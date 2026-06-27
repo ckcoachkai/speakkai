@@ -1,0 +1,16 @@
+---
+import { getEntry, render } from "astro:content";
+import ResourcePage from "@/components/ResourcePage.astro";
+
+const entry = await getEntry("blog", "corporate-events");
+
+if (!entry) {
+  throw new Error("Missing corporate-events content");
+}
+
+const { Content } = await render(entry);
+---
+
+<ResourcePage {...entry.data}>
+  <Content />
+</ResourcePage>

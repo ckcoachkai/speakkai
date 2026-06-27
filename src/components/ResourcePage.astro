@@ -1,0 +1,155 @@
+---
+import { ArrowLeft, ArrowUpRight, CircleCheckBig } from "@lucide/astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SiteFooter from "@/components/SiteFooter.astro";
+import TopLinks from "@/components/TopLinks.astro";
+
+interface ResourceSection {
+  title: string;
+  text: string;
+}
+
+interface Video {
+  title: string;
+  youtubeId: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+  lede: string;
+  label: string;
+  imageSrc?: string;
+  sections: ResourceSection[];
+  steps: string[];
+  videos?: Video[];
+}
+
+const content = Astro.props;
+---
+
+<BaseLayout title={`${content.title} | Speaking With Kai`} description={content.description}>
+  <main class="resource-page">
+    <section class="resource-hero" aria-labelledby="resource-title">
+      <header class="site-nav resource-nav" aria-label="Page navigation">
+        <a class="brand" href="/" aria-label="Speaking With Kai home">SWK</a>
+        <a class="nav-cta" href="/#contact">
+          Book
+          <ArrowUpRight aria-hidden="true" size={18} />
+        </a>
+      </header>
+      <TopLinks />
+
+      <div class="resource-hero-grid">
+        <div>
+          <p class="eyebrow">{content.eyebrow}</p>
+          <h1 id="resource-title">{content.title}</h1>
+          <p class="hero-lede">{content.lede}</p>
+          <div class="hero-actions">
+            <a class="button button-light" href="/#contact">
+              Book a Service
+              <ArrowUpRight aria-hidden="true" size={18} />
+            </a>
+            <a class="button button-dark" href="/">
+              <ArrowLeft aria-hidden="true" size={18} />
+              Home
+            </a>
+          </div>
+        </div>
+
+        <aside class="resource-card" aria-label={content.label}>
+          <span>{content.label}</span>
+          {
+            content.imageSrc ? (
+              <div class="resource-photo-frame">
+                <img
+                  class="resource-photo"
+                  src={content.imageSrc}
+                  alt="Kai speaking with one hand raised"
+                  loading="eager"
+                />
+              </div>
+            ) : (
+              <div class="resource-orbit">
+                <i />
+                <i />
+                <i />
+              </div>
+            )
+          }
+        </aside>
+      </div>
+    </section>
+
+    <section class="resource-body">
+      <div class="section-heading">
+        <p class="vertical-red">DETAILS</p>
+        <div>
+          <p class="eyebrow">How it helps</p>
+          <h2>Practical support with a clear next step.</h2>
+        </div>
+      </div>
+
+      <div class="resource-grid">
+        {
+          content.sections.map((section) => (
+            <article class="work-card compact-card">
+              <p>{content.eyebrow}</p>
+              <h3>{section.title}</h3>
+              <span>{section.text}</span>
+            </article>
+          ))
+        }
+      </div>
+
+      <article class="markdown-body">
+        <slot />
+      </article>
+    </section>
+
+    {
+      content.videos ? (
+        <section class="video-section" aria-labelledby="videos-title">
+          <div class="section-heading">
+            <p class="vertical-red">WATCH</p>
+            <div>
+              <p class="eyebrow">Embedded YouTube</p>
+              <h2 id="videos-title">Champion-level rounds to study closely.</h2>
+            </div>
+          </div>
+
+          <div class="video-grid">
+            {content.videos.map((video) => (
+              <article class="video-card">
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.youtubeId}`}
+                  title={video.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                />
+                <h3>{video.title}</h3>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null
+    }
+
+    <section class="resource-steps">
+      <p class="vertical-black">FLOW</p>
+      <div class="services-grid">
+        {
+          content.steps.map((step, index) => (
+            <article class="service-item">
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{step}</h3>
+              <CircleCheckBig aria-hidden="true" size={20} />
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>

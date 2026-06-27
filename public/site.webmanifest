@@ -1,0 +1,8 @@
+{
+  "name": "Speaking With Kai",
+  "short_name": "SWK",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08090d",
+  "theme_color": "#d71919"
+}

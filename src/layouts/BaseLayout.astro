@@ -1,0 +1,35 @@
+---
+import "@/styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "说开表达 SpeakKai | Speaking Coaching and Communication Support",
+  description = "说开表达 SpeakKai helps students, families, speakers, and teams explore speaking support, resources, media, and booking options."
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://speakkai.com");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="说开表达 SpeakKai" />
+    <meta property="og:type" content="website" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
