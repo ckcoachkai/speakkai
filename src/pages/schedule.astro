@@ -270,6 +270,11 @@ import { RefreshCw } from "@lucide/astro";
       .note-item:first-child { border-top: 0; }
       .note-label { color: #34413e; }
       .note-value { color: #6a7471; font-weight: 700; }
+      .note-item.highlight-travel { border-left: 4px solid #0f8a83; background: #e1f5f3; }
+      .note-item.highlight-holiday { border-left: 4px solid #d97706; background: #fff4d6; }
+      .note-item.highlight-makeup { border-left: 4px solid #d14c3f; background: #fde8e5; }
+      .note-item[class*="highlight-"] .note-label,
+      .note-item[class*="highlight-"] .note-value { color: #20304f; font-weight: 800; }
       .school-note { display: block; }
 
       .legend-note {
@@ -431,6 +436,13 @@ import { RefreshCw } from "@lucide/astro";
         return `${main}${mode ? ` ${mode}` : ""}${detail ? ` - ${detail}` : ""}`;
       }
 
+      function highlightKind(value: string) {
+        if (/make-?up workday/i.test(value)) return "makeup";
+        if (/holiday/i.test(value)) return "holiday";
+        if (/\btravel\b|all day (?:taiwan|thailand)/i.test(value)) return "travel";
+        return "";
+      }
+
       function appendLines(cell: HTMLTableCellElement, value: string) {
         const lines = value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
         const content = document.createElement("div");
@@ -453,10 +465,14 @@ import { RefreshCw } from "@lucide/astro";
         for (const line of lines.slice(1)) {
           const event = document.createElement("span");
           const formattedLine = formatEventLine(line);
-          const kind = /\b1-1\b/i.test(formattedLine) ? "private" : "standard";
+          const kind = highlightKind(formattedLine) ||
+            (/\b1-1\b/i.test(formattedLine) ? "private" : "standard");
           const colors = {
             private: ["#f0a000", "#fff2cc"],
             standard: ["#087ee6", "#e7f2ff"],
+            travel: ["#0f8a83", "#e1f5f3"],
+            holiday: ["#d97706", "#fff4d6"],
+            makeup: ["#d14c3f", "#fde8e5"],
           }[kind];
           event.className = `event-line kind-${kind}`;
           event.textContent = formattedLine;
@@ -477,7 +493,8 @@ import { RefreshCw } from "@lucide/astro";
 
         for (const item of items) {
           const li = document.createElement("li");
-          li.className = `note-item${school ? " school-note" : ""}`;
+          const highlight = school ? "" : highlightKind(`${item.label} ${item.value ?? ""}`);
+          li.className = `note-item${school ? " school-note" : ""}${highlight ? ` highlight-${highlight}` : ""}`;
           const label = document.createElement("span");
           label.className = "note-label";
           label.textContent = item.label;
