@@ -135,12 +135,32 @@ function toPublicSheet(feed, rows) {
 }
 
 async function fetchPublishedSheet(feed) {
-  const response = await fetch(feed.url, {
-    headers: { "user-agent": "SpeakKai-Schedule-Mirror/1.0" },
-    redirect: "follow",
-  });
+  const maximumAttempts = 4;
+  let response;
 
-  if (!response.ok) {
+  for (let attempt = 1; attempt <= maximumAttempts; attempt += 1) {
+    try {
+      response = await fetch(feed.url, {
+        headers: { "user-agent": "SpeakKai-Schedule-Mirror/1.0" },
+        redirect: "follow",
+        signal: AbortSignal.timeout(45_000),
+      });
+
+      if (response.ok || (response.status < 500 && response.status !== 429)) break;
+    } catch (error) {
+      if (attempt === maximumAttempts) {
+        throw new Error(`Published feed for ${feed.title} could not be reached.`, {
+          cause: error,
+        });
+      }
+    }
+
+    if (attempt < maximumAttempts) {
+      await new Promise((resolve) => setTimeout(resolve, attempt * 2_000));
+    }
+  }
+
+  if (!response?.ok) {
     throw new Error(`Published feed for ${feed.title} failed (${response.status}).`);
   }
 
