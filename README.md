@@ -27,23 +27,22 @@ The view-only schedule is published at `https://speakkai.com/schedule/`. GitHub
 Actions refreshes it every 15 minutes. The browser-facing page reads only the
 generated `/data/schedule.json` file and never connects to Google.
 
-The workflow mirrors only sheet tab IDs `260607` and `260608`. Hidden rows and
-columns are excluded. Formulas, comments, notes, and Google credentials are not
-written to the public file.
+The workflow mirrors only the separately published `July 2026` and `August
+2026` sheet feeds. Other spreadsheet tabs remain private. Comments, notes, and
+Google account credentials are not written to the public file.
 
-One-time Google setup:
+Google publishing setup:
 
-1. Create or select a Google Cloud project and enable the Google Sheets API.
-2. Create a service account and download its JSON key.
-3. Share the source spreadsheet with the service account's `client_email` as a
-   viewer.
-4. Add the complete JSON key to the GitHub Actions secret
-   `GOOGLE_SERVICE_ACCOUNT_JSON`.
-5. Add the spreadsheet ID to the GitHub Actions secret `GOOGLE_SHEET_ID`.
-6. Run the Pages workflow manually once, then verify `/schedule/`.
+1. In Google Sheets, use `File` -> `Share` -> `Publish to web`.
+2. Publish only `July 2026` and `August 2026` as CSV feeds, not the entire
+   document.
+3. Keep `Automatically republish when changes are made` enabled.
+4. The two generated public CSV feeds are configured in
+   `.github/workflows/deploy.yml`; no Google account key is required.
+5. Run the Pages workflow manually once, then verify `/schedule/`.
 
-The source spreadsheet remains private. Do not commit the service account JSON
-or place it in `public/`.
+The selected schedule feeds and the resulting mirror are public. All other tabs
+remain private.
 
 ## Porkbun DNS for `speakkai.com`
 

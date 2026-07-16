@@ -20,9 +20,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-      GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
-      GOOGLE_SHEET_GIDS: "260607,260608"
+      GOOGLE_PUBLISHED_SHEETS_JSON: >-
+        [{"id":260607,"title":"July 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260607&single=true&output=csv"},{"id":260608,"title":"August 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260608&single=true&output=csv"}]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,7 +34,6 @@ jobs:
       - name: Install
         run: npm install
       - name: Sync approved Google Sheet tabs
-        if: ${{ env.GOOGLE_SERVICE_ACCOUNT_JSON != '' && env.GOOGLE_SHEET_ID != '' }}
         run: npm run sync:schedule
       - name: Build
         run: npm run build
