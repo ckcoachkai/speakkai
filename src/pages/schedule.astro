@@ -228,11 +228,13 @@ import { RefreshCw } from "@lucide/astro";
         background: #eef3fa;
       }
 
-      .event-line.kind-class { border-left-color: #17a673; background: #e5f7f0; }
-      .event-line.kind-online { border-left-color: #168fb8; background: #e5f5fb; }
-      .event-line.kind-private { border-left-color: #e6a321; background: #fff6df; }
-      .event-line.kind-travel { border-left-color: #3977c3; background: #e9f1fc; }
-      .event-line.kind-sharing { border-left-color: #7358b8; background: #f0edfb; }
+      .event-line.kind-prep { border-left-color: #102f62; background: #e3eaf5; }
+      .event-line.kind-tedx { border-left-color: #087ee6; background: #e3f2ff; }
+      .event-line.kind-class { border-left-color: #00a7c7; background: #e1f7fb; }
+      .event-line.kind-online { border-left-color: #00b8a9; background: #def8f4; }
+      .event-line.kind-private { border-left-color: #f0a000; background: #fff3d6; }
+      .event-line.kind-travel { border-left-color: #4054c7; background: #e9ebff; }
+      .event-line.kind-sharing { border-left-color: #a83bb6; background: #f8e8fa; }
 
       .notes-rail {
         min-width: 0;
@@ -401,14 +403,18 @@ import { RefreshCw } from "@lucide/astro";
 
         const date = document.createElement("span");
         date.className = "date-line";
-        date.textContent = lines[0];
+        date.textContent = lines[0].replace(/\s*\(\s*\d+(?:\.\d+)?h\s*\)\s*/gi, "").trim();
         date.style.cssText =
           "display:inline-flex;align-self:flex-start;align-items:center;justify-content:center;min-width:24px;min-height:22px;margin:0;padding:2px 6px;border-radius:4px;color:#fff;background:#17a6a0;font-size:10px;font-weight:800;line-height:1.15";
         content.append(date);
 
         for (const line of lines.slice(1)) {
           const event = document.createElement("span");
-          const kind = /All day|Taiwan|Thailand|Travel/i.test(line)
+          const kind = /备赛|preparation|prep/i.test(line)
+            ? "prep"
+            : /TEDx/i.test(line)
+              ? "tedx"
+              : /All day|Taiwan|Thailand|Travel/i.test(line)
             ? "travel"
             : /Sharing|分享/i.test(line)
               ? "sharing"
@@ -420,11 +426,13 @@ import { RefreshCw } from "@lucide/astro";
                     ? "class"
                     : "default";
           const colors = {
-            travel: ["#3977c3", "#e9f1fc"],
-            sharing: ["#7358b8", "#f0edfb"],
-            private: ["#e6a321", "#fff6df"],
-            online: ["#168fb8", "#e5f5fb"],
-            class: ["#17a673", "#e5f7f0"],
+            prep: ["#102f62", "#e3eaf5"],
+            tedx: ["#087ee6", "#e3f2ff"],
+            travel: ["#4054c7", "#e9ebff"],
+            sharing: ["#a83bb6", "#f8e8fa"],
+            private: ["#f0a000", "#fff3d6"],
+            online: ["#00b8a9", "#def8f4"],
+            class: ["#00a7c7", "#e1f7fb"],
             default: ["#6f7e96", "#eef3fa"],
           }[kind];
           event.className = `event-line kind-${kind}`;
@@ -526,6 +534,7 @@ import { RefreshCw } from "@lucide/astro";
         for (let row = 1; row < sheet.rows.length; row += 1) {
           const highlightLabel = cellValue(sheet, row, 8);
           const highlightValue = cellValue(sheet, row, 9);
+          if (/monthly hours?/i.test(highlightLabel)) continue;
           if (highlightLabel || highlightValue) {
             highlights.push({ label: highlightLabel || highlightValue, value: highlightLabel ? highlightValue : "" });
           }
