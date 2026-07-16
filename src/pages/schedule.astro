@@ -228,13 +228,8 @@ import { RefreshCw } from "@lucide/astro";
         background: #eef3fa;
       }
 
-      .event-line.kind-prep { border-left-color: #102f62; background: #e3eaf5; }
-      .event-line.kind-tedx { border-left-color: #087ee6; background: #e3f2ff; }
-      .event-line.kind-class { border-left-color: #00a7c7; background: #e1f7fb; }
-      .event-line.kind-online { border-left-color: #00b8a9; background: #def8f4; }
-      .event-line.kind-private { border-left-color: #f0a000; background: #fff3d6; }
-      .event-line.kind-travel { border-left-color: #4054c7; background: #e9ebff; }
-      .event-line.kind-sharing { border-left-color: #a83bb6; background: #f8e8fa; }
+      .event-line.kind-standard { border-left-color: #087ee6; background: #e7f2ff; }
+      .event-line.kind-private { border-left-color: #f0a000; background: #fff2cc; }
 
       .notes-rail {
         min-width: 0;
@@ -386,7 +381,54 @@ import { RefreshCw } from "@lucide/astro";
       }
 
       function cellValue(sheet: Sheet, row: number, column: number) {
-        return (sheet.rows[row]?.cells?.[column]?.value?.trim() ?? "").replaceAll("龙柏", "LB");
+        return (sheet.rows[row]?.cells?.[column]?.value?.trim() ?? "")
+          .replaceAll("龙柏", "LB")
+          .replaceAll("华漕", "HC");
+      }
+
+      function formatEventLine(rawLine: string) {
+        let line = rawLine.replaceAll("龙柏", "LB").replaceAll("华漕", "HC").trim();
+        const mode = line.includes("线上") ? "线上" : line.includes("线下") ? "线下" : "";
+        line = line.replace(/\s*(线上|线下)\s*/g, " ").replace(/\s+/g, " ").trim();
+
+        const separatorIndex = line.indexOf(" - ");
+        let main = separatorIndex >= 0 ? line.slice(0, separatorIndex).trim() : line;
+        let detail = separatorIndex >= 0 ? line.slice(separatorIndex + 3).trim() : "";
+        const inferredMode = mode || (/\b(?:LB|HC|JH)\b/.test(main) ? "线下" : "");
+
+        if (main.includes("班课")) {
+          main = main.replace(/\s*班课\s*/g, " 班课").trim();
+          return `${main}${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}`;
+        }
+
+        const lessonMatch = detail.match(/^(Lesson\s+\d+)\s+(.+)$/i);
+        const explicitPrivate = detail.match(/^(.+?)\s+1-1$/i);
+        const isDescriptor =
+          /^(TEDx|备赛|student interview|Classes|FBI分享|WSDA国赛)$/i.test(detail) ||
+          /All day|Sharing|分享/i.test(main);
+        let name = "";
+
+        if (explicitPrivate) {
+          name = explicitPrivate[1].trim();
+          detail = "";
+        } else if (lessonMatch) {
+          detail = lessonMatch[1];
+          name = lessonMatch[2].trim();
+        } else if (detail && !isDescriptor) {
+          name = detail;
+          detail = "";
+        }
+
+        if (name) {
+          return `${main} (${name}) 1-1${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}`;
+        }
+
+        if (/\b1-1\b/i.test(main)) {
+          main = main.replace(/\s*1-1\s*/i, " 1-1").trim();
+          return `${main}${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}`;
+        }
+
+        return `${main}${mode ? ` ${mode}` : ""}${detail ? ` - ${detail}` : ""}`;
       }
 
       function appendLines(cell: HTMLTableCellElement, value: string) {
@@ -410,33 +452,14 @@ import { RefreshCw } from "@lucide/astro";
 
         for (const line of lines.slice(1)) {
           const event = document.createElement("span");
-          const kind = /备赛|preparation|prep/i.test(line)
-            ? "prep"
-            : /TEDx/i.test(line)
-              ? "tedx"
-              : /All day|Taiwan|Thailand|Travel/i.test(line)
-            ? "travel"
-            : /Sharing|分享/i.test(line)
-              ? "sharing"
-              : /1-1/i.test(line)
-                ? "private"
-                : /线上|online/i.test(line)
-                  ? "online"
-                  : /班课|class/i.test(line)
-                    ? "class"
-                    : "default";
+          const formattedLine = formatEventLine(line);
+          const kind = /\b1-1\b/i.test(formattedLine) ? "private" : "standard";
           const colors = {
-            prep: ["#102f62", "#e3eaf5"],
-            tedx: ["#087ee6", "#e3f2ff"],
-            travel: ["#4054c7", "#e9ebff"],
-            sharing: ["#a83bb6", "#f8e8fa"],
-            private: ["#f0a000", "#fff3d6"],
-            online: ["#00b8a9", "#def8f4"],
-            class: ["#00a7c7", "#e1f7fb"],
-            default: ["#6f7e96", "#eef3fa"],
+            private: ["#f0a000", "#fff2cc"],
+            standard: ["#087ee6", "#e7f2ff"],
           }[kind];
           event.className = `event-line kind-${kind}`;
-          event.textContent = line;
+          event.textContent = formattedLine;
           event.style.cssText = `display:block;position:relative;min-width:0;margin:0;padding:4px 5px;overflow-wrap:anywhere;border-left:3px solid ${colors[0]};border-radius:3px;color:#20304f;background:${colors[1]};font-size:9px;line-height:1.35`;
           content.append(event);
         }
@@ -521,7 +544,12 @@ import { RefreshCw } from "@lucide/astro";
             td.style.cssText = `height:auto;padding:0;overflow:visible;border:1px solid #9eb0c8;vertical-align:top;background:${tbody.children.length % 2 === 0 ? "#fbfdff" : "#ffffff"};font-size:9px;line-height:1.24`;
             if (column === 0 || column === 6) td.classList.add("is-weekend");
             if (column === 0 || column === 6) td.style.background = "#eef7fa";
-            appendLines(td, (row.cells?.[column]?.value ?? "").replaceAll("龙柏", "LB"));
+            appendLines(
+              td,
+              (row.cells?.[column]?.value ?? "")
+                .replaceAll("龙柏", "LB")
+                .replaceAll("华漕", "HC"),
+            );
             tr.append(td);
           }
           tbody.append(tr);
