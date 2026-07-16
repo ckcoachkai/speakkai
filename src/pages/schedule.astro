@@ -172,9 +172,9 @@ import { RefreshCw } from "@lucide/astro";
       th.is-weekend { background: #236b83; }
 
       td {
-        height: var(--week-height, 110px);
+        height: auto;
         padding: 0;
-        overflow: hidden;
+        overflow: visible;
         vertical-align: top;
         background: #fff;
         font-size: 9px;
@@ -183,9 +183,10 @@ import { RefreshCw } from "@lucide/astro";
       }
 
       .cell-content {
-        height: var(--week-height, 110px);
+        min-height: var(--week-height, 110px);
+        height: auto;
         padding: 4px 5px 5px;
-        overflow: hidden;
+        overflow: visible;
       }
 
       tbody tr:nth-child(odd) td { background: #fbfcfc; }
@@ -303,7 +304,7 @@ import { RefreshCw } from "@lucide/astro";
         .month-heading { font-size: 17px; }
         .sheet-tab { padding-right: 9px; padding-left: 9px; }
         .table-shell, .notes-rail { border-right: 0; border-left: 0; }
-        td { height: 108px; font-size: 9px; }
+        .cell-content { min-height: 108px; }
         .notes-rail { grid-template-columns: 1fr; }
         .notes-section + .notes-section { border-top: 1px solid #a0aaa6; border-left: 0; }
         .legend-note { margin-right: 9px; margin-left: 9px; }
@@ -382,6 +383,8 @@ import { RefreshCw } from "@lucide/astro";
         const lines = value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
         const content = document.createElement("div");
         content.className = "cell-content";
+        content.style.cssText =
+          "min-height:var(--week-height,110px);height:auto;padding:4px 5px 5px;overflow:visible";
         if (lines.length === 0) {
           cell.classList.add("is-empty");
           cell.append(content);
@@ -499,7 +502,7 @@ import { RefreshCw } from "@lucide/astro";
           const tr = document.createElement("tr");
           for (let column = 0; column < 7; column += 1) {
             const td = document.createElement("td");
-            td.style.cssText = `height:${weekHeight}px;padding:0;overflow:hidden;border:1px solid #9eb0c8;vertical-align:top;background:${tbody.children.length % 2 === 0 ? "#fbfdff" : "#ffffff"};font-size:9px;line-height:1.24`;
+            td.style.cssText = `height:auto;padding:0;overflow:visible;border:1px solid #9eb0c8;vertical-align:top;background:${tbody.children.length % 2 === 0 ? "#fbfdff" : "#ffffff"};font-size:9px;line-height:1.24`;
             if (column === 0 || column === 6) td.classList.add("is-weekend");
             if (column === 0 || column === 6) td.style.background = "#eef7fa";
             appendLines(td, (row.cells?.[column]?.value ?? "").replaceAll("龙柏", "LB"));
