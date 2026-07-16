@@ -1,0 +1,501 @@
+---
+import { RefreshCw } from "@lucide/astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="color-scheme" content="light" />
+    <title>Schedule | SpeakKai</title>
+    <style>
+      :root {
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "Microsoft YaHei", sans-serif;
+        color: #1d2423;
+        background: #f4f6f5;
+        font-synthesis: none;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        background: #f4f6f5;
+      }
+
+      button,
+      a {
+        font: inherit;
+      }
+
+      .page-header {
+        display: flex;
+        min-height: 72px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 14px clamp(18px, 4vw, 56px);
+        border-bottom: 1px solid #d9dfdc;
+        background: #ffffff;
+      }
+
+      .identity {
+        min-width: 0;
+      }
+
+      .identity h1 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 750;
+        letter-spacing: 0;
+      }
+
+      .identity p {
+        margin: 4px 0 0;
+        color: #66716e;
+        font-size: 13px;
+      }
+
+      .refresh-button {
+        display: inline-grid;
+        width: 40px;
+        height: 40px;
+        flex: 0 0 40px;
+        place-items: center;
+        border: 1px solid #cbd3d0;
+        border-radius: 6px;
+        color: #26302e;
+        background: #ffffff;
+        cursor: pointer;
+      }
+
+      .refresh-button:hover {
+        border-color: #8b9995;
+        background: #f7f9f8;
+      }
+
+      .refresh-button:focus-visible,
+      .sheet-tab:focus-visible {
+        outline: 3px solid #aad7d0;
+        outline-offset: 2px;
+      }
+
+      main {
+        padding: 22px clamp(12px, 3vw, 40px) 40px;
+      }
+
+      .sheet-tabs {
+        display: flex;
+        min-height: 42px;
+        gap: 4px;
+        overflow-x: auto;
+        border-bottom: 1px solid #cbd3d0;
+        scrollbar-width: thin;
+      }
+
+      .sheet-tab {
+        position: relative;
+        min-width: max-content;
+        padding: 10px 16px 11px;
+        border: 0;
+        color: #5c6865;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .sheet-tab[aria-selected="true"] {
+        color: #17201e;
+        font-weight: 700;
+      }
+
+      .sheet-tab[aria-selected="true"]::after {
+        position: absolute;
+        right: 10px;
+        bottom: -1px;
+        left: 10px;
+        height: 3px;
+        background: #c62a21;
+        content: "";
+      }
+
+      .table-shell {
+        max-height: calc(100vh - 170px);
+        overflow: auto;
+        border: 1px solid #cbd3d0;
+        border-top: 0;
+        background: #ffffff;
+      }
+
+      table {
+        width: max-content;
+        min-width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        table-layout: auto;
+      }
+
+      td {
+        min-width: 72px;
+        height: 32px;
+        padding: 6px 9px;
+        overflow-wrap: anywhere;
+        border-right: 1px solid #dfe4e2;
+        border-bottom: 1px solid #dfe4e2;
+        color: #202725;
+        background: #ffffff;
+        font-size: 14px;
+        line-height: 1.35;
+        letter-spacing: 0;
+      }
+
+      td a {
+        color: inherit;
+        text-decoration-color: #40877e;
+        text-underline-offset: 2px;
+      }
+
+      td.is-frozen-row,
+      td.is-frozen-column {
+        position: sticky;
+      }
+
+      td.is-frozen-row {
+        z-index: 2;
+        box-shadow: 0 1px 0 #aeb9b6;
+      }
+
+      td.is-frozen-column {
+        z-index: 3;
+        box-shadow: 1px 0 0 #aeb9b6;
+      }
+
+      td.is-frozen-row.is-frozen-column {
+        z-index: 4;
+      }
+
+      .status {
+        display: grid;
+        min-height: 45vh;
+        place-items: center;
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .status strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 18px;
+      }
+
+      .status span {
+        color: #68736f;
+        font-size: 14px;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      @media (max-width: 640px) {
+        .page-header {
+          min-height: 64px;
+          padding: 10px 14px;
+        }
+
+        .identity h1 {
+          font-size: 18px;
+        }
+
+        main {
+          padding: 12px 0 0;
+        }
+
+        .sheet-tabs {
+          padding: 0 8px;
+        }
+
+        .table-shell {
+          max-height: calc(100vh - 130px);
+          border-right: 0;
+          border-left: 0;
+        }
+
+        td {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="identity">
+        <h1 id="schedule-title">时间表 Schedule</h1>
+        <p id="updated-time">正在载入 Loading</p>
+      </div>
+      <button class="refresh-button" type="button" title="Refresh" aria-label="Refresh schedule">
+        <RefreshCw size={19} stroke-width={2} aria-hidden="true" />
+      </button>
+    </header>
+
+    <main>
+      <div class="status" id="status" role="status">
+        <div>
+          <strong>正在载入</strong>
+          <span>Loading schedule</span>
+        </div>
+      </div>
+      <section id="schedule" hidden>
+        <div class="sheet-tabs" id="sheet-tabs" role="tablist" aria-label="Schedule sheets"></div>
+        <div class="table-shell" id="table-shell"></div>
+      </section>
+    </main>
+
+    <script>
+      type Cell = {
+        value?: string;
+        background?: string;
+        foreground?: string;
+        bold?: boolean;
+        italic?: boolean;
+        horizontalAlignment?: string;
+        verticalAlignment?: string;
+        wrapStrategy?: string;
+        link?: string;
+      };
+
+      type Sheet = {
+        id: number;
+        title: string;
+        frozenRows: number;
+        frozenColumns: number;
+        columns: Array<{ hidden?: boolean; width?: number }>;
+        rows: Array<{ hidden?: boolean; height?: number; cells?: Cell[] }>;
+        merges: Array<{
+          startRow: number;
+          endRow: number;
+          startColumn: number;
+          endColumn: number;
+        }>;
+      };
+
+      type ScheduleData = {
+        status: string;
+        updatedAt: string | null;
+        spreadsheetTitle?: string;
+        sheets: Sheet[];
+      };
+
+      const statusElement = document.querySelector<HTMLElement>("#status");
+      const scheduleElement = document.querySelector<HTMLElement>("#schedule");
+      const tabsElement = document.querySelector<HTMLElement>("#sheet-tabs");
+      const tableShell = document.querySelector<HTMLElement>("#table-shell");
+      const updatedTime = document.querySelector<HTMLElement>("#updated-time");
+      const refreshButton = document.querySelector<HTMLButtonElement>(".refresh-button");
+
+      refreshButton?.addEventListener("click", () => window.location.reload());
+
+      function showStatus(title: string, detail: string) {
+        if (!statusElement || !scheduleElement) return;
+        statusElement.replaceChildren();
+        const wrapper = document.createElement("div");
+        const strong = document.createElement("strong");
+        const span = document.createElement("span");
+        strong.textContent = title;
+        span.textContent = detail;
+        wrapper.append(strong, span);
+        statusElement.append(wrapper);
+        statusElement.hidden = false;
+        scheduleElement.hidden = true;
+      }
+
+      function clampedSize(value: number | undefined, min: number, max: number) {
+        if (!value || !Number.isFinite(value)) return undefined;
+        return Math.min(Math.max(value, min), max);
+      }
+
+      function renderSheet(sheet: Sheet) {
+        if (!tableShell) return;
+        tableShell.replaceChildren();
+
+        const visibleRows = sheet.rows
+          .map((row, index) => ({ row, index }))
+          .filter(({ row }) => !row.hidden);
+        const visibleColumns = sheet.columns
+          .map((column, index) => ({ column, index }))
+          .filter(({ column }) => !column.hidden);
+
+        if (visibleRows.length === 0 || visibleColumns.length === 0) {
+          const empty = document.createElement("div");
+          empty.className = "status";
+          empty.textContent = "此工作表为空 This sheet is empty";
+          tableShell.append(empty);
+          return;
+        }
+
+        const spanByCell = new Map<string, { rowSpan: number; columnSpan: number }>();
+        const coveredCells = new Set<string>();
+        for (const merge of sheet.merges ?? []) {
+          const mergeRows = visibleRows.filter(
+            ({ index }) => index >= merge.startRow && index < merge.endRow,
+          );
+          const mergeColumns = visibleColumns.filter(
+            ({ index }) => index >= merge.startColumn && index < merge.endColumn,
+          );
+          if (mergeRows.length === 0 || mergeColumns.length === 0) continue;
+
+          const startKey = `${mergeRows[0].index}:${mergeColumns[0].index}`;
+          spanByCell.set(startKey, {
+            rowSpan: mergeRows.length,
+            columnSpan: mergeColumns.length,
+          });
+          for (const { index: rowIndex } of mergeRows) {
+            for (const { index: columnIndex } of mergeColumns) {
+              const key = `${rowIndex}:${columnIndex}`;
+              if (key !== startKey) coveredCells.add(key);
+            }
+          }
+        }
+
+        const table = document.createElement("table");
+        const colgroup = document.createElement("colgroup");
+        for (const { column } of visibleColumns) {
+          const col = document.createElement("col");
+          const width = clampedSize(column.width, 60, 320);
+          if (width) col.style.width = `${width}px`;
+          colgroup.append(col);
+        }
+        table.append(colgroup);
+
+        const tbody = document.createElement("tbody");
+        let frozenTop = 0;
+        const frozenLeftByColumn = new Map<number, number>();
+        let frozenLeft = 0;
+        for (const { column, index } of visibleColumns) {
+          if (index >= sheet.frozenColumns) continue;
+          frozenLeftByColumn.set(index, frozenLeft);
+          frozenLeft += clampedSize(column.width, 60, 320) ?? 100;
+        }
+
+        for (const { row, index: rowIndex } of visibleRows) {
+          const tr = document.createElement("tr");
+          const rowHeight = clampedSize(row.height, 24, 200);
+          if (rowHeight) tr.style.height = `${rowHeight}px`;
+
+          for (const { column, index: columnIndex } of visibleColumns) {
+            const key = `${rowIndex}:${columnIndex}`;
+            if (coveredCells.has(key)) continue;
+
+            const cell = row.cells?.[columnIndex] ?? {};
+            const td = document.createElement("td");
+            const span = spanByCell.get(key);
+            if (span?.rowSpan && span.rowSpan > 1) td.rowSpan = span.rowSpan;
+            if (span?.columnSpan && span.columnSpan > 1) td.colSpan = span.columnSpan;
+            if (!span || span.columnSpan === 1) {
+              const cellWidth = clampedSize(column.width, 60, 320) ?? 100;
+              td.style.width = `${cellWidth}px`;
+              td.style.minWidth = `${cellWidth}px`;
+            }
+
+            if (cell.background) td.style.backgroundColor = cell.background;
+            if (cell.foreground) td.style.color = cell.foreground;
+            if (cell.bold) td.style.fontWeight = "700";
+            if (cell.italic) td.style.fontStyle = "italic";
+            if (["left", "center", "right"].includes(cell.horizontalAlignment ?? "")) {
+              td.style.textAlign = cell.horizontalAlignment!;
+            }
+            if (["top", "middle", "bottom"].includes(cell.verticalAlignment ?? "")) {
+              td.style.verticalAlign = cell.verticalAlignment!;
+            }
+            if (cell.wrapStrategy === "clip") td.style.whiteSpace = "nowrap";
+
+            if (rowIndex < sheet.frozenRows) {
+              td.classList.add("is-frozen-row");
+              td.style.top = `${frozenTop}px`;
+            }
+            const frozenColumnLeft = frozenLeftByColumn.get(columnIndex);
+            if (frozenColumnLeft !== undefined) {
+              td.classList.add("is-frozen-column");
+              td.style.left = `${frozenColumnLeft}px`;
+            }
+
+            if (cell.link) {
+              const link = document.createElement("a");
+              link.href = cell.link;
+              link.target = "_blank";
+              link.rel = "noopener noreferrer";
+              link.textContent = cell.value ?? "";
+              td.append(link);
+            } else {
+              td.textContent = cell.value ?? "";
+            }
+            tr.append(td);
+          }
+          tbody.append(tr);
+          if (rowIndex < sheet.frozenRows) {
+            frozenTop += rowHeight ?? 32;
+          }
+        }
+
+        table.append(tbody);
+        tableShell.append(table);
+        tableShell.scrollTo({ top: 0, left: 0 });
+      }
+
+      function renderSchedule(data: ScheduleData) {
+        if (!tabsElement || !scheduleElement || !statusElement || !updatedTime) return;
+        if (data.status !== "ready" || data.sheets.length === 0) {
+          showStatus("时间表尚未发布", "Schedule setup is not complete");
+          updatedTime.textContent = "等待首次同步 Waiting for first sync";
+          return;
+        }
+
+        updatedTime.textContent = data.updatedAt
+          ? `最后更新 Updated ${new Intl.DateTimeFormat(undefined, {
+              dateStyle: "medium",
+              timeStyle: "short",
+            }).format(new Date(data.updatedAt))}`
+          : "";
+
+        tabsElement.replaceChildren();
+        data.sheets.forEach((sheet, index) => {
+          const button = document.createElement("button");
+          button.className = "sheet-tab";
+          button.type = "button";
+          button.role = "tab";
+          button.textContent = sheet.title;
+          button.ariaSelected = String(index === 0);
+          button.addEventListener("click", () => {
+            tabsElement.querySelectorAll(".sheet-tab").forEach((tab) => {
+              tab.setAttribute("aria-selected", String(tab === button));
+            });
+            renderSheet(sheet);
+          });
+          tabsElement.append(button);
+        });
+
+        statusElement.hidden = true;
+        scheduleElement.hidden = false;
+        renderSheet(data.sheets[0]);
+      }
+
+      fetch("/data/schedule.json", { cache: "no-store" })
+        .then((response) => {
+          if (!response.ok) throw new Error("Schedule data is unavailable.");
+          return response.json() as Promise<ScheduleData>;
+        })
+        .then(renderSchedule)
+        .catch(() => {
+          showStatus("暂时无法载入时间表", "The schedule could not be loaded");
+          if (updatedTime) updatedTime.textContent = "";
+        });
+    </script>
+  </body>
+</html>
