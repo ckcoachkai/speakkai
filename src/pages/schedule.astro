@@ -431,8 +431,27 @@ import { RefreshCw } from "@lucide/astro";
         return `${main}${mode ? ` ${mode}` : ""}${detail ? ` - ${detail}` : ""}`;
       }
 
-      function appendLines(cell: HTMLTableCellElement, value: string) {
-        const lines = value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+      function isCancelledEvent(line: string, dateLine: string, sheetTitle: string) {
+        const day = Number(dateLine.match(/^\s*(\d{1,2})\b/)?.[1]);
+        return (
+          /\bJuly\s+2026\b/i.test(sheetTitle) &&
+          day >= 20 &&
+          day <= 24 &&
+          /\bJH\b/i.test(line) &&
+          /16:00\s*[-\u2013\u2014]\s*19:00/.test(line)
+        );
+      }
+
+      function appendLines(cell: HTMLTableCellElement, value: string, sheetTitle: string) {
+        const sourceLines = value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+        const lines = sourceLines.length
+          ? [
+              sourceLines[0],
+              ...sourceLines.slice(1).filter((line) =>
+                !isCancelledEvent(line, sourceLines[0], sheetTitle),
+              ),
+            ]
+          : [];
         const content = document.createElement("div");
         content.className = "cell-content";
         content.style.cssText =
@@ -549,6 +568,7 @@ import { RefreshCw } from "@lucide/astro";
               (row.cells?.[column]?.value ?? "")
                 .replaceAll("龙柏", "LB")
                 .replaceAll("华漕", "HC"),
+              sheet.title,
             );
             tr.append(td);
           }
