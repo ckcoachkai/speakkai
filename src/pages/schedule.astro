@@ -15,8 +15,8 @@ import { RefreshCw } from "@lucide/astro";
         font-family:
           Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
           "Segoe UI", "Microsoft YaHei", sans-serif;
-        color: #18201e;
-        background: #edf1ef;
+        color: #17233d;
+        background: #f4f7fb;
         font-synthesis: none;
       }
 
@@ -26,7 +26,7 @@ import { RefreshCw } from "@lucide/astro";
         min-width: 320px;
         min-height: 100vh;
         margin: 0;
-        background: #edf1ef;
+        background: #f4f7fb;
       }
 
       button, a { font: inherit; }
@@ -38,7 +38,7 @@ import { RefreshCw } from "@lucide/astro";
         justify-content: space-between;
         gap: 20px;
         padding: 9px clamp(14px, 2.5vw, 36px);
-        border-bottom: 1px solid #c8d0cd;
+        border-bottom: 1px solid #d5deed;
         background: #fff;
       }
 
@@ -53,7 +53,7 @@ import { RefreshCw } from "@lucide/astro";
 
       .identity p {
         margin: 3px 0 0;
-        color: #69736f;
+        color: #65718a;
         font-size: 11px;
       }
 
@@ -63,18 +63,18 @@ import { RefreshCw } from "@lucide/astro";
         height: 36px;
         flex: 0 0 36px;
         place-items: center;
-        border: 1px solid #bec8c4;
+        border: 1px solid #c7d3e5;
         border-radius: 6px;
-        color: #26302e;
+        color: #173d70;
         background: #fff;
         cursor: pointer;
       }
 
-      .refresh-button:hover { background: #f4f7f5; }
+      .refresh-button:hover { background: #eef5ff; }
 
       .refresh-button:focus-visible,
       .sheet-tab:focus-visible {
-        outline: 3px solid #9bcfc6;
+        outline: 3px solid #80d6d1;
         outline-offset: 2px;
       }
 
@@ -108,15 +108,15 @@ import { RefreshCw } from "@lucide/astro";
         position: relative;
         min-width: max-content;
         padding: 8px 12px 9px;
-        border: 1px solid #c4ccc9;
+        border: 1px solid #cbd6e7;
         border-bottom: 0;
-        color: #5a6662;
+        color: #65718a;
         background: transparent;
         cursor: pointer;
       }
 
       .sheet-tab[aria-selected="true"] {
-        color: #17201e;
+        color: #173d70;
         font-weight: 720;
         background: #fff;
       }
@@ -127,7 +127,7 @@ import { RefreshCw } from "@lucide/astro";
         bottom: 0;
         left: 8px;
         height: 3px;
-        background: #c52b22;
+        background: #17a6a0;
         content: "";
       }
 
@@ -141,7 +141,7 @@ import { RefreshCw } from "@lucide/astro";
       .table-shell {
         min-width: 0;
         overflow: hidden;
-        border: 1px solid #7f8b87;
+        border: 2px solid #244f83;
         background: #fff;
       }
 
@@ -153,8 +153,7 @@ import { RefreshCw } from "@lucide/astro";
       }
 
       th, td {
-        border: 0;
-        box-shadow: inset -1px -1px 0 #75817d;
+        border: 1px solid #9eb0c8;
       }
 
       th:last-child, td:last-child { border-right: 0; }
@@ -164,13 +163,13 @@ import { RefreshCw } from "@lucide/astro";
         height: 29px;
         padding: 4px 3px;
         color: #fff;
-        background: #314943;
+        background: #173d70;
         font-size: 11px;
         font-weight: 720;
         text-align: center;
       }
 
-      th.is-weekend { background: #5b6763; }
+      th.is-weekend { background: #236b83; }
 
       td {
         height: var(--week-height, 110px);
@@ -189,29 +188,42 @@ import { RefreshCw } from "@lucide/astro";
         overflow: hidden;
       }
 
-      td.is-weekend { background: #f5f7f6; }
-      td.is-empty { background: #f0f3f2; }
+      tbody tr:nth-child(odd) td { background: #fbfcfc; }
+      td.is-weekend { background: #f1f5f3 !important; }
+      td.is-empty { background: #e9eeec !important; }
 
       .date-line {
-        display: block;
-        min-height: 16px;
-        margin-bottom: 2px;
-        color: #b4241c;
-        font-size: 11px;
+        display: inline-flex;
+        min-width: 24px;
+        min-height: 22px;
+        align-items: center;
+        justify-content: center;
+        margin: 0 0 4px;
+        padding: 2px 6px;
+        border-radius: 4px;
+        color: #fff;
+        background: #17a6a0;
+        font-size: 10px;
         font-weight: 800;
         line-height: 1.15;
       }
 
       .event-line {
         display: block;
-        margin-top: 1px;
+        margin-top: 3px;
+        padding: 3px 4px;
         overflow-wrap: anywhere;
+        border-left: 3px solid #6d7c77;
+        border-radius: 2px;
+        color: #20304f;
+        background: #eef3fa;
       }
 
-      .event-line + .event-line {
-        padding-top: 2px;
-        border-top: 1px dotted #d6dcda;
-      }
+      .event-line.kind-class { border-left-color: #17a673; background: #e5f7f0; }
+      .event-line.kind-online { border-left-color: #168fb8; background: #e5f5fb; }
+      .event-line.kind-private { border-left-color: #e6a321; background: #fff6df; }
+      .event-line.kind-travel { border-left-color: #3977c3; background: #e9f1fc; }
+      .event-line.kind-sharing { border-left-color: #7358b8; background: #f0edfb; }
 
       .notes-rail {
         min-width: 0;
@@ -225,7 +237,7 @@ import { RefreshCw } from "@lucide/astro";
         margin: 0;
         padding: 7px 9px;
         color: #fff;
-        background: #314943;
+        background: #173d70;
         font-size: 11px;
         font-weight: 750;
       }
@@ -247,6 +259,8 @@ import { RefreshCw } from "@lucide/astro";
         line-height: 1.3;
       }
 
+      .note-item:nth-child(odd) { background: #f2f6fb; }
+
       .note-item:first-child { border-top: 0; }
       .note-label { color: #34413e; }
       .note-value { color: #6a7471; font-weight: 700; }
@@ -255,8 +269,8 @@ import { RefreshCw } from "@lucide/astro";
       .legend-note {
         margin: 0 0 8px;
         padding: 6px 9px;
-        border-left: 3px solid #c52b22;
-        color: #606b67;
+        border-left: 3px solid #17a6a0;
+        color: #5e6b83;
         background: #fff;
         font-size: 10px;
       }
@@ -361,7 +375,7 @@ import { RefreshCw } from "@lucide/astro";
       }
 
       function cellValue(sheet: Sheet, row: number, column: number) {
-        return sheet.rows[row]?.cells?.[column]?.value?.trim() ?? "";
+        return (sheet.rows[row]?.cells?.[column]?.value?.trim() ?? "").replaceAll("龙柏", "LB");
       }
 
       function appendLines(cell: HTMLTableCellElement, value: string) {
@@ -377,12 +391,34 @@ import { RefreshCw } from "@lucide/astro";
         const date = document.createElement("span");
         date.className = "date-line";
         date.textContent = lines[0];
+        date.style.cssText =
+          "display:inline-flex;align-items:center;justify-content:center;min-width:24px;min-height:22px;margin:0 0 4px;padding:2px 6px;border-radius:4px;color:#fff;background:#17a6a0;font-size:10px;font-weight:800;line-height:1.15";
         content.append(date);
 
         for (const line of lines.slice(1)) {
           const event = document.createElement("span");
-          event.className = "event-line";
+          const kind = /All day|Taiwan|Thailand|Travel/i.test(line)
+            ? "travel"
+            : /Sharing|分享/i.test(line)
+              ? "sharing"
+              : /1-1/i.test(line)
+                ? "private"
+                : /线上|online/i.test(line)
+                  ? "online"
+                  : /班课|class/i.test(line)
+                    ? "class"
+                    : "default";
+          const colors = {
+            travel: ["#3977c3", "#e9f1fc"],
+            sharing: ["#7358b8", "#f0edfb"],
+            private: ["#e6a321", "#fff6df"],
+            online: ["#168fb8", "#e5f5fb"],
+            class: ["#17a673", "#e5f7f0"],
+            default: ["#6f7e96", "#eef3fa"],
+          }[kind];
+          event.className = `event-line kind-${kind}`;
           event.textContent = line;
+          event.style.cssText = `display:block;margin-top:3px;padding:3px 4px;overflow-wrap:anywhere;border-left:3px solid ${colors[0]};border-radius:2px;color:#20304f;background:${colors[1]};font-size:9px;line-height:1.24`;
           content.append(event);
         }
         cell.append(content);
@@ -442,13 +478,18 @@ import { RefreshCw } from "@lucide/astro";
 
         const table = document.createElement("table");
         table.setAttribute("aria-label", `${sheet.title} calendar`);
+        table.style.cssText =
+          "width:100%;border-collapse:collapse;border-spacing:0;table-layout:fixed;background:#fff";
         const thead = document.createElement("thead");
         const headerRow = document.createElement("tr");
         for (let column = 0; column < 7; column += 1) {
           const th = document.createElement("th");
           th.scope = "col";
           th.textContent = cellValue(sheet, weekdayRow, column);
+          th.style.cssText =
+            "height:29px;padding:4px 3px;border:1px solid #8da3bf;color:#fff;background:#173d70;font-size:11px;font-weight:720;text-align:center";
           if (column === 0 || column === 6) th.classList.add("is-weekend");
+          if (column === 0 || column === 6) th.style.background = "#236b83";
           headerRow.append(th);
         }
         thead.append(headerRow);
@@ -458,8 +499,10 @@ import { RefreshCw } from "@lucide/astro";
           const tr = document.createElement("tr");
           for (let column = 0; column < 7; column += 1) {
             const td = document.createElement("td");
+            td.style.cssText = `height:${weekHeight}px;padding:0;overflow:hidden;border:1px solid #9eb0c8;vertical-align:top;background:${tbody.children.length % 2 === 0 ? "#fbfdff" : "#ffffff"};font-size:9px;line-height:1.24`;
             if (column === 0 || column === 6) td.classList.add("is-weekend");
-            appendLines(td, row.cells?.[column]?.value ?? "");
+            if (column === 0 || column === 6) td.style.background = "#eef7fa";
+            appendLines(td, (row.cells?.[column]?.value ?? "").replaceAll("龙柏", "LB"));
             tr.append(td);
           }
           tbody.append(tr);
