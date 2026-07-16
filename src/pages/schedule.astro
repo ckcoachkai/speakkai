@@ -10,175 +10,255 @@ import { RefreshCw } from "@lucide/astro";
     <meta name="robots" content="noindex" />
     <meta name="color-scheme" content="light" />
     <title>Schedule | SpeakKai</title>
-    <style>
+    <style is:global>
       :root {
         font-family:
           Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
           "Segoe UI", "Microsoft YaHei", sans-serif;
-        color: #1d2423;
-        background: #f4f6f5;
+        color: #18201e;
+        background: #edf1ef;
         font-synthesis: none;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
         min-width: 320px;
         min-height: 100vh;
         margin: 0;
-        background: #f4f6f5;
+        background: #edf1ef;
       }
 
-      button,
-      a {
-        font: inherit;
-      }
+      button, a { font: inherit; }
 
       .page-header {
         display: flex;
-        min-height: 72px;
+        min-height: 60px;
         align-items: center;
         justify-content: space-between;
-        gap: 24px;
-        padding: 14px clamp(18px, 4vw, 56px);
-        border-bottom: 1px solid #d9dfdc;
-        background: #ffffff;
+        gap: 20px;
+        padding: 9px clamp(14px, 2.5vw, 36px);
+        border-bottom: 1px solid #c8d0cd;
+        background: #fff;
       }
 
-      .identity {
-        min-width: 0;
-      }
+      .identity { min-width: 0; }
 
       .identity h1 {
         margin: 0;
-        font-size: 22px;
-        font-weight: 750;
+        font-size: 18px;
+        font-weight: 760;
         letter-spacing: 0;
       }
 
       .identity p {
-        margin: 4px 0 0;
-        color: #66716e;
-        font-size: 13px;
+        margin: 3px 0 0;
+        color: #69736f;
+        font-size: 11px;
       }
 
       .refresh-button {
         display: inline-grid;
-        width: 40px;
-        height: 40px;
-        flex: 0 0 40px;
+        width: 36px;
+        height: 36px;
+        flex: 0 0 36px;
         place-items: center;
-        border: 1px solid #cbd3d0;
+        border: 1px solid #bec8c4;
         border-radius: 6px;
         color: #26302e;
-        background: #ffffff;
+        background: #fff;
         cursor: pointer;
       }
 
-      .refresh-button:hover {
-        border-color: #8b9995;
-        background: #f7f9f8;
-      }
+      .refresh-button:hover { background: #f4f7f5; }
 
       .refresh-button:focus-visible,
       .sheet-tab:focus-visible {
-        outline: 3px solid #aad7d0;
+        outline: 3px solid #9bcfc6;
         outline-offset: 2px;
       }
 
-      main {
-        padding: 22px clamp(12px, 3vw, 40px) 40px;
+      main { padding: 12px clamp(10px, 1.7vw, 26px) 20px; }
+
+      .schedule-toolbar {
+        display: flex;
+        min-height: 40px;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 8px;
+      }
+
+      .month-heading {
+        margin: 0;
+        padding-bottom: 5px;
+        font-size: 20px;
+        font-weight: 780;
+        letter-spacing: 0;
       }
 
       .sheet-tabs {
         display: flex;
-        min-height: 42px;
-        gap: 4px;
+        gap: 2px;
         overflow-x: auto;
-        border-bottom: 1px solid #cbd3d0;
         scrollbar-width: thin;
       }
 
       .sheet-tab {
         position: relative;
         min-width: max-content;
-        padding: 10px 16px 11px;
-        border: 0;
-        color: #5c6865;
+        padding: 8px 12px 9px;
+        border: 1px solid #c4ccc9;
+        border-bottom: 0;
+        color: #5a6662;
         background: transparent;
         cursor: pointer;
       }
 
       .sheet-tab[aria-selected="true"] {
         color: #17201e;
-        font-weight: 700;
+        font-weight: 720;
+        background: #fff;
       }
 
       .sheet-tab[aria-selected="true"]::after {
         position: absolute;
-        right: 10px;
-        bottom: -1px;
-        left: 10px;
+        right: 8px;
+        bottom: 0;
+        left: 8px;
         height: 3px;
-        background: #c62a21;
+        background: #c52b22;
         content: "";
       }
 
+      .calendar-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(190px, 15vw);
+        gap: 10px;
+        align-items: stretch;
+      }
+
       .table-shell {
-        max-height: calc(100vh - 170px);
-        overflow: auto;
-        border: 1px solid #cbd3d0;
-        border-top: 0;
-        background: #ffffff;
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid #7f8b87;
+        background: #fff;
       }
 
       table {
-        width: max-content;
-        min-width: 100%;
+        width: 100%;
         border-collapse: separate;
         border-spacing: 0;
-        table-layout: auto;
+        table-layout: fixed;
       }
 
+      th, td {
+        border: 0;
+        box-shadow: inset -1px -1px 0 #75817d;
+      }
+
+      th:last-child, td:last-child { border-right: 0; }
+      tbody tr:last-child td { border-bottom: 0; }
+
+      th {
+        height: 29px;
+        padding: 4px 3px;
+        color: #fff;
+        background: #314943;
+        font-size: 11px;
+        font-weight: 720;
+        text-align: center;
+      }
+
+      th.is-weekend { background: #5b6763; }
+
       td {
-        min-width: 72px;
-        height: 32px;
-        padding: 6px 9px;
-        overflow-wrap: anywhere;
-        border-right: 1px solid #dfe4e2;
-        border-bottom: 1px solid #dfe4e2;
-        color: #202725;
-        background: #ffffff;
-        font-size: 14px;
-        line-height: 1.35;
+        height: var(--week-height, 110px);
+        padding: 0;
+        overflow: hidden;
+        vertical-align: top;
+        background: #fff;
+        font-size: 9px;
+        line-height: 1.24;
         letter-spacing: 0;
       }
 
-      td a {
-        color: inherit;
-        text-decoration-color: #40877e;
-        text-underline-offset: 2px;
+      .cell-content {
+        height: var(--week-height, 110px);
+        padding: 4px 5px 5px;
+        overflow: hidden;
       }
 
-      td.is-frozen-row,
-      td.is-frozen-column {
-        position: sticky;
+      td.is-weekend { background: #f5f7f6; }
+      td.is-empty { background: #f0f3f2; }
+
+      .date-line {
+        display: block;
+        min-height: 16px;
+        margin-bottom: 2px;
+        color: #b4241c;
+        font-size: 11px;
+        font-weight: 800;
+        line-height: 1.15;
       }
 
-      td.is-frozen-row {
-        z-index: 2;
-        box-shadow: 0 1px 0 #aeb9b6;
+      .event-line {
+        display: block;
+        margin-top: 1px;
+        overflow-wrap: anywhere;
       }
 
-      td.is-frozen-column {
-        z-index: 3;
-        box-shadow: 1px 0 0 #aeb9b6;
+      .event-line + .event-line {
+        padding-top: 2px;
+        border-top: 1px dotted #d6dcda;
       }
 
-      td.is-frozen-row.is-frozen-column {
-        z-index: 4;
+      .notes-rail {
+        min-width: 0;
+        border: 1px solid #a0aaa6;
+        background: #fff;
+      }
+
+      .notes-section + .notes-section { border-top: 1px solid #a0aaa6; }
+
+      .notes-heading {
+        margin: 0;
+        padding: 7px 9px;
+        color: #fff;
+        background: #314943;
+        font-size: 11px;
+        font-weight: 750;
+      }
+
+      .notes-list {
+        display: grid;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .note-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 6px;
+        padding: 6px 8px;
+        border-top: 1px solid #d8dddb;
+        font-size: 9px;
+        line-height: 1.3;
+      }
+
+      .note-item:first-child { border-top: 0; }
+      .note-label { color: #34413e; }
+      .note-value { color: #6a7471; font-weight: 700; }
+      .school-note { display: block; }
+
+      .legend-note {
+        margin: 0 0 8px;
+        padding: 6px 9px;
+        border-left: 3px solid #c52b22;
+        color: #606b67;
+        background: #fff;
+        font-size: 10px;
       }
 
       .status {
@@ -189,48 +269,30 @@ import { RefreshCw } from "@lucide/astro";
         text-align: center;
       }
 
-      .status strong {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 18px;
-      }
+      .status strong { display: block; margin-bottom: 8px; font-size: 18px; }
+      .status span { color: #68736f; font-size: 14px; }
+      [hidden] { display: none !important; }
 
-      .status span {
-        color: #68736f;
-        font-size: 14px;
-      }
-
-      [hidden] {
-        display: none !important;
+      @media (max-width: 900px) {
+        .calendar-layout { grid-template-columns: 1fr; }
+        .table-shell { overflow-x: auto; }
+        table { min-width: 720px; }
+        .notes-rail { display: grid; grid-template-columns: 1fr 1fr; }
+        .notes-section + .notes-section { border-top: 0; border-left: 1px solid #a0aaa6; }
       }
 
       @media (max-width: 640px) {
-        .page-header {
-          min-height: 64px;
-          padding: 10px 14px;
-        }
-
-        .identity h1 {
-          font-size: 18px;
-        }
-
-        main {
-          padding: 12px 0 0;
-        }
-
-        .sheet-tabs {
-          padding: 0 8px;
-        }
-
-        .table-shell {
-          max-height: calc(100vh - 130px);
-          border-right: 0;
-          border-left: 0;
-        }
-
-        td {
-          font-size: 13px;
-        }
+        .page-header { min-height: 56px; padding: 8px 10px; }
+        .identity h1 { font-size: 16px; }
+        main { padding: 8px 0 0; }
+        .schedule-toolbar { align-items: center; padding: 0 9px; }
+        .month-heading { font-size: 17px; }
+        .sheet-tab { padding-right: 9px; padding-left: 9px; }
+        .table-shell, .notes-rail { border-right: 0; border-left: 0; }
+        td { height: 108px; font-size: 9px; }
+        .notes-rail { grid-template-columns: 1fr; }
+        .notes-section + .notes-section { border-top: 1px solid #a0aaa6; border-left: 0; }
+        .legend-note { margin-right: 9px; margin-left: 9px; }
       }
     </style>
   </head>
@@ -241,62 +303,44 @@ import { RefreshCw } from "@lucide/astro";
         <p id="updated-time">正在载入 Loading</p>
       </div>
       <button class="refresh-button" type="button" title="Refresh" aria-label="Refresh schedule">
-        <RefreshCw size={19} stroke-width={2} aria-hidden="true" />
+        <RefreshCw size={17} stroke-width={2} aria-hidden="true" />
       </button>
     </header>
 
     <main>
       <div class="status" id="status" role="status">
-        <div>
-          <strong>正在载入</strong>
-          <span>Loading schedule</span>
-        </div>
+        <div><strong>正在载入</strong><span>Loading schedule</span></div>
       </div>
       <section id="schedule" hidden>
-        <div class="sheet-tabs" id="sheet-tabs" role="tablist" aria-label="Schedule sheets"></div>
-        <div class="table-shell" id="table-shell"></div>
+        <div class="schedule-toolbar">
+          <h2 class="month-heading" id="month-heading"></h2>
+          <div class="sheet-tabs" id="sheet-tabs" role="tablist" aria-label="Schedule months"></div>
+        </div>
+        <p class="legend-note" id="legend-note" hidden></p>
+        <div class="calendar-layout">
+          <div class="table-shell" id="table-shell"></div>
+          <aside class="notes-rail" id="notes-rail" aria-label="Schedule notes"></aside>
+        </div>
       </section>
     </main>
 
     <script>
-      type Cell = {
-        value?: string;
-        background?: string;
-        foreground?: string;
-        bold?: boolean;
-        italic?: boolean;
-        horizontalAlignment?: string;
-        verticalAlignment?: string;
-        wrapStrategy?: string;
-        link?: string;
-      };
-
+      type Cell = { value?: string };
       type Sheet = {
         id: number;
         title: string;
-        frozenRows: number;
-        frozenColumns: number;
-        columns: Array<{ hidden?: boolean; width?: number }>;
-        rows: Array<{ hidden?: boolean; height?: number; cells?: Cell[] }>;
-        merges: Array<{
-          startRow: number;
-          endRow: number;
-          startColumn: number;
-          endColumn: number;
-        }>;
+        columns: Array<{ hidden?: boolean }>;
+        rows: Array<{ hidden?: boolean; cells?: Cell[] }>;
       };
-
-      type ScheduleData = {
-        status: string;
-        updatedAt: string | null;
-        spreadsheetTitle?: string;
-        sheets: Sheet[];
-      };
+      type ScheduleData = { status: string; updatedAt: string | null; sheets: Sheet[] };
 
       const statusElement = document.querySelector<HTMLElement>("#status");
       const scheduleElement = document.querySelector<HTMLElement>("#schedule");
       const tabsElement = document.querySelector<HTMLElement>("#sheet-tabs");
       const tableShell = document.querySelector<HTMLElement>("#table-shell");
+      const notesRail = document.querySelector<HTMLElement>("#notes-rail");
+      const monthHeading = document.querySelector<HTMLElement>("#month-heading");
+      const legendNote = document.querySelector<HTMLElement>("#legend-note");
       const updatedTime = document.querySelector<HTMLElement>("#updated-time");
       const refreshButton = document.querySelector<HTMLButtonElement>(".refresh-button");
 
@@ -316,137 +360,134 @@ import { RefreshCw } from "@lucide/astro";
         scheduleElement.hidden = true;
       }
 
-      function clampedSize(value: number | undefined, min: number, max: number) {
-        if (!value || !Number.isFinite(value)) return undefined;
-        return Math.min(Math.max(value, min), max);
+      function cellValue(sheet: Sheet, row: number, column: number) {
+        return sheet.rows[row]?.cells?.[column]?.value?.trim() ?? "";
       }
 
-      function renderSheet(sheet: Sheet) {
-        if (!tableShell) return;
-        tableShell.replaceChildren();
-
-        const visibleRows = sheet.rows
-          .map((row, index) => ({ row, index }))
-          .filter(({ row }) => !row.hidden);
-        const visibleColumns = sheet.columns
-          .map((column, index) => ({ column, index }))
-          .filter(({ column }) => !column.hidden);
-
-        if (visibleRows.length === 0 || visibleColumns.length === 0) {
-          const empty = document.createElement("div");
-          empty.className = "status";
-          empty.textContent = "此工作表为空 This sheet is empty";
-          tableShell.append(empty);
+      function appendLines(cell: HTMLTableCellElement, value: string) {
+        const lines = value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+        const content = document.createElement("div");
+        content.className = "cell-content";
+        if (lines.length === 0) {
+          cell.classList.add("is-empty");
+          cell.append(content);
           return;
         }
 
-        const spanByCell = new Map<string, { rowSpan: number; columnSpan: number }>();
-        const coveredCells = new Set<string>();
-        for (const merge of sheet.merges ?? []) {
-          const mergeRows = visibleRows.filter(
-            ({ index }) => index >= merge.startRow && index < merge.endRow,
-          );
-          const mergeColumns = visibleColumns.filter(
-            ({ index }) => index >= merge.startColumn && index < merge.endColumn,
-          );
-          if (mergeRows.length === 0 || mergeColumns.length === 0) continue;
+        const date = document.createElement("span");
+        date.className = "date-line";
+        date.textContent = lines[0];
+        content.append(date);
 
-          const startKey = `${mergeRows[0].index}:${mergeColumns[0].index}`;
-          spanByCell.set(startKey, {
-            rowSpan: mergeRows.length,
-            columnSpan: mergeColumns.length,
-          });
-          for (const { index: rowIndex } of mergeRows) {
-            for (const { index: columnIndex } of mergeColumns) {
-              const key = `${rowIndex}:${columnIndex}`;
-              if (key !== startKey) coveredCells.add(key);
-            }
-          }
+        for (const line of lines.slice(1)) {
+          const event = document.createElement("span");
+          event.className = "event-line";
+          event.textContent = line;
+          content.append(event);
         }
+        cell.append(content);
+      }
+
+      function makeNotesSection(title: string, items: Array<{ label: string; value?: string }>, school = false) {
+        const section = document.createElement("section");
+        section.className = "notes-section";
+        const heading = document.createElement("h3");
+        heading.className = "notes-heading";
+        heading.textContent = title;
+        const list = document.createElement("ul");
+        list.className = "notes-list";
+
+        for (const item of items) {
+          const li = document.createElement("li");
+          li.className = `note-item${school ? " school-note" : ""}`;
+          const label = document.createElement("span");
+          label.className = "note-label";
+          label.textContent = item.label;
+          li.append(label);
+          if (item.value) {
+            const value = document.createElement("span");
+            value.className = "note-value";
+            value.textContent = item.value;
+            li.append(value);
+          }
+          list.append(li);
+        }
+        section.append(heading, list);
+        return section;
+      }
+
+      function renderSheet(sheet: Sheet) {
+        if (!tableShell || !notesRail || !monthHeading || !legendNote) return;
+        tableShell.replaceChildren();
+        notesRail.replaceChildren();
+        monthHeading.textContent = sheet.title;
+
+        const weekdayRow = sheet.rows.findIndex((_, index) =>
+          /^Sunday$/i.test(cellValue(sheet, index, 0)),
+        );
+        if (weekdayRow < 0) {
+          showStatus("无法显示此月份", "This month does not contain a calendar grid");
+          return;
+        }
+
+        const calendarRows = sheet.rows.slice(weekdayRow + 1).filter((row) =>
+          row.cells?.slice(0, 7).some((cell) => cell.value?.trim()),
+        );
+        const availableHeight = Math.max(420, window.innerHeight - 164);
+        const weekHeight = Math.min(
+          142,
+          Math.max(72, Math.floor(availableHeight / Math.max(calendarRows.length, 1))),
+        );
+        tableShell.style.setProperty("--week-height", `${weekHeight}px`);
 
         const table = document.createElement("table");
-        const colgroup = document.createElement("colgroup");
-        for (const { column } of visibleColumns) {
-          const col = document.createElement("col");
-          const width = clampedSize(column.width, 60, 320);
-          if (width) col.style.width = `${width}px`;
-          colgroup.append(col);
+        table.setAttribute("aria-label", `${sheet.title} calendar`);
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+        for (let column = 0; column < 7; column += 1) {
+          const th = document.createElement("th");
+          th.scope = "col";
+          th.textContent = cellValue(sheet, weekdayRow, column);
+          if (column === 0 || column === 6) th.classList.add("is-weekend");
+          headerRow.append(th);
         }
-        table.append(colgroup);
+        thead.append(headerRow);
 
         const tbody = document.createElement("tbody");
-        let frozenTop = 0;
-        const frozenLeftByColumn = new Map<number, number>();
-        let frozenLeft = 0;
-        for (const { column, index } of visibleColumns) {
-          if (index >= sheet.frozenColumns) continue;
-          frozenLeftByColumn.set(index, frozenLeft);
-          frozenLeft += clampedSize(column.width, 60, 320) ?? 100;
-        }
-
-        for (const { row, index: rowIndex } of visibleRows) {
+        for (const row of calendarRows) {
           const tr = document.createElement("tr");
-          const rowHeight = clampedSize(row.height, 24, 200);
-          if (rowHeight) tr.style.height = `${rowHeight}px`;
-
-          for (const { column, index: columnIndex } of visibleColumns) {
-            const key = `${rowIndex}:${columnIndex}`;
-            if (coveredCells.has(key)) continue;
-
-            const cell = row.cells?.[columnIndex] ?? {};
+          for (let column = 0; column < 7; column += 1) {
             const td = document.createElement("td");
-            const span = spanByCell.get(key);
-            if (span?.rowSpan && span.rowSpan > 1) td.rowSpan = span.rowSpan;
-            if (span?.columnSpan && span.columnSpan > 1) td.colSpan = span.columnSpan;
-            if (!span || span.columnSpan === 1) {
-              const cellWidth = clampedSize(column.width, 60, 320) ?? 100;
-              td.style.width = `${cellWidth}px`;
-              td.style.minWidth = `${cellWidth}px`;
-            }
-
-            if (cell.background) td.style.backgroundColor = cell.background;
-            if (cell.foreground) td.style.color = cell.foreground;
-            if (cell.bold) td.style.fontWeight = "700";
-            if (cell.italic) td.style.fontStyle = "italic";
-            if (["left", "center", "right"].includes(cell.horizontalAlignment ?? "")) {
-              td.style.textAlign = cell.horizontalAlignment!;
-            }
-            if (["top", "middle", "bottom"].includes(cell.verticalAlignment ?? "")) {
-              td.style.verticalAlign = cell.verticalAlignment!;
-            }
-            if (cell.wrapStrategy === "clip") td.style.whiteSpace = "nowrap";
-
-            if (rowIndex < sheet.frozenRows) {
-              td.classList.add("is-frozen-row");
-              td.style.top = `${frozenTop}px`;
-            }
-            const frozenColumnLeft = frozenLeftByColumn.get(columnIndex);
-            if (frozenColumnLeft !== undefined) {
-              td.classList.add("is-frozen-column");
-              td.style.left = `${frozenColumnLeft}px`;
-            }
-
-            if (cell.link) {
-              const link = document.createElement("a");
-              link.href = cell.link;
-              link.target = "_blank";
-              link.rel = "noopener noreferrer";
-              link.textContent = cell.value ?? "";
-              td.append(link);
-            } else {
-              td.textContent = cell.value ?? "";
-            }
+            if (column === 0 || column === 6) td.classList.add("is-weekend");
+            appendLines(td, row.cells?.[column]?.value ?? "");
             tr.append(td);
           }
           tbody.append(tr);
-          if (rowIndex < sheet.frozenRows) {
-            frozenTop += rowHeight ?? 32;
-          }
         }
-
-        table.append(tbody);
+        table.append(thead, tbody);
         tableShell.append(table);
-        tableShell.scrollTo({ top: 0, left: 0 });
+
+        const highlights: Array<{ label: string; value?: string }> = [];
+        const schoolNotes: Array<{ label: string }> = [];
+        for (let row = 1; row < sheet.rows.length; row += 1) {
+          const highlightLabel = cellValue(sheet, row, 8);
+          const highlightValue = cellValue(sheet, row, 9);
+          if (highlightLabel || highlightValue) {
+            highlights.push({ label: highlightLabel || highlightValue, value: highlightLabel ? highlightValue : "" });
+          }
+          const schoolNote = cellValue(sheet, row, 11);
+          if (schoolNote) schoolNotes.push({ label: schoolNote });
+        }
+        if (highlights.length) notesRail.append(makeNotesSection("Day highlights", highlights));
+        if (schoolNotes.length) notesRail.append(makeNotesSection("School calendar notes", schoolNotes, true));
+        notesRail.hidden = notesRail.childElementCount === 0;
+
+        const preCalendarNotes = sheet.rows
+          .slice(1, weekdayRow)
+          .map((row) => row.cells?.slice(0, 7).map((cell) => cell.value?.trim()).find(Boolean))
+          .filter((value): value is string => Boolean(value));
+        legendNote.textContent = preCalendarNotes.join(" · ");
+        legendNote.hidden = preCalendarNotes.length === 0;
       }
 
       function renderSchedule(data: ScheduleData) {
@@ -486,7 +527,11 @@ import { RefreshCw } from "@lucide/astro";
         renderSheet(data.sheets[0]);
       }
 
-      fetch("/data/schedule.json", { cache: "no-store" })
+      const scheduleDataUrl = ["localhost", "127.0.0.1"].includes(window.location.hostname)
+        ? "https://speakkai.com/data/schedule.json"
+        : "/data/schedule.json";
+
+      fetch(scheduleDataUrl, { cache: "no-store" })
         .then((response) => {
           if (!response.ok) throw new Error("Schedule data is unavailable.");
           return response.json() as Promise<ScheduleData>;
