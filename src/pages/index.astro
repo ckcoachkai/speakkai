@@ -7,15 +7,164 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="robots" content="noindex" />
-    <title>SpeakKai</title>
+    <meta name="description" content="Coach Kai's schedule and WeChat contact." />
+    <title>SpeakKai | Coach Kai</title>
     <style>
+      :root {
+        color-scheme: light;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background: #f5f7fa;
+        color: #071b3d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       html,
       body {
         min-height: 100%;
         margin: 0;
+      }
+
+      body {
+        background: #f5f7fa;
+      }
+
+      main {
+        min-height: 100vh;
+      }
+
+      .coach-banner {
+        width: 100%;
+        aspect-ratio: 4 / 1;
+        overflow: hidden;
+        background: #020b20;
+      }
+
+      .coach-banner picture,
+      .coach-banner img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .coach-banner img {
+        object-fit: contain;
+      }
+
+      .home-actions {
+        display: grid;
+        grid-template-columns: minmax(220px, 360px) minmax(220px, 360px);
+        align-items: center;
+        justify-content: center;
+        gap: 56px;
+        width: min(100% - 40px, 900px);
+        margin: 0 auto;
+        padding: 52px 0 64px;
+      }
+
+      .wechat-qr {
+        display: block;
+        width: 100%;
+        max-height: 420px;
+        object-fit: contain;
         background: #fff;
+        border: 1px solid #d9e0ea;
+        border-radius: 6px;
+      }
+
+      .schedule-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 72px;
+        padding: 18px 28px;
+        border: 2px solid #0b5fc7;
+        border-radius: 6px;
+        background: #0b5fc7;
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: center;
+        text-decoration: none;
+        transition:
+          background-color 160ms ease,
+          border-color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .schedule-link:hover {
+        border-color: #074a9f;
+        background: #074a9f;
+        transform: translateY(-2px);
+      }
+
+      .schedule-link:focus-visible {
+        outline: 3px solid #ffbf47;
+        outline-offset: 4px;
+      }
+
+      @media (max-width: 640px) {
+        .coach-banner {
+          aspect-ratio: 1683 / 935;
+        }
+
+        .home-actions {
+          grid-template-columns: minmax(0, 340px);
+          gap: 28px;
+          width: min(100% - 32px, 420px);
+          padding: 32px 0 44px;
+        }
+
+        .wechat-qr {
+          max-height: 390px;
+        }
+
+        .schedule-link {
+          min-height: 64px;
+          font-size: 1.25rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .schedule-link {
+          transition: none;
+        }
       }
     </style>
   </head>
-  <body></body>
+  <body>
+    <main>
+      <section class="coach-banner" aria-label="Coach Kai">
+        <picture>
+          <source
+            media="(max-width: 640px)"
+            srcset="/images/coach-kai-banner-mobile.png"
+          />
+          <img
+            src="/images/coach-kai-banner-desktop.png"
+            width="2508"
+            height="627"
+            alt="Coach Kai"
+          />
+        </picture>
+      </section>
+
+      <section class="home-actions" aria-label="Contact and schedule">
+        <img
+          class="wechat-qr"
+          src="/images/coach-kai-wechat-qr.png"
+          width="938"
+          height="1340"
+          alt="Coach Kai WeChat QR code"
+          loading="eager"
+        />
+        <a class="schedule-link" href="/schedule/">Schedule</a>
+      </section>
+    </main>
+  </body>
 </html>
