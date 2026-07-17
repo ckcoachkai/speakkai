@@ -113,6 +113,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .shortcut-pill kbd { display:inline-grid; place-items:center; min-width:24px; height:21px; padding:0 5px; border:1px solid var(--line-strong); border-bottom-width:2px; border-radius:5px; background:var(--panel-solid); color:var(--text); font-size:10px; }
 .wheel-stage { width:min(82vh,76vw,860px); height:min(82vh,76vw,860px); max-width:calc(100% - 24px); max-height:calc(100% - 150px); position:relative; display:grid; place-items:center; margin-top:30px; }
 .wheel-stage::before { content:""; position:absolute; inset:3.2%; border-radius:50%; background:#0a0b0f; box-shadow:0 30px 72px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.08),0 0 0 11px rgba(16,18,23,.84); }
+.wheel-stage.empty-wheel-stage::before { background:#e5e7eb; box-shadow:0 24px 54px rgba(71,85,105,.2),0 0 0 1px #cbd5e1,0 0 0 11px rgba(226,232,240,.9); }
+.empty-wheel-stage .pointer { background:#cbd5e1; filter:drop-shadow(-4px 5px 4px rgba(71,85,105,.2)); }
+.empty-wheel-stage .pointer::after { background:#f8fafc; }
 .wheel-svg { width:100%; height:100%; filter:drop-shadow(0 16px 24px rgba(0,0,0,.36)); overflow:visible; z-index:1; }
 .rotor { transform-origin:300px 300px; will-change:transform; }
 .pointer {
@@ -504,7 +507,8 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
     ['#111827', '#374151', '#6B7280', '#9CA3AF', '#D1D5DB'],
     ['#FF006E', '#8338EC', '#3A86FF', '#FFBE0B', '#FB5607']
   ];
-  var DEFAULT_NAMES = ['Ali', 'Beatriz', 'Charles', 'Diya', 'Eric', 'Fatima', 'Gabriel', 'Hanna'];
+  var DEFAULT_NAMES = ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'];
+  var LEGACY_DEFAULT_NAMES = ['Ali', 'Beatriz', 'Charles', 'Diya', 'Eric', 'Fatima', 'Gabriel', 'Hanna'];
   var DEFAULT_SETTINGS = { title:'Wheel of DOOM', palette:0, duration:6, sound:true, confetti:true, weighted:false, autoRemove:false, dark:false };
 
   function secureRandom() {
@@ -580,9 +584,14 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
   function Wheel(props) {
     var entries = props.entries;
     if (!entries.length) {
-      return h('div', { className:'empty-state' },
-        h('strong', null, 'The wheel needs contestants'),
-        h('div', null, 'Add at least one name to awaken the Wheel of DOOM.')
+      return h('div', { className:'wheel-stage empty-wheel-stage' },
+        h('svg', { className:'wheel-svg', viewBox:'0 0 600 600', role:'img', 'aria-label':'Empty wheel' },
+          h('circle', { cx:300, cy:300, r:290, fill:'#f8fafc', stroke:'#cbd5e1', strokeWidth:10 }),
+          h('circle', { cx:300, cy:300, r:274, fill:'#eef2f7', stroke:'#ffffff', strokeWidth:4 }),
+          h('circle', { cx:300, cy:300, r:64, fill:'#e2e8f0', stroke:'#cbd5e1', strokeWidth:5 }),
+          h('circle', { cx:300, cy:300, r:48, fill:'#f8fafc', stroke:'#dbe3ec', strokeWidth:1 })
+        ),
+        h('div', { className:'pointer' })
       );
     }
     var total = entries.reduce(function(s,e){return s + e.weight;}, 0);
@@ -724,6 +733,8 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
     React.Component.call(this);
     var storedSettings = loadJSON('spinselect.settings', null);
     var settings = Object.assign({}, DEFAULT_SETTINGS, storedSettings || {});
+    var storedEntries = loadJSON('spinselect.entries', null);
+    if (storedEntries === null || storedEntries === LEGACY_DEFAULT_NAMES.join('\n')) storedEntries = DEFAULT_NAMES.join('\n');
     if (!loadJSON('wheelofdoom.multicolorV2', false)) {
       if (!storedSettings || settings.title === 'Wheel of Names' || settings.title === 'Untitled wheel') settings.title = 'Wheel of DOOM';
       settings.palette = 0;
@@ -731,7 +742,7 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
       saveJSON('wheelofdoom.multicolorV2', true);
     }
     this.state = {
-      text: loadJSON('spinselect.entries', DEFAULT_NAMES.join('\n')),
+      text: storedEntries,
       settings: settings,
       history: loadJSON('spinselect.history', []),
       saved: loadJSON('spinselect.saved', []),
@@ -930,7 +941,7 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
   };
   App.prototype.newWheel = function() {
     if (this.state.spinning) return;
-    this.setState({text:'',history:[],rotation:secureRandom()*360,settings:Object.assign({},this.state.settings,{title:'Wheel of DOOM'}),sliceImages:{},backgroundImage:'',imageSpeaker:''});
+    this.setState({text:DEFAULT_NAMES.join('\n'),history:[],rotation:secureRandom()*360,settings:Object.assign({},this.state.settings,{title:'Wheel of DOOM'}),sliceImages:{},backgroundImage:'',imageSpeaker:'Player 1'});
     this.notify('New wheel created');
   };
   App.prototype.saveWheel = function() {
