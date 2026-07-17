@@ -426,7 +426,7 @@ import { RefreshCw } from "@lucide/astro";
         }
 
         if (name) {
-          return `${main} (${name}) 1-1${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}${locationSuffix}`;
+          return `${main} (${name})${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}${locationSuffix}`;
         }
 
         if (/\b1-1\b/i.test(main)) {
@@ -467,7 +467,9 @@ import { RefreshCw } from "@lucide/astro";
           const event = document.createElement("span");
           const formattedLine = formatEventLine(line);
           const kind = highlightKind(formattedLine) ||
-            (/\b1-1\b/i.test(formattedLine) ? "private" : "standard");
+            (/\b1-1\b/i.test(formattedLine) || /\((?!SH\))[^()]+\)\s+(?:线上|线下)(?:\s|$)/.test(formattedLine)
+              ? "private"
+              : "standard");
           const colors = {
             private: ["#f0a000", "#fff2cc"],
             standard: ["#087ee6", "#e7f2ff"],
