@@ -146,7 +146,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .panel-top { padding:18px 18px 14px; border-bottom:1px solid var(--line); background:linear-gradient(180deg,var(--panel-soft),transparent); }
 .panel-kicker { color:var(--accent); font-size:10px; font-weight:900; letter-spacing:1.8px; text-transform:uppercase; }
 .panel-title { margin-top:4px; font-size:18px; font-weight:900; }
-.tabs { height:48px; display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid var(--line); padding:0 10px; }
+.tabs { height:48px; display:grid; grid-template-columns:repeat(3,1fr); border-bottom:1px solid var(--line); padding:0 10px; }
 .tab { border:0; background:transparent; color:var(--muted); font-weight:800; position:relative; font-size:13px; }
 .tab.active { color:var(--text); }
 .tab.active::after { content:""; position:absolute; bottom:-1px; height:3px; left:18%; right:18%; background:linear-gradient(90deg,var(--accent),var(--accent-bright)); border-radius:3px 3px 0 0; }
@@ -160,6 +160,9 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .image-file-input { display:none; }
 .media-controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
 .media-control { display:grid; grid-template-columns:42px minmax(0,1fr); gap:8px; align-items:center; border:1px solid var(--line); border-radius:11px; padding:8px; background:var(--panel-soft); }
+.advanced-panel .media-controls { grid-template-columns:1fr; gap:10px; }
+.advanced-panel .media-control { grid-template-columns:56px minmax(0,1fr); padding:12px; }
+.advanced-panel .media-preview { width:56px; height:56px; }
 .media-control-main { display:grid; min-width:0; gap:6px; }
 .media-control-title { color:var(--text); font-size:10px; font-weight:900; }
 .media-preview { width:42px; height:42px; border:1px solid var(--line-strong); border-radius:9px; object-fit:cover; background:var(--panel-solid); }
@@ -991,7 +994,7 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
     var selectedSpeaker=entries.some(function(entry){return entry.name===st.imageSpeaker;}) ? st.imageSpeaker : (entries[0] ? entries[0].name : '');
     var selectedSpeakerImage=selectedSpeaker && st.sliceImages[selectedSpeaker];
     var appStyle=st.backgroundImage ? {
-      backgroundImage:'linear-gradient(rgba(5,8,14,.58),rgba(5,8,14,.58)),url("'+st.backgroundImage+'")',
+      backgroundImage:'url("'+st.backgroundImage+'")',
       backgroundSize:'cover',
       backgroundPosition:'center',
       backgroundAttachment:'fixed'
@@ -1041,12 +1044,23 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
           ),
           h('div',{className:'tabs'},
             h('button',{className:'tab '+(st.tab==='entries'?'active':''),onClick:function(){self.setState({tab:'entries'});}},'Contestants'),
-            h('button',{className:'tab '+(st.tab==='results'?'active':''),onClick:function(){self.setState({tab:'results'});}},'Doom Log ('+st.history.length+')')
+            h('button',{className:'tab '+(st.tab==='results'?'active':''),onClick:function(){self.setState({tab:'results'});}},'Doom Log ('+st.history.length+')'),
+            h('button',{className:'tab '+(st.tab==='advanced'?'active':''),onClick:function(){self.setState({tab:'advanced'});}},'Advanced')
           ),
           st.tab==='entries' ? h('div',{className:'panel-body'},
             h('div',{className:'input-header'},h('div',{className:'input-label'},'Contestant names'),h('span',{className:'count-badge'},entries.length+' READY')),
             h('textarea',{className:'entries-editor',value:st.text,onChange:function(e){self.setState({text:e.target.value});},spellCheck:false,placeholder:'One contestant per line\nAlice\nBob\nCharlie'}),
             h('div',{className:'editor-hint'},settings.weighted?'Weighted mode: use Name | 3':'One contestant per line. Duplicates are allowed.'),
+            h('div',{className:'button-grid'},
+              h('button',{className:'action-button',onClick:function(){self.shuffle();}},'Shuffle'),
+              h('button',{className:'action-button',onClick:function(){self.sort();}},'Sort'),
+              h('button',{className:'action-button',onClick:function(){self.duplicate();}},'Duplicate'),
+              h('button',{className:'action-button',onClick:function(){self.clear();}},'Clear')
+            ),
+            h('button',{className:'spin-button',onClick:function(){self.spin();},disabled:st.spinning||!entries.length},st.spinning?'Fate is deciding…':'Spin the Wheel of DOOM'),
+            h('div',{className:'panel-footnote'},'Secure random selection • Your list stays on this device')
+          ) : st.tab==='advanced' ? h('div',{className:'panel-body advanced-panel'},
+            h('div',{className:'input-header'},h('div',{className:'input-label'},'Images')),
             h('input',{type:'file',accept:'image/*',className:'image-file-input',ref:function(node){self.speakerImageInput=node;},onChange:function(e){var file=e.target.files&&e.target.files[0];self.uploadSpeakerImage(file,selectedSpeaker);e.target.value='';}}),
             h('input',{type:'file',accept:'image/*',className:'image-file-input',ref:function(node){self.backgroundImageInput=node;},onChange:function(e){var file=e.target.files&&e.target.files[0];self.uploadBackgroundImage(file);e.target.value='';}}),
             h('div',{className:'media-controls'},
@@ -1075,15 +1089,7 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
                   h('div',{className:'image-control-copy'},'Fills the page behind the wheel and controls')
                 )
               )
-            ),
-            h('div',{className:'button-grid'},
-              h('button',{className:'action-button',onClick:function(){self.shuffle();}},'Shuffle'),
-              h('button',{className:'action-button',onClick:function(){self.sort();}},'Sort'),
-              h('button',{className:'action-button',onClick:function(){self.duplicate();}},'Duplicate'),
-              h('button',{className:'action-button',onClick:function(){self.clear();}},'Clear')
-            ),
-            h('button',{className:'spin-button',onClick:function(){self.spin();},disabled:st.spinning||!entries.length},st.spinning?'Fate is deciding…':'Spin the Wheel of DOOM'),
-            h('div',{className:'panel-footnote'},'Secure random selection • Your list stays on this device')
+            )
           ) : h('div',{className:'panel-body'},
             st.history.length ? h('div',{className:'results-list'}, st.history.map(function(r,i){return h('div',{className:'result-row',key:r.time+'-'+i},h('div',{className:'result-number'},i+1),h('div',{className:'result-name'},r.name),h('div',{className:'result-time'},new Date(r.time).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})));})) : h('div',{className:'no-results'},'Spin the Wheel of DOOM to begin the selection log.'),
             st.history.length ? h('button',{className:'secondary',onClick:function(){self.setState({history:[]});}},'Clear results') : null
