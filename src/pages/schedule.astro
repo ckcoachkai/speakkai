@@ -133,7 +133,7 @@ import { RefreshCw } from "@lucide/astro";
 
       .calendar-layout {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(190px, 15vw);
+        grid-template-columns: minmax(0, 1fr) minmax(230px, 18vw);
         gap: 10px;
         align-items: stretch;
       }
@@ -277,6 +277,21 @@ import { RefreshCw } from "@lucide/astro";
       .note-item[class*="highlight-"] .note-value { color: #20304f; font-weight: 800; }
       .school-note { display: block; }
 
+      .contact-qr-wrap {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        background: #fff;
+      }
+
+      .contact-qr {
+        display: block;
+        width: 100%;
+        max-width: 260px;
+        height: auto;
+        object-fit: contain;
+      }
+
       .legend-note {
         margin: 0 0 8px;
         padding: 6px 9px;
@@ -304,6 +319,7 @@ import { RefreshCw } from "@lucide/astro";
         table { min-width: 720px; }
         .notes-rail { display: grid; grid-template-columns: 1fr 1fr; }
         .notes-section + .notes-section { border-top: 0; border-left: 1px solid #a0aaa6; }
+        .contact-section { grid-column: 1 / -1; border-top: 1px solid #a0aaa6 !important; border-left: 0 !important; }
       }
 
       @media (max-width: 640px) {
@@ -316,6 +332,7 @@ import { RefreshCw } from "@lucide/astro";
         .table-shell, .notes-rail { border-right: 0; border-left: 0; }
         .cell-content { min-height: 108px; }
         .notes-rail { grid-template-columns: 1fr; }
+        .contact-section { grid-column: auto; }
         .notes-section + .notes-section { border-top: 1px solid #a0aaa6; border-left: 0; }
         .legend-note { margin-right: 9px; margin-left: 9px; }
       }
@@ -514,6 +531,25 @@ import { RefreshCw } from "@lucide/astro";
         return section;
       }
 
+      function makeContactSection() {
+        const section = document.createElement("section");
+        section.className = "notes-section contact-section";
+        const heading = document.createElement("h3");
+        heading.className = "notes-heading";
+        heading.textContent = "Contact Coach Kai";
+        const imageWrap = document.createElement("div");
+        imageWrap.className = "contact-qr-wrap";
+        const qrImage = document.createElement("img");
+        qrImage.className = "contact-qr";
+        qrImage.src = "/images/coach-kai-wechat-qr.png";
+        qrImage.alt = "WeChat QR code for Coach Kai";
+        qrImage.loading = "lazy";
+        qrImage.decoding = "async";
+        imageWrap.append(qrImage);
+        section.append(heading, imageWrap);
+        return section;
+      }
+
       function renderSheet(sheet: Sheet) {
         if (!tableShell || !notesRail || !monthHeading || !legendNote) return;
         tableShell.replaceChildren();
@@ -591,6 +627,7 @@ import { RefreshCw } from "@lucide/astro";
         }
         if (highlights.length) notesRail.append(makeNotesSection("Day highlights", highlights));
         if (schoolNotes.length) notesRail.append(makeNotesSection("School calendar notes", schoolNotes, true));
+        notesRail.append(makeContactSection());
         notesRail.hidden = notesRail.childElementCount === 0;
 
         const preCalendarNotes = sheet.rows
