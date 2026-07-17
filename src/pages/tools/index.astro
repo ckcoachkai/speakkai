@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, Drama, Gamepad2, Timer } from "@lucide/astro";
+import { ArrowRight, Disc3, Drama, Gamepad2, Timer } from "@lucide/astro";
 import ContactStrip from "../../components/ContactStrip.astro";
 
 const pageTitle = "Tools | SpeakKai";
@@ -299,6 +299,31 @@ const pageTitle = "Tools | SpeakKai";
               automatic green, yellow, and red timing signals.
             </p>
             <a class="tool-link" href="/tools/toastmasters-timer/">
+              Open tool
+              <ArrowRight size={17} stroke-width={2.2} aria-hidden="true" />
+            </a>
+          </div>
+        </article>
+
+        <article class="tool-card">
+          <img
+            class="tool-preview"
+            src="/images/wheel-of-doom-preview.png"
+            width="1280"
+            height="720"
+            alt="Wheel of Doom random name picker preview"
+          />
+          <div class="tool-content">
+            <span class="tool-label">
+              <Disc3 size={16} stroke-width={2.2} aria-hidden="true" />
+              Classroom game
+            </span>
+            <h2>Wheel of Doom</h2>
+            <p>
+              Add contestants and spin a colorful wheel to randomly choose the
+              next participant.
+            </p>
+            <a class="tool-link" href="/tools/wheel-of-doom/">
               Open tool
               <ArrowRight size={17} stroke-width={2.2} aria-hidden="true" />
             </a>
