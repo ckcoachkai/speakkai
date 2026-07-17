@@ -68,6 +68,83 @@ const JUNIOR_DEFAULT = [
   { id: 'jr-7', title: 'Team B Closing Speech', speaker: 'Team B', duration: 60 },
 ];
 
+const LINCOLN_DOUGLAS_SEGMENTS = [
+  { id: 'ld-1', title: 'Affirmative Constructive', speaker: 'Affirmative', duration: 360 },
+  { id: 'ld-2', title: 'Cross-Examination', speaker: 'Negative questions Affirmative', duration: 180 },
+  { id: 'ld-3', title: 'Negative Constructive', speaker: 'Negative', duration: 420 },
+  { id: 'ld-4', title: 'Cross-Examination', speaker: 'Affirmative questions Negative', duration: 180 },
+  { id: 'ld-5', title: 'First Affirmative Rebuttal', speaker: 'Affirmative', duration: 240 },
+  { id: 'ld-6', title: 'Negative Rebuttal', speaker: 'Negative', duration: 360 },
+  { id: 'ld-7', title: 'Second Affirmative Rebuttal', speaker: 'Affirmative', duration: 180 },
+];
+
+const POLICY_SEGMENTS = [
+  { id: 'policy-1', title: 'First Affirmative Constructive', speaker: 'Affirmative', duration: 480 },
+  { id: 'policy-2', title: 'Cross-Examination', speaker: 'Negative questions Affirmative', duration: 180 },
+  { id: 'policy-3', title: 'First Negative Constructive', speaker: 'Negative', duration: 480 },
+  { id: 'policy-4', title: 'Cross-Examination', speaker: 'Affirmative questions Negative', duration: 180 },
+  { id: 'policy-5', title: 'Second Affirmative Constructive', speaker: 'Affirmative', duration: 480 },
+  { id: 'policy-6', title: 'Cross-Examination', speaker: 'Negative questions Affirmative', duration: 180 },
+  { id: 'policy-7', title: 'Second Negative Constructive', speaker: 'Negative', duration: 480 },
+  { id: 'policy-8', title: 'Cross-Examination', speaker: 'Affirmative questions Negative', duration: 180 },
+  { id: 'policy-9', title: 'First Negative Rebuttal', speaker: 'Negative', duration: 300 },
+  { id: 'policy-10', title: 'First Affirmative Rebuttal', speaker: 'Affirmative', duration: 300 },
+  { id: 'policy-11', title: 'Second Negative Rebuttal', speaker: 'Negative', duration: 300 },
+  { id: 'policy-12', title: 'Second Affirmative Rebuttal', speaker: 'Affirmative', duration: 300 },
+];
+
+const WORLD_SCHOOLS_SEGMENTS = [
+  { id: 'wsd-1', title: 'First Proposition Speech', speaker: 'Proposition', duration: 480, protectedStart: 60, protectedEnd: 60 },
+  { id: 'wsd-2', title: 'First Opposition Speech', speaker: 'Opposition', duration: 480, protectedStart: 60, protectedEnd: 60 },
+  { id: 'wsd-3', title: 'Second Proposition Speech', speaker: 'Proposition', duration: 480, protectedStart: 60, protectedEnd: 60 },
+  { id: 'wsd-4', title: 'Second Opposition Speech', speaker: 'Opposition', duration: 480, protectedStart: 60, protectedEnd: 60 },
+  { id: 'wsd-5', title: 'Third Proposition Speech', speaker: 'Proposition', duration: 480, protectedStart: 60, protectedEnd: 60 },
+  { id: 'wsd-6', title: 'Third Opposition Speech', speaker: 'Opposition', duration: 480, protectedStart: 60, protectedEnd: 60 },
+  { id: 'wsd-7', title: 'Opposition Reply Speech', speaker: 'Opposition', duration: 240, protectedStart: 0, protectedEnd: 0 },
+  { id: 'wsd-8', title: 'Proposition Reply Speech', speaker: 'Proposition', duration: 240, protectedStart: 0, protectedEnd: 0 },
+];
+
+const CONGRESSIONAL_SEGMENTS = [
+  { id: 'congress-1', title: 'Authorship or Sponsorship Speech', speaker: 'Presiding Officer recognizes speaker', duration: 180 },
+  { id: 'congress-2', title: 'Questioning Period', speaker: 'Chamber', duration: 120 },
+  { id: 'congress-3', title: 'First Negative Speech', speaker: 'Presiding Officer recognizes speaker', duration: 180 },
+  { id: 'congress-4', title: 'Questioning Period', speaker: 'Chamber', duration: 60 },
+  { id: 'congress-5', title: 'Affirmative Speech', speaker: 'Presiding Officer recognizes speaker', duration: 180 },
+  { id: 'congress-6', title: 'Questioning Period', speaker: 'Chamber', duration: 60 },
+  { id: 'congress-7', title: 'Negative Speech', speaker: 'Presiding Officer recognizes speaker', duration: 180 },
+  { id: 'congress-8', title: 'Questioning Period', speaker: 'Chamber', duration: 60 },
+];
+
+const MODEL_UN_DEFAULT = [
+  { id: 'mun-1', title: 'Opening Speech', speaker: 'Delegate', duration: 90, notes: 'Set the conference speaking time below if different.' },
+  { id: 'mun-2', title: 'General Speakers List', speaker: 'Delegate', duration: 90 },
+  { id: 'mun-3', title: 'Moderated Caucus Speech', speaker: 'Delegate', duration: 60 },
+  { id: 'mun-4', title: 'Unmoderated Caucus', speaker: 'Committee', duration: 600 },
+  { id: 'mun-5', title: 'Draft Resolution Presentation', speaker: 'Sponsors', duration: 180 },
+  { id: 'mun-6', title: 'Questions and Answers', speaker: 'Committee', duration: 300 },
+  { id: 'mun-7', title: 'Closing Speech', speaker: 'Delegate', duration: 60 },
+];
+
+const DEBATE_LABELS = {
+  pf: 'Public Forum',
+  bp: 'British Parliamentary',
+  wsd: 'World Schools Debate',
+  policy: 'Policy Debate',
+  junior: 'Junior Debate',
+  ld: 'Lincoln-Douglas Debate',
+  congress: 'Congressional Debate',
+  mun: 'Model United Nations',
+  custom: 'Custom Debate Format',
+};
+
+const STATIC_DEBATE_SEGMENTS = {
+  pf: PF_SEGMENTS,
+  wsd: WORLD_SCHOOLS_SEGMENTS,
+  policy: POLICY_SEGMENTS,
+  ld: LINCOLN_DOUGLAS_SEGMENTS,
+  congress: CONGRESSIONAL_SEGMENTS,
+};
+
 const EMPTY_CUSTOM_STAGE = {
   title: 'New Stage', speaker: 'Speaker or Team', duration: 180, warnings: [], bell: 'standard', protectedStart: 0, protectedEnd: 0, notes: '',
 };
@@ -191,6 +268,7 @@ function App() {
   const [customSpeechDraft, setCustomSpeechDraft] = usePersistentState('sdt-custom-speech-draft', DEFAULT_CUSTOM_SPEECH);
   const [customSpeechPresets, setCustomSpeechPresets] = usePersistentState('sdt-custom-speech-presets', []);
   const [juniorSegments, setJuniorSegments] = usePersistentState('sdt-junior-format', JUNIOR_DEFAULT);
+  const [munSegments, setMunSegments] = usePersistentState('sdt-mun-format', MODEL_UN_DEFAULT);
   const [bpSegments, setBpSegments] = usePersistentState('sdt-bp-format', BP_SEGMENTS);
   const [customSegments, setCustomSegments] = usePersistentState('sdt-custom-debate-draft', [{ ...EMPTY_CUSTOM_STAGE, id: makeId('custom') }]);
   const [customFormatName, setCustomFormatName] = usePersistentState('sdt-custom-debate-name', 'My Debate Format');
@@ -206,7 +284,18 @@ function App() {
   const [validationError, setValidationError] = useState('');
   const [pulse, setPulse] = useState('');
   const [editorOpen, setEditorOpen] = useState(false);
-  const [prepRemaining, setPrepRemaining] = useState({ speechPrep: extempPrepSeconds, bpMotion: bpMotionSeconds, pfA: 180, pfB: 180, jrA: 120, jrB: 120 });
+  const [prepRemaining, setPrepRemaining] = useState({
+    speechPrep: extempPrepSeconds,
+    bpMotion: bpMotionSeconds,
+    pfA: 180,
+    pfB: 180,
+    jrA: 120,
+    jrB: 120,
+    ldAff: 240,
+    ldNeg: 240,
+    policyAff: 480,
+    policyNeg: 480,
+  });
 
   const frameRef = useRef(null);
   const startedAtRef = useRef(null);
@@ -226,13 +315,13 @@ function App() {
   const graceSeconds = savedSpeech ? savedSpeech.grace : graceChoice === 'custom' ? customGrace : Number(graceChoice);
 
   const selectedSavedFormat = savedFormats.find((item) => `saved:${item.id}` === debateFormat);
-  const debateSegments = debateFormat === 'pf'
-    ? PF_SEGMENTS
-    : debateFormat === 'bp'
-      ? bpSegments
-      : debateFormat === 'junior'
-        ? juniorSegments
-        : selectedSavedFormat?.segments || customSegments;
+  const debateSegments = debateFormat === 'bp'
+    ? bpSegments
+    : debateFormat === 'junior'
+      ? juniorSegments
+      : debateFormat === 'mun'
+        ? munSegments
+        : STATIC_DEBATE_SEGMENTS[debateFormat] || selectedSavedFormat?.segments || customSegments;
   const segment = debateSegments[clamp(currentStage, 0, Math.max(0, debateSegments.length - 1))] || EMPTY_CUSTOM_STAGE;
   const officialLimit = mode === 'speech' ? speechTiming?.bell || 300 : segment.duration || 180;
   const overtime = Math.max(0, elapsed - officialLimit);
@@ -269,23 +358,25 @@ function App() {
         ? 'green'
         : 'neutral';
 
-  const bpStatus = mode === 'debate' && debateFormat === 'bp'
+  const poiFormat = mode === 'debate' && (debateFormat === 'bp' || debateFormat === 'wsd');
+  const hasProtectedTime = poiFormat && ((segment.protectedStart ?? 0) > 0 || (segment.protectedEnd ?? 0) > 0);
+  const poiStatus = hasProtectedTime
     ? overtime > 0
       ? 'Overtime'
-      : elapsed < (segment.protectedStart || 60)
+      : elapsed < (segment.protectedStart ?? 0)
         ? 'Protected Time'
-        : elapsed >= officialLimit - (segment.protectedEnd || 60)
+        : elapsed >= officialLimit - (segment.protectedEnd ?? 0)
           ? 'Final Protected Time'
           : 'POIs Open'
     : '';
 
-  const visualStage = mode === 'speech' ? speechStage : overtime > 0 ? 'red' : debateFormat === 'bp' && bpStatus === 'POIs Open' ? 'green' : 'neutral';
+  const visualStage = mode === 'speech' ? speechStage : overtime > 0 ? 'red' : poiStatus === 'POIs Open' ? 'green' : 'neutral';
 
   const timerStatus = mode === 'speech'
     ? overtime > 0
       ? graceSeconds > 0 && overtime <= graceSeconds ? `Grace period - ${formatClock(graceSeconds - overtime)} remaining` : 'Overtime'
       : speechStage === 'neutral' ? 'Official timing' : `${speechStage.charAt(0).toUpperCase()}${speechStage.slice(1)} warning`
-    : bpStatus || (overtime > 0 ? 'Overtime' : 'Round timing');
+    : poiStatus || (overtime > 0 ? 'Overtime' : 'Round timing');
 
   useEffect(() => {
     reducedMotionRef.current = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || false;
@@ -404,9 +495,9 @@ function App() {
       cue('yellow', speechTiming.yellow, 'soft', 'yellow');
       cue('official', speechTiming.bell, 'standard', 'red');
       if (graceSeconds > 0) cue('grace', speechTiming.bell + graceSeconds, 'strong', 'red');
-    } else if (debateFormat === 'bp') {
-      cue('poi-open', segment.protectedStart || 60, 'soft', 'green');
-      cue('poi-close', officialLimit - (segment.protectedEnd || 60), 'soft', 'yellow');
+    } else if (hasProtectedTime) {
+      cue('poi-open', segment.protectedStart ?? 0, 'soft', 'green');
+      cue('poi-close', officialLimit - (segment.protectedEnd ?? 0), 'soft', 'yellow');
       cue('official', officialLimit, 'strong', 'red');
     } else {
       (segment.warnings || []).forEach((warning, index) => cue(`warning-${index}`, warning, 'soft', 'yellow'));
@@ -417,7 +508,7 @@ function App() {
       completionRef.current = true;
       window.setTimeout(() => moveStage(1, autoStart), 350);
     }
-  }, [activeClock, autoAdvance, autoStart, debateFormat, elapsed, firePulse, graceSeconds, mode, moveStage, muted, officialLimit, runState, segment, speechTiming]);
+  }, [activeClock, autoAdvance, autoStart, debateFormat, elapsed, firePulse, graceSeconds, hasProtectedTime, mode, moveStage, muted, officialLimit, runState, segment, speechTiming]);
 
   const switchMode = (nextMode) => {
     setMode(nextMode);
@@ -456,6 +547,7 @@ function App() {
 
   const updateEditorSegments = (updater) => {
     if (debateFormat === 'junior') setJuniorSegments(updater);
+    else if (debateFormat === 'mun') setMunSegments(updater);
     else setCustomSegments(updater);
   };
 
@@ -478,7 +570,7 @@ function App() {
     dragIndexRef.current = null;
   };
 
-  const saveDebateFormat = (segments = debateFormat === 'junior' ? juniorSegments : customSegments, name = customFormatName) => {
+  const saveDebateFormat = (segments = debateFormat === 'junior' ? juniorSegments : debateFormat === 'mun' ? munSegments : customSegments, name = customFormatName) => {
     const saved = { id: makeId('debate'), name: name.trim() || 'Custom Debate Format', segments: segments.map((item) => ({ ...item, id: makeId('stage') })) };
     setSavedFormats((current) => [...current, saved]);
     setDebateFormat(`saved:${saved.id}`);
@@ -525,8 +617,8 @@ function App() {
   }, [bpMotionSeconds]);
 
   const isMainRunning = runState === 'running' && activeClock === 'main';
-  const editorSegments = debateFormat === 'junior' ? juniorSegments : customSegments;
-  const editorAvailable = debateFormat === 'junior' || debateFormat === 'custom';
+  const editorSegments = debateFormat === 'junior' ? juniorSegments : debateFormat === 'mun' ? munSegments : customSegments;
+  const editorAvailable = debateFormat === 'junior' || debateFormat === 'mun' || debateFormat === 'custom';
 
   return (
     <div className={`app mode-${mode} stage-${visualStage} ${pulse ? `pulse-${pulse}` : ''}`}>
@@ -562,7 +654,7 @@ function App() {
           <div className="event-toolbar">
             <div>
               <span className="eyebrow">{mode === 'speech' ? 'Speech event' : 'Debate format'}</span>
-              <strong>{mode === 'speech' ? speechTiming?.label : debateFormat === 'pf' ? 'Public Forum' : debateFormat === 'bp' ? 'British Parliamentary' : debateFormat === 'junior' ? 'Junior Debate' : selectedSavedFormat?.name || 'Custom Debate Format'}</strong>
+              <strong>{mode === 'speech' ? speechTiming?.label : DEBATE_LABELS[debateFormat] || selectedSavedFormat?.name || 'Custom Debate Format'}</strong>
             </div>
             {mode === 'speech' ? (
               <select value={speechPreset} onChange={(event) => switchSpeech(event.target.value)} aria-label="Speech event">
@@ -580,11 +672,24 @@ function App() {
               </select>
             ) : (
               <select value={debateFormat} onChange={(event) => switchDebate(event.target.value)} aria-label="Debate format">
-                <option value="pf">Public Forum</option>
-                <option value="bp">British Parliamentary</option>
-                <option value="junior">Junior Debate</option>
-                <option value="custom">Custom Debate Format</option>
-                {savedFormats.map((format) => <option key={format.id} value={`saved:${format.id}`}>{format.name}</option>)}
+                <optgroup label="Team Debate">
+                  <option value="pf">Public Forum</option>
+                  <option value="bp">British Parliamentary</option>
+                  <option value="wsd">World Schools Debate</option>
+                  <option value="policy">Policy Debate</option>
+                  <option value="junior">Junior Debate</option>
+                </optgroup>
+                <optgroup label="Individual and Chamber Debate">
+                  <option value="ld">Lincoln-Douglas Debate</option>
+                  <option value="congress">Congressional Debate</option>
+                </optgroup>
+                <optgroup label="Model United Nations">
+                  <option value="mun">Model UN Committee Session</option>
+                </optgroup>
+                <optgroup label="Custom Formats">
+                  <option value="custom">Custom Debate Format</option>
+                  {savedFormats.map((format) => <option key={format.id} value={`saved:${format.id}`}>{format.name}</option>)}
+                </optgroup>
               </select>
             )}
           </div>
@@ -666,6 +771,20 @@ function App() {
             </div>
           )}
 
+          {mode === 'debate' && debateFormat === 'ld' && (
+            <div className="prep-grid">
+              <PrepBank label="Affirmative Prep" clockKey="ldAff" remaining={prepRemaining.ldAff} total={240} activeClock={activeClock} runState={runState} onToggle={startPrep} onReset={resetPrep} />
+              <PrepBank label="Negative Prep" clockKey="ldNeg" remaining={prepRemaining.ldNeg} total={240} activeClock={activeClock} runState={runState} onToggle={startPrep} onReset={resetPrep} />
+            </div>
+          )}
+
+          {mode === 'debate' && debateFormat === 'policy' && (
+            <div className="prep-grid">
+              <PrepBank label="Affirmative Prep" clockKey="policyAff" remaining={prepRemaining.policyAff} total={480} activeClock={activeClock} runState={runState} onToggle={startPrep} onReset={resetPrep} />
+              <PrepBank label="Negative Prep" clockKey="policyNeg" remaining={prepRemaining.policyNeg} total={480} activeClock={activeClock} runState={runState} onToggle={startPrep} onReset={resetPrep} />
+            </div>
+          )}
+
           {mode === 'debate' && debateFormat === 'bp' && (
             <PrepBank label="Motion Preparation" clockKey="bpMotion" remaining={prepRemaining.bpMotion} total={bpMotionSeconds} activeClock={activeClock} runState={runState} onToggle={startPrep} onReset={resetPrep} />
           )}
@@ -732,6 +851,9 @@ function App() {
           )}
 
           {mode === 'debate' && debateFormat === 'junior' && <p className="format-note">Junior debate rules vary. You can edit this format below.</p>}
+          {mode === 'debate' && debateFormat === 'mun' && <p className="format-note">Model UN speaking and caucus times vary by conference. Edit this committee sequence below.</p>}
+          {mode === 'debate' && debateFormat === 'wsd' && <p className="format-note">Substantive speeches include protected time during the first and final minute. Reply speeches do not accept POIs.</p>}
+          {mode === 'debate' && debateFormat === 'congress' && <p className="format-note">This preset provides a repeatable speech and questioning cycle. Restart or save a custom sequence for additional legislation.</p>}
 
           {mode === 'debate' && debateFormat === 'bp' && (
             <section className="control-section stage-editor-section">
@@ -761,7 +883,7 @@ function App() {
 
           {mode === 'debate' && editorAvailable && (
             <section className="control-section stage-editor-section">
-              <button className="editor-toggle" onClick={() => setEditorOpen((current) => !current)} aria-expanded={editorOpen}><span><Settings2 size={17} /> Edit {debateFormat === 'junior' ? 'Junior Format' : 'Custom Format'}</span><ChevronRight className={editorOpen ? 'rotated' : ''} size={18} /></button>
+              <button className="editor-toggle" onClick={() => setEditorOpen((current) => !current)} aria-expanded={editorOpen}><span><Settings2 size={17} /> Edit {debateFormat === 'junior' ? 'Junior Format' : debateFormat === 'mun' ? 'Model UN Format' : 'Custom Format'}</span><ChevronRight className={editorOpen ? 'rotated' : ''} size={18} /></button>
               {editorOpen && (
                 <div className="stage-editor">
                   {debateFormat === 'custom' && <label className="field-label">Format name<input value={customFormatName} onChange={(event) => setCustomFormatName(event.target.value)} /></label>}
@@ -773,7 +895,7 @@ function App() {
                           <label>Stage name<input value={item.title} onChange={(event) => updateStage(index, { title: event.target.value })} /></label>
                           <label>Speaker or team<input value={item.speaker} onChange={(event) => updateStage(index, { speaker: event.target.value })} /></label>
                           <label>Duration (seconds)<input type="number" min="1" value={item.duration} onChange={(event) => updateStage(index, { duration: Math.max(1, Number(event.target.value) || 1) })} /></label>
-                          {debateFormat === 'custom' && <>
+                          {(debateFormat === 'custom' || debateFormat === 'mun') && <>
                             <label>Warnings (seconds)<input value={(item.warnings || []).join(', ')} onChange={(event) => updateStage(index, { warnings: event.target.value.split(',').map(Number).filter((value) => Number.isFinite(value) && value >= 0) })} /></label>
                             <label>Bell<select value={item.bell || 'standard'} onChange={(event) => updateStage(index, { bell: event.target.value })}><option value="standard">Standard</option><option value="strong">Strong</option></select></label>
                             <label>Protected start (sec)<input type="number" min="0" value={item.protectedStart || 0} onChange={(event) => updateStage(index, { protectedStart: Math.max(0, Number(event.target.value) || 0) })} /></label>
@@ -786,8 +908,8 @@ function App() {
                     ))}
                   </div>
                   <button className="secondary-wide" onClick={addStage}><Plus size={17} /> Add Stage</button>
-                  <button className="save-button" onClick={() => saveDebateFormat(editorSegments, debateFormat === 'junior' ? 'Junior Debate Custom' : customFormatName)}><Save size={17} /> Save as Custom Preset</button>
-                  <button className="text-command" onClick={() => debateFormat === 'junior' ? setJuniorSegments(JUNIOR_DEFAULT) : setCustomSegments([{ ...EMPTY_CUSTOM_STAGE, id: makeId('custom') }])}><RotateCcw size={15} /> Restore default format</button>
+                  <button className="save-button" onClick={() => saveDebateFormat(editorSegments, debateFormat === 'junior' ? 'Junior Debate Custom' : debateFormat === 'mun' ? 'Model UN Custom' : customFormatName)}><Save size={17} /> Save as Custom Preset</button>
+                  <button className="text-command" onClick={() => debateFormat === 'junior' ? setJuniorSegments(JUNIOR_DEFAULT) : debateFormat === 'mun' ? setMunSegments(MODEL_UN_DEFAULT) : setCustomSegments([{ ...EMPTY_CUSTOM_STAGE, id: makeId('custom') }])}><RotateCcw size={15} /> Restore default format</button>
                 </div>
               )}
             </section>
