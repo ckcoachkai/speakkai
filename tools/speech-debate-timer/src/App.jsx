@@ -24,8 +24,8 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const SPEECH_PRESETS = {
-  oo5: { group: 'Original Oratory', label: 'Original Oratory - 5 Minutes', note: 'Short-Form Practice', duration: 300, green: 240, yellow: 270, red: 300, bell: 300 },
-  oo10: { group: 'Original Oratory', label: 'Original Oratory - 10 Minutes', duration: 600, green: 540, yellow: 570, red: 600, bell: 600 },
+  oo5: { group: 'Original Oratory', label: 'MS', duration: 300, green: 240, yellow: 270, red: 300, bell: 300 },
+  oo10: { group: 'Original Oratory', label: 'HS', duration: 600, green: 540, yellow: 570, red: 600, bell: 600 },
   extemp7: { group: 'Extemporaneous Speaking', label: 'Extemporaneous Speaking - 7 Minutes', duration: 420, green: 360, yellow: 390, red: 420, bell: 420, extemp: true },
   expo3: { group: 'Expository Speaking', label: 'Expository Speaking - 3 Minutes', duration: 180, green: 120, yellow: 150, red: 180, bell: 180 },
   expo5: { group: 'Expository Speaking', label: 'Expository Speaking - 5 Minutes', duration: 300, green: 240, yellow: 270, red: 300, bell: 300 },

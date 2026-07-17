@@ -1,0 +1,598 @@
+---
+import SiteFooter from "../components/SiteFooter.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex" />
+    <meta
+      name="description"
+      content="Meet Kai Liu, a TEDx speaker, communication coach, speech and debate trainer, and award-winning Toastmasters leader."
+    />
+    <title>About Coach Kai | SpeakKai</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background: #f5f7fa;
+        color: #071b3d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+        margin: 0;
+      }
+
+      body {
+        background: #f5f7fa;
+      }
+
+      main {
+        min-height: 100vh;
+      }
+
+      .coach-banner {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 1;
+        overflow: hidden;
+        background: #020b20;
+      }
+
+      .coach-banner picture,
+      .coach-banner img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .coach-banner img {
+        object-fit: contain;
+      }
+
+      .site-header {
+        display: flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #d5deed;
+        background: #fff;
+      }
+
+      .site-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(22px, 4vw, 52px);
+      }
+
+      .site-nav a {
+        padding: 14px 4px 12px;
+        border-bottom: 2px solid transparent;
+        color: #294568;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1;
+        text-decoration: none;
+      }
+
+      .site-nav a:hover,
+      .site-nav a[aria-current="page"] {
+        border-bottom-color: #19a9c5;
+        color: #0a5f91;
+      }
+
+      .site-nav a:focus-visible {
+        border-radius: 3px;
+        outline: 3px solid #80d6d1;
+        outline-offset: 2px;
+      }
+
+      .about-section,
+      .leadership-section,
+      .coaching-section {
+        scroll-margin-top: 56px;
+      }
+
+      .about-section {
+        padding: clamp(58px, 8vw, 96px) 0;
+        background: #fff;
+      }
+
+      .about-inner,
+      .section-inner {
+        width: min(100% - 40px, 1120px);
+        margin: 0 auto;
+      }
+
+      .about-intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+        align-items: start;
+        gap: clamp(42px, 7vw, 88px);
+      }
+
+      .section-kicker {
+        margin: 0 0 10px;
+        color: #087c98;
+        font-size: 12px;
+        font-weight: 900;
+        line-height: 1.2;
+        text-transform: uppercase;
+      }
+
+      .about-copy h1,
+      .section-heading h2 {
+        margin: 0;
+        color: #10284d;
+        letter-spacing: 0;
+      }
+
+      .about-copy h1 {
+        font-size: clamp(42px, 7vw, 72px);
+        line-height: 0.98;
+      }
+
+      .about-role {
+        margin: 18px 0 0;
+        color: #0a5f91;
+        font-size: clamp(18px, 2.2vw, 25px);
+        font-weight: 800;
+        line-height: 1.35;
+      }
+
+      .about-story {
+        max-width: 760px;
+        margin: 26px 0 0;
+        color: #42546b;
+        font-size: 17px;
+        line-height: 1.75;
+      }
+
+      .about-metrics {
+        display: grid;
+        gap: 0;
+        margin: 2px 0 0;
+        border-top: 1px solid #cbd7e7;
+      }
+
+      .about-metrics div {
+        display: grid;
+        gap: 4px;
+        padding: 19px 0;
+        border-bottom: 1px solid #cbd7e7;
+      }
+
+      .about-metrics dt {
+        color: #0b5fc7;
+        font-size: 30px;
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .about-metrics dd {
+        margin: 0;
+        color: #52647b;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      .career-path {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-top: clamp(48px, 7vw, 76px);
+        border-top: 1px solid #b9c9dd;
+        border-bottom: 1px solid #b9c9dd;
+      }
+
+      .career-step {
+        padding: 24px 22px 26px 0;
+      }
+
+      .career-step + .career-step {
+        padding-left: 22px;
+        border-left: 1px solid #b9c9dd;
+      }
+
+      .career-year {
+        display: block;
+        margin-bottom: 8px;
+        color: #087c98;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .career-step strong {
+        display: block;
+        color: #18345d;
+        font-size: 17px;
+        line-height: 1.35;
+      }
+
+      .career-step p {
+        margin: 8px 0 0;
+        color: #607087;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .leadership-section {
+        padding: clamp(58px, 8vw, 90px) 0;
+        border-top: 1px solid #d3deec;
+        border-bottom: 1px solid #d3deec;
+        background: #eef4fb;
+      }
+
+      .section-heading {
+        max-width: 760px;
+      }
+
+      .section-heading h2 {
+        font-size: clamp(32px, 4.5vw, 48px);
+        line-height: 1.08;
+      }
+
+      .section-heading > p:last-child {
+        margin: 16px 0 0;
+        color: #586a81;
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      .leadership-layout {
+        display: grid;
+        grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+        gap: clamp(44px, 7vw, 82px);
+        margin-top: 42px;
+      }
+
+      .credential-list,
+      .outcome-list {
+        display: grid;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid #b8c8dc;
+      }
+
+      .credential-list li,
+      .outcome-list li {
+        padding: 17px 0;
+        border-bottom: 1px solid #b8c8dc;
+        color: #324a69;
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      .credential-list strong,
+      .outcome-list strong {
+        color: #102c54;
+      }
+
+      .achievement-list {
+        display: grid;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid #9fb3cb;
+      }
+
+      .achievement-list li {
+        display: grid;
+        grid-template-columns: 72px minmax(0, 1fr);
+        gap: 20px;
+        padding: 15px 0;
+        border-bottom: 1px solid #b8c8dc;
+      }
+
+      .achievement-list time {
+        color: #0b68bb;
+        font-size: 17px;
+        font-weight: 900;
+      }
+
+      .achievement-list span {
+        color: #324a69;
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      .coaching-section {
+        padding: clamp(58px, 8vw, 90px) 0;
+        background: #fff;
+      }
+
+      .coaching-columns {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(28px, 4vw, 52px);
+        margin-top: 42px;
+      }
+
+      .coaching-column {
+        min-width: 0;
+      }
+
+      .coaching-column + .coaching-column {
+        padding-left: clamp(28px, 4vw, 52px);
+        border-left: 1px solid #cbd7e7;
+      }
+
+      .coaching-column h3 {
+        margin: 0 0 16px;
+        color: #17345e;
+        font-size: 21px;
+        line-height: 1.25;
+      }
+
+      .coaching-column p {
+        margin: 0;
+        color: #52647b;
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .coaching-column p + p {
+        margin-top: 14px;
+      }
+
+      @media (max-width: 640px) {
+        .coach-banner {
+          aspect-ratio: 1683 / 935;
+        }
+
+        .site-header {
+          min-height: 46px;
+        }
+
+        .site-nav {
+          width: 100%;
+          gap: 0;
+        }
+
+        .site-nav a {
+          flex: 1 1 20%;
+          padding: 13px 2px 11px;
+          font-size: 13px;
+          text-align: center;
+        }
+
+        .about-inner,
+        .section-inner {
+          width: min(100% - 32px, 540px);
+        }
+
+        .about-intro,
+        .leadership-layout,
+        .coaching-columns {
+          grid-template-columns: 1fr;
+        }
+
+        .about-intro { gap: 36px; }
+        .about-story { font-size: 16px; }
+
+        .career-path {
+          grid-template-columns: 1fr;
+          margin-top: 44px;
+        }
+
+        .career-step,
+        .career-step + .career-step {
+          padding: 20px 0;
+          border-left: 0;
+        }
+
+        .career-step + .career-step {
+          border-top: 1px solid #b9c9dd;
+        }
+
+        .leadership-layout,
+        .coaching-columns { gap: 36px; }
+
+        .achievement-list li {
+          grid-template-columns: 58px minmax(0, 1fr);
+          gap: 12px;
+        }
+
+        .coaching-column + .coaching-column {
+          padding-top: 30px;
+          padding-left: 0;
+          border-top: 1px solid #cbd7e7;
+          border-left: 0;
+        }
+
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="coach-banner" aria-label="Coach Kai">
+        <picture>
+          <source
+            media="(max-width: 640px)"
+            srcset="/images/coach-kai-banner-mobile.png"
+          />
+          <img
+            src="/images/coach-kai-banner-desktop.png"
+            width="2508"
+            height="627"
+            alt="Coach Kai"
+          />
+        </picture>
+      </section>
+
+      <header class="site-header">
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="/">Home</a>
+          <a href="/about/" aria-current="page">About</a>
+          <a href="/schedule/">Schedule</a>
+          <a href="/tools/">Tools</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </header>
+
+      <section class="about-section" id="about" aria-labelledby="about-title">
+        <div class="about-inner">
+          <div class="about-intro">
+            <div class="about-copy">
+              <p class="section-kicker">About Coach Kai</p>
+              <h1 id="about-title">Kai Liu</h1>
+              <p class="about-role">
+                TEDx Speaker | Communication Coach | Speech &amp; Debate Coach
+              </p>
+              <p class="about-story">
+                A first-generation Chinese American, Kai built his career by
+                confronting the same challenges he now helps others overcome:
+                a stutter, fear of public speaking, and difficulty expressing
+                ideas with confidence. Teaching English while learning Mandarin
+                in China helped him find his voice. His work grew from language
+                training and education consulting into competitive speech,
+                debate, storytelling, and leadership development for students
+                and professionals.
+              </p>
+            </div>
+
+            <dl class="about-metrics" aria-label="Career highlights">
+              <div>
+                <dt>15+ years</dt>
+                <dd>Education and communication training</dd>
+              </div>
+              <div>
+                <dt>1,000+</dt>
+                <dd>Presentations delivered across seven countries</dd>
+              </div>
+              <div>
+                <dt>2,000+</dt>
+                <dd>Students trained in speaking, debate, and confidence</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="career-path" aria-label="Career path">
+            <article class="career-step">
+              <span class="career-year">2007-2012</span>
+              <strong>English Trainer</strong>
+              <p>Adapted communication curricula for learners from children to professionals.</p>
+            </article>
+            <article class="career-step">
+              <span class="career-year">2012-2015</span>
+              <strong>Education Consultant</strong>
+              <p>Built university strategies and coached high-stakes international interviews.</p>
+            </article>
+            <article class="career-step">
+              <span class="career-year">2015-2017</span>
+              <strong>Test Preparation</strong>
+              <p>Taught structured argument, writing, and speaking for IELTS, TOEFL, and SAT.</p>
+            </article>
+            <article class="career-step">
+              <span class="career-year">2017-Present</span>
+              <strong>Speech &amp; Debate Coach</strong>
+              <p>Develops speakers, debate teams, TEDx talks, and professional presentations.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="leadership-section" aria-labelledby="leadership-title">
+        <div class="section-inner">
+          <header class="section-heading">
+            <p class="section-kicker">Toastmasters</p>
+            <h2 id="leadership-title">Leadership and competition</h2>
+            <p>
+              Nine years of continuous Toastmasters leadership, extensive club
+              service, and a District 85 competition record across evaluation,
+              Table Topics, and International Speech.
+            </p>
+          </header>
+
+          <div class="leadership-layout">
+            <ul class="credential-list" aria-label="Toastmasters leadership credentials">
+              <li><strong>Past President</strong> of Shanghai No.1, Xujiahui, Imagine, and Teachers Bilingual Toastmasters clubs.</li>
+              <li><strong>Division N Director, District 85 (2019-2020)</strong>, leading 20 clubs and approximately 500 members.</li>
+              <li>Organized two Club Officer Training programs for <strong>120 participants each</strong>.</li>
+              <li>Completed <strong>six Toastmasters Pathways</strong> and the Competent Communicator manual.</li>
+              <li>District trainer and public-relations sharing speaker across Districts 85, 88, 89, 118, and 128.</li>
+            </ul>
+
+            <ol class="achievement-list" aria-label="Selected Toastmasters competition results">
+              <li><time>2018</time><span>District 85 Area 02 Table Topics Champion</span></li>
+              <li><time>2019</time><span>District 85 Division Evaluation Contest Finalist</span></li>
+              <li><time>2021</time><span>District 85 Evaluation Runner-up and International Speech Finalist</span></li>
+              <li><time>2022</time><span>District 85 Table Topics Second Runner-up and International Speech Second Runner-up</span></li>
+              <li><time>2024</time><span>District 85 Table Topics Finalist and Train-the-Trainer program trainer</span></li>
+              <li><time>2025</time><span>District 85 Evaluation Finalist</span></li>
+              <li><time>2026</time><span>District 85 Table Topics Finalist and International Speech Runner-up</span></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="coaching-section" aria-labelledby="coaching-title">
+        <div class="section-inner">
+          <header class="section-heading">
+            <p class="section-kicker">Coaching and training</p>
+            <h2 id="coaching-title">From classrooms to global stages</h2>
+            <p>
+              Kai combines competitive speaking technique with critical
+              thinking, storytelling, and practical performance coaching.
+            </p>
+          </header>
+
+          <div class="coaching-columns">
+            <article class="coaching-column">
+              <h3>Student results</h3>
+              <p>
+                Coached national champions and finalists across HOSA, USAD,
+                National History Day, ESDP, TOC, WSDA, and the World Forensics
+                League in original oratory, expository speaking, storytelling,
+                debate, hosting, writing, and interviews.
+              </p>
+              <p>
+                He has also served as a judge for Toastmasters, USAD, HOSA,
+                WSDA, and Star of Outlook competitions.
+              </p>
+            </article>
+
+            <article class="coaching-column">
+              <h3>Corporate communication</h3>
+              <p>
+                Delivered training in business storytelling, persuasion,
+                customer service, investor pitching, presentation skills, and
+                sales communication for Microsoft, Entegris, AIA, fintech
+                teams, law firms, and creative companies.
+              </p>
+              <p>
+                A TEDxSMIC speaker and TEDx coach, Kai has presented in New
+                York, Singapore, Thailand, Vietnam, and cities across China.
+              </p>
+            </article>
+
+            <article class="coaching-column">
+              <h3>Global mentorship</h3>
+              <p>
+                His professional development includes programs created by
+                World Champions Darren LaCroix, Mark Brown, and Craig Valentine,
+                plus coaching from 2021 World Champion Verity Price and world
+                finalists Kwong Yue Yang, Kin Ng, and Fursey Gotuaco.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+    </main>
+    <SiteFooter />
+  </body>
+</html>
