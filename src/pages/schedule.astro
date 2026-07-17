@@ -365,11 +365,14 @@ import { RefreshCw } from "@lucide/astro";
       .contact-qr-wrap {
         position: relative;
         width: calc(100% - 20px);
-        max-width: 190px;
+        max-width: 200px;
         aspect-ratio: 1;
-        margin: 10px auto;
+        margin: 12px auto 14px;
         overflow: hidden;
+        border: 1px solid #d5deed;
+        border-radius: 5px;
         background: #fff;
+        box-shadow: 0 8px 22px rgb(23 48 78 / 12%);
       }
 
       .contact-qr {
@@ -701,7 +704,9 @@ import { RefreshCw } from "@lucide/astro";
         qrImage.className = "contact-qr";
         qrImage.src = "/images/coach-kai-wechat-qr.png";
         qrImage.alt = "WeChat QR code for Coach Kai";
-        qrImage.loading = "lazy";
+        qrImage.width = 938;
+        qrImage.height = 1340;
+        qrImage.loading = "eager";
         qrImage.decoding = "async";
         imageWrap.append(qrImage);
         section.append(heading, imageWrap);

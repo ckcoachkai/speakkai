@@ -58,16 +58,22 @@
 
       .banner-contact {
         position: absolute;
-        right: clamp(14px, 3vw, 44px);
-        bottom: 14px;
+        right: clamp(14px, 2vw, 32px);
+        top: 12px;
+        bottom: auto;
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         gap: 10px;
+        padding: 8px;
+        border: 1px solid rgb(255 255 255 / 28%);
+        border-radius: 6px;
+        background: rgb(3 15 42 / 88%);
+        box-shadow: 0 8px 24px rgb(0 0 0 / 28%);
       }
 
       .banner-qr-wrap {
         position: relative;
-        width: clamp(76px, 7vw, 108px);
+        width: clamp(92px, 7vw, 104px);
         aspect-ratio: 1;
         overflow: hidden;
         border: 2px solid rgb(255 255 255 / 82%);
@@ -75,7 +81,7 @@
         background: #fff;
       }
 
-      .banner-qr {
+      .coach-banner .banner-qr {
         position: absolute;
         top: -68.33%;
         left: -28.33%;
@@ -88,10 +94,7 @@
       .banner-socials {
         display: grid;
         gap: 4px;
-        padding: 8px 11px;
-        border: 1px solid rgb(255 255 255 / 24%);
-        border-radius: 4px;
-        background: rgb(3 15 42 / 84%);
+        padding: 6px 8px;
         color: #fff;
         font-size: 13px;
         line-height: 1.2;
@@ -188,17 +191,18 @@
         }
 
         .banner-contact {
+          top: auto;
           right: 8px;
           bottom: 8px;
-          left: 8px;
+          left: auto;
           align-items: center;
-          justify-content: center;
           gap: 8px;
+          padding: 6px;
         }
 
         .banner-qr-wrap {
-          width: 70px;
-          flex: 0 0 70px;
+          width: 84px;
+          flex: 0 0 84px;
         }
 
         .banner-socials {
