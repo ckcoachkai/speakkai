@@ -225,8 +225,9 @@ import { RefreshCw } from "@lucide/astro";
       }
 
       .event-line.kind-standard { border-left-color: #004165; background: #c3d7e4; }
-      .event-line.kind-private { border-left-color: #00a7b5; background: #c7f3f5; }
-      .event-line.kind-tmc { border-left-color: #772432; background: #f5e8ea; }
+      .event-line.kind-private { border-left-color: #7e22ce; background: #f3e8ff; }
+      .event-line.kind-online { border-left-color: #db2777; background: #fce7f3; }
+      .event-line.kind-tmc { border-left-color: #b91c1c; background: #fee2e2; }
 
       .event-time {
         display: block;
@@ -494,14 +495,16 @@ import { RefreshCw } from "@lucide/astro";
         for (const line of lines.slice(1)) {
           const event = document.createElement("span");
           const formattedLine = formatEventLine(line);
-          const kind = highlightKind(formattedLine) ||
-            (/\b1-1\b/i.test(formattedLine) || /\((?!SH\))[^()]+\)\s+(?:线上|线下)(?:\s|$)/.test(formattedLine)
-              ? "private"
-              : "standard");
+          const highlightedKind = highlightKind(formattedLine);
+          const isPrivate =
+            /\b1-1\b/i.test(formattedLine) ||
+            /\((?!SH\))[^()]+\)\s+(?:线上|线下)(?:\s|$)/.test(formattedLine);
+          const kind = highlightedKind || (isPrivate ? "private" : /线上(?:\s|$)/.test(formattedLine) ? "online" : "standard");
           const colors = {
-            private: ["#00a7b5", "#c7f3f5"],
+            private: ["#7e22ce", "#f3e8ff"],
+            online: ["#db2777", "#fce7f3"],
             standard: ["#004165", "#c3d7e4"],
-            tmc: ["#772432", "#f5e8ea"],
+            tmc: ["#b91c1c", "#fee2e2"],
             travel: ["#d6a800", "#fff6cc"],
             holiday: ["#2e7d32", "#e8f5e9"],
             makeup: ["#9aa1a8", "#eef1f3"],
