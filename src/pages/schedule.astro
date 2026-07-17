@@ -75,10 +75,10 @@ import { RefreshCw } from "@lucide/astro";
       .banner-socials strong { font-weight: 800; }
 
       .page-header {
-        display: flex;
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) auto minmax(44px, 1fr);
         min-height: 60px;
         align-items: center;
-        justify-content: space-between;
         gap: 20px;
         padding: 9px clamp(14px, 2.5vw, 36px);
         border-bottom: 1px solid #d5deed;
@@ -100,11 +100,40 @@ import { RefreshCw } from "@lucide/astro";
         font-size: 11px;
       }
 
+      .site-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(18px, 3vw, 42px);
+      }
+
+      .site-nav a {
+        padding: 8px 2px 7px;
+        border-bottom: 2px solid transparent;
+        color: #294568;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1;
+        text-decoration: none;
+      }
+
+      .site-nav a:hover,
+      .site-nav a[aria-current="page"] {
+        border-bottom-color: #19a9c5;
+        color: #0a5f91;
+      }
+
+      .site-nav a:focus-visible {
+        border-radius: 3px;
+        outline: 3px solid #80d6d1;
+        outline-offset: 2px;
+      }
+
       .refresh-button {
         display: inline-grid;
         width: 36px;
         height: 36px;
-        flex: 0 0 36px;
+        justify-self: end;
         place-items: center;
         border: 1px solid #c7d3e5;
         border-radius: 6px;
@@ -385,8 +414,27 @@ import { RefreshCw } from "@lucide/astro";
           padding: 7px 8px;
           font-size: 11px;
         }
-        .page-header { min-height: 56px; padding: 8px 10px; }
+        .page-header {
+          grid-template-columns: minmax(0, 1fr) 36px;
+          gap: 7px 12px;
+          min-height: 56px;
+          padding: 8px 10px 0;
+        }
         .identity h1 { font-size: 16px; }
+        .site-nav {
+          grid-column: 1 / -1;
+          grid-row: 2;
+          width: calc(100% + 20px);
+          margin-left: -10px;
+          gap: 0;
+          border-top: 1px solid #e2e8f1;
+        }
+        .site-nav a {
+          flex: 1 1 25%;
+          padding: 10px 4px 9px;
+          text-align: center;
+        }
+        .refresh-button { grid-column: 2; grid-row: 1; }
         main { padding: 8px 0 0; }
         .schedule-toolbar { align-items: center; padding: 0 9px; }
         .month-heading { font-size: 17px; }
@@ -427,6 +475,12 @@ import { RefreshCw } from "@lucide/astro";
         <h1 id="schedule-title">Coach Kai's Timeslot</h1>
         <p id="updated-time">正在载入 Loading</p>
       </div>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/#about">About</a>
+        <a href="/schedule/" aria-current="page">Schedule</a>
+        <a href="/#contact">Contact</a>
+      </nav>
       <button class="refresh-button" type="button" title="Refresh" aria-label="Refresh schedule">
         <RefreshCw size={17} stroke-width={2} aria-hidden="true" />
       </button>

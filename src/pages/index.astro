@@ -38,6 +38,7 @@
       }
 
       .coach-banner {
+        position: relative;
         width: 100%;
         aspect-ratio: 4 / 1;
         overflow: hidden;
@@ -55,31 +56,104 @@
         object-fit: contain;
       }
 
-      .home-actions {
-        display: grid;
-        grid-template-columns: minmax(220px, 360px) minmax(220px, 360px);
-        align-items: center;
-        justify-content: center;
-        gap: 56px;
-        width: min(100% - 40px, 900px);
-        margin: 0 auto;
-        padding: 52px 0 64px;
+      .banner-contact {
+        position: absolute;
+        right: clamp(14px, 3vw, 44px);
+        bottom: 14px;
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
       }
 
-      .wechat-qr {
-        display: block;
-        width: 100%;
-        max-height: 420px;
-        object-fit: contain;
+      .banner-qr-wrap {
+        position: relative;
+        width: clamp(76px, 7vw, 108px);
+        aspect-ratio: 1;
+        overflow: hidden;
+        border: 2px solid rgb(255 255 255 / 82%);
+        border-radius: 4px;
         background: #fff;
-        border: 1px solid #d9e0ea;
-        border-radius: 6px;
+      }
+
+      .banner-qr {
+        position: absolute;
+        top: -68.33%;
+        left: -28.33%;
+        display: block;
+        width: 156.33%;
+        max-width: none;
+        height: auto;
+      }
+
+      .banner-socials {
+        display: grid;
+        gap: 4px;
+        padding: 8px 11px;
+        border: 1px solid rgb(255 255 255 / 24%);
+        border-radius: 4px;
+        background: rgb(3 15 42 / 84%);
+        color: #fff;
+        font-size: 13px;
+        line-height: 1.2;
+        text-shadow: 0 1px 3px rgb(0 0 0 / 55%);
+      }
+
+      .banner-socials strong {
+        font-weight: 800;
+      }
+
+      .site-header {
+        display: flex;
+        min-height: 56px;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #d5deed;
+        background: #fff;
+      }
+
+      .site-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(22px, 4vw, 52px);
+      }
+
+      .site-nav a {
+        padding: 19px 2px 17px;
+        border-bottom: 2px solid transparent;
+        color: #294568;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1;
+        text-decoration: none;
+      }
+
+      .site-nav a:hover,
+      .site-nav a[aria-current="page"] {
+        border-bottom-color: #19a9c5;
+        color: #0a5f91;
+      }
+
+      .site-nav a:focus-visible {
+        border-radius: 3px;
+        outline: 3px solid #80d6d1;
+        outline-offset: 2px;
+      }
+
+      .home-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: min(100% - 40px, 640px);
+        margin: 0 auto;
+        padding: 52px 0 64px;
       }
 
       .schedule-link {
         display: flex;
         align-items: center;
         justify-content: center;
+        width: min(100%, 360px);
         min-height: 72px;
         padding: 18px 28px;
         border: 2px solid #0b5fc7;
@@ -113,15 +187,44 @@
           aspect-ratio: 1683 / 935;
         }
 
-        .home-actions {
-          grid-template-columns: minmax(0, 340px);
-          gap: 28px;
-          width: min(100% - 32px, 420px);
-          padding: 32px 0 44px;
+        .banner-contact {
+          right: 8px;
+          bottom: 8px;
+          left: 8px;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
         }
 
-        .wechat-qr {
-          max-height: 390px;
+        .banner-qr-wrap {
+          width: 70px;
+          flex: 0 0 70px;
+        }
+
+        .banner-socials {
+          min-width: 0;
+          padding: 7px 9px;
+          font-size: 11px;
+        }
+
+        .site-header {
+          min-height: 48px;
+        }
+
+        .site-nav {
+          width: 100%;
+          gap: 0;
+        }
+
+        .site-nav a {
+          flex: 1 1 25%;
+          padding: 16px 4px 14px;
+          text-align: center;
+        }
+
+        .home-actions {
+          width: min(100% - 32px, 420px);
+          padding: 32px 0 44px;
         }
 
         .schedule-link {
@@ -139,7 +242,7 @@
   </head>
   <body>
     <main>
-      <section class="coach-banner" aria-label="Coach Kai">
+      <section class="coach-banner" id="about" aria-label="Coach Kai social media">
         <picture>
           <source
             media="(max-width: 640px)"
@@ -152,17 +255,33 @@
             alt="Coach Kai"
           />
         </picture>
+        <div class="banner-contact" id="contact">
+          <div class="banner-qr-wrap">
+            <img
+              class="banner-qr"
+              src="/images/coach-kai-wechat-qr.png"
+              width="938"
+              height="1340"
+              alt="Coach Kai WeChat QR code"
+            />
+          </div>
+          <div class="banner-socials">
+            <span>WeChat: <strong>CKcoachkai</strong></span>
+            <span>小红书: <strong>CKcoachkai</strong></span>
+          </div>
+        </div>
       </section>
 
-      <section class="home-actions" aria-label="Contact and schedule">
-        <img
-          class="wechat-qr"
-          src="/images/coach-kai-wechat-qr.png"
-          width="938"
-          height="1340"
-          alt="Coach Kai WeChat QR code"
-          loading="eager"
-        />
+      <header class="site-header">
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="/" aria-current="page">Home</a>
+          <a href="/#about">About</a>
+          <a href="/schedule/">Schedule</a>
+          <a href="/#contact">Contact</a>
+        </nav>
+      </header>
+
+      <section class="home-actions" aria-label="Schedule">
         <a class="schedule-link" href="/schedule/">Schedule</a>
       </section>
     </main>
