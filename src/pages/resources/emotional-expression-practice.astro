@@ -1,0 +1,130 @@
+---
+import { ExternalLink } from "@lucide/astro";
+import ResourceLayout from "../../layouts/ResourceLayout.astro";
+---
+
+<ResourceLayout
+  pageTitle="Emotional Expression Practice | SpeakKai"
+  description="Emotional Expression Practice presentation by Kai Liu."
+>
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/resources/">Resources</a>
+    <span aria-hidden="true">/</span>
+    <span>Emotional Expression Practice</span>
+  </nav>
+
+  <header class="page-heading">
+    <span class="eyebrow">Speaking practice</span>
+    <h1>Emotional Expression Practice</h1>
+    <p>By Kai Liu</p>
+  </header>
+
+  <section class="presentation" aria-label="Emotional Expression Practice presentation">
+    <div class="embed-wrap">
+      <iframe
+        loading="lazy"
+        src="https://www.canva.com/design/DAHOycrZyVg/n64SIkvYGANmflyJEec0Lg/view?embed"
+        title="Emotional Expression Practice by Kai Liu"
+        allowfullscreen
+        allow="fullscreen"
+      ></iframe>
+    </div>
+    <a
+      class="external-link"
+      href="https://www.canva.com/design/DAHOycrZyVg/n64SIkvYGANmflyJEec0Lg/view?utm_content=DAHOycrZyVg&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link"
+      target="_blank"
+      rel="noopener"
+    >
+      Open Emotional Expression Practice in Canva
+      <ExternalLink size={17} stroke-width={2.2} aria-hidden="true" />
+    </a>
+  </section>
+
+  <style>
+    .breadcrumb {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+      color: #66758a;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .breadcrumb a { color: #0b68bb; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .page-heading {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      color: #087c98;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 900px;
+      margin: 0;
+      color: #10284d;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .page-heading p {
+      margin: 0;
+      color: #5a6b80;
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    .presentation { display: grid; gap: 16px; }
+
+    .embed-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border: 1px solid #c8d5e5;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 14px 38px rgb(26 55 89 / 14%);
+    }
+
+    .embed-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .external-link {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 44px;
+      align-items: center;
+      gap: 8px;
+      color: #0b68bb;
+      font-size: 15px;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    .external-link:hover { text-decoration: underline; }
+    .external-link:focus-visible { border-radius: 3px; outline: 3px solid #80d6d1; outline-offset: 3px; }
+
+    @media (max-width: 600px) {
+      .breadcrumb { font-size: 13px; }
+      .page-heading { margin-bottom: 22px; }
+      .embed-wrap { border-radius: 6px; }
+    }
+  </style>
+</ResourceLayout>

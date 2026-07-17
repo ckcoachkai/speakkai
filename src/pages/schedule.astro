@@ -434,9 +434,9 @@ import SiteFooter from "../components/SiteFooter.astro";
           border-top: 1px solid #e2e8f1;
         }
         .site-nav a {
-          flex: 1 1 20%;
+          flex: 1 1 16.666%;
           padding: 12px 2px 10px;
-          font-size: 13px;
+          font-size: clamp(10px, 3.2vw, 13px);
           text-align: center;
         }
         .refresh-button { grid-column: 2; grid-row: 1; }
@@ -485,6 +485,7 @@ import SiteFooter from "../components/SiteFooter.astro";
         <a href="/about/">About</a>
         <a href="/schedule/" aria-current="page">Schedule</a>
         <a href="/tools/">Tools</a>
+        <a href="/resources/">Resources</a>
         <a href="/contact/">Contact</a>
       </nav>
       <button class="refresh-button" type="button" title="Refresh" aria-label="Refresh schedule">

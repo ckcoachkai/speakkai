@@ -153,9 +153,9 @@ import SiteFooter from "../components/SiteFooter.astro";
         }
 
         .site-nav a {
-          flex: 1 1 20%;
+          flex: 1 1 16.666%;
           padding: 13px 2px 11px;
-          font-size: 13px;
+          font-size: clamp(10px, 3.2vw, 13px);
           text-align: center;
         }
 
@@ -200,6 +200,7 @@ import SiteFooter from "../components/SiteFooter.astro";
           <a href="/about/">About</a>
           <a href="/schedule/">Schedule</a>
           <a href="/tools/">Tools</a>
+          <a href="/resources/">Resources</a>
           <a href="/contact/">Contact</a>
         </nav>
       </header>

@@ -51,7 +51,7 @@ const { pageTitle, description, toolTitle, toolSrc } = Astro.props;
 
       .site-nav {
         display: flex;
-        width: min(100% - 80px, 620px);
+        width: min(100% - 80px, 720px);
         align-items: center;
         justify-content: center;
         gap: clamp(18px, 3.5vw, 44px);
@@ -135,9 +135,9 @@ const { pageTitle, description, toolTitle, toolSrc } = Astro.props;
         }
 
         .site-nav a {
-          flex: 1 1 20%;
+          flex: 1 1 16.666%;
           padding: 13px 1px 11px;
-          font-size: 13px;
+          font-size: clamp(9.5px, 2.8vw, 12px);
           text-align: center;
         }
 
@@ -157,6 +157,7 @@ const { pageTitle, description, toolTitle, toolSrc } = Astro.props;
         <a href="/about/">About</a>
         <a href="/schedule/">Schedule</a>
         <a href="/tools/" aria-current="page">Tools</a>
+        <a href="/resources/">Resources</a>
         <a href="/contact/">Contact</a>
       </nav>
       <button
