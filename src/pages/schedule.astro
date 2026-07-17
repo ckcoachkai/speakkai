@@ -294,27 +294,23 @@ import { RefreshCw } from "@lucide/astro";
       .school-note { display: block; }
 
       .contact-qr-wrap {
-        display: flex;
-        justify-content: center;
-        padding: 10px;
+        position: relative;
+        width: calc(100% - 20px);
+        max-width: 190px;
+        aspect-ratio: 1;
+        margin: 10px auto;
+        overflow: hidden;
         background: #fff;
       }
 
       .contact-qr {
+        position: absolute;
+        top: -68.33%;
+        left: -28.33%;
         display: block;
-        width: 100%;
-        max-width: 260px;
+        width: 156.33%;
+        max-width: none;
         height: auto;
-        object-fit: contain;
-      }
-
-      .legend-note {
-        margin: 0 0 8px;
-        padding: 6px 9px;
-        border-left: 3px solid #17a6a0;
-        color: #5e6b83;
-        background: #fff;
-        font-size: 10px;
       }
 
       .status {
@@ -350,7 +346,6 @@ import { RefreshCw } from "@lucide/astro";
         .notes-rail { grid-template-columns: 1fr; }
         .contact-section { grid-column: auto; }
         .notes-section + .notes-section { border-top: 1px solid #a0aaa6; border-left: 0; }
-        .legend-note { margin-right: 9px; margin-left: 9px; }
       }
     </style>
   </head>
@@ -374,7 +369,6 @@ import { RefreshCw } from "@lucide/astro";
           <h2 class="month-heading" id="month-heading"></h2>
           <div class="sheet-tabs" id="sheet-tabs" role="tablist" aria-label="Schedule months"></div>
         </div>
-        <p class="legend-note" id="legend-note" hidden></p>
         <div class="calendar-layout">
           <div class="table-shell" id="table-shell"></div>
           <aside class="notes-rail" id="notes-rail" aria-label="Schedule notes"></aside>
@@ -398,7 +392,6 @@ import { RefreshCw } from "@lucide/astro";
       const tableShell = document.querySelector<HTMLElement>("#table-shell");
       const notesRail = document.querySelector<HTMLElement>("#notes-rail");
       const monthHeading = document.querySelector<HTMLElement>("#month-heading");
-      const legendNote = document.querySelector<HTMLElement>("#legend-note");
       const updatedTime = document.querySelector<HTMLElement>("#updated-time");
       const refreshButton = document.querySelector<HTMLButtonElement>(".refresh-button");
 
@@ -585,7 +578,7 @@ import { RefreshCw } from "@lucide/astro";
       }
 
       function renderSheet(sheet: Sheet) {
-        if (!tableShell || !notesRail || !monthHeading || !legendNote) return;
+        if (!tableShell || !notesRail || !monthHeading) return;
         tableShell.replaceChildren();
         notesRail.replaceChildren();
         monthHeading.textContent = sheet.title;
@@ -664,12 +657,6 @@ import { RefreshCw } from "@lucide/astro";
         notesRail.append(makeContactSection());
         notesRail.hidden = notesRail.childElementCount === 0;
 
-        const preCalendarNotes = sheet.rows
-          .slice(1, weekdayRow)
-          .map((row) => row.cells?.slice(0, 7).map((cell) => cell.value?.trim()).find(Boolean))
-          .filter((value): value is string => Boolean(value));
-        legendNote.textContent = preCalendarNotes.join(" · ");
-        legendNote.hidden = preCalendarNotes.length === 0;
       }
 
       function renderSchedule(data: ScheduleData) {

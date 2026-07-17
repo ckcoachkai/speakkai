@@ -21,7 +21,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GOOGLE_PUBLISHED_SHEETS_JSON: >-
-        [{"id":260607,"title":"July 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260607&single=true&output=csv"},{"id":260608,"title":"August 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260608&single=true&output=csv"}]
+        [
+          {"id":260607,"title":"July 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260607&single=true&output=csv"},
+          {"id":260608,"title":"August 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260608&single=true&output=csv"},
+          {"id":260609,"title":"September 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260609&single=true&output=csv"},
+          {"id":260610,"title":"October 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260610&single=true&output=csv"},
+          {"id":260611,"title":"November 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260611&single=true&output=csv"},
+          {"id":260612,"title":"December 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260612&single=true&output=csv"}
+        ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
