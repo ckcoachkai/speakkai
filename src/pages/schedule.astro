@@ -232,6 +232,21 @@ import { RefreshCw } from "@lucide/astro";
       .event-line.kind-private { border-left-color: #00a7b5; background: #ddf7f8; }
       .event-line.kind-tmc { border-left-color: #772432; background: #f5e8ea; }
 
+      .event-time {
+        display: block;
+        color: #526173;
+        font-size: 8px;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+
+      .event-title {
+        display: block;
+        margin-top: 2px;
+        font-weight: 750;
+        line-height: 1.3;
+      }
+
       .notes-rail {
         min-width: 0;
         border: 1px solid #a0aaa6;
@@ -498,8 +513,19 @@ import { RefreshCw } from "@lucide/astro";
             makeup: ["#9aa1a8", "#eef1f3"],
           }[kind];
           event.className = `event-line kind-${kind}`;
-          event.textContent = formattedLine;
           event.style.cssText = `display:block;position:relative;min-width:0;margin:0;padding:4px 5px;overflow-wrap:anywhere;border-left:3px solid ${colors[0]};border-radius:3px;color:#20304f;background:${colors[1]};font-size:9px;line-height:1.35`;
+          const timedEvent = formattedLine.match(/^(\d{1,2}:\d{2}(?:\s*-\s*\d{1,2}:\d{2})?)\s+(.+)$/);
+          if (timedEvent) {
+            const time = document.createElement("span");
+            time.className = "event-time";
+            time.textContent = timedEvent[1];
+            const title = document.createElement("span");
+            title.className = "event-title";
+            title.textContent = timedEvent[2];
+            event.append(time, title);
+          } else {
+            event.textContent = formattedLine;
+          }
           content.append(event);
         }
         cell.append(content);
