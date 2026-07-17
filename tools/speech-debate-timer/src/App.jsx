@@ -821,10 +821,10 @@ function PrepBank({ label, clockKey, remaining, total, activeClock, runState, on
   const running = activeClock === clockKey && runState === 'running';
   return (
     <section className={`prep-bank ${running ? 'is-running' : ''}`} aria-label={`${label} prep timer`}>
-      <div><span>{label}</span><strong>{formatClock(remaining)}</strong><small>of {formatClock(total)}</small></div>
+      <div className="prep-copy"><span>{label}</span><strong>{formatClock(remaining)}</strong><small>of {formatClock(total)}</small></div>
       <div className="prep-actions">
-        <button onClick={() => onToggle(clockKey)}>{running ? <Pause size={17} /> : <Play size={17} fill="currentColor" />} {running ? 'Pause' : remaining < total ? 'Resume' : 'Start'}</button>
-        <button onClick={() => onReset(clockKey, total)} title={`Reset ${label}`}><RotateCcw size={16} /></button>
+        <button className="prep-toggle" onClick={() => onToggle(clockKey)}>{running ? <Pause size={17} /> : <Play size={17} fill="currentColor" />} {running ? 'Pause' : remaining < total ? 'Resume' : 'Start'}</button>
+        <button className="prep-reset" onClick={() => onReset(clockKey, total)} title={`Reset ${label}`} aria-label={`Reset ${label}`}><RotateCcw size={16} /></button>
       </div>
     </section>
   );

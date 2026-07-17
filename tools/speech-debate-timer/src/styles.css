@@ -1,7 +1,7 @@
 :root {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #eaf0f8;
-  background: #08111f;
+  color: #17243a;
+  background: #ffffff;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -20,7 +20,7 @@ body,
 
 body {
   min-height: 100vh;
-  background: #08111f;
+  background: #ffffff;
 }
 
 button,
@@ -54,7 +54,7 @@ textarea:focus-visible {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
-  background: #0a1423;
+  background: #ffffff;
 }
 
 .app.mode-debate {
@@ -138,6 +138,7 @@ textarea:focus-visible {
 
 .brand h1 {
   margin: 0;
+  color: #f7f9fc;
   font-size: 1.18rem;
   line-height: 1.25;
   letter-spacing: 0;
@@ -229,7 +230,7 @@ textarea:focus-visible {
 .event-toolbar strong {
   display: block;
   margin-top: 3px;
-  color: #f7f9fc;
+  color: #17243a;
   font-size: 1.2rem;
 }
 
@@ -270,6 +271,7 @@ textarea:focus-visible {
 
 .segment-heading h2 {
   margin: 4px 0 8px;
+  color: #f7f9fc;
   font-size: 1.55rem;
   line-height: 1.2;
 }
@@ -293,10 +295,10 @@ textarea:focus-visible {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid #33445c;
+  border: 1px solid #c9d4e2;
   border-radius: 8px;
-  background: #101d2f;
-  box-shadow: 0 20px 50px rgb(0 0 0 / 22%);
+  background: #ffffff;
+  box-shadow: 0 14px 38px rgb(20 43 74 / 10%);
   transition: border-color 180ms ease, background-color 180ms ease;
 }
 
@@ -306,23 +308,23 @@ textarea:focus-visible {
 
 .stage-green .timer-surface {
   border-color: #39b76c;
-  background: #102a26;
+  background: #f0fbf4;
 }
 
 .stage-yellow .timer-surface {
   border-color: #e3b03b;
-  background: #302817;
+  background: #fff9e8;
 }
 
 .stage-red .timer-surface {
   border-color: #ef5b5b;
-  background: #321c23;
+  background: #fff3f3;
 }
 
 .status-line {
   justify-content: space-between;
   gap: 18px;
-  color: #aab7ca;
+  color: #617087;
   font-size: 0.8rem;
 }
 
@@ -330,7 +332,7 @@ textarea:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #dce5f2;
+  color: #24354e;
   font-weight: 800;
 }
 
@@ -361,8 +363,8 @@ textarea:focus-visible {
   font-size: 8.2rem;
   line-height: 0.95;
   letter-spacing: 0;
-  color: #ffffff;
-  text-shadow: 0 7px 25px rgb(0 0 0 / 28%);
+  color: #10223d;
+  text-shadow: none;
 }
 
 .overtime {
@@ -374,7 +376,7 @@ textarea:focus-visible {
 
 .grace-label {
   margin-top: 5px;
-  color: #ffc7c7;
+  color: #a52828;
   font-size: 0.82rem;
 }
 
@@ -383,7 +385,7 @@ textarea:focus-visible {
   height: 8px;
   overflow: hidden;
   border-radius: 4px;
-  background: #26364b;
+  background: #e2e8f0;
 }
 
 .progress-track span {
@@ -403,13 +405,13 @@ textarea:focus-visible {
   justify-content: center;
   gap: 6px;
   margin-top: 10px;
-  color: #aebbd0;
+  color: #617087;
   font-size: 0.8rem;
   text-align: center;
 }
 
 .next-line strong {
-  color: #edf3fb;
+  color: #1d304b;
 }
 
 .main-controls {
@@ -489,20 +491,20 @@ textarea:focus-visible {
 .prep-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 14px;
 }
 
 .prep-bank {
-  margin-top: 12px;
-  min-height: 104px;
-  padding: 14px 16px;
+  margin-top: 14px;
+  min-height: 112px;
+  padding: 16px 18px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
-  border: 1px solid #314259;
+  gap: 18px;
+  border: 1px solid #ccd6e3;
   border-radius: 6px;
-  background: #0c1828;
+  background: #f7f9fc;
 }
 
 .prep-bank.is-running {
@@ -511,7 +513,7 @@ textarea:focus-visible {
 
 .prep-copy span {
   display: block;
-  color: #9eacc0;
+  color: #53647b;
   font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -520,22 +522,40 @@ textarea:focus-visible {
 .prep-copy strong {
   display: block;
   margin-top: 3px;
-  color: #f7f9fc;
+  color: #142a47;
   font-size: 1.85rem;
   font-variant-numeric: tabular-nums;
 }
 
 .prep-actions {
-  gap: 6px;
+  flex-wrap: nowrap;
+  gap: 8px;
 }
 
 .prep-actions button {
-  width: 38px;
   height: 38px;
-  border: 1px solid #43556e;
+  border: 1px solid #aebdce;
   border-radius: 5px;
-  color: #e7eef8;
-  background: #17263a;
+  color: #173252;
+  background: #ffffff;
+}
+
+.prep-actions button:hover {
+  border-color: var(--mode-accent);
+  color: #0d223b;
+  background: #eef7fb;
+}
+
+.prep-actions .prep-toggle {
+  width: auto;
+  min-width: 92px;
+  padding: 0 13px;
+  white-space: nowrap;
+}
+
+.prep-actions .prep-reset {
+  width: 38px;
+  flex: 0 0 38px;
 }
 
 .control-panel {
@@ -1000,6 +1020,13 @@ textarea:focus-visible {
 
   .prep-bank {
     min-height: 90px;
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .prep-actions .prep-toggle {
+    min-width: 86px;
+    padding: 0 10px;
   }
 
   .team-grid,
