@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Charades Arena</title>
+<style>
+:root{
+  --bg:#f5f7fb;--panel:#fff;--ink:#192033;--muted:#65708a;--line:#dfe5ef;
+  --accent:#6257ff;--accent2:#00a58e;--danger:#e34a61;--shadow:0 18px 50px rgba(35,45,80,.12);
+}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink);
+background:radial-gradient(circle at 10% 10%,rgba(98,87,255,.13),transparent 28%),radial-gradient(circle at 90% 15%,rgba(0,165,142,.12),transparent 26%),var(--bg)}
+button,input,select{font:inherit}button{cursor:pointer}.app{max-width:1280px;margin:auto;padding:22px}
+header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}.brand h1{margin:0;font-size:clamp(1.7rem,3vw,2.55rem);letter-spacing:-.045em}.brand p{margin:6px 0 0;color:var(--muted)}
+.badge{padding:8px 12px;border-radius:999px;background:#eeecff;color:#4c43cc;font-weight:800;font-size:.82rem}
+.grid{display:grid;grid-template-columns:360px 1fr;gap:18px;align-items:start}.panel{background:rgba(255,255,255,.93);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.sidebar{padding:20px;position:sticky;top:18px}h2,h3{margin-top:0}.section{padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid var(--line)}.section:last-child{border:0;margin:0;padding:0}
+label{display:block;font-size:.84rem;font-weight:800;margin:0 0 7px;color:#3c4560}input,select{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:white;color:var(--ink);outline:none}
+input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(98,87,255,.12)}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.roster{display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto;padding-right:3px}.student-row{display:grid;grid-template-columns:1fr 38px;gap:7px}
+.icon-btn{border:0;border-radius:11px;background:#fff0f2;color:var(--danger);font-weight:900}.secondary,.primary,.ghost{border:0;border-radius:13px;padding:11px 14px;font-weight:850;transition:.16s}
+.secondary:hover,.primary:hover,.ghost:hover,.action:hover{transform:translateY(-1px);filter:brightness(.98)}.primary{background:var(--accent);color:#fff}.secondary{background:#ebe9ff;color:#4a40ca}.ghost{background:#eef2f7;color:#42506c}.full{width:100%}
+.game{padding:20px;min-height:690px;display:flex;flex-direction:column}.topbar{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.player-chip{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:15px;background:#f0efff;font-weight:900}.player-dot{width:11px;height:11px;border-radius:50%;background:var(--accent)}
+.stats{display:flex;gap:9px;flex-wrap:wrap}.stat{background:#f2f5f9;border-radius:13px;padding:9px 12px;text-align:center;min-width:92px}.stat b{display:block;font-size:1.13rem}.stat span{font-size:.72rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.timer-wrap{margin:18px 0 12px}.timer-line{display:flex;justify-content:space-between;align-items:end;margin-bottom:8px}.timer{font-variant-numeric:tabular-nums;font-size:clamp(2rem,5vw,4.4rem);font-weight:950;letter-spacing:-.06em}.next-label{color:var(--muted);font-weight:800}
+.progress{height:13px;border-radius:999px;background:#e8edf5;overflow:hidden}.progress>div{height:100%;width:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .25s linear}
+.card{flex:1;min-height:330px;margin:15px 0;display:flex;align-items:center;justify-content:center;text-align:center;padding:35px;border-radius:28px;border:2px dashed #cfd6e6;background:linear-gradient(145deg,rgba(98,87,255,.055),rgba(0,165,142,.055)),#fff;position:relative;overflow:hidden}
+.card:before,.card:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;opacity:.17}.card:before{background:var(--accent);top:-70px;left:-60px}.card:after{background:var(--accent2);bottom:-80px;right:-55px}
+.word{position:relative;z-index:1;font-size:clamp(2rem,5vw,4.9rem);line-height:1.1;font-weight:950;letter-spacing:-.045em;max-width:900px}.word.small{font-size:clamp(1.55rem,3.8vw,3.35rem)}.placeholder{color:#8a94aa}.flash{animation:flash .45s ease}
+@keyframes flash{0%{transform:scale(.78);opacity:.15}70%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+.actions{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:12px}.action{border:0;border-radius:18px;padding:18px 10px;font-size:1.1rem;font-weight:950;transition:.14s}.correct{background:#dff8ef;color:#087b67}.wrong{background:#ffe8ec;color:#bd2942}.skip{background:#fff2da;color:#a66508}
+.controls{display:flex;gap:9px;justify-content:center;margin-top:12px;flex-wrap:wrap}.scoreboard{margin-top:18px;padding:18px}.score-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+table{width:100%;border-collapse:collapse}th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left}th{font-size:.73rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}.rank{font-weight:950;color:var(--accent)}.leader td{font-weight:900}.empty{text-align:center;color:var(--muted);padding:26px}
+.modal-backdrop{position:fixed;inset:0;background:rgba(16,22,38,.62);display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal-backdrop.show{display:flex}.modal{max-width:560px;width:100%;background:#fff;border-radius:26px;padding:26px;box-shadow:var(--shadow);text-align:center}.modal h2{font-size:2rem;margin-bottom:8px}.result-big{font-size:4.6rem;font-weight:950;color:var(--accent);line-height:1}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}.result-grid div{background:#f2f5f9;border-radius:15px;padding:13px}.result-grid b{display:block;font-size:1.45rem}.note{font-size:.78rem;color:var(--muted);line-height:1.45;margin-top:10px}.switch-line{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.83rem;font-weight:750;margin-top:10px}.switch-line input{width:auto}
+@media(max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}.sidebar,.game{min-width:0}.sidebar{position:static}.game{min-height:620px}.actions{grid-template-columns:1fr}.card{min-height:280px}.scoreboard{overflow-x:auto}.scoreboard table{min-width:720px}}@media(max-width:520px){.app{padding:12px}.panel{border-radius:17px}.sidebar,.game{padding:15px}.row{grid-template-columns:1fr}.timer{font-size:3.1rem}.stat{min-width:78px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><h1>🎭 Class Charades Arena</h1><p>Choose an actor, run the timer, and track every student’s score.</p></div><div class="badge">600 PROMPTS</div></header>
+<div class="grid">
+<aside class="panel sidebar">
+  <div class="section"><h3>1. Student roster</h3><div class="row" style="margin-bottom:10px"><button class="secondary" id="addStudent">＋ Add student</button><button class="ghost" id="randomPlayer">🎲 Random player</button></div><div class="roster" id="roster"></div></div>
+  <div class="section"><h3>2. Round settings</h3>
+    <label for="playerSelect">Student playing</label><select id="playerSelect"></select>
+    <div class="row" style="margin-top:11px">
+      <div><label for="difficulty">Difficulty</label><select id="difficulty"><option value="easy">Easy — one word</option><option value="medium">Medium — noun + verb</option><option value="hard">Hard — complex scene</option></select></div>
+      <div><label for="roundMinutes">Round length</label><select id="roundMinutes"><option value="1">1 minute</option><option value="2">2 minutes</option><option value="3">3 minutes</option><option value="5" selected>5 minutes</option><option value="7">7 minutes</option><option value="10">10 minutes</option></select></div>
+    </div>
+    <div style="margin-top:11px"><label for="cardSeconds">New prompt every</label><select id="cardSeconds"><option value="15">15 seconds</option><option value="30">30 seconds</option><option value="45">45 seconds</option><option value="60" selected>1 minute</option><option value="90">90 seconds</option><option value="120">2 minutes</option></select></div>
+    <label class="switch-line"><input type="checkbox" id="shuffleToggle" checked> Shuffle without repeating until all 200 are used</label>
+  </div>
+  <button class="primary full" id="startRound">▶ Start round</button>
+  <p class="note">Keyboard: <b>C</b> correct · <b>X</b> incorrect · <b>S</b> skip · <b>U</b> undo · <b>Space</b> pause</p>
+</aside>
+<main>
+<section class="panel game">
+  <div class="topbar"><div class="player-chip"><span class="player-dot"></span><span id="activePlayer">Choose a student</span></div><div class="stats"><div class="stat"><b id="correctCount">0</b><span>Correct</span></div><div class="stat"><b id="wrongCount">0</b><span>Incorrect</span></div><div class="stat"><b id="skipCount">0</b><span>Skipped</span></div><div class="stat"><b id="expiredCount">0</b><span>Unanswered</span></div></div></div>
+  <div class="timer-wrap"><div class="timer-line"><div class="timer" id="timer">05:00</div><div class="next-label">Next prompt: <span id="nextTimer">01:00</span></div></div><div class="progress"><div id="progressBar"></div></div></div>
+  <div class="card"><div class="word placeholder" id="word">Set up the round, then press Start.</div></div>
+  <div class="actions"><button class="action correct" id="correctBtn">✓ Correct</button><button class="action wrong" id="wrongBtn">✕ Incorrect</button><button class="action skip" id="skipBtn">↪ Skip / Next</button></div>
+  <div class="controls"><button class="ghost" id="pauseBtn">⏸ Pause</button><button class="ghost" id="undoBtn">↶ Undo last mark</button><button class="ghost" id="newWordBtn">⚡ Next — unanswered</button><button class="ghost" id="endBtn">■ End round</button><button class="ghost" id="fullscreenBtn">⛶ Fullscreen</button></div>
+</section>
+<section class="panel scoreboard"><div class="score-head"><div><h2 style="margin-bottom:4px">🏆 Scoreboard</h2><div class="note" style="margin:0">Score equals correct answers only. Use − / + to fix accidental marks.</div></div><button class="ghost" id="resetScores">Reset scores</button></div><div id="scoreTable"></div></section>
+</main>
+</div>
+</div>
+<div class="modal-backdrop" id="resultModal"><div class="modal"><div style="font-size:3rem">🎉</div><h2 id="resultTitle">Round complete!</h2><p id="resultSubtitle"></p><div class="result-big" id="resultScore">0</div><div>correct answers</div><div class="result-grid" style="grid-template-columns:repeat(4,1fr)"><div><b id="modalWrong">0</b><span>Incorrect</span></div><div><b id="modalSkip">0</b><span>Skipped</span></div><div><b id="modalExpired">0</b><span>Unanswered</span></div><div><b id="modalSeen">0</b><span>Prompts seen</span></div></div><button class="primary full" id="closeModal">Continue</button></div></div>
+
+<script>
+const WORD_BANKS={"easy": ["apple", "banana", "orange", "watermelon", "strawberry", "pineapple", "carrot", "potato", "tomato", "pizza", "hamburger", "sandwich", "noodles", "rice", "cake", "cookie", "ice cream", "popcorn", "chocolate", "cheese", "cat", "dog", "rabbit", "mouse", "horse", "cow", "pig", "sheep", "goat", "chicken", "duck", "frog", "fish", "shark", "whale", "dolphin", "octopus", "crab", "turtle", "snake", "lion", "tiger", "elephant", "monkey", "panda", "bear", "giraffe", "zebra", "kangaroo", "penguin", "eagle", "owl", "parrot", "butterfly", "bee", "spider", "ant", "dinosaur", "dragon", "unicorn", "baby", "teacher", "doctor", "nurse", "chef", "farmer", "police officer", "firefighter", "pilot", "astronaut", "king", "queen", "pirate", "clown", "magician", "robot", "superhero", "princess", "detective", "monster", "book", "pencil", "eraser", "ruler", "backpack", "chair", "table", "door", "window", "clock", "phone", "camera", "computer", "television", "lamp", "mirror", "umbrella", "key", "balloon", "gift", "car", "bus", "train", "airplane", "boat", "bicycle", "motorcycle", "rocket", "taxi", "truck", "house", "school", "hospital", "restaurant", "park", "zoo", "beach", "mountain", "castle", "island", "sun", "moon", "star", "cloud", "rain", "snow", "wind", "rainbow", "thunder", "fire", "happy", "sad", "angry", "scared", "tired", "hungry", "thirsty", "cold", "hot", "surprised", "run", "walk", "jump", "swim", "dance", "sing", "sleep", "eat", "drink", "laugh", "cry", "read", "write", "draw", "cook", "clap", "wave", "kick", "throw", "catch", "brush", "wash", "open", "close", "push", "pull", "sit", "stand", "crawl", "fly", "soccer", "basketball", "tennis", "baseball", "golf", "boxing", "skiing", "skating", "surfing", "yoga", "birthday", "wedding", "party", "concert", "movie", "game", "homework", "music", "photo", "dream", "toothbrush", "pillow", "suitcase", "violin", "drum", "helmet", "ladder", "treasure", "volcano", "ghost"], "medium": ["cat dancing", "cat sneezing", "cat juggling", "cat sleepwalking", "cat whispering", "cat skating", "cat cooking", "cat painting", "dog dancing", "dog sneezing", "dog juggling", "dog sleepwalking", "dog whispering", "dog skating", "dog cooking", "dog painting", "rabbit dancing", "rabbit sneezing", "rabbit juggling", "rabbit sleepwalking", "rabbit whispering", "rabbit skating", "rabbit cooking", "rabbit painting", "monkey dancing", "monkey sneezing", "monkey juggling", "monkey sleepwalking", "monkey whispering", "monkey skating", "monkey cooking", "monkey painting", "panda dancing", "panda sneezing", "panda juggling", "panda sleepwalking", "panda whispering", "panda skating", "panda cooking", "panda painting", "elephant dancing", "elephant sneezing", "elephant juggling", "elephant sleepwalking", "elephant whispering", "elephant skating", "elephant cooking", "elephant painting", "penguin dancing", "penguin sneezing", "penguin juggling", "penguin sleepwalking", "penguin whispering", "penguin skating", "penguin cooking", "penguin painting", "shark dancing", "shark sneezing", "shark juggling", "shark sleepwalking", "shark whispering", "shark skating", "shark cooking", "shark painting", "octopus dancing", "octopus sneezing", "octopus juggling", "octopus sleepwalking", "octopus whispering", "octopus skating", "octopus cooking", "octopus painting", "dinosaur dancing", "dinosaur sneezing", "dinosaur juggling", "dinosaur sleepwalking", "dinosaur whispering", "dinosaur skating", "dinosaur cooking", "dinosaur painting", "teacher dancing", "teacher sneezing", "teacher juggling", "teacher sleepwalking", "teacher whispering", "teacher skating", "teacher cooking", "teacher painting", "doctor dancing", "doctor sneezing", "doctor juggling", "doctor sleepwalking", "doctor whispering", "doctor skating", "doctor cooking", "doctor painting", "chef dancing", "chef sneezing", "chef juggling", "chef sleepwalking", "chef whispering", "chef skating", "chef cooking", "chef painting", "farmer dancing", "farmer sneezing", "farmer juggling", "farmer sleepwalking", "farmer whispering", "farmer skating", "farmer cooking", "farmer painting", "pilot dancing", "pilot sneezing", "pilot juggling", "pilot sleepwalking", "pilot whispering", "pilot skating", "pilot cooking", "pilot painting", "astronaut dancing", "astronaut sneezing", "astronaut juggling", "astronaut sleepwalking", "astronaut whispering", "astronaut skating", "astronaut cooking", "astronaut painting", "pirate dancing", "pirate sneezing", "pirate juggling", "pirate sleepwalking", "pirate whispering", "pirate skating", "pirate cooking", "pirate painting", "clown dancing", "clown sneezing", "clown juggling", "clown sleepwalking", "clown whispering", "clown skating", "clown cooking", "clown painting", "magician dancing", "magician sneezing", "magician juggling", "magician sleepwalking", "magician whispering", "magician skating", "magician cooking", "magician painting", "robot dancing", "robot sneezing", "robot juggling", "robot sleepwalking", "robot whispering", "robot skating", "robot cooking", "robot painting", "superhero dancing", "superhero sneezing", "superhero juggling", "superhero sleepwalking", "superhero whispering", "superhero skating", "superhero cooking", "superhero painting", "detective dancing", "detective sneezing", "detective juggling", "detective sleepwalking", "detective whispering", "detective skating", "detective cooking", "detective painting", "king dancing", "king sneezing", "king juggling", "king sleepwalking", "king whispering", "king skating", "king cooking", "king painting", "queen dancing", "queen sneezing", "queen juggling", "queen sleepwalking", "queen whispering", "queen skating", "queen cooking", "queen painting", "baby dancing", "baby sneezing", "baby juggling", "baby sleepwalking", "baby whispering", "baby skating", "baby cooking", "baby painting"], "hard": ["nervous astronaut chasing a runaway balloon while answering a phone", "nervous astronaut cooking dinner while the kitchen fills with smoke", "nervous astronaut crossing a river while protecting a birthday cake", "nervous astronaut giving a speech while a bee circles the stage", "nervous astronaut trying to sleep while an alarm keeps ringing", "nervous astronaut opening an umbrella as a strong wind blows", "nervous astronaut taking a selfie while riding a wild horse", "nervous astronaut searching for keys while a dog steals a shoe", "nervous astronaut dancing at a wedding while carrying hot soup", "nervous astronaut building a robot while the lights keep flickering", "grumpy pirate chasing a runaway balloon while answering a phone", "grumpy pirate cooking dinner while the kitchen fills with smoke", "grumpy pirate crossing a river while protecting a birthday cake", "grumpy pirate giving a speech while a bee circles the stage", "grumpy pirate trying to sleep while an alarm keeps ringing", "grumpy pirate opening an umbrella as a strong wind blows", "grumpy pirate taking a selfie while riding a wild horse", "grumpy pirate searching for keys while a dog steals a shoe", "grumpy pirate dancing at a wedding while carrying hot soup", "grumpy pirate building a robot while the lights keep flickering", "excited teacher chasing a runaway balloon while answering a phone", "excited teacher cooking dinner while the kitchen fills with smoke", "excited teacher crossing a river while protecting a birthday cake", "excited teacher giving a speech while a bee circles the stage", "excited teacher trying to sleep while an alarm keeps ringing", "excited teacher opening an umbrella as a strong wind blows", "excited teacher taking a selfie while riding a wild horse", "excited teacher searching for keys while a dog steals a shoe", "excited teacher dancing at a wedding while carrying hot soup", "excited teacher building a robot while the lights keep flickering", "sleepy superhero chasing a runaway balloon while answering a phone", "sleepy superhero cooking dinner while the kitchen fills with smoke", "sleepy superhero crossing a river while protecting a birthday cake", "sleepy superhero giving a speech while a bee circles the stage", "sleepy superhero trying to sleep while an alarm keeps ringing", "sleepy superhero opening an umbrella as a strong wind blows", "sleepy superhero taking a selfie while riding a wild horse", "sleepy superhero searching for keys while a dog steals a shoe", "sleepy superhero dancing at a wedding while carrying hot soup", "sleepy superhero building a robot while the lights keep flickering", "confused chef chasing a runaway balloon while answering a phone", "confused chef cooking dinner while the kitchen fills with smoke", "confused chef crossing a river while protecting a birthday cake", "confused chef giving a speech while a bee circles the stage", "confused chef trying to sleep while an alarm keeps ringing", "confused chef opening an umbrella as a strong wind blows", "confused chef taking a selfie while riding a wild horse", "confused chef searching for keys while a dog steals a shoe", "confused chef dancing at a wedding while carrying hot soup", "confused chef building a robot while the lights keep flickering", "dramatic detective chasing a runaway balloon while answering a phone", "dramatic detective cooking dinner while the kitchen fills with smoke", "dramatic detective crossing a river while protecting a birthday cake", "dramatic detective giving a speech while a bee circles the stage", "dramatic detective trying to sleep while an alarm keeps ringing", "dramatic detective opening an umbrella as a strong wind blows", "dramatic detective taking a selfie while riding a wild horse", "dramatic detective searching for keys while a dog steals a shoe", "dramatic detective dancing at a wedding while carrying hot soup", "dramatic detective building a robot while the lights keep flickering", "clumsy magician chasing a runaway balloon while answering a phone", "clumsy magician cooking dinner while the kitchen fills with smoke", "clumsy magician crossing a river while protecting a birthday cake", "clumsy magician giving a speech while a bee circles the stage", "clumsy magician trying to sleep while an alarm keeps ringing", "clumsy magician opening an umbrella as a strong wind blows", "clumsy magician taking a selfie while riding a wild horse", "clumsy magician searching for keys while a dog steals a shoe", "clumsy magician dancing at a wedding while carrying hot soup", "clumsy magician building a robot while the lights keep flickering", "brave firefighter chasing a runaway balloon while answering a phone", "brave firefighter cooking dinner while the kitchen fills with smoke", "brave firefighter crossing a river while protecting a birthday cake", "brave firefighter giving a speech while a bee circles the stage", "brave firefighter trying to sleep while an alarm keeps ringing", "brave firefighter opening an umbrella as a strong wind blows", "brave firefighter taking a selfie while riding a wild horse", "brave firefighter searching for keys while a dog steals a shoe", "brave firefighter dancing at a wedding while carrying hot soup", "brave firefighter building a robot while the lights keep flickering", "jealous king chasing a runaway balloon while answering a phone", "jealous king cooking dinner while the kitchen fills with smoke", "jealous king crossing a river while protecting a birthday cake", "jealous king giving a speech while a bee circles the stage", "jealous king trying to sleep while an alarm keeps ringing", "jealous king opening an umbrella as a strong wind blows", "jealous king taking a selfie while riding a wild horse", "jealous king searching for keys while a dog steals a shoe", "jealous king dancing at a wedding while carrying hot soup", "jealous king building a robot while the lights keep flickering", "cheerful robot chasing a runaway balloon while answering a phone", "cheerful robot cooking dinner while the kitchen fills with smoke", "cheerful robot crossing a river while protecting a birthday cake", "cheerful robot giving a speech while a bee circles the stage", "cheerful robot trying to sleep while an alarm keeps ringing", "cheerful robot opening an umbrella as a strong wind blows", "cheerful robot taking a selfie while riding a wild horse", "cheerful robot searching for keys while a dog steals a shoe", "cheerful robot dancing at a wedding while carrying hot soup", "cheerful robot building a robot while the lights keep flickering", "frightened doctor chasing a runaway balloon while answering a phone", "frightened doctor cooking dinner while the kitchen fills with smoke", "frightened doctor crossing a river while protecting a birthday cake", "frightened doctor giving a speech while a bee circles the stage", "frightened doctor trying to sleep while an alarm keeps ringing", "frightened doctor opening an umbrella as a strong wind blows", "frightened doctor taking a selfie while riding a wild horse", "frightened doctor searching for keys while a dog steals a shoe", "frightened doctor dancing at a wedding while carrying hot soup", "frightened doctor building a robot while the lights keep flickering", "proud penguin chasing a runaway balloon while answering a phone", "proud penguin cooking dinner while the kitchen fills with smoke", "proud penguin crossing a river while protecting a birthday cake", "proud penguin giving a speech while a bee circles the stage", "proud penguin trying to sleep while an alarm keeps ringing", "proud penguin opening an umbrella as a strong wind blows", "proud penguin taking a selfie while riding a wild horse", "proud penguin searching for keys while a dog steals a shoe", "proud penguin dancing at a wedding while carrying hot soup", "proud penguin building a robot while the lights keep flickering", "impatient farmer chasing a runaway balloon while answering a phone", "impatient farmer cooking dinner while the kitchen fills with smoke", "impatient farmer crossing a river while protecting a birthday cake", "impatient farmer giving a speech while a bee circles the stage", "impatient farmer trying to sleep while an alarm keeps ringing", "impatient farmer opening an umbrella as a strong wind blows", "impatient farmer taking a selfie while riding a wild horse", "impatient farmer searching for keys while a dog steals a shoe", "impatient farmer dancing at a wedding while carrying hot soup", "impatient farmer building a robot while the lights keep flickering", "shy dinosaur chasing a runaway balloon while answering a phone", "shy dinosaur cooking dinner while the kitchen fills with smoke", "shy dinosaur crossing a river while protecting a birthday cake", "shy dinosaur giving a speech while a bee circles the stage", "shy dinosaur trying to sleep while an alarm keeps ringing", "shy dinosaur opening an umbrella as a strong wind blows", "shy dinosaur taking a selfie while riding a wild horse", "shy dinosaur searching for keys while a dog steals a shoe", "shy dinosaur dancing at a wedding while carrying hot soup", "shy dinosaur building a robot while the lights keep flickering", "angry ballerina chasing a runaway balloon while answering a phone", "angry ballerina cooking dinner while the kitchen fills with smoke", "angry ballerina crossing a river while protecting a birthday cake", "angry ballerina giving a speech while a bee circles the stage", "angry ballerina trying to sleep while an alarm keeps ringing", "angry ballerina opening an umbrella as a strong wind blows", "angry ballerina taking a selfie while riding a wild horse", "angry ballerina searching for keys while a dog steals a shoe", "angry ballerina dancing at a wedding while carrying hot soup", "angry ballerina building a robot while the lights keep flickering", "curious alien chasing a runaway balloon while answering a phone", "curious alien cooking dinner while the kitchen fills with smoke", "curious alien crossing a river while protecting a birthday cake", "curious alien giving a speech while a bee circles the stage", "curious alien trying to sleep while an alarm keeps ringing", "curious alien opening an umbrella as a strong wind blows", "curious alien taking a selfie while riding a wild horse", "curious alien searching for keys while a dog steals a shoe", "curious alien dancing at a wedding while carrying hot soup", "curious alien building a robot while the lights keep flickering", "forgetful professor chasing a runaway balloon while answering a phone", "forgetful professor cooking dinner while the kitchen fills with smoke", "forgetful professor crossing a river while protecting a birthday cake", "forgetful professor giving a speech while a bee circles the stage", "forgetful professor trying to sleep while an alarm keeps ringing", "forgetful professor opening an umbrella as a strong wind blows", "forgetful professor taking a selfie while riding a wild horse", "forgetful professor searching for keys while a dog steals a shoe", "forgetful professor dancing at a wedding while carrying hot soup", "forgetful professor building a robot while the lights keep flickering", "frozen explorer chasing a runaway balloon while answering a phone", "frozen explorer cooking dinner while the kitchen fills with smoke", "frozen explorer crossing a river while protecting a birthday cake", "frozen explorer giving a speech while a bee circles the stage", "frozen explorer trying to sleep while an alarm keeps ringing", "frozen explorer opening an umbrella as a strong wind blows", "frozen explorer taking a selfie while riding a wild horse", "frozen explorer searching for keys while a dog steals a shoe", "frozen explorer dancing at a wedding while carrying hot soup", "frozen explorer building a robot while the lights keep flickering", "suspicious clown chasing a runaway balloon while answering a phone", "suspicious clown cooking dinner while the kitchen fills with smoke", "suspicious clown crossing a river while protecting a birthday cake", "suspicious clown giving a speech while a bee circles the stage", "suspicious clown trying to sleep while an alarm keeps ringing", "suspicious clown opening an umbrella as a strong wind blows", "suspicious clown taking a selfie while riding a wild horse", "suspicious clown searching for keys while a dog steals a shoe", "suspicious clown dancing at a wedding while carrying hot soup", "suspicious clown building a robot while the lights keep flickering", "exhausted athlete chasing a runaway balloon while answering a phone", "exhausted athlete cooking dinner while the kitchen fills with smoke", "exhausted athlete crossing a river while protecting a birthday cake", "exhausted athlete giving a speech while a bee circles the stage", "exhausted athlete trying to sleep while an alarm keeps ringing", "exhausted athlete opening an umbrella as a strong wind blows", "exhausted athlete taking a selfie while riding a wild horse", "exhausted athlete searching for keys while a dog steals a shoe", "exhausted athlete dancing at a wedding while carrying hot soup", "exhausted athlete building a robot while the lights keep flickering"]};
+const state={
+ students:[
+  {id:crypto.randomUUID(),name:"Student 1",score:0,rounds:0,correct:0,wrong:0,skipped:0,expired:0},
+  {id:crypto.randomUUID(),name:"Student 2",score:0,rounds:0,correct:0,wrong:0,skipped:0,expired:0},
+  {id:crypto.randomUUID(),name:"Student 3",score:0,rounds:0,correct:0,wrong:0,skipped:0,expired:0}
+ ],
+ running:false,paused:false,interval:null,remaining:300,total:300,cardRemaining:60,cardInterval:60,
+ currentPlayerId:null,currentWord:"",currentPromptOpen:false,queue:[],
+ round:{correct:0,wrong:0,skipped:0,expired:0,seen:0,history:[]}
+};
+const $=id=>document.getElementById(id);
+const fmt=secs=>`${String(Math.floor(secs/60)).padStart(2,"0")}:${String(secs%60).padStart(2,"0")}`;
+function normalizeStudent(s,i=0){
+ return {
+  id:s.id||crypto.randomUUID(),name:s.name||`Student ${i+1}`,
+  score:Number(s.score)||0,rounds:Number(s.rounds)||0,correct:Number(s.correct)||0,
+  wrong:Number(s.wrong)||0,skipped:Number(s.skipped)||0,expired:Number(s.expired)||0
+ }
+}
+function save(){localStorage.setItem("charadesArenaData",JSON.stringify({students:state.students}))}
+function load(){
+ try{
+  const data=JSON.parse(localStorage.getItem("charadesArenaData"));
+  if(data?.students?.length)state.students=data.students.map(normalizeStudent)
+ }catch(e){}
+}
+function escapeHtml(str){return String(str).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function addStudent(){
+ state.students.push(normalizeStudent({name:`Student ${state.students.length+1}`},state.students.length));
+ renderAll();save()
+}
+function renderRoster(){
+ const roster=$("roster");roster.innerHTML="";
+ state.students.forEach((s,i)=>{
+  const row=document.createElement("div");row.className="student-row";
+  const input=document.createElement("input");input.value=s.name;input.setAttribute("aria-label",`Student ${i+1} name`);
+  input.onchange=()=>{s.name=input.value.trim()||`Student ${i+1}`;renderPlayerSelect();renderScoreboard();save()};
+  const del=document.createElement("button");del.className="icon-btn";del.textContent="×";del.title="Remove student";
+  del.onclick=()=>{
+   if(state.running)return alert("End or abandon the round before changing the roster.");
+   state.students=state.students.filter(x=>x.id!==s.id);
+   if(!state.students.length)state.students.push(normalizeStudent({name:"Student 1"},0));
+   renderAll();save()
+  };
+  row.append(input,del);roster.append(row)
+ })
+}
+function renderPlayerSelect(){
+ const sel=$("playerSelect"),previous=sel.value||state.currentPlayerId;sel.innerHTML="";
+ state.students.forEach(s=>{const o=document.createElement("option");o.value=s.id;o.textContent=s.name;sel.append(o)});
+ if(state.students.some(s=>s.id===previous))sel.value=previous;
+ state.currentPlayerId=sel.value||state.students[0]?.id||null;updateActivePlayer()
+}
+function renderScoreboard(){
+ if(!state.students.length){$("scoreTable").innerHTML='<div class="empty">Add students to begin.</div>';return}
+ const sorted=[...state.students].sort((a,b)=>b.score-a.score||b.correct-a.correct||a.name.localeCompare(b.name));
+ let html='<table><thead><tr><th>Rank</th><th>Student</th><th>Score</th><th>Rounds</th><th>Correct</th><th>Incorrect</th><th>Skipped</th><th>Unanswered</th><th>Adjust</th></tr></thead><tbody>';
+ sorted.forEach((s,i)=>{
+  html+=`<tr class="${i===0&&s.score>0?'leader':''}">
+   <td class="rank">${i+1}</td><td>${escapeHtml(s.name)}</td><td><b>${s.score}</b></td>
+   <td>${s.rounds}</td><td>${s.correct}</td><td>${s.wrong}</td><td>${s.skipped}</td><td>${s.expired}</td>
+   <td style="white-space:nowrap">
+    <button class="ghost score-adjust" data-id="${s.id}" data-delta="-1" title="Remove one correct answer" style="padding:6px 10px">−</button>
+    <button class="ghost score-adjust" data-id="${s.id}" data-delta="1" title="Add one correct answer" style="padding:6px 10px">＋</button>
+   </td></tr>`
+ });
+ $("scoreTable").innerHTML=html+"</tbody></table>";
+ document.querySelectorAll(".score-adjust").forEach(btn=>btn.onclick=()=>{
+  if(state.running)return alert("Finish the active round before adjusting saved scores.");
+  const student=state.students.find(s=>s.id===btn.dataset.id);
+  const delta=Number(btn.dataset.delta);
+  if(!student)return;
+  if(delta<0&&student.correct<=0)return;
+  student.correct=Math.max(0,student.correct+delta);
+  student.score=Math.max(0,student.score+delta);
+  save();renderScoreboard()
+ })
+}
+function renderAll(){renderRoster();renderPlayerSelect();renderScoreboard();updateTimerUI();updateRoundStats()}
+function updateActivePlayer(){const p=state.students.find(s=>s.id===state.currentPlayerId);$("activePlayer").textContent=p?p.name:"Choose a student"}
+function updateTimerUI(){
+ $("timer").textContent=fmt(Math.max(0,state.remaining));
+ $("nextTimer").textContent=fmt(Math.max(0,Math.min(state.cardRemaining,state.remaining)));
+ $("progressBar").style.width=`${Math.max(0,state.remaining/state.total*100)}%`
+}
+function updateRoundStats(){
+ $("correctCount").textContent=state.round.correct;
+ $("wrongCount").textContent=state.round.wrong;
+ $("skipCount").textContent=state.round.skipped;
+ $("expiredCount").textContent=state.round.expired
+}
+function makeQueue(){
+ state.queue=[...WORD_BANKS[$("difficulty").value]];
+ if($("shuffleToggle").checked){
+  for(let i=state.queue.length-1;i>0;i--){
+   const j=Math.floor(Math.random()*(i+1));[state.queue[i],state.queue[j]]=[state.queue[j],state.queue[i]]
+  }
+ }
+}
+function showNextWord(){
+ if(!state.running)return;if(!state.queue.length)makeQueue();
+ state.currentWord=$("shuffleToggle").checked?state.queue.pop():state.queue[Math.floor(Math.random()*state.queue.length)];
+ state.currentPromptOpen=true;state.round.seen++;state.cardRemaining=Math.min(state.cardInterval,state.remaining);
+ const word=$("word");word.textContent=state.currentWord;word.classList.remove("placeholder","flash");
+ word.classList.toggle("small",state.currentWord.length>42);void word.offsetWidth;word.classList.add("flash");updateTimerUI()
+}
+function resolveCurrent(type,showAnother=true){
+ if(!state.running||state.paused||!state.currentPromptOpen)return;
+ if(!["correct","wrong","skipped","expired"].includes(type))return;
+ state.round[type]++;
+ state.round.history.push(type);
+ state.currentPromptOpen=false;
+ updateRoundStats();
+ if(showAnother&&state.remaining>0)showNextWord()
+}
+function abandonRound(){
+ clearInterval(state.interval);state.running=false;state.paused=false;state.currentPromptOpen=false;
+ $("word").style.filter="none";$("word").textContent="Round abandoned — no score was saved.";$("word").className="word placeholder";
+ $("pauseBtn").textContent="⏸ Pause"
+}
+function startRound(){
+ if(state.running){
+  const abandon=confirm("A round is already running. Abandon it without saving and start a new round?");
+  if(!abandon)return;
+  abandonRound()
+ }
+ state.currentPlayerId=$("playerSelect").value;if(!state.currentPlayerId)return alert("Please add and choose a student.");
+ state.total=Number($("roundMinutes").value)*60;state.remaining=state.total;
+ state.cardInterval=Number($("cardSeconds").value);state.cardRemaining=Math.min(state.cardInterval,state.remaining);
+ state.round={correct:0,wrong:0,skipped:0,expired:0,seen:0,history:[]};
+ state.running=true;state.paused=false;state.currentPromptOpen=false;makeQueue();showNextWord();
+ $("pauseBtn").textContent="⏸ Pause";updateActivePlayer();updateRoundStats();updateTimerUI();
+ clearInterval(state.interval);state.interval=setInterval(tick,1000)
+}
+function tick(){
+ if(!state.running||state.paused)return;
+ state.remaining--;state.cardRemaining--;
+ if(state.remaining<=0){
+  state.remaining=0;
+  if(state.currentPromptOpen)resolveCurrent("expired",false);
+  updateTimerUI();endRound(true);return
+ }
+ if(state.cardRemaining<=0)resolveCurrent("expired",true);
+ updateTimerUI()
+}
+function answer(type){resolveCurrent(type,true)}
+function undoLastMark(){
+ if(!state.running||state.paused)return;
+ const last=state.round.history.pop();
+ if(!last)return alert("There is no answer mark to undo.");
+ state.round[last]=Math.max(0,state.round[last]-1);
+ updateRoundStats()
+}
+function togglePause(){
+ if(!state.running)return;state.paused=!state.paused;
+ $("pauseBtn").textContent=state.paused?"▶ Resume":"⏸ Pause";
+ $("word").style.filter=state.paused?"blur(16px)":"none"
+}
+function endRound(show=true){
+ if(!state.running)return;
+ clearInterval(state.interval);state.running=false;state.paused=false;$("word").style.filter="none";
+ const p=state.students.find(s=>s.id===state.currentPlayerId);
+ if(p){
+  p.score+=state.round.correct;p.rounds++;p.correct+=state.round.correct;
+  p.wrong+=state.round.wrong;p.skipped+=state.round.skipped;p.expired+=state.round.expired
+ }
+ state.currentPromptOpen=false;save();renderScoreboard();
+ $("word").textContent="Round finished — choose the next student.";$("word").className="word placeholder";
+ if(show){
+  $("resultSubtitle").textContent=`${p?.name||"Student"} finished the round with`;
+  $("resultScore").textContent=state.round.correct;
+  $("modalWrong").textContent=state.round.wrong;$("modalSkip").textContent=state.round.skipped;
+  $("modalExpired").textContent=state.round.expired;$("modalSeen").textContent=state.round.seen;
+  $("resultModal").classList.add("show")
+ }
+}
+$("addStudent").onclick=addStudent;
+$("randomPlayer").onclick=()=>{
+ if(!state.students.length)return;
+ const s=state.students[Math.floor(Math.random()*state.students.length)];
+ $("playerSelect").value=s.id;state.currentPlayerId=s.id;updateActivePlayer()
+};
+$("playerSelect").onchange=e=>{state.currentPlayerId=e.target.value;updateActivePlayer()};
+$("roundMinutes").onchange=()=>{if(!state.running){state.total=Number($("roundMinutes").value)*60;state.remaining=state.total;updateTimerUI()}};
+$("cardSeconds").onchange=()=>{if(!state.running){state.cardInterval=Number($("cardSeconds").value);state.cardRemaining=state.cardInterval;updateTimerUI()}};
+$("startRound").onclick=startRound;
+$("correctBtn").onclick=()=>answer("correct");
+$("wrongBtn").onclick=()=>answer("wrong");
+$("skipBtn").onclick=()=>answer("skipped");
+$("newWordBtn").onclick=()=>resolveCurrent("expired",true);
+$("undoBtn").onclick=undoLastMark;
+$("pauseBtn").onclick=togglePause;
+$("endBtn").onclick=()=>{
+ if(!state.running)return;
+ if(state.currentPromptOpen)resolveCurrent("expired",false);
+ endRound(true)
+};
+$("closeModal").onclick=()=>$("resultModal").classList.remove("show");
+$("resetScores").onclick=()=>{
+ if(state.running)return alert("Finish the active round before resetting scores.");
+ if(!confirm("Reset every student's scoreboard?"))return;
+ state.students.forEach(s=>Object.assign(s,{score:0,rounds:0,correct:0,wrong:0,skipped:0,expired:0}));
+ save();renderScoreboard()
+};
+$("fullscreenBtn").onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()};
+document.addEventListener("keydown",e=>{
+ if(e.target.matches("input,select"))return;
+ if(e.code==="Space"){e.preventDefault();togglePause()}
+ if(e.key.toLowerCase()==="c")answer("correct");
+ if(e.key.toLowerCase()==="x")answer("wrong");
+ if(e.key.toLowerCase()==="s")answer("skipped");
+ if(e.key.toLowerCase()==="u")undoLastMark()
+});
+window.addEventListener("beforeunload",()=>clearInterval(state.interval));
+load();renderAll();
+</script>
+</body>
+</html>
