@@ -410,7 +410,7 @@ import { RefreshCw } from "@lucide/astro";
         const lessonMatch = detail.match(/^(Lesson\s+\d+)\s+(.+)$/i);
         const explicitPrivate = detail.match(/^(.+?)\s+1-1$/i);
         const isDescriptor =
-          /^(TEDx|备赛|student interview|Classes|FBI分享|WSDA国赛)$/i.test(detail) ||
+          /^(TEDx|备赛|student interview|\u9762\u8bd5|Classes|FBI分享|WSDA国赛)$/i.test(detail) ||
           /All day|Sharing|分享/i.test(main);
         let name = "";
 
