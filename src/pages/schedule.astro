@@ -400,10 +400,11 @@ import { RefreshCw } from "@lucide/astro";
         let main = separatorIndex >= 0 ? line.slice(0, separatorIndex).trim() : line;
         let detail = separatorIndex >= 0 ? line.slice(separatorIndex + 3).trim() : "";
         const inferredMode = mode || (/\b(?:LB|HC|JH)\b/.test(main) ? "线下" : "");
+        const locationSuffix = inferredMode === "\u7ebf\u4e0b" ? " (SH)" : "";
 
         if (main.includes("班课")) {
           main = main.replace(/\s*班课\s*/g, " 班课").trim();
-          return `${main}${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}`;
+          return `${main}${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}${locationSuffix}`;
         }
 
         const lessonMatch = detail.match(/^(Lesson\s+\d+)\s+(.+)$/i);
@@ -425,15 +426,15 @@ import { RefreshCw } from "@lucide/astro";
         }
 
         if (name) {
-          return `${main} (${name}) 1-1${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}`;
+          return `${main} (${name}) 1-1${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}${locationSuffix}`;
         }
 
         if (/\b1-1\b/i.test(main)) {
           main = main.replace(/\s*1-1\s*/i, " 1-1").trim();
-          return `${main}${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}`;
+          return `${main}${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}${locationSuffix}`;
         }
 
-        return `${main}${mode ? ` ${mode}` : ""}${detail ? ` - ${detail}` : ""}`;
+        return `${main}${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}${locationSuffix}`;
       }
 
       function highlightKind(value: string) {
