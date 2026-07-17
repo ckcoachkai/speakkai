@@ -433,7 +433,12 @@ import { RefreshCw } from "@lucide/astro";
         let main = separatorIndex >= 0 ? line.slice(0, separatorIndex).trim() : line;
         let detail = separatorIndex >= 0 ? line.slice(separatorIndex + 3).trim() : "";
         const inferredMode = mode || (/\b(?:LB|HC|JH)\b/.test(main) ? "线下" : "");
-        const locationSuffix = inferredMode === "\u7ebf\u4e0b" ? " (SH)" : "";
+        const shLocationMatch = inferredMode === "\u7ebf\u4e0b" ? main.match(/\b(LB|JH)\b/i) : null;
+        const shLocation = shLocationMatch?.[1].toUpperCase() ?? "";
+        if (shLocationMatch) {
+          main = main.replace(shLocationMatch[0], "").replace(/\s+/g, " ").trim();
+        }
+        const locationSuffix = inferredMode === "\u7ebf\u4e0b" ? `${shLocation ? ` ${shLocation}` : ""} (SH)` : "";
 
         if (main.includes("班课")) {
           main = main.replace(/\s*班课\s*/g, " 班课").trim();
