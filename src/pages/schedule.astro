@@ -230,6 +230,7 @@ import { RefreshCw } from "@lucide/astro";
 
       .event-line.kind-standard { border-left-color: #004165; background: #e5f0f4; }
       .event-line.kind-private { border-left-color: #00a7b5; background: #ddf7f8; }
+      .event-line.kind-tmc { border-left-color: #772432; background: #f5e8ea; }
 
       .notes-rail {
         min-width: 0;
@@ -455,6 +456,7 @@ import { RefreshCw } from "@lucide/astro";
       }
 
       function highlightKind(value: string) {
+        if (/\(TMC\)/i.test(value)) return "tmc";
         if (/make-?up workday/i.test(value)) return "makeup";
         if (/holiday/i.test(value)) return "holiday";
         if (/\btravel\b|all day (?:taiwan|thailand)/i.test(value)) return "travel";
@@ -490,6 +492,7 @@ import { RefreshCw } from "@lucide/astro";
           const colors = {
             private: ["#00a7b5", "#ddf7f8"],
             standard: ["#004165", "#e5f0f4"],
+            tmc: ["#772432", "#f5e8ea"],
             travel: ["#d6a800", "#fff6cc"],
             holiday: ["#2e7d32", "#e8f5e9"],
             makeup: ["#9aa1a8", "#eef1f3"],
