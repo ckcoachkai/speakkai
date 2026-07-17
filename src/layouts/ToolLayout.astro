@@ -1,5 +1,6 @@
 ---
 import { ChevronsDown, ChevronsUp } from "@lucide/astro";
+import SiteFooter from "../components/SiteFooter.astro";
 
 interface Props {
   pageTitle: string;
@@ -104,8 +105,8 @@ const { pageTitle, description, toolTitle, toolSrc } = Astro.props;
       .tool-frame {
         display: block;
         width: 100%;
-        height: calc(100vh - 48px);
-        height: calc(100dvh - 48px);
+        height: calc(100vh - 74px);
+        height: calc(100dvh - 74px);
         border: 0;
         background: #090d14;
       }
@@ -120,8 +121,8 @@ const { pageTitle, description, toolTitle, toolSrc } = Astro.props;
       :global(body.nav-collapsed) .collapse-icon { display: none; }
       :global(body.nav-collapsed) .expand-icon { display: block; }
       :global(body.nav-collapsed) .tool-frame {
-        height: calc(100vh - 28px);
-        height: calc(100dvh - 28px);
+        height: calc(100vh - 54px);
+        height: calc(100dvh - 54px);
       }
 
       @media (max-width: 640px) {
@@ -143,8 +144,8 @@ const { pageTitle, description, toolTitle, toolSrc } = Astro.props;
         .nav-toggle { right: 7px; width: 30px; height: 30px; }
 
         .tool-frame {
-          height: calc(100vh - 46px);
-          height: calc(100dvh - 46px);
+          height: calc(100vh - 72px);
+          height: calc(100dvh - 72px);
         }
       }
     </style>
@@ -175,6 +176,7 @@ const { pageTitle, description, toolTitle, toolSrc } = Astro.props;
       title={toolTitle}
       allow="autoplay"
     ></iframe>
+    <SiteFooter />
     <script>
       const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
 
