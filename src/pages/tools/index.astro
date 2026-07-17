@@ -111,8 +111,8 @@ const pageTitle = "Tools | SpeakKai";
 
       .tools-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
       }
 
       .tool-card {
@@ -126,7 +126,7 @@ const pageTitle = "Tools | SpeakKai";
       .tool-preview {
         display: block;
         width: 100%;
-        aspect-ratio: 16 / 9;
+        height: 190px;
         object-fit: cover;
         object-position: center top;
         border-bottom: 1px solid #d7e0ec;
@@ -136,7 +136,7 @@ const pageTitle = "Tools | SpeakKai";
       .tool-content {
         display: grid;
         gap: 13px;
-        padding: 24px;
+        padding: 20px;
       }
 
       .tool-label {
@@ -153,7 +153,7 @@ const pageTitle = "Tools | SpeakKai";
       .tool-content h2 {
         margin: 0;
         color: #142b50;
-        font-size: 25px;
+        font-size: 23px;
         line-height: 1.15;
         letter-spacing: 0;
       }
@@ -183,6 +183,10 @@ const pageTitle = "Tools | SpeakKai";
 
       .tool-link:hover { background: #07589f; }
 
+      @media (max-width: 920px) {
+        .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+
       @media (max-width: 700px) {
         .site-header { min-height: 46px; }
 
@@ -205,6 +209,7 @@ const pageTitle = "Tools | SpeakKai";
 
         .page-heading p { font-size: 16px; }
         .tools-grid { grid-template-columns: 1fr; }
+        .tool-preview { height: clamp(150px, 42vw, 175px); }
         .tool-content { padding: 20px; }
       }
     </style>
