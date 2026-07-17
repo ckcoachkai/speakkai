@@ -557,9 +557,10 @@ import { RefreshCw } from "@lucide/astro";
           const event = document.createElement("span");
           const formattedLine = formatEventLine(line);
           const highlightedKind = highlightKind(formattedLine);
-          const isPrivate =
-            /\b1-1\b/i.test(formattedLine) ||
-            /\((?!SH\))[^()]+\)\s+(?:线上|线下)(?:\s|$)/.test(formattedLine);
+          const hasNamedStudent =
+            /\((?!SH\)|TMC\)|Booked\)|Planned\))[^()]+\)/i.test(formattedLine) &&
+            /(?:线上|线下)(?:\s|$)/.test(formattedLine);
+          const isPrivate = /\b1-1\b/i.test(formattedLine) || hasNamedStudent;
           const kind = highlightedKind || (isPrivate ? "private" : /线上(?:\s|$)/.test(formattedLine) ? "online" : "standard");
           const colors = {
             private: ["#7e22ce", "#f3e8ff"],
