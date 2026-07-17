@@ -562,7 +562,7 @@ function App() {
           <div className="event-toolbar">
             <div>
               <span className="eyebrow">{mode === 'speech' ? 'Speech event' : 'Debate format'}</span>
-              <strong>{mode === 'speech' ? speechTiming?.label : debateFormat === 'pf' ? 'Public Forum' : debateFormat === 'bp' ? 'British Parliamentary' : debateFormat === 'junior' ? 'Junior Debate - Classroom Default' : selectedSavedFormat?.name || 'Custom Debate Format'}</strong>
+              <strong>{mode === 'speech' ? speechTiming?.label : debateFormat === 'pf' ? 'Public Forum' : debateFormat === 'bp' ? 'British Parliamentary' : debateFormat === 'junior' ? 'Junior Debate' : selectedSavedFormat?.name || 'Custom Debate Format'}</strong>
             </div>
             {mode === 'speech' ? (
               <select value={speechPreset} onChange={(event) => switchSpeech(event.target.value)} aria-label="Speech event">
@@ -582,7 +582,7 @@ function App() {
               <select value={debateFormat} onChange={(event) => switchDebate(event.target.value)} aria-label="Debate format">
                 <option value="pf">Public Forum</option>
                 <option value="bp">British Parliamentary</option>
-                <option value="junior">Junior Debate - Classroom Default</option>
+                <option value="junior">Junior Debate</option>
                 <option value="custom">Custom Debate Format</option>
                 {savedFormats.map((format) => <option key={format.id} value={`saved:${format.id}`}>{format.name}</option>)}
               </select>
