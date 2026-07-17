@@ -4,4 +4,4 @@ WHEEL OF DOOM
 2. Double-click Wheel-of-DOOM.html.
 3. The game runs offline in your browser.
 
-The uploaded center image and contestant list are stored locally in that browser.
+Speaker slice photos, the page background, and the contestant list are stored locally in that browser.
