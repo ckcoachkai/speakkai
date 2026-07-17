@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, Drama, Gamepad2 } from "@lucide/astro";
+import { ArrowRight, Drama, Gamepad2, Timer } from "@lucide/astro";
 import ContactStrip from "../../components/ContactStrip.astro";
 
 const pageTitle = "Tools | SpeakKai";
@@ -274,6 +274,31 @@ const pageTitle = "Tools | SpeakKai";
               live team scoring.
             </p>
             <a class="tool-link" href="/tools/class-charades/">
+              Open tool
+              <ArrowRight size={17} stroke-width={2.2} aria-hidden="true" />
+            </a>
+          </div>
+        </article>
+
+        <article class="tool-card">
+          <img
+            class="tool-preview"
+            src="/images/toastmasters-timer-preview.png"
+            width="1280"
+            height="720"
+            alt="Toastmasters Speech Timer preview"
+          />
+          <div class="tool-content">
+            <span class="tool-label">
+              <Timer size={16} stroke-width={2.2} aria-hidden="true" />
+              Speaking tool
+            </span>
+            <h2>Toastmasters Speech Timer</h2>
+            <p>
+              Time prepared speeches, evaluations, and Table Topics with
+              automatic green, yellow, and red timing signals.
+            </p>
+            <a class="tool-link" href="/tools/toastmasters-timer/">
               Open tool
               <ArrowRight size={17} stroke-width={2.2} aria-hidden="true" />
             </a>
