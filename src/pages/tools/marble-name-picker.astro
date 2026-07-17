@@ -1,4 +1,6 @@
 ---
+import ContactStrip from "../../components/ContactStrip.astro";
+
 const pageTitle = "Marble Name Picker | SpeakKai Tools";
 ---
 
@@ -77,8 +79,8 @@ const pageTitle = "Marble Name Picker | SpeakKai Tools";
       .game-frame {
         display: block;
         width: 100%;
-        height: calc(100vh - 62px);
-        height: calc(100dvh - 62px);
+        height: calc(100vh - 158px);
+        height: calc(100dvh - 158px);
         border: 0;
         background: #090d14;
       }
@@ -101,8 +103,8 @@ const pageTitle = "Marble Name Picker | SpeakKai Tools";
         }
 
         .game-frame {
-          height: calc(100vh - 52px);
-          height: calc(100dvh - 52px);
+          height: calc(100vh - 140px);
+          height: calc(100dvh - 140px);
         }
       }
     </style>
@@ -117,6 +119,7 @@ const pageTitle = "Marble Name Picker | SpeakKai Tools";
         <a href="/#contact">Contact</a>
       </nav>
     </header>
+    <ContactStrip />
     <iframe
       class="game-frame"
       src="/games/marble-name-picker.html"

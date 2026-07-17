@@ -1,0 +1,104 @@
+---
+interface Props {
+  id?: string;
+}
+
+const { id } = Astro.props;
+---
+
+<section class="contact-strip" id={id} aria-label="Contact Coach Kai">
+  <div class="contact-inner">
+    <div class="contact-qr-wrap">
+      <img
+        class="contact-qr"
+        src="/images/coach-kai-wechat-qr.png"
+        width="938"
+        height="1340"
+        alt="Coach Kai WeChat QR code"
+      />
+    </div>
+    <div class="contact-copy">
+      <strong>Contact Coach Kai</strong>
+      <span>WeChat: <b>CKcoachkai</b></span>
+      <span>小红书: <b>CKcoachkai</b></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-strip {
+    display: flex;
+    height: 96px;
+    border-bottom: 1px solid #d5deed;
+    background: #f4f8fd;
+  }
+
+  .contact-inner {
+    display: flex;
+    width: min(100% - 32px, 1120px);
+    height: 100%;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin: 0 auto;
+  }
+
+  .contact-qr-wrap {
+    position: relative;
+    width: 76px;
+    height: 76px;
+    flex: 0 0 76px;
+    overflow: hidden;
+    border: 1px solid #c7d4e5;
+    border-radius: 4px;
+    background: #fff;
+  }
+
+  .contact-qr {
+    position: absolute;
+    top: -68.33%;
+    left: -28.33%;
+    display: block;
+    width: 156.33%;
+    max-width: none;
+    height: auto;
+  }
+
+  .contact-copy {
+    display: grid;
+    gap: 2px;
+    color: #40546f;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  .contact-copy strong {
+    margin-bottom: 2px;
+    color: #102c54;
+    font-size: 14px;
+  }
+
+  .contact-copy b {
+    color: #152f55;
+    font-weight: 850;
+  }
+
+  @media (max-width: 640px) {
+    .contact-strip { height: 88px; }
+
+    .contact-inner {
+      width: min(100% - 20px, 420px);
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .contact-qr-wrap {
+      width: 68px;
+      height: 68px;
+      flex-basis: 68px;
+    }
+
+    .contact-copy { font-size: 11px; }
+    .contact-copy strong { font-size: 13px; }
+  }
+</style>
