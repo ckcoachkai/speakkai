@@ -209,11 +209,9 @@ input[type="range"] { accent-color:var(--accent); }
 .secondary { border:1px solid var(--line); color:var(--text); background:var(--panel-solid); }
 .primary { border:0; background:var(--accent); color:#fff; }
 .danger { border:0; background:#ea4335; color:#fff; }
-.winner-modal { width:min(490px,100%); text-align:center; overflow:hidden; border-color:rgba(251,188,5,.28); }
-.winner-banner { background:linear-gradient(105deg,#4285f4,#34a853 48%,#fbbc05 74%,#ea4335); color:#fff; padding:20px; font-size:11px; font-weight:900; letter-spacing:2.4px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,.12); }
-.winner-icon { width:54px; height:54px; margin:26px auto 0; display:grid; place-items:center; border-radius:50%; background:rgba(66,133,244,.1); border:1px solid rgba(66,133,244,.22); color:var(--accent); font-size:25px; font-weight:950; }
-.winner-name { font-size:clamp(32px,7vw,54px); font-weight:950; padding:16px 24px 8px; letter-spacing:-1.4px; overflow-wrap:anywhere; }
-.winner-caption { color:var(--muted); font-size:12px; padding:0 24px 14px; }
+.winner-modal { width:min(490px,100%); text-align:center; overflow:hidden; border-color:rgba(66,133,244,.3); }
+.winner-banner { background:#1967d2; color:#fff; padding:20px; font-size:11px; font-weight:900; letter-spacing:2.4px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,.14); }
+.winner-name { font-size:clamp(32px,7vw,54px); font-weight:950; padding:30px 24px 18px; letter-spacing:-1.4px; overflow-wrap:anywhere; }
 .winner-actions { display:flex; justify-content:center; gap:10px; padding:10px 20px 26px; }
 .save-list { display:flex; flex-direction:column; gap:8px; }
 .save-row { display:grid; grid-template-columns:1fr auto auto; gap:7px; align-items:center; border:1px solid var(--line); border-radius:10px; padding:11px; }
@@ -634,11 +632,8 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
           h('circle', { cx:300, cy:300, r:274, fill:'none', stroke:'rgba(255,255,255,.82)', strokeWidth:4 }),
           h('circle', { cx:300, cy:300, r:265, fill:'none', stroke:'rgba(0,0,0,.18)', strokeWidth:2 })
         ),
-        h('circle', { cx:300, cy:300, r:64, fill:'#0f1117', stroke:'#fbbc05', strokeWidth:5 }),
-        h('g', null,
-          h('circle', { cx:300, cy:300, r:48, fill:'rgba(66,133,244,.13)', stroke:'rgba(255,255,255,.14)', strokeWidth:1 }),
-          h('text', { x:300, y:309, textAnchor:'middle', fill:'#fbbc05', fontSize:28, fontWeight:950 }, '!')
-        )
+        h('circle', { cx:300, cy:300, r:64, fill:'#0f1117', stroke:'#4285f4', strokeWidth:5 }),
+        h('circle', { cx:300, cy:300, r:48, fill:'rgba(66,133,244,.18)', stroke:'rgba(255,255,255,.18)', strokeWidth:1 })
       ),
       h('div', { className:'pointer' })
     );
@@ -703,9 +698,7 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
     return h('div', { className:'modal-backdrop' },
       h('div', { className:'modal winner-modal' },
         h('div', { className:'winner-banner' }, 'The Wheel Has Spoken'),
-        h('div', { className:'winner-icon' }, '!'),
         h('div', { className:'winner-name' }, props.winner.name),
-        h('div', { className:'winner-caption' }, 'Fate has made its selection.'),
         h('div', { className:'winner-actions' },
           h('button', { className:'secondary', onClick:props.onClose }, 'Close'),
           h('button', { className:'danger', onClick:props.onRemove }, 'Remove')
