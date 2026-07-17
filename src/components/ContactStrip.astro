@@ -1,12 +1,13 @@
 ---
 interface Props {
   id?: string;
+  variant?: "strip" | "page";
 }
 
-const { id } = Astro.props;
+const { id, variant = "strip" } = Astro.props;
 ---
 
-<section class="contact-strip" id={id} aria-label="Contact Coach Kai">
+<section class:list={["contact-strip", { "is-page": variant === "page" }]} id={id} aria-label="Contact Coach Kai">
   <div class="contact-inner">
     <div class="contact-qr-wrap">
       <img
@@ -18,7 +19,7 @@ const { id } = Astro.props;
       />
     </div>
     <div class="contact-copy">
-      <strong>Contact Coach Kai</strong>
+      {variant === "page" ? <h1>Contact Coach Kai</h1> : <strong>Contact Coach Kai</strong>}
       <span>WeChat: <b>CKcoachkai</b></span>
       <span>小红书: <b>CKcoachkai</b></span>
     </div>
@@ -78,9 +79,42 @@ const { id } = Astro.props;
     font-size: 14px;
   }
 
+  .contact-copy h1 {
+    margin: 0 0 8px;
+    color: #102c54;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: 0;
+  }
+
   .contact-copy b {
     color: #152f55;
     font-weight: 850;
+  }
+
+  .contact-strip.is-page {
+    min-height: calc(100vh - 62px);
+    height: auto;
+    border-bottom: 0;
+  }
+
+  .is-page .contact-inner {
+    justify-content: center;
+    gap: clamp(28px, 6vw, 72px);
+    padding: 48px 0;
+  }
+
+  .is-page .contact-qr-wrap {
+    width: min(34vw, 320px);
+    height: min(34vw, 320px);
+    flex-basis: min(34vw, 320px);
+    border-color: #afc1d7;
+    box-shadow: 0 14px 34px rgb(28 58 91 / 12%);
+  }
+
+  .is-page .contact-copy {
+    gap: 9px;
+    font-size: 18px;
   }
 
   @media (max-width: 640px) {
@@ -100,5 +134,23 @@ const { id } = Astro.props;
 
     .contact-copy { font-size: 11px; }
     .contact-copy strong { font-size: 13px; }
+
+    .contact-strip.is-page { min-height: calc(100vh - 52px); }
+
+    .is-page .contact-inner {
+      width: min(100% - 32px, 420px);
+      flex-direction: column;
+      gap: 24px;
+      padding: 36px 0 54px;
+      text-align: center;
+    }
+
+    .is-page .contact-qr-wrap {
+      width: min(74vw, 280px);
+      height: min(74vw, 280px);
+      flex-basis: min(74vw, 280px);
+    }
+
+    .is-page .contact-copy { font-size: 16px; }
   }
 </style>
