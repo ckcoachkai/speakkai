@@ -169,8 +169,6 @@ import { RefreshCw } from "@lucide/astro";
         text-align: center;
       }
 
-      th.is-weekend { background: #0f8a83; }
-
       td {
         height: auto;
         padding: 0;
@@ -194,8 +192,6 @@ import { RefreshCw } from "@lucide/astro";
         overflow: visible;
       }
 
-      tbody tr:nth-child(odd) td { background: #e8eef4; }
-      td.is-weekend { background: #dcefeb !important; }
       td.is-empty { background: #e9eeec !important; }
 
       .date-line {
@@ -435,7 +431,7 @@ import { RefreshCw } from "@lucide/astro";
 
         if (main.includes("班课")) {
           main = main.replace(/\s*班课\s*/g, " 班课").trim();
-          return `${main}${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}${locationSuffix}`;
+          return `${main}${detail ? ` - ${detail}` : ""}${locationSuffix}${inferredMode ? ` ${inferredMode}` : ""}`;
         }
 
         const lessonMatch = detail.match(/^(Lesson\s+\d+)\s+(.+)$/i);
@@ -457,15 +453,15 @@ import { RefreshCw } from "@lucide/astro";
         }
 
         if (name) {
-          return `${main} (${name})${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}${locationSuffix}`;
+          return `${main} (${name})${detail ? ` - ${detail}` : ""}${locationSuffix}${inferredMode ? ` ${inferredMode}` : ""}`;
         }
 
         if (/\b1-1\b/i.test(main)) {
           main = main.replace(/\s*1-1\s*/i, " 1-1").trim();
-          return `${main}${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}${locationSuffix}`;
+          return `${main}${detail ? ` - ${detail}` : ""}${locationSuffix}${inferredMode ? ` ${inferredMode}` : ""}`;
         }
 
-        return `${main}${inferredMode ? ` ${inferredMode}` : ""}${detail ? ` - ${detail}` : ""}${locationSuffix}`;
+        return `${main}${detail ? ` - ${detail}` : ""}${locationSuffix}${inferredMode ? ` ${inferredMode}` : ""}`;
       }
 
       function highlightKind(value: string) {
@@ -614,7 +610,6 @@ import { RefreshCw } from "@lucide/astro";
           th.style.cssText =
             "height:29px;padding:4px 3px;border:1px solid #8da3bf;color:#fff;background:#173d70;font-size:11px;font-weight:720;text-align:center";
           if (column === 0 || column === 6) th.classList.add("is-weekend");
-          if (column === 0 || column === 6) th.style.background = "#0f8a83";
           headerRow.append(th);
         }
         thead.append(headerRow);
@@ -624,9 +619,8 @@ import { RefreshCw } from "@lucide/astro";
           const tr = document.createElement("tr");
           for (let column = 0; column < 7; column += 1) {
             const td = document.createElement("td");
-            td.style.cssText = `height:auto;padding:0;overflow:visible;border:1px solid #9eb0c8;vertical-align:top;background:${tbody.children.length % 2 === 0 ? "#e8eef4" : "#ffffff"};font-size:9px;line-height:1.24`;
+            td.style.cssText = "height:auto;padding:0;overflow:visible;border:1px solid #9eb0c8;vertical-align:top;background:#fff;font-size:9px;line-height:1.24";
             if (column === 0 || column === 6) td.classList.add("is-weekend");
-            if (column === 0 || column === 6) td.style.background = "#dcefeb";
             appendLines(
               td,
               (row.cells?.[column]?.value ?? "")
