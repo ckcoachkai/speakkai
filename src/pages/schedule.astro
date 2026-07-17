@@ -34,10 +34,17 @@ import { RefreshCw } from "@lucide/astro";
       .coach-banner {
         position: relative;
         width: 100%;
-        height: clamp(180px, 25vw, 340px);
+        height: auto;
+        aspect-ratio: 4 / 1;
         overflow: hidden;
         border-bottom: 1px solid #224d83;
         background: #06142f;
+      }
+
+      .coach-banner picture {
+        display: block;
+        width: 100%;
+        height: 100%;
       }
 
       .coach-banner img {
@@ -45,7 +52,7 @@ import { RefreshCw } from "@lucide/astro";
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: center 12%;
+        object-position: center;
       }
 
       .banner-socials {
@@ -368,8 +375,7 @@ import { RefreshCw } from "@lucide/astro";
       }
 
       @media (max-width: 640px) {
-        .coach-banner { height: 180px; }
-        .coach-banner img { object-position: center; }
+        .coach-banner { aspect-ratio: 1683 / 935; }
         .banner-socials {
           right: 8px;
           bottom: 8px;
@@ -395,14 +401,22 @@ import { RefreshCw } from "@lucide/astro";
   </head>
   <body>
     <section class="coach-banner" aria-label="Coach Kai social media">
-      <img
-        src="/images/coach-kai-banner.png"
-        alt="Coach Kai"
-        width="1680"
-        height="945"
-        fetchpriority="high"
-        decoding="async"
-      />
+      <picture>
+        <source
+          media="(max-width: 640px)"
+          srcset="/images/coach-kai-banner-mobile.png"
+          width="1683"
+          height="935"
+        />
+        <img
+          src="/images/coach-kai-banner-desktop.png"
+          alt="Coach Kai"
+          width="2508"
+          height="627"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </picture>
       <div class="banner-socials">
         <span>WeChat: <strong>CKcoachkai</strong></span>
         <span>小红书: <strong>CKcoachkai</strong></span>
