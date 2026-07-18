@@ -1,0 +1,169 @@
+---
+import { ArrowRight, Disc3, Drama, Gamepad2, Swords, Timer } from "@lucide/astro";
+
+const tools = [
+  {
+    name: "Marble Name Picker",
+    description: "Release player marbles and let the physics board choose the next participant.",
+    href: "/tools/marble-name-picker/",
+    image: "/images/marble-name-picker-preview.png",
+    imageAlt: "Marble Name Picker physics board preview",
+    label: "Classroom game",
+    icon: Gamepad2,
+  },
+  {
+    name: "Class Charades",
+    description: "Run fast-paced charades rounds with prompts, a timer, and live team scoring.",
+    href: "/tools/class-charades/",
+    image: "/images/class-charades-preview.png",
+    imageAlt: "Class Charades game arena preview",
+    label: "Classroom game",
+    icon: Drama,
+  },
+  {
+    name: "Toastmasters Speech Timer",
+    description: "Time speeches, evaluations, and Table Topics with clear timing signals.",
+    href: "/tools/toastmasters-timer/",
+    image: "/images/toastmasters-timer-preview.png",
+    imageAlt: "Toastmasters Speech Timer preview",
+    label: "Speaking tool",
+    icon: Timer,
+  },
+  {
+    name: "Wheel of Doom",
+    description: "Choose the next participant with a colorful, customizable random wheel.",
+    href: "/tools/wheel-of-doom/",
+    image: "/images/wheel-of-doom-preview.png",
+    imageAlt: "Wheel of Doom random name picker preview",
+    label: "Classroom game",
+    icon: Disc3,
+  },
+  {
+    name: "Speech & Debate Timer",
+    description: "Competition and classroom timing for speech and debate events.",
+    href: "/tools/speech-debate-timer/",
+    image: "/images/speech-debate-timer-preview.png",
+    imageAlt: "Student Speech and Debate Timer preview",
+    label: "Competition tool",
+    icon: Swords,
+  },
+];
+---
+
+<div class="tools-grid" aria-label="Available tools">
+  {tools.map((tool) => {
+    const Icon = tool.icon;
+    return (
+      <article class="tool-card">
+        <img
+          class="tool-preview"
+          src={tool.image}
+          width="1280"
+          height="720"
+          alt={tool.imageAlt}
+        />
+        <div class="tool-content">
+          <span class="tool-label">
+            <Icon size={16} stroke-width={2.2} aria-hidden="true" />
+            {tool.label}
+          </span>
+          <h2>{tool.name}</h2>
+          <p>{tool.description}</p>
+          <a class="tool-link" href={tool.href}>
+            Open tool
+            <ArrowRight size={17} stroke-width={2.2} aria-hidden="true" />
+          </a>
+        </div>
+      </article>
+    );
+  })}
+</div>
+
+<style>
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .tool-card {
+    overflow: hidden;
+    border: 1px solid #cbd7e7;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 14px 34px rgb(26 55 89 / 10%);
+  }
+
+  .tool-preview {
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    object-position: center top;
+    border-bottom: 1px solid #d7e0ec;
+    background: #0b111b;
+  }
+
+  .tool-content {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 13px;
+    padding: 20px;
+  }
+
+  .tool-label {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 7px;
+    color: #087c98;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0;
+    color: #142b50;
+    font-size: 23px;
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+
+  p {
+    margin: 0;
+    color: #5b6b80;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .tool-link {
+    display: inline-flex;
+    width: fit-content;
+    min-height: 44px;
+    align-items: center;
+    gap: 9px;
+    margin-top: 3px;
+    padding: 11px 16px;
+    border-radius: 5px;
+    background: #0b68bb;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 850;
+    text-decoration: none;
+  }
+
+  .tool-link:hover { background: #07589f; }
+  .tool-link:focus-visible { outline: 3px solid #80d6d1; outline-offset: 3px; }
+
+  @media (max-width: 920px) {
+    .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 680px) {
+    .tools-grid { grid-template-columns: 1fr; }
+    .tool-preview { height: clamp(150px, 42vw, 175px); }
+  }
+</style>
