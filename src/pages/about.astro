@@ -1,5 +1,6 @@
 ---
 import SiteFooter from "../components/SiteFooter.astro";
+import SiteNavigation from "../components/SiteNavigation.astro";
 ---
 
 <!doctype html>
@@ -434,13 +435,7 @@ import SiteFooter from "../components/SiteFooter.astro";
       </section>
 
       <header class="site-header">
-        <nav class="site-nav" aria-label="Main navigation">
-          <a href="/">Home</a>
-          <a href="/about/" aria-current="page">About</a>
-          <a href="/schedule/">Schedule</a>
-          <a href="/resources/">Resources</a>
-          <a href="/contact/">Contact</a>
-        </nav>
+        <SiteNavigation current="about" />
       </header>
 
       <section class="about-section" id="about" aria-labelledby="about-title">

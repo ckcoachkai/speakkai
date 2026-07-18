@@ -1,6 +1,7 @@
 ---
 import ContactStrip from "../components/ContactStrip.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import SiteNavigation from "../components/SiteNavigation.astro";
 ---
 
 <!doctype html>
@@ -195,13 +196,7 @@ import SiteFooter from "../components/SiteFooter.astro";
       </section>
 
       <header class="site-header">
-        <nav class="site-nav" aria-label="Main navigation">
-          <a href="/" aria-current="page">Home</a>
-          <a href="/about/">About</a>
-          <a href="/schedule/">Schedule</a>
-          <a href="/resources/">Resources</a>
-          <a href="/contact/">Contact</a>
-        </nav>
+        <SiteNavigation current="home" />
       </header>
 
       <ContactStrip id="contact" />

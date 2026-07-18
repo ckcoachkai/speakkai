@@ -1,6 +1,7 @@
 ---
 import ContactStrip from "../components/ContactStrip.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import SiteNavigation from "../components/SiteNavigation.astro";
 
 const pageTitle = "Contact Coach Kai | SpeakKai";
 ---
@@ -86,13 +87,7 @@ const pageTitle = "Contact Coach Kai | SpeakKai";
   </head>
   <body>
     <header class="site-header">
-      <nav class="site-nav" aria-label="Main navigation">
-        <a href="/">Home</a>
-        <a href="/about/">About</a>
-        <a href="/schedule/">Schedule</a>
-        <a href="/resources/">Resources</a>
-        <a href="/contact/" aria-current="page">Contact</a>
-      </nav>
+      <SiteNavigation current="contact" />
     </header>
 
     <ContactStrip variant="page" />

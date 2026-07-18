@@ -1,6 +1,7 @@
 ---
 import { ChevronsDown, ChevronsUp } from "@lucide/astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import SiteNavigation from "../components/SiteNavigation.astro";
 
 interface Props {
   pageTitle: string;
@@ -152,13 +153,7 @@ const { pageTitle, description, toolTitle, toolSrc } = Astro.props;
   </head>
   <body>
     <header class="site-header">
-      <nav class="site-nav" aria-label="Main navigation">
-        <a href="/">Home</a>
-        <a href="/about/">About</a>
-        <a href="/schedule/">Schedule</a>
-        <a href="/resources/" aria-current="page">Resources</a>
-        <a href="/contact/">Contact</a>
-      </nav>
+      <SiteNavigation current="resources" compact />
       <button
         class="nav-toggle"
         type="button"

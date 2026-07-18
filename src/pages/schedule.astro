@@ -1,6 +1,7 @@
 ---
 import { RefreshCw } from "@lucide/astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import SiteNavigation from "../components/SiteNavigation.astro";
 ---
 
 <!doctype html>
@@ -480,13 +481,7 @@ import SiteFooter from "../components/SiteFooter.astro";
         <h1 id="schedule-title">Coach Kai's Timeslot</h1>
         <p id="updated-time">正在载入 Loading</p>
       </div>
-      <nav class="site-nav" aria-label="Main navigation">
-        <a href="/">Home</a>
-        <a href="/about/">About</a>
-        <a href="/schedule/" aria-current="page">Schedule</a>
-        <a href="/resources/">Resources</a>
-        <a href="/contact/">Contact</a>
-      </nav>
+      <SiteNavigation current="schedule" />
       <button class="refresh-button" type="button" title="Refresh" aria-label="Refresh schedule">
         <RefreshCw size={17} stroke-width={2} aria-hidden="true" />
       </button>

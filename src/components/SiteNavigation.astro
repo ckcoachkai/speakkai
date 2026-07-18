@@ -1,0 +1,132 @@
+---
+interface Props {
+  current?: "home" | "about" | "schedule" | "resources" | "contact";
+  compact?: boolean;
+}
+
+const { current, compact = false } = Astro.props;
+---
+
+<nav class:list={["site-nav", { "is-compact": compact }]} aria-label="Main navigation">
+  <a href="/" aria-current={current === "home" ? "page" : undefined}>Home</a>
+  <a href="/about/" aria-current={current === "about" ? "page" : undefined}>About</a>
+  <a href="/schedule/" aria-current={current === "schedule" ? "page" : undefined}>Schedule</a>
+  <details class="resources-menu">
+    <summary aria-current={current === "resources" ? "page" : undefined}>Resources</summary>
+    <div class="resources-links">
+      <a href="/resources/slides/">Slides</a>
+      <a href="/resources/tools/">Tools</a>
+    </div>
+  </details>
+  <a href="/contact/" aria-current={current === "contact" ? "page" : undefined}>Contact</a>
+</nav>
+
+<style>
+  .site-nav {
+    display: flex;
+    width: min(100%, 720px);
+    align-items: center;
+    justify-content: center;
+    gap: clamp(14px, 2.8vw, 38px);
+  }
+
+  .site-nav a,
+  .resources-menu > summary {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 3px 12px;
+    border-bottom: 2px solid transparent;
+    color: #294568;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .resources-menu { position: relative; }
+  .resources-menu > summary { list-style: none; gap: 7px; }
+  .resources-menu > summary::-webkit-details-marker { display: none; }
+
+  .resources-menu > summary::after {
+    width: 6px;
+    height: 6px;
+    margin-top: -3px;
+    border-right: 2px solid currentcolor;
+    border-bottom: 2px solid currentcolor;
+    content: "";
+    transform: rotate(45deg);
+  }
+
+  .resources-menu[open] > summary::after { margin-top: 3px; transform: rotate(225deg); }
+
+  .site-nav a:hover,
+  .site-nav a[aria-current="page"],
+  .resources-menu > summary:hover,
+  .resources-menu > summary[aria-current="page"] {
+    border-bottom-color: #19a9c5;
+    color: #0a5f91;
+  }
+
+  .site-nav a:focus-visible,
+  .resources-menu > summary:focus-visible {
+    border-radius: 3px;
+    outline: 3px solid #80d6d1;
+    outline-offset: 2px;
+  }
+
+  .resources-links {
+    position: absolute;
+    z-index: 20;
+    top: calc(100% + 6px);
+    left: 50%;
+    display: grid;
+    min-width: 138px;
+    padding: 5px;
+    border: 1px solid #cbd7e7;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 12px 28px rgb(20 43 80 / 18%);
+    transform: translateX(-50%);
+  }
+
+  .resources-links a {
+    min-height: 38px;
+    justify-content: flex-start;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .resources-links a:hover { border: 0; background: #eaf5f7; }
+
+  @media (max-width: 700px) {
+    .site-nav,
+    .site-nav.is-compact {
+      width: 100%;
+      margin-right: 0;
+      gap: 0;
+    }
+
+    .site-nav a,
+    .resources-menu {
+      min-width: 0;
+      flex: 1 1 20%;
+    }
+
+    .site-nav a,
+    .resources-menu > summary {
+      min-height: 46px;
+      padding: 13px 1px 11px;
+      font-size: clamp(10px, 3.2vw, 13px);
+      text-align: center;
+    }
+
+    .resources-menu > summary { width: 100%; }
+    .resources-links { right: 0; left: auto; transform: none; }
+    .resources-links a { min-height: 38px; padding: 10px 12px; font-size: 14px; }
+  }
+</style>

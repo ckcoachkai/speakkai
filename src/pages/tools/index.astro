@@ -1,6 +1,7 @@
 ---
 import { ArrowRight, Disc3, Drama, Gamepad2, Swords, Timer } from "@lucide/astro";
 import SiteFooter from "../../components/SiteFooter.astro";
+import SiteNavigation from "../../components/SiteNavigation.astro";
 
 const pageTitle = "Tools | SpeakKai";
 ---
@@ -216,13 +217,7 @@ const pageTitle = "Tools | SpeakKai";
   </head>
   <body>
     <header class="site-header">
-      <nav class="site-nav" aria-label="Main navigation">
-        <a href="/">Home</a>
-        <a href="/about/">About</a>
-        <a href="/schedule/">Schedule</a>
-        <a href="/resources/">Resources</a>
-        <a href="/contact/">Contact</a>
-      </nav>
+      <SiteNavigation current="resources" />
     </header>
 
     <main>
