@@ -792,7 +792,8 @@ import SiteNavigation from "../components/SiteNavigation.astro";
 
       function renderSchedule(data: ScheduleData) {
         if (!tabsElement || !scheduleElement || !statusElement || !updatedTime) return;
-        if (data.status !== "ready" || data.sheets.length === 0) {
+        const visibleSheets = data.sheets.filter((sheet) => sheet.title !== "July 2026");
+        if (data.status !== "ready" || visibleSheets.length === 0) {
           showStatus("时间表尚未发布", "Schedule setup is not complete");
           updatedTime.textContent = "等待首次同步 Waiting for first sync";
           return;
@@ -806,7 +807,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
           : "";
 
         tabsElement.replaceChildren();
-        data.sheets.forEach((sheet, index) => {
+        visibleSheets.forEach((sheet, index) => {
           const button = document.createElement("button");
           button.className = "sheet-tab";
           button.type = "button";
@@ -824,7 +825,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
 
         statusElement.hidden = true;
         scheduleElement.hidden = false;
-        renderSheet(data.sheets[0]);
+        renderSheet(visibleSheets[0]);
       }
 
       const scheduleDataUrl = ["localhost", "127.0.0.1"].includes(window.location.hostname)
