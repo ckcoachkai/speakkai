@@ -557,7 +557,11 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         const shLocationMatch = inferredMode === "\u7ebf\u4e0b" ? main.match(/\b(LB|JH)\b/i) : null;
         const shLocation = shLocationMatch?.[1].toUpperCase() ?? "";
         if (shLocationMatch) {
-          main = main.replace(shLocationMatch[0], "").replace(/\s+/g, " ").trim();
+          main = main
+            .replace(shLocationMatch[0], "")
+            .replace(/\s*\(SH\)\s*/gi, " ")
+            .replace(/\s+/g, " ")
+            .trim();
         }
         const locationSuffix = inferredMode === "\u7ebf\u4e0b" ? `${shLocation ? ` ${shLocation}` : ""} (SH)` : "";
 
