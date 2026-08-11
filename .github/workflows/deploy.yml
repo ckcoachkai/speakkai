@@ -4,7 +4,8 @@ on:
   push:
     branches: ["main"]
   schedule:
-    - cron: "7,22,37,52 * * * *"
+    # 08:15 Asia/Shanghai (GitHub Actions schedules use UTC).
+    - cron: "15 0 * * *"
   workflow_dispatch:
 
 permissions:
@@ -14,21 +15,14 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GOOGLE_PUBLISHED_SHEETS_JSON: >-
-        [
-          {"id":260607,"title":"July 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260607&single=true&output=csv"},
-          {"id":260608,"title":"August 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260608&single=true&output=csv"},
-          {"id":260609,"title":"September 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260609&single=true&output=csv"},
-          {"id":260610,"title":"October 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260610&single=true&output=csv"},
-          {"id":260611,"title":"November 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260611&single=true&output=csv"},
-          {"id":260612,"title":"December 2026","url":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pub?gid=260612&single=true&output=csv"}
-        ]
+      GOOGLE_PUBLISHED_SHEETS_URL: https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pubhtml
+      GOOGLE_SCHEDULE_START_MONTH: "2026-07"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,7 +34,7 @@ jobs:
           node-version: 20
       - name: Install
         run: npm install
-      - name: Sync approved Google Sheet tabs
+      - name: Discover and sync published monthly Google Sheet tabs
         run: npm run sync:schedule
       - name: Build
         run: npm run build
