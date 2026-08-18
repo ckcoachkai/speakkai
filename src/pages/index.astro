@@ -97,45 +97,102 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         outline-offset: 2px;
       }
 
-      .home-actions {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: min(100% - 40px, 640px);
-        margin: 0 auto;
-        padding: 52px 0 64px;
+      .home-intro {
+        display: grid;
+        place-items: center;
+        padding: clamp(56px, 8vw, 104px) 24px;
+        background:
+          radial-gradient(circle at 78% 18%, rgb(37 99 235 / 16%), transparent 28rem),
+          #0b1020;
+        color: #fff;
       }
 
-      .schedule-link {
+      .intro-copy {
+        width: min(100%, 940px);
+        text-align: center;
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: #a8c7ff;
+        font-size: clamp(0.78rem, 1.5vw, 0.95rem);
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .home-intro h1 {
+        max-width: 820px;
+        margin: 0 auto;
+        font-size: clamp(2.7rem, 7vw, 5.8rem);
+        line-height: 0.98;
+        letter-spacing: -0.055em;
+      }
+
+      .home-intro h1 span {
+        color: #ffcc00;
+      }
+
+      .intro-lede {
+        max-width: 700px;
+        margin: 28px auto 0;
+        color: #d8e3f6;
+        font-size: clamp(1.05rem, 2vw, 1.3rem);
+        line-height: 1.65;
+      }
+
+      .home-actions {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .home-actions a {
+        display: inline-flex;
+        min-height: 54px;
         align-items: center;
         justify-content: center;
-        width: min(100%, 360px);
-        min-height: 72px;
-        padding: 18px 28px;
-        border: 2px solid #0b5fc7;
-        border-radius: 6px;
-        background: #0b5fc7;
-        color: #fff;
-        font-size: 1.5rem;
-        font-weight: 700;
-        line-height: 1.2;
-        text-align: center;
+        min-width: 180px;
+        padding: 14px 24px;
+        border: 2px solid transparent;
+        border-radius: 999px;
+        font-weight: 800;
         text-decoration: none;
         transition:
           background-color 160ms ease,
           border-color 160ms ease,
+          color 160ms ease,
           transform 160ms ease;
       }
 
-      .schedule-link:hover {
-        border-color: #074a9f;
-        background: #074a9f;
+      .home-actions a:hover {
         transform: translateY(-2px);
       }
 
-      .schedule-link:focus-visible {
-        outline: 3px solid #ffbf47;
+      .primary-cta {
+        background: #2563eb;
+        color: #fff;
+      }
+
+      .primary-cta:hover {
+        background: #1d4ed8;
+      }
+
+      .secondary-cta {
+        border-color: #59749c !important;
+        background: rgb(255 255 255 / 4%);
+        color: #fff;
+      }
+
+      .secondary-cta:hover {
+        border-color: #a8c7ff !important;
+        background: rgb(255 255 255 / 9%);
+      }
+
+      .home-actions a:focus-visible {
+        outline: 3px solid #ffcc00;
         outline-offset: 4px;
       }
 
@@ -160,19 +217,21 @@ import SiteNavigation from "../components/SiteNavigation.astro";
           text-align: center;
         }
 
-        .home-actions {
-          width: min(100% - 32px, 420px);
-          padding: 32px 0 44px;
+        .home-intro {
+          padding: 48px 20px 56px;
         }
 
-        .schedule-link {
-          min-height: 64px;
-          font-size: 1.25rem;
+        .home-actions {
+          display: grid;
+        }
+
+        .home-actions a {
+          width: min(100%, 320px);
         }
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .schedule-link {
+        .home-actions a {
           transition: none;
         }
       }
@@ -199,11 +258,22 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         <SiteNavigation current="home" />
       </header>
 
-      <ContactStrip id="contact" />
-
-      <section class="home-actions" aria-label="Schedule">
-        <a class="schedule-link" href="/schedule/">Schedule</a>
+      <section class="home-intro" aria-labelledby="home-title">
+        <div class="intro-copy">
+          <p class="eyebrow">Communication coaching · Shanghai &amp; online</p>
+          <h1 id="home-title">Speak with clarity.<br /><span>Lead with confidence.</span></h1>
+          <p class="intro-lede">
+            Public speaking, speech and debate, and practical communication
+            coaching for students, adults, and teams.
+          </p>
+          <div class="home-actions" aria-label="Start here">
+            <a class="primary-cta" href="/contact/">Work with Kai</a>
+            <a class="secondary-cta" href="/schedule/">View schedule</a>
+          </div>
+        </div>
       </section>
+
+      <ContactStrip id="contact" />
     </main>
     <SiteFooter />
   </body>
