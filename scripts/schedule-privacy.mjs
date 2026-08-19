@@ -1,8 +1,9 @@
 const PUBLIC_COLUMN_COUNT = 7;
-const PUBLIC_STATUSES = new Set(["Limited availability", "Unavailable"]);
+const PUBLIC_STATUSES = new Set(["Limited availability", "Online available", "Unavailable"]);
 const PUBLIC_BUSY_TIME_PATTERN =
   /^Busy: (?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)?$/;
 const PUBLIC_TRAVEL_LABEL_PATTERN = /^Travel: Malaysia$/;
+const PUBLIC_IN_PERSON_LABEL = "In-person: Malaysia only";
 const RAW_TIME = String.raw`(?:[01]?\d|2[0-3])[:：][0-5]\d`;
 const RAW_TIME_RANGE_PATTERN = new RegExp(
   String.raw`(?<!\d)(${RAW_TIME})\s*(?:-|–|—|~|～|to|至)\s*(${RAW_TIME})(?!\d)`,
@@ -53,6 +54,13 @@ function extractPublicTravelLabel(value) {
   return isTravel && /\bmalaysia\b/i.test(details) ? "Travel: Malaysia" : "";
 }
 
+function isMalaysiaOnlineOpen(value) {
+  const details = String(value ?? "");
+  const isMalaysiaTravel = Boolean(extractPublicTravelLabel(details));
+  const onlineIsOpen = /\bonline\s+(?:is\s+)?(?:open|available)\b/i.test(details);
+  return isMalaysiaTravel && onlineIsOpen;
+}
+
 export function sanitizeCalendarCell(value) {
   const lines = cleanLines(value);
   if (lines.length === 0) return "";
@@ -65,6 +73,15 @@ export function sanitizeCalendarCell(value) {
   if (!details) return day;
 
   const busyTimes = extractBusyTimes(details);
+  if (isMalaysiaOnlineOpen(details)) {
+    return [
+      day,
+      "Online available",
+      PUBLIC_IN_PERSON_LABEL,
+      ...busyTimes.map((time) => `Busy: ${time}`),
+    ].join("\n");
+  }
+
   const unavailable =
     /\ball\s*day\b|\bholiday\b|全天|休假/i.test(details) ||
     (busyTimes.length === 0 && /\btravel\b|\bbooked\b|\bplanned\b|旅行/i.test(details));
@@ -145,12 +162,20 @@ export function assertAvailabilityOnlySheet(sheet) {
       }
 
       const [day, status, ...extra] = cleanLines(value);
-      const invalidBusyTimes = extra.some((line) => !PUBLIC_BUSY_TIME_PATTERN.test(line));
-      const invalidTravelLabels = extra.some((line) => !PUBLIC_TRAVEL_LABEL_PATTERN.test(line));
+      const invalidLimitedDetails = extra.some((line) => !PUBLIC_BUSY_TIME_PATTERN.test(line));
+      const invalidUnavailableDetails = extra.some(
+        (line) => !PUBLIC_TRAVEL_LABEL_PATTERN.test(line),
+      );
+      const invalidOnlineDetails =
+        !extra.includes(PUBLIC_IN_PERSON_LABEL) ||
+        extra.some(
+          (line) => line !== PUBLIC_IN_PERSON_LABEL && !PUBLIC_BUSY_TIME_PATTERN.test(line),
+        );
       const invalidStatusDetails =
         (!status && extra.length > 0) ||
-        (status === "Unavailable" && invalidTravelLabels) ||
-        (status === "Limited availability" && invalidBusyTimes);
+        (status === "Unavailable" && invalidUnavailableDetails) ||
+        (status === "Limited availability" && invalidLimitedDetails) ||
+        (status === "Online available" && invalidOnlineDetails);
 
       if (
         !/^\d{1,2}$/.test(day) ||

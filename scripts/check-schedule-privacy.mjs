@@ -30,5 +30,17 @@ assert.equal(
   sanitizeCalendarCell("29\nAll day Malaysia travel (Booked)"),
   "29\nUnavailable\nTravel: Malaysia",
 );
+assert.equal(
+  sanitizeCalendarCell(
+    "29\n09:15-12:15 private class\n13:00-15:30 private class\nAll day Malaysia (Travel) — Online open; in-person Malaysia only",
+  ),
+  "29\nOnline available\nIn-person: Malaysia only\nBusy: 09:15–12:15\nBusy: 13:00–15:30",
+);
+assert.equal(
+  sanitizeCalendarCell(
+    "30\nAll day Malaysia (Travel) — Online open; in-person Malaysia only",
+  ),
+  "30\nOnline available\nIn-person: Malaysia only",
+);
 assert.equal(sanitizeCalendarCell("1\nAll day Thailand (Planned)"), "1\nUnavailable");
 console.log("Public schedule privacy check passed.");

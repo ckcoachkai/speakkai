@@ -532,8 +532,9 @@ import SiteNavigation from "../components/SiteNavigation.astro";
     <main>
       <div class="availability-note">
         <p>
-          Busy time ranges are listed on limited-availability dates. Unlisted times may
-          be open; student names, lesson details, and locations remain private.
+          Busy time ranges are listed on limited or online-available dates. Unlisted
+          times may be open; online and in-person limits are shown separately while
+          student names, lesson details, and locations remain private.
         </p>
         <a href="/contact/">Confirm a time</a>
       </div>
@@ -600,6 +601,8 @@ import SiteNavigation from "../components/SiteNavigation.astro";
       function availabilityKind(value: string) {
         if (/^Unavailable$/i.test(value)) return "unavailable";
         if (/^Limited availability$/i.test(value)) return "limited";
+        if (/^Online available$/i.test(value)) return "online";
+        if (/^In-person: Malaysia only$/i.test(value)) return "travel";
         if (/^Travel: Malaysia$/i.test(value)) return "travel";
         if (/^Busy: (?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)?$/i.test(value)) {
           return "busy";
@@ -633,6 +636,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
           const colors = {
             unavailable: ["#8a3f46", "#f7e8ea"],
             limited: ["#a66a00", "#fff3d6"],
+            online: ["#0f766e", "#e6fffb"],
             busy: ["#0b5fc7", "#edf5fe"],
             travel: ["#075985", "#e0f2fe"],
           }[kind];
