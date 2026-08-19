@@ -532,8 +532,8 @@ import SiteNavigation from "../components/SiteNavigation.astro";
     <main>
       <div class="availability-note">
         <p>
-          This calendar shows general availability only. Student names, lesson details,
-          locations, and precise appointment times are kept private.
+          Busy time ranges are listed on limited-availability dates. Unlisted times may
+          be open; student names, lesson details, and locations remain private.
         </p>
         <a href="/contact/">Confirm a time</a>
       </div>
@@ -600,6 +600,9 @@ import SiteNavigation from "../components/SiteNavigation.astro";
       function availabilityKind(value: string) {
         if (/^Unavailable$/i.test(value)) return "unavailable";
         if (/^Limited availability$/i.test(value)) return "limited";
+        if (/^Busy: (?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)?$/i.test(value)) {
+          return "busy";
+        }
         return "";
       }
 
@@ -629,6 +632,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
           const colors = {
             unavailable: ["#8a3f46", "#f7e8ea"],
             limited: ["#a66a00", "#fff3d6"],
+            busy: ["#0b5fc7", "#edf5fe"],
           }[kind];
           event.className = `event-line kind-${kind}`;
           event.style.cssText = `display:block;position:relative;min-width:0;margin:0;padding:4px 5px;overflow-wrap:anywhere;border-left:3px solid ${colors[0]};border-radius:3px;color:#20304f;background:${colors[1]};font-size:9px;line-height:1.35`;
