@@ -23,10 +23,16 @@ The `public/CNAME` file keeps the custom domain attached during future deploys.
 
 ## Google Sheet schedule mirror
 
-The view-only schedule is published at `https://speakkai.com/schedule/`. GitHub
-Actions refreshes it every day at 08:15 Asia/Shanghai, as well as after a push
-to `main` or a manual workflow run. The browser-facing page reads only the
-generated `/data/schedule.json` file and never connects to Google.
+The availability calendar is published at `https://speakkai.com/schedule/`.
+GitHub Actions refreshes it every day at 08:15 Asia/Shanghai, as well as after
+a push to `main` or a manual workflow run. The browser-facing page reads only
+the generated `/data/schedule.json` file and never connects to Google.
+
+The sync deliberately converts every occupied calendar cell to either
+`Limited availability` or `Unavailable`. Names, lesson descriptions, precise
+times, locations, travel details, and the spreadsheet's notes columns are not
+written to the public JSON. A separate deployment check rejects any generated
+file that does not match this availability-only schema.
 
 The workflow discovers published tabs named in English as `Month YYYY`, starting
 with `July 2026`, and mirrors only those month tabs. Summary, entry, notes, and

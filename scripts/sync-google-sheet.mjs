@@ -1,5 +1,9 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
+import {
+  assertAvailabilityOnlySchedule,
+  sanitizeCalendarGrid,
+} from "./schedule-privacy.mjs";
 
 const OUTPUT_PATH = resolve("public/data/schedule.json");
 const MONTH_NAMES = [
@@ -252,15 +256,15 @@ function trimGrid(rows) {
 
 function toPublicSheet(feed, rows) {
   const grid = trimGrid(rows);
-  const columnCount = grid.reduce((maximum, row) => Math.max(maximum, row.length), 0);
+  const publicGrid = sanitizeCalendarGrid(grid, feed.title);
 
   return {
     id: feed.id,
     title: feed.title,
     frozenRows: 0,
     frozenColumns: 0,
-    columns: Array.from({ length: columnCount }, () => ({ width: 120 })),
-    rows: grid.map((row) => ({
+    columns: Array.from({ length: 7 }, () => ({ width: 120 })),
+    rows: publicGrid.map((row) => ({
       cells: row.map((value) => ({ value })),
     })),
     merges: [],
@@ -315,8 +319,11 @@ async function main() {
     updatedAt: new Date().toISOString(),
     spreadsheetTitle: "Kai Schedule 2026",
     timeZone: "Asia/Shanghai",
+    privacyMode: "availability-only",
     sheets,
   };
+
+  assertAvailabilityOnlySchedule(output);
 
   await mkdir(dirname(OUTPUT_PATH), { recursive: true });
   await writeFile(OUTPUT_PATH, `${JSON.stringify(output)}\n`, "utf8");

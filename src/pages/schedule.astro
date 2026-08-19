@@ -11,7 +11,11 @@ import SiteNavigation from "../components/SiteNavigation.astro";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <meta name="color-scheme" content="light" />
-    <title>Coach Kai's Timeslot | SpeakKai</title>
+    <meta
+      name="description"
+      content="View Coach Kai's general availability and contact him to confirm a suitable coaching time."
+    />
+    <title>Coach Kai's Availability | SpeakKai</title>
     <style is:global>
       :root {
         font-family:
@@ -153,6 +157,37 @@ import SiteNavigation from "../components/SiteNavigation.astro";
       }
 
       main { padding: 12px clamp(10px, 1.7vw, 26px) 20px; }
+
+      .availability-note {
+        display: flex;
+        width: min(100%, 920px);
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin: 0 auto 12px;
+        padding: 12px 16px;
+        border: 1px solid #c5d5e8;
+        border-radius: 6px;
+        color: #40546f;
+        background: #fff;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .availability-note p { margin: 0; }
+
+      .availability-note a {
+        flex: 0 0 auto;
+        padding: 9px 13px;
+        border-radius: 5px;
+        color: #fff;
+        background: #0b5fc7;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .availability-note a:hover { background: #074a9f; }
+      .availability-note a:focus-visible { outline: 3px solid #80d6d1; outline-offset: 2px; }
 
       .schedule-toolbar {
         display: flex;
@@ -442,6 +477,13 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         }
         .refresh-button { grid-column: 2; grid-row: 1; }
         main { padding: 8px 0 0; }
+        .availability-note {
+          width: calc(100% - 18px);
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 10px;
+          margin-bottom: 10px;
+        }
         .schedule-toolbar { align-items: center; padding: 0 9px; }
         .month-heading { font-size: 17px; }
         .sheet-tab { padding-right: 9px; padding-left: 9px; }
@@ -478,7 +520,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
     </section>
     <header class="page-header">
       <div class="identity">
-        <h1 id="schedule-title">Coach Kai's Timeslot</h1>
+        <h1 id="schedule-title">Coach Kai's Availability</h1>
         <p id="updated-time">正在载入 Loading</p>
       </div>
       <SiteNavigation current="schedule" />
@@ -488,6 +530,13 @@ import SiteNavigation from "../components/SiteNavigation.astro";
     </header>
 
     <main>
+      <div class="availability-note">
+        <p>
+          This calendar shows general availability only. Student names, lesson details,
+          locations, and precise appointment times are kept private.
+        </p>
+        <a href="/contact/">Confirm a time</a>
+      </div>
       <div class="status" id="status" role="status">
         <div><strong>正在载入</strong><span>Loading schedule</span></div>
       </div>
@@ -512,7 +561,12 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         columns: Array<{ hidden?: boolean }>;
         rows: Array<{ hidden?: boolean; cells?: Cell[] }>;
       };
-      type ScheduleData = { status: string; updatedAt: string | null; sheets: Sheet[] };
+      type ScheduleData = {
+        status: string;
+        updatedAt: string | null;
+        privacyMode?: string;
+        sheets: Sheet[];
+      };
 
       const statusElement = document.querySelector<HTMLElement>("#status");
       const scheduleElement = document.querySelector<HTMLElement>("#schedule");
@@ -540,71 +594,12 @@ import SiteNavigation from "../components/SiteNavigation.astro";
       }
 
       function cellValue(sheet: Sheet, row: number, column: number) {
-        return (sheet.rows[row]?.cells?.[column]?.value?.trim() ?? "")
-          .replaceAll("龙柏", "LB")
-          .replaceAll("华漕", "HC");
+        return sheet.rows[row]?.cells?.[column]?.value?.trim() ?? "";
       }
 
-      function formatEventLine(rawLine: string) {
-        let line = rawLine.replaceAll("龙柏", "LB").replaceAll("华漕", "HC").trim();
-        const mode = line.includes("线上") ? "线上" : line.includes("线下") ? "线下" : "";
-        line = line.replace(/\s*(线上|线下)\s*/g, " ").replace(/\s+/g, " ").trim();
-
-        const separatorIndex = line.indexOf(" - ");
-        let main = separatorIndex >= 0 ? line.slice(0, separatorIndex).trim() : line;
-        let detail = separatorIndex >= 0 ? line.slice(separatorIndex + 3).trim() : "";
-        const inferredMode = mode || (/\b(?:LB|HC|JH)\b/.test(main) ? "线下" : "");
-        const shLocationMatch = inferredMode === "\u7ebf\u4e0b" ? main.match(/\b(LB|JH)\b/i) : null;
-        const shLocation = shLocationMatch?.[1].toUpperCase() ?? "";
-        if (shLocationMatch) {
-          main = main
-            .replace(shLocationMatch[0], "")
-            .replace(/\s*\(SH\)\s*/gi, " ")
-            .replace(/\s+/g, " ")
-            .trim();
-        }
-        const locationSuffix = inferredMode === "\u7ebf\u4e0b" ? `${shLocation ? ` ${shLocation}` : ""} (SH)` : "";
-
-        if (main.includes("班课")) {
-          main = main.replace(/\s*班课\s*/g, " 班课").trim();
-          return `${main}${detail ? ` - ${detail}` : ""}${locationSuffix}${inferredMode ? ` ${inferredMode}` : ""}`;
-        }
-
-        const lessonMatch = detail.match(/^(Lesson\s+\d+)\s+(.+)$/i);
-        const explicitPrivate = detail.match(/^(.+?)\s+1-1$/i);
-        const isDescriptor =
-          /^(TEDx|备赛|student interview|\u9762\u8bd5|Classes|FBI分享|WSDA国赛)$/i.test(detail) ||
-          /All day|Sharing|分享/i.test(main);
-        let name = "";
-
-        if (explicitPrivate) {
-          name = explicitPrivate[1].trim();
-          detail = "";
-        } else if (lessonMatch) {
-          detail = lessonMatch[1];
-          name = lessonMatch[2].trim();
-        } else if (detail && !isDescriptor) {
-          name = detail;
-          detail = "";
-        }
-
-        if (name) {
-          return `${main} (${name})${detail ? ` - ${detail}` : ""}${locationSuffix}${inferredMode ? ` ${inferredMode}` : ""}`;
-        }
-
-        if (/\b1-1\b/i.test(main)) {
-          main = main.replace(/\s*1-1\s*/i, " 1-1").trim();
-          return `${main}${detail ? ` - ${detail}` : ""}${locationSuffix}${inferredMode ? ` ${inferredMode}` : ""}`;
-        }
-
-        return `${main}${detail ? ` - ${detail}` : ""}${locationSuffix}${inferredMode ? ` ${inferredMode}` : ""}`;
-      }
-
-      function highlightKind(value: string) {
-        if (/\(TMC\)/i.test(value)) return "tmc";
-        if (/make-?up workday/i.test(value)) return "makeup";
-        if (/holiday/i.test(value)) return "holiday";
-        if (/\btravel\b|all day (?:taiwan|thailand)/i.test(value)) return "travel";
+      function availabilityKind(value: string) {
+        if (/^Unavailable$/i.test(value)) return "unavailable";
+        if (/^Limited availability$/i.test(value)) return "limited";
         return "";
       }
 
@@ -628,69 +623,19 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         content.append(date);
 
         for (const line of lines.slice(1)) {
+          const kind = availabilityKind(line);
+          if (!kind) continue;
           const event = document.createElement("span");
-          const formattedLine = formatEventLine(line);
-          const highlightedKind = highlightKind(formattedLine);
-          const hasNamedStudent =
-            /\((?!SH\)|TMC\)|Booked\)|Planned\))[^()]+\)/i.test(formattedLine) &&
-            /(?:线上|线下)(?:\s|$)/.test(formattedLine);
-          const isPrivate = /\b1-1\b/i.test(formattedLine) || hasNamedStudent;
-          const kind = highlightedKind || (isPrivate ? "private" : /线上(?:\s|$)/.test(formattedLine) ? "online" : "standard");
           const colors = {
-            private: ["#7e22ce", "#f3e8ff"],
-            online: ["#db2777", "#fce7f3"],
-            standard: ["#004165", "#c3d7e4"],
-            tmc: ["#b91c1c", "#fee2e2"],
-            travel: ["#d6a800", "#fff6cc"],
-            holiday: ["#2e7d32", "#e8f5e9"],
-            makeup: ["#9aa1a8", "#eef1f3"],
+            unavailable: ["#8a3f46", "#f7e8ea"],
+            limited: ["#a66a00", "#fff3d6"],
           }[kind];
           event.className = `event-line kind-${kind}`;
           event.style.cssText = `display:block;position:relative;min-width:0;margin:0;padding:4px 5px;overflow-wrap:anywhere;border-left:3px solid ${colors[0]};border-radius:3px;color:#20304f;background:${colors[1]};font-size:9px;line-height:1.35`;
-          const timedEvent = formattedLine.match(/^(\d{1,2}:\d{2}(?:\s*-\s*\d{1,2}:\d{2})?)\s+(.+)$/);
-          if (timedEvent) {
-            const time = document.createElement("span");
-            time.className = "event-time";
-            time.textContent = timedEvent[1];
-            const title = document.createElement("span");
-            title.className = "event-title";
-            title.textContent = timedEvent[2];
-            event.append(time, title);
-          } else {
-            event.textContent = formattedLine;
-          }
+          event.textContent = line;
           content.append(event);
         }
         cell.append(content);
-      }
-
-      function makeNotesSection(title: string, items: Array<{ label: string; value?: string }>, school = false) {
-        const section = document.createElement("section");
-        section.className = "notes-section";
-        const heading = document.createElement("h3");
-        heading.className = "notes-heading";
-        heading.textContent = title;
-        const list = document.createElement("ul");
-        list.className = "notes-list";
-
-        for (const item of items) {
-          const li = document.createElement("li");
-          const highlight = school ? "" : highlightKind(`${item.label} ${item.value ?? ""}`);
-          li.className = `note-item${school ? " school-note" : ""}${highlight ? ` highlight-${highlight}` : ""}`;
-          const label = document.createElement("span");
-          label.className = "note-label";
-          label.textContent = item.label;
-          li.append(label);
-          if (item.value) {
-            const value = document.createElement("span");
-            value.className = "note-value";
-            value.textContent = item.value;
-            li.append(value);
-          }
-          list.append(li);
-        }
-        section.append(heading, list);
-        return section;
       }
 
       function makeContactSection() {
@@ -762,12 +707,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
             const td = document.createElement("td");
             td.style.cssText = "height:auto;padding:0;overflow:visible;border:1px solid #9eb0c8;vertical-align:top;background:#fff;font-size:9px;line-height:1.24";
             if (column === 0 || column === 6) td.classList.add("is-weekend");
-            appendLines(
-              td,
-              (row.cells?.[column]?.value ?? "")
-                .replaceAll("龙柏", "LB")
-                .replaceAll("华漕", "HC"),
-            );
+            appendLines(td, row.cells?.[column]?.value ?? "");
             tr.append(td);
           }
           tbody.append(tr);
@@ -775,20 +715,6 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         table.append(thead, tbody);
         tableShell.append(table);
 
-        const highlights: Array<{ label: string; value?: string }> = [];
-        const schoolNotes: Array<{ label: string }> = [];
-        for (let row = 1; row < sheet.rows.length; row += 1) {
-          const highlightLabel = cellValue(sheet, row, 8);
-          const highlightValue = cellValue(sheet, row, 9);
-          if (/monthly hours?/i.test(highlightLabel)) continue;
-          if (highlightLabel || highlightValue) {
-            highlights.push({ label: highlightLabel || highlightValue, value: highlightLabel ? highlightValue : "" });
-          }
-          const schoolNote = cellValue(sheet, row, 11);
-          if (schoolNote) schoolNotes.push({ label: schoolNote });
-        }
-        if (highlights.length) notesRail.append(makeNotesSection("Day highlights", highlights));
-        if (schoolNotes.length) notesRail.append(makeNotesSection("School calendar notes", schoolNotes, true));
         notesRail.append(makeContactSection());
         notesRail.hidden = notesRail.childElementCount === 0;
 
@@ -796,6 +722,11 @@ import SiteNavigation from "../components/SiteNavigation.astro";
 
       function renderSchedule(data: ScheduleData) {
         if (!tabsElement || !scheduleElement || !statusElement || !updatedTime) return;
+        if (data.privacyMode !== "availability-only") {
+          showStatus("暂时无法显示时间", "Availability is temporarily unavailable");
+          updatedTime.textContent = "";
+          return;
+        }
         const visibleSheets = data.sheets.filter((sheet) => sheet.title !== "July 2026");
         if (data.status !== "ready" || visibleSheets.length === 0) {
           showStatus("时间表尚未发布", "Schedule setup is not complete");
@@ -832,9 +763,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         renderSheet(visibleSheets[0]);
       }
 
-      const scheduleDataUrl = ["localhost", "127.0.0.1"].includes(window.location.hostname)
-        ? "https://speakkai.com/data/schedule.json"
-        : "/data/schedule.json";
+      const scheduleDataUrl = "/data/schedule.json";
 
       fetch(scheduleDataUrl, { cache: "no-store" })
         .then((response) => {
