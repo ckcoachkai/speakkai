@@ -1,7 +1,8 @@
 const PUBLIC_COLUMN_COUNT = 7;
 const PUBLIC_STATUSES = new Set(["Limited availability", "Online available", "Unavailable"]);
-const PUBLIC_BUSY_TIME_PATTERN =
-  /^Busy: (?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)?$/;
+export const PUBLIC_PRIVACY_MODE = "availability-with-concise-labels";
+const PUBLIC_TIME_CUE_PATTERN =
+  /^(?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)? · (?:SAS|龙柏班课|JH班课|TMC|Claire|Coaching|Reserved time)$/;
 const PUBLIC_TRAVEL_LABEL_PATTERN = /^Travel: Malaysia$/;
 const PUBLIC_IN_PERSON_LABEL = "In-person: Malaysia only";
 const RAW_TIME = String.raw`(?:[01]?\d|2[0-3])[:：][0-5]\d`;
@@ -48,6 +49,38 @@ export function extractBusyTimes(value) {
   return busyTimes;
 }
 
+function derivePublicCue(value, fallbackCue = "") {
+  const details = String(value ?? "");
+  if (/\bSAS\b/i.test(details)) return "SAS";
+  if (/龙柏/.test(details)) return "龙柏班课";
+  if (/\bJH\b/i.test(details)) return "JH班课";
+  if (/\bTMC\b/i.test(details)) return "TMC";
+  // Individual names are deliberately opt-in. Add a name here only after Kai
+  // explicitly approves it as a public memory cue.
+  if (/\bClaire\b/i.test(details)) return "Claire";
+  if (/\bprivate\b|\bclass\b|\blesson\b|班课/i.test(details)) return "Coaching";
+  return fallbackCue || "Reserved time";
+}
+
+export function extractPublicTimeEntries(detailLines) {
+  const lines = Array.isArray(detailLines) ? detailLines : cleanLines(detailLines);
+  const fallbackCue = derivePublicCue(lines.join(" "));
+  const entries = [];
+  const seen = new Set();
+
+  for (const line of lines) {
+    const cue = derivePublicCue(line, fallbackCue);
+    for (const time of extractBusyTimes(line)) {
+      const key = `${time}\n${cue}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      entries.push({ time, cue });
+    }
+  }
+
+  return entries;
+}
+
 function extractPublicTravelLabel(value) {
   const details = String(value ?? "");
   const isTravel = /\ball\s*day\b|\btravel\b|\bbooked\b|\bplanned\b|旅行/i.test(details);
@@ -69,29 +102,30 @@ export function sanitizeCalendarCell(value) {
   if (!dayMatch) return "";
 
   const day = dayMatch[1];
-  const details = [dayMatch[2], ...lines.slice(1)].filter(Boolean).join(" ");
+  const detailLines = [dayMatch[2], ...lines.slice(1)].filter(Boolean);
+  const details = detailLines.join(" ");
   if (!details) return day;
 
-  const busyTimes = extractBusyTimes(details);
+  const timedEntries = extractPublicTimeEntries(detailLines);
   if (isMalaysiaOnlineOpen(details)) {
     return [
       day,
       "Online available",
       PUBLIC_IN_PERSON_LABEL,
-      ...busyTimes.map((time) => `Busy: ${time}`),
+      ...timedEntries.map(({ time, cue }) => `${time} · ${cue}`),
     ].join("\n");
   }
 
   const unavailable =
     /\ball\s*day\b|\bholiday\b|全天|休假/i.test(details) ||
-    (busyTimes.length === 0 && /\btravel\b|\bbooked\b|\bplanned\b|旅行/i.test(details));
+    (timedEntries.length === 0 && /\btravel\b|\bbooked\b|\bplanned\b|旅行/i.test(details));
 
   const publicLines = [day, unavailable ? "Unavailable" : "Limited availability"];
   if (unavailable) {
     const publicTravelLabel = extractPublicTravelLabel(details);
     if (publicTravelLabel) publicLines.push(publicTravelLabel);
   } else {
-    publicLines.push(...busyTimes.map((time) => `Busy: ${time}`));
+    publicLines.push(...timedEntries.map(({ time, cue }) => `${time} · ${cue}`));
   }
 
   return publicLines.join("\n");
@@ -124,7 +158,7 @@ export function sanitizeCalendarGrid(rows, monthTitle) {
   return [titleRow, weekdayHeadings, ...calendarRows];
 }
 
-export function assertAvailabilityOnlySheet(sheet) {
+export function assertConcisePublicScheduleSheet(sheet) {
   if (sheet.columns.length !== PUBLIC_COLUMN_COUNT) {
     throw new Error(`${sheet.title} must expose exactly seven calendar columns.`);
   }
@@ -162,14 +196,14 @@ export function assertAvailabilityOnlySheet(sheet) {
       }
 
       const [day, status, ...extra] = cleanLines(value);
-      const invalidLimitedDetails = extra.some((line) => !PUBLIC_BUSY_TIME_PATTERN.test(line));
+      const invalidLimitedDetails = extra.some((line) => !PUBLIC_TIME_CUE_PATTERN.test(line));
       const invalidUnavailableDetails = extra.some(
         (line) => !PUBLIC_TRAVEL_LABEL_PATTERN.test(line),
       );
       const invalidOnlineDetails =
         !extra.includes(PUBLIC_IN_PERSON_LABEL) ||
         extra.some(
-          (line) => line !== PUBLIC_IN_PERSON_LABEL && !PUBLIC_BUSY_TIME_PATTERN.test(line),
+          (line) => line !== PUBLIC_IN_PERSON_LABEL && !PUBLIC_TIME_CUE_PATTERN.test(line),
         );
       const invalidStatusDetails =
         (!status && extra.length > 0) ||
@@ -188,14 +222,14 @@ export function assertAvailabilityOnlySheet(sheet) {
   });
 }
 
-export function assertAvailabilityOnlySchedule(data) {
-  if (data.privacyMode !== "availability-only") {
-    throw new Error("The public schedule must declare availability-only privacy mode.");
+export function assertConcisePublicSchedule(data) {
+  if (data.privacyMode !== PUBLIC_PRIVACY_MODE) {
+    throw new Error("The public schedule must declare concise-label privacy mode.");
   }
 
   if (!Array.isArray(data.sheets)) {
     throw new Error("The public schedule is missing its sheets array.");
   }
 
-  data.sheets.forEach(assertAvailabilityOnlySheet);
+  data.sheets.forEach(assertConcisePublicScheduleSheet);
 }

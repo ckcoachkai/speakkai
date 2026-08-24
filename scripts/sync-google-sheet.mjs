@@ -1,7 +1,8 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import {
-  assertAvailabilityOnlySchedule,
+  assertConcisePublicSchedule,
+  PUBLIC_PRIVACY_MODE,
   sanitizeCalendarGrid,
 } from "./schedule-privacy.mjs";
 
@@ -319,11 +320,11 @@ async function main() {
     updatedAt: new Date().toISOString(),
     spreadsheetTitle: "Kai Schedule 2026",
     timeZone: "Asia/Shanghai",
-    privacyMode: "availability-only",
+    privacyMode: PUBLIC_PRIVACY_MODE,
     sheets,
   };
 
-  assertAvailabilityOnlySchedule(output);
+  assertConcisePublicSchedule(output);
 
   await mkdir(dirname(OUTPUT_PATH), { recursive: true });
   await writeFile(OUTPUT_PATH, `${JSON.stringify(output)}\n`, "utf8");

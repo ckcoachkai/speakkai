@@ -532,9 +532,9 @@ import SiteNavigation from "../components/SiteNavigation.astro";
     <main>
       <div class="availability-note">
         <p>
-          Busy time ranges are listed on limited or online-available dates. Unlisted
-          times may be open; online and in-person limits are shown separately while
-          student names, lesson details, and locations remain private.
+          Timed commitments use concise public cues on limited or online-available
+          dates. Unlisted times may be open; online and in-person limits are shown
+          separately while detailed schedule notes remain private.
         </p>
         <a href="/contact/">Confirm a time</a>
       </div>
@@ -604,7 +604,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         if (/^Online available$/i.test(value)) return "online";
         if (/^In-person: Malaysia only$/i.test(value)) return "travel";
         if (/^Travel: Malaysia$/i.test(value)) return "travel";
-        if (/^Busy: (?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)?$/i.test(value)) {
+        if (/^(?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)? · (?:SAS|龙柏班课|JH班课|TMC|Claire|Coaching|Reserved time)$/i.test(value)) {
           return "busy";
         }
         return "";
@@ -732,7 +732,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
 
       function renderSchedule(data: ScheduleData) {
         if (!tabsElement || !scheduleElement || !statusElement || !updatedTime) return;
-        if (data.privacyMode !== "availability-only") {
+        if (data.privacyMode !== "availability-with-concise-labels") {
           showStatus("暂时无法显示时间", "Availability is temporarily unavailable");
           updatedTime.textContent = "";
           return;

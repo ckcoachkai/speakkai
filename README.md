@@ -29,11 +29,13 @@ a push to `main` or a manual workflow run. The browser-facing page reads only
 the generated `/data/schedule.json` file and never connects to Google.
 
 The sync deliberately converts every occupied calendar cell to either
-`Limited availability` or `Unavailable`. Limited dates retain only normalized
-busy times, such as `Busy: 09:30–12:15`; names, lesson descriptions, locations,
-travel details, and the spreadsheet's notes columns are not written to the
+`Limited availability` or `Unavailable`. Timed entries retain a normalized time
+and one approved concise cue, such as `09:30–12:15 · SAS`. The only permitted
+cues are `SAS`, `龙柏班课`, `JH班课`, `TMC`, the explicitly approved name `Claire`,
+and the safe fallbacks `Coaching` or `Reserved time`. Long descriptions,
+locations, contact details, notes, and unapproved names are not written to the
 public JSON. A separate deployment check rejects any generated file that does
-not match this availability-only schema.
+not match this concise-label schema.
 
 The workflow discovers published tabs named in English as `Month YYYY`, starting
 with `July 2026`, and mirrors only those month tabs. Summary, entry, notes, and
