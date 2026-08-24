@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import {
-  assertConcisePublicSchedule,
+  assertCalendarDisplayPublicSchedule,
   PUBLIC_PRIVACY_MODE,
   sanitizeCalendarGrid,
 } from "./schedule-privacy.mjs";
@@ -324,7 +324,7 @@ async function main() {
     sheets,
   };
 
-  assertConcisePublicSchedule(output);
+  assertCalendarDisplayPublicSchedule(output);
 
   await mkdir(dirname(OUTPUT_PATH), { recursive: true });
   await writeFile(OUTPUT_PATH, `${JSON.stringify(output)}\n`, "utf8");

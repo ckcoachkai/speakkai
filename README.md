@@ -29,13 +29,13 @@ a push to `main` or a manual workflow run. The browser-facing page reads only
 the generated `/data/schedule.json` file and never connects to Google.
 
 The sync deliberately converts every occupied calendar cell to either
-`Limited availability` or `Unavailable`. Timed entries retain a normalized time
-and one approved concise cue, such as `09:30–12:15 · SAS`. The only permitted
-cues are `SAS`, `龙柏班课`, `JH班课`, `TMC`, the explicitly approved name `Claire`,
-and the safe fallbacks `Coaching` or `Reserved time`. Long descriptions,
-locations, contact details, notes, and unapproved names are not written to the
-public JSON. A separate deployment check rejects any generated file that does
-not match this concise-label schema.
+`Limited availability` or `Unavailable`. Timed entries retain the normalized
+time and the useful label from the same published Calendar Display line, such
+as `09:30–12:15 · 龙柏 班课`. This includes names shown in those Calendar Display
+cells, which are styled as VIP 1-to-1 sessions. The mirror never reads Notes or
+other working columns, and removes links, email addresses, and phone-like
+strings if they appear in a Calendar Display line. A separate deployment check
+rejects generated detail that does not match this Calendar Display schema.
 
 The workflow discovers published tabs named in English as `Month YYYY`, starting
 with `July 2026`, and mirrors only those month tabs. Summary, entry, notes, and

@@ -1,10 +1,12 @@
 const PUBLIC_COLUMN_COUNT = 7;
 const PUBLIC_STATUSES = new Set(["Limited availability", "Online available", "Unavailable"]);
-export const PUBLIC_PRIVACY_MODE = "availability-with-concise-labels";
-const PUBLIC_TIME_CUE_PATTERN =
-  /^(?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)? · (?:SAS|龙柏班课|JH班课|TMC|Claire|Coaching|Reserved time)$/;
+export const PUBLIC_PRIVACY_MODE = "calendar-display-event-details";
+const PUBLIC_EVENT_LINE_PATTERN =
+  /^(?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)? · .+$/;
 const PUBLIC_TRAVEL_LABEL_PATTERN = /^Travel: Malaysia$/;
 const PUBLIC_IN_PERSON_LABEL = "In-person: Malaysia only";
+const PUBLIC_DETAIL_FORBIDDEN_PATTERN =
+  /(?:https?:\/\/|\bwww\.|[\w.+-]+@[\w.-]+\.[a-z]{2,}|\+?\d[\d\s()-]{6,}\d)/i;
 const RAW_TIME = String.raw`(?:[01]?\d|2[0-3])[:：][0-5]\d`;
 const RAW_TIME_RANGE_PATTERN = new RegExp(
   String.raw`(?<!\d)(${RAW_TIME})\s*(?:-|–|—|~|～|to|至)\s*(${RAW_TIME})(?!\d)`,
@@ -49,32 +51,73 @@ export function extractBusyTimes(value) {
   return busyTimes;
 }
 
-function derivePublicCue(value, fallbackCue = "") {
-  const details = String(value ?? "");
-  if (/\bSAS\b/i.test(details)) return "SAS";
-  if (/龙柏/.test(details)) return "龙柏班课";
-  if (/\bJH\b/i.test(details)) return "JH班课";
-  if (/\bTMC\b/i.test(details)) return "TMC";
-  // Individual names are deliberately opt-in. Add a name here only after Kai
-  // explicitly approves it as a public memory cue.
-  if (/\bClaire\b/i.test(details)) return "Claire";
-  if (/\bprivate\b|\bclass\b|\blesson\b|班课/i.test(details)) return "Coaching";
-  return fallbackCue || "Reserved time";
+function removeCalendarDisplayContactDetails(value) {
+  return String(value ?? "")
+    .replace(/https?:\/\/\S+|\bwww\.\S+/gi, " ")
+    .replace(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/gi, " ")
+    .replace(/\+?\d[\d\s()-]{6,}\d/g, " ");
 }
 
-export function extractPublicTimeEntries(detailLines) {
+function normalizeCalendarDisplayLabel(value) {
+  return removeCalendarDisplayContactDetails(value)
+    .replace(RAW_TIME_RANGE_PATTERN, " ")
+    .replace(RAW_SINGLE_TIME_PATTERN, " ")
+    .replace(/\s+/g, " ")
+    .replace(/^[\s,;:|/–—-]+|[\s,;:|/–—-]+$/g, "")
+    .trim() || "Reserved time";
+}
+
+const NON_NAME_CAPITALIZED_WORDS = new Set([
+  "Class",
+  "Demo",
+  "Training",
+  "Kunshan",
+  "SAS",
+  "TMC",
+  "JH",
+  "SH",
+  "US",
+  "Weds",
+  "Thursday",
+  "Reserved",
+  "Time",
+  "Office",
+  "Work",
+  "Block",
+  "Online",
+  "Offline",
+]);
+
+export function classifyCalendarDisplayEvent(label) {
+  const details = String(label ?? "").trim();
+  if (/\bVIP\b|\b1\s*(?:-|v)\s*1\b|\b1\s*-?\s*on\s*-?\s*1\b|一对一/i.test(details)) {
+    return "vip";
+  }
+
+  const capitalizedWords = details.match(/\b[A-Z][a-z]{1,}\b/g) ?? [];
+  const hasNamedPerson = capitalizedWords.some((word) => !NON_NAME_CAPITALIZED_WORDS.has(word));
+  const hasCamelCaseName = /\b[A-Z][a-z]+(?:[A-Z][a-z]+)+\b/.test(details);
+  const hasLowerCaseDottedName = /[-–—]\s*[a-z][a-z]+(?:\.[a-z])?\b/.test(details);
+  if (hasNamedPerson || hasCamelCaseName || hasLowerCaseDottedName) return "vip";
+
+  if (/\bSAS\b/i.test(details)) return "sas";
+  if (/\bTMC\b|\(TMC\)/i.test(details)) return "tmc";
+  if (/班课|\bclass\b|\bgroup\b|\bJH\b|龙柏/i.test(details)) return "group";
+  return "reserved";
+}
+
+export function extractCalendarDisplayEvents(detailLines) {
   const lines = Array.isArray(detailLines) ? detailLines : cleanLines(detailLines);
-  const fallbackCue = derivePublicCue(lines.join(" "));
   const entries = [];
   const seen = new Set();
 
   for (const line of lines) {
-    const cue = derivePublicCue(line, fallbackCue);
     for (const time of extractBusyTimes(line)) {
-      const key = `${time}\n${cue}`;
+      const label = normalizeCalendarDisplayLabel(line);
+      const key = `${time}\n${label}`;
       if (seen.has(key)) continue;
       seen.add(key);
-      entries.push({ time, cue });
+      entries.push({ time, label });
     }
   }
 
@@ -106,13 +149,13 @@ export function sanitizeCalendarCell(value) {
   const details = detailLines.join(" ");
   if (!details) return day;
 
-  const timedEntries = extractPublicTimeEntries(detailLines);
+  const timedEntries = extractCalendarDisplayEvents(detailLines);
   if (isMalaysiaOnlineOpen(details)) {
     return [
       day,
       "Online available",
       PUBLIC_IN_PERSON_LABEL,
-      ...timedEntries.map(({ time, cue }) => `${time} · ${cue}`),
+      ...timedEntries.map(({ time, label }) => `${time} · ${label}`),
     ].join("\n");
   }
 
@@ -125,7 +168,7 @@ export function sanitizeCalendarCell(value) {
     const publicTravelLabel = extractPublicTravelLabel(details);
     if (publicTravelLabel) publicLines.push(publicTravelLabel);
   } else {
-    publicLines.push(...timedEntries.map(({ time, cue }) => `${time} · ${cue}`));
+    publicLines.push(...timedEntries.map(({ time, label }) => `${time} · ${label}`));
   }
 
   return publicLines.join("\n");
@@ -158,7 +201,7 @@ export function sanitizeCalendarGrid(rows, monthTitle) {
   return [titleRow, weekdayHeadings, ...calendarRows];
 }
 
-export function assertConcisePublicScheduleSheet(sheet) {
+export function assertCalendarDisplayPublicScheduleSheet(sheet) {
   if (sheet.columns.length !== PUBLIC_COLUMN_COUNT) {
     throw new Error(`${sheet.title} must expose exactly seven calendar columns.`);
   }
@@ -196,14 +239,18 @@ export function assertConcisePublicScheduleSheet(sheet) {
       }
 
       const [day, status, ...extra] = cleanLines(value);
-      const invalidLimitedDetails = extra.some((line) => !PUBLIC_TIME_CUE_PATTERN.test(line));
+      const invalidLimitedDetails = extra.some(
+        (line) => !PUBLIC_EVENT_LINE_PATTERN.test(line) || PUBLIC_DETAIL_FORBIDDEN_PATTERN.test(line),
+      );
       const invalidUnavailableDetails = extra.some(
         (line) => !PUBLIC_TRAVEL_LABEL_PATTERN.test(line),
       );
       const invalidOnlineDetails =
         !extra.includes(PUBLIC_IN_PERSON_LABEL) ||
         extra.some(
-          (line) => line !== PUBLIC_IN_PERSON_LABEL && !PUBLIC_TIME_CUE_PATTERN.test(line),
+          (line) =>
+            line !== PUBLIC_IN_PERSON_LABEL &&
+            (!PUBLIC_EVENT_LINE_PATTERN.test(line) || PUBLIC_DETAIL_FORBIDDEN_PATTERN.test(line)),
         );
       const invalidStatusDetails =
         (!status && extra.length > 0) ||
@@ -222,14 +269,14 @@ export function assertConcisePublicScheduleSheet(sheet) {
   });
 }
 
-export function assertConcisePublicSchedule(data) {
+export function assertCalendarDisplayPublicSchedule(data) {
   if (data.privacyMode !== PUBLIC_PRIVACY_MODE) {
-    throw new Error("The public schedule must declare concise-label privacy mode.");
+    throw new Error("The public schedule must declare Calendar Display event-detail privacy mode.");
   }
 
   if (!Array.isArray(data.sheets)) {
     throw new Error("The public schedule is missing its sheets array.");
   }
 
-  data.sheets.forEach(assertConcisePublicScheduleSheet);
+  data.sheets.forEach(assertCalendarDisplayPublicScheduleSheet);
 }
