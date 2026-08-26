@@ -1,5 +1,5 @@
 const PUBLIC_COLUMN_COUNT = 7;
-const PUBLIC_STATUSES = new Set(["Limited availability", "Online available", "Unavailable"]);
+const PUBLIC_STATUSES = new Set(["Holiday", "Limited availability", "Online available", "Unavailable"]);
 export const PUBLIC_PRIVACY_MODE = "calendar-display-event-details";
 const PUBLIC_EVENT_LINE_PATTERN =
   /^(?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)? · .+$/;
@@ -159,11 +159,16 @@ export function sanitizeCalendarCell(value) {
     ].join("\n");
   }
 
+  const holiday = /\bholiday\b|休假/i.test(details);
   const unavailable =
-    /\ball\s*day\b|\bholiday\b|全天|休假/i.test(details) ||
-    (timedEntries.length === 0 && /\btravel\b|\bbooked\b|\bplanned\b|旅行/i.test(details));
+    !holiday &&
+    (/\ball\s*day\b|全天/i.test(details) ||
+      (timedEntries.length === 0 && /\btravel\b|\bbooked\b|\bplanned\b|旅行/i.test(details)));
 
-  const publicLines = [day, unavailable ? "Unavailable" : "Limited availability"];
+  const publicLines = [
+    day,
+    holiday ? "Holiday" : unavailable ? "Unavailable" : "Limited availability",
+  ];
   if (unavailable) {
     const publicTravelLabel = extractPublicTravelLabel(details);
     if (publicTravelLabel) publicLines.push(publicTravelLabel);
@@ -254,6 +259,7 @@ export function assertCalendarDisplayPublicScheduleSheet(sheet) {
         );
       const invalidStatusDetails =
         (!status && extra.length > 0) ||
+        (status === "Holiday" && extra.length > 0) ||
         (status === "Unavailable" && invalidUnavailableDetails) ||
         (status === "Limited availability" && invalidLimitedDetails) ||
         (status === "Online available" && invalidOnlineDetails);
