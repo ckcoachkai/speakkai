@@ -94,6 +94,8 @@ export function classifyCalendarDisplayEvent(label) {
     return "vip";
   }
 
+  if (/班课|年级|\bgroup\b|\bLogan\s*班\b/i.test(details)) return "group";
+
   const capitalizedWords = details.match(/\b[A-Z][a-z]{1,}\b/g) ?? [];
   const hasNamedPerson = capitalizedWords.some((word) => !NON_NAME_CAPITALIZED_WORDS.has(word));
   const hasCamelCaseName = /\b[A-Z][a-z]+(?:[A-Z][a-z]+)+\b/.test(details);
