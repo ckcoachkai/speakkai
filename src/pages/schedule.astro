@@ -353,8 +353,8 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         background: #f1f5f9;
       }
 
-      .event-line.kind-group, .legend-item.kind-group { color: #075f3a; }
-      .event-line.kind-group { border-left-color: #087443; background: #dcfce7; }
+      .event-line.kind-group, .legend-item.kind-group { color: #9a3412; }
+      .event-line.kind-group { border-left-color: #c2410c; background: #ffedd5; }
       .event-line.kind-vip, .legend-item.kind-vip { color: #6d28d9; }
       .event-line.kind-vip { border-left-color: #7c3aed; background: #f3e8ff; }
       .event-line.kind-sas, .legend-item.kind-sas { color: #075cbe; }
@@ -644,6 +644,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
 
       function calendarDisplayEventKind(label: string) {
         if (/\bVIP\b|\b1\s*(?:-|v)\s*1\b|\b1\s*-?\s*on\s*-?\s*1\b|一对一/i.test(label)) return "vip";
+        if (/班课|年级|\bgroup\b|\bLogan\s*班\b/i.test(label)) return "group";
         const words = label.match(/\b[A-Z][a-z]{1,}\b/g) ?? [];
         if (
           words.some((word) => !nonNameCapitalizedWords.has(word)) ||
