@@ -657,6 +657,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
       }
 
       function availabilityKind(value: string) {
+        if (/^Holiday$/i.test(value)) return "availability";
         if (/^Unavailable$/i.test(value)) return "availability";
         if (/^Limited availability$/i.test(value)) return "availability";
         if (/^Online available$/i.test(value)) return "availability";
