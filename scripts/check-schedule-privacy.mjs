@@ -39,6 +39,9 @@ assert.equal(
   "10\nLimited availability\n09:00–10:00 · Reserved time",
 );
 assert.equal(classifyCalendarDisplayEvent("JH 线下 班课"), "group");
+assert.equal(classifyCalendarDisplayEvent("SAS - 五年级"), "group");
+assert.equal(classifyCalendarDisplayEvent("井亭大厦 - 二年级 Logan 班"), "group");
+assert.equal(classifyCalendarDisplayEvent("古北1699 - 八九年级"), "group");
 assert.equal(classifyCalendarDisplayEvent("龙柏 - Victoria"), "vip");
 assert.equal(classifyCalendarDisplayEvent("龙柏 - nina.r"), "vip");
 assert.equal(classifyCalendarDisplayEvent("YoYo class (US)"), "vip");
