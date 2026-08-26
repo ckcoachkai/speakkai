@@ -64,4 +64,5 @@ assert.equal(
   "30\nOnline available\nIn-person: Malaysia only",
 );
 assert.equal(sanitizeCalendarCell("1\nAll day Thailand (Planned)"), "1\nUnavailable");
+assert.equal(sanitizeCalendarCell("25\nHoliday"), "25\nHoliday");
 console.log("Calendar Display schedule privacy check passed.");
