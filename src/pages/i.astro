@@ -833,6 +833,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         }
 
         for (const line of lines.slice(1)) {
+          if (/^(?:Limited availability|Online available)$/i.test(line)) continue;
           const kind = availabilityKind(line);
           if (!kind) continue;
           const event = document.createElement("span");
