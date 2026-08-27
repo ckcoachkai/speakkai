@@ -624,7 +624,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         <h1 id="internal-auth-title">Private schedule</h1>
         <p class="internal-auth-copy">Enter the password to view Coach Kai's internal schedule.</p>
         <label for="internal-password">Password</label>
-        <input id="internal-password" name="password" type="password" autocomplete="current-password" required />
+        <input id="internal-password" name="password" type="password" inputmode="numeric" autocomplete="current-password" required />
         <button class="internal-auth-submit" type="submit">View schedule</button>
         <p class="internal-auth-error" id="internal-auth-error" aria-live="polite"></p>
       </form>
@@ -953,7 +953,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
     <script is:inline>
       (() => {
         const unlockKey = "speakkai-internal-unlocked";
-        const expectedHash = "606e8f7f504231dae21b7f05be2b379340eb1cd13ae4e103998983d165c10d29";
+        const expectedHash = "6c2a616da5b2c5b5286336f5196890ba694541bbc169a96007cbb5df6f5ad2c7";
         const wall = document.getElementById("internal-auth-wall");
         const form = document.getElementById("internal-auth-form");
         const input = document.getElementById("internal-password");
