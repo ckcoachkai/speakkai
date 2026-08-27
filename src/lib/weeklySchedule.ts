@@ -6,6 +6,25 @@ export type WeeklyScheduleBlock = {
 
 type TimeRange = { start: number; end: number };
 
+const MONTH_NAMES = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+const GENERAL_FREE_START = 2026 * 12 + 8;
+const GENERAL_FREE_END = 2026 * 12 + 11;
+
+function monthKey(monthTitle: string) {
+  const match = monthTitle.match(/^([A-Za-z]+) (\d{4})$/);
+  if (!match) return null;
+  const month = MONTH_NAMES.indexOf(match[1]);
+  return month < 0 ? null : Number(match[2]) * 12 + month;
+}
+
+function hasMalaysiaAvailability(lines: string[]) {
+  const details = lines.slice(1).join(" ");
+  return /Online available/i.test(details) && /In-person: Malaysia only/i.test(details);
+}
+
 function timeRange(line: string): TimeRange | null {
   const match = line.match(/^([01]\d|2[0-3]):([0-5]\d)(?:[–-]([01]\d|2[0-3]):([0-5]\d))?/);
   if (!match) return null;
@@ -15,9 +34,13 @@ function timeRange(line: string): TimeRange | null {
 }
 
 function dayIsBlocked(lines: string[]) {
-  return lines.slice(1).some((line) =>
-    /^(?:Holiday|Unavailable|Travel:|In-person:|All day)/i.test(line),
-  );
+  const malaysiaAvailability = hasMalaysiaAvailability(lines);
+  return lines.slice(1).some((line) => {
+    if (malaysiaAvailability && /^(?:Travel: Malaysia|In-person: Malaysia only)$/i.test(line)) {
+      return false;
+    }
+    return /^(?:Holiday|Unavailable|Travel:|In-person:|All day)/i.test(line);
+  });
 }
 
 function availableSegments(lines: string[], freeStart: number, freeEnd: number) {
@@ -71,16 +94,36 @@ function freeBlocks(
   }));
 }
 
-export function weeklyScheduleBlocks(column: number, lines: string[]): WeeklyScheduleBlock[] {
+export function weeklyScheduleBlocks(
+  column: number,
+  lines: string[],
+  monthTitle: string,
+): WeeklyScheduleBlock[] {
+  const key = monthKey(monthTitle);
+  const malaysiaAvailability = hasMalaysiaAvailability(lines);
+  const generalFreeEnabled =
+    key !== null && key >= GENERAL_FREE_START && key <= GENERAL_FREE_END;
+
+  if (!generalFreeEnabled && !malaysiaAvailability) return [];
+
+  const inPersonTitle = malaysiaAvailability
+    ? "Online free · Malaysia in-person only"
+    : "Online / offline free";
+
   if (column === 0) {
     return [
-      ...freeBlocks(lines, 7 * 60, 9 * 60, "Online free"),
-      ...freeBlocks(lines, 17 * 60, 22 * 60, "Online / offline free"),
+      ...freeBlocks(
+        lines,
+        7 * 60,
+        9 * 60,
+        malaysiaAvailability ? inPersonTitle : "Online free",
+      ),
+      ...freeBlocks(lines, 17 * 60, 22 * 60, inPersonTitle),
     ];
   }
 
   if (column === 1) {
-    return freeBlocks(lines, 7 * 60, 15 * 60, "Online / offline free");
+    return freeBlocks(lines, 7 * 60, 15 * 60, inPersonTitle);
   }
 
   if (column === 2) {
@@ -101,10 +144,11 @@ export function weeklyScheduleBlocks(column: number, lines: string[]): WeeklySch
 
   if (column === 4 || column === 5) {
     return [
-      ...freeBlocks(lines, 7 * 60, 15 * 60, "Online / offline free"),
-      ...freeBlocks(lines, 20 * 60, 23 * 60, "Online / offline free"),
+      ...freeBlocks(lines, 7 * 60, 15 * 60, inPersonTitle),
+      ...freeBlocks(lines, 20 * 60, 23 * 60, inPersonTitle),
     ];
   }
 
   return [];
 }
+
