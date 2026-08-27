@@ -746,7 +746,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
           if (/^(?:Free|Available)$/i.test(line)) {
             content.append(makePublicEvent("free", "", "Free"));
           } else if (/^Online available$/i.test(line)) {
-            content.append(makePublicEvent("free", "", "Online times available"));
+            continue;
           } else if (/^(?:Holiday|Unavailable)$/i.test(line)) {
             content.append(makePublicEvent("reserved", "", "Unavailable"));
           } else if (/^(?:Travel:|In-person:)/i.test(line)) {
