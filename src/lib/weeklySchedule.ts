@@ -102,7 +102,7 @@ export function weeklyScheduleBlocks(
   const key = monthKey(monthTitle);
   const malaysiaAvailability = hasMalaysiaAvailability(lines);
   if (malaysiaAvailability) {
-    return [{ kind: "free", timeText: "", title: "Full day free" }];
+    return [{ kind: "free", timeText: "", title: "Full day free · Online or offline (Malaysia)" }];
   }
 
   const generalFreeEnabled =
