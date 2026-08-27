@@ -367,6 +367,18 @@ import SiteNavigation from "../components/SiteNavigation.astro";
       .event-line.kind-availability { border-left-color: #0f857d; background: #d9f7f4; }
       .event-line.kind-reserved, .legend-item.kind-reserved { color: #475569; }
       .event-line.kind-reserved { border-left-color: #64748b; background: #f1f5f9; }
+      .event-line.kind-free, .legend-item.kind-free { color: #166534; }
+      .event-line.kind-free {
+        border-left-color: #22c55e;
+        color: #12340e;
+        background: #b7ff3c;
+        box-shadow: inset 0 0 0 1px rgb(34 197 94 / 30%);
+      }
+      .event-line.kind-special {
+        border-left-color: #0284c7;
+        color: #0c4a6e;
+        background: #e0f2fe;
+      }
 
       .event-time {
         display: block;
@@ -671,6 +683,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         <a href="/contact/">Confirm a time</a>
       </div>
       <div class="schedule-legend" aria-label="Schedule colour legend">
+        <span class="legend-item kind-free"><i class="legend-swatch" aria-hidden="true"></i>Free</span>
         <span class="legend-item kind-group"><i class="legend-swatch" aria-hidden="true"></i>班课 / group</span>
         <span class="legend-item kind-vip"><i class="legend-swatch" aria-hidden="true"></i>VIP 1-to-1</span>
         <span class="legend-item kind-sas"><i class="legend-swatch" aria-hidden="true"></i>SAS</span>
@@ -696,6 +709,8 @@ import SiteNavigation from "../components/SiteNavigation.astro";
     <SiteFooter />
 
     <script>
+      import { weeklyScheduleBlocks } from "../lib/weeklySchedule";
+
       type Cell = { value?: string };
       type Sheet = {
         id: number;
@@ -770,7 +785,26 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         return eventMatch ? calendarDisplayEventKind(eventMatch[1]) : "";
       }
 
-      function appendLines(cell: HTMLTableCellElement, value: string) {
+      function makeWeeklyBlock(kind: string, timeText: string, titleText: string) {
+        const event = document.createElement("span");
+        event.className = `event-line kind-${kind}`;
+
+        if (timeText) {
+          const time = document.createElement("span");
+          time.className = "event-time";
+          time.textContent = timeText;
+          const title = document.createElement("span");
+          title.className = "event-title";
+          title.textContent = titleText;
+          event.append(time, title);
+        } else {
+          event.textContent = titleText;
+        }
+
+        return event;
+      }
+
+      function appendLines(cell: HTMLTableCellElement, value: string, column: number) {
         const lines = value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
         const content = document.createElement("div");
         content.className = "cell-content";
@@ -788,6 +822,10 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         date.style.cssText =
           "display:inline-flex;align-self:flex-start;align-items:center;justify-content:center;min-width:24px;min-height:22px;margin:0;padding:2px 6px;border-radius:4px;color:#fff;background:#17a6a0;font-size:10px;font-weight:800;line-height:1.15";
         content.append(date);
+
+        for (const block of weeklyScheduleBlocks(column, lines)) {
+          content.append(makeWeeklyBlock(block.kind, block.timeText, block.title));
+        }
 
         for (const line of lines.slice(1)) {
           const kind = availabilityKind(line);
@@ -880,7 +918,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
             const td = document.createElement("td");
             td.style.cssText = "height:auto;padding:0;overflow:visible;border:1px solid #9eb0c8;vertical-align:top;background:#fff;font-size:9px;line-height:1.24";
             if (column === 0 || column === 6) td.classList.add("is-weekend");
-            appendLines(td, row.cells?.[column]?.value ?? "");
+            appendLines(td, row.cells?.[column]?.value ?? "", column);
             tr.append(td);
           }
           tbody.append(tr);
