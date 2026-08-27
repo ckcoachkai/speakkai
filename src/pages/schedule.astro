@@ -584,7 +584,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         <span class="legend-item kind-free"><i class="legend-swatch" aria-hidden="true"></i>Free</span>
         <span class="legend-item kind-group"><i class="legend-swatch" aria-hidden="true"></i>Class booked</span>
         <span class="legend-item kind-reserved"><i class="legend-swatch" aria-hidden="true"></i>Time booked</span>
-        <span class="legend-item kind-travel"><i class="legend-swatch" aria-hidden="true"></i>Travel / limited</span>
+        <span class="legend-item kind-travel"><i class="legend-swatch" aria-hidden="true"></i>Travel</span>
       </div>
       <div class="status" id="status" role="status">
         <div><strong>正在载入</strong><span>Loading schedule</span></div>
@@ -750,7 +750,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
           } else if (/^(?:Holiday|Unavailable)$/i.test(line)) {
             content.append(makePublicEvent("reserved", "", "Unavailable"));
           } else if (/^(?:Travel:|In-person:)/i.test(line)) {
-            content.append(makePublicEvent("travel", "", "Travel / limited availability"));
+            content.append(makePublicEvent("travel", "", "Travel"));
           }
         }
         cell.append(content);
