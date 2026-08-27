@@ -804,7 +804,12 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         return event;
       }
 
-      function appendLines(cell: HTMLTableCellElement, value: string, column: number) {
+      function appendLines(
+        cell: HTMLTableCellElement,
+        value: string,
+        column: number,
+        monthTitle: string,
+      ) {
         const lines = value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
         const content = document.createElement("div");
         content.className = "cell-content";
@@ -823,7 +828,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
           "display:inline-flex;align-self:flex-start;align-items:center;justify-content:center;min-width:24px;min-height:22px;margin:0;padding:2px 6px;border-radius:4px;color:#fff;background:#17a6a0;font-size:10px;font-weight:800;line-height:1.15";
         content.append(date);
 
-        for (const block of weeklyScheduleBlocks(column, lines)) {
+        for (const block of weeklyScheduleBlocks(column, lines, monthTitle)) {
           content.append(makeWeeklyBlock(block.kind, block.timeText, block.title));
         }
 
@@ -918,7 +923,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
             const td = document.createElement("td");
             td.style.cssText = "height:auto;padding:0;overflow:visible;border:1px solid #9eb0c8;vertical-align:top;background:#fff;font-size:9px;line-height:1.24";
             if (column === 0 || column === 6) td.classList.add("is-weekend");
-            appendLines(td, row.cells?.[column]?.value ?? "", column);
+            appendLines(td, row.cells?.[column]?.value ?? "", column, sheet.title);
             tr.append(td);
           }
           tbody.append(tr);
@@ -1033,3 +1038,4 @@ import SiteNavigation from "../components/SiteNavigation.astro";
 
   </body>
 </html>
+
