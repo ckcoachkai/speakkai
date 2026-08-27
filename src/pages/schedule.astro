@@ -584,6 +584,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         <span class="legend-item kind-free"><i class="legend-swatch" aria-hidden="true"></i>Free</span>
         <span class="legend-item kind-group"><i class="legend-swatch" aria-hidden="true"></i>Class booked</span>
         <span class="legend-item kind-reserved"><i class="legend-swatch" aria-hidden="true"></i>Time booked</span>
+        <span class="legend-item kind-tmc"><i class="legend-swatch" aria-hidden="true"></i>TMC</span>
         <span class="legend-item kind-travel"><i class="legend-swatch" aria-hidden="true"></i>Travel</span>
       </div>
       <div class="status" id="status" role="status">
@@ -727,17 +728,18 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         }
 
         for (const line of lines.slice(1)) {
-          if (/^Limited availability$/i.test(line)) continue;
+          if (/^(?:Limited availability|In-person: Malaysia only|Travel: Malaysia)$/i.test(line)) continue;
 
           const eventMatch = line.match(/^((?:[01]\d|2[0-3]):[0-5]\d(?:[–-](?:[01]\d|2[0-3]):[0-5]\d)?) · (.+)$/);
           if (eventMatch) {
             const originalKind = calendarDisplayEventKind(eventMatch[2]);
+            const isTmc = /\bTMC\b|\(TMC\)/i.test(eventMatch[2]);
             const isClass = originalKind === "group" || originalKind === "sas";
             content.append(
               makePublicEvent(
-                isClass ? "group" : "reserved",
+                isTmc ? "tmc" : isClass ? "group" : "reserved",
                 eventMatch[1],
-                isClass ? "Class booked" : "Time booked",
+                isTmc ? eventMatch[2] : isClass ? "Class booked" : "Time booked",
               ),
             );
             continue;
