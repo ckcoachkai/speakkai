@@ -374,6 +374,11 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         background: #b7ff3c;
         box-shadow: inset 0 0 0 1px rgb(34 197 94 / 30%);
       }
+      .event-line.kind-special {
+        border-left-color: #0284c7;
+        color: #0c4a6e;
+        background: #e0f2fe;
+      }
 
       .event-time {
         display: block;
@@ -680,16 +685,66 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         return { start, end };
       }
 
-      function sundaySlotIsFree(lines: string[], freeStart: number, freeEnd: number) {
-        const dayIsBlocked = lines.slice(1).some((line) =>
+      function dayIsBlocked(lines: string[]) {
+        return lines.slice(1).some((line) =>
           /^(?:Holiday|Unavailable|Travel:|In-person:|All day)/i.test(line),
         );
-        if (dayIsBlocked) return false;
+      }
 
-        return !lines.slice(1).some((line) => {
+      function availableSegments(lines: string[], freeStart: number, freeEnd: number) {
+        if (dayIsBlocked(lines)) return [];
+
+        const busyRanges = lines
+          .slice(1)
+          .map(timeRange)
+          .filter((range): range is { start: number; end: number } =>
+            Boolean(range && range.start < freeEnd && range.end > freeStart),
+          )
+          .map((range) => ({
+            start: Math.max(freeStart, range.start),
+            end: Math.min(freeEnd, range.end),
+          }))
+          .sort((a, b) => a.start - b.start);
+
+        const segments: Array<{ start: number; end: number }> = [];
+        let cursor = freeStart;
+        for (const range of busyRanges) {
+          if (range.start > cursor) segments.push({ start: cursor, end: range.start });
+          cursor = Math.max(cursor, range.end);
+        }
+        if (cursor < freeEnd) segments.push({ start: cursor, end: freeEnd });
+        return segments.filter((segment) => segment.end - segment.start >= 15);
+      }
+
+      function hasBookingOverlap(lines: string[], start: number, end: number) {
+        return lines.slice(1).some((line) => {
           const range = timeRange(line);
-          return range ? range.start < freeEnd && range.end > freeStart : false;
+          return range ? range.start < end && range.end > start : false;
         });
+      }
+
+      function formatMinutes(total: number) {
+        const hours = Math.floor(total / 60).toString().padStart(2, "0");
+        const minutes = (total % 60).toString().padStart(2, "0");
+        return `${hours}:${minutes}`;
+      }
+
+      function appendFreeWindow(
+        content: HTMLElement,
+        lines: string[],
+        start: number,
+        end: number,
+        title: string,
+      ) {
+        for (const segment of availableSegments(lines, start, end)) {
+          content.append(
+            makePublicEvent(
+              "free",
+              `${formatMinutes(segment.start)}–${formatMinutes(segment.end)}`,
+              title,
+            ),
+          );
+        }
       }
 
       function makePublicEvent(kind: string, timeText: string, titleText: string) {
@@ -730,12 +785,32 @@ import SiteNavigation from "../components/SiteNavigation.astro";
           "display:inline-flex;align-self:flex-start;align-items:center;justify-content:center;min-width:24px;min-height:22px;margin:0;padding:2px 6px;border-radius:4px;color:#fff;background:#17a6a0;font-size:10px;font-weight:800;line-height:1.15";
         content.append(date);
 
-        if (column === 0 && sundaySlotIsFree(lines, 7 * 60, 9 * 60)) {
-          content.append(makePublicEvent("free", "07:00–09:00", "Online free"));
+        if (column === 0) {
+          appendFreeWindow(content, lines, 7 * 60, 9 * 60, "Online free");
+          appendFreeWindow(content, lines, 17 * 60, 22 * 60, "Online / offline free");
         }
 
-        if (column === 0 && sundaySlotIsFree(lines, 17 * 60, 22 * 60)) {
-          content.append(makePublicEvent("free", "17:00–22:00", "Online / offline free"));
+        if (column === 1) {
+          appendFreeWindow(content, lines, 7 * 60, 15 * 60, "Online / offline free");
+        }
+
+        if (column === 2 && !dayIsBlocked(lines) && !hasBookingOverlap(lines, 9 * 60, 12 * 60)) {
+          content.append(makePublicEvent("reserved", "09:00–12:00", "Booked"));
+        }
+
+        if (column === 3 && !dayIsBlocked(lines)) {
+          content.append(
+            makePublicEvent(
+              "special",
+              "",
+              "Off day · Times available for special circumstances",
+            ),
+          );
+        }
+
+        if (column === 4 || column === 5) {
+          appendFreeWindow(content, lines, 7 * 60, 15 * 60, "Online / offline free");
+          appendFreeWindow(content, lines, 20 * 60, 23 * 60, "Online / offline free");
         }
 
         for (const line of lines.slice(1)) {
