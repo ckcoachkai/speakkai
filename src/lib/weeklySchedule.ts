@@ -101,14 +101,15 @@ export function weeklyScheduleBlocks(
 ): WeeklyScheduleBlock[] {
   const key = monthKey(monthTitle);
   const malaysiaAvailability = hasMalaysiaAvailability(lines);
+  if (malaysiaAvailability) {
+    return [{ kind: "free", timeText: "", title: "Full day free" }];
+  }
+
   const generalFreeEnabled =
     key !== null && key >= GENERAL_FREE_START && key <= GENERAL_FREE_END;
+  if (!generalFreeEnabled) return [];
 
-  if (!generalFreeEnabled && !malaysiaAvailability) return [];
-
-  const inPersonTitle = malaysiaAvailability
-    ? "Online free · Malaysia in-person only"
-    : "Online / offline free";
+  const inPersonTitle = "Online / offline free";
 
   if (column === 0) {
     return [
