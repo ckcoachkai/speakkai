@@ -524,9 +524,111 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         .contact-section { grid-column: auto; }
         .notes-section + .notes-section { border-top: 1px solid #a0aaa6; border-left: 0; }
       }
+
+      .internal-auth-wall {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        background:
+          radial-gradient(circle at top, rgb(25 169 197 / 18%), transparent 38%),
+          #06142f;
+      }
+
+      .internal-auth-card {
+        width: min(100%, 390px);
+        padding: 30px;
+        border: 1px solid rgb(255 255 255 / 18%);
+        border-radius: 12px;
+        color: #17233d;
+        background: #fff;
+        box-shadow: 0 24px 70px rgb(0 0 0 / 38%);
+      }
+
+      .internal-auth-kicker {
+        margin: 0 0 7px;
+        color: #0a7092;
+        font-size: 12px;
+        font-weight: 850;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+      }
+
+      .internal-auth-card h1 {
+        margin: 0;
+        font-size: 25px;
+        line-height: 1.15;
+      }
+
+      .internal-auth-copy {
+        margin: 10px 0 22px;
+        color: #65718a;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .internal-auth-card label {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .internal-auth-card input {
+        width: 100%;
+        height: 46px;
+        padding: 0 12px;
+        border: 1px solid #aebdd2;
+        border-radius: 6px;
+        color: #17233d;
+        background: #fff;
+        font: inherit;
+      }
+
+      .internal-auth-card input:focus {
+        border-color: #0b5fc7;
+        outline: 3px solid rgb(11 95 199 / 18%);
+      }
+
+      .internal-auth-submit {
+        width: 100%;
+        height: 44px;
+        margin-top: 12px;
+        border: 0;
+        border-radius: 6px;
+        color: #fff;
+        background: #0b5fc7;
+        font-weight: 850;
+        cursor: pointer;
+      }
+
+      .internal-auth-submit:hover { background: #074a9f; }
+
+      .internal-auth-error {
+        min-height: 20px;
+        margin: 10px 0 0;
+        color: #b42318;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
     </style>
   </head>
   <body>
+
+    <div class="internal-auth-wall" id="internal-auth-wall" role="dialog" aria-modal="true" aria-labelledby="internal-auth-title">
+      <form class="internal-auth-card" id="internal-auth-form">
+        <p class="internal-auth-kicker">SpeakKai · Internal</p>
+        <h1 id="internal-auth-title">Private schedule</h1>
+        <p class="internal-auth-copy">Enter the password to view Coach Kai's internal schedule.</p>
+        <label for="internal-password">Password</label>
+        <input id="internal-password" name="password" type="password" autocomplete="current-password" required />
+        <button class="internal-auth-submit" type="submit">View schedule</button>
+        <p class="internal-auth-error" id="internal-auth-error" aria-live="polite"></p>
+      </form>
+    </div>
     <section class="coach-banner" aria-label="Coach Kai social media">
       <picture>
         <source
@@ -847,5 +949,49 @@ import SiteNavigation from "../components/SiteNavigation.astro";
           if (updatedTime) updatedTime.textContent = "";
         });
     </script>
+
+    <script is:inline>
+      (() => {
+        const unlockKey = "speakkai-internal-unlocked";
+        const expectedHash = "606e8f7f504231dae21b7f05be2b379340eb1cd13ae4e103998983d165c10d29";
+        const wall = document.getElementById("internal-auth-wall");
+        const form = document.getElementById("internal-auth-form");
+        const input = document.getElementById("internal-password");
+        const error = document.getElementById("internal-auth-error");
+
+        const unlock = () => {
+          if (wall) wall.hidden = true;
+          document.getElementById("schedule-title")?.focus();
+        };
+
+        if (sessionStorage.getItem(unlockKey) === expectedHash) {
+          unlock();
+        } else {
+          input?.focus();
+        }
+
+        form?.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          if (!(input instanceof HTMLInputElement)) return;
+
+          const bytes = new TextEncoder().encode(input.value);
+          const digest = await crypto.subtle.digest("SHA-256", bytes);
+          const actualHash = Array.from(new Uint8Array(digest))
+            .map((byte) => byte.toString(16).padStart(2, "0"))
+            .join("");
+
+          if (actualHash === expectedHash) {
+            sessionStorage.setItem(unlockKey, expectedHash);
+            input.value = "";
+            if (error) error.textContent = "";
+            unlock();
+          } else {
+            if (error) error.textContent = "Incorrect password. Please try again.";
+            input.select();
+          }
+        });
+      })();
+    </script>
+
   </body>
 </html>
