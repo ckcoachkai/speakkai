@@ -6,6 +6,9 @@ const pageDescription =
 const mapUrl = (query: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 
+const imageVariant = (src: string, width: 720 | 1600) =>
+  src.replace(/\.jpg$/i, `-${width}.webp`);
+
 const days = [
   {
     id: "aug-29",
@@ -26,12 +29,21 @@ const days = [
     badgeEn: "Source plan",
     badgeZh: "原行程",
     badgeTone: "source",
+    weatherBadgeEn: "Keep the evening optional after the flight",
+    weatherBadgeZh: "飞行后晚间活动按体力决定",
     image: {
       src: "/images/malatrip/jonker-street.jpg",
       altEn: "The decorated entrance to Jonker Walk in Melaka",
       altZh: "马六甲鸡场街装饰华丽的入口牌楼",
       credit: "Jack No1 · CC BY-SA 3.0",
       creditUrl: "https://commons.wikimedia.org/wiki/File:Jonker_Street@Malacca.JPG",
+    },
+    secondaryImage: {
+      src: "/images/malatrip/melaka-river.jpg",
+      altEn: "Melaka River between the Old Market Bridge and Hang Tuah Bridge",
+      altZh: "旧市场桥与汉都亚桥之间的马六甲河",
+      credit: "Slleong · CC0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Melaka_River_1.jpg",
     },
     events: [
       {
@@ -45,16 +57,16 @@ const days = [
         time: "20:00–22:00",
         en: "Road transfer from Kuala Lumpur to Melaka",
         zh: "从吉隆坡乘车前往马六甲",
-        noteEn: "Allow extra time for airport formalities and weekend traffic.",
-        noteZh: "周末可能堵车，也要预留入境和取行李时间。",
+        noteEn: "The 2h35 buffer is fragile: keep the driver pickup flexible for immigration, baggage and weekend traffic.",
+        noteZh: "2小时35分钟的缓冲并不宽裕：接车时间需灵活，以应对入境、取行李与周末堵车。",
       },
       {
         timeEn: "Late evening",
         timeZh: "晚上",
         en: "Check in, find dinner, then take a short Jonker Street and riverside walk",
         zh: "入住、吃晚餐，然后轻松逛鸡场街与河畔",
-        noteEn: "Saturday is the best fit for the full Jonker Walk night-market atmosphere.",
-        noteZh: "星期六最适合感受鸡场街完整的夜市氛围。",
+        noteEn: "Saturday has the full night market, but after a long flight this walk is optional—not an obligation.",
+        noteZh: "星期六有完整夜市，但长途飞行后可按体力取消散步，不必勉强。",
       },
     ],
     stay: {
@@ -87,6 +99,8 @@ const days = [
     badgeEn: "New suggested plan",
     badgeZh: "新增建议行程",
     badgeTone: "suggested",
+    weatherBadgeEn: "Check heat, rain & haze that morning",
+    weatherBadgeZh: "当天早晨查看高温、降雨与烟霾",
     image: {
       src: "/images/malatrip/melaka-dutch-square.jpg",
       altEn: "Dutch Square and the red Stadthuys buildings illuminated at night in Melaka",
@@ -94,6 +108,13 @@ const days = [
       credit: "Sharon Hahn Darlin · CC BY 2.0",
       creditUrl:
         "https://commons.wikimedia.org/wiki/File:Melaka,_Malaysia_-_Dutch_Square_or_Red_Square,_March_2023.jpg",
+    },
+    secondaryImage: {
+      src: "/images/malatrip/baba-nyonya-museum.jpg",
+      altEn: "Exterior of the Baba and Nyonya House Museum in Melaka",
+      altZh: "马六甲峇峇娘惹博物馆外观",
+      credit: "Azuladnan · CC BY-SA 4.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Baba_and_Nyonya_House_Museum_Exterior.jpg",
     },
     events: [
       {
@@ -140,11 +161,11 @@ const days = [
       },
       {
         time: "20:30–00:30",
-        en: "Merdeka Eve: choose the hotel skyline view or the official countdown at Stadium Merdeka",
-        zh: "国庆前夜：可选酒店天际线夜景，或前往默迪卡体育场官方倒数活动",
+        en: "Merdeka Eve: default to a calm hotel skyline view; Stadium Merdeka is the high-crowd option",
+        zh: "国庆前夜：默认选择较轻松的酒店天际线夜景；默迪卡体育场为人流密集选项",
         noteEn:
-          "The official gathering is listed for 18:30–00:00. Expect large crowds, road closures and a slow journey home.",
-        noteZh: "官方活动时间为18:30–00:00。预计人流很大、道路封闭，回程会较慢。",
+          "Use the hotel option only after confirming the actual property, view and pool access. If attending the stadium, set a meeting point, stay together and pre-plan the return.",
+        noteZh: "选择酒店方案前，先确认准确酒店、景观与泳池权限。若去体育场，请设定集合点、全程同行并提前安排回程。",
       },
     ],
     stay: {
@@ -176,16 +197,32 @@ const days = [
     summaryZh:
       "较详细的行程替代了早期概略版：早餐、泳池拍照、午餐、游览市中心，最后回酒店看天际线。",
     badgeEn: "Latest detailed draft",
-    badgeZh: "较新详细版",
+    badgeZh: "最新详细版",
     badgeTone: "source",
+    weatherBadgeEn: "Check heat, rain & haze that morning",
+    weatherBadgeZh: "当天早晨查看高温、降雨与烟霾",
+    image: {
+      src: "/images/malatrip/kl-night-skyline.jpg",
+      altEn: "Kuala Lumpur’s illuminated city centre skyline at night",
+      altZh: "夜晚灯光璀璨的吉隆坡市中心天际线",
+      credit: "Shahee Ilyas · CC BY-SA 4.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Kl-skyline-at-night-2022.jpg",
+    },
+    secondaryImage: {
+      src: "/images/malatrip/stadium-merdeka.jpg",
+      altEn: "The grandstand of historic Stadium Merdeka in Kuala Lumpur",
+      altZh: "吉隆坡历史悠久的默迪卡体育场看台",
+      credit: "Photo by CEphoto, Uwe Aranas · CC BY-SA 3.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Malaysia_Stadium-Merdeka-05.jpg",
+    },
     events: [
       { time: "09:30–10:30", en: "Breakfast", zh: "早餐" },
       { time: "11:45–12:30", en: "Infinity-pool photos", zh: "无边泳池拍照" },
       { time: "12:30–13:30", en: "Lunch", zh: "午餐" },
       {
         time: "13:30–19:00",
-        en: "Explore Kuala Lumpur city centre and KLCC at a family pace",
-        zh: "按家庭节奏游览吉隆坡市中心与 KLCC",
+        en: "Explore KLCC in 60–90 minute outdoor blocks, with an air-conditioned break between photo stops",
+        zh: "KLCC 户外活动每次控制在60–90分钟，两段拍照之间安排室内空调休息",
         noteEn:
           "Exterior tower and KLCC Park photos do not need a tower ticket; holiday queues and closures may be heavier than usual.",
         noteZh: "在双子塔外与 KLCC 公园拍照无需登塔票；国庆日排队与临时管制可能更多。",
@@ -226,12 +263,21 @@ const days = [
     badgeEn: "Timing needs confirmation",
     badgeZh: "时间需确认",
     badgeTone: "warning",
+    weatherBadgeEn: "Check weather and mosque access that morning",
+    weatherBadgeZh: "当天早晨查看天气与清真寺参观安排",
     image: {
       src: "/images/malatrip/putrajaya-mosque.jpg",
       altEn: "Putra Mosque and Putra Square beneath a cloudy sky",
       altZh: "阴云下的布特拉清真寺与布特拉广场",
       credit: "Slices of Light · CC BY-SA 4.0",
       creditUrl: "https://commons.wikimedia.org/wiki/File:Dataran_Putra_Square_dan_Masjid_Putra.jpg",
+    },
+    secondaryImage: {
+      src: "/images/malatrip/ets-butterworth.jpg",
+      altEn: "Class 93 ETS 204 electric train at Butterworth Railway Station",
+      altZh: "北海火车站内的93型 ETS 204 电动列车",
+      credit: "philip.mallis · CC BY-SA 2.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Class_93_ETS_204_high_speed_train_waiting_to_depart_Butterworth_Railway_Station,_Penang,_Malaysia.jpg",
     },
     events: [
       {
@@ -245,12 +291,26 @@ const days = [
         zh: "退房并寄存行李",
       },
       {
-        time: "10:00–11:00",
-        en: "KLCC → Putra Mosque, Putrajaya",
-        zh: "KLCC → 布城粉红清真寺",
+        timeEn: "Decision gate",
+        timeZh: "关键确认",
+        critical: true,
+        en: "STOP: open the booked ETS ticket before leaving the hotel; choose only Option A or Option B below",
+        zh: "先停一下：离开酒店前打开并核对已订 ETS 车票；下方选项A与B只能选择一个",
+        noteEn: "The source drafts conflict. The official timetable currently supports 14:10–18:15, while the detailed screenshot says 15:55–20:00.",
+        noteZh: "两版原行程有冲突：当前官方时刻表支持14:10–18:15，而详细截图写着15:55–20:00。",
       },
       {
-        time: "11:00–12:30",
+        time: "Option A · 14:10",
+        en: "Do not start the Putrajaya trip; collect luggage and be at KL Sentral by about 13:25",
+        zh: "不要开始布城行程；取行李并争取13:25左右到达吉隆坡中央车站",
+      },
+      {
+        time: "Option B · 10:00–11:00",
+        en: "Only if the ticket says 15:55: KLCC → Putra Mosque, Putrajaya",
+        zh: "仅当车票为15:55：KLCC → 布城粉红清真寺",
+      },
+      {
+        time: "Option B · 11:00–12:30",
         en: "Putra Mosque, Putra Square and exterior views of Perdana Putra",
         zh: "粉红清真寺、布特拉广场及首相府外观",
         noteEn:
@@ -258,34 +318,22 @@ const days = [
         noteZh: "穿端庄的浅色衣服。通常会提供长袍和头巾；礼拜时间优先。",
       },
       {
-        time: "12:30–13:30",
-        en: "Return toward KLCC and have lunch",
-        zh: "返回 KLCC 方向并吃午餐",
+        time: "Option B · 15:55",
+        en: "If the ticket says 15:55, return from Putrajaya, collect luggage and reach KL Sentral by about 15:10",
+        zh: "若车票为15:55，可从布城返回、取行李，并争取15:10左右到达吉隆坡中央车站",
       },
       {
-        time: "14:00–15:00",
-        en: "KLCC → KL Sentral; collect luggage and reach the platform early",
-        zh: "KLCC → 吉隆坡中央车站；取行李并提前到站台",
-      },
-      {
-        time: "15:55–20:00",
-        en: "Latest detailed draft: ETS north to Butterworth / Penang",
-        zh: "较新详细版：乘 ETS 北上至北海／槟城",
-        noteEn:
-          "Earlier draft: 14:10–18:15 (EP9326 matches the current official timetable). Confirm the booked train immediately.",
-        noteZh: "早期版本为14:10–18:15（EP9326 与当前官方时刻表相符）。请立即核对已订车票。",
-      },
-      {
-        time: "20:30–21:00",
-        en: "Ferry/transfer from Butterworth to George Town, then drop luggage",
-        zh: "从北海乘渡轮／接驳前往乔治城，然后放行李",
-        noteEn: "The ferry operates from the mainland to Raja Tun Uda Terminal near the heritage district; keep a buffer after the train.",
-        noteZh: "渡轮从大陆前往靠近古城的 Raja Tun Uda 码头；下火车后要预留转乘时间。",
+        timeEn: "After arrival",
+        timeZh: "抵达后",
+        en: "Allow until 19:45+ (Option A) or 21:45+ (Option B) for ferry/Grab and hotel arrival",
+        zh: "选项A请预留至19:45以后，选项B请预留至21:45以后，用于渡轮／Grab 与抵达住宿",
+        noteEn: "Confirm late check-in. If ferry timing is poor, use a pre-agreed Grab/taxi route across the bridge.",
+        noteZh: "请确认晚到入住方式。若渡轮衔接不理想，可使用事先确认的 Grab／出租车经大桥前往。",
       },
     ],
     stay: {
-      en: "Macalisterz George Town · homestay, two rooms",
-      zh: "Macalisterz 乔治城 · 民宿，两房",
+      en: "Macalisterz George Town · two-bedroom homestay",
+      zh: "Macalisterz 乔治城 · 两居室民宿",
       noteEn: "Use the family confirmation for the exact unit, check-in method and address.",
       noteZh: "具体房号、入住方式与地址请以家庭预订确认单为准。",
     },
@@ -312,8 +360,10 @@ const days = [
     summaryZh:
       "尽早乘缆车上山，在最热时段前下山，再前往香格里拉附近海岸。",
     badgeEn: "Latest detailed draft",
-    badgeZh: "较新详细版",
+    badgeZh: "最新详细版",
     badgeTone: "source",
+    weatherBadgeEn: "Check queues, heat, rain & haze that morning",
+    weatherBadgeZh: "当天早晨查看排队、高温、降雨与烟霾",
     image: {
       src: "/images/malatrip/penang-hill-funicular.jpg",
       altEn: "Penang Hill funicular tracks descending toward George Town",
@@ -387,6 +437,8 @@ const days = [
     badgeEn: "Suggested detail",
     badgeZh: "建议细化",
     badgeTone: "suggested",
+    weatherBadgeEn: "Check heat, rain & haze that morning",
+    weatherBadgeZh: "当天早晨查看高温、降雨与烟霾",
     image: {
       src: "/images/malatrip/george-town.jpg",
       altEn: "A historic George Town street with bicycles, shophouses and a mosque",
@@ -394,6 +446,13 @@ const days = [
       credit: "Wilford Peloquin · CC BY 2.0",
       creditUrl:
         "https://commons.wikimedia.org/wiki/File:227a_Georgetown_Penang,_Malaysia_(51255889913).jpg",
+    },
+    secondaryImage: {
+      src: "/images/malatrip/chew-jetty.jpg",
+      altEn: "Chew Jetty on the Clan Jetties waterfront in George Town",
+      altZh: "乔治城姓氏桥水上社区中的姓周桥",
+      credit: "yeowatzup · CC BY 2.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Chew_Jetty,_Georgetown,_Penang,_Malaysia_(5257794500).jpg",
     },
     events: [
       { time: "12:00–13:00", en: "Brunch or an easy local lunch in the heritage core", zh: "在古城中心吃早午餐或轻松午餐" },
@@ -420,10 +479,10 @@ const days = [
       {
         timeEn: "Later",
         timeZh: "晚些时候",
-        en: "Leave for Penang Airport according to the airline’s check-in requirement",
-        zh: "按航空公司值机要求前往槟城机场",
-        noteEn: "For an international 01:00 departure, verify the date, terminal and recommended airport arrival time on the ticket.",
-        noteZh: "若国际航班01:00起飞，请在机票上确认日期、航站楼及建议到达机场时间。",
+        en: "Set a fixed airport departure time after checking the airline requirement; a cautious working target is 20:30–21:00",
+        zh: "核对航空公司值机要求后，设定固定出发时间；谨慎的暂定目标为20:30–21:00",
+        noteEn: "For an international 01:00 departure, verify the date, terminal and required airport-arrival time on the actual ticket; leave earlier if instructed.",
+        noteZh: "若国际航班01:00起飞，请按实际机票确认日期、航站楼与要求到达机场的时间；如航空公司要求更早，请相应提前。",
       },
     ],
     stay: {
@@ -457,6 +516,13 @@ const days = [
     badgeEn: "Verify flight booking",
     badgeZh: "请核对机票",
     badgeTone: "warning",
+    image: {
+      src: "/images/malatrip/penang-ferry.jpg",
+      altEn: "Penang ferry crossing the strait toward George Town",
+      altZh: "穿过海峡驶向乔治城的槟城渡轮",
+      credit: "Clay Gilliland · CC BY-SA 2.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Ferry_from_Butterworth_to_Georgetown_Penang_(12353551884).jpg",
+    },
     events: [
       {
         time: "01:00–10:40",
@@ -503,16 +569,189 @@ const checklist = [
     en: "Check Malaysia’s official air-quality reading before outdoor plans.",
     zh: "户外活动前查看马来西亚官方空气质量。",
   },
+  {
+    id: "penang-checkin",
+    en: "Confirm the exact Macalisterz unit, late check-in method and bridge-transfer fallback.",
+    zh: "确认 Macalisterz 的具体房号、晚到入住方式与经大桥接驳的备选方案。",
+  },
+];
+
+const galleryItems = [
+  {
+    region: "kl",
+    src: "/images/malatrip/kuala-lumpur-skyline.jpg",
+    altEn: "Kuala Lumpur skyline and the illuminated Petronas Twin Towers at dusk",
+    altZh: "黄昏时亮灯的吉隆坡天际线与双子塔",
+    placeEn: "Kuala Lumpur",
+    placeZh: "吉隆坡",
+    titleEn: "City lights, first impressions",
+    titleZh: "城市灯光，旅程初印象",
+    credit: "Walkerssk · CC0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Skyline_at_dusk_1.jpg",
+  },
+  {
+    region: "melaka",
+    src: "/images/malatrip/melaka-dutch-square.jpg",
+    altEn: "Red colonial buildings around Dutch Square in Melaka",
+    altZh: "马六甲荷兰红屋广场的红色殖民建筑",
+    placeEn: "Melaka",
+    placeZh: "马六甲",
+    titleEn: "The red heart of the old city",
+    titleZh: "古城中心的一抹红",
+    credit: "Sharon Hahn Darlin · CC BY 2.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Melaka,_Malaysia_-_Dutch_Square_or_Red_Square,_March_2023.jpg",
+  },
+  {
+    region: "melaka",
+    src: "/images/malatrip/melaka-river.jpg",
+    altEn: "Melaka River between the Old Market Bridge and Hang Tuah Bridge",
+    altZh: "旧市场桥与汉都亚桥之间的马六甲河",
+    placeEn: "Melaka River",
+    placeZh: "马六甲河",
+    titleEn: "A slow walk beside the water",
+    titleZh: "沿河慢慢散步",
+    credit: "Slleong · CC0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Melaka_River_1.jpg",
+  },
+  {
+    region: "melaka",
+    src: "/images/malatrip/baba-nyonya-museum.jpg",
+    altEn: "Exterior of the Baba and Nyonya House Museum in Melaka",
+    altZh: "马六甲峇峇娘惹博物馆外观",
+    placeEn: "Peranakan heritage",
+    placeZh: "娘惹文化",
+    titleEn: "Stories behind the shophouse doors",
+    titleZh: "店屋门后的家族故事",
+    credit: "Azuladnan · CC BY-SA 4.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Baba_and_Nyonya_House_Museum_Exterior.jpg",
+  },
+  {
+    region: "kl",
+    src: "/images/malatrip/kl-night-skyline.jpg",
+    altEn: "Kuala Lumpur’s illuminated city centre skyline at night",
+    altZh: "夜晚灯光璀璨的吉隆坡市中心天际线",
+    placeEn: "Kuala Lumpur",
+    placeZh: "吉隆坡",
+    titleEn: "Merdeka Eve above the city",
+    titleZh: "国庆前夜的城市天际线",
+    credit: "Shahee Ilyas · CC BY-SA 4.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Kl-skyline-at-night-2022.jpg",
+  },
+  {
+    region: "kl",
+    src: "/images/malatrip/stadium-merdeka.jpg",
+    altEn: "The grandstand of historic Stadium Merdeka in Kuala Lumpur",
+    altZh: "吉隆坡历史悠久的默迪卡体育场看台",
+    placeEn: "Stadium Merdeka",
+    placeZh: "默迪卡体育场",
+    titleEn: "Where independence was declared",
+    titleZh: "见证独立历史的场地",
+    credit: "CEphoto, Uwe Aranas · CC BY-SA 3.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Malaysia_Stadium-Merdeka-05.jpg",
+  },
+  {
+    region: "putrajaya",
+    src: "/images/malatrip/putrajaya-mosque.jpg",
+    altEn: "Putra Mosque viewed across Putra Square in Putrajaya",
+    altZh: "从布特拉广场眺望布特拉清真寺",
+    placeEn: "Putrajaya",
+    placeZh: "布城",
+    titleEn: "Pink stone beside the lake",
+    titleZh: "湖畔的粉红建筑",
+    credit: "Slices of Light · CC BY-SA 4.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Dataran_Putra_Square_dan_Masjid_Putra.jpg",
+  },
+  {
+    region: "penang",
+    src: "/images/malatrip/ets-butterworth.jpg",
+    altEn: "Class 93 ETS 204 electric train at Butterworth Railway Station",
+    altZh: "北海火车站内的93型 ETS 204 电动列车",
+    placeEn: "ETS northbound",
+    placeZh: "ETS 北上列车",
+    titleEn: "The rail journey to Penang",
+    titleZh: "乘火车前往槟城",
+    credit: "philip.mallis · CC BY-SA 2.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Class_93_ETS_204_high_speed_train_waiting_to_depart_Butterworth_Railway_Station,_Penang,_Malaysia.jpg",
+  },
+  {
+    region: "penang",
+    src: "/images/malatrip/penang-ferry.jpg",
+    altEn: "Penang ferry crossing from Butterworth toward George Town",
+    altZh: "从北海驶往乔治城的槟城渡轮",
+    placeEn: "Penang Strait",
+    placeZh: "槟城海峡",
+    titleEn: "Across the water to George Town",
+    titleZh: "渡海进入乔治城",
+    credit: "Clay Gilliland · CC BY-SA 2.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Ferry_from_Butterworth_to_Georgetown_Penang_(12353551884).jpg",
+  },
+  {
+    region: "penang",
+    src: "/images/malatrip/penang-shophouses.jpg",
+    altEn: "Colorful historic shophouse façades along Armenian Street in George Town",
+    altZh: "乔治城亚美尼亚街色彩缤纷的历史店屋立面",
+    placeEn: "Armenian Street",
+    placeZh: "亚美尼亚街",
+    titleEn: "Colour, craft and living heritage",
+    titleZh: "色彩、手艺与活着的古城",
+    credit: "Supanut Arunoprayote · CC BY 4.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Penang.Shophouse_(VI).jpg",
+  },
+  {
+    region: "penang",
+    src: "/images/malatrip/chew-jetty.jpg",
+    altEn: "Chew Jetty on the Clan Jetties waterfront in George Town",
+    altZh: "乔治城姓氏桥水上社区中的姓周桥",
+    placeEn: "Clan Jetties",
+    placeZh: "姓氏桥",
+    titleEn: "A neighbourhood built over the sea",
+    titleZh: "建在海上的社区",
+    credit: "yeowatzup · CC BY 2.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:Chew_Jetty,_Georgetown,_Penang,_Malaysia_(5257794500).jpg",
+  },
+  {
+    region: "penang",
+    src: "/images/malatrip/penang-hill-view.jpg",
+    altEn: "George Town and Penang island seen from Penang Hill",
+    altZh: "从升旗山俯瞰乔治城与槟岛",
+    placeEn: "Penang Hill",
+    placeZh: "升旗山",
+    titleEn: "The island from above",
+    titleZh: "从山顶看整座岛",
+    credit: "Albreeze · CC BY-SA 3.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:George_Town_,_Penang._View_from_Penang_Hill.jpg",
+  },
+  {
+    region: "penang",
+    src: "/images/malatrip/batu-ferringhi-sunset.jpg",
+    altEn: "Boats and swimmers at sunset on Batu Ferringhi beach",
+    altZh: "峇都丁宜海滩日落时的船只与游人",
+    placeEn: "Batu Ferringhi",
+    placeZh: "峇都丁宜",
+    titleEn: "A soft finish by the sea",
+    titleZh: "在海边轻松收尾",
+    credit: "Marek Ślusarczyk · CC BY 3.0",
+    creditUrl: "https://commons.wikimedia.org/wiki/File:34_Sunset_at_Batu_Ferringhi_beach,_Penang,_Malaysia.jpg",
+  },
 ];
 
 const photoCredits = [
-  { label: "Kuala Lumpur skyline", creator: "Walkerssk", license: "CC0", url: "https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Skyline_at_dusk_1.jpg" },
-  { label: "Jonker Street", creator: "Jack No1", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Jonker_Street@Malacca.JPG" },
-  { label: "Dutch Square", creator: "Sharon Hahn Darlin", license: "CC BY 2.0", url: "https://commons.wikimedia.org/wiki/File:Melaka,_Malaysia_-_Dutch_Square_or_Red_Square,_March_2023.jpg" },
-  { label: "Putra Mosque", creator: "Slices of Light", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Dataran_Putra_Square_dan_Masjid_Putra.jpg" },
-  { label: "Penang Hill", creator: "Richard Horvath", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Penang_Hill_Funicular_Railway_-_panoramio.jpg" },
-  { label: "Batu Ferringhi", creator: "Marek Ślusarczyk", license: "CC BY 3.0", url: "https://commons.wikimedia.org/wiki/File:34_Sunset_at_Batu_Ferringhi_beach,_Penang,_Malaysia.jpg" },
-  { label: "George Town", creator: "Wilford Peloquin", license: "CC BY 2.0", url: "https://commons.wikimedia.org/wiki/File:227a_Georgetown_Penang,_Malaysia_(51255889913).jpg" },
+  { labelEn: "Kuala Lumpur skyline", labelZh: "吉隆坡天际线", creator: "Walkerssk", license: "CC0", url: "https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Skyline_at_dusk_1.jpg" },
+  { labelEn: "Jonker Street", labelZh: "鸡场街", creator: "Jack No1", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Jonker_Street@Malacca.JPG" },
+  { labelEn: "Dutch Square", labelZh: "荷兰红屋广场", creator: "Sharon Hahn Darlin", license: "CC BY 2.0", url: "https://commons.wikimedia.org/wiki/File:Melaka,_Malaysia_-_Dutch_Square_or_Red_Square,_March_2023.jpg" },
+  { labelEn: "Melaka River", labelZh: "马六甲河", creator: "Slleong", license: "CC0", url: "https://commons.wikimedia.org/wiki/File:Melaka_River_1.jpg" },
+  { labelEn: "Baba & Nyonya museum", labelZh: "峇峇娘惹博物馆", creator: "Azuladnan", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Baba_and_Nyonya_House_Museum_Exterior.jpg" },
+  { labelEn: "Kuala Lumpur at night", labelZh: "吉隆坡夜景", creator: "Shahee Ilyas", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Kl-skyline-at-night-2022.jpg" },
+  { labelEn: "Stadium Merdeka", labelZh: "默迪卡体育场", creator: "CEphoto, Uwe Aranas", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Malaysia_Stadium-Merdeka-05.jpg" },
+  { labelEn: "Putra Mosque", labelZh: "布特拉清真寺", creator: "Slices of Light", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Dataran_Putra_Square_dan_Masjid_Putra.jpg" },
+  { labelEn: "ETS train", labelZh: "ETS 列车", creator: "philip.mallis", license: "CC BY-SA 2.0", url: "https://commons.wikimedia.org/wiki/File:Class_93_ETS_204_high_speed_train_waiting_to_depart_Butterworth_Railway_Station,_Penang,_Malaysia.jpg" },
+  { labelEn: "Penang ferry", labelZh: "槟城渡轮", creator: "Clay Gilliland", license: "CC BY-SA 2.0", url: "https://commons.wikimedia.org/wiki/File:Ferry_from_Butterworth_to_Georgetown_Penang_(12353551884).jpg" },
+  { labelEn: "George Town shophouses", labelZh: "乔治城店屋", creator: "Supanut Arunoprayote", license: "CC BY 4.0", url: "https://commons.wikimedia.org/wiki/File:Penang.Shophouse_(VI).jpg" },
+  { labelEn: "Chew Jetty", labelZh: "姓周桥", creator: "yeowatzup", license: "CC BY 2.0", url: "https://commons.wikimedia.org/wiki/File:Chew_Jetty,_Georgetown,_Penang,_Malaysia_(5257794500).jpg" },
+  { labelEn: "Penang Hill view", labelZh: "升旗山景观", creator: "Albreeze", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:George_Town_,_Penang._View_from_Penang_Hill.jpg" },
+  { labelEn: "Penang Hill funicular", labelZh: "升旗山缆车", creator: "Richard Horvath", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Penang_Hill_Funicular_Railway_-_panoramio.jpg" },
+  { labelEn: "Batu Ferringhi", labelZh: "峇都丁宜", creator: "Marek Ślusarczyk", license: "CC BY 3.0", url: "https://commons.wikimedia.org/wiki/File:34_Sunset_at_Batu_Ferringhi_beach,_Penang,_Malaysia.jpg" },
+  { labelEn: "George Town street", labelZh: "乔治城街景", creator: "Wilford Peloquin", license: "CC BY 2.0", url: "https://commons.wikimedia.org/wiki/File:227a_Georgetown_Penang,_Malaysia_(51255889913).jpg" },
 ];
 ---
 
@@ -524,6 +763,8 @@ const photoCredits = [
     <meta name="description" content={pageDescription} />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="theme-color" content="#123d39" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://speakkai.com/malatrip/" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:type" content="website" />
@@ -562,6 +803,9 @@ const photoCredits = [
       .lang-zh { display: none; }
       html[data-lang="zh"] .lang-en { display: none; }
       html[data-lang="zh"] .lang-zh { display: inline; }
+      html[data-lang="zh"] h1, html[data-lang="zh"] h2, html[data-lang="zh"] .display-type, html[data-lang="zh"] .day-content h3, html[data-lang="zh"] .panel h3 { font-family: "Noto Serif SC", "Songti SC", SimSun, Georgia, serif; letter-spacing: -.035em; }
+
+      .scroll-progress { position: fixed; z-index: 80; inset: 0 auto auto 0; width: 0; height: 4px; background: linear-gradient(90deg, var(--sun), #ff8b61); box-shadow: 0 0 16px rgb(255 209 102 / 70%); pointer-events: none; }
 
       .skip-link {
         position: fixed;
@@ -597,6 +841,7 @@ const photoCredits = [
       .top-actions { display: flex; align-items: center; gap: 8px; }
       .utility-button { min-height: 38px; padding: 8px 12px; border: 1px solid rgb(255 255 255 / 28%); border-radius: 999px; color: #edf7f3; background: rgb(255 255 255 / 8%); cursor: pointer; font-size: 12px; font-weight: 850; }
       .utility-button:hover { background: rgb(255 255 255 / 16%); }
+      .utility-button.is-complete { color: var(--ink-deep); background: #8be0c1; }
       .language-switch { display: inline-flex; padding: 4px; border: 1px solid rgb(255 255 255 / 28%); border-radius: 999px; background: rgb(0 0 0 / 12%); }
       .language-switch button { min-width: 52px; min-height: 34px; padding: 6px 11px; border: 0; border-radius: 999px; color: #dce9e4; background: transparent; cursor: pointer; font-size: 12px; font-weight: 900; }
       .language-switch button[aria-pressed="true"] { color: var(--ink-deep); background: var(--sun); }
@@ -638,6 +883,7 @@ const photoCredits = [
       .facts dd { margin: 7px 0 0; color: var(--muted); font-size: 12px; font-weight: 760; line-height: 1.35; }
 
       .page-shell { width: min(100% - 36px, 1120px); margin: 0 auto; padding: 64px 0 92px; }
+      #photo-story, #itinerary, #before-you-go { scroll-margin-top: 92px; }
       .section-kicker { margin: 0 0 12px; color: var(--coral); font-size: 11px; font-weight: 950; letter-spacing: .12em; text-transform: uppercase; }
       .section-heading { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(280px, .75fr); gap: 44px; align-items: end; }
       h2 { margin: 0; color: var(--ink); font-size: clamp(39px, 5.8vw, 65px); letter-spacing: -.05em; line-height: .98; text-wrap: balance; }
@@ -654,6 +900,8 @@ const photoCredits = [
       .day-jump { display: flex; gap: 8px; margin: 30px 0 0; padding: 4px 0 8px; overflow-x: auto; scrollbar-width: thin; }
       .day-jump a { display: grid; min-width: 104px; padding: 10px 12px; border: 1px solid #d7cebd; border-radius: 12px; color: var(--ink); background: var(--paper); text-decoration: none; }
       .day-jump a:hover { border-color: #88b8ad; background: #f6fffb; }
+      .day-jump a[aria-current="true"] { border-color: var(--sea); color: #fff; background: var(--sea); box-shadow: 0 8px 22px rgb(29 119 112 / 20%); }
+      .day-jump a[aria-current="true"] span { color: #d9f2eb; }
       .day-jump strong { font-family: Georgia, "Times New Roman", serif; font-size: 22px; line-height: 1; }
       .day-jump span { margin-top: 4px; color: var(--muted); font-size: 10px; font-weight: 850; text-transform: uppercase; }
 
@@ -664,7 +912,8 @@ const photoCredits = [
       .day-photos.two { grid-template-columns: 1.25fr .75fr; }
       .photo-panel { position: relative; min-height: 310px; overflow: hidden; }
       .photo-panel + .photo-panel { border-left: 5px solid var(--paper); }
-      .photo-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .photo-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .65s cubic-bezier(.2,.75,.25,1); }
+      .day-card:hover .photo-panel img { transform: scale(1.025); }
       .photo-panel .portrait-photo { object-position: center 42%; }
       .photo-credit { position: absolute; right: 10px; bottom: 9px; margin: 0; padding: 5px 7px; border-radius: 6px; color: rgb(255 255 255 / 86%); background: rgb(7 28 25 / 68%); font-size: 9px; backdrop-filter: blur(6px); }
       .day-layout { display: grid; grid-template-columns: 160px minmax(0, 1fr); }
@@ -681,10 +930,14 @@ const photoCredits = [
       .badge.source { color: #145a52; background: #dcefe9; }
       .badge.suggested { color: #725016; background: #fff0bd; }
       .badge.warning { color: #8c3424; background: #ffe0d9; }
+      .weather-chip { display: inline-flex; width: fit-content; margin-top: 14px; padding: 7px 10px; border: 1px solid #e5c58e; border-radius: 999px; color: #77501e; background: #fff7df; font-size: 10px; font-weight: 850; }
+      .weather-chip::before { margin-right: 6px; content: "☀"; }
       .day-content h3 { max-width: 800px; margin: 15px 0 0; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: clamp(28px, 3.5vw, 40px); letter-spacing: -.038em; line-height: 1.05; text-wrap: balance; }
       .day-summary { max-width: 820px; margin: 13px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
       .schedule { display: grid; gap: 0; margin: 25px 0 0; padding: 0; list-style: none; }
       .schedule li { display: grid; grid-template-columns: 122px minmax(0, 1fr); gap: 18px; padding: 15px 0; border-top: 1px solid #e3dccf; }
+      .schedule li.critical { margin: 10px 0; padding: 16px; border: 1px solid #e1a38f; border-radius: 13px; background: #fff0eb; box-shadow: inset 5px 0 0 var(--coral); }
+      .schedule li.critical time { color: #9d3526; text-transform: uppercase; }
       .schedule time { padding-top: 2px; color: var(--coral); font-size: 12px; font-weight: 950; letter-spacing: .015em; }
       .activity { color: #2a4742; font-size: 14px; font-weight: 780; line-height: 1.52; }
       .activity small { display: block; margin-top: 5px; color: #71807a; font-size: 12px; font-weight: 560; line-height: 1.55; }
@@ -703,6 +956,10 @@ const photoCredits = [
       .panel h3 { margin: 0; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 27px; letter-spacing: -.025em; }
       .panel-intro { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
       .checklist { display: grid; gap: 10px; margin-top: 20px; }
+      .check-progress { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px 12px; align-items: center; margin-top: 18px; }
+      .check-progress-track { height: 8px; overflow: hidden; border-radius: 999px; background: #e6ded1; }
+      .check-progress-bar { display: block; width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--sea), #69c9ad); transition: width .3s ease; }
+      .check-progress-output { color: var(--sea); font-size: 11px; font-weight: 950; }
       .check-item { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 11px; align-items: start; padding: 13px; border: 1px solid #e0d8cb; border-radius: 11px; cursor: pointer; }
       .check-item:hover { background: #fbf8f0; }
       .check-item input { width: 19px; height: 19px; margin: 1px 0 0; accent-color: #14796f; }
@@ -720,6 +977,44 @@ const photoCredits = [
       .hotel-card p { margin: 11px 0 0; color: var(--muted); font-size: 13px; line-height: 1.62; }
       .hotel-card .coordination { margin-top: 14px; padding: 11px; border-radius: 9px; color: #785221; background: #fff0bd; font-size: 11px; font-weight: 800; }
       .hotel-card a { width: fit-content; margin-top: auto; padding-top: 22px; color: #a33d2b; font-size: 12px; font-weight: 900; }
+
+      .gallery-section { margin: 0 0 78px; }
+      .gallery-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 28px; }
+      .gallery-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+      .gallery-filters button { min-height: 38px; padding: 8px 13px; border: 1px solid #cfc5b4; border-radius: 999px; color: #345850; background: var(--paper); cursor: pointer; font-size: 11px; font-weight: 900; }
+      .gallery-filters button:hover { border-color: #77a99e; }
+      .gallery-filters button[aria-pressed="true"] { border-color: var(--ink); color: #fff; background: var(--ink); }
+      .gallery-hint { margin: 0; color: var(--muted); font-size: 11px; }
+      .gallery-grid { display: grid; grid-auto-flow: dense; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+      .gallery-card { grid-column: span 4; min-width: 0; margin: 0; align-self: start; overflow: hidden; border: 1px solid #d6cdbc; border-radius: 16px; background: var(--paper); box-shadow: 0 14px 38px rgb(39 50 43 / 8%); }
+      .gallery-card:nth-child(1), .gallery-card:nth-child(2), .gallery-card:nth-child(6), .gallery-card:nth-child(7), .gallery-card:nth-child(11), .gallery-card:nth-child(12) { grid-column: span 6; }
+      .gallery-card:nth-child(13) { grid-column: 1 / -1; }
+      .gallery-card[hidden] { display: none; }
+      .gallery-open { position: relative; display: block; width: 100%; min-height: 270px; padding: 0; overflow: hidden; border: 0; color: #fff; background: #cbd8d3; cursor: zoom-in; text-align: left; }
+      .gallery-card:nth-child(1) .gallery-open, .gallery-card:nth-child(2) .gallery-open, .gallery-card:nth-child(6) .gallery-open, .gallery-card:nth-child(7) .gallery-open, .gallery-card:nth-child(11) .gallery-open, .gallery-card:nth-child(12) .gallery-open { min-height: 330px; }
+      .gallery-card:nth-child(13) .gallery-open { min-height: 390px; }
+      .gallery-open img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .55s cubic-bezier(.2,.75,.25,1), filter .3s ease; }
+      .gallery-open:hover img, .gallery-open:focus-visible img { transform: scale(1.045); filter: saturate(1.08); }
+      .gallery-overlay { position: absolute; inset: auto 0 0; padding: 54px 17px 16px; background: linear-gradient(transparent, rgb(7 30 28 / 88%)); }
+      .gallery-place { display: block; color: #ffe18d; font-size: 9px; font-weight: 950; letter-spacing: .1em; text-transform: uppercase; }
+      .gallery-title { display: block; margin-top: 5px; font-family: Georgia, "Times New Roman", serif; font-size: 20px; font-weight: 700; line-height: 1.08; }
+      .gallery-credit { margin: 0; padding: 9px 12px; color: #6f7a75; font-size: 9px; }
+      .gallery-credit a { font-weight: 800; }
+
+      .photo-lightbox { width: min(100% - 28px, 1120px); max-width: 1120px; padding: 0; overflow: hidden; border: 1px solid rgb(255 255 255 / 14%); border-radius: 20px; color: #fff; background: #071d1b; box-shadow: 0 36px 110px rgb(0 0 0 / 55%); }
+      .photo-lightbox::backdrop { background: rgb(2 12 11 / 86%); backdrop-filter: blur(10px); }
+      .lightbox-stage { position: relative; display: grid; min-height: min(72vh, 720px); place-items: center; background: #061816; }
+      .lightbox-stage img { display: block; width: 100%; max-height: min(72vh, 720px); object-fit: contain; }
+      .lightbox-close, .lightbox-nav { position: absolute; z-index: 2; display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid rgb(255 255 255 / 25%); border-radius: 50%; color: #fff; background: rgb(5 27 25 / 76%); cursor: pointer; font-size: 21px; backdrop-filter: blur(8px); }
+      .lightbox-close { top: 14px; right: 14px; }
+      .lightbox-nav { top: 50%; transform: translateY(-50%); }
+      .lightbox-prev { left: 14px; }
+      .lightbox-next { right: 14px; }
+      .lightbox-close:hover, .lightbox-nav:hover { color: var(--ink-deep); background: var(--sun); }
+      .lightbox-caption { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; padding: 18px 22px 21px; }
+      .lightbox-caption strong { display: block; font-family: Georgia, "Times New Roman", serif; font-size: 21px; }
+      .lightbox-caption p { margin: 5px 0 0; color: #a9c1bb; font-size: 11px; }
+      .lightbox-caption a { color: #ffe18d; font-size: 10px; font-weight: 850; }
 
       .sources { margin-top: 76px; }
       .source-details { margin-top: 22px; border: 1px solid #d6cdbc; border-radius: 16px; background: var(--paper); }
@@ -741,6 +1036,7 @@ const photoCredits = [
         .live-grid, .hotel-grid { grid-template-columns: 1fr; }
         .hotel-card { min-height: 0; }
         .planning-grid { grid-template-columns: 1fr; }
+        .gallery-card, .gallery-card:nth-child(n) { grid-column: span 6; }
         .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .facts div:nth-child(3) { border-top: 1px solid #dfd6c6; border-left: 0; }
         .facts div:nth-child(4) { border-top: 1px solid #dfd6c6; }
@@ -751,6 +1047,7 @@ const photoCredits = [
         .trip-status { display: none; }
         .top-actions { justify-self: end; }
         .utility-button { display: none; }
+        .utility-button[data-action="share"] { display: inline-flex; min-height: 44px; align-items: center; }
         .hero, .hero-inner { min-height: 650px; }
         .hero-inner { padding: 88px 0 58px; }
         .hero-credit { display: none; }
@@ -762,15 +1059,19 @@ const photoCredits = [
         .day-content { padding: 25px 22px 27px; }
         .day-photos, .day-photos.two { grid-template-columns: 1fr; min-height: 250px; }
         .photo-panel { min-height: 250px; }
-        .day-photos.two .photo-panel:nth-child(2) { display: none; }
+        .day-photos.two .photo-panel:nth-child(2) { display: block; }
         .photo-panel + .photo-panel { border-top: 5px solid var(--paper); border-left: 0; }
         .source-content { grid-template-columns: 1fr; }
+        .gallery-open, .gallery-card:nth-child(n) .gallery-open { min-height: 245px; }
+        .lightbox-stage { min-height: 0; padding-top: 58px; }
+        .lightbox-stage img { max-height: 52vh; }
+        .lightbox-caption { grid-template-columns: 1fr; }
       }
 
       @media (max-width: 520px) {
         .topbar { min-height: 59px; }
         .brand { font-size: 14px; }
-        .language-switch button { min-width: 44px; min-height: 31px; padding: 5px 8px; }
+        .language-switch button { min-width: 44px; min-height: 44px; padding: 7px 9px; }
         .hero, .hero-inner { min-height: 610px; }
         .hero-inner, .page-shell, .facts-wrap { width: min(100% - 26px, 1120px); }
         h1 { font-size: clamp(45px, 14vw, 64px); }
@@ -784,10 +1085,12 @@ const photoCredits = [
         .schedule li { grid-template-columns: 1fr; gap: 5px; }
         .schedule time { padding-top: 0; }
         .panel { padding: 22px; }
+        .gallery-card, .gallery-card:nth-child(n) { grid-column: 1 / -1; }
+        .gallery-hint { width: 100%; }
       }
 
       @media print {
-        .topbar, .hero-actions, .day-jump, .card-actions, .checklist input { display: none !important; }
+        .topbar, .hero-actions, .day-jump, .card-actions, .checklist input, .gallery-section, .scroll-progress { display: none !important; }
         .hero, .hero-inner { min-height: 390px; }
         .hero-inner { padding: 60px 0 35px; }
         .facts-wrap { margin-top: 0; }
@@ -798,10 +1101,14 @@ const photoCredits = [
         a { text-decoration: none; }
       }
 
-      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+      }
     </style>
   </head>
   <body>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
     <a class="skip-link" href="#itinerary"><span class="lang-en">Skip to itinerary</span><span class="lang-zh">跳到行程</span></a>
 
     <header class="topbar">
@@ -811,6 +1118,7 @@ const photoCredits = [
         <span id="trip-status-zh" class="lang-zh">马来西亚 · 2026年8月29日—9月4日</span>
       </div>
       <div class="top-actions">
+        <button class="utility-button" type="button" data-action="share"><span class="lang-en">Share</span><span class="lang-zh">分享</span></button>
         <button class="utility-button" type="button" data-action="print"><span class="lang-en">Print / PDF</span><span class="lang-zh">打印 / PDF</span></button>
         <div class="language-switch" role="group" aria-label="Language / 语言">
           <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
@@ -823,7 +1131,9 @@ const photoCredits = [
       <section class="hero" aria-labelledby="page-title">
         <img
           class="hero-image"
-          src="/images/malatrip/kuala-lumpur-skyline.jpg"
+          src={imageVariant("/images/malatrip/kuala-lumpur-skyline.jpg", 1600)}
+          srcset={`${imageVariant("/images/malatrip/kuala-lumpur-skyline.jpg", 720)} 720w, ${imageVariant("/images/malatrip/kuala-lumpur-skyline.jpg", 1600)} 1600w`}
+          sizes="100vw"
           alt="Kuala Lumpur skyline and the illuminated Petronas Twin Towers at dusk"
           data-alt-en="Kuala Lumpur skyline and the illuminated Petronas Twin Towers at dusk"
           data-alt-zh="黄昏时亮灯的吉隆坡天际线与双子塔"
@@ -834,7 +1144,7 @@ const photoCredits = [
         />
         <div class="hero-inner">
           <div class="hero-copy">
-            <span class="unlisted"><span class="lang-en">Unlisted family guide</span><span class="lang-zh">不公开索引的家庭指南</span></span>
+            <span class="unlisted"><span class="lang-en">Unlisted family guide</span><span class="lang-zh">仅限链接访问的家庭指南</span></span>
             <p class="eyebrow"><span class="lang-en">29 August—4 September 2026</span><span class="lang-zh">2026年8月29日—9月4日</span></p>
             <h1 id="page-title"><span class="lang-en">Malaysia, together.</span><span class="lang-zh">一起去马来西亚。</span></h1>
             <p class="hero-summary">
@@ -843,21 +1153,27 @@ const photoCredits = [
             </p>
             <div class="hero-actions">
               <a class="button button-primary" href="#itinerary"><span class="lang-en">Open the day-by-day plan</span><span class="lang-zh">查看每日行程</span></a>
+              <a class="button button-ghost" href="#photo-story"><span class="lang-en">Explore 13 travel photos</span><span class="lang-zh">浏览13张旅行照片</span></a>
               <a class="button button-ghost" href="#before-you-go"><span class="lang-en">See what needs confirming</span><span class="lang-zh">查看待确认事项</span></a>
             </div>
-            <ol class="route" aria-label="Trip route">
-              <li>Shanghai</li><li>Kuala Lumpur</li><li>Melaka</li><li>Putrajaya</li><li>Penang</li><li>Shanghai</li>
+            <ol class="route" aria-label="Trip route" data-aria-en="Trip route" data-aria-zh="旅行路线">
+              <li><span class="lang-en">Shanghai</span><span class="lang-zh">上海</span></li>
+              <li><span class="lang-en">Kuala Lumpur</span><span class="lang-zh">吉隆坡</span></li>
+              <li><span class="lang-en">Melaka</span><span class="lang-zh">马六甲</span></li>
+              <li><span class="lang-en">Putrajaya</span><span class="lang-zh">布城</span></li>
+              <li><span class="lang-en">Penang</span><span class="lang-zh">槟城</span></li>
+              <li><span class="lang-en">Shanghai</span><span class="lang-zh">上海</span></li>
             </ol>
           </div>
         </div>
         <p class="hero-credit"><a href="https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Skyline_at_dusk_1.jpg" target="_blank" rel="noreferrer">Photo: Walkerssk · CC0</a></p>
       </section>
 
-      <div class="facts-wrap" aria-label="Trip summary">
+      <div class="facts-wrap" aria-label="Trip summary" data-aria-en="Trip summary" data-aria-zh="旅程概览">
         <dl class="facts">
           <div><dt>7</dt><dd><span class="lang-en">days · 6 nights</span><span class="lang-zh">7天 · 6晚</span></dd></div>
           <div><dt>4</dt><dd><span class="lang-en">main areas</span><span class="lang-zh">4个主要地区</span></dd></div>
-          <div><dt>3</dt><dd><span class="lang-en">accommodation bases</span><span class="lang-zh">3处住宿基地</span></dd></div>
+          <div><dt>3</dt><dd><span class="lang-en">accommodation bases</span><span class="lang-zh">3处住宿地点</span></dd></div>
           <div><dt>UTC+8</dt><dd><span class="lang-en">same time as Shanghai</span><span class="lang-zh">与上海无时差</span></dd></div>
         </dl>
       </div>
@@ -872,7 +1188,7 @@ const photoCredits = [
           <div class="live-grid">
             <article class="live-card alert">
               <strong><span class="lang-en">National Day crowds</span><span class="lang-zh">国庆人流</span></strong>
-              <p><span class="lang-en">The official Merdeka Eve gathering is listed at Stadium Merdeka on 30 August, 18:30–00:00. Expect closures, crowds and a slow return.</span><span class="lang-zh">官方国庆前夜活动将于8月30日18:30–00:00在默迪卡体育场举行。预计会有道路封闭、人流密集，回程较慢。</span></p>
+              <p><span class="lang-en">The official gathering is listed at Stadium Merdeka on 30 August, 18:30–00:00. For parents, the calm hotel view is the default—once the exact hotel and view are confirmed.</span><span class="lang-zh">官方活动将于8月30日18:30–00:00在默迪卡体育场举行。与爸妈同行时，默认选择较轻松的酒店夜景方案——前提是先确认准确酒店与景观。</span></p>
               <a href="https://www.merdeka360.my/web/events/list/?eventDisplay=past&tribe-bar-date=2026-09-07" target="_blank" rel="noreferrer"><span class="lang-en">Check Merdeka360</span><span class="lang-zh">查看 Merdeka360</span></a>
             </article>
             <article class="live-card">
@@ -882,22 +1198,80 @@ const photoCredits = [
             </article>
             <article class="live-card alert">
               <strong><span class="lang-en">ETS ticket conflict</span><span class="lang-zh">ETS 车票时间冲突</span></strong>
-              <p><span class="lang-en">The drafts show 14:10–18:15 and 15:55–20:00. The current official timetable supports the first option; the family ticket is the final authority.</span><span class="lang-zh">两版行程分别写着14:10–18:15和15:55–20:00。当前官方时刻表支持前者，但最终请以家庭车票为准。</span></p>
+              <p><span class="lang-en">Do not follow either time until the booked ticket is open. The drafts show 14:10–18:15 and 15:55–20:00; the morning route changes completely depending on the answer.</span><span class="lang-zh">在打开并核对已订车票前，请勿采用任何一个时间。两版分别写着14:10–18:15和15:55–20:00；不同答案会彻底改变上午路线。</span></p>
               <a href="https://www.ktmb.com.my/assets/pdf/2026/Jadual%20Tren%20ETS%201%20Jun%202026.pdf" target="_blank" rel="noreferrer"><span class="lang-en">Open official timetable</span><span class="lang-zh">查看官方时刻表</span></a>
             </article>
           </div>
         </section>
 
+        <section class="gallery-section" id="photo-story" aria-labelledby="gallery-title">
+          <p class="section-kicker"><span class="lang-en">A visual journey</span><span class="lang-zh">用照片预览旅程</span></p>
+          <div class="section-heading">
+            <h2 id="gallery-title"><span class="lang-en">See the trip before you take it.</span><span class="lang-zh">出发前，先看见这段旅程。</span></h2>
+            <p><span class="lang-en">Thirteen licensed photographs trace red-brick Melaka, Kuala Lumpur at night, the rail-and-ferry crossing and Penang’s living heritage. Select any photograph to open the immersive view.</span><span class="lang-zh">13张有授权的照片串起红砖马六甲、吉隆坡夜景、火车与渡轮，以及槟城仍在生活中的古城文化。点击任意照片即可沉浸浏览。</span></p>
+          </div>
+          <div class="gallery-toolbar">
+            <div class="gallery-filters" role="group" aria-label="Filter photographs" data-aria-en="Filter photographs" data-aria-zh="筛选照片">
+              <button type="button" data-gallery-filter="all" aria-pressed="true"><span class="lang-en">All 13</span><span class="lang-zh">全部13张</span></button>
+              <button type="button" data-gallery-filter="kl" aria-pressed="false"><span class="lang-en">Kuala Lumpur</span><span class="lang-zh">吉隆坡</span></button>
+              <button type="button" data-gallery-filter="melaka" aria-pressed="false"><span class="lang-en">Melaka</span><span class="lang-zh">马六甲</span></button>
+              <button type="button" data-gallery-filter="putrajaya" aria-pressed="false"><span class="lang-en">Putrajaya</span><span class="lang-zh">布城</span></button>
+              <button type="button" data-gallery-filter="penang" aria-pressed="false"><span class="lang-en">Penang</span><span class="lang-zh">槟城</span></button>
+            </div>
+            <p class="gallery-hint"><span class="lang-en">Click to expand · use ← → or swipe</span><span class="lang-zh">点击放大 · 可用 ← → 或左右滑动</span></p>
+          </div>
+          <div class="gallery-grid" aria-live="polite">
+            {galleryItems.map((item, index) => (
+              <figure class="gallery-card" data-gallery-card data-region={item.region}>
+                <button
+                  class="gallery-open"
+                  type="button"
+                  data-gallery-open
+                  data-gallery-index={index}
+                  data-full-src={imageVariant(item.src, 1600)}
+                  data-alt-en={item.altEn}
+                  data-alt-zh={item.altZh}
+                  data-place-en={item.placeEn}
+                  data-place-zh={item.placeZh}
+                  data-title-en={item.titleEn}
+                  data-title-zh={item.titleZh}
+                  data-credit={item.credit}
+                  data-credit-url={item.creditUrl}
+                  aria-label={`Open photo: ${item.titleEn}`}
+                  data-aria-en={`Open photo: ${item.titleEn}`}
+                  data-aria-zh={`打开照片：${item.titleZh}`}
+                >
+                  <img
+                    src={imageVariant(item.src, 720)}
+                    srcset={`${imageVariant(item.src, 720)} 720w, ${imageVariant(item.src, 1600)} 1600w`}
+                    sizes="(max-width: 520px) calc(100vw - 26px), (max-width: 900px) 50vw, 38vw"
+                    alt={item.altEn}
+                    data-alt-en={item.altEn}
+                    data-alt-zh={item.altZh}
+                    loading="eager"
+                    decoding="async"
+                  />
+                  <span class="gallery-overlay">
+                    <span class="gallery-place"><span class="lang-en">{item.placeEn}</span><span class="lang-zh">{item.placeZh}</span></span>
+                    <span class="gallery-title"><span class="lang-en">{item.titleEn}</span><span class="lang-zh">{item.titleZh}</span></span>
+                  </span>
+                </button>
+                <figcaption class="gallery-credit"><a href={item.creditUrl} target="_blank" rel="noreferrer">Photo: {item.credit}</a></figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+
         <section id="itinerary" aria-labelledby="itinerary-title">
-          <p class="section-kicker"><span class="lang-en">Working itinerary</span><span class="lang-zh">当前行程</span></p>
+          <p class="section-kicker"><span class="lang-en">Working itinerary</span><span class="lang-zh">暂定行程</span></p>
           <div class="section-heading">
             <h2 id="itinerary-title"><span class="lang-en">The journey, day by day.</span><span class="lang-zh">每日行程。</span></h2>
-            <p><span class="lang-en">Where the screenshots conflict, the more detailed draft is shown as the working plan. New Melaka and George Town ideas are marked “suggested.”</span><span class="lang-zh">两张截图有冲突时，本页采用较详细版本作为当前计划。新增的马六甲与乔治城安排均标为“建议”。</span></p>
+            <p><span class="lang-en">Where the screenshots conflict, the more detailed draft is shown as the working plan. New Melaka and George Town ideas are marked “suggested.”</span><span class="lang-zh">两张截图有冲突时，本页采用较详细版本作为暂定计划。新增的马六甲与乔治城安排均标为“建议”。</span></p>
           </div>
 
-          <nav class="day-jump" aria-label="Jump to a day">
+          <nav class="day-jump" aria-label="Jump to a day" data-aria-en="Jump to a day" data-aria-zh="跳到某一天">
             {days.map((day) => (
-              <a href={`#${day.id}`}>
+              <a href={`#${day.id}`} data-day-link={day.date}>
                 <strong>{day.day}</strong>
                 <span><span class="lang-en">{day.monthEn}</span><span class="lang-zh">{day.monthZh}</span></span>
               </a>
@@ -911,13 +1285,13 @@ const photoCredits = [
                   <figure class:list={["day-photos", { two: day.secondaryImage }]}>
                     <div class="photo-panel">
                       <img
-                        src={day.image.src}
+                        src={imageVariant(day.image.src, 720)}
+                        srcset={`${imageVariant(day.image.src, 720)} 720w, ${imageVariant(day.image.src, 1600)} 1600w`}
+                        sizes="(max-width: 720px) calc(100vw - 26px), 65vw"
                         alt={day.image.altEn}
                         data-alt-en={day.image.altEn}
                         data-alt-zh={day.image.altZh}
-                        width="1920"
-                        height="1200"
-                        loading="lazy"
+                        loading="eager"
                         decoding="async"
                       />
                       <figcaption class="photo-credit"><a href={day.image.creditUrl} target="_blank" rel="noreferrer">{day.image.credit}</a></figcaption>
@@ -925,13 +1299,13 @@ const photoCredits = [
                     {day.secondaryImage && (
                       <div class="photo-panel">
                         <img
-                          src={day.secondaryImage.src}
+                          src={imageVariant(day.secondaryImage.src, 720)}
+                          srcset={`${imageVariant(day.secondaryImage.src, 720)} 720w, ${imageVariant(day.secondaryImage.src, 1600)} 1600w`}
+                          sizes="(max-width: 720px) calc(100vw - 26px), 35vw"
                           alt={day.secondaryImage.altEn}
                           data-alt-en={day.secondaryImage.altEn}
                           data-alt-zh={day.secondaryImage.altZh}
-                          width="1920"
-                          height="1200"
-                          loading="lazy"
+                          loading="eager"
                           decoding="async"
                         />
                         <figcaption class="photo-credit"><a href={day.secondaryImage.creditUrl} target="_blank" rel="noreferrer">{day.secondaryImage.credit}</a></figcaption>
@@ -940,7 +1314,7 @@ const photoCredits = [
                   </figure>
                 )}
                 <div class="day-layout">
-                  <aside class="date-rail" aria-label={`${day.monthEn} ${day.day}`}>
+                  <aside class="date-rail" aria-label={`${day.monthEn} ${day.day}`} data-aria-en={`${day.monthEn} ${day.day}`} data-aria-zh={`${day.monthZh}${day.day}日`}>
                     <strong>{day.day}</strong>
                     <span class="month"><span class="lang-en">{day.monthEn}</span><span class="lang-zh">{day.monthZh}</span></span>
                     <span class="weekday"><span class="lang-en">{day.weekdayEn}</span><span class="lang-zh">{day.weekdayZh}</span></span>
@@ -953,9 +1327,10 @@ const photoCredits = [
                     </div>
                     <h3><span class="lang-en">{day.titleEn}</span><span class="lang-zh">{day.titleZh}</span></h3>
                     <p class="day-summary"><span class="lang-en">{day.summaryEn}</span><span class="lang-zh">{day.summaryZh}</span></p>
+                    {day.weatherBadgeEn && <span class="weather-chip"><span class="lang-en">{day.weatherBadgeEn}</span><span class="lang-zh">{day.weatherBadgeZh}</span></span>}
                     <ol class="schedule">
                       {day.events.map((event) => (
-                        <li>
+                        <li class:list={{ critical: "critical" in event && event.critical }}>
                           <time>
                             {event.time ?? (
                               <><span class="lang-en">{event.timeEn}</span><span class="lang-zh">{event.timeZh}</span></>
@@ -999,6 +1374,10 @@ const photoCredits = [
             <article class="panel">
               <h3><span class="lang-en">Confirmation checklist</span><span class="lang-zh">确认清单</span></h3>
               <p class="panel-intro"><span class="lang-en">The guide keeps uncertain details visible instead of quietly guessing.</span><span class="lang-zh">本指南不会默默猜测，而是明确保留所有尚未确认的信息。</span></p>
+              <div class="check-progress" aria-live="polite">
+                <span class="check-progress-track" id="check-progress-track" role="progressbar" aria-label="Checklist progress" data-aria-en="Checklist progress" data-aria-zh="确认清单进度" aria-valuemin="0" aria-valuemax={checklist.length} aria-valuenow="0"><span class="check-progress-bar" id="check-progress-bar"></span></span>
+                <output class="check-progress-output" id="check-progress-output">0 / {checklist.length}</output>
+              </div>
               <div class="checklist">
                 {checklist.map((item) => (
                   <label class="check-item">
@@ -1025,8 +1404,8 @@ const photoCredits = [
         <section class="hotels" aria-labelledby="hotels-title">
           <p class="section-kicker"><span class="lang-en">Accommodation</span><span class="lang-zh">住宿</span></p>
           <div class="section-heading">
-            <h2 id="hotels-title"><span class="lang-en">Three bases, one detail still to settle.</span><span class="lang-zh">三处住宿，还有一项需要确认。</span></h2>
-            <p><span class="lang-en">The family’s own booking confirmations remain the authority for room type, breakfast, access and check-in.</span><span class="lang-zh">房型、早餐、无障碍设施与入住方式，均以家庭自己的预订确认单为准。</span></p>
+            <h2 id="hotels-title"><span class="lang-en">Three bases, a few details still to settle.</span><span class="lang-zh">三处住宿，仍有几项细节待确认。</span></h2>
+            <p><span class="lang-en">The family’s own booking confirmations remain the authority for room type, breakfast, access and check-in.</span><span class="lang-zh">房型、早餐、进入方式与入住手续，均以家庭自己的预订确认单为准。</span></p>
           </div>
           <div class="hotel-grid">
             <article class="hotel-card">
@@ -1044,7 +1423,7 @@ const photoCredits = [
             </article>
             <article class="hotel-card">
               <span class="hotel-number">03</span>
-              <h3>Macalisterz George Town</h3>
+              <h3><span class="lang-en">Macalisterz George Town</span><span class="lang-zh">Macalisterz 乔治城</span></h3>
               <p><span class="lang-en">The source notes describe a clean, two-room homestay in George Town. The exact unit and access instructions are not shown.</span><span class="lang-zh">原行程写明这是乔治城一套干净的两房民宿，但未显示具体房号与进入方式。</span></p>
               <p class="coordination"><span class="lang-en">Save the host’s check-in message offline before boarding the ETS train.</span><span class="lang-zh">上 ETS 火车前，请离线保存房东的入住信息。</span></p>
               <a href={mapUrl("Macalisterz George Town Penang")} target="_blank" rel="noreferrer"><span class="lang-en">Open area map</span><span class="lang-zh">打开区域地图</span></a>
@@ -1073,19 +1452,19 @@ const photoCredits = [
               <div>
                 <h3><span class="lang-en">Official travel references</span><span class="lang-zh">官方旅行参考</span></h3>
                 <ul>
-                  <li><a href="https://www.malaysia.travel/explore/dutch-square" target="_blank" rel="noreferrer">Tourism Malaysia · Dutch Square</a></li>
-                  <li><a href="https://tourism.ppj.gov.my/destination/detail/112" target="_blank" rel="noreferrer">Putrajaya Tourism · Putra Mosque</a></li>
-                  <li><a href="https://www.ktmb.com.my/traintime.html" target="_blank" rel="noreferrer">KTMB · ETS timetables</a></li>
-                  <li><a href="https://penangport.gov.my/en/services/service/ferry-services" target="_blank" rel="noreferrer">Penang Port · ferry service</a></li>
-                  <li><a href="https://www.penanghill.gov.my/index.php/en/tickets" target="_blank" rel="noreferrer">Penang Hill · hours and tickets</a></li>
-                  <li><a href="https://whc.unesco.org/en/list/1223" target="_blank" rel="noreferrer">UNESCO · Melaka and George Town</a></li>
+                  <li><a href="https://www.malaysia.travel/explore/dutch-square" target="_blank" rel="noreferrer"><span class="lang-en">Tourism Malaysia · Dutch Square</span><span class="lang-zh">马来西亚旅游局 · 荷兰红屋广场</span></a></li>
+                  <li><a href="https://tourism.ppj.gov.my/destination/detail/112" target="_blank" rel="noreferrer"><span class="lang-en">Putrajaya Tourism · Putra Mosque</span><span class="lang-zh">布城旅游局 · 布特拉清真寺</span></a></li>
+                  <li><a href="https://www.ktmb.com.my/traintime.html" target="_blank" rel="noreferrer"><span class="lang-en">KTMB · ETS timetables</span><span class="lang-zh">KTMB · ETS 时刻表</span></a></li>
+                  <li><a href="https://penangport.gov.my/en/services/service/ferry-services" target="_blank" rel="noreferrer"><span class="lang-en">Penang Port · ferry service</span><span class="lang-zh">槟城港口 · 渡轮服务</span></a></li>
+                  <li><a href="https://www.penanghill.gov.my/index.php/en/tickets" target="_blank" rel="noreferrer"><span class="lang-en">Penang Hill · hours and tickets</span><span class="lang-zh">升旗山 · 开放时间与门票</span></a></li>
+                  <li><a href="https://whc.unesco.org/en/list/1223" target="_blank" rel="noreferrer"><span class="lang-en">UNESCO · Melaka and George Town</span><span class="lang-zh">联合国教科文组织 · 马六甲与乔治城</span></a></li>
                 </ul>
               </div>
               <div>
                 <h3><span class="lang-en">Photo credits</span><span class="lang-zh">图片版权</span></h3>
                 <ul>
                   {photoCredits.map((credit) => (
-                    <li><a href={credit.url} target="_blank" rel="noreferrer">{credit.label}</a> · {credit.creator} · {credit.license}</li>
+                    <li><a href={credit.url} target="_blank" rel="noreferrer"><span class="lang-en">{credit.labelEn}</span><span class="lang-zh">{credit.labelZh}</span></a> · {credit.creator} · {credit.license}</li>
                   ))}
                 </ul>
               </div>
@@ -1101,13 +1480,41 @@ const photoCredits = [
 
     <footer class="footer">
       <strong><span class="lang-en">Malaysia Family Trip · 2026</span><span class="lang-zh">2026 马来西亚家庭之旅</span></strong>
-      <p><span class="lang-en">Prepared as an unlisted, noindex family guide on SpeakKai.</span><span class="lang-zh">本页作为 SpeakKai 上不公开索引的家庭旅行指南。</span></p>
+      <p><span class="lang-en">Prepared as an unlisted, noindex family guide on SpeakKai. Anyone with the link can view it.</span><span class="lang-zh">本页是 SpeakKai 上仅限链接访问、禁止搜索引擎索引的家庭旅行指南；任何获得链接的人都可以查看。</span></p>
     </footer>
+
+    <dialog class="photo-lightbox" id="photo-lightbox" aria-labelledby="lightbox-title">
+      <div class="lightbox-stage">
+        <img id="lightbox-image" src="" alt="" />
+        <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close photo" data-aria-en="Close photo" data-aria-zh="关闭照片">×</button>
+        <button class="lightbox-nav lightbox-prev" type="button" data-lightbox-prev aria-label="Previous photo" data-aria-en="Previous photo" data-aria-zh="上一张照片">←</button>
+        <button class="lightbox-nav lightbox-next" type="button" data-lightbox-next aria-label="Next photo" data-aria-en="Next photo" data-aria-zh="下一张照片">→</button>
+      </div>
+      <div class="lightbox-caption">
+        <div>
+          <strong id="lightbox-title"></strong>
+          <p id="lightbox-place"></p>
+        </div>
+        <a id="lightbox-credit" href="#" target="_blank" rel="noreferrer"></a>
+      </div>
+    </dialog>
 
     <script is:inline>
       const root = document.documentElement;
       const languageButtons = document.querySelectorAll('[data-set-lang]');
       const images = document.querySelectorAll('img[data-alt-en]');
+      const localizedLabels = document.querySelectorAll('[data-aria-en]');
+      const externalLinks = document.querySelectorAll('a[target="_blank"]');
+      const lightbox = document.getElementById('photo-lightbox');
+      const lightboxImage = document.getElementById('lightbox-image');
+      const lightboxTitle = document.getElementById('lightbox-title');
+      const lightboxPlace = document.getElementById('lightbox-place');
+      const lightboxCredit = document.getElementById('lightbox-credit');
+      const galleryCards = Array.from(document.querySelectorAll('[data-gallery-card]'));
+      const galleryButtons = Array.from(document.querySelectorAll('[data-gallery-open]'));
+      let lightboxPosition = 0;
+      let lastGalleryTrigger = null;
+      let touchStartX = 0;
 
       function safeRead(key) {
         try { return window.localStorage.getItem(key); } catch { return null; }
@@ -1115,6 +1522,30 @@ const photoCredits = [
 
       function safeWrite(key, value) {
         try { window.localStorage.setItem(key, value); } catch {}
+      }
+
+      function getLanguage() {
+        return root.dataset.lang === 'zh' ? 'zh' : 'en';
+      }
+
+      function getVisibleGalleryButtons() {
+        return galleryButtons.filter((button) => !button.closest('[data-gallery-card]').hidden);
+      }
+
+      function renderLightbox() {
+        const visibleButtons = getVisibleGalleryButtons();
+        if (!visibleButtons.length) return;
+        lightboxPosition = (lightboxPosition + visibleButtons.length) % visibleButtons.length;
+        const button = visibleButtons[lightboxPosition];
+        const language = getLanguage();
+        lightboxImage.src = button.dataset.fullSrc;
+        lightboxImage.alt = button.dataset[language === 'zh' ? 'altZh' : 'altEn'] || '';
+        lightboxTitle.textContent = button.dataset[language === 'zh' ? 'titleZh' : 'titleEn'] || '';
+        lightboxPlace.textContent = button.dataset[language === 'zh' ? 'placeZh' : 'placeEn'] || '';
+        lightboxCredit.href = button.dataset.creditUrl;
+        const creditText = language === 'zh' ? `图片版权：${button.dataset.credit}` : `Photo: ${button.dataset.credit}`;
+        lightboxCredit.textContent = creditText;
+        lightboxCredit.setAttribute('aria-label', language === 'zh' ? `${creditText}（在新标签页打开）` : `${creditText} (opens in a new tab)`);
       }
 
       function setLanguage(language) {
@@ -1126,6 +1557,19 @@ const photoCredits = [
         images.forEach((image) => {
           image.alt = image.getAttribute(language === 'zh' ? 'data-alt-zh' : 'data-alt-en') || '';
         });
+        localizedLabels.forEach((element) => {
+          element.setAttribute('aria-label', element.getAttribute(language === 'zh' ? 'data-aria-zh' : 'data-aria-en') || '');
+        });
+        externalLinks.forEach((link) => {
+          const translatedText = link.querySelector(language === 'zh' ? '.lang-zh' : '.lang-en');
+          const label = (translatedText?.textContent || link.textContent || '').trim();
+          link.setAttribute('aria-label', language === 'zh' ? `${label}（在新标签页打开）` : `${label} (opens in a new tab)`);
+        });
+        document.title = language === 'zh' ? '2026马来西亚家庭之旅 | SpeakKai' : 'Malaysia Family Trip 2026 | SpeakKai';
+        document.querySelector('meta[name="description"]')?.setAttribute('content', language === 'zh'
+          ? '2026年8月29日至9月4日，吉隆坡、马六甲、布城与槟城双语家庭旅行指南。'
+          : 'A bilingual family travel guide for Kuala Lumpur, Melaka, Putrajaya and Penang, 29 August–4 September 2026.');
+        if (lightbox?.open) renderLightbox();
         safeWrite('malatrip-language', language);
       }
 
@@ -1140,6 +1584,97 @@ const photoCredits = [
       setLanguage(preferredLanguage);
 
       document.querySelector('[data-action="print"]')?.addEventListener('click', () => window.print());
+
+      const shareButton = document.querySelector('[data-action="share"]');
+      shareButton?.addEventListener('click', async () => {
+        const en = shareButton.querySelector('.lang-en');
+        const zh = shareButton.querySelector('.lang-zh');
+        const originalEn = en.textContent;
+        const originalZh = zh.textContent;
+        let shared = false;
+        try {
+          if (navigator.share && window.matchMedia('(pointer: coarse)').matches) {
+            await navigator.share({ title: document.title, text: getLanguage() === 'zh' ? '马来西亚家庭旅行指南' : 'Malaysia family trip guide', url: window.location.href });
+            shared = true;
+          } else if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(window.location.href);
+          } else {
+            throw new Error('Clipboard unavailable');
+          }
+          en.textContent = shared ? 'Shared' : 'Link copied';
+          zh.textContent = shared ? '已分享' : '链接已复制';
+          shareButton.classList.add('is-complete');
+        } catch {
+          en.textContent = 'Copy unavailable';
+          zh.textContent = '暂无法复制';
+        }
+        window.setTimeout(() => {
+          en.textContent = originalEn;
+          zh.textContent = originalZh;
+          shareButton.classList.remove('is-complete');
+        }, 1800);
+      });
+
+      const scrollProgress = document.getElementById('scroll-progress');
+      const updateScrollProgress = () => {
+        const available = document.documentElement.scrollHeight - window.innerHeight;
+        const percentage = available > 0 ? Math.min(100, Math.max(0, (window.scrollY / available) * 100)) : 0;
+        scrollProgress.style.width = `${percentage}%`;
+      };
+      updateScrollProgress();
+      window.addEventListener('scroll', updateScrollProgress, { passive: true });
+
+      const dayCards = Array.from(document.querySelectorAll('[data-date]'));
+      const dayLinks = Array.from(document.querySelectorAll('[data-day-link]'));
+      if ('IntersectionObserver' in window) {
+        const dayObserver = new IntersectionObserver((entries) => {
+          const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!visible) return;
+          dayLinks.forEach((link) => link.setAttribute('aria-current', String(link.dataset.dayLink === visible.target.dataset.date)));
+        }, { rootMargin: '-18% 0px -62% 0px', threshold: [0.01, 0.2, 0.5] });
+        dayCards.forEach((card) => dayObserver.observe(card));
+      }
+
+      document.querySelectorAll('[data-gallery-filter]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const filter = button.dataset.galleryFilter;
+          galleryCards.forEach((card) => { card.hidden = filter !== 'all' && card.dataset.region !== filter; });
+          document.querySelectorAll('[data-gallery-filter]').forEach((filterButton) => {
+            filterButton.setAttribute('aria-pressed', String(filterButton === button));
+          });
+        });
+      });
+
+      galleryButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const visibleButtons = getVisibleGalleryButtons();
+          lightboxPosition = visibleButtons.indexOf(button);
+          lastGalleryTrigger = button;
+          renderLightbox();
+          lightbox.showModal();
+        });
+      });
+
+      function moveLightbox(direction) {
+        lightboxPosition += direction;
+        renderLightbox();
+      }
+
+      document.querySelector('[data-lightbox-close]')?.addEventListener('click', () => lightbox.close());
+      document.querySelector('[data-lightbox-prev]')?.addEventListener('click', () => moveLightbox(-1));
+      document.querySelector('[data-lightbox-next]')?.addEventListener('click', () => moveLightbox(1));
+      lightbox?.addEventListener('click', (event) => { if (event.target === lightbox) lightbox.close(); });
+      lightbox?.addEventListener('close', () => lastGalleryTrigger?.focus());
+      lightbox?.addEventListener('touchstart', (event) => { touchStartX = event.changedTouches[0]?.clientX || 0; }, { passive: true });
+      lightbox?.addEventListener('touchend', (event) => {
+        const distance = (event.changedTouches[0]?.clientX || 0) - touchStartX;
+        if (Math.abs(distance) > 45) moveLightbox(distance > 0 ? -1 : 1);
+      }, { passive: true });
+      document.addEventListener('keydown', (event) => {
+        if (!lightbox?.open) return;
+        if (event.key === 'ArrowLeft') moveLightbox(-1);
+        if (event.key === 'ArrowRight') moveLightbox(1);
+      });
 
       const dateParts = Object.fromEntries(
         new Intl.DateTimeFormat('en', {
@@ -1170,10 +1705,26 @@ const photoCredits = [
         statusZh.textContent = '旅程已完成 · 2026年8月29日—9月4日';
       }
 
-      document.querySelectorAll('[data-check-id]').forEach((checkbox) => {
+      const checkboxes = Array.from(document.querySelectorAll('[data-check-id]'));
+      const updateChecklistProgress = () => {
+        const complete = checkboxes.filter((checkbox) => checkbox.checked).length;
+        const percentage = checkboxes.length ? (complete / checkboxes.length) * 100 : 0;
+        document.getElementById('check-progress-bar').style.width = `${percentage}%`;
+        document.getElementById('check-progress-track').setAttribute('aria-valuenow', String(complete));
+        document.getElementById('check-progress-output').textContent = `${complete} / ${checkboxes.length}`;
+      };
+      checkboxes.forEach((checkbox) => {
         const key = `malatrip-check-${checkbox.dataset.checkId}`;
         checkbox.checked = safeRead(key) === '1';
-        checkbox.addEventListener('change', () => safeWrite(key, checkbox.checked ? '1' : '0'));
+        checkbox.addEventListener('change', () => {
+          safeWrite(key, checkbox.checked ? '1' : '0');
+          updateChecklistProgress();
+        });
+      });
+      updateChecklistProgress();
+
+      window.addEventListener('beforeprint', () => {
+        document.querySelectorAll('img[loading="lazy"]').forEach((image) => { image.loading = 'eager'; });
       });
     </script>
   </body>
