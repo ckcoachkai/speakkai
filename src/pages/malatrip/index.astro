@@ -1,0 +1,1180 @@
+---
+const pageTitle = "Malaysia Family Trip 2026 | SpeakKai";
+const pageDescription =
+  "A bilingual family travel guide for Kuala Lumpur, Melaka, Putrajaya and Penang, 29 August–4 September 2026.";
+
+const mapUrl = (query: string) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+
+const days = [
+  {
+    id: "aug-29",
+    date: "2026-08-29",
+    day: "29",
+    monthEn: "August",
+    monthZh: "8月",
+    weekdayEn: "Saturday",
+    weekdayZh: "星期六",
+    placeEn: "Arrival · Melaka",
+    placeZh: "抵达 · 马六甲",
+    titleEn: "Land, head south, then meet Melaka after dark",
+    titleZh: "抵达后南下，在夜色中初见马六甲",
+    summaryEn:
+      "Keep the first night simple: airport, road transfer, hotel, food and a gentle walk through the heritage centre.",
+    summaryZh:
+      "首晚安排尽量简单：抵达、乘车、入住、吃饭，再轻松逛一逛古城中心。",
+    badgeEn: "Source plan",
+    badgeZh: "原行程",
+    badgeTone: "source",
+    image: {
+      src: "/images/malatrip/jonker-street.jpg",
+      altEn: "The decorated entrance to Jonker Walk in Melaka",
+      altZh: "马六甲鸡场街装饰华丽的入口牌楼",
+      credit: "Jack No1 · CC BY-SA 3.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Jonker_Street@Malacca.JPG",
+    },
+    events: [
+      {
+        time: "11:45–17:25",
+        en: "Shanghai Pudong T2 → Kuala Lumpur T2",
+        zh: "上海浦东 T2 → 吉隆坡 T2",
+        noteEn: "Keep passports and onward-transfer details in hand luggage.",
+        noteZh: "护照与后续接送信息请放在随身行李中。",
+      },
+      {
+        time: "20:00–22:00",
+        en: "Road transfer from Kuala Lumpur to Melaka",
+        zh: "从吉隆坡乘车前往马六甲",
+        noteEn: "Allow extra time for airport formalities and weekend traffic.",
+        noteZh: "周末可能堵车，也要预留入境和取行李时间。",
+      },
+      {
+        timeEn: "Late evening",
+        timeZh: "晚上",
+        en: "Check in, find dinner, then take a short Jonker Street and riverside walk",
+        zh: "入住、吃晚餐，然后轻松逛鸡场街与河畔",
+        noteEn: "Saturday is the best fit for the full Jonker Walk night-market atmosphere.",
+        noteZh: "星期六最适合感受鸡场街完整的夜市氛围。",
+      },
+    ],
+    stay: {
+      en: "VIENTO RedHouse Melaka by Rest Collection",
+      zh: "VIENTO 马六甲红屋精选酒店",
+      noteEn: "Family-booked hotel in the heritage core · 32 Jalan Laksamana",
+      noteZh: "家人已订酒店，位于古城中心 · Jalan Laksamana 32号",
+    },
+    actions: [
+      { href: mapUrl("VIENTO RedHouse Melaka by Rest Collection"), en: "Hotel map", zh: "酒店地图" },
+      { href: mapUrl("Jonker Walk Melaka"), en: "Jonker Street map", zh: "鸡场街地图" },
+    ],
+  },
+  {
+    id: "aug-30",
+    date: "2026-08-30",
+    day: "30",
+    monthEn: "August",
+    monthZh: "8月",
+    weekdayEn: "Sunday",
+    weekdayZh: "星期日",
+    placeEn: "Melaka → Kuala Lumpur",
+    placeZh: "马六甲 → 吉隆坡",
+    titleEn: "A parent-friendly heritage day, then Merdeka Eve",
+    titleZh: "适合爸妈的古城一日游，晚上迎接国庆",
+    summaryEn:
+      "This fills the previously unplanned Melaka day while preserving the 16:00 transfer to Kuala Lumpur. Outdoor walking is front-loaded, with a cool lunch break and an easy final hour.",
+    summaryZh:
+      "这是为原本尚未规划的马六甲一日游补充的路线，同时保留16:00前往吉隆坡的安排。步行集中在上午，中午安排室内休息，最后一小时保持轻松。",
+    badgeEn: "New suggested plan",
+    badgeZh: "新增建议行程",
+    badgeTone: "suggested",
+    image: {
+      src: "/images/malatrip/melaka-dutch-square.jpg",
+      altEn: "Dutch Square and the red Stadthuys buildings illuminated at night in Melaka",
+      altZh: "夜晚亮灯的马六甲荷兰红屋广场与红色建筑",
+      credit: "Sharon Hahn Darlin · CC BY 2.0",
+      creditUrl:
+        "https://commons.wikimedia.org/wiki/File:Melaka,_Malaysia_-_Dutch_Square_or_Red_Square,_March_2023.jpg",
+    },
+    events: [
+      {
+        time: "08:00–09:00",
+        en: "Breakfast, water and sun protection; confirm luggage storage with the hotel",
+        zh: "早餐，准备水与防晒用品，并向酒店确认行李寄存",
+      },
+      {
+        time: "09:00–10:00",
+        en: "Dutch Square: Stadthuys, Christ Church, clock tower and river photos",
+        zh: "荷兰红屋广场：Stadthuys、基督堂、钟楼与河边拍照",
+        noteEn: "The hotel is in the same heritage core, so this is the easiest first stop.",
+        noteZh: "酒店就在古城中心，这是最轻松的第一站。",
+      },
+      {
+        time: "10:00–11:10",
+        en: "St Paul’s Hill and A Famosa — or skip the hill if either parent is tired",
+        zh: "圣保罗山与圣地亚哥城门——如果爸妈累了，可跳过上山",
+      },
+      {
+        time: "11:20–12:15",
+        en: "Baba & Nyonya Heritage Museum, subject to same-day opening and ticket availability",
+        zh: "峇峇娘惹文化博物馆（以当天开放及售票情况为准）",
+      },
+      {
+        time: "12:15–13:45",
+        en: "Nyonya lunch, air-conditioning break, check-out and luggage",
+        zh: "娘惹午餐、室内休息、退房与整理行李",
+      },
+      {
+        time: "13:45–15:10",
+        en: "Slow Jonker Street and riverside loop; stop for cendol or coffee",
+        zh: "慢逛鸡场街与河畔；吃煎蕊或喝咖啡",
+      },
+      {
+        time: "15:10–16:00",
+        en: "Return to the hotel, collect bags and meet the transfer",
+        zh: "回酒店取行李，与接送车辆会合",
+      },
+      {
+        time: "16:00–19:00",
+        en: "Melaka → Kuala Lumpur; check in and have a simple dinner",
+        zh: "马六甲 → 吉隆坡；入住并简单吃晚餐",
+      },
+      {
+        time: "20:30–00:30",
+        en: "Merdeka Eve: choose the hotel skyline view or the official countdown at Stadium Merdeka",
+        zh: "国庆前夜：可选酒店天际线夜景，或前往默迪卡体育场官方倒数活动",
+        noteEn:
+          "The official gathering is listed for 18:30–00:00. Expect large crowds, road closures and a slow journey home.",
+        noteZh: "官方活动时间为18:30–00:00。预计人流很大、道路封闭，回程会较慢。",
+      },
+    ],
+    stay: {
+      en: "Imperial Luxury Hotel — exact English property name still to confirm",
+      zh: "帝国豪华酒店——请确认准确的英文酒店名称",
+      noteEn: "Source notes highlight an infinity pool and Twin Towers view.",
+      noteZh: "原行程特别提到无边泳池与双子塔景观。",
+    },
+    actions: [
+      { href: mapUrl("Dutch Square Melaka"), en: "Heritage map", zh: "古城地图" },
+      { href: "https://www.merdeka360.my/web/events/list/?eventDisplay=past&tribe-bar-date=2026-09-07", en: "Official countdown", zh: "官方倒数活动" },
+      { href: mapUrl("Stadium Merdeka Kuala Lumpur"), en: "Stadium map", zh: "体育场地图" },
+    ],
+  },
+  {
+    id: "aug-31",
+    date: "2026-08-31",
+    day: "31",
+    monthEn: "August",
+    monthZh: "8月",
+    weekdayEn: "Monday",
+    weekdayZh: "星期一",
+    placeEn: "Kuala Lumpur · National Day",
+    placeZh: "吉隆坡 · 马来西亚国庆日",
+    titleEn: "A slow city day framed by the Twin Towers",
+    titleZh: "以双子塔为背景的轻松城市日",
+    summaryEn:
+      "The detailed draft replaces the earlier broad outline: breakfast, pool photos, lunch, the city centre, then a final skyline session at the hotel.",
+    summaryZh:
+      "较详细的行程替代了早期概略版：早餐、泳池拍照、午餐、游览市中心，最后回酒店看天际线。",
+    badgeEn: "Latest detailed draft",
+    badgeZh: "较新详细版",
+    badgeTone: "source",
+    events: [
+      { time: "09:30–10:30", en: "Breakfast", zh: "早餐" },
+      { time: "11:45–12:30", en: "Infinity-pool photos", zh: "无边泳池拍照" },
+      { time: "12:30–13:30", en: "Lunch", zh: "午餐" },
+      {
+        time: "13:30–19:00",
+        en: "Explore Kuala Lumpur city centre and KLCC at a family pace",
+        zh: "按家庭节奏游览吉隆坡市中心与 KLCC",
+        noteEn:
+          "Exterior tower and KLCC Park photos do not need a tower ticket; holiday queues and closures may be heavier than usual.",
+        noteZh: "在双子塔外与 KLCC 公园拍照无需登塔票；国庆日排队与临时管制可能更多。",
+      },
+      {
+        time: "20:30–22:00",
+        en: "Return to the hotel pool for rest and Twin Towers lights",
+        zh: "回酒店泳池休息，拍双子塔灯光",
+      },
+    ],
+    stay: {
+      en: "Imperial Luxury Hotel — exact property name to confirm",
+      zh: "帝国豪华酒店——准确名称待确认",
+      noteEn: "Keep this booking confirmation handy before relying on the pool/view description.",
+      noteZh: "请以预订确认单为准，再确认泳池与景观信息。",
+    },
+    actions: [
+      { href: mapUrl("Petronas Twin Towers Kuala Lumpur"), en: "KLCC map", zh: "KLCC 地图" },
+      { href: "https://www.klccconventioncentre.com/visitors/experience-kuala-lumpur/places-to-visit", en: "KLCC guide", zh: "KLCC 指南" },
+    ],
+  },
+  {
+    id: "sep-1",
+    date: "2026-09-01",
+    day: "01",
+    monthEn: "September",
+    monthZh: "9月",
+    weekdayEn: "Tuesday",
+    weekdayZh: "星期二",
+    placeEn: "Putrajaya → Penang",
+    placeZh: "布城 → 槟城",
+    titleEn: "Pink Mosque, rail north, ferry to George Town",
+    titleZh: "粉红清真寺、乘火车北上、渡轮进乔治城",
+    summaryEn:
+      "This follows the more detailed Putrajaya version. The two images disagree on the ETS departure, so the train ticket—not this page—must decide the final timing.",
+    summaryZh:
+      "本页采用含布城行程的详细版本。两张图片中的 ETS 发车时间不一致，最终必须以火车票为准。",
+    badgeEn: "Timing needs confirmation",
+    badgeZh: "时间需确认",
+    badgeTone: "warning",
+    image: {
+      src: "/images/malatrip/putrajaya-mosque.jpg",
+      altEn: "Putra Mosque and Putra Square beneath a cloudy sky",
+      altZh: "阴云下的布特拉清真寺与布特拉广场",
+      credit: "Slices of Light · CC BY-SA 4.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Dataran_Putra_Square_dan_Masjid_Putra.jpg",
+    },
+    events: [
+      {
+        time: "08:00–09:00",
+        en: "Breakfast",
+        zh: "早餐",
+      },
+      {
+        time: "09:00–09:45",
+        en: "Check out and store luggage",
+        zh: "退房并寄存行李",
+      },
+      {
+        time: "10:00–11:00",
+        en: "KLCC → Putra Mosque, Putrajaya",
+        zh: "KLCC → 布城粉红清真寺",
+      },
+      {
+        time: "11:00–12:30",
+        en: "Putra Mosque, Putra Square and exterior views of Perdana Putra",
+        zh: "粉红清真寺、布特拉广场及首相府外观",
+        noteEn:
+          "Wear modest, light-coloured clothing. Visitor robes and head coverings are generally provided; prayer times take priority.",
+        noteZh: "穿端庄的浅色衣服。通常会提供长袍和头巾；礼拜时间优先。",
+      },
+      {
+        time: "12:30–13:30",
+        en: "Return toward KLCC and have lunch",
+        zh: "返回 KLCC 方向并吃午餐",
+      },
+      {
+        time: "14:00–15:00",
+        en: "KLCC → KL Sentral; collect luggage and reach the platform early",
+        zh: "KLCC → 吉隆坡中央车站；取行李并提前到站台",
+      },
+      {
+        time: "15:55–20:00",
+        en: "Latest detailed draft: ETS north to Butterworth / Penang",
+        zh: "较新详细版：乘 ETS 北上至北海／槟城",
+        noteEn:
+          "Earlier draft: 14:10–18:15 (EP9326 matches the current official timetable). Confirm the booked train immediately.",
+        noteZh: "早期版本为14:10–18:15（EP9326 与当前官方时刻表相符）。请立即核对已订车票。",
+      },
+      {
+        time: "20:30–21:00",
+        en: "Ferry/transfer from Butterworth to George Town, then drop luggage",
+        zh: "从北海乘渡轮／接驳前往乔治城，然后放行李",
+        noteEn: "The ferry operates from the mainland to Raja Tun Uda Terminal near the heritage district; keep a buffer after the train.",
+        noteZh: "渡轮从大陆前往靠近古城的 Raja Tun Uda 码头；下火车后要预留转乘时间。",
+      },
+    ],
+    stay: {
+      en: "Macalisterz George Town · homestay, two rooms",
+      zh: "Macalisterz 乔治城 · 民宿，两房",
+      noteEn: "Use the family confirmation for the exact unit, check-in method and address.",
+      noteZh: "具体房号、入住方式与地址请以家庭预订确认单为准。",
+    },
+    actions: [
+      { href: mapUrl("Putra Mosque Putrajaya"), en: "Putrajaya map", zh: "布城地图" },
+      { href: "https://www.ktmb.com.my/assets/pdf/2026/Jadual%20Tren%20ETS%201%20Jun%202026.pdf", en: "Official ETS timetable", zh: "ETS 官方时刻表" },
+      { href: "https://penangport.gov.my/en/services/service/ferry-services", en: "Official ferry info", zh: "官方渡轮信息" },
+    ],
+  },
+  {
+    id: "sep-2",
+    date: "2026-09-02",
+    day: "02",
+    monthEn: "September",
+    monthZh: "9月",
+    weekdayEn: "Wednesday",
+    weekdayZh: "星期三",
+    placeEn: "Penang Hill · Batu Ferringhi",
+    placeZh: "升旗山 · 峇都丁宜",
+    titleEn: "Cool hill air in the morning, warm coast in the afternoon",
+    titleZh: "上午山风清凉，下午海边放松",
+    summaryEn:
+      "Take the funicular early, descend before the hottest part of the day, then continue to the coast near the Shangri-La area.",
+    summaryZh:
+      "尽早乘缆车上山，在最热时段前下山，再前往香格里拉附近海岸。",
+    badgeEn: "Latest detailed draft",
+    badgeZh: "较新详细版",
+    badgeTone: "source",
+    image: {
+      src: "/images/malatrip/penang-hill-funicular.jpg",
+      altEn: "Penang Hill funicular tracks descending toward George Town",
+      altZh: "升旗山缆车轨道向乔治城方向延伸",
+      credit: "Richard Horvath · CC BY-SA 3.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Penang_Hill_Funicular_Railway_-_panoramio.jpg",
+    },
+    secondaryImage: {
+      src: "/images/malatrip/batu-ferringhi-sunset.jpg",
+      altEn: "Boats and swimmers at sunset on Batu Ferringhi beach",
+      altZh: "峇都丁宜海滩日落时的船只与游人",
+      credit: "Marek Ślusarczyk · CC BY 3.0",
+      creditUrl:
+        "https://commons.wikimedia.org/wiki/File:34_Sunset_at_Batu_Ferringhi_beach,_Penang,_Malaysia.jpg",
+    },
+    events: [
+      {
+        time: "07:45–08:30",
+        en: "George Town → Penang Hill Lower Station; quick breakfast on the way",
+        zh: "乔治城 → 升旗山下站；路上简单吃早餐",
+      },
+      {
+        time: "08:30–10:30",
+        en: "Funicular up Penang Hill and explore the summit",
+        zh: "乘缆车上升旗山，在山顶游玩",
+        noteEn: "Monkeys may appear, but sightings are not guaranteed. Do not feed or approach wildlife.",
+        noteZh: "可能看到猴子，但不保证。不要喂食或靠近野生动物。",
+      },
+      {
+        time: "11:00–13:00",
+        en: "Descend, have lunch, then travel to the Batu Ferringhi / Shangri-La seaside area",
+        zh: "下山、吃午餐，然后前往峇都丁宜／香格里拉海边",
+      },
+      {
+        time: "13:30–16:00",
+        en: "Beach views, photos and relaxed family time",
+        zh: "海边看景、拍照与家庭休闲时间",
+        noteEn:
+          "Use the public shoreline unless the family has a resort booking or day pass; traffic back to George Town can be slow.",
+        noteZh: "如没有度假村预订或日票，请使用公共海滩；返回乔治城时可能堵车。",
+      },
+    ],
+    stay: {
+      en: "Macalisterz George Town · second night",
+      zh: "Macalisterz 乔治城 · 第二晚",
+      noteEn: "Leave the evening flexible for dinner and rest.",
+      noteZh: "晚间保持灵活，用于晚餐与休息。",
+    },
+    actions: [
+      { href: mapUrl("Penang Hill Lower Station"), en: "Penang Hill map", zh: "升旗山地图" },
+      { href: "https://www.penanghill.gov.my/index.php/en/tickets", en: "Hours & tickets", zh: "开放时间与门票" },
+      { href: mapUrl("Batu Ferringhi Beach Penang"), en: "Beach map", zh: "海滩地图" },
+    ],
+  },
+  {
+    id: "sep-3",
+    date: "2026-09-03",
+    day: "03",
+    monthEn: "September",
+    monthZh: "9月",
+    weekdayEn: "Thursday",
+    weekdayZh: "星期四",
+    placeEn: "George Town",
+    placeZh: "乔治城",
+    titleEn: "A flexible final afternoon in the heritage city",
+    titleZh: "在古城度过灵活的最后一个下午",
+    summaryEn:
+      "The latest draft only says “George Town, 12:00–18:00.” This gentle route adds structure without turning the final day into a race.",
+    summaryZh:
+      "较新版本只写了“乔治城12:00–18:00”。以下轻松路线补充了内容，又不会让最后一天太赶。",
+    badgeEn: "Suggested detail",
+    badgeZh: "建议细化",
+    badgeTone: "suggested",
+    image: {
+      src: "/images/malatrip/george-town.jpg",
+      altEn: "A historic George Town street with bicycles, shophouses and a mosque",
+      altZh: "乔治城历史街道上的自行车、店屋与清真寺",
+      credit: "Wilford Peloquin · CC BY 2.0",
+      creditUrl:
+        "https://commons.wikimedia.org/wiki/File:227a_Georgetown_Penang,_Malaysia_(51255889913).jpg",
+    },
+    events: [
+      { time: "12:00–13:00", en: "Brunch or an easy local lunch in the heritage core", zh: "在古城中心吃早午餐或轻松午餐" },
+      {
+        time: "13:00–14:30",
+        en: "Armenian Street, shophouses and the living heritage lanes",
+        zh: "亚美尼亚街、老店屋与充满生活气息的古城小巷",
+      },
+      {
+        time: "14:30–15:30",
+        en: "Clan Jetties waterfront — or a café break if the heat is strong",
+        zh: "姓氏桥海边——天气太热时可改为咖啡馆休息",
+      },
+      {
+        time: "15:30–17:00",
+        en: "Choose one indoor heritage stop, then tea or dessert",
+        zh: "选择一个室内文化景点，然后喝茶或吃甜点",
+      },
+      {
+        time: "17:00–18:00",
+        en: "Early dinner, return to the accommodation and prepare for the overnight flight",
+        zh: "早点吃晚餐，回住宿整理，为凌晨航班做准备",
+      },
+      {
+        timeEn: "Later",
+        timeZh: "晚些时候",
+        en: "Leave for Penang Airport according to the airline’s check-in requirement",
+        zh: "按航空公司值机要求前往槟城机场",
+        noteEn: "For an international 01:00 departure, verify the date, terminal and recommended airport arrival time on the ticket.",
+        noteZh: "若国际航班01:00起飞，请在机票上确认日期、航站楼及建议到达机场时间。",
+      },
+    ],
+    stay: {
+      en: "Macalisterz George Town until airport transfer",
+      zh: "在前往机场前留在 Macalisterz 乔治城",
+      noteEn: "Confirm luggage storage or late access with the host.",
+      noteZh: "请向房东确认行李寄存或延迟取行李方式。",
+    },
+    actions: [
+      { href: mapUrl("Armenian Street George Town Penang"), en: "Heritage core map", zh: "古城中心地图" },
+      { href: mapUrl("Penang International Airport"), en: "Airport map", zh: "机场地图" },
+      { href: "https://whc.unesco.org/en/list/1223", en: "UNESCO city story", zh: "联合国教科文组织介绍" },
+    ],
+  },
+  {
+    id: "sep-4",
+    date: "2026-09-04",
+    day: "04",
+    monthEn: "September",
+    monthZh: "9月",
+    weekdayEn: "Friday",
+    weekdayZh: "星期五",
+    placeEn: "Penang → Shanghai",
+    placeZh: "槟城 → 上海",
+    titleEn: "Overnight flight home",
+    titleZh: "搭乘凌晨航班回家",
+    summaryEn:
+      "The final row in the detailed image is cropped, so the booking confirmation must be the authority for flight number, terminal and arrival time.",
+    summaryZh:
+      "详细图片的最后一行被裁切，因此航班号、航站楼与到达时间必须以预订确认单为准。",
+    badgeEn: "Verify flight booking",
+    badgeZh: "请核对机票",
+    badgeTone: "warning",
+    events: [
+      {
+        time: "01:00–10:40",
+        en: "Penang → Shanghai",
+        zh: "槟城 → 上海",
+        noteEn: "Time transcribed from the detailed image; terminal and airline were not visible.",
+        noteZh: "时间抄自详细图片；图片中未显示航空公司和航站楼。",
+      },
+    ],
+    actions: [
+      { href: mapUrl("Penang International Airport"), en: "Penang Airport map", zh: "槟城机场地图" },
+    ],
+  },
+];
+
+const checklist = [
+  {
+    id: "hotel-room",
+    en: "Confirm whether Kai’s room is included at VIENTO; if not, reserve the same property.",
+    zh: "确认 Kai 的房间是否已包含在 VIENTO 的预订中；如果没有，请订同一家酒店。",
+  },
+  {
+    id: "kl-hotel",
+    en: "Confirm the exact English name and address of “帝国豪华酒店.”",
+    zh: "确认“帝国豪华酒店”的准确英文名与地址。",
+  },
+  {
+    id: "train-ticket",
+    en: "Resolve the ETS conflict: 14:10–18:15 or 15:55–20:00.",
+    zh: "确认 ETS 时间：14:10–18:15 还是 15:55–20:00。",
+  },
+  {
+    id: "beach-venue",
+    en: "Confirm which Shangri-La / Batu Ferringhi beach meeting point is intended.",
+    zh: "确认香格里拉／峇都丁宜海边的具体集合地点。",
+  },
+  {
+    id: "return-flight",
+    en: "Check the 4 September flight number, terminal and airport-arrival time.",
+    zh: "核对9月4日航班号、航站楼与建议到达机场时间。",
+  },
+  {
+    id: "air-quality",
+    en: "Check Malaysia’s official air-quality reading before outdoor plans.",
+    zh: "户外活动前查看马来西亚官方空气质量。",
+  },
+];
+
+const photoCredits = [
+  { label: "Kuala Lumpur skyline", creator: "Walkerssk", license: "CC0", url: "https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Skyline_at_dusk_1.jpg" },
+  { label: "Jonker Street", creator: "Jack No1", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Jonker_Street@Malacca.JPG" },
+  { label: "Dutch Square", creator: "Sharon Hahn Darlin", license: "CC BY 2.0", url: "https://commons.wikimedia.org/wiki/File:Melaka,_Malaysia_-_Dutch_Square_or_Red_Square,_March_2023.jpg" },
+  { label: "Putra Mosque", creator: "Slices of Light", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Dataran_Putra_Square_dan_Masjid_Putra.jpg" },
+  { label: "Penang Hill", creator: "Richard Horvath", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Penang_Hill_Funicular_Railway_-_panoramio.jpg" },
+  { label: "Batu Ferringhi", creator: "Marek Ślusarczyk", license: "CC BY 3.0", url: "https://commons.wikimedia.org/wiki/File:34_Sunset_at_Batu_Ferringhi_beach,_Penang,_Malaysia.jpg" },
+  { label: "George Town", creator: "Wilford Peloquin", license: "CC BY 2.0", url: "https://commons.wikimedia.org/wiki/File:227a_Georgetown_Penang,_Malaysia_(51255889913).jpg" },
+];
+---
+
+<!doctype html>
+<html lang="en" data-lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={pageDescription} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#123d39" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://speakkai.com/malatrip/" />
+    <meta property="og:image" content="https://speakkai.com/images/malatrip/kuala-lumpur-skyline.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content="https://speakkai.com/images/malatrip/kuala-lumpur-skyline.jpg" />
+    <title>{pageTitle}</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, "Noto Sans SC", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #183b37;
+        background: #f4efe3;
+        font-synthesis: none;
+        --ink: #173f3a;
+        --ink-deep: #0e2b29;
+        --muted: #63716c;
+        --paper: #fffdf7;
+        --sand: #f4efe3;
+        --line: #d9d0c0;
+        --sun: #ffd166;
+        --coral: #d95c42;
+        --sea: #1d7770;
+        --sky: #dff1eb;
+      }
+
+      * { box-sizing: border-box; }
+      html { min-width: 320px; min-height: 100%; scroll-behavior: smooth; }
+      body { min-height: 100%; margin: 0; background: var(--sand); }
+      button, input { font: inherit; }
+      a { color: inherit; text-underline-offset: 3px; }
+      img { max-width: 100%; }
+      .lang-zh { display: none; }
+      html[data-lang="zh"] .lang-en { display: none; }
+      html[data-lang="zh"] .lang-zh { display: inline; }
+
+      .skip-link {
+        position: fixed;
+        z-index: 100;
+        top: 10px;
+        left: 10px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        color: #fff;
+        background: #000;
+        transform: translateY(-160%);
+      }
+      .skip-link:focus { transform: translateY(0); }
+
+      .topbar {
+        position: sticky;
+        z-index: 30;
+        top: 0;
+        display: grid;
+        grid-template-columns: minmax(120px, auto) minmax(0, 1fr) auto;
+        min-height: 66px;
+        align-items: center;
+        gap: 20px;
+        padding: 9px max(18px, calc((100vw - 1220px) / 2));
+        border-bottom: 1px solid rgb(255 255 255 / 16%);
+        color: #fff;
+        background: rgb(12 46 43 / 94%);
+        box-shadow: 0 12px 30px rgb(6 30 28 / 16%);
+        backdrop-filter: blur(16px);
+      }
+      .brand { font-weight: 950; letter-spacing: -.03em; text-decoration: none; }
+      .trip-status { overflow: hidden; color: #cfe2dd; font-size: 12px; font-weight: 800; letter-spacing: .045em; text-align: center; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+      .top-actions { display: flex; align-items: center; gap: 8px; }
+      .utility-button { min-height: 38px; padding: 8px 12px; border: 1px solid rgb(255 255 255 / 28%); border-radius: 999px; color: #edf7f3; background: rgb(255 255 255 / 8%); cursor: pointer; font-size: 12px; font-weight: 850; }
+      .utility-button:hover { background: rgb(255 255 255 / 16%); }
+      .language-switch { display: inline-flex; padding: 4px; border: 1px solid rgb(255 255 255 / 28%); border-radius: 999px; background: rgb(0 0 0 / 12%); }
+      .language-switch button { min-width: 52px; min-height: 34px; padding: 6px 11px; border: 0; border-radius: 999px; color: #dce9e4; background: transparent; cursor: pointer; font-size: 12px; font-weight: 900; }
+      .language-switch button[aria-pressed="true"] { color: var(--ink-deep); background: var(--sun); }
+      button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid #ffb82e; outline-offset: 3px; }
+
+      .hero {
+        position: relative;
+        min-height: 720px;
+        overflow: hidden;
+        color: #fff;
+        background: var(--ink-deep);
+      }
+      .hero::before { position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgb(5 25 24 / 91%) 0%, rgb(5 25 24 / 66%) 43%, rgb(5 25 24 / 12%) 78%), linear-gradient(0deg, rgb(5 25 24 / 80%) 0%, transparent 45%); content: ""; }
+      .hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+      .hero-inner { position: relative; z-index: 2; display: flex; width: min(100% - 42px, 1180px); min-height: 720px; margin: 0 auto; align-items: flex-end; padding: 110px 0 82px; }
+      .hero-copy { max-width: 810px; }
+      .unlisted { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 22px; padding: 7px 11px; border: 1px solid rgb(255 255 255 / 28%); border-radius: 999px; color: #e3f0eb; background: rgb(255 255 255 / 9%); font-size: 11px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; backdrop-filter: blur(8px); }
+      .unlisted::before { width: 7px; height: 7px; border-radius: 50%; background: #78d7b4; content: ""; }
+      .eyebrow { margin: 0 0 18px; color: var(--sun); font-size: 13px; font-weight: 950; letter-spacing: .13em; text-transform: uppercase; }
+      h1, h2, .display-type { font-family: Georgia, "Times New Roman", serif; }
+      h1 { max-width: 790px; margin: 0; font-size: clamp(52px, 8.4vw, 98px); font-weight: 700; letter-spacing: -.058em; line-height: .92; text-wrap: balance; }
+      .hero-summary { max-width: 720px; margin: 26px 0 0; color: #e8f4ef; font-size: clamp(17px, 2vw, 22px); line-height: 1.58; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 30px; }
+      .button { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: 7px; padding: 11px 16px; border: 1px solid transparent; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 900; text-decoration: none; }
+      .button-primary { color: var(--ink-deep); background: var(--sun); }
+      .button-primary:hover { background: #ffe19a; }
+      .button-ghost { border-color: rgb(255 255 255 / 32%); color: #fff; background: rgb(255 255 255 / 9%); backdrop-filter: blur(8px); }
+      .button-ghost:hover { background: rgb(255 255 255 / 17%); }
+      .route { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 0; padding: 0; list-style: none; }
+      .route li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 11px; border: 1px solid rgb(255 255 255 / 25%); border-radius: 999px; background: rgb(255 255 255 / 8%); font-size: 11px; font-weight: 850; }
+      .route li:not(:last-child)::after { color: #8dd3c4; content: "→"; }
+      .hero-credit { position: absolute; z-index: 2; right: max(16px, calc((100vw - 1180px) / 2)); bottom: 16px; margin: 0; color: rgb(255 255 255 / 70%); font-size: 10px; }
+
+      .facts-wrap { position: relative; z-index: 5; width: min(100% - 36px, 1120px); margin: -34px auto 0; }
+      .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; border: 1px solid #d5cbb9; border-radius: 18px; background: var(--paper); box-shadow: 0 22px 56px rgb(27 48 42 / 14%); }
+      .facts div { padding: 23px 24px; }
+      .facts div + div { border-left: 1px solid #dfd6c6; }
+      .facts dt { color: var(--coral); font-family: Georgia, "Times New Roman", serif; font-size: 29px; font-weight: 800; line-height: 1; }
+      .facts dd { margin: 7px 0 0; color: var(--muted); font-size: 12px; font-weight: 760; line-height: 1.35; }
+
+      .page-shell { width: min(100% - 36px, 1120px); margin: 0 auto; padding: 64px 0 92px; }
+      .section-kicker { margin: 0 0 12px; color: var(--coral); font-size: 11px; font-weight: 950; letter-spacing: .12em; text-transform: uppercase; }
+      .section-heading { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(280px, .75fr); gap: 44px; align-items: end; }
+      h2 { margin: 0; color: var(--ink); font-size: clamp(39px, 5.8vw, 65px); letter-spacing: -.05em; line-height: .98; text-wrap: balance; }
+      .section-heading > p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.72; }
+
+      .live-board { margin-bottom: 72px; }
+      .live-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 26px; }
+      .live-card { padding: 22px; border: 1px solid #d7cdbd; border-radius: 15px; background: var(--paper); box-shadow: 0 12px 32px rgb(47 56 49 / 7%); }
+      .live-card.alert { border-color: #e4b783; background: #fff7e9; }
+      .live-card strong { display: block; color: var(--ink); font-size: 17px; }
+      .live-card p { margin: 10px 0 0; color: #64706b; font-size: 13px; line-height: 1.62; }
+      .live-card a { display: inline-flex; margin-top: 14px; color: #a33d2b; font-size: 12px; font-weight: 900; }
+
+      .day-jump { display: flex; gap: 8px; margin: 30px 0 0; padding: 4px 0 8px; overflow-x: auto; scrollbar-width: thin; }
+      .day-jump a { display: grid; min-width: 104px; padding: 10px 12px; border: 1px solid #d7cebd; border-radius: 12px; color: var(--ink); background: var(--paper); text-decoration: none; }
+      .day-jump a:hover { border-color: #88b8ad; background: #f6fffb; }
+      .day-jump strong { font-family: Georgia, "Times New Roman", serif; font-size: 22px; line-height: 1; }
+      .day-jump span { margin-top: 4px; color: var(--muted); font-size: 10px; font-weight: 850; text-transform: uppercase; }
+
+      .timeline { display: grid; gap: 30px; margin-top: 26px; }
+      .day-card { scroll-margin-top: 88px; overflow: hidden; border: 1px solid #d7cebd; border-radius: 22px; background: var(--paper); box-shadow: 0 20px 52px rgb(35 50 44 / 9%); }
+      .day-card.is-today { border-color: #23897c; box-shadow: 0 0 0 4px rgb(35 137 124 / 15%), 0 24px 60px rgb(35 50 44 / 13%); }
+      .day-photos { display: grid; grid-template-columns: 1fr; min-height: 310px; margin: 0; background: #dce6de; }
+      .day-photos.two { grid-template-columns: 1.25fr .75fr; }
+      .photo-panel { position: relative; min-height: 310px; overflow: hidden; }
+      .photo-panel + .photo-panel { border-left: 5px solid var(--paper); }
+      .photo-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .photo-panel .portrait-photo { object-position: center 42%; }
+      .photo-credit { position: absolute; right: 10px; bottom: 9px; margin: 0; padding: 5px 7px; border-radius: 6px; color: rgb(255 255 255 / 86%); background: rgb(7 28 25 / 68%); font-size: 9px; backdrop-filter: blur(6px); }
+      .day-layout { display: grid; grid-template-columns: 160px minmax(0, 1fr); }
+      .date-rail { padding: 31px 26px; color: #fff; background: var(--ink); }
+      .date-rail strong { display: block; font-family: Georgia, "Times New Roman", serif; font-size: 50px; line-height: .9; }
+      .date-rail .month { display: block; margin-top: 8px; color: #d2e7e0; font-size: 12px; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
+      .date-rail .weekday { display: block; margin-top: 17px; color: #9cc6bb; font-size: 11px; font-weight: 800; }
+      .today-chip { display: none; width: fit-content; margin-top: 18px; padding: 5px 8px; border-radius: 999px; color: var(--ink-deep); background: var(--sun); font-size: 9px; font-weight: 950; letter-spacing: .07em; text-transform: uppercase; }
+      .day-card.is-today .today-chip { display: inline-flex; }
+      .day-content { min-width: 0; padding: 32px 36px 34px; }
+      .day-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+      .place { margin: 0; color: var(--sea); font-size: 12px; font-weight: 950; letter-spacing: .08em; text-transform: uppercase; }
+      .badge { display: inline-flex; width: fit-content; padding: 6px 9px; border-radius: 999px; font-size: 9px; font-weight: 950; letter-spacing: .07em; text-transform: uppercase; }
+      .badge.source { color: #145a52; background: #dcefe9; }
+      .badge.suggested { color: #725016; background: #fff0bd; }
+      .badge.warning { color: #8c3424; background: #ffe0d9; }
+      .day-content h3 { max-width: 800px; margin: 15px 0 0; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: clamp(28px, 3.5vw, 40px); letter-spacing: -.038em; line-height: 1.05; text-wrap: balance; }
+      .day-summary { max-width: 820px; margin: 13px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+      .schedule { display: grid; gap: 0; margin: 25px 0 0; padding: 0; list-style: none; }
+      .schedule li { display: grid; grid-template-columns: 122px minmax(0, 1fr); gap: 18px; padding: 15px 0; border-top: 1px solid #e3dccf; }
+      .schedule time { padding-top: 2px; color: var(--coral); font-size: 12px; font-weight: 950; letter-spacing: .015em; }
+      .activity { color: #2a4742; font-size: 14px; font-weight: 780; line-height: 1.52; }
+      .activity small { display: block; margin-top: 5px; color: #71807a; font-size: 12px; font-weight: 560; line-height: 1.55; }
+      .stay-card { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 13px; align-items: start; margin-top: 18px; padding: 16px 18px; border-radius: 13px; color: #e8f4ef; background: #173f3a; }
+      .stay-marker { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 50%; color: var(--ink-deep); background: var(--sun); font-size: 11px; font-weight: 950; }
+      .stay-card strong { display: block; font-size: 13px; line-height: 1.45; }
+      .stay-card p { margin: 4px 0 0; color: #bcd5ce; font-size: 11px; line-height: 1.5; }
+      .card-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+      .card-actions a { display: inline-flex; min-height: 37px; align-items: center; padding: 8px 12px; border: 1px solid #cfc5b4; border-radius: 999px; color: #32544e; background: #fff; font-size: 11px; font-weight: 900; text-decoration: none; }
+      .card-actions a:hover { border-color: #6a9f94; background: #effbf7; }
+      .card-actions a::after { margin-left: 6px; content: "↗"; }
+
+      .planning { margin-top: 76px; }
+      .planning-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr); gap: 18px; margin-top: 30px; }
+      .panel { padding: 28px; border: 1px solid #d6cdbc; border-radius: 18px; background: var(--paper); box-shadow: 0 15px 38px rgb(39 50 43 / 7%); }
+      .panel h3 { margin: 0; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 27px; letter-spacing: -.025em; }
+      .panel-intro { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+      .checklist { display: grid; gap: 10px; margin-top: 20px; }
+      .check-item { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 11px; align-items: start; padding: 13px; border: 1px solid #e0d8cb; border-radius: 11px; cursor: pointer; }
+      .check-item:hover { background: #fbf8f0; }
+      .check-item input { width: 19px; height: 19px; margin: 1px 0 0; accent-color: #14796f; }
+      .check-item span { color: #38524d; font-size: 13px; font-weight: 700; line-height: 1.5; }
+      .check-item:has(input:checked) span { color: #85908c; text-decoration: line-through; }
+      .comfort-list { display: grid; gap: 12px; margin: 20px 0 0; padding: 0; list-style: none; }
+      .comfort-list li { padding: 14px 0 0 18px; border-top: 1px solid #e2dbcf; color: #4f625d; font-size: 13px; line-height: 1.58; }
+      .comfort-list li::marker { color: var(--coral); }
+
+      .hotels { margin-top: 76px; }
+      .hotel-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; margin-top: 28px; }
+      .hotel-card { display: flex; min-height: 310px; flex-direction: column; padding: 25px; border: 1px solid #d8cfbf; border-radius: 17px; background: var(--paper); box-shadow: 0 15px 40px rgb(40 51 45 / 7%); }
+      .hotel-number { color: var(--coral); font-family: Georgia, "Times New Roman", serif; font-size: 34px; font-weight: 800; }
+      .hotel-card h3 { margin: 18px 0 0; color: var(--ink); font-size: 20px; line-height: 1.25; }
+      .hotel-card p { margin: 11px 0 0; color: var(--muted); font-size: 13px; line-height: 1.62; }
+      .hotel-card .coordination { margin-top: 14px; padding: 11px; border-radius: 9px; color: #785221; background: #fff0bd; font-size: 11px; font-weight: 800; }
+      .hotel-card a { width: fit-content; margin-top: auto; padding-top: 22px; color: #a33d2b; font-size: 12px; font-weight: 900; }
+
+      .sources { margin-top: 76px; }
+      .source-details { margin-top: 22px; border: 1px solid #d6cdbc; border-radius: 16px; background: var(--paper); }
+      .source-details summary { padding: 20px 23px; color: var(--ink); cursor: pointer; font-weight: 900; }
+      .source-content { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 0 23px 24px; }
+      .source-content h3 { margin: 0 0 10px; color: var(--ink); font-size: 15px; }
+      .source-content p, .source-content li { color: var(--muted); font-size: 12px; line-height: 1.65; }
+      .source-content ul { margin: 0; padding-left: 18px; }
+      .source-content li + li { margin-top: 8px; }
+
+      .footer { padding: 30px 18px 38px; border-top: 1px solid #d5cbbb; color: #6c7772; background: #ebe4d7; text-align: center; }
+      .footer strong { color: var(--ink); }
+      .footer p { margin: 8px auto 0; font-size: 11px; line-height: 1.55; }
+
+      @media (max-width: 900px) {
+        .hero::before { background: linear-gradient(0deg, rgb(5 25 24 / 91%) 0%, rgb(5 25 24 / 33%) 76%); }
+        .hero-inner { align-items: flex-end; }
+        .section-heading { grid-template-columns: 1fr; gap: 16px; }
+        .live-grid, .hotel-grid { grid-template-columns: 1fr; }
+        .hotel-card { min-height: 0; }
+        .planning-grid { grid-template-columns: 1fr; }
+        .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .facts div:nth-child(3) { border-top: 1px solid #dfd6c6; border-left: 0; }
+        .facts div:nth-child(4) { border-top: 1px solid #dfd6c6; }
+      }
+
+      @media (max-width: 720px) {
+        .topbar { grid-template-columns: auto 1fr; }
+        .trip-status { display: none; }
+        .top-actions { justify-self: end; }
+        .utility-button { display: none; }
+        .hero, .hero-inner { min-height: 650px; }
+        .hero-inner { padding: 88px 0 58px; }
+        .hero-credit { display: none; }
+        .day-layout { grid-template-columns: 1fr; }
+        .date-rail { display: flex; align-items: baseline; gap: 11px; padding: 18px 22px; }
+        .date-rail strong { font-size: 38px; }
+        .date-rail .month, .date-rail .weekday, .today-chip { margin-top: 0; }
+        .today-chip { margin-left: auto; }
+        .day-content { padding: 25px 22px 27px; }
+        .day-photos, .day-photos.two { grid-template-columns: 1fr; min-height: 250px; }
+        .photo-panel { min-height: 250px; }
+        .day-photos.two .photo-panel:nth-child(2) { display: none; }
+        .photo-panel + .photo-panel { border-top: 5px solid var(--paper); border-left: 0; }
+        .source-content { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 520px) {
+        .topbar { min-height: 59px; }
+        .brand { font-size: 14px; }
+        .language-switch button { min-width: 44px; min-height: 31px; padding: 5px 8px; }
+        .hero, .hero-inner { min-height: 610px; }
+        .hero-inner, .page-shell, .facts-wrap { width: min(100% - 26px, 1120px); }
+        h1 { font-size: clamp(45px, 14vw, 64px); }
+        .hero-summary { font-size: 16px; }
+        .hero-actions { align-items: stretch; flex-direction: column; }
+        .hero-actions .button { width: 100%; }
+        .facts { grid-template-columns: 1fr 1fr; }
+        .facts div { padding: 18px 16px; }
+        .facts dt { font-size: 25px; }
+        .page-shell { padding-top: 52px; }
+        .schedule li { grid-template-columns: 1fr; gap: 5px; }
+        .schedule time { padding-top: 0; }
+        .panel { padding: 22px; }
+      }
+
+      @media print {
+        .topbar, .hero-actions, .day-jump, .card-actions, .checklist input { display: none !important; }
+        .hero, .hero-inner { min-height: 390px; }
+        .hero-inner { padding: 60px 0 35px; }
+        .facts-wrap { margin-top: 0; }
+        .day-card, .panel, .hotel-card { break-inside: avoid; box-shadow: none; }
+        .day-photos { min-height: 190px; }
+        .photo-panel { min-height: 190px; }
+        .page-shell { padding-bottom: 30px; }
+        a { text-decoration: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#itinerary"><span class="lang-en">Skip to itinerary</span><span class="lang-zh">跳到行程</span></a>
+
+    <header class="topbar">
+      <a class="brand" href="/">SpeakKai</a>
+      <div class="trip-status" aria-live="polite">
+        <span id="trip-status-en" class="lang-en">Malaysia · 29 Aug—4 Sep 2026</span>
+        <span id="trip-status-zh" class="lang-zh">马来西亚 · 2026年8月29日—9月4日</span>
+      </div>
+      <div class="top-actions">
+        <button class="utility-button" type="button" data-action="print"><span class="lang-en">Print / PDF</span><span class="lang-zh">打印 / PDF</span></button>
+        <div class="language-switch" role="group" aria-label="Language / 语言">
+          <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-set-lang="zh" aria-pressed="false">中文</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <img
+          class="hero-image"
+          src="/images/malatrip/kuala-lumpur-skyline.jpg"
+          alt="Kuala Lumpur skyline and the illuminated Petronas Twin Towers at dusk"
+          data-alt-en="Kuala Lumpur skyline and the illuminated Petronas Twin Towers at dusk"
+          data-alt-zh="黄昏时亮灯的吉隆坡天际线与双子塔"
+          width="1920"
+          height="1109"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <span class="unlisted"><span class="lang-en">Unlisted family guide</span><span class="lang-zh">不公开索引的家庭指南</span></span>
+            <p class="eyebrow"><span class="lang-en">29 August—4 September 2026</span><span class="lang-zh">2026年8月29日—9月4日</span></p>
+            <h1 id="page-title"><span class="lang-en">Malaysia, together.</span><span class="lang-zh">一起去马来西亚。</span></h1>
+            <p class="hero-summary">
+              <span class="lang-en">A bilingual, parent-friendly live guide from Kuala Lumpur to Melaka, Putrajaya and Penang—translated from the family itinerary and expanded where the plan was still open.</span>
+              <span class="lang-zh">一份适合全家、可中英文切换的实时旅行指南：从吉隆坡到马六甲、布城与槟城，并在原计划未完成的部分加入实用建议。</span>
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#itinerary"><span class="lang-en">Open the day-by-day plan</span><span class="lang-zh">查看每日行程</span></a>
+              <a class="button button-ghost" href="#before-you-go"><span class="lang-en">See what needs confirming</span><span class="lang-zh">查看待确认事项</span></a>
+            </div>
+            <ol class="route" aria-label="Trip route">
+              <li>Shanghai</li><li>Kuala Lumpur</li><li>Melaka</li><li>Putrajaya</li><li>Penang</li><li>Shanghai</li>
+            </ol>
+          </div>
+        </div>
+        <p class="hero-credit"><a href="https://commons.wikimedia.org/wiki/File:Kuala_Lumpur_Skyline_at_dusk_1.jpg" target="_blank" rel="noreferrer">Photo: Walkerssk · CC0</a></p>
+      </section>
+
+      <div class="facts-wrap" aria-label="Trip summary">
+        <dl class="facts">
+          <div><dt>7</dt><dd><span class="lang-en">days · 6 nights</span><span class="lang-zh">7天 · 6晚</span></dd></div>
+          <div><dt>4</dt><dd><span class="lang-en">main areas</span><span class="lang-zh">4个主要地区</span></dd></div>
+          <div><dt>3</dt><dd><span class="lang-en">accommodation bases</span><span class="lang-zh">3处住宿基地</span></dd></div>
+          <div><dt>UTC+8</dt><dd><span class="lang-en">same time as Shanghai</span><span class="lang-zh">与上海无时差</span></dd></div>
+        </dl>
+      </div>
+
+      <div class="page-shell">
+        <section class="live-board" aria-labelledby="live-title">
+          <p class="section-kicker"><span class="lang-en">Checked 28 August 2026</span><span class="lang-zh">更新于2026年8月28日</span></p>
+          <div class="section-heading">
+            <h2 id="live-title"><span class="lang-en">Three live checks before the trip moves.</span><span class="lang-zh">出发前先确认三件事。</span></h2>
+            <p><span class="lang-en">The itinerary is usable now, but transport and outdoor-event conditions can change faster than a static page.</span><span class="lang-zh">行程现在已可使用，但交通与户外活动状态变化很快，出发前仍需核对。</span></p>
+          </div>
+          <div class="live-grid">
+            <article class="live-card alert">
+              <strong><span class="lang-en">National Day crowds</span><span class="lang-zh">国庆人流</span></strong>
+              <p><span class="lang-en">The official Merdeka Eve gathering is listed at Stadium Merdeka on 30 August, 18:30–00:00. Expect closures, crowds and a slow return.</span><span class="lang-zh">官方国庆前夜活动将于8月30日18:30–00:00在默迪卡体育场举行。预计会有道路封闭、人流密集，回程较慢。</span></p>
+              <a href="https://www.merdeka360.my/web/events/list/?eventDisplay=past&tribe-bar-date=2026-09-07" target="_blank" rel="noreferrer"><span class="lang-en">Check Merdeka360</span><span class="lang-zh">查看 Merdeka360</span></a>
+            </article>
+            <article class="live-card">
+              <strong><span class="lang-en">Air quality & haze</span><span class="lang-zh">空气质量与烟霾</span></strong>
+              <p><span class="lang-en">Outdoor schedules may be adjusted when haze worsens. Check Malaysia’s official API reading before long walks, hill visits or celebrations.</span><span class="lang-zh">烟霾加重时，户外活动可能调整。长时间步行、上山或参加庆典前，请查看马来西亚官方空气污染指数。</span></p>
+              <a href="https://apims.doe.gov.my/" target="_blank" rel="noreferrer"><span class="lang-en">Open official APIMS</span><span class="lang-zh">打开官方 APIMS</span></a>
+            </article>
+            <article class="live-card alert">
+              <strong><span class="lang-en">ETS ticket conflict</span><span class="lang-zh">ETS 车票时间冲突</span></strong>
+              <p><span class="lang-en">The drafts show 14:10–18:15 and 15:55–20:00. The current official timetable supports the first option; the family ticket is the final authority.</span><span class="lang-zh">两版行程分别写着14:10–18:15和15:55–20:00。当前官方时刻表支持前者，但最终请以家庭车票为准。</span></p>
+              <a href="https://www.ktmb.com.my/assets/pdf/2026/Jadual%20Tren%20ETS%201%20Jun%202026.pdf" target="_blank" rel="noreferrer"><span class="lang-en">Open official timetable</span><span class="lang-zh">查看官方时刻表</span></a>
+            </article>
+          </div>
+        </section>
+
+        <section id="itinerary" aria-labelledby="itinerary-title">
+          <p class="section-kicker"><span class="lang-en">Working itinerary</span><span class="lang-zh">当前行程</span></p>
+          <div class="section-heading">
+            <h2 id="itinerary-title"><span class="lang-en">The journey, day by day.</span><span class="lang-zh">每日行程。</span></h2>
+            <p><span class="lang-en">Where the screenshots conflict, the more detailed draft is shown as the working plan. New Melaka and George Town ideas are marked “suggested.”</span><span class="lang-zh">两张截图有冲突时，本页采用较详细版本作为当前计划。新增的马六甲与乔治城安排均标为“建议”。</span></p>
+          </div>
+
+          <nav class="day-jump" aria-label="Jump to a day">
+            {days.map((day) => (
+              <a href={`#${day.id}`}>
+                <strong>{day.day}</strong>
+                <span><span class="lang-en">{day.monthEn}</span><span class="lang-zh">{day.monthZh}</span></span>
+              </a>
+            ))}
+          </nav>
+
+          <div class="timeline">
+            {days.map((day) => (
+              <article class="day-card" id={day.id} data-date={day.date}>
+                {day.image && (
+                  <figure class:list={["day-photos", { two: day.secondaryImage }]}>
+                    <div class="photo-panel">
+                      <img
+                        src={day.image.src}
+                        alt={day.image.altEn}
+                        data-alt-en={day.image.altEn}
+                        data-alt-zh={day.image.altZh}
+                        width="1920"
+                        height="1200"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <figcaption class="photo-credit"><a href={day.image.creditUrl} target="_blank" rel="noreferrer">{day.image.credit}</a></figcaption>
+                    </div>
+                    {day.secondaryImage && (
+                      <div class="photo-panel">
+                        <img
+                          src={day.secondaryImage.src}
+                          alt={day.secondaryImage.altEn}
+                          data-alt-en={day.secondaryImage.altEn}
+                          data-alt-zh={day.secondaryImage.altZh}
+                          width="1920"
+                          height="1200"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <figcaption class="photo-credit"><a href={day.secondaryImage.creditUrl} target="_blank" rel="noreferrer">{day.secondaryImage.credit}</a></figcaption>
+                      </div>
+                    )}
+                  </figure>
+                )}
+                <div class="day-layout">
+                  <aside class="date-rail" aria-label={`${day.monthEn} ${day.day}`}>
+                    <strong>{day.day}</strong>
+                    <span class="month"><span class="lang-en">{day.monthEn}</span><span class="lang-zh">{day.monthZh}</span></span>
+                    <span class="weekday"><span class="lang-en">{day.weekdayEn}</span><span class="lang-zh">{day.weekdayZh}</span></span>
+                    <span class="today-chip"><span class="lang-en">Today</span><span class="lang-zh">今天</span></span>
+                  </aside>
+                  <div class="day-content">
+                    <div class="day-meta">
+                      <p class="place"><span class="lang-en">{day.placeEn}</span><span class="lang-zh">{day.placeZh}</span></p>
+                      <span class={`badge ${day.badgeTone}`}><span class="lang-en">{day.badgeEn}</span><span class="lang-zh">{day.badgeZh}</span></span>
+                    </div>
+                    <h3><span class="lang-en">{day.titleEn}</span><span class="lang-zh">{day.titleZh}</span></h3>
+                    <p class="day-summary"><span class="lang-en">{day.summaryEn}</span><span class="lang-zh">{day.summaryZh}</span></p>
+                    <ol class="schedule">
+                      {day.events.map((event) => (
+                        <li>
+                          <time>
+                            {event.time ?? (
+                              <><span class="lang-en">{event.timeEn}</span><span class="lang-zh">{event.timeZh}</span></>
+                            )}
+                          </time>
+                          <span class="activity">
+                            <span class="lang-en">{event.en}</span><span class="lang-zh">{event.zh}</span>
+                            {event.noteEn && <small><span class="lang-en">{event.noteEn}</span><span class="lang-zh">{event.noteZh}</span></small>}
+                          </span>
+                        </li>
+                      ))}
+                    </ol>
+                    {day.stay && (
+                      <div class="stay-card">
+                        <span class="stay-marker" aria-hidden="true">H</span>
+                        <div>
+                          <strong><span class="lang-en">{day.stay.en}</span><span class="lang-zh">{day.stay.zh}</span></strong>
+                          <p><span class="lang-en">{day.stay.noteEn}</span><span class="lang-zh">{day.stay.noteZh}</span></p>
+                        </div>
+                      </div>
+                    )}
+                    <div class="card-actions">
+                      {day.actions.map((action) => (
+                        <a href={action.href} target="_blank" rel="noreferrer"><span class="lang-en">{action.en}</span><span class="lang-zh">{action.zh}</span></a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="planning" id="before-you-go" aria-labelledby="planning-title">
+          <p class="section-kicker"><span class="lang-en">Before you go</span><span class="lang-zh">出发前</span></p>
+          <div class="section-heading">
+            <h2 id="planning-title"><span class="lang-en">Resolve the unknowns. Protect the easy pace.</span><span class="lang-zh">先解决不确定项，再守住轻松节奏。</span></h2>
+            <p><span class="lang-en">These boxes save on this device only. They are a practical reminder, not a booking system.</span><span class="lang-zh">勾选状态只保存在本设备上。这是实用提醒，不是预订系统。</span></p>
+          </div>
+          <div class="planning-grid">
+            <article class="panel">
+              <h3><span class="lang-en">Confirmation checklist</span><span class="lang-zh">确认清单</span></h3>
+              <p class="panel-intro"><span class="lang-en">The guide keeps uncertain details visible instead of quietly guessing.</span><span class="lang-zh">本指南不会默默猜测，而是明确保留所有尚未确认的信息。</span></p>
+              <div class="checklist">
+                {checklist.map((item) => (
+                  <label class="check-item">
+                    <input type="checkbox" data-check-id={item.id} />
+                    <span><span class="lang-en">{item.en}</span><span class="lang-zh">{item.zh}</span></span>
+                  </label>
+                ))}
+              </div>
+            </article>
+            <article class="panel">
+              <h3><span class="lang-en">Family comfort notes</span><span class="lang-zh">家庭舒适提示</span></h3>
+              <p class="panel-intro"><span class="lang-en">Designed for Kai and his parents, with walking alternatives and cool-down time.</span><span class="lang-zh">为 Kai 与爸妈设计，包含少走路的替代方案与降温休息时间。</span></p>
+              <ul class="comfort-list">
+                <li><span class="lang-en">Use Grab or a taxi whenever a walk stops being enjoyable; St Paul’s Hill is the clearest optional skip.</span><span class="lang-zh">步行不再舒服时就使用 Grab 或出租车；圣保罗山最适合按体力跳过。</span></li>
+                <li><span class="lang-en">Carry water, umbrellas, sunscreen and breathable layers. Keep a light mask available if haze worsens.</span><span class="lang-zh">随身带水、雨伞、防晒与透气衣物；烟霾加重时可备轻便口罩。</span></li>
+                <li><span class="lang-en">For Putra Mosque: modest clothing, covered shoulders and knees, easy-to-remove shoes.</span><span class="lang-zh">参观粉红清真寺：衣着端庄，遮住肩膀与膝盖，穿方便脱下的鞋。</span></li>
+                <li><span class="lang-en">Malaysia and Shanghai are both UTC+8, so there is no clock change.</span><span class="lang-zh">马来西亚与上海同为 UTC+8，无需调整时钟。</span></li>
+                <li><span class="lang-en">Keep booking confirmations offline: flight, hotel addresses, ETS ticket and homestay check-in method.</span><span class="lang-zh">离线保存预订确认：航班、酒店地址、ETS 车票与民宿入住方式。</span></li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="hotels" aria-labelledby="hotels-title">
+          <p class="section-kicker"><span class="lang-en">Accommodation</span><span class="lang-zh">住宿</span></p>
+          <div class="section-heading">
+            <h2 id="hotels-title"><span class="lang-en">Three bases, one detail still to settle.</span><span class="lang-zh">三处住宿，还有一项需要确认。</span></h2>
+            <p><span class="lang-en">The family’s own booking confirmations remain the authority for room type, breakfast, access and check-in.</span><span class="lang-zh">房型、早餐、无障碍设施与入住方式，均以家庭自己的预订确认单为准。</span></p>
+          </div>
+          <div class="hotel-grid">
+            <article class="hotel-card">
+              <span class="hotel-number">01</span>
+              <h3>VIENTO RedHouse Melaka by Rest Collection</h3>
+              <p><span class="lang-en">32 Jalan Laksamana, in the heritage core beside Dutch Square and close to Jonker Street.</span><span class="lang-zh">位于 Jalan Laksamana 32号，紧邻荷兰红屋广场，靠近鸡场街。</span></p>
+              <p class="coordination"><span class="lang-en">Parents’ hotel is confirmed. Kai should verify whether his room is included; if not, book the same property.</span><span class="lang-zh">爸妈的酒店已确认。Kai 需确认自己的房间是否已包含；若没有，请订同一家酒店。</span></p>
+              <a href="https://www.rest-collection.com/hotel/52" target="_blank" rel="noreferrer"><span class="lang-en">Open hotel page</span><span class="lang-zh">打开酒店页面</span></a>
+            </article>
+            <article class="hotel-card">
+              <span class="hotel-number">02</span>
+              <h3><span class="lang-en">“Imperial Luxury Hotel” — provisional translation</span><span class="lang-zh">“帝国豪华酒店”——英文暂译</span></h3>
+              <p><span class="lang-en">The screenshot describes a good Kuala Lumpur hotel with a famous infinity pool and a Twin Towers view, but the exact property is not identifiable from the image alone.</span><span class="lang-zh">截图称这是一家很好的吉隆坡酒店，以无边泳池与双子塔景观闻名，但无法仅凭图片确定准确酒店。</span></p>
+              <p class="coordination"><span class="lang-en">Do not use a guessed map pin. Copy the exact English name and address from the reservation.</span><span class="lang-zh">不要使用猜测的地图定位。请从预订确认中复制准确英文名与地址。</span></p>
+            </article>
+            <article class="hotel-card">
+              <span class="hotel-number">03</span>
+              <h3>Macalisterz George Town</h3>
+              <p><span class="lang-en">The source notes describe a clean, two-room homestay in George Town. The exact unit and access instructions are not shown.</span><span class="lang-zh">原行程写明这是乔治城一套干净的两房民宿，但未显示具体房号与进入方式。</span></p>
+              <p class="coordination"><span class="lang-en">Save the host’s check-in message offline before boarding the ETS train.</span><span class="lang-zh">上 ETS 火车前，请离线保存房东的入住信息。</span></p>
+              <a href={mapUrl("Macalisterz George Town Penang")} target="_blank" rel="noreferrer"><span class="lang-en">Open area map</span><span class="lang-zh">打开区域地图</span></a>
+            </article>
+          </div>
+        </section>
+
+        <section class="sources" aria-labelledby="sources-title">
+          <p class="section-kicker"><span class="lang-en">Sources & transparency</span><span class="lang-zh">来源与说明</span></p>
+          <div class="section-heading">
+            <h2 id="sources-title"><span class="lang-en">What came from the itinerary—and what was added.</span><span class="lang-zh">哪些来自原行程，哪些是新增建议。</span></h2>
+            <p><span class="lang-en">The attachments were treated only as travel data. They contained no instructions for the website to execute.</span><span class="lang-zh">附件仅作为旅行信息来源；其中没有需要网站执行的指令。</span></p>
+          </div>
+          <details class="source-details">
+            <summary><span class="lang-en">Open source notes, official references and photo credits</span><span class="lang-zh">展开查看来源说明、官方参考与图片版权</span></summary>
+            <div class="source-content">
+              <div>
+                <h3><span class="lang-en">Itinerary decisions</span><span class="lang-zh">行程处理方式</span></h3>
+                <ul>
+                  <li><span class="lang-en">29–30 August comes from the broader itinerary image, with a new Melaka day plan added around the 16:00 departure.</span><span class="lang-zh">8月29–30日来自概略行程图；马六甲一日游在保留16:00出发的前提下新增。</span></li>
+                  <li><span class="lang-en">31 August–2 September uses the more detailed image where times overlap.</span><span class="lang-zh">8月31日–9月2日有重叠时采用更详细的图片。</span></li>
+                  <li><span class="lang-en">3 September uses “George Town 12:00–18:00” from the detailed image and adds a clearly labelled suggested route.</span><span class="lang-zh">9月3日采用详细图片中的“乔治城12:00–18:00”，并加入明确标注的建议路线。</span></li>
+                  <li><span class="lang-en">Unresolved details remain visible: ETS time, exact KL hotel, exact seaside venue and return-flight details.</span><span class="lang-zh">仍未确认的内容会明确显示：ETS 时间、吉隆坡酒店、具体海边地点与返程航班信息。</span></li>
+                </ul>
+              </div>
+              <div>
+                <h3><span class="lang-en">Official travel references</span><span class="lang-zh">官方旅行参考</span></h3>
+                <ul>
+                  <li><a href="https://www.malaysia.travel/explore/dutch-square" target="_blank" rel="noreferrer">Tourism Malaysia · Dutch Square</a></li>
+                  <li><a href="https://tourism.ppj.gov.my/destination/detail/112" target="_blank" rel="noreferrer">Putrajaya Tourism · Putra Mosque</a></li>
+                  <li><a href="https://www.ktmb.com.my/traintime.html" target="_blank" rel="noreferrer">KTMB · ETS timetables</a></li>
+                  <li><a href="https://penangport.gov.my/en/services/service/ferry-services" target="_blank" rel="noreferrer">Penang Port · ferry service</a></li>
+                  <li><a href="https://www.penanghill.gov.my/index.php/en/tickets" target="_blank" rel="noreferrer">Penang Hill · hours and tickets</a></li>
+                  <li><a href="https://whc.unesco.org/en/list/1223" target="_blank" rel="noreferrer">UNESCO · Melaka and George Town</a></li>
+                </ul>
+              </div>
+              <div>
+                <h3><span class="lang-en">Photo credits</span><span class="lang-zh">图片版权</span></h3>
+                <ul>
+                  {photoCredits.map((credit) => (
+                    <li><a href={credit.url} target="_blank" rel="noreferrer">{credit.label}</a> · {credit.creator} · {credit.license}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3><span class="lang-en">Safety note</span><span class="lang-zh">安全说明</span></h3>
+                <p><span class="lang-en">Opening hours, transport times, weather, air quality and event access can change. Re-check official pages and the family’s actual booking confirmations before each travel day.</span><span class="lang-zh">开放时间、交通时刻、天气、空气质量与活动入场安排都可能变化。每天出发前，请再次核对官方页面与家庭实际预订确认单。</span></p>
+              </div>
+            </div>
+          </details>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <strong><span class="lang-en">Malaysia Family Trip · 2026</span><span class="lang-zh">2026 马来西亚家庭之旅</span></strong>
+      <p><span class="lang-en">Prepared as an unlisted, noindex family guide on SpeakKai.</span><span class="lang-zh">本页作为 SpeakKai 上不公开索引的家庭旅行指南。</span></p>
+    </footer>
+
+    <script is:inline>
+      const root = document.documentElement;
+      const languageButtons = document.querySelectorAll('[data-set-lang]');
+      const images = document.querySelectorAll('img[data-alt-en]');
+
+      function safeRead(key) {
+        try { return window.localStorage.getItem(key); } catch { return null; }
+      }
+
+      function safeWrite(key, value) {
+        try { window.localStorage.setItem(key, value); } catch {}
+      }
+
+      function setLanguage(language) {
+        root.dataset.lang = language;
+        root.lang = language === 'zh' ? 'zh-CN' : 'en';
+        languageButtons.forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.setLang === language));
+        });
+        images.forEach((image) => {
+          image.alt = image.getAttribute(language === 'zh' ? 'data-alt-zh' : 'data-alt-en') || '';
+        });
+        safeWrite('malatrip-language', language);
+      }
+
+      const savedLanguage = safeRead('malatrip-language');
+      const preferredLanguage = savedLanguage === 'zh' || savedLanguage === 'en'
+        ? savedLanguage
+        : (navigator.language || '').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+
+      languageButtons.forEach((button) => {
+        button.addEventListener('click', () => setLanguage(button.dataset.setLang));
+      });
+      setLanguage(preferredLanguage);
+
+      document.querySelector('[data-action="print"]')?.addEventListener('click', () => window.print());
+
+      const dateParts = Object.fromEntries(
+        new Intl.DateTimeFormat('en', {
+          timeZone: 'Asia/Kuala_Lumpur',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }).formatToParts(new Date()).filter((part) => part.type !== 'literal').map((part) => [part.type, part.value])
+      );
+      const malaysiaDate = `${dateParts.year}-${dateParts.month}-${dateParts.day}`;
+      const firstDate = '2026-08-29';
+      const lastDate = '2026-09-04';
+      const todayCard = document.querySelector(`[data-date="${malaysiaDate}"]`);
+      const statusEn = document.getElementById('trip-status-en');
+      const statusZh = document.getElementById('trip-status-zh');
+
+      if (todayCard) {
+        todayCard.classList.add('is-today');
+        const dayNumber = Array.from(document.querySelectorAll('[data-date]')).indexOf(todayCard) + 1;
+        statusEn.textContent = `Today · Day ${dayNumber} of 7`;
+        statusZh.textContent = `今天 · 第 ${dayNumber} 天／共7天`;
+      } else if (malaysiaDate < firstDate) {
+        const daysUntil = Math.ceil((Date.parse(`${firstDate}T00:00:00+08:00`) - Date.now()) / 86400000);
+        statusEn.textContent = daysUntil <= 1 ? 'Trip starts tomorrow' : `Trip starts in ${daysUntil} days`;
+        statusZh.textContent = daysUntil <= 1 ? '旅程明天开始' : `距离出发还有 ${daysUntil} 天`;
+      } else if (malaysiaDate > lastDate) {
+        statusEn.textContent = 'Trip complete · 29 Aug—4 Sep 2026';
+        statusZh.textContent = '旅程已完成 · 2026年8月29日—9月4日';
+      }
+
+      document.querySelectorAll('[data-check-id]').forEach((checkbox) => {
+        const key = `malatrip-check-${checkbox.dataset.checkId}`;
+        checkbox.checked = safeRead(key) === '1';
+        checkbox.addEventListener('change', () => safeWrite(key, checkbox.checked ? '1' : '0'));
+      });
+    </script>
+  </body>
+</html>
