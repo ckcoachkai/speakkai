@@ -1,0 +1,54 @@
+---
+import ConceptSwitcher from "../components/ConceptSwitcher.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  current: string;
+  themeColor?: string;
+  lightSwitcher?: boolean;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description,
+  current,
+  themeColor = "#07142f",
+  lightSwitcher = false,
+  bodyClass = "",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content={themeColor} />
+    <title>{title} | SpeakKai Concept Lab</title>
+    <style is:global>
+      :root {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-synthesis: none;
+      }
+      * { box-sizing: border-box; }
+      html { min-width: 320px; min-height: 100%; scroll-behavior: smooth; }
+      body { min-height: 100%; margin: 0; }
+      img { max-width: 100%; }
+      a, button { -webkit-tap-highlight-color: transparent; }
+      button, input { font: inherit; }
+      ::selection { color: #07142f; background: #ffd32a; }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+      }
+    </style>
+  </head>
+  <body class={bodyClass}>
+    <slot />
+    <ConceptSwitcher current={current} light={lightSwitcher} />
+  </body>
+</html>
