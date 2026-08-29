@@ -1,0 +1,190 @@
+---
+interface Props { id: string; }
+const { id } = Astro.props;
+
+const concepts: Record<string, {
+  label: string; mode: string; eyebrow: string; title: string[]; accent: string;
+  description: string; cta: string; secondary: string; steps: [string, string][];
+}> = {
+  "1": {
+    label: "Test 1", mode: "Executive Editorial", eyebrow: "Private communication coaching",
+    title: ["Ideas deserve", "a powerful voice."], accent: "powerful",
+    description: "Quietly confident coaching for people with something important to say.",
+    cta: "Begin a conversation", secondary: "Professional / Premium",
+    steps: [["Young speakers", "Confidence with substance."], ["Professionals", "Presence under pressure."], ["Organizations", "Ideas that move a room."]],
+  },
+  "2": {
+    label: "Test 2", mode: "Kinetic Creator", eyebrow: "Speech coaching without the boring bits",
+    title: ["MAKE THEM", "LISTEN."], accent: "LISTEN.",
+    description: "Clear structure. Strong delivery. Zero waffle. Build the kind of presence people remember.",
+    cta: "LEVEL UP YOUR VOICE", secondary: "High-contrast / YouTuber",
+    steps: [["HOOK", "Win the first ten seconds."], ["MOVE", "Make the audience care."], ["LAND", "Finish with an idea that sticks."]],
+  },
+  "3": {
+    label: "Test 3", mode: "Storybook Studio", eyebrow: "For brave young voices",
+    title: ["Big ideas start", "with a brave voice!"], accent: "brave voice!",
+    description: "Speech, debate, and storytelling coaching that makes practice feel like an adventure.",
+    cta: "Start your speaking quest", secondary: "Kids-friendly / Playful",
+    steps: [["Find your idea", "What do you really want to say?"], ["Build your story", "Give every idea a beginning, middle, and wow."], ["Own the stage", "Use your voice, face, hands, and heart."]],
+  },
+  "4": {
+    label: "Test 4", mode: "Glass Atelier", eyebrow: "The art of communication",
+    title: ["Make your voice", "impossible to ignore."], accent: "impossible",
+    description: "Precision coaching for clear ideas, magnetic delivery, and influence that lasts beyond the room.",
+    cta: "Work with Coach Kai", secondary: "Luxury / Atmospheric",
+    steps: [["SPEAK", "Build clarity and control."], ["CONNECT", "Turn attention into trust."], ["INFLUENCE", "Create impact that compounds."]],
+  },
+  "5": {
+    label: "Test 5", mode: "Coach Kai Uncut", eyebrow: "No teleprompter needed",
+    title: ["Let's make your talk", "feel like you."], accent: "like you.",
+    description: "Real coaching. Useful feedback. Better stories. Practice that changes what happens when the camera turns on.",
+    cta: "BOOK A COACHING CALL", secondary: "Vlog / Documentary",
+    steps: [["01:12", "Stop sounding rehearsed."], ["04:36", "Make your first ten seconds matter."], ["08:42", "Use the feedback loop that works."]],
+  },
+  "6": {
+    label: "Test 6", mode: "Swiss Clarity", eyebrow: "Communication systems by Coach Kai",
+    title: ["Clear thinking.", "Visible impact."], accent: "Visible impact.",
+    description: "We turn communication into a trainable system for students, professionals, and teams.",
+    cta: "VIEW THE SYSTEM", secondary: "Structured / Evidence-led",
+    steps: [["ASSESS", "Map the goal and context."], ["PRACTICE", "Train against real conditions."], ["PERFORM", "Communicate with control."]],
+  },
+  "7": {
+    label: "Test 7", mode: "Center Stage", eyebrow: "Every voice has a moment",
+    title: ["When the room goes quiet,", "what will you say?"], accent: "what will you say?",
+    description: "Build the clarity, courage, and presence to meet your most important moment.",
+    cta: "Begin your rehearsal", secondary: "Cinematic / Emotional",
+    steps: [["ACT I", "Find the truth."], ["ACT II", "Shape the story."], ["ACT III", "Leave an echo."]],
+  },
+  "a": {
+    label: "Test A", mode: "Brave Ideas Club", eyebrow: "High energy edition",
+    title: ["SAY IT", "LIKE YOU MEAN IT!"], accent: "LIKE YOU",
+    description: "Big thoughts. Bold stories. Brave young speakers.",
+    cta: "I'M READY!", secondary: "Animated / Cartoon Poster",
+    steps: [["THINK IT!", "Turn a tiny thought into a mighty idea."], ["SHAPE IT!", "Build a story people follow."], ["SHARE IT!", "Own your moment."]],
+  },
+  "9": {
+    label: "Test 9", mode: "Field Notes", eyebrow: "A note from your coach",
+    title: ["Your best speech", "should still sound like you."], accent: "like you.",
+    description: "We start with what you care about, then build the structure, courage, and craft to help other people care too.",
+    cta: "Let's work on it together", secondary: "Human / Scrapbook",
+    steps: [["Listen first", "Good coaching begins with the person."], ["Practice for real", "Prepare for the actual room and pressure."], ["Keep what works", "Build a personal toolkit."]],
+  },
+  "10": {
+    label: "Test 10", mode: "Signal / Influence", eyebrow: "System online / communication intelligence",
+    title: ["AMPLIFY", "YOUR SIGNAL."], accent: "SIGNAL.",
+    description: "Transform raw ideas into communication that connects, influences, and compounds into reputation.",
+    cta: "INITIALIZE COACHING", secondary: "Futurist / Interactive",
+    steps: [["ASSESS", "Map goal, context, signal, and friction."], ["STRUCTURE", "Build logic and story architecture."], ["AMPLIFY", "Refine the voice only you can own."]],
+  },
+};
+const current = concepts[id] ?? concepts["1"];
+const previews = [
+  "/images/emotional-expression-practice-preview.png",
+  "/images/speech-debate-timer-preview.png",
+  "/images/class-charades-preview.png",
+];
+---
+
+<div class:list={["concept", `concept-${id}`]}>
+  <header class="topbar">
+    <a class="wordmark" href="/"><span>说开</span><b>SpeakKai</b></a>
+    <p>{current.label} / {current.mode}</p>
+    <nav><a href="#method">Method</a><a href="/about/">About</a><a href="/schedule/">Schedule</a></nav>
+    <a class="nav-cta" href="/contact/">Connect ↗</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">{current.eyebrow}</p>
+        <h1>{current.title.map((line) => <span class:list={{ accent: line.includes(current.accent) }}>{line}</span>)}</h1>
+        <p class="description">{current.description}</p>
+        <div class="actions"><a href="/contact/">{current.cta} <b>→</b></a><span>Shanghai · Online worldwide</span></div>
+      </div>
+
+      <div class="visual">
+        <div class="blur blur-one"></div><div class="blur blur-two"></div>
+        <div class="graphic burst"></div><div class="graphic orbit"></div><div class="graphic grid"></div>
+        <figure class="portrait">
+          <img src="/images/coach-kai-banner-mobile.png" alt="Coach Kai in a navy suit" />
+          <figcaption><b>KAI LIU</b><span>Communication Coach / TEDx Speaker</span></figcaption>
+        </figure>
+        <div class="sticker sticker-one">15+<span>YEARS</span></div>
+        <div class="sticker sticker-two">SPEAK<br />CONNECT<br />INFLUENCE</div>
+        <div class="focus-corners"><i></i><i></i><i></i><i></i></div>
+      </div>
+    </section>
+
+    <div class="ticker"><div>SPEECH ◆ DEBATE ◆ STORYTELLING ◆ PRESENTATIONS ◆ CLARITY ◆ CONFIDENCE ◆ SPEECH ◆ DEBATE ◆ STORYTELLING ◆ PRESENTATIONS ◆</div></div>
+
+    <section class="proof" aria-label="Coach Kai experience">
+      <p>Selected experience</p>
+      <dl><div><dt>15+</dt><dd>Years in education</dd></div><div><dt>2,000+</dt><dd>Students coached</dd></div><div><dt>1,000+</dt><dd>Presentations</dd></div><div><dt>7</dt><dd>Countries reached</dd></div></dl>
+    </section>
+
+    <section class="method" id="method">
+      <header><p>THE SPEAKKAI JOURNEY / 01—03</p><h2>From first idea to lasting influence.</h2></header>
+      <div class="step-grid">{current.steps.map((step, index) => <article><span>0{index + 1}</span><h3>{step[0]}</h3><p>{step[1]}</p><i>↗</i></article>)}</div>
+    </section>
+
+    <section class="media-wall">
+      <header><p>PRACTICE IN MOTION</p><h2>Tools that make progress visible.</h2></header>
+      <div>{previews.map((src, index) => <figure><img src={src} alt="SpeakKai learning and practice resource" loading="lazy" /><figcaption><span>0{index + 1}</span><b>{["Expression before perfection", "Practice creates calm", "Play makes ideas move"][index]}</b></figcaption></figure>)}</div>
+    </section>
+
+    <section class="closing">
+      <p>Speak clearly. Connect deeply. Influence meaningfully.</p>
+      <a href="/contact/">Build your voice with Coach Kai ↗</a>
+    </section>
+  </main>
+</div>
+
+<style>
+  .concept { --bg:#f3eee5;--ink:#201e1b;--accent:#a36f3c;--soft:#c9c0b3;--panel:#fff;min-height:100vh;padding-bottom:88px;color:var(--ink);background:var(--bg);font-family:Arial,sans-serif;overflow:hidden }
+  .topbar{position:relative;z-index:20;display:grid;grid-template-columns:1fr auto auto 1fr;min-height:80px;align-items:center;gap:38px;padding:0 4vw;border-bottom:1px solid var(--soft)}
+  .wordmark{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}.wordmark span{display:grid;width:38px;height:38px;place-items:center;border-radius:50%;color:var(--bg);background:var(--ink);font-size:10px}.wordmark b{font:700 22px Georgia}
+  .topbar>p{margin:0;font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.topbar nav{display:flex;gap:28px}.topbar nav a,.nav-cta{color:inherit;font-size:10px;font-weight:800;letter-spacing:.1em;text-decoration:none;text-transform:uppercase}.nav-cta{justify-self:end}
+  .hero{position:relative;display:grid;grid-template-columns:.9fr 1.1fr;min-height:760px;align-items:center;gap:6vw;width:min(100% - 8vw,1500px);margin:auto}
+  .hero-copy{position:relative;z-index:5}.eyebrow{margin:0 0 30px;color:var(--accent);font-size:10px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}.hero h1{margin:0;font:400 clamp(62px,7.5vw,120px)/.86 Georgia;letter-spacing:-.065em}.hero h1 span{display:block}.hero h1 .accent{color:var(--accent);font-style:italic}.description{max-width:570px;margin:30px 0 0;color:color-mix(in srgb,var(--ink) 70%,transparent);font:20px/1.6 Georgia}.actions{display:flex;align-items:center;gap:24px;margin-top:32px}.actions a{display:inline-flex;gap:30px;padding:16px 20px;color:var(--bg);background:var(--ink);font-size:11px;font-weight:900;letter-spacing:.08em;text-decoration:none;text-transform:uppercase}.actions span{font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+  .visual{position:relative;height:660px}.portrait{position:absolute;z-index:3;inset:35px 12% 0 10%;margin:0;overflow:hidden;background:#102b55;box-shadow:0 35px 80px rgb(0 0 0 / 20%)}.portrait img{width:410%;max-width:none;height:100%;object-fit:cover;object-position:10% center}.portrait figcaption{position:absolute;right:0;bottom:0;left:0;display:grid;padding:42px 24px 22px;color:#fff;background:linear-gradient(transparent,rgb(0 0 0 / 75%))}.portrait figcaption b{font-size:24px}.portrait figcaption span{font-size:8px;letter-spacing:.12em}.sticker{position:absolute;z-index:6;display:grid;place-items:center;color:var(--bg);background:var(--accent);font-weight:900;text-align:center}.sticker span{font-size:8px}.sticker-one{top:5px;right:3%;width:105px;height:105px;border-radius:50%;font-size:30px;transform:rotate(8deg)}.sticker-two{bottom:5%;left:0;padding:16px;font-size:11px;line-height:1.4;transform:rotate(-6deg)}.graphic,.blur,.focus-corners{position:absolute}.orbit{inset:0;border:1px solid var(--accent);border-radius:50%;opacity:.25;animation:pulse 5s ease-in-out infinite}.grid{inset:0;background-image:linear-gradient(color-mix(in srgb,var(--accent) 15%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--accent) 15%,transparent) 1px,transparent 1px);background-size:40px 40px}.burst{display:none}
+  .ticker{overflow:hidden;border-block:1px solid var(--soft);color:var(--bg);background:var(--ink)}.ticker div{width:max-content;padding:14px 0;font-size:14px;font-weight:900;letter-spacing:.08em;animation:ticker 22s linear infinite}
+  .proof{display:grid;grid-template-columns:180px 1fr;width:min(100% - 8vw,1500px);margin:auto;padding:42px 0;border-bottom:1px solid var(--soft)}.proof>p{margin:0;font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.proof dl{display:grid;grid-template-columns:repeat(4,1fr);margin:0}.proof dl div{padding-left:22px;border-left:1px solid var(--soft)}.proof dt{font:40px Georgia}.proof dd{margin:5px 0 0;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+  .method,.media-wall{width:min(100% - 8vw,1500px);margin:auto;padding:100px 0}.method>header,.media-wall>header{display:grid;grid-template-columns:.42fr 1fr;align-items:end;margin-bottom:55px}.method header p,.media-wall header p{font-size:9px;font-weight:900;letter-spacing:.13em}.method h2,.media-wall h2{max-width:850px;margin:0;font:400 clamp(44px,5vw,76px)/.95 Georgia;letter-spacing:-.05em}.step-grid{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--soft)}.step-grid article{position:relative;min-height:300px;padding:30px}.step-grid article+article{border-left:1px solid var(--soft)}.step-grid span{color:var(--accent);font-size:10px;font-weight:900}.step-grid h3{margin:80px 0 0;font:400 34px Georgia}.step-grid p{max-width:280px;line-height:1.55}.step-grid i{position:absolute;right:25px;bottom:25px;color:var(--accent);font-style:normal}
+  .media-wall{border-top:1px solid var(--soft)}.media-wall>div{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.media-wall figure{position:relative;margin:0;overflow:hidden;background:var(--panel);box-shadow:0 20px 45px rgb(0 0 0 / 10%)}.media-wall img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;transition:transform .5s ease}.media-wall figure:hover img{transform:scale(1.04)}.media-wall figcaption{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:18px}.media-wall figcaption span{color:var(--accent);font-size:10px}.media-wall figcaption b{font:20px Georgia}
+  .closing{display:flex;width:min(100% - 8vw,1500px);align-items:center;justify-content:space-between;margin:auto;padding:60px 0 110px;border-top:1px solid var(--soft)}.closing p{margin:0;font:italic clamp(28px,4vw,50px) Georgia}.closing a{color:var(--accent);font-size:11px;font-weight:900;text-decoration:none;text-transform:uppercase}
+
+  /* Test 2 — kinetic creator */
+  .concept-2{--bg:#0b0b0d;--ink:#fff;--accent:#ffe600;--soft:#fff;--panel:#ff3822;font-family:Arial Black,Impact,sans-serif}.concept-2 .topbar{border-bottom:2px solid #fff}.concept-2 .wordmark span{border-radius:0;color:#111;background:#ffe600;transform:rotate(-5deg)}.concept-2 .hero{width:100%;padding-left:5vw}.concept-2 .hero h1{font-family:Impact,Arial Black,sans-serif;font-style:normal;font-size:clamp(90px,11vw,180px);line-height:.68;transform:skew(-4deg)}.concept-2 .hero h1 .accent{color:#ff3822;font-style:normal;text-shadow:7px 7px 0 #ffe600}.concept-2 .description{font:700 18px/1.5 Arial}.concept-2 .actions a{color:#111;background:#ffe600;box-shadow:8px 8px 0 #ff3822}.concept-2 .visual{height:760px;background:#ff3822;clip-path:polygon(12% 0,100% 0,100% 100%,0 100%)}.concept-2 .portrait{inset:0 4% 0 10%;box-shadow:none}.concept-2 .burst{display:block;inset:8%;border-radius:50%;background:repeating-conic-gradient(#ffe600 0 9deg,#ff3822 9deg 18deg);animation:spin 25s linear infinite}.concept-2 .orbit,.concept-2 .grid{display:none}.concept-2 .portrait img{filter:contrast(1.12)}.concept-2 .sticker-one{border:4px solid #111;color:#111;background:#fff;box-shadow:6px 6px 0 #111}.concept-2 .sticker-two{left:6%;color:#111;background:#62f0bd;box-shadow:5px 5px 0 #111}.concept-2 .ticker{color:#111;background:#62f0bd;border-width:2px}.concept-2 .proof,.concept-2 .step-grid,.concept-2 .media-wall,.concept-2 .closing{border-color:#fff}.concept-2 .method h2,.concept-2 .media-wall h2,.concept-2 .step-grid h3,.concept-2 .media-wall figcaption b,.concept-2 .closing p{font-family:Impact,Arial Black,sans-serif;text-transform:uppercase}
+
+  /* Test 3 — storybook */
+  .concept-3{--bg:#fff9df;--ink:#302d64;--accent:#ff6068;--soft:#b9afd5;--panel:#fff;font-family:"Trebuchet MS",Arial,sans-serif}.concept-3 .wordmark span{border-radius:14px 14px 14px 4px;background:#6255d9}.concept-3 .hero{min-height:720px}.concept-3 .hero h1{font-family:"Trebuchet MS";font-weight:900}.concept-3 .hero h1 .accent{font-style:normal;transform:rotate(-2deg)}.concept-3 .description{font:18px/1.6 "Trebuchet MS"}.concept-3 .actions a{border:3px solid #302d64;border-radius:99px;color:#fff;background:#6255d9;box-shadow:5px 5px 0 #302d64}.concept-3 .visual{border-radius:48% 48% 12% 12%;background:#83dfff}.concept-3 .portrait{inset:18% 13% 0;border:5px solid #302d64;border-bottom:0;border-radius:48% 48% 0 0;box-shadow:10px 10px 0 #4bc89c}.concept-3 .orbit{border:0;background:#ffc937;width:140px;height:140px;inset:5% 7% auto auto;opacity:1}.concept-3 .grid{display:none}.concept-3 .sticker-one,.concept-3 .sticker-two{border:3px solid #302d64;box-shadow:5px 5px 0 #302d64}.concept-3 .sticker-two{border-radius:24px 24px 24px 4px;color:#302d64;background:#fff}.concept-3 .ticker{color:#fff;background:#6255d9}.concept-3 .step-grid article{border:3px solid #302d64;border-radius:24px;background:#fff;box-shadow:7px 7px 0 #302d64}.concept-3 .step-grid{gap:28px;border:0}.concept-3 .step-grid article+article{border-left:3px solid #302d64}.concept-3 .step-grid h3,.concept-3 .method h2,.concept-3 .media-wall h2{font-family:"Trebuchet MS";font-weight:900}
+
+  /* Test 4 — glass atelier */
+  .concept-4{--bg:#080f28;--ink:#eef5ff;--accent:#65e4e3;--soft:#294466;--panel:rgb(255 255 255 / 8%);background:radial-gradient(circle at 75% 8%,#3e2770 0,transparent 34%),radial-gradient(circle at 5% 70%,#075a67 0,transparent 30%),#080f28}.concept-4 .topbar{background:rgb(8 15 40 / 45%);backdrop-filter:blur(20px)}.concept-4 .hero h1{font-family:Arial,sans-serif;font-weight:600}.concept-4 .hero h1 .accent{color:transparent;background:linear-gradient(100deg,#65e4e3,#b183ff);-webkit-background-clip:text;background-clip:text;font-style:normal}.concept-4 .description{font-family:Arial;color:#aebbd2}.concept-4 .actions a{border-radius:99px;color:#07142f;background:#65e4e3}.concept-4 .visual{border:1px solid rgb(255 255 255 / 20%);border-radius:42px;background:rgb(255 255 255 / 7%);backdrop-filter:blur(25px);box-shadow:0 45px 100px rgb(0 0 0 / 35%)}.concept-4 .portrait{border-radius:30px}.concept-4 .blur{display:block;border-radius:50%;filter:blur(70px);animation:drift 8s ease-in-out infinite alternate}.concept-4 .blur-one{top:0;right:0;width:260px;height:260px;background:#7b52ff}.concept-4 .blur-two{bottom:0;left:0;width:280px;height:280px;background:#00c6bb}.concept-4 .proof,.concept-4 .step-grid,.concept-4 .media-wall,.concept-4 .closing{border-color:#294466}.concept-4 .step-grid article,.concept-4 .media-wall figure{border:1px solid rgb(255 255 255 / 14%);border-radius:26px;background:rgb(255 255 255 / 7%);backdrop-filter:blur(18px)}.concept-4 .step-grid{gap:14px;border:0}.concept-4 .step-grid article+article{border-left:1px solid rgb(255 255 255 / 14%)}
+
+  /* Test 5 — vlog documentary */
+  .concept-5{--bg:#eee8da;--ink:#191919;--accent:#ed4b2f;--soft:#191919;--panel:#fff}.concept-5 .topbar{border-bottom:2px solid #191919}.concept-5 .wordmark b::after{content:" UNCUT";margin-left:5px;padding:3px 5px;color:#fff;background:#ed4b2f;font:9px Arial;vertical-align:top}.concept-5 .hero h1{font-family:Arial;font-weight:900}.concept-5 .hero h1 .accent{font-family:Georgia}.concept-5 .description{font-size:18px}.concept-5 .visual{height:620px;border:8px solid #191919;background:#102b55;transform:rotate(1deg)}.concept-5 .portrait{inset:0;margin:0;box-shadow:none}.concept-5 .grid{display:none}.concept-5 .orbit{inset:22px;border:0;border-top:2px solid #fff;border-left:2px solid #fff;border-radius:0}.concept-5 .sticker-one{right:-3%;border-radius:0;color:#fff;background:#ed4b2f;font:700 13px monospace}.concept-5 .sticker-one::after{content:" REC";display:block}.concept-5 .sticker-two{color:#fff;background:#191919;font-family:monospace}.concept-5 .ticker{background:#191919}.concept-5 .proof,.concept-5 .step-grid,.concept-5 .media-wall,.concept-5 .closing{border-width:2px}.concept-5 .media-wall figure{border:2px solid #191919;box-shadow:7px 7px 0 #ed4b2f}
+
+  /* Test 6 — Swiss clarity */
+  .concept-6{--bg:#f4f2ec;--ink:#0d2b52;--accent:#e32636;--soft:#0d2b52;--panel:#fff}.concept-6 .topbar{grid-template-columns:90px 1fr auto 90px;padding:0;border-bottom:1px solid #0d2b52}.concept-6 .wordmark{height:80px;justify-content:center;border-right:1px solid #0d2b52}.concept-6 .wordmark span{display:none}.concept-6 .wordmark b{font:900 25px Arial}.concept-6 .wordmark b::after{content:"/";color:#e32636}.concept-6 .nav-cta{display:grid;height:80px;place-items:center;border-left:1px solid #0d2b52;writing-mode:vertical-rl}.concept-6 .hero{grid-template-columns:1.2fr .72fr;border-inline:1px solid #0d2b52}.concept-6 .hero-copy{padding:55px}.concept-6 .hero h1{font-family:Arial;font-weight:800}.concept-6 .hero h1 .accent{font-style:normal}.concept-6 .description{font-family:Arial}.concept-6 .visual{align-self:stretch;height:auto;border-left:1px solid #0d2b52}.concept-6 .portrait{inset:0;box-shadow:none}.concept-6 .portrait img{filter:grayscale(1) contrast(1.1)}.concept-6 .orbit,.concept-6 .grid,.concept-6 .sticker-two{display:none}.concept-6 .sticker-one{border-radius:0;background:#e32636}.concept-6 .ticker{display:none}.concept-6 .proof,.concept-6 .step-grid,.concept-6 .media-wall,.concept-6 .closing{border-color:#0d2b52}.concept-6 .method h2,.concept-6 .media-wall h2,.concept-6 .step-grid h3{font-family:Arial;font-weight:800}
+
+  /* Test 7 — cinematic stage */
+  .concept-7{--bg:#04070f;--ink:#fff;--accent:#f0b84e;--soft:#374050;--panel:#0d1421;background:#04070f}.concept-7 .topbar{position:absolute;right:0;left:0;color:#fff}.concept-7 .hero{width:100%;min-height:850px;padding:120px 7vw 80px}.concept-7 .hero::before{position:absolute;inset:0;background:linear-gradient(90deg,rgb(4 7 15 / 86%),rgb(4 7 15 / 15%)),url("/images/coach-kai-banner-desktop.png") center/cover;content:""}.concept-7 .hero-copy{align-self:end}.concept-7 .hero h1{font-size:clamp(60px,7vw,110px)}.concept-7 .hero h1 .accent{color:#f0b84e}.concept-7 .description{color:#bac4d3}.concept-7 .actions a{border:1px solid #f0b84e;color:#fff;background:transparent}.concept-7 .visual{align-self:stretch;height:auto}.concept-7 .portrait{display:none}.concept-7 .orbit{inset:-15% 10%;border-color:#f0b84e;border-radius:0;clip-path:polygon(45% 0,55% 0,100% 100%,0 100%);background:linear-gradient(90deg,transparent,rgb(255 226 168 / 15%),transparent);filter:blur(15px);animation:sweep 8s ease-in-out infinite alternate}.concept-7 .grid,.concept-7 .sticker-one{display:none}.concept-7 .sticker-two{right:4%;bottom:3%;left:auto;color:#f0b84e;background:transparent;font-family:Georgia}.concept-7 .ticker{display:none}.concept-7 .method h2,.concept-7 .media-wall h2,.concept-7 .step-grid h3,.concept-7 .closing p{font-family:Georgia}.concept-7 .step-grid article{min-height:240px}
+
+  /* Test A — neo-brutalist cartoon */
+  .concept-a{--bg:#fbf52c;--ink:#111;--accent:#ff4e79;--soft:#111;--panel:#fff;font-family:Arial Black,Impact,sans-serif}.concept-a .topbar{border-bottom:4px solid #111;background:#fff}.concept-a .wordmark span{border:3px solid #111;border-radius:0;color:#111;background:#19b394;box-shadow:4px 4px 0 #111;transform:rotate(-4deg)}.concept-a .nav-cta{padding:9px;border:3px solid #111;background:#19b394;box-shadow:4px 4px 0 #111;transform:rotate(2deg)}.concept-a .hero{width:100%;min-height:720px;gap:0}.concept-a .hero-copy{align-self:stretch;display:flex;flex-direction:column;justify-content:center;padding:5vw;border-right:4px solid #111}.concept-a .hero h1{font-family:Impact,Arial Black,sans-serif;font-size:clamp(78px,10vw,160px);line-height:.7}.concept-a .hero h1 .accent{color:#fff;font-style:normal;text-shadow:-3px -3px 0 #111,3px -3px 0 #111,-3px 3px 0 #111,3px 3px 0 #111}.concept-a .description{font:900 20px Arial}.concept-a .actions a{border:4px solid #111;color:#fff;background:#ff4e79;box-shadow:7px 7px 0 #111;transform:rotate(-1deg)}.concept-a .visual{height:720px;background:#6ae1ff}.concept-a .portrait{inset:12% 17% 0;border:5px solid #111;border-bottom:0;border-radius:50% 50% 0 0;box-shadow:13px 13px 0 #ff4e79}.concept-a .grid{background-image:radial-gradient(#111 1.5px,transparent 1.5px);background-size:22px 22px;opacity:.18}.concept-a .orbit{display:none}.concept-a .sticker{border:4px solid #111;color:#111;box-shadow:5px 5px 0 #111}.concept-a .sticker-one{background:#fbf52c}.concept-a .sticker-two{background:#fff}.concept-a .ticker{color:#111;background:#ff4e79;border-width:4px}.concept-a .proof,.concept-a .step-grid,.concept-a .media-wall,.concept-a .closing{border-width:4px}.concept-a .step-grid{gap:0}.concept-a .step-grid article{border:4px solid #111}.concept-a .step-grid article+article{border-left:0}.concept-a .step-grid article:nth-child(2){background:#19b394}.concept-a .method h2,.concept-a .media-wall h2,.concept-a .step-grid h3{font-family:Impact,Arial Black,sans-serif;text-transform:uppercase}.concept-a .media-wall figure{border:4px solid #111;box-shadow:8px 8px 0 #111}
+
+  /* Test 9 — scrapbook field notes */
+  .concept-9{--bg:#efe6d2;--ink:#18382c;--accent:#d2673c;--soft:#756c5a;--panel:#fff;background-color:#efe6d2;background-image:linear-gradient(rgb(78 65 45 / 5%) 1px,transparent 1px);background-size:100% 28px}.concept-9 .wordmark b::after{content:" field notes";font-style:italic;font-weight:400}.concept-9 .hero h1{font-weight:400}.concept-9 .hero h1 .accent{color:#d2673c}.concept-9 .eyebrow{font:italic 24px Georgia;letter-spacing:0;text-transform:none}.concept-9 .visual{height:650px}.concept-9 .portrait{inset:7% 10% 4% 22%;padding:12px 12px 55px;background:#fff;box-shadow:4px 8px 20px rgb(60 45 28 / 18%);transform:rotate(3deg)}.concept-9 .portrait img{width:410%;height:100%}.concept-9 .portrait figcaption{color:#18382c;background:#fff}.concept-9 .grid,.concept-9 .orbit{display:none}.concept-9 .sticker-one{top:4%;left:2%;right:auto;border-radius:0;color:#18382c;background:#fff1a8;box-shadow:3px 6px 15px rgb(60 45 28 / 15%);transform:rotate(-5deg)}.concept-9 .sticker-two{bottom:2%;left:4%;color:#18382c;background:#fff;padding:24px;box-shadow:3px 6px 15px rgb(60 45 28 / 15%);transform:rotate(-6deg)}.concept-9 .ticker{display:none}.concept-9 .step-grid article{background:rgb(255 255 255 / 35%)}.concept-9 .media-wall figure:nth-child(1){transform:rotate(-2deg)}.concept-9 .media-wall figure:nth-child(2){transform:rotate(1.5deg)}.concept-9 .media-wall figure:nth-child(3){transform:rotate(-1deg)}
+
+  /* Test 10 — signal interface */
+  .concept-10{--bg:#020617;--ink:#dcf7f1;--accent:#15f4c0;--soft:#1c4568;--panel:#061329;font-family:monospace;background:radial-gradient(circle at 70% 20%,#0c224e 0,transparent 36%),#020617}.concept-10::before{position:absolute;inset:0;background-image:linear-gradient(rgb(85 165 255 / 8%) 1px,transparent 1px),linear-gradient(90deg,rgb(85 165 255 / 8%) 1px,transparent 1px);background-size:60px 60px;content:"";mask-image:linear-gradient(#000,transparent 85%);pointer-events:none}.concept-10 .topbar{position:relative}.concept-10 .wordmark b::after{content:"_OS";color:#15f4c0}.concept-10 .hero h1{font-family:Arial Black,Impact,sans-serif;font-size:clamp(78px,9vw,145px);line-height:.72}.concept-10 .hero h1 .accent{color:transparent;-webkit-text-stroke:2px #15f4c0;text-shadow:0 0 28px rgb(21 244 192 / 28%);font-style:normal}.concept-10 .description{color:#7ea0b8;font:16px/1.7 monospace}.concept-10 .actions a{border:1px solid #15f4c0;color:#15f4c0;background:rgb(21 244 192 / 7%)}.concept-10 .visual{height:700px}.concept-10 .portrait{inset:22% 28% 13%;border:1px solid #15f4c0;clip-path:polygon(20% 0,80% 0,100% 15%,100% 85%,80% 100%,20% 100%,0 85%,0 15%);box-shadow:0 0 40px rgb(21 244 192 / 25%)}.concept-10 .orbit{inset:0;border-color:#285977}.concept-10 .orbit::before,.concept-10 .orbit::after{position:absolute;border:1px solid #285977;border-radius:50%;content:""}.concept-10 .orbit::before{inset:13%}.concept-10 .orbit::after{inset:27%}.concept-10 .grid{background-size:35px 35px}.concept-10 .sticker{border:1px solid #315b7c;color:#15f4c0;background:#061329;font-size:9px;letter-spacing:.1em}.concept-10 .sticker-one{border-radius:0}.concept-10 .ticker{color:#15f4c0;background:#061329}.concept-10 .step-grid{gap:0;border:1px solid #1c4568;background:rgb(4 15 36 / 72%)}.concept-10 .step-grid article+article{border-left:1px solid #1c4568}.concept-10 .method h2,.concept-10 .media-wall h2,.concept-10 .step-grid h3{font-family:Arial;font-weight:900}.concept-10 .media-wall figure{border:1px solid #1c4568;background:#061329}
+
+  @keyframes ticker{to{transform:translateX(-50%)}}@keyframes pulse{50%{transform:scale(1.03);opacity:.5}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes drift{to{transform:translate(70px,45px) scale(1.14)}}@keyframes sweep{to{transform:translateX(18%) rotate(3deg)}}
+  @media(max-width:900px){
+    .topbar{grid-template-columns:1fr auto;padding-inline:20px}.topbar>p,.topbar nav{display:none}.hero,.concept-2 .hero,.concept-3 .hero,.concept-4 .hero,.concept-5 .hero,.concept-6 .hero,.concept-7 .hero,.concept-a .hero,.concept-9 .hero,.concept-10 .hero{grid-template-columns:1fr;width:min(100% - 40px,760px);padding:80px 0}.concept-a .hero{width:100%;padding:0}.concept-a .hero-copy{padding:80px 24px;border-right:0;border-bottom:4px solid #111}.visual,.concept-2 .visual,.concept-3 .visual,.concept-4 .visual,.concept-5 .visual,.concept-6 .visual,.concept-7 .visual,.concept-a .visual,.concept-9 .visual,.concept-10 .visual{height:620px}.concept-6 .visual{border-top:1px solid #0d2b52;border-left:0}.concept-7 .hero{min-height:820px}.proof{grid-template-columns:1fr}.proof dl{margin-top:25px}.method>header,.media-wall>header{grid-template-columns:1fr;gap:18px}.step-grid,.media-wall>div{grid-template-columns:1fr}.step-grid{gap:18px;border:0}.step-grid article{border:1px solid var(--soft)}.step-grid article+article{border-left:1px solid var(--soft)}.closing{align-items:flex-start;flex-direction:column;gap:25px}
+  }
+  @media(max-width:600px){
+    .concept{padding-bottom:78px}.nav-cta{display:none}.topbar{grid-template-columns:1fr}.hero,.concept-2 .hero,.concept-3 .hero,.concept-4 .hero,.concept-5 .hero,.concept-6 .hero,.concept-7 .hero,.concept-9 .hero,.concept-10 .hero{width:min(100% - 28px,620px)}.hero h1,.concept-2 .hero h1,.concept-3 .hero h1,.concept-4 .hero h1,.concept-5 .hero h1,.concept-6 .hero h1,.concept-7 .hero h1,.concept-a .hero h1,.concept-9 .hero h1,.concept-10 .hero h1{font-size:clamp(54px,17vw,86px)}.description{font-size:16px}.actions{align-items:flex-start;flex-direction:column}.visual,.concept-2 .visual,.concept-3 .visual,.concept-4 .visual,.concept-5 .visual,.concept-6 .visual,.concept-7 .visual,.concept-a .visual,.concept-9 .visual,.concept-10 .visual{height:520px}.portrait{inset:30px 8% 0}.concept-10 .portrait{inset:20%}.sticker-one{width:80px;height:80px;font-size:23px}.proof,.method,.media-wall,.closing{width:min(100% - 28px,620px)}.proof dl{grid-template-columns:repeat(2,1fr);gap:25px}.proof dl div:nth-child(3){border-left:0}.method,.media-wall{padding:70px 0}.method h2,.media-wall h2{font-size:42px}
+  }
+</style>
