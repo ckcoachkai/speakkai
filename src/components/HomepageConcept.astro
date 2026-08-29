@@ -105,10 +105,12 @@ const previews = [
       <div class="visual">
         <div class="blur blur-one"></div><div class="blur blur-two"></div>
         <div class="graphic burst"></div><div class="graphic orbit"></div><div class="graphic grid"></div>
-        <figure class="portrait">
-          <img src="/images/coach-kai-banner-mobile.png" alt="Coach Kai in a navy suit" />
-          <figcaption><b>KAI LIU</b><span>Communication Coach / TEDx Speaker</span></figcaption>
-        </figure>
+        {id !== "7" && (
+          <figure class="portrait">
+            <img src="/images/coach-kai-banner-mobile.png" alt="Coach Kai in a navy suit" />
+            <figcaption><b>KAI LIU</b><span>Communication Coach / TEDx Speaker</span></figcaption>
+          </figure>
+        )}
         <div class="sticker sticker-one">15+<span>YEARS</span></div>
         <div class="sticker sticker-two">SPEAK<br />CONNECT<br />INFLUENCE</div>
         <div class="focus-corners"><i></i><i></i><i></i><i></i></div>
