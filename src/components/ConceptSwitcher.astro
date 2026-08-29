@@ -10,7 +10,7 @@ const concepts = [
   ...["1", "2", "3", "4", "5", "6", "7", "a", "9", "10"].map((id) => ({
     id,
     label: id === "a" ? "Test A" : `Test ${id}`,
-    href: `/test-${id}/`,
+    href: `/test${id}/`,
   })),
 ];
 ---
