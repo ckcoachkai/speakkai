@@ -58,7 +58,7 @@ const concepts = [
 
     <section class="idea-section">
       <div class="idea-photo-wrap">
-        <img src="/images/concepts/speakkai-influence-sketch.png" alt="A cleaned visual interpretation of Kai's original concentric website design sketch" />
+        <img src="/images/concepts/speakkai-influence-sketch.png" loading="lazy" decoding="async" alt="A cleaned visual interpretation of Kai's original concentric website design sketch" />
         <div class="sketch-labels" aria-hidden="true"><span>Speak</span><span>Connect</span><span>Influence</span><span>Build</span><span>Reputation</span></div>
         <b>01 · Original thought</b>
       </div>
@@ -87,7 +87,7 @@ const concepts = [
       </div>
       <div class="concept-grid">
         {concepts.map((concept, index) => (
-          <a class="concept-card" href={`/test-${concept.id}/`} style={`--c1:${concept.colors[0]};--c2:${concept.colors[1]};--c3:${concept.colors[2]}`}>
+          <a class="concept-card" href={`/test${concept.id}/`} style={`--c1:${concept.colors[0]};--c2:${concept.colors[1]};--c3:${concept.colors[2]}`}>
             <div class="card-visual">
               <span class="shape shape-a"></span><span class="shape shape-b"></span>
               <img src="/images/coach-kai-banner-mobile.png" alt="" loading="lazy" />
