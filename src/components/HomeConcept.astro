@@ -1,0 +1,255 @@
+---
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, CirclePlay, Mic, Play, Quote, Sparkles, Star, Zap } from "@lucide/astro";
+import TestSwitcher from "./TestSwitcher.astro";
+import "../styles/test-concepts.css";
+
+interface Props {
+  variant: "1" | "2" | "3" | "4" | "5" | "6" | "7" | "a" | "9";
+}
+
+const { variant } = Astro.props;
+const concepts = {
+  "1": { name: "Cinematic Authority", tone: "dark" as const },
+  "2": { name: "Swiss Proof System", tone: "light" as const },
+  "3": { name: "Playful Confidence", tone: "light" as const },
+  "4": { name: "Creator Energy", tone: "light" as const },
+  "5": { name: "Quiet Luxury", tone: "dark" as const },
+  "6": { name: "Kinetic Ripple", tone: "dark" as const },
+  "7": { name: "Editorial Scrapbook", tone: "light" as const },
+  "a": { name: "Future Signal", tone: "dark" as const },
+  "9": { name: "Human Documentary", tone: "light" as const },
+};
+const concept = concepts[variant];
+
+const proof = [
+  ["15+", "years in education"],
+  ["2,000+", "students trained"],
+  ["1,000+", "presentations delivered"],
+  ["7", "countries reached"],
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={`SpeakKai homepage experiment: ${concept.name}.`} />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{`SpeakKai ${variant.toUpperCase()} | ${concept.name}`}</title>
+  </head>
+  <body class={`concept-page concept-${variant}`}>
+    {variant === "1" && (
+      <>
+        <header class="c1-header concept-header">
+          <a class="concept-logo" href="/">SpeakKai<span>.</span></a>
+          <nav aria-label="Main navigation">
+            <a href="/about/">Coach</a><a href="/resources/">Programs</a><a href="/schedule/">Schedule</a>
+          </nav>
+          <a class="header-action" href="/contact/">Book a conversation <ArrowUpRight size={15} /></a>
+        </header>
+        <main>
+          <section class="c1-hero">
+            <img src="/images/coach-kai-headshot.webp" alt="Coach Kai in a navy suit" />
+            <div class="c1-shade"></div>
+            <p class="c1-vertical">Coach Kai · Speech · Story · Influence</p>
+            <div class="c1-copy">
+              <p class="concept-kicker">Communication coaching for consequential moments</p>
+              <h1>Own the room.<br /><em>Move the people.</em></h1>
+              <p>Structured thinking, persuasive story, and a presence people remember—from classrooms to global stages.</p>
+              <div class="concept-actions"><a class="pill is-lime" href="/contact/">Build your voice <ArrowRight size={17} /></a><a class="text-action" href="#c1-proof">See the evidence <ArrowDown size={16} /></a></div>
+            </div>
+            <div class="c1-glass-note"><Quote size={18} /><strong>Speaking is the start.</strong><span>Reputation is what the ripple becomes.</span></div>
+          </section>
+          <section class="c1-proof" id="c1-proof">
+            <div class="proof-row">{proof.map(([number, label]) => <div><strong>{number}</strong><span>{label}</span></div>)}</div>
+            <div class="c1-path">
+              <p class="concept-kicker">The path outward</p>
+              <ol><li><span>01</span>Speak</li><li><span>02</span>Connect</li><li><span>03</span>Influence</li><li><span>04</span>Build</li><li><span>05</span>Reputation</li></ol>
+            </div>
+          </section>
+        </main>
+      </>
+    )}
+
+    {variant === "2" && (
+      <>
+        <header class="c2-header concept-header">
+          <a class="concept-logo" href="/">SPEAKKAI / 26</a>
+          <span>Shanghai + Online</span>
+          <nav aria-label="Main navigation"><a href="/about/">About</a><a href="/resources/">Work</a><a href="/contact/">Enquire ↗</a></nav>
+        </header>
+        <main class="c2-main">
+          <section class="c2-masthead">
+            <div class="c2-title"><span>01 — Communication coaching</span><h1>Clarity<br />creates<br />momentum.</h1></div>
+            <div class="c2-image"><img src="/images/coach-kai-headshot.webp" alt="Coach Kai" /><span class="c2-caption">Coach Kai Liu<br />Speaker / Coach / Educator</span></div>
+            <aside class="c2-aside"><p>For students who need a voice. Professionals who need impact. Organizations that need ideas to move.</p><a href="/contact/">Find your coaching fit <ArrowUpRight size={15} /></a></aside>
+          </section>
+          <section class="c2-index" aria-label="Services">
+            <div><span>A</span><strong>Think</strong><p>Structure arguments and stories with precision.</p></div>
+            <div><span>B</span><strong>Speak</strong><p>Deliver with confidence, control, and presence.</p></div>
+            <div><span>C</span><strong>Lead</strong><p>Build trust and move people to action.</p></div>
+          </section>
+          <section class="c2-proof">
+            <div class="c2-proof-label">Selected evidence / 2007—2026</div>
+            {proof.map(([number, label]) => <div><strong>{number}</strong><span>{label}</span></div>)}
+          </section>
+        </main>
+      </>
+    )}
+
+    {variant === "3" && (
+      <>
+        <header class="c3-header concept-header">
+          <a class="concept-logo" href="/"><span>☺</span> SpeakKai</a>
+          <nav aria-label="Main navigation"><a href="/about/">Meet Kai</a><a href="/resources/">Play &amp; practise</a><a href="/contact/">For parents</a></nav>
+          <a class="c3-cta" href="/contact/">Let's grow! <Star size={15} fill="currentColor" /></a>
+        </header>
+        <main>
+          <section class="c3-hero">
+            <div class="c3-blob blob-a"></div><div class="c3-blob blob-b"></div>
+            <div class="c3-copy">
+              <p class="concept-kicker">Big ideas start with a brave little voice</p>
+              <h1>Speak up.<br /><span>Shine out.</span></h1>
+              <p>Playful, practical coaching that helps young speakers organise ideas, tell better stories, and feel proud of what they have to say.</p>
+              <div class="concept-actions"><a class="pill" href="/contact/">Find the right program <ArrowRight size={17} /></a><a class="c3-play" href="/resources/"><CirclePlay size={23} /> Try free tools</a></div>
+            </div>
+            <div class="c3-picture">
+              <img src="/images/test/kids-speaking.webp" alt="Children sharing ideas in a colourful speaking circle" />
+              <span class="sticker sticker-1">Brave ideas!</span><span class="sticker sticker-2">You’ve got this ★</span>
+            </div>
+          </section>
+          <section class="c3-steps">
+            <p class="concept-kicker">Confidence grows by doing</p>
+            <div class="c3-step-grid"><article><span>1</span><h2>Try</h2><p>Start small. Find the words.</p></article><article><span>2</span><h2>Play</h2><p>Experiment with voice and story.</p></article><article><span>3</span><h2>Perform</h2><p>Share ideas with real confidence.</p></article></div>
+            <div class="c3-parent-note"><Check size={22} /><div><strong>Coach Kai · 15+ years in education · private and group coaching.</strong><p>Every session connects practical feedback to the next visible step.</p></div><a href="/about/">Why Coach Kai ↗</a></div>
+          </section>
+        </main>
+      </>
+    )}
+
+    {variant === "4" && (
+      <>
+        <header class="c4-header concept-header">
+          <a class="concept-logo" href="/">SPEAK<br />KAI</a>
+          <span class="c4-channel">VOICE &amp; VICTORY / CHANNEL 01</span>
+          <a class="c4-menu" href="/contact/" aria-label="Book a consultation"><ArrowUpRight size={20} /></a>
+        </header>
+        <main>
+          <section class="c4-hero">
+            <div class="c4-copy">
+              <span class="c4-chip">NEW SEASON ⚡</span>
+              <h1>DON’T JUST<br /><em>SAY IT.</em><br />LAND IT.</h1>
+              <p>High-energy coaching for sharper stories, stronger arguments, and the confidence to press record—or walk on stage.</p>
+              <a class="c4-button" href="/contact/">LEVEL UP YOUR VOICE <Play size={16} fill="currentColor" /></a>
+            </div>
+            <div class="c4-visual"><img src="/images/test/vlog-megaphone.webp" alt="Megaphone and microphone in a high-energy graphic collage" /><span class="c4-burst">SPEAK<br />BIGGER</span><span class="c4-arrow">↙</span></div>
+          </section>
+          <div class="c4-marquee" aria-hidden="true"><div>SPEAK — CONNECT — INFLUENCE — BUILD — REPUTATION — SPEAK — CONNECT — INFLUENCE — BUILD — REPUTATION —</div></div>
+          <aside class="c4-trust" aria-label="Coach Kai experience"><span><strong>15+</strong> years in education</span><span><strong>2,000+</strong> students trained</span><span><strong>7</strong> countries reached</span></aside>
+          <section class="c4-grid">
+            <article class="c4-feature"><span>01 / START HERE</span><h2>Find your angle.</h2><p>Turn “I don’t know what to say” into a clear point of view worth hearing.</p></article>
+            <a class="c4-video" href="/tools/speech-debate-timer/" aria-label="Open the SpeakKai speech and debate practice timer"><img src="/images/speech-debate-timer-preview.png" alt="SpeakKai speech and debate practice timer" /><span><CirclePlay size={44} /></span></a>
+            <article class="c4-feature is-red"><span>02 / MAKE IT MOVE</span><h2>Train like it’s live.</h2><p>Timed practice, targeted feedback, stronger repeat performances.</p></article>
+          </section>
+        </main>
+      </>
+    )}
+
+    {variant === "5" && (
+      <>
+        <header class="c5-header concept-header">
+          <a class="concept-logo" href="/">SpeakKai</a>
+          <nav aria-label="Main navigation"><a href="/about/">The Coach</a><a href="/resources/">The Work</a><a href="/contact/">Private Enquiry</a></nav>
+        </header>
+        <main>
+          <section class="c5-hero">
+            <div class="c5-photo"><img src="/images/coach-kai-headshot.webp" alt="Coach Kai" /><div></div></div>
+            <div class="c5-copy"><p class="concept-kicker">Private communication coaching</p><h1>A voice with<br /><em>gravity.</em></h1><p>Speech, debate, and presentation coaching for ambitious students, leaders, and schools.</p><a href="/contact/">Request a conversation <ArrowRight size={17} /></a></div>
+            <div class="c5-seal"><span>15+</span><small>YEARS IN<br />EDUCATION</small></div>
+          </section>
+          <section class="c5-services">
+            <header><p class="concept-kicker">The discipline</p><h2>What you say.<br />How it lands.<br />What remains.</h2></header>
+            <div class="c5-service-list"><article><span>01</span><h3>Private coaching</h3><p>Confidential, exacting work for important presentations, interviews, and leadership moments.</p></article><article><span>02</span><h3>Student development</h3><p>Rigorous structure and warm mentorship for ambitious young speakers.</p></article><article><span>03</span><h3>Institutional training</h3><p>Communication programs designed for schools, teams, and organisations.</p></article></div>
+          </section>
+        </main>
+      </>
+    )}
+
+    {variant === "6" && (
+      <>
+        <header class="c6-header concept-header"><a class="concept-logo" href="/">S/K</a><span>THE RIPPLE METHOD</span><a href="/contact/">Begin ↗</a></header>
+        <main>
+          <section class="c6-hero">
+            <div class="c6-type" aria-hidden="true"><span>VOICE</span><span>VICTORY</span></div>
+            <div class="c6-orbit">
+              <span class="c6-ring r1"></span><span class="c6-ring r2"></span><span class="c6-ring r3"></span><span class="c6-ring r4"></span><span class="c6-ring r5"></span>
+              <div class="c6-center"><img src="/images/coach-kai-headshot.webp" alt="Coach Kai" /></div>
+              <span class="c6-tag t1" title="Express a clear idea with confidence">Speak</span><span class="c6-tag t2" title="Make the message matter to another person">Connect</span><span class="c6-tag t3" title="Move attention toward understanding and action">Influence</span><span class="c6-tag t4" title="Turn communication into opportunity and leadership">Build</span><span class="c6-tag t5" title="Let repeated impact become trusted reputation">Reputation</span>
+            </div>
+            <div class="c6-copy"><p class="concept-kicker">Communication compounds</p><h1>Start at the center.</h1><p>Speech, debate, and presentation coaching for students, leaders, and schools.</p><a class="pill is-lime" href="/contact/">Make the first ripple <ArrowRight size={17} /></a></div>
+          </section>
+          <aside class="c6-proof" aria-label="Coach Kai experience">{proof.slice(0, 3).map(([number, label]) => <span><strong>{number}</strong>{label}</span>)}</aside>
+          <section class="c6-loop"><div><span>SPEAK</span><i>→</i><span>CONNECT</span><i>→</i><span>INFLUENCE</span><i>→</i><span>BUILD</span><i>→</i><span>REPUTATION</span></div></section>
+        </main>
+      </>
+    )}
+
+    {variant === "7" && (
+      <>
+        <header class="c7-header concept-header"><a class="concept-logo" href="/">SpeakKai Journal</a><span>ISSUE 01 · VOICE</span><nav aria-label="Main navigation"><a href="/about/">Profile</a><a href="/resources/">Practice</a><a href="/contact/">Contact</a></nav></header>
+        <main class="c7-main">
+          <section class="c7-cover">
+            <div class="c7-headline"><p class="concept-kicker">A field guide to being heard</p><h1>The room changes when you know what you want to say.</h1><p class="c7-deck">Coach Kai on turning thought into structure, structure into presence, and presence into influence.</p><a href="/contact/">Start your story <ArrowUpRight size={16} /></a></div>
+            <figure class="c7-photo-main"><img src="/images/coach-kai-headshot.webp" alt="Coach Kai" /><figcaption>Coach Kai / Communication Coach / Shanghai</figcaption></figure>
+            <aside class="c7-note"><span>THE COACH</span><p>15+ years helping students and leaders turn practice into visible progress.</p></aside>
+            <div class="c7-doodle" aria-hidden="true">↗</div>
+          </section>
+          <section class="c7-stories">
+            <article class="c7-story is-wide"><span>01 / THE PRACTICE ROOM</span><img src="/images/class-charades-preview.png" alt="Class Charades practice tool" /><h2>Make practice feel alive.</h2></article>
+            <article class="c7-story"><span>02 / PROOF</span><blockquote>“A good speech sounds natural because the structure is invisible.”</blockquote><p>15+ years turning technique into confident performance.</p></article>
+            <article class="c7-story is-dark"><span>03 / NEXT</span><h2>What are you preparing for?</h2><a href="/contact/">Tell Coach Kai →</a></article>
+          </section>
+        </main>
+      </>
+    )}
+
+    {variant === "a" && (
+      <>
+        <header class="ca-header concept-header"><a class="concept-logo" href="/">SPEAKKAI<span>//A</span></a><div class="ca-status"><i></i> SIGNAL ONLINE</div><nav aria-label="Main navigation"><a href="/about/">PROFILE</a><a href="/resources/">TOOLS</a><a href="/contact/">CONNECT</a></nav></header>
+        <main>
+          <section class="ca-hero">
+            <img class="ca-bg" src="/images/test/cyber-orbit.webp" alt="Luminous voice signal expanding through five orbits" />
+            <div class="ca-grid"></div><div class="ca-scan"></div>
+            <div class="ca-copy"><p class="concept-kicker">VOICE SYSTEM / VERSION 20.26</p><h1>YOUR IDEAS<br />NEED <em>SIGNAL.</em></h1><p>Upgrade clarity. Amplify presence. Convert attention into trust.</p><div class="concept-actions"><a class="ca-button" href="/contact/">INITIALISE COACHING <Zap size={16} fill="currentColor" /></a><a href="#ca-modules">VIEW MODULES ↓</a></div></div>
+            <div class="ca-data"><span>INPUT</span><strong>THOUGHT</strong><i></i><span>OUTPUT</span><strong>INFLUENCE</strong></div>
+          </section>
+          <section class="ca-modules" id="ca-modules">
+            <div class="ca-module"><span>01</span><Mic size={23} /><h2>VOICE</h2><p>Delivery, control, presence.</p></div><div class="ca-module"><span>02</span><Sparkles size={23} /><h2>STORY</h2><p>Structure, emotion, memory.</p></div><div class="ca-module"><span>03</span><Zap size={23} /><h2>IMPACT</h2><p>Trust, influence, action.</p></div>
+          </section>
+          <aside class="ca-proof" aria-label="Coach Kai experience">{proof.slice(0, 3).map(([number, label]) => <span><strong>{number}</strong>{label}</span>)}</aside>
+        </main>
+      </>
+    )}
+
+    {variant === "9" && (
+      <>
+        <header class="c9-header concept-header"><a class="concept-logo" href="/">SpeakKai</a><p>Stories, speeches, and the courage to be understood.</p><a href="/contact/">Talk to Kai</a></header>
+        <main>
+          <section class="c9-hero">
+            <div class="c9-image"><img src="/images/coach-kai-headshot.webp" alt="Coach Kai" /><span>Shanghai, 2026</span></div>
+            <div class="c9-copy"><p class="concept-kicker">A human approach to communication</p><h1>Every confident speaker started somewhere.</h1><p>Kai did too—with a stutter, a fear of public speaking, and ideas he struggled to express. That experience now shapes how he coaches every student and professional.</p><a href="/contact/">Prepare for your next moment <ArrowRight size={17} /></a></div>
+          </section>
+          <aside class="c9-proof" aria-label="Coach Kai experience">{proof.slice(0, 3).map(([number, label]) => <span><strong>{number}</strong>{label}</span>)}</aside>
+          <section class="c9-timeline">
+            <header><span>THE WORK</span><h2>Small moments.<br />Visible change.</h2></header>
+            <div class="c9-scenes"><article><span class="scene-number">01</span><div><h3>Find the thought.</h3><p>“What do I actually want people to understand?”</p></div></article><article><span class="scene-number">02</span><div><h3>Shape the story.</h3><p>Build a clear beginning, a meaningful turn, and an ending that stays.</p></div></article><article><span class="scene-number">03</span><div><h3>Share it bravely.</h3><p>Practise until the technique makes room for the person.</p></div></article></div>
+          </section>
+          <section class="c9-letter"><Quote size={28} /><blockquote>Confidence is not the absence of nerves. It is knowing that your message is worth the moment.</blockquote><div><strong>Kai Liu</strong><span>Coach · Speaker · Educator</span></div><a href="/contact/">Prepare for your next moment ↗</a></section>
+        </main>
+      </>
+    )}
+
+    <TestSwitcher current={variant} tone={concept.tone} />
+  </body>
+</html>

@@ -1,0 +1,100 @@
+---
+interface Props {
+  current: string;
+  tone?: "light" | "dark";
+}
+
+const { current, tone = "dark" } = Astro.props;
+const concepts = [
+  { label: "Test", href: "/test/", id: "test" },
+  { label: "1", href: "/test1/", id: "1" },
+  { label: "2", href: "/test2/", id: "2" },
+  { label: "3", href: "/test3/", id: "3" },
+  { label: "4", href: "/test4/", id: "4" },
+  { label: "5", href: "/test5/", id: "5" },
+  { label: "6", href: "/test6/", id: "6" },
+  { label: "7", href: "/test7/", id: "7" },
+  { label: "A", href: "/testa/", id: "a" },
+  { label: "9", href: "/test9/", id: "9" },
+  { label: "10", href: "/test10/", id: "10" },
+];
+---
+
+<nav class:list={["test-switcher", `is-${tone}`]} aria-label="Homepage concepts">
+  <span>Concepts</span>
+  <div class="test-links">
+    {concepts.map((concept) => (
+      <a href={concept.href} aria-current={current === concept.id ? "page" : undefined}>
+        {concept.label}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<style>
+  .test-switcher {
+    position: fixed;
+    z-index: 100;
+    right: 18px;
+    bottom: 18px;
+    display: flex;
+    max-width: calc(100vw - 36px);
+    align-items: center;
+    gap: 10px;
+    padding: 7px 8px 7px 12px;
+    border: 1px solid rgb(255 255 255 / 20%);
+    border-radius: 999px;
+    box-shadow: 0 16px 45px rgb(0 0 0 / 24%);
+    backdrop-filter: blur(18px);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .is-dark { color: #fff; background: rgb(4 13 15 / 78%); }
+  .is-light { border-color: rgb(3 17 20 / 17%); color: #10201e; background: rgb(248 246 239 / 82%); }
+
+  .test-switcher > span {
+    flex: 0 0 auto;
+    font-size: 9px;
+    font-weight: 950;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+  }
+
+  .test-links {
+    display: flex;
+    max-width: min(66vw, 430px);
+    gap: 3px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .test-links::-webkit-scrollbar { display: none; }
+
+  .test-links a {
+    display: grid;
+    min-width: 27px;
+    height: 27px;
+    flex: 0 0 27px;
+    place-items: center;
+    border-radius: 50%;
+    color: inherit;
+    font-size: 10px;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  .test-links a:hover { background: rgb(125 214 195 / 20%); }
+  .test-links a[aria-current="page"] { color: #10201e; background: #d9ff57; }
+  .test-links a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+  @media (max-width: 620px) {
+    .test-switcher { right: 10px; bottom: 10px; left: 10px; justify-content: center; max-width: none; gap: 6px; padding-right: 6px; padding-left: 8px; }
+    .test-links { max-width: calc(100vw - 76px); gap: 2px; }
+    .test-links a { min-width: 22px; height: 25px; flex-basis: 22px; font-size: 9px; }
+  }
+
+  @media (max-width: 350px) {
+    .test-switcher > span { display: none; }
+    .test-links { max-width: calc(100vw - 32px); }
+  }
+</style>
