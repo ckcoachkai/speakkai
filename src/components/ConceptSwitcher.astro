@@ -6,17 +6,17 @@ interface Props {
 
 const { current, light = false } = Astro.props;
 const concepts = [
-  { id: "test", label: "Test", href: "/test/" },
+  { id: "test", label: "Lab", href: "/concept-lab/" },
   ...["1", "2", "3", "4", "5", "6", "7", "a", "9", "10"].map((id) => ({
     id,
     label: id === "a" ? "Test A" : `Test ${id}`,
-    href: `/test${id}/`,
+    href: `/concept-lab/test${id}/`,
   })),
 ];
 ---
 
 <aside class:list={["concept-switcher", { light }]} aria-label="Homepage concept switcher">
-  <a class="lab-mark" href="/test/" aria-label="Return to the concept gallery">
+  <a class="lab-mark" href="/concept-lab/" aria-label="Return to the concept gallery">
     <span>SK</span><b>Concept Lab</b>
   </a>
   <nav aria-label="Choose a homepage concept">
