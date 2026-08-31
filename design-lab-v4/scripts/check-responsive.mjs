@@ -4,8 +4,8 @@ import path from "node:path";
 
 const baseUrl = process.env.BASE_URL || "http://127.0.0.1:4322";
 const outputDir = process.env.RESPONSIVE_QA_DIR || "output/playwright/v4/responsive-qa";
-const start = Number(process.env.TEST_START || 21);
-const end = Number(process.env.TEST_END || 50);
+const start = Number(process.env.TEST_START || 1);
+const end = Number(process.env.TEST_END || 4);
 const viewports = [
   { name: "tablet", width: 820, height: 1180 },
   { name: "mobile", width: 390, height: 844 },

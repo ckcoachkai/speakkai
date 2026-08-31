@@ -12,7 +12,7 @@ const browser = await chromium.launch({
 });
 const report = [];
 
-for (let test = 21; test <= 50; test += 1) {
+for (let test = 1; test <= 4; test += 1) {
   const context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, reducedMotion: "reduce" });
   const page = await context.newPage();
   const url = new URL(`/tests/${test}/`, baseUrl).toString();

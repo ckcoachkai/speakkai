@@ -13,10 +13,11 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
   data-qa="experiment-root"
   data-qa-ready="true"
   data-test-number={experiment.number}
+  data-source-number={experiment.sourceNumber}
   data-family={experiment.family}
   data-single-screen="true"
 >
-  {experiment.number === 31 && (
+  {experiment.sourceNumber === 31 && (
     <div class="skill-galaxy" data-interaction data-active={panelId(0)}>
       <section class="galaxy-message" data-qa="primary-message"><p class="v4-kicker">Skill Galaxy / Test 31</p><h1>{content.headline}</h1><p>{content.summary}</p></section>
       <div class="galaxy-system">
@@ -37,7 +38,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 32 && (
+  {experiment.sourceNumber === 32 && (
     <div class="stage-quest" data-interaction data-active={panelId(0)}>
       <header data-qa="primary-message"><p class="v4-kicker">Stage Quest / no scores, no ranks</p><h1>{content.headline}</h1><p>{content.summary}</p></header>
       <div class="quest-path" role="tablist" aria-label="Speaking practice levels">
@@ -56,7 +57,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 33 && (
+  {experiment.sourceNumber === 33 && (
     <div class="comic-lab" data-interaction data-active={panelId(0)}>
       <header class="comic-title" data-qa="primary-message"><span>NEW!</span><h1>{content.headline}</h1><p>{content.summary}</p></header>
       <Portrait treatment="portrait-comic" label="COACH KAI SAYS: TRY IT OUT LOUD." />
@@ -73,7 +74,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 34 && (
+  {experiment.sourceNumber === 34 && (
     <div class="kinetic-jam" data-interaction data-active={panelId(0)}>
       <div class="kinetic-word" aria-hidden="true"><span>VOICE</span><span>CHOICE</span></div>
       <section class="kinetic-message" data-qa="primary-message"><p class="v4-kicker">Kinetic Type Jam / Test 34</p><h1>{content.headline}</h1><p>{content.summary}</p></section>
@@ -89,7 +90,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 35 && (
+  {experiment.sourceNumber === 35 && (
     <div class="speaking-hud" data-interaction data-active={panelId(0)}>
       <header data-qa="primary-message"><span>SK // PRACTICE MODE</span><h1>{content.headline}</h1><p>{content.summary}</p></header>
       <Portrait treatment="portrait-player" label="PLAYER GUIDE / COACH KAI" />
@@ -107,7 +108,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 36 && (
+  {experiment.sourceNumber === 36 && (
     <div class="sticker-studio" data-interaction data-active={panelId(0)}>
       <div class="sticker-bg" aria-hidden="true"><span>SAY IT</span><span>YOUR WAY</span><span>TRY AGAIN</span></div>
       <Portrait treatment="portrait-cutout" label="COACH KAI" />
@@ -123,7 +124,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 37 && (
+  {experiment.sourceNumber === 37 && (
     <div class="desk-world" data-interaction data-active={panelId(0)}>
       <section class="desk-intro" data-qa="primary-message"><p class="v4-kicker">Classroom Desk World / parent + student</p><h1>{content.headline}</h1><p>{content.summary}</p></section>
       <Portrait treatment="portrait-polaroid" label="Coach Kai / practice guide" />
@@ -140,7 +141,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 38 && (
+  {experiment.sourceNumber === 38 && (
     <div class="voice-visualizer" data-interaction data-active={panelId(0)}>
       <section data-qa="primary-message"><p class="v4-kicker">Rhythm & Voice Visualizer / no microphone</p><h1>{content.headline}</h1><p>{content.summary}</p></section>
       <Portrait treatment="portrait-wave" label="Coach Kai / voice choices" />
@@ -156,7 +157,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 39 && (
+  {experiment.sourceNumber === 39 && (
     <div class="practice-flipbook" data-interaction data-active={panelId(0)}>
       <header data-qa="primary-message"><p class="v4-kicker">Transformation Flipbook / process, not promise</p><h1>{content.headline}</h1><p>{content.summary}</p></header>
       <Portrait treatment="portrait-margin-note" label="Coach Kai / annotate the next attempt" />
@@ -172,7 +173,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 40 && (
+  {experiment.sourceNumber === 40 && (
     <div class="motion-poster" data-interaction data-active={panelId(0)}>
       <div class="poster-type" aria-hidden="true"><span>SPEAK</span><span>KAI</span></div>
       <Portrait treatment="portrait-poster" label="COACH KAI / COMMUNICATION IN PRACTICE" />

@@ -23,9 +23,9 @@ const description = `${experiment.content.headline} ${experiment.content.summary
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0B1020" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <title>{`Test ${experiment.number}: ${experiment.title} | SpeakKai V4`}</title>
+    <title>{`Version ${experiment.number}: ${experiment.title} | SpeakKai`}</title>
   </head>
-  <body class:list={["v4-page", `v4-family-${experiment.family}`, `v4-test-${experiment.number}`]}>
+  <body class:list={["v4-page", `v4-family-${experiment.family}`, `v4-version-${experiment.number}`, `v4-source-${experiment.sourceNumber}`]}>
     <V4Navigator current={experiment.number} />
     <main class="v4-main">
       {experiment.family === "corporate" && <CorporateExperiment experiment={experiment} />}

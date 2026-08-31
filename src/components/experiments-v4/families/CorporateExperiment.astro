@@ -16,10 +16,11 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
   data-qa="experiment-root"
   data-qa-ready="true"
   data-test-number={experiment.number}
+  data-source-number={experiment.sourceNumber}
   data-family={experiment.family}
   data-single-screen="true"
 >
-  {experiment.number === 21 && (
+  {experiment.sourceNumber === 21 && (
     <div class="boardroom" data-interaction data-active={panelId(0)}>
       <header class="boardroom-mast"><span>SpeakKai / Practice brief</span><span>Issue 21</span></header>
       <Portrait treatment="portrait-editorial" label="Coach Kai / Communication Coach" />
@@ -48,7 +49,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 22 && (
+  {experiment.sourceNumber === 22 && (
     <div class="swiss-grid" data-interaction data-active={panelId(0)}>
       <header class="swiss-index"><b>SK/22</b><span>Parent evidence grid</span><span>V4</span></header>
       <section class="swiss-question" data-qa="primary-message">
@@ -72,7 +73,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 23 && (
+  {experiment.sourceNumber === 23 && (
     <div class="annual-report" data-interaction data-active={panelId(0)}>
       <section class="report-cover" data-qa="primary-message">
         <div class="report-number">23</div><p>SpeakKai practice overview / 2026</p><h1>{content.headline}</h1><p>{content.summary}</p>
@@ -96,7 +97,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 24 && (
+  {experiment.sourceNumber === 24 && (
     <div class="keynote-stage" data-interaction data-active={panelId(0)}>
       <div class="keynote-light" aria-hidden="true"></div>
       <section class="keynote-copy" data-qa="primary-message">
@@ -118,7 +119,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 25 && (
+  {experiment.sourceNumber === 25 && (
     <div class="decision-matrix" data-interaction data-active={panelId(0)}>
       <header data-qa="primary-message"><p class="v4-kicker">Parent Decision Matrix</p><h1>{content.headline}</h1><p>{content.summary}</p></header>
       <Portrait treatment="portrait-parent" label="Start with context, not a score" />
@@ -138,7 +139,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 26 && (
+  {experiment.sourceNumber === 26 && (
     <div class="institutional-blueprint" data-interaction data-active={panelId(0)}>
       <header data-qa="primary-message"><p class="v4-kicker">Institutional Blueprint / SK-26</p><h1>{content.headline}</h1><p>{content.summary}</p></header>
       <Portrait treatment="portrait-pin" label="Program lead / Coach Kai" />
@@ -159,11 +160,11 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 27 && (
+  {experiment.sourceNumber === 27 && (
     <div class="coaching-atelier" data-interaction data-active={panelId(0)}>
       <div class="atelier-monogram" aria-hidden="true">SK</div>
       <Portrait treatment="portrait-atelier" label="Coach Kai / private practice" />
-      <section class="atelier-copy" data-qa="primary-message"><p class="v4-kicker">Coaching Atelier</p><h1>{content.headline}</h1><p>{content.summary}</p></section>
+      <section class="atelier-copy" data-qa="primary-message"><p class="v4-kicker">Coaching Atelier / Version {experiment.number}</p><h1>{content.headline}</h1><p>{content.summary}</p></section>
       <div class="atelier-swatches" role="tablist" aria-label="Private coaching focuses">
         {content.panels.map((item, index) => (
           <button type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}><i aria-hidden="true"></i><span>{item.label}</span></button>
@@ -179,7 +180,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 28 && (
+  {experiment.sourceNumber === 28 && (
     <div class="case-study-wall" data-interaction data-active={panelId(0)}>
       <header data-qa="primary-message"><p class="v4-kicker">Case Study Wall / process examples only</p><h1>{content.headline}</h1><p>{content.summary}</p></header>
       <Portrait treatment="portrait-annotator" label="Coach Kai / process annotator" />
@@ -199,7 +200,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 29 && (
+  {experiment.sourceNumber === 29 && (
     <div class="press-room" data-interaction data-active={panelId(0)}>
       <section class="press-title" data-qa="primary-message"><p class="v4-kicker">Documentary Press Room / approved public material</p><h1>{content.headline}</h1><p>{content.summary}</p></section>
       <div class="contact-sheet" role="tablist" aria-label="Public context frames">
@@ -220,7 +221,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
     </div>
   )}
 
-  {experiment.number === 30 && (
+  {experiment.sourceNumber === 30 && (
     <div class="motion-identity" data-interaction data-active={panelId(0)}>
       <div class="identity-type" aria-hidden="true"><span>SPEAK</span><span>KAI</span></div>
       <Portrait treatment="portrait-sliced" label="Coach Kai / communication in motion" />

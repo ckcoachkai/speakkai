@@ -1,12 +1,9 @@
 ---
-import { experimentsV4, legacyExperiments, missingLegacyExperiments } from "../../data/experimentLabV4";
-import { reviewV4ByNumber } from "../../data/experimentReviewsV4";
+import { experimentsV4 } from "../../data/experimentLabV4";
 import "@fontsource/manrope/400.css";
 import "@fontsource/manrope/700.css";
 import "@fontsource/archivo-black/400.css";
 import "@fontsource/space-mono/400.css";
-
-const familyLabel = { corporate: "Corporate / trust", "fun-motion": "Fun / motion", modern: "Modern / spatial" };
 ---
 
 <!doctype html>
@@ -15,124 +12,83 @@ const familyLabel = { corporate: "Corporate / trust", "fun-motion": "Fun / motio
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="description" content="Browse SpeakKai homepage experiments for parents, students, and schools or organizations." />
+    <meta name="description" content="Compare four selected SpeakKai homepage directions." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <title>Homepage Experiment Lab V4 | SpeakKai</title>
+    <title>Four Homepage Directions | SpeakKai</title>
     <style>
       :root { --navy:#0b1020; --blue:#2563eb; --yellow:#ffcc00; --paper:#f4f2ea; --ink:#10243a; }
       * { box-sizing:border-box; }
-      body { margin:0; background:var(--paper); color:var(--ink); font-family:"Manrope",system-ui,sans-serif; }
+      body { margin:0; min-height:100vh; background:var(--paper); color:var(--ink); font-family:"Manrope",system-ui,sans-serif; }
       a { color:inherit; }
-      .mast { min-height:58vh; padding:clamp(24px,5vw,82px); display:grid; grid-template-columns:1.2fr .8fr; gap:32px; align-items:end; background:var(--navy); color:white; overflow:hidden; position:relative; }
-      .mast::after { content:"V4"; position:absolute; right:-2vw; top:-3vw; font:clamp(12rem,34vw,34rem)/.8 "Archivo Black",sans-serif; color:rgba(37,99,235,.2); letter-spacing:-.09em; }
+      .mast { min-height:34vh; padding:clamp(28px,5vw,76px); display:grid; grid-template-columns:1.25fr .75fr; gap:32px; align-items:end; background:var(--navy); color:white; overflow:hidden; position:relative; }
+      .mast::after { content:"4"; position:absolute; right:1vw; top:-7vw; font:clamp(15rem,31vw,31rem)/.8 "Archivo Black",sans-serif; color:rgba(37,99,235,.2); letter-spacing:-.09em; }
       .mast-copy,.mast-note { position:relative; z-index:1; }
       .eyebrow { margin:0 0 14px; color:var(--yellow); font:11px "Space Mono",monospace; letter-spacing:.13em; text-transform:uppercase; }
-      h1 { margin:0; max-width:10ch; font:clamp(3.6rem,8vw,9rem)/.82 "Archivo Black",sans-serif; letter-spacing:-.07em; text-transform:uppercase; }
+      h1 { margin:0; max-width:12ch; font:clamp(3rem,6.5vw,7.4rem)/.84 "Archivo Black",sans-serif; letter-spacing:-.065em; text-transform:uppercase; }
       .mast-copy>p:last-child { max-width:62ch; color:#bdc9d9; line-height:1.6; }
-      .mast-note { padding:24px; border:1px solid #53617a; background:rgba(12,21,43,.8); }
+      .mast-note { max-width:34rem; padding:22px; border:1px solid #53617a; background:rgba(12,21,43,.82); }
       .mast-note strong { display:block; color:var(--yellow); font:11px "Space Mono",monospace; text-transform:uppercase; }
       .mast-note p { margin-bottom:0; color:#cbd5e3; line-height:1.55; }
-      .filters { position:sticky; top:0; z-index:10; display:flex; flex-wrap:wrap; gap:8px; padding:14px clamp(18px,4vw,64px); border-bottom:1px solid #c2c8cc; background:rgba(244,242,234,.96); backdrop-filter:blur(12px); }
-      .filters button { min-height:38px; padding:8px 13px; border:1px solid #8a969f; border-radius:999px; background:transparent; cursor:pointer; font-size:11px; font-weight:800; }
-      .filters button[aria-pressed="true"] { background:var(--navy); border-color:var(--navy); color:white; }
-      #result-count { margin-left:auto; align-self:center; font:10px "Space Mono",monospace; }
       main { padding:clamp(26px,4vw,64px); }
       .section-head { margin:0 0 22px; display:flex; align-items:end; justify-content:space-between; gap:18px; }
       .section-head h2 { margin:0; font:clamp(2rem,4vw,4.5rem)/.9 "Archivo Black",sans-serif; text-transform:uppercase; }
-      .section-head p { max-width:48ch; margin:0; color:#5e6d7a; line-height:1.5; }
-      .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
-      .card { min-width:0; position:relative; overflow:hidden; min-height:430px; display:grid; grid-template-rows:190px 1fr; border:1px solid #aeb8bf; background:white; text-decoration:none; transition:transform .2s ease, box-shadow .2s ease; }
-      .card:hover,.card:focus-visible { transform:translateY(-4px); box-shadow:0 20px 45px rgba(17,37,56,.13); }
+      .section-head p { max-width:50ch; margin:0; color:#5e6d7a; line-height:1.5; }
+      .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+      .card { min-width:0; min-height:390px; display:grid; grid-template-columns:minmax(180px,38%) 1fr; border:1px solid #aeb8bf; background:white; text-decoration:none; overflow:hidden; transition:transform .2s ease,box-shadow .2s ease; }
+      .card:hover,.card:focus-visible { transform:translateY(-4px); box-shadow:0 20px 45px rgba(17,37,56,.14); }
       .preview { position:relative; overflow:hidden; background:var(--navy); }
-      .preview img { position:absolute; right:0; bottom:0; width:52%; height:100%; object-fit:cover; filter:saturate(.78); }
-      .preview::before { content:attr(data-number); position:absolute; left:12px; bottom:-20px; z-index:2; font:clamp(5rem,9vw,9rem)/.75 "Archivo Black",sans-serif; color:var(--yellow); letter-spacing:-.08em; }
-      .card[data-family="fun-motion"] .preview { background:#245fd2; }
-      .card[data-family="fun-motion"] .preview::after { content:""; position:absolute; inset:18px 46% 18px 18px; border:5px solid #ffcc00; transform:rotate(-4deg); }
-      .card[data-family="modern"] .preview { background:linear-gradient(135deg,#0b1020,#3158a2); }
-      .card[data-family="modern"] .preview img { clip-path:circle(43% at 55% 50%); }
-      .card-body { padding:18px; display:flex; flex-direction:column; }
-      .meta { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
-      .meta span { padding:5px 7px; border:1px solid #c5cdd2; border-radius:999px; font:8px "Space Mono",monospace; text-transform:uppercase; }
-      .meta span:first-child { background:#eef3ff; border-color:#96b3ef; }
-      .card h3 { margin:0; font-size:clamp(1.4rem,2vw,2rem); letter-spacing:-.035em; }
-      .hypothesis { color:#5c6b78; font-size:12px; line-height:1.5; }
-      .open { margin-top:auto; display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid #d5dade; font-size:11px; font-weight:800; }
-      .review-status { color:#6b7782; font:9px "Space Mono",monospace; }
-      .legacy { margin-top:70px; }
-      .legacy-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
-      .legacy-card { min-height:90px; padding:14px; border:1px solid #aeb8bf; background:white; text-decoration:none; display:flex; flex-direction:column; justify-content:space-between; }
-      .legacy-card strong { font-size:12px; }
-      .legacy-card span { color:#66747f; font-size:10px; }
-      .legacy-card.missing { background:#ece9df; border-style:dashed; color:#6b716f; }
-      .archive-note { margin-top:34px; padding:18px; border-left:5px solid var(--yellow); background:var(--navy); color:white; }
-      .archive-note a { color:var(--yellow); font-weight:800; }
-      [hidden] { display:none!important; }
+      .preview img { width:100%; height:100%; object-fit:cover; object-position:50% 24%; filter:saturate(.8) contrast(1.03); }
+      .preview::after { content:attr(data-version); position:absolute; left:14px; bottom:2px; font:clamp(5rem,9vw,9rem)/.75 "Archivo Black",sans-serif; color:var(--yellow); letter-spacing:-.08em; text-shadow:0 4px 22px rgba(11,16,32,.45); }
+      .card:nth-child(2) .preview { background:#07111f; }
+      .card:nth-child(3) .preview { background:linear-gradient(150deg,#10223f,#3158a2); }
+      .card:nth-child(3) .preview img { clip-path:circle(45% at 52% 48%); }
+      .card:nth-child(4) .preview img { transform:perspective(700px) rotateY(-8deg) scale(.94); }
+      .card-body { padding:clamp(20px,2.5vw,34px); display:flex; flex-direction:column; }
+      .version { margin:0 0 14px; color:#2563eb; font:10px "Space Mono",monospace; letter-spacing:.12em; text-transform:uppercase; }
+      .card h3 { margin:0; font-size:clamp(1.7rem,2.8vw,3rem); line-height:.98; letter-spacing:-.045em; }
+      .audience { margin:14px 0 0; font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; }
+      .hypothesis { color:#5c6b78; font-size:13px; line-height:1.55; }
+      .open { margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:12px; padding-top:18px; border-top:1px solid #d5dade; font-size:11px; font-weight:800; }
+      .open span:last-child { color:#6b7782; font:9px "Space Mono",monospace; text-transform:uppercase; }
       :focus-visible { outline:3px solid #e3ad00; outline-offset:3px; }
-      @media(max-width:980px){ .grid{grid-template-columns:1fr 1fr}.legacy-grid{grid-template-columns:repeat(3,1fr)} }
-      @media(max-width:650px){ .mast{grid-template-columns:1fr;min-height:auto}.grid{grid-template-columns:1fr}.legacy-grid{grid-template-columns:1fr 1fr}.filters{position:relative}#result-count{width:100%;margin:0}.section-head{align-items:start;flex-direction:column}.card{min-height:400px} }
-      @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+      @media(max-width:900px){ .mast{grid-template-columns:1fr;min-height:auto}.grid{grid-template-columns:1fr}.card{min-height:360px} }
+      @media(max-width:560px){ .card{grid-template-columns:1fr;grid-template-rows:220px 1fr}.section-head{align-items:start;flex-direction:column}.mast::after{opacity:.55} }
+      @media(prefers-reduced-motion:reduce){*{transition:none!important}}
     </style>
   </head>
   <body>
     <header class="mast">
-      <div class="mast-copy"><p class="eyebrow">SpeakKai Homepage Experiment Lab V4</p><h1>30 new single-screen proposals.</h1><p>Tests 21–50 are competing hypotheses for parents, students, and schools or organizations. Every concept uses the same verified content boundaries while changing composition, interaction, portrait treatment, and stakeholder priority.</p></div>
-      <aside class="mast-note"><strong>V4 difference</strong><p>This set replaces V3 Tests 21–50. The previous Parent Command Center remains preserved in a renderable archive for comparison.</p></aside>
+      <div class="mast-copy">
+        <p class="eyebrow">SpeakKai Homepage Shortlist</p>
+        <h1>Four directions. One final homepage.</h1>
+        <p>These are the four selected designs. Open each version, compare the experience, and refine the strongest ideas into the final SpeakKai homepage.</p>
+      </div>
+      <aside class="mast-note">
+        <strong>Current stage</strong>
+        <p>The broad experiment phase is finished. Versions 1–4 are now the only active homepage directions in this lab.</p>
+      </aside>
     </header>
-    <nav class="filters" aria-label="Filter homepage experiments">
-      <button type="button" data-filter="all" aria-pressed="true">All 30</button>
-      <button type="button" data-filter="parent" aria-pressed="false">Parent</button>
-      <button type="button" data-filter="student" aria-pressed="false">Student</button>
-      <button type="button" data-filter="customer" aria-pressed="false">Customer</button>
-      <button type="button" data-filter="corporate" aria-pressed="false">Corporate / trust</button>
-      <button type="button" data-filter="fun-motion" aria-pressed="false">Fun / motion</button>
-      <button type="button" data-filter="modern" aria-pressed="false">Modern / spatial</button>
-      <button type="button" data-filter="single-screen" aria-pressed="false">Single screen</button>
-      <span id="result-count" aria-live="polite">30 concepts shown</span>
-    </nav>
     <main>
-      <header class="section-head"><h2>Tests 21–50</h2><p>Choose a card to open the full experiment. All desktop concepts target 1920×1080, 1600×900, 1440×900, and 1366×768; mobile reflows into a scrollable page.</p></header>
-      <section class="grid" aria-label="V4 homepage experiments">
-        {experimentsV4.map((experiment) => {
-          const review = reviewV4ByNumber.get(experiment.number);
-          return (
-          <a class="card" href={`/tests/${experiment.number}/`} data-primary={experiment.primaryCategory} data-family={experiment.family} data-single-screen="true">
-            <div class="preview" data-number={experiment.number}><img src="/images/coach-kai-headshot.webp" width="1400" height="1400" alt="" loading="lazy" decoding="async" /></div>
+      <header class="section-head">
+        <h2>Versions 1–4</h2>
+        <p>Each direction keeps a different strength: warmth, cinematic personality, spatial clarity, or structured program exploration.</p>
+      </header>
+      <section class="grid" aria-label="Selected SpeakKai homepage directions">
+        {experimentsV4.map((experiment) => (
+          <a class="card" href={`/tests/${experiment.number}/`}>
+            <div class="preview" data-version={experiment.number}>
+              <img src="/images/coach-kai-headshot.webp" width="1400" height="1400" alt="" loading="lazy" decoding="async" />
+            </div>
             <div class="card-body">
-              <div class="meta"><span>{experiment.primaryCategory}</span><span>{familyLabel[experiment.family]}</span><span>Single screen</span></div>
-              <h3>{experiment.number}. {experiment.title}</h3>
+              <p class="version">Version {experiment.number}</p>
+              <h3>{experiment.title}</h3>
+              <p class="audience">For {experiment.primaryStakeholder}</p>
               <p class="hypothesis">{experiment.hypothesis}</p>
-              <div class="open"><span>Open experiment →</span><span class="review-status">Internal score {review?.average.toFixed(2) ?? "—"}/10</span></div>
+              <div class="open"><span>Open Version {experiment.number} →</span><span>Single screen</span></div>
             </div>
           </a>
-          );
-        })}
-      </section>
-      <section class="legacy">
-        <header class="section-head"><h2>Preserved earlier routes</h2><p>Tests 1–7, A, 9, and 10 remain operational. Test 8 and Tests 11–20 are marked Missing because no implementation exists in this repository.</p></header>
-        <div class="legacy-grid">
-          {legacyExperiments.map((item) => <a class="legacy-card" href={item.href}><strong>{item.label}</strong><span>Preserved route →</span></a>)}
-          {missingLegacyExperiments.map((id) => <div class="legacy-card missing"><strong>Test {id}</strong><span>Missing</span></div>)}
-        </div>
-        <p class="archive-note">V3 reference: <a href="/tests/archive/v3-parent-command-center/">render the preserved Parent Command Center</a>.</p>
+        ))}
       </section>
     </main>
-    <script is:inline>
-      (() => {
-        const buttons = [...document.querySelectorAll('[data-filter]')];
-        const cards = [...document.querySelectorAll('.card')];
-        const count = document.querySelector('#result-count');
-        buttons.forEach((button) => button.addEventListener('click', () => {
-          const filter = button.dataset.filter;
-          buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-          let visible = 0;
-          cards.forEach((card) => {
-            const show = filter === 'all' || card.dataset.primary === filter || card.dataset.family === filter || (filter === 'single-screen' && card.dataset.singleScreen === 'true');
-            card.hidden = !show;
-            if (show) visible += 1;
-          });
-          count.textContent = `${visible} concept${visible === 1 ? '' : 's'} shown`;
-        }));
-      })();
-    </script>
   </body>
 </html>

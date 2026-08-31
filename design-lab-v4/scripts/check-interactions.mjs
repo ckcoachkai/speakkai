@@ -4,8 +4,8 @@ import path from "node:path";
 
 const baseUrl = process.env.BASE_URL || "http://127.0.0.1:4321";
 const outputDir = process.env.INTERACTION_QA_DIR || "output/playwright/v4/interaction-qa";
-const start = Number(process.env.TEST_START || 21);
-const end = Number(process.env.TEST_END || 50);
+const start = Number(process.env.TEST_START || 1);
+const end = Number(process.env.TEST_END || 4);
 
 await fs.mkdir(outputDir, { recursive: true });
 const browser = await chromium.launch({

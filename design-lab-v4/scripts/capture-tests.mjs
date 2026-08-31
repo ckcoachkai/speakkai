@@ -4,8 +4,8 @@ import path from "node:path";
 
 const baseUrl = process.env.BASE_URL || "http://127.0.0.1:4321";
 const routeTemplate = process.env.ROUTE_TEMPLATE || "/tests/{n}/";
-const start = Number(process.env.TEST_START || 21);
-const end = Number(process.env.TEST_END || 50);
+const start = Number(process.env.TEST_START || 1);
+const end = Number(process.env.TEST_END || 4);
 const outputDir = process.env.SCREENSHOT_DIR || "output/playwright/v4/screenshots";
 const width = Number(process.env.VIEWPORT_WIDTH || 1920);
 const height = Number(process.env.VIEWPORT_HEIGHT || 1080);

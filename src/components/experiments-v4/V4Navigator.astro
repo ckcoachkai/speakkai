@@ -6,8 +6,9 @@ interface Props {
 }
 
 const { current } = Astro.props;
-const previous = current > 21 ? current - 1 : 50;
-const next = current < 50 ? current + 1 : 21;
+const currentIndex = experimentsV4.findIndex((experiment) => experiment.number === current);
+const previous = experimentsV4[(currentIndex - 1 + experimentsV4.length) % experimentsV4.length];
+const next = experimentsV4[(currentIndex + 1) % experimentsV4.length];
 ---
 
 <nav class="v4-nav" aria-label="Homepage experiment navigation" data-qa="test-switcher">
@@ -15,27 +16,26 @@ const next = current < 50 ? current + 1 : 21;
     <span class="v4-brand-mark" aria-hidden="true">SK</span>
     <span>SpeakKai Lab</span>
   </a>
-  <div class="v4-stepper" aria-label={`Current experiment: Test ${current}`}>
-    <a href={`/tests/${previous}/`} aria-label={`Previous: Test ${previous}`}>← {previous}</a>
-    <strong>Test {current}</strong>
-    <a href={`/tests/${next}/`} aria-label={`Next: Test ${next}`}>{next} →</a>
+  <div class="v4-stepper" aria-label={`Current homepage direction: Version ${current}`}>
+    <a href={`/tests/${previous.number}/`} aria-label={`Previous: Version ${previous.number}`}>← {previous.number}</a>
+    <strong>Version {current}</strong>
+    <a href={`/tests/${next.number}/`} aria-label={`Next: Version ${next.number}`}>{next.number} →</a>
   </div>
   <details class="v4-jump">
     <summary>Jump to</summary>
     <div class="v4-jump-panel">
-      <p>V4 single-screen concepts</p>
+      <p>Four selected directions</p>
       <ol>
         {experimentsV4.map((experiment) => (
           <li>
             <a href={`/tests/${experiment.number}/`} aria-current={experiment.number === current ? "page" : undefined}>
-              <span>{experiment.number}</span>
+              <span>V{experiment.number}</span>
               {experiment.title}
             </a>
           </li>
         ))}
       </ol>
-      <a class="v4-gallery-link" href="/tests/">View the full gallery</a>
+      <a class="v4-gallery-link" href="/tests/">Compare all four</a>
     </div>
   </details>
 </nav>
-

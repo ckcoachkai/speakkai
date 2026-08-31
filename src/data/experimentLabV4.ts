@@ -21,6 +21,7 @@ export type ExperimentContent = {
 
 export type ExperimentV4 = {
   number: number;
+  sourceNumber: number;
   slug: string;
   family: ExperimentFamily;
   title: string;
@@ -456,6 +457,7 @@ function normalizeExperiment(raw: (typeof registry.experiments)[number]): Experi
 
   return {
     number: raw.number,
+    sourceNumber: raw.number,
     slug: raw.slug,
     family: raw.family as ExperimentFamily,
     title: raw.title,
@@ -476,20 +478,25 @@ function normalizeExperiment(raw: (typeof registry.experiments)[number]): Experi
   };
 }
 
-export const experimentsV4 = registry.experiments.map(normalizeExperiment);
+const experimentsBySourceNumber = new Map(
+  registry.experiments.map(normalizeExperiment).map((experiment) => [experiment.sourceNumber, experiment]),
+);
+
+const selectedVersions = [
+  { number: 1, sourceNumber: 27 },
+  { number: 2, sourceNumber: 47 },
+  { number: 3, sourceNumber: 41 },
+  { number: 4, sourceNumber: 43 },
+] as const;
+
+export const experimentsV4 = selectedVersions.map(({ number, sourceNumber }) => {
+  const source = experimentsBySourceNumber.get(sourceNumber);
+  if (!source) throw new Error(`Missing selected experiment source ${sourceNumber}.`);
+  return {
+    ...source,
+    number,
+    sourceNumber,
+    slug: `version-${number}-${source.slug}`,
+  };
+});
 export const experimentV4ByNumber = new Map(experimentsV4.map((item) => [item.number, item]));
-
-export const legacyExperiments = [
-  { id: "1", label: "Test 1", href: "/test1/" },
-  { id: "2", label: "Test 2", href: "/test2/" },
-  { id: "3", label: "Test 3", href: "/test3/" },
-  { id: "4", label: "Test 4", href: "/test4/" },
-  { id: "5", label: "Test 5", href: "/test5/" },
-  { id: "6", label: "Test 6", href: "/test6/" },
-  { id: "7", label: "Test 7", href: "/test7/" },
-  { id: "A", label: "Test A", href: "/testa/" },
-  { id: "9", label: "Test 9", href: "/test9/" },
-  { id: "10", label: "Test 10", href: "/test10/" },
-];
-
-export const missingLegacyExperiments = ["8", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"];
