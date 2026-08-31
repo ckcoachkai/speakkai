@@ -6,12 +6,11 @@ const baseUrl = process.env.BASE_URL || "http://127.0.0.1:4322";
 const executablePath = process.env.PW_EXECUTABLE_PATH || undefined;
 const outputDir = "output/playwright/spatial-pages";
 const routes = [
-  { name: "about", path: "/about/", canonical: "https://speakkai.com/about/" },
   { name: "contact", path: "/contact/", canonical: "https://speakkai.com/contact/" },
   { name: "resources", path: "/resources/", canonical: "https://speakkai.com/resources/" },
   { name: "schedule", path: "/schedule/", canonical: "https://speakkai.com/schedule/" },
 ];
-const expectedNavigation = ["/", "/about/", "/schedule/", "/resources/", "/contact/"];
+const expectedNavigation = ["/", "/schedule/", "/resources/", "/contact/"];
 const viewports = [
   { name: "desktop", width: 1440, height: 900 },
   { name: "mobile", width: 390, height: 844 },
@@ -72,4 +71,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("Spatial page check passed: About, Contact, Resources, and Schedule at desktop and mobile sizes with working navigation, content, images, and schedule rendering.");
+console.log("Spatial page check passed: Contact, Resources, and Schedule at desktop and mobile sizes with working navigation, content, images, and schedule rendering.");

@@ -1,6 +1,6 @@
 ---
 interface Props {
-  current?: "home" | "about" | "schedule" | "resources" | "contact";
+  current?: "home" | "schedule" | "resources" | "contact";
   compact?: boolean;
 }
 
@@ -9,7 +9,6 @@ const { current, compact = false } = Astro.props;
 
 <nav class:list={["site-nav", { "is-compact": compact }]} aria-label="Main navigation">
   <a href="/" aria-current={current === "home" ? "page" : undefined}>Home</a>
-  <a href="/about/" aria-current={current === "about" ? "page" : undefined}>About</a>
   <a href="/schedule/" aria-current={current === "schedule" ? "page" : undefined}>Schedule</a>
   <a href="/resources/" aria-current={current === "resources" ? "page" : undefined}>Resources</a>
   <a href="/contact/" aria-current={current === "contact" ? "page" : undefined}>Contact</a>
@@ -59,7 +58,7 @@ const { current, compact = false } = Astro.props;
       gap: 0;
     }
 
-    .site-nav a { min-width: 0; flex: 1 1 20%; }
+    .site-nav a { min-width: 0; flex: 1 1 25%; }
 
     .site-nav a {
       min-height: 46px;

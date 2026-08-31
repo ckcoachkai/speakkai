@@ -20,6 +20,8 @@ const initial = await desktop.evaluate(() => ({
   brandText: document.querySelector(".spatial-brand")?.textContent?.replace(/\s+/g, " ").trim() || "",
   controls: document.querySelectorAll("[data-home-control]").length,
   controlLabels: [...document.querySelectorAll("[data-home-control] strong")].map((item) => item.textContent?.trim()),
+  homepageStats: document.querySelectorAll(".homepage-stats div").length,
+  aboutNavLinks: document.querySelectorAll('.spatial-site-header a[href="/about/"]').length,
   primaryCtaCount: document.querySelectorAll('[data-qa="primary-cta"]').length,
   horizontalOverflow: Math.max(0, document.documentElement.scrollWidth - innerWidth),
   imagesLoaded: [...document.images].every((image) => image.complete && image.naturalWidth > 0),
@@ -32,9 +34,11 @@ assert(!initial.robots.toLowerCase().includes("noindex"), "Production homepage m
 assert(initial.h1Count === 1, "Production homepage must contain exactly one H1.");
 assert(initial.labNavCount === 0, "Experiment-lab toolbar leaked onto the production homepage.");
 assert(initial.productionHeaderCount === 1, "Production navigation is missing.");
-assert(initial.brandText === "SpeakKai 说开", "Homepage brand does not include 说开 after SpeakKai.");
+assert(initial.brandText.replace(/\s+/g, "") === "SpeakKai说开", "Homepage brand does not include 说开 after SpeakKai.");
 assert(initial.controls === 5, "Production homepage must contain five information controls.");
 assert(JSON.stringify(initial.controlLabels) === JSON.stringify(["About", "Philosophy", "Programs", "Paradigm", "Media"]), "Homepage information controls are not labelled as requested.");
+assert(initial.homepageStats === 3, "Homepage About panel is missing its compact career highlights.");
+assert(initial.aboutNavLinks === 0, "Standalone About navigation is still visible.");
 assert(initial.primaryCtaCount === 1, "Production homepage must contain one primary CTA.");
 assert(initial.horizontalOverflow <= 4, "Desktop homepage has horizontal overflow.");
 assert(initial.imagesLoaded, "A production homepage image failed to load.");
@@ -60,6 +64,18 @@ const controls = desktop.locator("[data-home-control]");
 await controls.nth(1).focus();
 await desktop.keyboard.press("ArrowRight");
 assert((await controls.nth(2).getAttribute("aria-selected")) === "true", "Keyboard navigation did not select the third panel.");
+
+await controls.nth(4).click();
+const mediaState = await desktop.evaluate(() => ({
+  cards: document.querySelectorAll(".homepage-media a").length,
+  imagesLoaded: [...document.querySelectorAll(".homepage-media img")].every((image) => image.complete && image.naturalWidth > 0),
+}));
+assert(mediaState.cards === 3, "Media panel does not contain the three verified account/contact cards.");
+assert(mediaState.imagesLoaded, "A media thumbnail failed to load.");
+
+const aboutRedirect = await desktop.goto(`${baseUrl}/about/`, { waitUntil: "networkidle" });
+assert(aboutRedirect?.status() === 200, "Legacy About URL did not resolve through the homepage redirect.");
+assert(new URL(desktop.url()).pathname === "/", "Legacy About URL did not redirect to the homepage.");
 
 const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, hasTouch: true, reducedMotion: "reduce" });
 await mobile.goto(`${baseUrl}/`, { waitUntil: "networkidle" });

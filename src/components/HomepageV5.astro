@@ -6,31 +6,68 @@ const homepage = activeExperimentV4ByNumber.get(5);
 if (!homepage) throw new Error("Version 5 is missing from the active experiment registry.");
 const { content } = homepage;
 const panelId = (index: number) => `homepage-panel-${index}`;
+
 const homePanels = [
   {
     label: "About",
-    title: "Meet Coach Kai",
-    copy: "Read Kai's current background, roles, and coaching approach on the public About page.",
+    title: "Kai Liu",
+    eyebrow: "TEDx speaker · communication coach · speech & debate coach",
+    copy: "A first-generation Chinese American, Kai built his work around the challenges he once faced himself: a stutter, fear of public speaking, and difficulty expressing ideas with confidence. His coaching connects clear thinking, structured messages, deliberate rehearsal, and human connection.",
+    stats: [
+      ["15+ years", "education and communication training"],
+      ["1,000+", "presentations across seven countries"],
+      ["2,000+", "students trained"],
+    ],
   },
   {
     label: "Philosophy",
-    title: "Clarify. Practise. Refine.",
-    copy: "Start with the audience and goal, shape the message, rehearse, notice the effect, and choose the next adjustment.",
+    title: "Build the speaker, not just the speech.",
+    eyebrow: "Clarity · practice · self-awareness · growth",
+    copy: "Confidence is not a performance trick. It grows when a speaker understands the audience, makes intentional choices, tests those choices aloud, notices the effect, and tries again.",
+    points: [
+      ["Meaning before polish", "Start with the audience, purpose, and central idea."],
+      ["Structure creates freedom", "Use a clear opening, body, conclusion, key message, and next step."],
+      ["Technique serves communication", "Power, pitch, pause, pace, gesture, movement, and expression should make meaning clearer."],
+      ["Feedback must be usable", "Name an observable choice, explain its effect, and give one action the speaker can rehearse."],
+    ],
   },
   {
     label: "Programs",
-    title: "Start with the speaking need",
-    copy: "Speech, debate, storytelling, presentation, and communication coaching.",
+    title: "Fall 2026 programs",
+    eyebrow: "One fully documented fall curriculum",
+    copy: "Young Competition Speakers is an 18-class program for Grades 1–2. Six topic → content → presentation cycles move students from short attempts toward a three-minute final showcase.",
+    program: {
+      meta: "18 classes · Grades 1–2",
+      name: "Young Competition Speakers",
+      details: "Articulation, body and voice warm-ups; rotating speaker roles; current topics; problem-solving scenarios; competition practice; rehearsal and showcase.",
+    },
+    note: "Other current coaching paths include original oratory, expository speaking, storytelling, debate, TEDx preparation, and professional presentations. They are not labelled as separate fall programs here without a verified fall curriculum.",
   },
   {
     label: "Paradigm",
-    title: "Goal. Attempt. Feedback. Next attempt.",
-    copy: "Speaking develops through concrete attempts, specific feedback, and deliberate revision.",
+    title: "Evidence → Effect → Enhancement",
+    eyebrow: "Kai’s working evaluation lens",
+    copy: "A strong evaluation does more than praise or list faults. It identifies what the speaker actually did, explains what that choice did to the audience, and gives the speaker a practical way to improve the next attempt.",
+    points: [
+      ["Intent", "Is the purpose and audience clear?"],
+      ["Content", "Is the central idea supported by structure, reasoning, examples, and evidence?"],
+      ["Delivery", "Do voice, body language, pacing, and presence strengthen the message?"],
+      ["Connection", "Can the audience follow, feel, remember, and respond?"],
+      ["Growth", "Did the speaker respond to coaching and make a more intentional next attempt?"],
+    ],
+    note: "Synthesized from repeated coaching and evaluation patterns; no fixed numerical weighting is claimed.",
   },
   {
     label: "Media",
-    title: "Explore public resources",
-    copy: "Open SpeakKai's working tools, site pages, and current public materials.",
+    title: "Find SpeakKai",
+    eyebrow: "Verified handles and public links",
+    copy: "Open the full WeChat contact card, find SpeakKai on Xiaohongshu, or visit the verified CKCoachKai Pinterest profile.",
+    media: [
+      { platform: "WeChat", handle: "CKcoachkai", href: "/contact/", image: "/images/coach-kai-wechat-qr.png", action: "Open full QR" },
+      { platform: "Xiaohongshu", handle: "CKcoachkai", href: "/contact/", image: "/images/coach-kai-headshot.webp", action: "View verified handle" },
+      { platform: "Pinterest", handle: "@ckcoachkai", href: "https://kr.pinterest.com/ckcoachkai/", image: "/images/coach-kai-banner-mobile.webp", action: "Open profile", external: true },
+    ],
+    note: "The WeChat and Xiaohongshu cards open the verified contact page because a stable public profile URL has not yet been verified. No account URL is guessed.",
   },
 ];
 ---
@@ -46,34 +83,31 @@ const homePanels = [
     </section>
     <div class="glass-planes" role="tablist" aria-label="Explore SpeakKai">
       {homePanels.map((item, index) => (
-        <button
-          class={`glass-plane plane-${index + 1}`}
-          type="button"
-          role="tab"
-          data-home-control
-          data-target={panelId(index)}
-          aria-controls={panelId(index)}
-          aria-selected={index === 0 ? "true" : "false"}
-          tabindex={index === 0 ? "0" : "-1"}
-        >
-          <span>0{index + 1}</span>
-          <strong>{item.label}</strong>
-          <small>{item.title}</small>
+        <button class={`glass-plane plane-${index + 1}`} type="button" role="tab" data-home-control data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"} tabindex={index === 0 ? "0" : "-1"}>
+          <span>0{index + 1}</span><strong>{item.label}</strong><small>{item.title}</small>
         </button>
       ))}
     </div>
     <aside class="glass-panel">
-      {homePanels.map((item, index) => (
-        <section id={panelId(index)} role="tabpanel" data-home-panel hidden={index !== 0}>
-          <h2>{item.title}</h2>
-          <p>{item.copy}</p>
-        </section>
-      ))}
+      <div class="glass-panel-content">
+        {homePanels.map((item, index) => (
+          <section id={panelId(index)} role="tabpanel" data-home-panel hidden={index !== 0}>
+            <p class="panel-eyebrow">{item.eyebrow}</p>
+            <h2>{item.title}</h2>
+            <p class="panel-lead">{item.copy}</p>
+            {item.stats && <dl class="homepage-stats" aria-label="Career highlights">{item.stats.map(([value, label]) => <div><dt>{value}</dt><dd>{label}</dd></div>)}</dl>}
+            {item.points && <ul class="homepage-points">{item.points.map(([name, detail]) => <li><strong>{name}</strong><span>{detail}</span></li>)}</ul>}
+            {item.program && <article class="homepage-program"><span>{item.program.meta}</span><h3>{item.program.name}</h3><p>{item.program.details}</p></article>}
+            {item.media && <div class="homepage-media" aria-label="SpeakKai media accounts">{item.media.map((account) => <a href={account.href} target={account.external ? "_blank" : undefined} rel={account.external ? "noreferrer" : undefined}><img src={account.image} alt="" loading="eager" /><span><small>{account.platform}</small><strong>{account.handle}</strong><em>{account.action} →</em></span></a>)}</div>}
+            {item.note && <p class="panel-note">{item.note}</p>}
+          </section>
+        ))}
+      </div>
       <div class="v4-actions">
         <a href={homepage.primaryHref} data-qa="primary-cta">{homepage.primaryCta}</a>
-        <a href={content.secondaryHref}>{content.secondaryCta}</a>
+        <a href="/resources/">Explore resources</a>
       </div>
-      <small>Speech, debate, storytelling, presentation, and communication coaching in Shanghai and online.</small>
+      <small class="homepage-service-line">Speech, debate, storytelling, presentation, and communication coaching in Shanghai and online.</small>
     </aside>
   </div>
 </article>
@@ -85,33 +119,19 @@ const homePanels = [
     const buttons = [...group.querySelectorAll('[data-home-control]')];
     const panels = [...group.querySelectorAll('[data-home-panel]')];
     let pauseUntil = 0;
-
     const activate = (button, focus = false) => {
       const target = button.getAttribute('data-target');
-      buttons.forEach((item) => {
-        const active = item === button;
-        item.setAttribute('aria-selected', String(active));
-        item.tabIndex = active ? 0 : -1;
-      });
-      panels.forEach((panel) => {
-        const active = panel.id === target;
-        panel.hidden = !active;
-        panel.classList.toggle('is-active', active);
-      });
+      buttons.forEach((item) => { const active = item === button; item.setAttribute('aria-selected', String(active)); item.tabIndex = active ? 0 : -1; });
+      panels.forEach((panel) => { const active = panel.id === target; panel.hidden = !active; panel.classList.toggle('is-active', active); });
       group.setAttribute('data-active', target || '');
       if (focus) button.focus();
     };
-
     buttons.forEach((button, index) => {
-      button.addEventListener('click', () => {
-        pauseUntil = Date.now() + 9000;
-        activate(button);
-      });
+      button.addEventListener('click', () => { pauseUntil = Date.now() + 12000; activate(button); });
       button.addEventListener('keydown', (event) => {
         const keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'];
         if (!keys.includes(event.key)) return;
-        event.preventDefault();
-        pauseUntil = Date.now() + 9000;
+        event.preventDefault(); pauseUntil = Date.now() + 12000;
         let next = index;
         if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % buttons.length;
         if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + buttons.length) % buttons.length;
@@ -120,13 +140,10 @@ const homePanels = [
         activate(buttons[next], true);
       });
     });
-
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      window.setInterval(() => {
-        if (Date.now() < pauseUntil || document.hidden) return;
-        const current = buttons.findIndex((button) => button.getAttribute('aria-selected') === 'true');
-        activate(buttons[(current + 1) % buttons.length]);
-      }, 4500);
-    }
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) window.setInterval(() => {
+      if (Date.now() < pauseUntil || document.hidden) return;
+      const current = buttons.findIndex((button) => button.getAttribute('aria-selected') === 'true');
+      activate(buttons[(current + 1) % buttons.length]);
+    }, 4500);
   })();
 </script>
