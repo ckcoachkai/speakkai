@@ -1,0 +1,874 @@
+[
+  {
+    "test": 21,
+    "url": "http://127.0.0.1:4322/tests/21/",
+    "checks": {
+      "status": 200,
+      "controlCount": 3,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 22,
+    "url": "http://127.0.0.1:4322/tests/22/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 23,
+    "url": "http://127.0.0.1:4322/tests/23/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 24,
+    "url": "http://127.0.0.1:4322/tests/24/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 25,
+    "url": "http://127.0.0.1:4322/tests/25/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 26,
+    "url": "http://127.0.0.1:4322/tests/26/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 27,
+    "url": "http://127.0.0.1:4322/tests/27/",
+    "checks": {
+      "status": 200,
+      "controlCount": 3,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 28,
+    "url": "http://127.0.0.1:4322/tests/28/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 29,
+    "url": "http://127.0.0.1:4322/tests/29/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 30,
+    "url": "http://127.0.0.1:4322/tests/30/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 31,
+    "url": "http://127.0.0.1:4322/tests/31/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 32,
+    "url": "http://127.0.0.1:4322/tests/32/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 33,
+    "url": "http://127.0.0.1:4322/tests/33/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 34,
+    "url": "http://127.0.0.1:4322/tests/34/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 35,
+    "url": "http://127.0.0.1:4322/tests/35/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 36,
+    "url": "http://127.0.0.1:4322/tests/36/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 37,
+    "url": "http://127.0.0.1:4322/tests/37/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 38,
+    "url": "http://127.0.0.1:4322/tests/38/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 39,
+    "url": "http://127.0.0.1:4322/tests/39/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 40,
+    "url": "http://127.0.0.1:4322/tests/40/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 41,
+    "url": "http://127.0.0.1:4322/tests/41/",
+    "checks": {
+      "status": 200,
+      "controlCount": 3,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 42,
+    "url": "http://127.0.0.1:4322/tests/42/",
+    "checks": {
+      "status": 200,
+      "controlCount": 3,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 43,
+    "url": "http://127.0.0.1:4322/tests/43/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 44,
+    "url": "http://127.0.0.1:4322/tests/44/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 45,
+    "url": "http://127.0.0.1:4322/tests/45/",
+    "checks": {
+      "status": 200,
+      "controlCount": 3,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 46,
+    "url": "http://127.0.0.1:4322/tests/46/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 47,
+    "url": "http://127.0.0.1:4322/tests/47/",
+    "checks": {
+      "status": 200,
+      "controlCount": 5,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 48,
+    "url": "http://127.0.0.1:4322/tests/48/",
+    "checks": {
+      "status": 200,
+      "controlCount": 3,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 49,
+    "url": "http://127.0.0.1:4322/tests/49/",
+    "checks": {
+      "status": 200,
+      "controlCount": 4,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  },
+  {
+    "test": 50,
+    "url": "http://127.0.0.1:4322/tests/50/",
+    "checks": {
+      "status": 200,
+      "controlCount": 3,
+      "hasInteraction": true,
+      "keyboardArrowSelectsNext": true,
+      "keyboardPanelVisible": true,
+      "touchClickSelects": true,
+      "primaryCtaHref": "/contact/",
+      "primaryCtaVisible": true,
+      "primaryCtaInViewport": true,
+      "imagesLoaded": true,
+      "imageState": [
+        {
+          "src": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "complete": true,
+          "naturalWidth": 1400
+        }
+      ],
+      "switcherOpens": true,
+      "switcherPanelBounded": true,
+      "reducedMotionApplied": true,
+      "audienceDeepLink": true,
+      "audienceUrlUpdates": true
+    },
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failed": false
+  }
+]

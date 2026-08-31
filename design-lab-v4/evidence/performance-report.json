@@ -1,0 +1,2270 @@
+[
+  {
+    "test": 21,
+    "url": "http://127.0.0.1:4322/tests/21/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10032,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.6999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 3.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.9000000953674316
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 8
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 3.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 3.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/playfair-display-latin-600-normal.CZLGqjJe.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 23228,
+          "transferSize": 23528,
+          "duration": 3.3000000715255737
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.2999999523162842
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 159364,
+      "cssEncodedBodySize": 92673,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 22,
+    "url": "http://127.0.0.1:4322/tests/22/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10756,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.299999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.1999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 26.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 21.699999928474426
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 21.799999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.2999999523162842
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 136136,
+      "cssEncodedBodySize": 69445,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 23,
+    "url": "http://127.0.0.1:4322/tests/23/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10403,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.1999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 7.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 2.4000000953674316
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 16.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 16.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.2000000476837158
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 24,
+    "url": "http://127.0.0.1:4322/tests/24/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10206,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.299999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 8.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 7.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 2.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 15.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.2999999523162842
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 25,
+    "url": "http://127.0.0.1:4322/tests/25/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10512,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.9000000953674316
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.8000000715255737
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 2.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 2.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 2.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.600000023841858
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 136136,
+      "cssEncodedBodySize": 69445,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 26,
+    "url": "http://127.0.0.1:4322/tests/26/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10391,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.8000000715255737
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.799999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 1.5999999046325684
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 1.7999999523162842
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 2.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 2.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.5
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 27,
+    "url": "http://127.0.0.1:4322/tests/27/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 9962,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.8000000715255737
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 7.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 2.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/playfair-display-latin-600-normal.CZLGqjJe.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 23228,
+          "transferSize": 23528,
+          "duration": 29.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 29.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.899999976158142
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 159364,
+      "cssEncodedBodySize": 92673,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 28,
+    "url": "http://127.0.0.1:4322/tests/28/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10535,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 3.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 4.199999928474426
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 3.0999999046325684
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 28.699999928474426
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 28.799999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 28.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/playfair-display-latin-600-normal.CZLGqjJe.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 23228,
+          "transferSize": 23528,
+          "duration": 28.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.4000000953674316
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 159364,
+      "cssEncodedBodySize": 92673,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 29,
+    "url": "http://127.0.0.1:4322/tests/29/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10612,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 3.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 3.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 28.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 28.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/playfair-display-latin-600-normal.CZLGqjJe.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 23228,
+          "transferSize": 23528,
+          "duration": 28.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 28.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.399999976158142
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 159364,
+      "cssEncodedBodySize": 92673,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 30,
+    "url": "http://127.0.0.1:4322/tests/30/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10292,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.8000000715255737
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 6.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 2.1999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 19.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 19.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.399999976158142
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 31,
+    "url": "http://127.0.0.1:4322/tests/31/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10375,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.8000000715255737
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 31
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 31.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 31.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 31.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.7000000476837158
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 32,
+    "url": "http://127.0.0.1:4322/tests/32/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10270,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 4.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 5.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 4.300000071525574
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 2.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 2.1999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 3.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 3.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.7999999523162842
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 33,
+    "url": "http://127.0.0.1:4322/tests/33/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10428,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 4.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 3.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 3.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 3.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 3.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 2.100000023841858
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 34,
+    "url": "http://127.0.0.1:4322/tests/34/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10211,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 23.799999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 19.300000071525574
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 19.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 19.300000071525574
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.5999999046325684
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 35,
+    "url": "http://127.0.0.1:4322/tests/35/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10281,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 3.1999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 3.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 4.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 1.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 27
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 27
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 27.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.5
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 36,
+    "url": "http://127.0.0.1:4322/tests/36/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10363,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.6999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 27
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 23
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 22.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 23.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.5
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 37,
+    "url": "http://127.0.0.1:4322/tests/37/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10392,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 3.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 3.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 4.299999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 3.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 3.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/playfair-display-latin-600-normal.CZLGqjJe.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 23228,
+          "transferSize": 23528,
+          "duration": 3.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 3.299999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.5999999046325684
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 159364,
+      "cssEncodedBodySize": 92673,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 38,
+    "url": "http://127.0.0.1:4322/tests/38/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 11020,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 3.5999999046325684
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 4.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 3.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 3.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 3.9000000953674316
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 4
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 4
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.7000000476837158
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 39,
+    "url": "http://127.0.0.1:4322/tests/39/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10375,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 3.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 4.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 3.3000000715255737
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 7.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 2.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/playfair-display-latin-600-normal.CZLGqjJe.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 23228,
+          "transferSize": 23528,
+          "duration": 21.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 21.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 4.100000023841858
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 159364,
+      "cssEncodedBodySize": 92673,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 40,
+    "url": "http://127.0.0.1:4322/tests/40/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10269,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 3.6999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 4.400000095367432
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 3.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 25.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 26.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 26.300000071525574
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 26.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.7000000476837158
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 41,
+    "url": "http://127.0.0.1:4322/tests/41/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10048,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 3.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 4.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 3.6999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 7.300000071525574
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 2.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 20.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.7000000476837158
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 136136,
+      "cssEncodedBodySize": 69445,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 42,
+    "url": "http://127.0.0.1:4322/tests/42/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 9804,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 2.799999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.1999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 26.100000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 26.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 26.300000071525574
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 26.299999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.600000023841858
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 43,
+    "url": "http://127.0.0.1:4322/tests/43/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10534,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 3
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.799999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 2.3000000715255737
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 2.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 2.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.6999999284744263
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 136136,
+      "cssEncodedBodySize": 69445,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 44,
+    "url": "http://127.0.0.1:4322/tests/44/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10357,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.6999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 26.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 28.40000009536743
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 28.40000009536743
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 28.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.600000023841858
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 45,
+    "url": "http://127.0.0.1:4322/tests/45/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 9775,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.700000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 4
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.6999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/playfair-display-latin-600-normal.CZLGqjJe.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 23228,
+          "transferSize": 23528,
+          "duration": 29.199999928474426
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 27.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 22.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 22.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.2999999523162842
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 159364,
+      "cssEncodedBodySize": 92673,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 46,
+    "url": "http://127.0.0.1:4322/tests/46/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10334,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 4.299999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 3
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 31.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 26.299999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 26.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.7999999523162842
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 136136,
+      "cssEncodedBodySize": 69445,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 47,
+    "url": "http://127.0.0.1:4322/tests/47/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10983,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.799999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.8000000715255737
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.9000000953674316
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 7.199999928474426
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 2.899999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 22.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/playfair-display-latin-600-normal.CZLGqjJe.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 23228,
+          "transferSize": 23528,
+          "duration": 22.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.899999976158142
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 159364,
+      "cssEncodedBodySize": 92673,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 48,
+    "url": "http://127.0.0.1:4322/tests/48/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 9813,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.299999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.200000047683716
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 7.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 2.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 17.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 17.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.5
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 49,
+    "url": "http://127.0.0.1:4322/tests/49/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10741,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 2.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 2.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 3.600000023841858
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 4.299999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 4.400000095367432
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 4.5
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.7000000476837158
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 136136,
+      "cssEncodedBodySize": 69445,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  },
+  {
+    "test": 50,
+    "url": "http://127.0.0.1:4322/tests/50/",
+    "status": 200,
+    "metrics": {
+      "htmlChars": 10214,
+      "resources": [
+        {
+          "name": "http://127.0.0.1:4322/_astro/about.CqXUTNw1.css",
+          "initiatorType": "link",
+          "encodedBodySize": 2039,
+          "transferSize": 2339,
+          "duration": 3.3000000715255737
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/_id_.sY0eqzpW.css",
+          "initiatorType": "link",
+          "encodedBodySize": 22566,
+          "transferSize": 22866,
+          "duration": 4.299999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/images/coach-kai-headshot.webp",
+          "initiatorType": "img",
+          "encodedBodySize": 66486,
+          "transferSize": 66786,
+          "duration": 3.1999999284744263
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-400-normal.PaqtzbVb.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14108,
+          "transferSize": 14408,
+          "duration": 26.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/space-mono-latin-400-normal.Rg4St2Dn.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 16520,
+          "transferSize": 16820,
+          "duration": 21.299999952316284
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/manrope-latin-700-normal.BZp_XxE4.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 14212,
+          "transferSize": 14512,
+          "duration": 21.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/_astro/archivo-black-latin-400-normal.BTVu2TQR.woff2",
+          "initiatorType": "css",
+          "encodedBodySize": 18604,
+          "transferSize": 18904,
+          "duration": 21.399999976158142
+        },
+        {
+          "name": "http://127.0.0.1:4322/favicon.svg",
+          "initiatorType": "other",
+          "encodedBodySize": 205,
+          "transferSize": 505,
+          "duration": 1.600000023841858
+        }
+      ],
+      "images": [
+        "http://127.0.0.1:4322/images/coach-kai-headshot.webp"
+      ],
+      "externalScripts": [],
+      "autoplayMedia": 0,
+      "mediaElements": 0,
+      "totalEncodedBodySize": 154740,
+      "cssEncodedBodySize": 88049,
+      "imageEncodedBodySize": 66486
+    },
+    "inactiveExperimentMedia": [],
+    "failed": false
+  }
+]

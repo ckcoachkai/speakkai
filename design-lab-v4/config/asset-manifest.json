@@ -1,0 +1,53 @@
+{
+  "version": "4.0",
+  "access_date": "2026-08-31",
+  "assets": [
+    {
+      "id": "coach-kai-headshot",
+      "path": "/images/coach-kai-headshot.webp",
+      "source_path": "public/images/coach-kai-headshot.webp",
+      "dimensions": "1400x1400",
+      "role": "signature identity portrait",
+      "alt": "Coach Kai",
+      "status": "verified repository asset",
+      "notes": "Highest-resolution standalone portrait found in the checkout. Reused through CSS crops, masks, grayscale, borders, and spatial treatments without changing identity."
+    },
+    {
+      "id": "coach-kai-banner-desktop",
+      "path": "/images/coach-kai-banner-desktop.png",
+      "source_path": "public/images/coach-kai-banner-desktop.png",
+      "dimensions": "2508x627",
+      "role": "existing public banner",
+      "alt": "Coach Kai banner",
+      "status": "verified repository asset",
+      "notes": "Not used as the primary V4 portrait because embedded text and wide composition limit flexible cropping."
+    },
+    {
+      "id": "kids-speaking-illustration",
+      "path": "/images/test/kids-speaking.webp",
+      "source_path": "public/images/test/kids-speaking.webp",
+      "role": "illustrative texture only",
+      "alt": "Stylized young speakers",
+      "status": "provenance and consent Missing",
+      "notes": "Never presented as a real learner, student result, testimonial, or case-study image."
+    },
+    {
+      "id": "cyber-orbit",
+      "path": "/images/test/cyber-orbit.webp",
+      "source_path": "public/images/test/cyber-orbit.webp",
+      "role": "abstract decorative texture",
+      "alt": "",
+      "status": "verified repository asset"
+    },
+    {
+      "id": "influence-sketch",
+      "path": "/images/concepts/speakkai-influence-sketch.png",
+      "source_path": "public/images/concepts/speakkai-influence-sketch.png",
+      "role": "illustrative concept texture",
+      "alt": "",
+      "status": "verified repository asset",
+      "notes": "Not presented as analytics, research, or measured network data."
+    }
+  ]
+}
+

@@ -1,0 +1,17 @@
+{
+  "job_id": "asset-036-sticker-cutout",
+  "test": 36,
+  "status": "example",
+  "tool_preference": [
+    "Canva",
+    "ChatGPT image generation"
+  ],
+  "input_asset": "DISCOVER_HIGHEST_RESOLUTION_COACH_KAI_PORTRAIT",
+  "prompt_file": "design-lab-v4/prompts/IMAGE_ASSETS.md",
+  "required_outputs": [
+    "public/design-lab/test-36/coach-kai-cutout.webp",
+    "public/design-lab/test-36/sticker-set.svg"
+  ],
+  "fallback": "Use CSS outline and project-native SVG shapes until approved assets are returned.",
+  "provenance_required": true
+}

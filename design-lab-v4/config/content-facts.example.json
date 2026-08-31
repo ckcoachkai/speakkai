@@ -1,0 +1,23 @@
+{
+  "status": "template-only",
+  "rule": "Codex must verify each item against the repository or user-approved source before publishing.",
+  "brand": {
+    "name": "SpeakKai",
+    "website": "speakkai.com",
+    "verified": true
+  },
+  "coach": {
+    "display_name": "Coach Kai",
+    "bio": null,
+    "credentials": [],
+    "verified": false
+  },
+  "programs": [],
+  "proof": [],
+  "testimonials": [],
+  "cta": {
+    "primary_url": null,
+    "availability_url": null,
+    "verified": false
+  }
+}

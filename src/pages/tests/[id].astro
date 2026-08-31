@@ -1,10 +1,10 @@
 ---
-import ExperimentLabPage from "../../components/ExperimentLabPage.astro";
-import { experiments } from "../../data/experimentLab";
+import ExperimentShell from "../../components/experiments-v4/ExperimentShell.astro";
+import { experimentsV4 } from "../../data/experimentLabV4";
 
 export function getStaticPaths() {
-  return experiments.map((experiment) => ({
-    params: { id: String(experiment.id) },
+  return experimentsV4.map((experiment) => ({
+    params: { id: String(experiment.number) },
     props: { experiment },
   }));
 }
@@ -12,4 +12,4 @@ export function getStaticPaths() {
 const { experiment } = Astro.props;
 ---
 
-<ExperimentLabPage experiment={experiment} />
+<ExperimentShell experiment={experiment} />

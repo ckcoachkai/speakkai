@@ -1,0 +1,30 @@
+{
+  "scale": "1-10",
+  "dimensions": [
+    "visual_impact",
+    "originality",
+    "brand_fit",
+    "primary_stakeholder_fit",
+    "clarity",
+    "trust",
+    "conversion",
+    "portrait_integration",
+    "interaction_quality",
+    "motion_quality",
+    "responsiveness",
+    "accessibility",
+    "technical_quality",
+    "performance"
+  ],
+  "rules": {
+    "primary_stakeholder_minimum_target": 8,
+    "retain_threshold_average": 7,
+    "automatic_redesign_conditions": [
+      "primary_stakeholder_fit < 7",
+      "clarity < 7",
+      "accessibility < 7",
+      "design signature too similar to another test",
+      "single-screen viewport failure"
+    ]
+  }
+}

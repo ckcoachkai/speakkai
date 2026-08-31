@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "assets": [
+    {
+      "asset_id": "coach-kai-primary-portrait",
+      "source_path": "TO_BE_DISCOVERED_IN_REPOSITORY",
+      "source_type": "user-approved-photo",
+      "rights_status": "verify",
+      "privacy_status": "approved-subject",
+      "derivatives": [],
+      "notes": "Use the highest-resolution original, not the screenshot crop, when available."
+    }
+  ]
+}

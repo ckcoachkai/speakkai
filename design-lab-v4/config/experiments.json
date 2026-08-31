@@ -1,0 +1,1298 @@
+{
+  "version": "4.0",
+  "numbering": {
+    "default_range": [
+      21,
+      50
+    ],
+    "reason": "21 through 50 is exactly 30 experiments.",
+    "migration_rule": "Archive the current 21-50 set first. If Test 21 is explicitly protected in the repository, use 22-51 instead and update every generated artifact consistently."
+  },
+  "families": {
+    "corporate": {
+      "range": [
+        21,
+        30
+      ],
+      "count": 10
+    },
+    "fun-motion": {
+      "range": [
+        31,
+        40
+      ],
+      "count": 10
+    },
+    "modern": {
+      "range": [
+        41,
+        50
+      ],
+      "count": 10
+    }
+  },
+  "experiments": [
+    {
+      "number": 21,
+      "slug": "boardroom-editorial",
+      "family": "corporate",
+      "title": "Boardroom Editorial",
+      "primary_stakeholder": "School / organizational customer",
+      "secondary_stakeholder": "Parent",
+      "hypothesis": "A premium editorial briefing can make SpeakKai feel authoritative without becoming cold or generic.",
+      "layout_archetype": "Asymmetric broadsheet: oversized statement, cropped portrait column, compact program brief and proof rail.",
+      "visual_language": "Executive magazine, financial editorial, disciplined white space, fine rules, one sharp yellow accent.",
+      "portrait_treatment": "Large vertical crop with a narrow editorial caption and subtle paper-grain mask.",
+      "interaction_model": "Three briefing tabs switch Programs, Evidence, and Partnership without leaving the viewport.",
+      "motion_language": "Quiet rule draws, masked image reveal, precise 180–280 ms tab transitions.",
+      "content_modules": [
+        "brand/value proposition",
+        "program categories",
+        "credibility proof",
+        "partnership CTA"
+      ],
+      "primary_cta": "Discuss a program",
+      "palette_direction": "Ink navy, warm white, muted steel, bright SpeakKai yellow.",
+      "typography_direction": "High-contrast editorial serif paired with a technical grotesk.",
+      "tool_routes": [
+        "Figma for editorial grid",
+        "CSS/GSAP for runtime motion",
+        "Canva only for optional paper texture"
+      ],
+      "signature": {
+        "structure": "broadsheet",
+        "depth": "flat",
+        "geometry": "rules-and-columns",
+        "type": "serif-editorial",
+        "image": "vertical-crop",
+        "navigation": "briefing-tabs",
+        "interaction": "tabbed",
+        "motion": "restrained-reveal",
+        "tone": "authoritative",
+        "density": "medium",
+        "cta": "partnership"
+      },
+      "avoid": "Do not reproduce the screenshot's three-column portrait/headline/card layout."
+    },
+    {
+      "number": 22,
+      "slug": "swiss-evidence-grid",
+      "family": "corporate",
+      "title": "Swiss Evidence Grid",
+      "primary_stakeholder": "Parent",
+      "secondary_stakeholder": "School / organizational customer",
+      "hypothesis": "A rigorous evidence-first grid can reduce uncertainty and make outcomes easy to scan.",
+      "layout_archetype": "Twelve-column modular grid with a small identity block, one large question, and evidence tiles of unequal scale.",
+      "visual_language": "International Swiss style, high alignment, numerals, restrained icons, no decorative gradients.",
+      "portrait_treatment": "Circular or square monochrome headshot used as an identity seal rather than a hero.",
+      "interaction_model": "Evidence tiles expand in place on click/focus; one tile can be open at a time.",
+      "motion_language": "Grid snapping, number count-up only when factual, subtle cross-axis shifts.",
+      "content_modules": [
+        "who Coach Kai is",
+        "skills/outcomes",
+        "teaching process",
+        "contact"
+      ],
+      "primary_cta": "See the right starting point",
+      "palette_direction": "White, navy-black, cool gray, yellow marker.",
+      "typography_direction": "Neutral Swiss grotesk with tabular numerals.",
+      "tool_routes": [
+        "Figma for grid system",
+        "CSS Grid",
+        "Framer Motion or GSAP only if already installed"
+      ],
+      "signature": {
+        "structure": "modular-grid",
+        "depth": "flat",
+        "geometry": "rectilinear",
+        "type": "swiss-grotesk",
+        "image": "identity-seal",
+        "navigation": "tile-index",
+        "interaction": "expand-in-place",
+        "motion": "grid-snap",
+        "tone": "rational",
+        "density": "high",
+        "cta": "guided-fit"
+      },
+      "avoid": "No dashboard clichés, fake metrics, or decorative charts."
+    },
+    {
+      "number": 23,
+      "slug": "annual-report-live",
+      "family": "corporate",
+      "title": "Annual Report Live",
+      "primary_stakeholder": "School / organizational customer",
+      "secondary_stakeholder": "Parent",
+      "hypothesis": "An annual-report metaphor can frame SpeakKai as a mature practice with a clear method and track record.",
+      "layout_archetype": "Live report cover with a CEO-letter portrait, a program ring, a process timeline, and a compact evidence drawer.",
+      "visual_language": "Annual report, investor presentation, data editorial, transparent provenance labels.",
+      "portrait_treatment": "Half-tone or duotone portrait inside a formal letterhead frame.",
+      "interaction_model": "Hover/focus on report sections previews a concise summary; click opens a side sheet.",
+      "motion_language": "Page-number transitions, chart strokes, controlled vertical wipes.",
+      "content_modules": [
+        "mission",
+        "program model",
+        "selected evidence",
+        "contact"
+      ],
+      "primary_cta": "Request the program overview",
+      "palette_direction": "Midnight blue, off-white, cobalt, restrained yellow.",
+      "typography_direction": "Corporate humanist sans with compact serif annotations.",
+      "tool_routes": [
+        "Figma for report cover",
+        "SVG for diagrams",
+        "Remotion only for an optional report-opening loop"
+      ],
+      "signature": {
+        "structure": "report-cover",
+        "depth": "layered-paper",
+        "geometry": "rings-and-ledger",
+        "type": "humanist-corporate",
+        "image": "duotone-letterhead",
+        "navigation": "report-sections",
+        "interaction": "preview-drawer",
+        "motion": "page-wipe",
+        "tone": "established",
+        "density": "medium",
+        "cta": "request-overview"
+      },
+      "avoid": "Do not invent performance numbers or use stock-market visual language."
+    },
+    {
+      "number": 24,
+      "slug": "executive-keynote",
+      "family": "corporate",
+      "title": "Executive Keynote",
+      "primary_stakeholder": "Adult customer / event organizer",
+      "secondary_stakeholder": "School / organizational customer",
+      "hypothesis": "A homepage that behaves like a polished keynote can demonstrate presentation expertise through the interface itself.",
+      "layout_archetype": "One dominant slide at a time with a visible four-chapter rail: Why, Programs, Proof, Contact.",
+      "visual_language": "Premium keynote, cinematic stage lighting, large type, minimal chrome.",
+      "portrait_treatment": "Full-height cutout entering from the edge, with controlled rim-light treatment.",
+      "interaction_model": "Click, keyboard arrows, or chapter rail swaps the in-viewport slide state.",
+      "motion_language": "Presentation-grade text choreography, mask reveals, no continuous looping.",
+      "content_modules": [
+        "value proposition",
+        "audiences/programs",
+        "proof",
+        "CTA"
+      ],
+      "primary_cta": "Build a speaking program",
+      "palette_direction": "Dark navy stage, soft spotlight, white, yellow cue light.",
+      "typography_direction": "Large geometric sans with condensed metadata.",
+      "tool_routes": [
+        "Figma for slide frames",
+        "HyperFrames or Remotion for motion studies",
+        "GSAP/CSS for interactive runtime"
+      ],
+      "signature": {
+        "structure": "keynote-slides",
+        "depth": "cinematic",
+        "geometry": "full-frame",
+        "type": "geometric-display",
+        "image": "rim-lit-cutout",
+        "navigation": "chapter-rail",
+        "interaction": "slide-state",
+        "motion": "choreographed",
+        "tone": "confident",
+        "density": "low",
+        "cta": "program-build"
+      },
+      "avoid": "Do not embed a rendered video as the whole website; the content must remain accessible and interactive."
+    },
+    {
+      "number": 25,
+      "slug": "parent-decision-matrix",
+      "family": "corporate",
+      "title": "Parent Decision Matrix",
+      "primary_stakeholder": "Parent",
+      "secondary_stakeholder": "Student",
+      "hypothesis": "Starting from a parent's concern can make the next step feel personal and concrete.",
+      "layout_archetype": "Four-quadrant concern matrix with a portrait anchor and a dynamic recommendation panel.",
+      "visual_language": "Calm advisory service, clean decision support, approachable rather than clinical.",
+      "portrait_treatment": "Friendly three-quarter portrait in a soft rounded frame; no fake advisor badge.",
+      "interaction_model": "Choose Confidence, Structure, Competition, or Presentation; content and CTA adapt instantly.",
+      "motion_language": "Panel morph, soft highlight travel, concise content crossfade.",
+      "content_modules": [
+        "parent question",
+        "matched outcome",
+        "method",
+        "next step"
+      ],
+      "primary_cta": "Ask about your child's goal",
+      "palette_direction": "Ice blue, navy, warm white, yellow confirmation.",
+      "typography_direction": "Warm humanist sans with clear hierarchy.",
+      "tool_routes": [
+        "Figma for decision states",
+        "React state machine",
+        "No external asset required beyond portrait"
+      ],
+      "signature": {
+        "structure": "decision-matrix",
+        "depth": "soft-cards",
+        "geometry": "quadrants",
+        "type": "humanist-sans",
+        "image": "friendly-anchor",
+        "navigation": "concern-selector",
+        "interaction": "adaptive-recommendation",
+        "motion": "panel-morph",
+        "tone": "reassuring",
+        "density": "medium",
+        "cta": "question-led"
+      },
+      "avoid": "Do not diagnose students or promise guaranteed outcomes."
+    },
+    {
+      "number": 26,
+      "slug": "institutional-blueprint",
+      "family": "corporate",
+      "title": "Institutional Blueprint",
+      "primary_stakeholder": "School / organizational customer",
+      "secondary_stakeholder": "Parent",
+      "hypothesis": "A blueprint interface can show how programs are assembled, customized, and delivered.",
+      "layout_archetype": "Architectural plan with labeled zones for audience, format, curriculum, delivery, and outcomes.",
+      "visual_language": "Blueprint/technical plan with precise annotations and a warm human portrait counterpoint.",
+      "portrait_treatment": "Portrait pinned like a project lead photo on the plan.",
+      "interaction_model": "Click blueprint zones to reveal implementation details in a compact inspector.",
+      "motion_language": "Line drawing, blueprint callouts, measured zoom without freeform panning.",
+      "content_modules": [
+        "program architecture",
+        "formats",
+        "customization",
+        "contact"
+      ],
+      "primary_cta": "Map a school program",
+      "palette_direction": "Deep blueprint blue, cream linework, yellow measurement marks.",
+      "typography_direction": "Technical mono labels plus a readable sans.",
+      "tool_routes": [
+        "Figma for schematic",
+        "SVG for plan lines",
+        "GSAP for line drawing"
+      ],
+      "signature": {
+        "structure": "blueprint-plan",
+        "depth": "technical-flat",
+        "geometry": "schematic",
+        "type": "mono-plus-sans",
+        "image": "pinned-project-lead",
+        "navigation": "plan-zones",
+        "interaction": "inspector",
+        "motion": "line-draw",
+        "tone": "capable",
+        "density": "high",
+        "cta": "program-map"
+      },
+      "avoid": "Do not make it look like engineering software or hide the human teaching story."
+    },
+    {
+      "number": 27,
+      "slug": "coaching-atelier",
+      "family": "corporate",
+      "title": "Coaching Atelier",
+      "primary_stakeholder": "Premium private client / parent",
+      "secondary_stakeholder": "Adult customer",
+      "hypothesis": "A refined atelier metaphor can position coaching as bespoke craft rather than a commodity lesson.",
+      "layout_archetype": "Editorial salon: framed portrait, one elegant thesis, three service swatches, discreet proof drawer.",
+      "visual_language": "Luxury editorial, warm paper, tailored details, no generic gold-on-black excess.",
+      "portrait_treatment": "Formal portrait with subtle fabric or deckled-paper edge treatment.",
+      "interaction_model": "Service swatches reveal bespoke coaching pathways and examples.",
+      "motion_language": "Slow paper lift, line reveal, gentle focus shifts.",
+      "content_modules": [
+        "personal coaching promise",
+        "pathways",
+        "credentials",
+        "consultation CTA"
+      ],
+      "primary_cta": "Plan a private consultation",
+      "palette_direction": "Ivory, midnight, muted cobalt, restrained brass-yellow.",
+      "typography_direction": "Elegant serif with a clean contemporary sans.",
+      "tool_routes": [
+        "Figma for art direction",
+        "Canva for texture composite if needed",
+        "CSS for runtime"
+      ],
+      "signature": {
+        "structure": "editorial-salon",
+        "depth": "paper-layers",
+        "geometry": "frames-and-swatches",
+        "type": "luxury-serif",
+        "image": "formal-framed",
+        "navigation": "service-swatches",
+        "interaction": "material-reveal",
+        "motion": "slow-paper",
+        "tone": "bespoke",
+        "density": "low",
+        "cta": "consultation"
+      },
+      "avoid": "No champagne-luxury clichés, fake scarcity, or vague prestige copy."
+    },
+    {
+      "number": 28,
+      "slug": "case-study-wall",
+      "family": "corporate",
+      "title": "Case Study Wall",
+      "primary_stakeholder": "Parent",
+      "secondary_stakeholder": "School / organizational customer",
+      "hypothesis": "Real, concise transformation stories can build more trust than a conventional credentials list.",
+      "layout_archetype": "Layered case cards with a coach annotation column and a fixed evidence/CTA spine.",
+      "visual_language": "Museum case-study wall, documentary labels, authentic photography.",
+      "portrait_treatment": "Coach portrait appears as an annotator, not the center of every card.",
+      "interaction_model": "Select a case card to reveal Goal → Practice → Change → Next step.",
+      "motion_language": "Card lift, annotation underline, before/after wipe where real assets exist.",
+      "content_modules": [
+        "selected case stories",
+        "method",
+        "proof provenance",
+        "CTA"
+      ],
+      "primary_cta": "Discuss a similar goal",
+      "palette_direction": "Gallery white, charcoal, navy labels, yellow annotation.",
+      "typography_direction": "Museum editorial sans with compact captions.",
+      "tool_routes": [
+        "Canva/Figma for approved case composites",
+        "React card state",
+        "No invented student imagery"
+      ],
+      "signature": {
+        "structure": "case-wall",
+        "depth": "stacked-cards",
+        "geometry": "gallery-panels",
+        "type": "museum-sans",
+        "image": "documentary-cards",
+        "navigation": "case-selector",
+        "interaction": "case-detail",
+        "motion": "card-lift",
+        "tone": "evidence-led",
+        "density": "medium",
+        "cta": "similar-goal"
+      },
+      "avoid": "Use only approved, factual, privacy-safe student stories."
+    },
+    {
+      "number": 29,
+      "slug": "documentary-press-room",
+      "family": "corporate",
+      "title": "Documentary Press Room",
+      "primary_stakeholder": "Parent",
+      "secondary_stakeholder": "Customer / partner",
+      "hypothesis": "A documentary contact-sheet can make the brand feel real, human, and active.",
+      "layout_archetype": "Full-viewport photo contact sheet with a central story caption and a vertical evidence ticker.",
+      "visual_language": "Documentary photography, press captions, film contact marks, restrained grain.",
+      "portrait_treatment": "One authentic Coach Kai image among real event/classroom frames; not a studio-only hero.",
+      "interaction_model": "Focus/click a frame to enlarge it and reveal one factual story sentence.",
+      "motion_language": "Contact-sheet focus, film-gate slide, caption type-on kept brief.",
+      "content_modules": [
+        "who/what",
+        "real moments",
+        "program cues",
+        "contact"
+      ],
+      "primary_cta": "See where SpeakKai can help",
+      "palette_direction": "Black, warm white, documentary blue, yellow timestamp.",
+      "typography_direction": "Editorial sans with monospaced captions.",
+      "tool_routes": [
+        "Canva for contact sheet if needed",
+        "CSS Grid",
+        "Image optimization pipeline"
+      ],
+      "signature": {
+        "structure": "contact-sheet",
+        "depth": "photographic",
+        "geometry": "film-frames",
+        "type": "editorial-mono",
+        "image": "multi-photo-documentary",
+        "navigation": "frame-focus",
+        "interaction": "lightbox-in-viewport",
+        "motion": "film-gate",
+        "tone": "human",
+        "density": "high",
+        "cta": "fit-discovery"
+      },
+      "avoid": "No fake film borders over low-quality or unrelated stock images."
+    },
+    {
+      "number": 30,
+      "slug": "corporate-motion-identity",
+      "family": "corporate",
+      "title": "Corporate Motion Identity",
+      "primary_stakeholder": "Customer / event organizer",
+      "secondary_stakeholder": "Student",
+      "hypothesis": "A controlled motion identity can demonstrate speaking energy while retaining executive credibility.",
+      "layout_archetype": "Full-screen typographic identity system with portrait slices, moving rule architecture, and a fixed action dock.",
+      "visual_language": "Broadcast brand package, conference opener, clean geometric motion.",
+      "portrait_treatment": "Portrait divided into crisp masked slices that align into one complete image.",
+      "interaction_model": "Hover/focus over Speaking, Debate, TEDx, or Business shifts the identity composition and copy.",
+      "motion_language": "Kinetic rules, masked portrait assembly, finite loops only.",
+      "content_modules": [
+        "brand promise",
+        "service modes",
+        "credibility",
+        "CTA"
+      ],
+      "primary_cta": "Start a conversation",
+      "palette_direction": "Royal blue, navy, white, high-energy yellow.",
+      "typography_direction": "Condensed display sans plus neutral interface sans.",
+      "tool_routes": [
+        "HyperFrames/Remotion for motion study or export",
+        "GSAP/CSS for accessible runtime"
+      ],
+      "signature": {
+        "structure": "motion-identity",
+        "depth": "graphic-layers",
+        "geometry": "moving-rules",
+        "type": "condensed-broadcast",
+        "image": "masked-slices",
+        "navigation": "service-modes",
+        "interaction": "identity-shift",
+        "motion": "kinetic-brand",
+        "tone": "executive-energy",
+        "density": "medium",
+        "cta": "conversation"
+      },
+      "avoid": "Do not let motion obscure the value proposition or run infinitely at full intensity."
+    },
+    {
+      "number": 31,
+      "slug": "skill-galaxy",
+      "family": "fun-motion",
+      "title": "Skill Galaxy",
+      "primary_stakeholder": "Student",
+      "secondary_stakeholder": "Parent",
+      "hypothesis": "A spatial skill universe can make communication growth feel explorable and aspirational.",
+      "layout_archetype": "Coach Kai at the center with orbiting skill worlds and a lower mission dock.",
+      "visual_language": "Polished educational sci-fi, luminous orbits, not childish outer-space clip art.",
+      "portrait_treatment": "Clean cutout portrait with soft edge light at the galaxy center.",
+      "interaction_model": "Click/focus orbiting worlds for Confidence, Structure, Debate, Performance, and Leadership.",
+      "motion_language": "Slow finite orbital cycles, focus zoom, particle motion reduced or removed under reduced-motion.",
+      "content_modules": [
+        "student aspiration",
+        "skill worlds",
+        "coach identity",
+        "join CTA"
+      ],
+      "primary_cta": "Choose your next skill",
+      "palette_direction": "Deep space navy, electric blue, warm yellow stars, soft white.",
+      "typography_direction": "Rounded futuristic sans with a highly readable body face.",
+      "tool_routes": [
+        "Figma for orbit map",
+        "CSS transforms/GSAP",
+        "ChatGPT image generation only for abstract space texture"
+      ],
+      "signature": {
+        "structure": "orbital-map",
+        "depth": "spatial",
+        "geometry": "circles-orbits",
+        "type": "futuristic-rounded",
+        "image": "central-cutout",
+        "navigation": "orbit-worlds",
+        "interaction": "spatial-select",
+        "motion": "finite-orbit",
+        "tone": "aspirational",
+        "density": "medium",
+        "cta": "skill-choice"
+      },
+      "avoid": "No tiny unreadable orbit labels or constant high-speed rotation."
+    },
+    {
+      "number": 32,
+      "slug": "stage-quest",
+      "family": "fun-motion",
+      "title": "Stage Quest",
+      "primary_stakeholder": "Student",
+      "secondary_stakeholder": "Parent",
+      "hypothesis": "A stage-quest metaphor can make practice feel like progression rather than correction.",
+      "layout_archetype": "Isometric or layered stage with four visible levels and a coach guide panel.",
+      "visual_language": "Premium game-map, stage lights, achievement path, mature enough for teens.",
+      "portrait_treatment": "Coach Kai as a guide card or full-body cutout beside the level path.",
+      "interaction_model": "Select Level 1–4 to reveal goals, practice, challenge, and showcase.",
+      "motion_language": "Spotlight travel, path illumination, badge reveal, no confetti overload.",
+      "content_modules": [
+        "journey",
+        "practice model",
+        "achievement",
+        "CTA"
+      ],
+      "primary_cta": "Start your first level",
+      "palette_direction": "Dark stage navy, magenta/blue light accents, SpeakKai yellow.",
+      "typography_direction": "Bold game-title display with neutral interface copy.",
+      "tool_routes": [
+        "Figma for isometric scene",
+        "Canva or image generation for stage props",
+        "CSS/GSAP runtime"
+      ],
+      "signature": {
+        "structure": "level-map",
+        "depth": "isometric",
+        "geometry": "path-and-platforms",
+        "type": "game-display",
+        "image": "guide-cutout",
+        "navigation": "levels",
+        "interaction": "level-select",
+        "motion": "spotlight-path",
+        "tone": "motivating",
+        "density": "medium",
+        "cta": "start-level"
+      },
+      "avoid": "Do not gamify with fake scores, coins, streaks, or pressure mechanics."
+    },
+    {
+      "number": 33,
+      "slug": "comic-speech-lab",
+      "family": "fun-motion",
+      "title": "Comic Speech Lab",
+      "primary_stakeholder": "Student",
+      "secondary_stakeholder": "Parent",
+      "hypothesis": "Comic storytelling can demonstrate voice, expression, and structure in a memorable way.",
+      "layout_archetype": "Six unequal comic panels that together form one complete 16:9 story.",
+      "visual_language": "Contemporary graphic novel, halftone sparingly, energetic speech bubbles.",
+      "portrait_treatment": "Photo-based Coach Kai cutout integrated into one or two illustrated panels.",
+      "interaction_model": "Panels expand slightly and reveal mini lessons; keyboard order follows story order.",
+      "motion_language": "Panel punch-in, speech bubble pop, drawn emphasis lines.",
+      "content_modules": [
+        "hook",
+        "structure",
+        "delivery",
+        "confidence",
+        "CTA"
+      ],
+      "primary_cta": "Build your speech story",
+      "palette_direction": "Navy, cream, coral, cyan, yellow accent.",
+      "typography_direction": "Expressive display lettering plus accessible sans; no all-caps paragraphs.",
+      "tool_routes": [
+        "Canva/Figma for panel art",
+        "ChatGPT image generation for non-person decorative art",
+        "CSS motion"
+      ],
+      "signature": {
+        "structure": "comic-panels",
+        "depth": "panel-layering",
+        "geometry": "irregular-frames",
+        "type": "comic-display",
+        "image": "photo-illustration-mix",
+        "navigation": "story-order",
+        "interaction": "panel-expand",
+        "motion": "bubble-pop",
+        "tone": "playful",
+        "density": "high",
+        "cta": "story-build"
+      },
+      "avoid": "Do not make it look preschool-level or bury text inside inaccessible raster images."
+    },
+    {
+      "number": 34,
+      "slug": "kinetic-type-jam",
+      "family": "fun-motion",
+      "title": "Kinetic Type Jam",
+      "primary_stakeholder": "Student",
+      "secondary_stakeholder": "Adult customer",
+      "hypothesis": "The interface can teach vocal delivery by letting typography visibly respond to speaking concepts.",
+      "layout_archetype": "Giant live typography field with four control words: Power, Pitch, Pace, Pause.",
+      "visual_language": "Motion-graphic title sequence, typographic playground, clean and legible.",
+      "portrait_treatment": "Portrait appears as a masked silhouette or cropped edge witness, not the main block.",
+      "interaction_model": "Selecting each P changes type scale, rhythm, spacing, and supporting message.",
+      "motion_language": "Variable-font or transform choreography; deterministic and reduced-motion safe.",
+      "content_modules": [
+        "PPP/P concept",
+        "coach identity",
+        "program cue",
+        "CTA"
+      ],
+      "primary_cta": "Try a speaking challenge",
+      "palette_direction": "Black/navy canvas with white type and one changing accent anchored by yellow.",
+      "typography_direction": "Variable display sans with a stable UI sans.",
+      "tool_routes": [
+        "Figma for key frames",
+        "HyperFrames/Remotion for motion tests",
+        "CSS/GSAP for runtime"
+      ],
+      "signature": {
+        "structure": "type-field",
+        "depth": "flat-motion",
+        "geometry": "letterforms",
+        "type": "variable-display",
+        "image": "edge-silhouette",
+        "navigation": "four-p-controls",
+        "interaction": "typographic-state",
+        "motion": "kinetic-type",
+        "tone": "expressive",
+        "density": "low",
+        "cta": "speaking-challenge"
+      },
+      "avoid": "Do not animate every word simultaneously or compromise readability."
+    },
+    {
+      "number": 35,
+      "slug": "speaking-game-hud",
+      "family": "fun-motion",
+      "title": "Speaking Game HUD",
+      "primary_stakeholder": "Student",
+      "secondary_stakeholder": "Parent",
+      "hypothesis": "A skill HUD can make complex speaking abilities feel tangible without pretending to measure the student.",
+      "layout_archetype": "Futuristic HUD around a portrait with four non-numeric skill modules and a mission card.",
+      "visual_language": "Competitive game interface, crisp lines, mature esports polish.",
+      "portrait_treatment": "Portrait inside a dynamic player-card frame with no fake ranking.",
+      "interaction_model": "Choose a skill module to see one practice mission and one outcome.",
+      "motion_language": "HUD scan, reticle shift, module lock-on, gentle idle only.",
+      "content_modules": [
+        "skills",
+        "practice mission",
+        "coach",
+        "CTA"
+      ],
+      "primary_cta": "Select a mission",
+      "palette_direction": "Near-black navy, electric cyan, yellow, white.",
+      "typography_direction": "Technical display face plus readable sans.",
+      "tool_routes": [
+        "Figma for HUD",
+        "SVG line art",
+        "GSAP/CSS"
+      ],
+      "signature": {
+        "structure": "hud",
+        "depth": "screen-overlay",
+        "geometry": "reticles-modules",
+        "type": "technical-game",
+        "image": "player-card",
+        "navigation": "skill-modules",
+        "interaction": "mission-select",
+        "motion": "scan-lock",
+        "tone": "competitive",
+        "density": "high",
+        "cta": "mission"
+      },
+      "avoid": "No fake performance scores, leaderboards, or manipulative game mechanics."
+    },
+    {
+      "number": 36,
+      "slug": "sticker-cutout-studio",
+      "family": "fun-motion",
+      "title": "Sticker Cutout Studio",
+      "primary_stakeholder": "Student",
+      "secondary_stakeholder": "Parent",
+      "hypothesis": "A creator-style cutout composition can make Coach Kai feel approachable and socially current.",
+      "layout_archetype": "Large portrait cutout surrounded by draggable but bounded stickers, labels, and mini cards.",
+      "visual_language": "High-energy creator thumbnail meets polished sticker sheet.",
+      "portrait_treatment": "Accurate clean cutout with bold outline and optional duplicated shadow layer.",
+      "interaction_model": "Drag decorative stickers; click functional stickers to reveal programs and proof.",
+      "motion_language": "Springy but controlled sticker entrance, tilt on hover, no physics chaos.",
+      "content_modules": [
+        "personality",
+        "student benefits",
+        "programs",
+        "CTA"
+      ],
+      "primary_cta": "Make speaking feel like you",
+      "palette_direction": "Bright yellow, royal blue, coral, white, charcoal.",
+      "typography_direction": "Bold creator display paired with a neutral rounded sans.",
+      "tool_routes": [
+        "Canva for cutout/sticker prep",
+        "ChatGPT image generation for abstract stickers",
+        "Pointer-accessible React interactions"
+      ],
+      "signature": {
+        "structure": "creator-collage",
+        "depth": "cutout-layers",
+        "geometry": "stickers",
+        "type": "creator-bold",
+        "image": "outlined-cutout",
+        "navigation": "functional-stickers",
+        "interaction": "bounded-drag",
+        "motion": "spring-tilt",
+        "tone": "approachable",
+        "density": "high",
+        "cta": "identity-led"
+      },
+      "avoid": "Do not change facial features, make the portrait cartoonishly inaccurate, or let drag interactions block keyboard access."
+    },
+    {
+      "number": 37,
+      "slug": "classroom-desk-world",
+      "family": "fun-motion",
+      "title": "Classroom Desk World",
+      "primary_stakeholder": "Parent",
+      "secondary_stakeholder": "Student",
+      "hypothesis": "A top-down desk world can explain the coaching process through familiar objects.",
+      "layout_archetype": "Top-down desk scene: notebook, microphone, cue cards, trophy, calendar, and portrait polaroid.",
+      "visual_language": "Warm tactile tabletop, crafted object illustration, real photo details.",
+      "portrait_treatment": "Portrait as a polaroid or ID card placed naturally on the desk.",
+      "interaction_model": "Each object maps to a content category; selecting it opens a note card within the desk.",
+      "motion_language": "Object nudge, paper slide, pen underline, subtle shadow response.",
+      "content_modules": [
+        "method",
+        "skills",
+        "evidence",
+        "availability/contact"
+      ],
+      "primary_cta": "Open the first practice card",
+      "palette_direction": "Warm wood/cream, navy stationery, yellow sticky note, cobalt ink.",
+      "typography_direction": "Friendly sans plus hand-drawn annotation used sparingly.",
+      "tool_routes": [
+        "Figma/Canva for scene assets",
+        "Image generation for non-branded props",
+        "CSS transforms"
+      ],
+      "signature": {
+        "structure": "top-down-scene",
+        "depth": "tactile",
+        "geometry": "object-map",
+        "type": "friendly-annotated",
+        "image": "polaroid",
+        "navigation": "desk-objects",
+        "interaction": "object-open",
+        "motion": "paper-slide",
+        "tone": "warm",
+        "density": "medium",
+        "cta": "practice-card"
+      },
+      "avoid": "Do not use a cluttered stock desk photo with unreadable hotspots."
+    },
+    {
+      "number": 38,
+      "slug": "rhythm-voice-visualizer",
+      "family": "fun-motion",
+      "title": "Rhythm & Voice Visualizer",
+      "primary_stakeholder": "Student",
+      "secondary_stakeholder": "Adult customer",
+      "hypothesis": "A visual rhythm system can make vocal delivery feel physical and understandable.",
+      "layout_archetype": "Portrait on one edge, a large waveform/rhythm field, and a compact control dock.",
+      "visual_language": "Music visualizer meets speech coaching, precise rather than nightclub-like.",
+      "portrait_treatment": "Side-profile or three-quarter portrait integrated into waveform contours.",
+      "interaction_model": "Select Pace, Pause, Emphasis, or Emotion to change the visualization and coaching prompt.",
+      "motion_language": "Deterministic waveform pulses and marker sweeps; optional sound is explicit and off by default.",
+      "content_modules": [
+        "voice concepts",
+        "practice prompt",
+        "coach identity",
+        "CTA"
+      ],
+      "primary_cta": "Try the rhythm exercise",
+      "palette_direction": "Midnight, electric blue, lavender, yellow cue markers.",
+      "typography_direction": "Modern grotesk with monospaced timing labels.",
+      "tool_routes": [
+        "HyperFrames for a visualizer study or pre-rendered loop",
+        "Suno only for optional owned instrumental demo",
+        "Web Audio only after explicit user action"
+      ],
+      "signature": {
+        "structure": "visualizer",
+        "depth": "light-field",
+        "geometry": "waveforms",
+        "type": "grotesk-mono",
+        "image": "profile-contour",
+        "navigation": "rhythm-controls",
+        "interaction": "visual-mode",
+        "motion": "pulse-sweep",
+        "tone": "immersive",
+        "density": "medium",
+        "cta": "rhythm-exercise"
+      },
+      "avoid": "No autoplay sound, no seizure-risk strobing, and no fake live microphone analysis."
+    },
+    {
+      "number": 39,
+      "slug": "transformation-flipbook",
+      "family": "fun-motion",
+      "title": "Transformation Flipbook",
+      "primary_stakeholder": "Parent",
+      "secondary_stakeholder": "Student",
+      "hypothesis": "A flipbook sequence can make practice and growth feel concrete while avoiding miracle-transformation claims.",
+      "layout_archetype": "Central flipbook/cards with four stages: Unsure, Structured, Practiced, Ready; portrait and CTA frame the sequence.",
+      "visual_language": "Editorial flipbook, frame-by-frame growth, hand-marked coaching notes.",
+      "portrait_treatment": "Portrait appears as the coach observing/annotating the frames.",
+      "interaction_model": "Drag a timeline or use arrows to move through the four stages.",
+      "motion_language": "Page flip, pose/copy transitions, annotation reveal.",
+      "content_modules": [
+        "growth stages",
+        "method",
+        "credible expectations",
+        "CTA"
+      ],
+      "primary_cta": "Plan the next practice step",
+      "palette_direction": "Cream, navy, sky blue, coral note, yellow marker.",
+      "typography_direction": "Editorial sans with handwritten coaching notes.",
+      "tool_routes": [
+        "Figma for frames",
+        "Remotion for optional flipbook preview",
+        "React/CSS for interactive runtime"
+      ],
+      "signature": {
+        "structure": "flipbook",
+        "depth": "page-stack",
+        "geometry": "frames",
+        "type": "editorial-handnote",
+        "image": "coach-annotator",
+        "navigation": "stage-timeline",
+        "interaction": "scrub-or-arrows",
+        "motion": "page-flip",
+        "tone": "growth-focused",
+        "density": "medium",
+        "cta": "next-step"
+      },
+      "avoid": "Do not imply guaranteed personality change or use fake before/after testimonials."
+    },
+    {
+      "number": 40,
+      "slug": "motion-poster-festival",
+      "family": "fun-motion",
+      "title": "Motion Poster Festival",
+      "primary_stakeholder": "Student",
+      "secondary_stakeholder": "Customer / event organizer",
+      "hypothesis": "A motion-poster homepage can make speaking feel like a cultural event rather than a remedial class.",
+      "layout_archetype": "A full-bleed poster with modular type blocks, portrait crop, event-like program strips, and one action stamp.",
+      "visual_language": "Contemporary festival poster, kinetic graphic design, bold but intentional.",
+      "portrait_treatment": "High-contrast portrait crop integrated behind and in front of type layers.",
+      "interaction_model": "Hover/focus/click rearranges poster modules into Student, Parent, or School information states.",
+      "motion_language": "Poster blocks slide, type masks, finite composition shuffle.",
+      "content_modules": [
+        "brand energy",
+        "audience paths",
+        "programs",
+        "CTA"
+      ],
+      "primary_cta": "Enter the SpeakKai experience",
+      "palette_direction": "Electric royal blue, yellow, off-white, optional coral.",
+      "typography_direction": "Oversized condensed display with compact readable labels.",
+      "tool_routes": [
+        "Figma for poster compositions",
+        "HyperFrames/Remotion for motion tests",
+        "GSAP/CSS runtime"
+      ],
+      "signature": {
+        "structure": "motion-poster",
+        "depth": "type-image-layers",
+        "geometry": "poster-blocks",
+        "type": "condensed-festival",
+        "image": "layered-high-contrast",
+        "navigation": "audience-state",
+        "interaction": "composition-rearrange",
+        "motion": "poster-shuffle",
+        "tone": "cultural-energy",
+        "density": "high",
+        "cta": "enter"
+      },
+      "avoid": "Do not sacrifice legibility for poster aesthetics."
+    },
+    {
+      "number": 41,
+      "slug": "spatial-glass-canvas",
+      "family": "modern",
+      "title": "Spatial Glass Canvas",
+      "primary_stakeholder": "Parent",
+      "secondary_stakeholder": "Customer / partner",
+      "hypothesis": "A restrained spatial interface can feel contemporary while keeping trust and clarity central.",
+      "layout_archetype": "Three floating translucent planes: Identity, Programs, Evidence, with a grounded CTA dock.",
+      "visual_language": "Spatial computing, frosted depth, calm gradients, precise lighting.",
+      "portrait_treatment": "Portrait behind one translucent pane with natural skin preserved.",
+      "interaction_model": "Select a plane to bring it forward; all content remains keyboard reachable.",
+      "motion_language": "Depth shift, focus blur change, spring damping kept subtle.",
+      "content_modules": [
+        "identity",
+        "programs",
+        "evidence",
+        "CTA"
+      ],
+      "primary_cta": "Bring your goal into focus",
+      "palette_direction": "Ice blue, translucent white, navy, warm yellow focus ring.",
+      "typography_direction": "Contemporary neo-grotesk with spacious tracking.",
+      "tool_routes": [
+        "Figma for depth mockup",
+        "CSS backdrop-filter with fallback",
+        "GSAP/Framer Motion if present"
+      ],
+      "signature": {
+        "structure": "spatial-planes",
+        "depth": "glass",
+        "geometry": "floating-panels",
+        "type": "neo-grotesk",
+        "image": "behind-glass",
+        "navigation": "plane-focus",
+        "interaction": "depth-select",
+        "motion": "parallax-focus",
+        "tone": "calm-modern",
+        "density": "low",
+        "cta": "focus"
+      },
+      "avoid": "No illegible glassmorphism, excessive blur, or weak contrast."
+    },
+    {
+      "number": 42,
+      "slug": "neo-brutalist-studio",
+      "family": "modern",
+      "title": "Neo-Brutalist Studio",
+      "primary_stakeholder": "Student",
+      "secondary_stakeholder": "Creative/customer partner",
+      "hypothesis": "A bold neo-brutalist interface can communicate confidence, directness, and personality.",
+      "layout_archetype": "Hard-edged blocks, oversized headline, portrait stamp, visible utility controls, asymmetrical grid.",
+      "visual_language": "Neo-brutalism refined by strong spacing and accessible type.",
+      "portrait_treatment": "Posterized or monochrome portrait stamp with accurate facial structure.",
+      "interaction_model": "Big labeled blocks open as in-place panels; visible interaction affordances.",
+      "motion_language": "Hard cuts, snap transitions, deliberate shake only on user action.",
+      "content_modules": [
+        "brand claim",
+        "program blocks",
+        "proof",
+        "CTA"
+      ],
+      "primary_cta": "Say it clearly",
+      "palette_direction": "Black, white, royal blue, bright yellow, optional acid green only if balanced.",
+      "typography_direction": "Heavy grotesk with monospaced utility text.",
+      "tool_routes": [
+        "Figma for block system",
+        "CSS transitions",
+        "Canva for posterized portrait if needed"
+      ],
+      "signature": {
+        "structure": "brutalist-blocks",
+        "depth": "flat-hard",
+        "geometry": "hard-rectangles",
+        "type": "heavy-grotesk",
+        "image": "portrait-stamp",
+        "navigation": "utility-blocks",
+        "interaction": "block-open",
+        "motion": "hard-snap",
+        "tone": "direct",
+        "density": "high",
+        "cta": "declarative"
+      },
+      "avoid": "Do not confuse brutalism with careless spacing or inaccessible contrast."
+    },
+    {
+      "number": 43,
+      "slug": "3d-card-architecture",
+      "family": "modern",
+      "title": "3D Card Architecture",
+      "primary_stakeholder": "Customer / partner",
+      "secondary_stakeholder": "Student",
+      "hypothesis": "A controlled 3D card architecture can show multiple offerings while preserving one clear hierarchy.",
+      "layout_archetype": "Perspective deck of four program cards, portrait as the stabilizing front plane, CTA fixed to horizon.",
+      "visual_language": "Premium 3D interface, matte materials, architectural depth.",
+      "portrait_treatment": "Portrait on the front card with depth-separated foreground and background.",
+      "interaction_model": "Keyboard/click rotates the card deck; each card exposes a concise program proposition.",
+      "motion_language": "Perspective rotation, depth easing, no free spinning.",
+      "content_modules": [
+        "programs",
+        "audiences",
+        "proof",
+        "CTA"
+      ],
+      "primary_cta": "Open a program path",
+      "palette_direction": "Deep navy, stone white, cobalt, yellow edge light.",
+      "typography_direction": "Architectural sans with compact labels.",
+      "tool_routes": [
+        "Figma for perspective frames",
+        "CSS 3D transforms or Three.js only if already justified",
+        "No WebGL requirement"
+      ],
+      "signature": {
+        "structure": "perspective-deck",
+        "depth": "3d",
+        "geometry": "cards-in-space",
+        "type": "architectural-sans",
+        "image": "depth-separated-card",
+        "navigation": "deck-rotation",
+        "interaction": "card-select",
+        "motion": "perspective-rotate",
+        "tone": "premium-tech",
+        "density": "medium",
+        "cta": "program-path"
+      },
+      "avoid": "Do not add heavy WebGL if CSS 3D is sufficient."
+    },
+    {
+      "number": 44,
+      "slug": "lens-portal",
+      "family": "modern",
+      "title": "Lens Portal",
+      "primary_stakeholder": "Mixed",
+      "secondary_stakeholder": "Parent",
+      "hypothesis": "A single visual lens can unify identity, services, and outcomes in a memorable but simple interface.",
+      "layout_archetype": "Large circular/elliptical lens with portrait inside; contextual content wraps the perimeter.",
+      "visual_language": "Optical interface, crisp rings, modern editorial science.",
+      "portrait_treatment": "Portrait framed through a lens with subtle magnification zones, never face distortion.",
+      "interaction_model": "Move or select the lens to focus on Coach, Programs, Students, or Partnerships.",
+      "motion_language": "Lens glide, ring pulse, focus transition.",
+      "content_modules": [
+        "identity",
+        "audience options",
+        "proof",
+        "CTA"
+      ],
+      "primary_cta": "Focus on your goal",
+      "palette_direction": "Soft white, navy, spectral blue, yellow focal mark.",
+      "typography_direction": "Clean geometric sans with optical labels.",
+      "tool_routes": [
+        "Figma for lens geometry",
+        "CSS masks and transforms",
+        "Image generation only for abstract refraction texture"
+      ],
+      "signature": {
+        "structure": "lens-interface",
+        "depth": "optical",
+        "geometry": "rings",
+        "type": "geometric-optical",
+        "image": "lens-framed",
+        "navigation": "focus-zones",
+        "interaction": "lens-focus",
+        "motion": "glide-pulse",
+        "tone": "curious-modern",
+        "density": "medium",
+        "cta": "focus-goal"
+      },
+      "avoid": "No facial warping, gimmicky cursor chasing, or low-contrast refraction."
+    },
+    {
+      "number": 45,
+      "slug": "quiet-monochrome",
+      "family": "modern",
+      "title": "Quiet Monochrome",
+      "primary_stakeholder": "Parent",
+      "secondary_stakeholder": "Premium private customer",
+      "hypothesis": "Extreme restraint can communicate confidence and trust when the copy and portrait are strong enough.",
+      "layout_archetype": "One portrait, one statement, three tiny proof anchors, one CTA; disclosure appears in a precise side rail.",
+      "visual_language": "Museum minimalism, monochrome photography, one yellow interaction accent.",
+      "portrait_treatment": "High-quality monochrome portrait with natural texture and generous breathing room.",
+      "interaction_model": "Three discreet anchors reveal Method, Experience, and Programs in the side rail.",
+      "motion_language": "Opacity, line draw, and one controlled portrait crop shift.",
+      "content_modules": [
+        "value proposition",
+        "proof anchors",
+        "method/programs",
+        "CTA"
+      ],
+      "primary_cta": "Talk about the next step",
+      "palette_direction": "Warm white, black/navy, gray, yellow.",
+      "typography_direction": "Elegant modern serif or neutral sans, very large and sparse.",
+      "tool_routes": [
+        "Figma for spacing study",
+        "Canva for monochrome treatment if original asset needs it",
+        "CSS only"
+      ],
+      "signature": {
+        "structure": "minimal-statement",
+        "depth": "flat-quiet",
+        "geometry": "negative-space",
+        "type": "minimal-editorial",
+        "image": "monochrome-hero",
+        "navigation": "proof-anchors",
+        "interaction": "side-rail",
+        "motion": "subtle-fade",
+        "tone": "quiet-confidence",
+        "density": "very-low",
+        "cta": "conversation"
+      },
+      "avoid": "Do not confuse minimalism with missing information or tiny text."
+    },
+    {
+      "number": 46,
+      "slug": "speakkai-os",
+      "family": "modern",
+      "title": "SpeakKai OS",
+      "primary_stakeholder": "Customer / partner",
+      "secondary_stakeholder": "Parent",
+      "hypothesis": "An operating-system metaphor can organize many audiences and services without scrolling.",
+      "layout_archetype": "Desktop canvas with four purposeful windows: Coach, Programs, Proof, Contact.",
+      "visual_language": "Contemporary desktop OS, friendly productivity system, polished not retro parody.",
+      "portrait_treatment": "Portrait in the Coach window with contextual metadata and no fake account data.",
+      "interaction_model": "Windows can focus, minimize, and snap; keyboard order remains logical.",
+      "motion_language": "Window open/snap, dock highlight, restrained shadow depth.",
+      "content_modules": [
+        "identity",
+        "programs",
+        "evidence",
+        "contact"
+      ],
+      "primary_cta": "Open a conversation",
+      "palette_direction": "Soft blue desktop, white windows, navy text, yellow active state.",
+      "typography_direction": "Modern UI sans with compact mono labels.",
+      "tool_routes": [
+        "Figma for window system",
+        "React state management",
+        "CSS transforms"
+      ],
+      "signature": {
+        "structure": "desktop-os",
+        "depth": "window-layers",
+        "geometry": "windows-dock",
+        "type": "ui-sans",
+        "image": "window-portrait",
+        "navigation": "dock",
+        "interaction": "window-management",
+        "motion": "snap-minimize",
+        "tone": "organized-modern",
+        "density": "high",
+        "cta": "open-conversation"
+      },
+      "avoid": "Do not make windows draggable off-screen or require desktop metaphors on mobile."
+    },
+    {
+      "number": 47,
+      "slug": "cinematic-hotspot-portrait",
+      "family": "modern",
+      "title": "Cinematic Hotspot Portrait",
+      "primary_stakeholder": "Parent",
+      "secondary_stakeholder": "Student",
+      "hypothesis": "One powerful image with well-designed hotspots can feel emotional while keeping the interface simple.",
+      "layout_archetype": "Full-bleed portrait or speaking image with five anchored hotspots and a fixed brand/CTA strip.",
+      "visual_language": "Cinematic editorial, strong photography, restrained overlays.",
+      "portrait_treatment": "Use the highest-resolution authentic photo; preserve face and skin, crop for text-safe zones.",
+      "interaction_model": "Hotspots reveal concise cards for Coach, Method, Programs, Results, and Contact.",
+      "motion_language": "Focus pull, card reveal, spotlight drift; no camera-motion simulation that causes nausea.",
+      "content_modules": [
+        "identity",
+        "method",
+        "programs",
+        "proof",
+        "CTA"
+      ],
+      "primary_cta": "Find the right path",
+      "palette_direction": "Photo-led with navy/black overlays and yellow hotspot markers.",
+      "typography_direction": "Cinematic sans with clear compact cards.",
+      "tool_routes": [
+        "Figma for hotspot map",
+        "Canva/Photoshop-like editing for photo grade",
+        "CSS accessible popovers"
+      ],
+      "signature": {
+        "structure": "full-bleed-hotspots",
+        "depth": "cinematic-photo",
+        "geometry": "anchored-points",
+        "type": "cinematic-sans",
+        "image": "full-bleed-authentic",
+        "navigation": "hotspots",
+        "interaction": "popover",
+        "motion": "focus-pull",
+        "tone": "emotional",
+        "density": "low",
+        "cta": "path-find"
+      },
+      "avoid": "Do not use hover-only hotspots or cover the face with labels."
+    },
+    {
+      "number": 48,
+      "slug": "fluid-typography-field",
+      "family": "modern",
+      "title": "Fluid Typography Field",
+      "primary_stakeholder": "Student",
+      "secondary_stakeholder": "Customer / event organizer",
+      "hypothesis": "Responsive typography can embody clarity, confidence, and adaptability without relying on complex illustration.",
+      "layout_archetype": "A fluid headline occupies most of the canvas; portrait and information modules move around its changing negative space.",
+      "visual_language": "Contemporary variable-type art direction, minimal shapes, high responsiveness.",
+      "portrait_treatment": "Portrait crop changes between edge, inset, and cutout states without altering the face.",
+      "interaction_model": "Audience controls morph the headline and rearrange the information field.",
+      "motion_language": "Variable font axes, smooth reflow, shape morphs with reduced-motion static states.",
+      "content_modules": [
+        "brand promise",
+        "audience-specific value",
+        "proof",
+        "CTA"
+      ],
+      "primary_cta": "Shape your message",
+      "palette_direction": "Royal blue/white with yellow and one rotating secondary accent.",
+      "typography_direction": "Variable display family plus stable body font.",
+      "tool_routes": [
+        "Figma for type studies",
+        "CSS variable fonts and container queries",
+        "Remotion for motion study only"
+      ],
+      "signature": {
+        "structure": "fluid-type-field",
+        "depth": "flat-responsive",
+        "geometry": "negative-space",
+        "type": "variable-fluid",
+        "image": "adaptive-crop",
+        "navigation": "audience-controls",
+        "interaction": "layout-morph",
+        "motion": "font-axis-reflow",
+        "tone": "adaptive",
+        "density": "medium",
+        "cta": "shape-message"
+      },
+      "avoid": "Do not make essential meaning depend on an unsupported variable-font effect."
+    },
+    {
+      "number": 49,
+      "slug": "living-network-map",
+      "family": "modern",
+      "title": "Living Network Map",
+      "primary_stakeholder": "School / organizational customer",
+      "secondary_stakeholder": "Parent",
+      "hypothesis": "A network map can show how audiences, skills, formats, and outcomes connect across SpeakKai's work.",
+      "layout_archetype": "Central SpeakKai node with four clusters: Audiences, Skills, Programs, Outcomes; portrait integrated as the human core.",
+      "visual_language": "Data-informed network visualization, elegant nodes, no fake analytics.",
+      "portrait_treatment": "Small high-quality portrait at the central human node.",
+      "interaction_model": "Select a node to trace a real pathway, such as Student → Debate → Small Group → Confidence.",
+      "motion_language": "Path tracing, node focus, cluster breathing kept subtle and finite.",
+      "content_modules": [
+        "audiences",
+        "skills",
+        "formats",
+        "outcomes",
+        "CTA"
+      ],
+      "primary_cta": "Trace a program pathway",
+      "palette_direction": "Light canvas, navy nodes, cobalt links, yellow active path.",
+      "typography_direction": "Technical but warm sans with clear node labels.",
+      "tool_routes": [
+        "Figma for network logic",
+        "SVG or Canvas",
+        "Avoid heavy graph libraries unless needed"
+      ],
+      "signature": {
+        "structure": "network-map",
+        "depth": "diagrammatic",
+        "geometry": "nodes-links",
+        "type": "technical-warm",
+        "image": "central-human-node",
+        "navigation": "node-clusters",
+        "interaction": "path-trace",
+        "motion": "link-draw",
+        "tone": "systems-thinking",
+        "density": "high",
+        "cta": "trace-pathway"
+      },
+      "avoid": "Do not imply quantitative relationships that are not real."
+    },
+    {
+      "number": 50,
+      "slug": "adaptive-audience-prism",
+      "family": "modern",
+      "title": "Adaptive Audience Prism",
+      "primary_stakeholder": "Mixed",
+      "secondary_stakeholder": "Parent / Student / Customer",
+      "hypothesis": "One strong brand canvas can adapt its evidence, tone, and CTA to parents, students, and customers without becoming generic.",
+      "layout_archetype": "A central portrait/prism with three audience faces; selecting one transforms the same single-screen composition.",
+      "visual_language": "Signature SpeakKai future-facing identity, geometric light, human portrait, clear audience modes.",
+      "portrait_treatment": "Portrait remains constant while framing, crop, and supporting visuals adapt per audience.",
+      "interaction_model": "Parent, Student, and School/Customer mode controls; state is shareable via URL parameter.",
+      "motion_language": "Prism rotation, palette shift, content re-layout, all under one second and reduced-motion safe.",
+      "content_modules": [
+        "universal brand promise",
+        "audience-specific value",
+        "audience-specific proof",
+        "audience-specific CTA"
+      ],
+      "primary_cta": "Choose your SpeakKai path",
+      "palette_direction": "Core navy/yellow with distinct but harmonious secondary colors per audience.",
+      "typography_direction": "One strong brand display system with adaptive supporting type scales.",
+      "tool_routes": [
+        "Figma for three state system",
+        "GSAP/Framer Motion or CSS for runtime",
+        "Remotion/HyperFrames for launch reel"
+      ],
+      "signature": {
+        "structure": "adaptive-prism",
+        "depth": "geometric-spatial",
+        "geometry": "triangular-prism",
+        "type": "signature-brand",
+        "image": "constant-adaptive-portrait",
+        "navigation": "audience-modes",
+        "interaction": "mode-transform",
+        "motion": "prism-transition",
+        "tone": "unified-flexible",
+        "density": "medium",
+        "cta": "audience-path"
+      },
+      "avoid": "Do not merely recolor identical content; each audience mode must change the argument, proof, and CTA."
+    }
+  ]
+}

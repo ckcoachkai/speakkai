@@ -1,0 +1,242 @@
+---
+import type { ExperimentV4 } from "../../../data/experimentLabV4";
+import Portrait from "../Portrait.astro";
+
+interface Props {
+  experiment: ExperimentV4;
+}
+
+const { experiment } = Astro.props;
+const { content } = experiment;
+const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
+---
+
+<article
+  class:list={["v4-experiment", "v4-corporate", `layout-${experiment.slug}`]}
+  data-qa="experiment-root"
+  data-qa-ready="true"
+  data-test-number={experiment.number}
+  data-family={experiment.family}
+  data-single-screen="true"
+>
+  {experiment.number === 21 && (
+    <div class="boardroom" data-interaction data-active={panelId(0)}>
+      <header class="boardroom-mast"><span>SpeakKai / Practice brief</span><span>Issue 21</span></header>
+      <Portrait treatment="portrait-editorial" label="Coach Kai / Communication Coach" />
+      <section class="boardroom-message" data-qa="primary-message">
+        <p class="v4-kicker">Boardroom Editorial · {experiment.primaryStakeholder}</p>
+        <h1>{content.headline}</h1>
+        <p>{content.summary}</p>
+        <div class="v4-actions">
+          <a href={experiment.primaryHref} data-qa="primary-cta">{experiment.primaryCta}</a>
+          <a href={content.secondaryHref}>{content.secondaryCta}</a>
+        </div>
+      </section>
+      <aside class="boardroom-brief" aria-label="Speaking program brief">
+        <div class="brief-tabs" role="tablist" aria-label="Briefing sections">
+          {content.panels.map((item, index) => (
+            <button type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}>{item.label}</button>
+          ))}
+        </div>
+        {content.panels.map((item, index) => (
+          <section id={panelId(index)} role="tabpanel" data-v4-panel data-qa="interaction-panel" hidden={index !== 0}>
+            <span>{String(index + 1).padStart(2, "0")}</span><h2>{item.title}</h2><p>{item.copy}</p>
+          </section>
+        ))}
+      </aside>
+      <footer class="v4-boundary">{content.boundary}</footer>
+    </div>
+  )}
+
+  {experiment.number === 22 && (
+    <div class="swiss-grid" data-interaction data-active={panelId(0)}>
+      <header class="swiss-index"><b>SK/22</b><span>Parent evidence grid</span><span>V4</span></header>
+      <section class="swiss-question" data-qa="primary-message">
+        <p class="v4-kicker">A decision aid, not a dashboard</p><h1>{content.headline}</h1><p>{content.summary}</p>
+      </section>
+      <Portrait treatment="portrait-seal" label="Coach Kai" />
+      <div class="swiss-tiles" role="tablist" aria-label="Evidence areas">
+        {content.panels.map((item, index) => (
+          <button class:list={["swiss-tile", { active: index === 0 }]} type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}>
+            <span>{item.label}</span><strong>{item.title}</strong>
+          </button>
+        ))}
+      </div>
+      <aside class="swiss-answer">
+        {content.panels.map((item, index) => (
+          <section id={panelId(index)} role="tabpanel" data-v4-panel data-qa="interaction-panel" hidden={index !== 0}><span>Selected evidence</span><h2>{item.title}</h2><p>{item.copy}</p></section>
+        ))}
+      </aside>
+      <div class="v4-actions swiss-actions"><a href={experiment.primaryHref} data-qa="primary-cta">{experiment.primaryCta}</a><a href={content.secondaryHref}>{content.secondaryCta}</a></div>
+      <footer class="v4-boundary">{content.boundary}</footer>
+    </div>
+  )}
+
+  {experiment.number === 23 && (
+    <div class="annual-report" data-interaction data-active={panelId(0)}>
+      <section class="report-cover" data-qa="primary-message">
+        <div class="report-number">23</div><p>SpeakKai practice overview / 2026</p><h1>{content.headline}</h1><p>{content.summary}</p>
+        <div class="v4-actions"><a href={experiment.primaryHref} data-qa="primary-cta">{experiment.primaryCta}</a><a href={content.secondaryHref}>{content.secondaryCta}</a></div>
+      </section>
+      <Portrait treatment="portrait-halftone" label="Practice lead / Coach Kai" />
+      <div class="report-process" role="tablist" aria-label="Practice overview sections">
+        {content.panels.map((item, index) => (
+          <button type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}>
+            <span>{String(index + 1).padStart(2, "0")}</span><strong>{item.label}</strong>
+          </button>
+        ))}
+      </div>
+      <aside class="report-drawer">
+        <p class="drawer-label">Selected section</p>
+        {content.panels.map((item, index) => (
+          <section id={panelId(index)} role="tabpanel" data-v4-panel data-qa="interaction-panel" hidden={index !== 0}><h2>{item.title}</h2><p>{item.copy}</p></section>
+        ))}
+        <small>{content.boundary}</small>
+      </aside>
+    </div>
+  )}
+
+  {experiment.number === 24 && (
+    <div class="keynote-stage" data-interaction data-active={panelId(0)}>
+      <div class="keynote-light" aria-hidden="true"></div>
+      <section class="keynote-copy" data-qa="primary-message">
+        <p class="v4-kicker">Executive Keynote / Test 24</p><h1>{content.headline}</h1><p>{content.summary}</p>
+        <div class="v4-actions"><a href={experiment.primaryHref} data-qa="primary-cta">{experiment.primaryCta}</a><a href={content.secondaryHref}>{content.secondaryCta}</a></div>
+      </section>
+      <Portrait treatment="portrait-stage" label="Coach Kai / rehearsal before performance" />
+      <nav class="keynote-chapters" aria-label="Keynote chapters" role="tablist">
+        {content.panels.map((item, index) => (
+          <button type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}><span>0{index + 1}</span>{item.label}</button>
+        ))}
+      </nav>
+      <aside class="keynote-note">
+        {content.panels.map((item, index) => (
+          <section id={panelId(index)} role="tabpanel" data-v4-panel data-qa="interaction-panel" hidden={index !== 0}><h2>{item.title}</h2><p>{item.copy}</p></section>
+        ))}
+        <small>{content.boundary}</small>
+      </aside>
+    </div>
+  )}
+
+  {experiment.number === 25 && (
+    <div class="decision-matrix" data-interaction data-active={panelId(0)}>
+      <header data-qa="primary-message"><p class="v4-kicker">Parent Decision Matrix</p><h1>{content.headline}</h1><p>{content.summary}</p></header>
+      <Portrait treatment="portrait-parent" label="Start with context, not a score" />
+      <div class="matrix-quadrants" role="tablist" aria-label="Possible speaking focuses">
+        {content.panels.map((item, index) => (
+          <button type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}><span>0{index + 1}</span><strong>{item.label}</strong><small>{item.title}</small></button>
+        ))}
+      </div>
+      <aside class="matrix-recommendation">
+        <span>Possible starting point</span>
+        {content.panels.map((item, index) => (
+          <section id={panelId(index)} role="tabpanel" data-v4-panel data-qa="interaction-panel" hidden={index !== 0}><h2>{item.title}</h2><p>{item.copy}</p></section>
+        ))}
+        <div class="v4-actions"><a href={experiment.primaryHref} data-qa="primary-cta">{experiment.primaryCta}</a><a href={content.secondaryHref}>{content.secondaryCta}</a></div>
+      </aside>
+      <footer class="v4-boundary">{content.boundary}</footer>
+    </div>
+  )}
+
+  {experiment.number === 26 && (
+    <div class="institutional-blueprint" data-interaction data-active={panelId(0)}>
+      <header data-qa="primary-message"><p class="v4-kicker">Institutional Blueprint / SK-26</p><h1>{content.headline}</h1><p>{content.summary}</p></header>
+      <Portrait treatment="portrait-pin" label="Program lead / Coach Kai" />
+      <div class="blueprint-plan" role="tablist" aria-label="Program planning zones">
+        <div class="blueprint-lines" aria-hidden="true"></div>
+        {content.panels.map((item, index) => (
+          <button style={`--node:${index}`} type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}><span>ZONE 0{index + 1}</span><strong>{item.label}</strong></button>
+        ))}
+      </div>
+      <aside class="blueprint-inspector">
+        <p>PROGRAM INSPECTOR</p>
+        {content.panels.map((item, index) => (
+          <section id={panelId(index)} role="tabpanel" data-v4-panel data-qa="interaction-panel" hidden={index !== 0}><h2>{item.title}</h2><p>{item.copy}</p></section>
+        ))}
+        <div class="v4-actions"><a href={experiment.primaryHref} data-qa="primary-cta">{experiment.primaryCta}</a><a href={content.secondaryHref}>{content.secondaryCta}</a></div>
+      </aside>
+      <footer class="v4-boundary">{content.boundary}</footer>
+    </div>
+  )}
+
+  {experiment.number === 27 && (
+    <div class="coaching-atelier" data-interaction data-active={panelId(0)}>
+      <div class="atelier-monogram" aria-hidden="true">SK</div>
+      <Portrait treatment="portrait-atelier" label="Coach Kai / private practice" />
+      <section class="atelier-copy" data-qa="primary-message"><p class="v4-kicker">Coaching Atelier</p><h1>{content.headline}</h1><p>{content.summary}</p></section>
+      <div class="atelier-swatches" role="tablist" aria-label="Private coaching focuses">
+        {content.panels.map((item, index) => (
+          <button type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}><i aria-hidden="true"></i><span>{item.label}</span></button>
+        ))}
+      </div>
+      <aside class="atelier-note">
+        {content.panels.map((item, index) => (
+          <section id={panelId(index)} role="tabpanel" data-v4-panel data-qa="interaction-panel" hidden={index !== 0}><span>Selected focus</span><h2>{item.title}</h2><p>{item.copy}</p></section>
+        ))}
+        <div class="v4-actions"><a href={experiment.primaryHref} data-qa="primary-cta">{experiment.primaryCta}</a><a href={content.secondaryHref}>{content.secondaryCta}</a></div>
+        <small>{content.boundary}</small>
+      </aside>
+    </div>
+  )}
+
+  {experiment.number === 28 && (
+    <div class="case-study-wall" data-interaction data-active={panelId(0)}>
+      <header data-qa="primary-message"><p class="v4-kicker">Case Study Wall / process examples only</p><h1>{content.headline}</h1><p>{content.summary}</p></header>
+      <Portrait treatment="portrait-annotator" label="Coach Kai / process annotator" />
+      <div class="case-cards" role="tablist" aria-label="Process example stages">
+        {content.panels.map((item, index) => (
+          <button style={`--case-index:${index}`} type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}><span>{item.label}</span><strong>{item.title}</strong><small>Open stage →</small></button>
+        ))}
+      </div>
+      <aside class="case-spine">
+        <b>PROCESS / NOT PROOF</b>
+        {content.panels.map((item, index) => (
+          <section id={panelId(index)} role="tabpanel" data-v4-panel data-qa="interaction-panel" hidden={index !== 0}><span>0{index + 1}</span><h2>{item.title}</h2><p>{item.copy}</p></section>
+        ))}
+        <div class="v4-actions"><a href={experiment.primaryHref} data-qa="primary-cta">{experiment.primaryCta}</a><a href={content.secondaryHref}>{content.secondaryCta}</a></div>
+        <small>{content.boundary}</small>
+      </aside>
+    </div>
+  )}
+
+  {experiment.number === 29 && (
+    <div class="press-room" data-interaction data-active={panelId(0)}>
+      <section class="press-title" data-qa="primary-message"><p class="v4-kicker">Documentary Press Room / approved public material</p><h1>{content.headline}</h1><p>{content.summary}</p></section>
+      <div class="contact-sheet" role="tablist" aria-label="Public context frames">
+        {content.panels.map((item, index) => (
+          <button class={`contact-frame frame-${index + 1}`} type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}>
+            {index === 0 ? <img src="/images/coach-kai-headshot.webp" width="1400" height="1400" alt="Coach Kai" data-qa="portrait" /> : <span class="frame-art" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>}
+            <strong>{item.label}</strong><small>{item.title}</small>
+          </button>
+        ))}
+      </div>
+      <aside class="press-caption">
+        {content.panels.map((item, index) => (
+          <section id={panelId(index)} role="tabpanel" data-v4-panel data-qa="interaction-panel" hidden={index !== 0}><span>Public caption / {String(index + 1).padStart(2, "0")}</span><h2>{item.title}</h2><p>{item.copy}</p></section>
+        ))}
+        <div class="v4-actions"><a href={experiment.primaryHref} data-qa="primary-cta">{experiment.primaryCta}</a><a href={content.secondaryHref}>{content.secondaryCta}</a></div>
+        <small>{content.boundary}</small>
+      </aside>
+    </div>
+  )}
+
+  {experiment.number === 30 && (
+    <div class="motion-identity" data-interaction data-active={panelId(0)}>
+      <div class="identity-type" aria-hidden="true"><span>SPEAK</span><span>KAI</span></div>
+      <Portrait treatment="portrait-sliced" label="Coach Kai / communication in motion" />
+      <section class="identity-message" data-qa="primary-message"><p class="v4-kicker">Corporate Motion Identity / SK-30</p><h1>{content.headline}</h1><p>{content.summary}</p></section>
+      <div class="identity-modes" role="tablist" aria-label="Communication modes">
+        {content.panels.map((item, index) => (
+          <button type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}><span>0{index + 1}</span>{item.label}</button>
+        ))}
+      </div>
+      <aside class="identity-panel">
+        {content.panels.map((item, index) => (
+          <section id={panelId(index)} role="tabpanel" data-v4-panel data-qa="interaction-panel" hidden={index !== 0}><h2>{item.title}</h2><p>{item.copy}</p></section>
+        ))}
+      </aside>
+      <div class="v4-actions identity-actions"><a href={experiment.primaryHref} data-qa="primary-cta">{experiment.primaryCta}</a><a href={content.secondaryHref}>{content.secondaryCta}</a></div>
+      <footer class="v4-boundary">{content.boundary}</footer>
+    </div>
+  )}
+</article>

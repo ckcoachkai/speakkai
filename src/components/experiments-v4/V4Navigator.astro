@@ -1,0 +1,41 @@
+---
+import { experimentsV4 } from "../../data/experimentLabV4";
+
+interface Props {
+  current: number;
+}
+
+const { current } = Astro.props;
+const previous = current > 21 ? current - 1 : 50;
+const next = current < 50 ? current + 1 : 21;
+---
+
+<nav class="v4-nav" aria-label="Homepage experiment navigation" data-qa="test-switcher">
+  <a class="v4-brand" href="/tests/" data-qa="brand" aria-label="SpeakKai Experiment Lab gallery">
+    <span class="v4-brand-mark" aria-hidden="true">SK</span>
+    <span>SpeakKai Lab</span>
+  </a>
+  <div class="v4-stepper" aria-label={`Current experiment: Test ${current}`}>
+    <a href={`/tests/${previous}/`} aria-label={`Previous: Test ${previous}`}>← {previous}</a>
+    <strong>Test {current}</strong>
+    <a href={`/tests/${next}/`} aria-label={`Next: Test ${next}`}>{next} →</a>
+  </div>
+  <details class="v4-jump">
+    <summary>Jump to</summary>
+    <div class="v4-jump-panel">
+      <p>V4 single-screen concepts</p>
+      <ol>
+        {experimentsV4.map((experiment) => (
+          <li>
+            <a href={`/tests/${experiment.number}/`} aria-current={experiment.number === current ? "page" : undefined}>
+              <span>{experiment.number}</span>
+              {experiment.title}
+            </a>
+          </li>
+        ))}
+      </ol>
+      <a class="v4-gallery-link" href="/tests/">View the full gallery</a>
+    </div>
+  </details>
+</nav>
+

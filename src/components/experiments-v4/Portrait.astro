@@ -1,0 +1,24 @@
+---
+interface Props {
+  treatment: string;
+  label?: string;
+  eager?: boolean;
+}
+
+const { treatment, label = "Coach Kai", eager = true } = Astro.props;
+---
+
+<figure class:list={["v4-portrait", treatment]} data-qa="portrait">
+  <div class="v4-portrait-frame">
+    <img
+      src="/images/coach-kai-headshot.webp"
+      width="1400"
+      height="1400"
+      alt="Coach Kai"
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+    />
+  </div>
+  <figcaption>{label}</figcaption>
+</figure>
+

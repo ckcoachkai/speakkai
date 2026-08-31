@@ -9,6 +9,11 @@
     "preview": "astro preview",
     "check": "astro check",
     "check:experiment-lab": "node scripts/check-experiment-lab.mjs",
+    "check:experiment-viewports": "node design-lab-v4/scripts/check-one-screen.mjs",
+    "check:experiment-interactions": "node design-lab-v4/scripts/check-interactions.mjs",
+    "check:experiment-responsive": "node design-lab-v4/scripts/check-responsive.mjs",
+    "check:experiment-performance": "node design-lab-v4/scripts/check-performance.mjs",
+    "capture:experiments": "node design-lab-v4/scripts/capture-tests.mjs",
     "sync:schedule": "node scripts/sync-google-sheet.mjs",
     "check:schedule-privacy": "node scripts/check-schedule-privacy.mjs"
   },
@@ -25,6 +30,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
+    "playwright": "1.55.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.5.3"
   }
