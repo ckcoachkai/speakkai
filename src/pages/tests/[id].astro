@@ -1,0 +1,15 @@
+---
+import ExperimentLabPage from "../../components/ExperimentLabPage.astro";
+import { experiments } from "../../data/experimentLab";
+
+export function getStaticPaths() {
+  return experiments.map((experiment) => ({
+    params: { id: String(experiment.id) },
+    props: { experiment },
+  }));
+}
+
+const { experiment } = Astro.props;
+---
+
+<ExperimentLabPage experiment={experiment} />

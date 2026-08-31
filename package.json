@@ -8,6 +8,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "check:experiment-lab": "node scripts/check-experiment-lab.mjs",
     "sync:schedule": "node scripts/sync-google-sheet.mjs",
     "check:schedule-privacy": "node scripts/check-schedule-privacy.mjs"
   },

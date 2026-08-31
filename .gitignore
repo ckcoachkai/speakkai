@@ -13,3 +13,5 @@ yarn-error.log*
 .static-preview*.log
 desktop-preview.png
 mobile-preview.png
+.playwright-cli/
+output/
