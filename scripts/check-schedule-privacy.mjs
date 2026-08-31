@@ -7,10 +7,17 @@ import {
   sanitizeCalendarCell,
 } from "./schedule-privacy.mjs";
 
-const schedulePath = resolve("public/data/schedule.json");
-const schedule = JSON.parse(await readFile(schedulePath, "utf8"));
+const publicSchedulePath = resolve("public/data/schedule.json");
+const internalSchedulePath = resolve("public/data/schedule-internal.json");
+const publicSchedule = JSON.parse(await readFile(publicSchedulePath, "utf8"));
+const internalSchedule = JSON.parse(await readFile(internalSchedulePath, "utf8"));
 
-assertCalendarDisplayPublicSchedule(schedule);
+assertCalendarDisplayPublicSchedule(publicSchedule);
+assertCalendarDisplayPublicSchedule(internalSchedule);
+assert.deepEqual(publicSchedule.sheets.map((sheet) => sheet.title), ["September 2026"]);
+for (const title of ["July 2026", "August 2026", "September 2026"]) {
+  assert.ok(internalSchedule.sheets.some((sheet) => sheet.title === title), `Internal schedule is missing ${title}.`);
+}
 
 assert.equal(
   sanitizeCalendarCell(

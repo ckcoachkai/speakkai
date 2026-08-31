@@ -852,7 +852,7 @@ import "@fontsource/manrope/700.css";
           updatedTime.textContent = "";
           return;
         }
-        const visibleSheets = data.sheets.filter((sheet) => sheet.title !== "July 2026");
+        const visibleSheets = data.sheets;
         if (data.status !== "ready" || visibleSheets.length === 0) {
           showStatus("时间表尚未发布", "Schedule setup is not complete");
           updatedTime.textContent = "等待首次同步 Waiting for first sync";

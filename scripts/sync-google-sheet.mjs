@@ -6,7 +6,8 @@ import {
   sanitizeCalendarGrid,
 } from "./schedule-privacy.mjs";
 
-const OUTPUT_PATH = resolve("public/data/schedule.json");
+const PUBLIC_OUTPUT_PATH = resolve("public/data/schedule.json");
+const INTERNAL_OUTPUT_PATH = resolve("public/data/schedule-internal.json");
 const MONTH_NAMES = [
   "January",
   "February",
@@ -314,21 +315,33 @@ async function fetchPublishedSheet(feed) {
 async function main() {
   const feeds = await resolveFeeds();
   const sheets = await Promise.all(feeds.map(fetchPublishedSheet));
+  const publicMonth = process.env.GOOGLE_PUBLIC_SCHEDULE_MONTH?.trim() || "2026-09";
+  const publicMonthKey = parseStartMonth(publicMonth);
+  const publicSheets = sheets.filter((sheet) => toMonthKey(sheet.title) === publicMonthKey);
 
-  const output = {
+  if (publicSheets.length !== 1) {
+    throw new Error(`The public schedule month ${publicMonth} was not found exactly once.`);
+  }
+
+  const common = {
     status: "ready",
     updatedAt: new Date().toISOString(),
     spreadsheetTitle: "Kai Schedule 2026",
     timeZone: "Asia/Shanghai",
     privacyMode: PUBLIC_PRIVACY_MODE,
-    sheets,
   };
+  const publicOutput = { ...common, sheets: publicSheets };
+  const internalOutput = { ...common, sheets };
 
-  assertCalendarDisplayPublicSchedule(output);
+  assertCalendarDisplayPublicSchedule(publicOutput);
+  assertCalendarDisplayPublicSchedule(internalOutput);
 
-  await mkdir(dirname(OUTPUT_PATH), { recursive: true });
-  await writeFile(OUTPUT_PATH, `${JSON.stringify(output)}\n`, "utf8");
-  console.log(`Mirrored ${sheets.length} published schedule tab(s).`);
+  await mkdir(dirname(PUBLIC_OUTPUT_PATH), { recursive: true });
+  await Promise.all([
+    writeFile(PUBLIC_OUTPUT_PATH, `${JSON.stringify(publicOutput)}\n`, "utf8"),
+    writeFile(INTERNAL_OUTPUT_PATH, `${JSON.stringify(internalOutput)}\n`, "utf8"),
+  ]);
+  console.log(`Mirrored ${publicSheets.length} public and ${sheets.length} internal schedule tab(s).`);
 }
 
 main().catch((error) => {

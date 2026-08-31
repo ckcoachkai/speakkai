@@ -23,6 +23,7 @@ jobs:
     env:
       GOOGLE_PUBLISHED_SHEETS_URL: https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8_5GzBV_NO2SBGWIQwBXkO8Jq6uVMCenblygeTLUN20y5FBIm0XQs0YKM7pshaN3A3U2E6s-qxByB/pubhtml
       GOOGLE_SCHEDULE_START_MONTH: "2026-07"
+      GOOGLE_PUBLIC_SCHEDULE_MONTH: "2026-09"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
