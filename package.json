@@ -13,6 +13,7 @@
     "check:original-visuals": "python scripts/compare-original-screenshots.py",
     "check:evolution-quality": "node scripts/check-evolution-quality.mjs",
     "check:version3-variants": "node scripts/check-evolution-quality.mjs",
+    "check:production-homepage": "node scripts/check-production-homepage.mjs",
     "check:experiment-viewports": "node design-lab-v4/scripts/check-one-screen.mjs",
     "check:experiment-interactions": "node design-lab-v4/scripts/check-interactions.mjs",
     "check:experiment-responsive": "node design-lab-v4/scripts/check-responsive.mjs",

@@ -1,0 +1,105 @@
+---
+import Portrait from "./experiments-v4/Portrait.astro";
+import { activeExperimentV4ByNumber } from "../data/experimentLabV4";
+
+const homepage = activeExperimentV4ByNumber.get(5);
+if (!homepage) throw new Error("Version 5 is missing from the active experiment registry.");
+const { content } = homepage;
+const panelId = (index: number) => `homepage-panel-${index}`;
+---
+
+<article class="v4-experiment v4-modern production-v5" data-qa="homepage-root" data-source-number="41">
+  <div class="glass-canvas" data-interaction data-active={panelId(0)}>
+    <div class="glass-orbit" aria-hidden="true"></div>
+    <Portrait treatment="portrait-glass" label="Coach Kai / communication coach" />
+    <section class="glass-message" data-qa="primary-message">
+      <p class="v4-kicker">SpeakKai / Communication coaching</p>
+      <h1>{content.headline}</h1>
+      <p>{content.summary}</p>
+    </section>
+    <div class="glass-planes" role="tablist" aria-label="Explore SpeakKai">
+      {content.panels.map((item, index) => (
+        <button
+          class={`glass-plane plane-${index + 1}`}
+          type="button"
+          role="tab"
+          data-home-control
+          data-target={panelId(index)}
+          aria-controls={panelId(index)}
+          aria-selected={index === 0 ? "true" : "false"}
+          tabindex={index === 0 ? "0" : "-1"}
+        >
+          <span>0{index + 1}</span>
+          <strong>{item.label}</strong>
+          <small>{item.title}</small>
+        </button>
+      ))}
+    </div>
+    <aside class="glass-panel">
+      {content.panels.map((item, index) => (
+        <section id={panelId(index)} role="tabpanel" data-home-panel hidden={index !== 0}>
+          <h2>{item.title}</h2>
+          <p>{item.copy}</p>
+        </section>
+      ))}
+      <div class="v4-actions">
+        <a href={homepage.primaryHref} data-qa="primary-cta">{homepage.primaryCta}</a>
+        <a href={content.secondaryHref}>{content.secondaryCta}</a>
+      </div>
+      <small>Speech, debate, storytelling, presentation, and communication coaching in Shanghai and online.</small>
+    </aside>
+  </div>
+</article>
+
+<script is:inline>
+  (() => {
+    const group = document.querySelector('.production-v5 [data-interaction]');
+    if (!group) return;
+    const buttons = [...group.querySelectorAll('[data-home-control]')];
+    const panels = [...group.querySelectorAll('[data-home-panel]')];
+    let pauseUntil = 0;
+
+    const activate = (button, focus = false) => {
+      const target = button.getAttribute('data-target');
+      buttons.forEach((item) => {
+        const active = item === button;
+        item.setAttribute('aria-selected', String(active));
+        item.tabIndex = active ? 0 : -1;
+      });
+      panels.forEach((panel) => {
+        const active = panel.id === target;
+        panel.hidden = !active;
+        panel.classList.toggle('is-active', active);
+      });
+      group.setAttribute('data-active', target || '');
+      if (focus) button.focus();
+    };
+
+    buttons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        pauseUntil = Date.now() + 9000;
+        activate(button);
+      });
+      button.addEventListener('keydown', (event) => {
+        const keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'];
+        if (!keys.includes(event.key)) return;
+        event.preventDefault();
+        pauseUntil = Date.now() + 9000;
+        let next = index;
+        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % buttons.length;
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + buttons.length) % buttons.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = buttons.length - 1;
+        activate(buttons[next], true);
+      });
+    });
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.setInterval(() => {
+        if (Date.now() < pauseUntil || document.hidden) return;
+        const current = buttons.findIndex((button) => button.getAttribute('aria-selected') === 'true');
+        activate(buttons[(current + 1) % buttons.length]);
+      }, 3000);
+    }
+  })();
+</script>
