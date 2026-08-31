@@ -1,0 +1,241 @@
+---
+import TestSwitcher from "./TestSwitcher.astro";
+import "../styles/champion-concepts.css";
+
+interface Props { id: "11" | "12" | "13" | "14" | "15" | "16"; }
+const { id } = Astro.props;
+
+const meta = {
+  "11": {
+    title: "Potential, Seen",
+    description: "A cinematic SpeakKai concept centered on transformation and unrealized potential.",
+    tone: "dark",
+  },
+  "12": {
+    title: "High-Stakes Clarity",
+    description: "A professional SpeakKai concept centered on winning important presentations.",
+    tone: "light",
+  },
+  "13": {
+    title: "Voice Creates Value",
+    description: "An optimistic SpeakKai concept about voice, visibility, and value.",
+    tone: "light",
+  },
+  "14": {
+    title: "The Transformation",
+    description: "A bold SpeakKai manifesto about communication as transformation.",
+    tone: "dark",
+  },
+  "15": {
+    title: "Make It Unforgettable",
+    description: "A stage-led SpeakKai concept centered on memorable stories and practical performance.",
+    tone: "dark",
+  },
+  "16": {
+    title: "The World-Stage Standard",
+    description: "A premium synthesis of the strongest world-class speaker website patterns.",
+    tone: "dark",
+  },
+} as const;
+
+const page = meta[id];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={page.description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content={id === "13" ? "#9cb7bd" : id === "12" ? "#f6f5f0" : "#0b0c0b"} />
+    <title>SpeakKai Test {id} | {page.title}</title>
+  </head>
+  <body class={`champion-concept champion-${id}`}>
+    {id === "11" && (
+      <main>
+        <header class="c11-nav">
+          <a class="c11-brand" href="/">SPEAK<span>KAI</span></a>
+          <p>Communication coaching · Shanghai + online</p>
+          <nav aria-label="Test 11 navigation"><a href="#journey">The journey</a><a href="/about/">Coach Kai</a><a class="c11-book" href="/contact/">Begin ↗</a></nav>
+        </header>
+        <section class="c11-hero">
+          <div class="c11-portrait">
+            <img src="/images/coach-kai-headshot.webp" width="1254" height="1254" alt="Coach Kai" fetchpriority="high" decoding="async" />
+          </div>
+          <div class="c11-copy">
+            <p>Test 11 · Potential, seen</p>
+            <h1>The speaker you could become is already <em>in there.</em></h1>
+            <p>Coach Kai helps students, professionals, and teams turn hidden ideas into clear messages—and clear messages into visible confidence.</p>
+            <a href="/contact/">Discover what your voice can do <span>↗</span></a>
+          </div>
+          <div class="c11-stamp"><b>VOICE</b><span>to</span><b>VICTORY</b></div>
+        </section>
+        <section class="c11-journey" id="journey">
+          <header><p>One transformation, five expanding effects</p><h2>It starts with a sentence.<br />It ends with how people remember you.</h2></header>
+          <ol>
+            <li><b>01</b><span>Speak</span><p>Shape the thought.</p></li>
+            <li><b>02</b><span>Connect</span><p>Reach the person.</p></li>
+            <li><b>03</b><span>Influence</span><p>Move the room.</p></li>
+            <li><b>04</b><span>Build</span><p>Repeat the result.</p></li>
+            <li><b>05</b><span>Reputation</span><p>Become known for it.</p></li>
+          </ol>
+        </section>
+        <section class="c11-close"><p>There is more in your voice than you can hear right now.</p><a href="/contact/">Let’s find it together ↗</a></section>
+      </main>
+    )}
+
+    {id === "12" && (
+      <main>
+        <div class="c12-top"><span>WIN THE MOMENTS THAT MATTER</span><span>Speaking · Debate · Presentations</span></div>
+        <header class="c12-nav">
+          <a href="/" class="c12-logo"><b>SK</b><span>Coach Kai<small>High-Stakes Communication</small></span></a>
+          <nav aria-label="Test 12 navigation"><a href="#solutions">Solutions</a><a href="#process">Process</a><a href="/about/">About</a><a class="c12-check" href="/schedule/">Check availability</a></nav>
+        </header>
+        <section class="c12-hero">
+          <div class="c12-copy">
+            <p>Test 12 · High-stakes clarity</p>
+            <h1>When the presentation matters, <em>preparation shows.</em></h1>
+            <p>Practical coaching for the interview, pitch, speech, debate, or boardroom moment you cannot afford to leave to chance.</p>
+            <div><a href="/contact/">Prepare with Coach Kai</a><a href="#process">See the process ↓</a></div>
+          </div>
+          <figure>
+            <img src="/images/coach-kai-headshot.webp" width="1254" height="1254" alt="Coach Kai" fetchpriority="high" />
+            <figcaption><b>CLARITY</b><span>under pressure</span></figcaption>
+          </figure>
+        </section>
+        <section class="c12-solutions" id="solutions">
+          <p>Choose the outcome</p>
+          <article><b>01</b><h2>Make the message land.</h2><span>Structure · Story · Evidence</span></article>
+          <article><b>02</b><h2>Make the delivery credible.</h2><span>Voice · Presence · Body language</span></article>
+          <article><b>03</b><h2>Make the result repeatable.</h2><span>Rehearsal · Feedback · Refinement</span></article>
+        </section>
+        <section class="c12-process" id="process">
+          <div><p>The preparation room</p><h2>Practice the pressure before the pressure arrives.</h2></div>
+          <ol><li><b>1</b><span>Diagnose the moment</span></li><li><b>2</b><span>Build the message</span></li><li><b>3</b><span>Rehearse realistically</span></li><li><b>4</b><span>Refine what matters</span></li></ol>
+        </section>
+      </main>
+    )}
+
+    {id === "13" && (
+      <main>
+        <header class="c13-nav">
+          <a href="/" class="c13-brand">SpeakKai<small>voice · value · victory</small></a>
+          <nav aria-label="Test 13 navigation"><a href="#paths">Coaching</a><a href="/about/">About</a><a href="/resources/">Resources</a><a href="/contact/">Talk to Kai</a></nav>
+        </header>
+        <section class="c13-hero">
+          <div class="c13-statement">
+            <p>Test 13 · Optimistic authority</p>
+            <h1>If your voice stays outside the room, so does your <mark>VALUE.</mark></h1>
+          </div>
+          <div class="c13-intro">
+            <p>Coach Kai helps thoughtful people find their voice, own their ideas, and show up with the kind of presence people remember.</p>
+            <div><strong>One clear voice</strong><span>can change the energy of a whole room.</span></div>
+          </div>
+          <img src="/images/coach-kai-headshot.webp" width="1254" height="1254" alt="Coach Kai" />
+          <i class="c13-orb c13-orb-a"></i><i class="c13-orb c13-orb-b"></i>
+        </section>
+        <section class="c13-proof"><span>Speak with clarity</span><span>Connect with warmth</span><span>Influence with purpose</span><span>Build what lasts</span></section>
+        <section class="c13-paths" id="paths">
+          <header><p>Find your path</p><h2>Different rooms.<br /><em>One authentic voice.</em></h2></header>
+          <article><b>01</b><h3>Young speakers</h3><p>Confidence that feels exciting, not forced.</p><a href="/contact/">Explore coaching ↗</a></article>
+          <article><b>02</b><h3>Professionals</h3><p>Clarity and presence for important conversations.</p><a href="/contact/">Prepare together ↗</a></article>
+          <article><b>03</b><h3>Schools &amp; teams</h3><p>Communication habits that lift the whole room.</p><a href="/contact/">Design a program ↗</a></article>
+        </section>
+        <section class="c13-close"><h2>Optimism is useful when it has a voice.</h2><a href="/contact/">Book a discovery conversation ↗</a></section>
+      </main>
+    )}
+
+    {id === "14" && (
+      <main>
+        <header class="c14-nav">
+          <a href="/">KAI.</a><span>Coach · Speaker · Builder of voices</span><a href="/contact/">Work together</a>
+        </header>
+        <section class="c14-hero">
+          <p>Test 14 · The transformation</p>
+          <h1>Your audience doesn’t need more information.</h1>
+          <h2>They need to <em>feel the change.</em></h2>
+          <p>Communication coaching for people ready to move from knowing what they mean to making other people understand it.</p>
+          <a href="#method">Enter the method ↓</a>
+        </section>
+        <section class="c14-story">
+          <figure><img src="/images/coach-kai-headshot.webp" width="1254" height="1254" alt="Coach Kai" /></figure>
+          <div><p>THE COACH</p><h2>Clear feedback. Real rehearsal. Visible change.</h2><p>Kai works where thinking and performance meet: helping each speaker understand what to say, how to say it, and why the audience should care.</p><a href="/about/">Meet Coach Kai ↗</a></div>
+        </section>
+        <section class="c14-method" id="method">
+          <header><p>The Ripple Method</p><h2>Five moves.<br />One transformation.</h2></header>
+          <ol><li><b>S</b><span>Speak</span><p>Clarify the thought.</p></li><li><b>C</b><span>Connect</span><p>Include the audience.</p></li><li><b>I</b><span>Influence</span><p>Move belief or action.</p></li><li><b>B</b><span>Build</span><p>Make progress repeatable.</p></li><li><b>R</b><span>Reputation</span><p>Let the result compound.</p></li></ol>
+        </section>
+        <section class="c14-close"><p>Don’t just finish the speech.</p><h2>Change the room.</h2><a href="/contact/">Start the transformation ↗</a></section>
+      </main>
+    )}
+
+    {id === "15" && (
+      <main>
+        <header class="c15-nav">
+          <a href="/" class="c15-brand">Coach Kai<small>Stories people carry with them</small></a>
+          <nav aria-label="Test 15 navigation"><a href="#keynotes">Speaking</a><a href="#coaching">Coaching</a><a href="/about/">About</a><a href="/contact/">Bring Kai in</a></nav>
+        </header>
+        <section class="c15-hero">
+          <img src="/images/coach-kai-banner-desktop.webp" width="2508" height="627" alt="Coach Kai against a blue stage-inspired backdrop" fetchpriority="high" decoding="async" />
+          <div class="c15-overlay">
+            <p>Test 15 · Memorable by design</p>
+            <h1>Better stories.<br /><em>Braver speakers.</em></h1>
+            <p>Useful ideas are not enough. Make them memorable, practical, and ready to travel beyond the room.</p>
+            <a href="#keynotes">See what Kai brings to the stage ↓</a>
+          </div>
+          <span class="c15-play">WATCH<br />THE IDEA<br />MOVE ▶</span>
+        </section>
+        <section class="c15-question"><span>Will they remember it in</span><b>3 days?</b><b>3 weeks?</b><b>3 months?</b></section>
+        <section class="c15-keynotes" id="keynotes">
+          <header><p>Speaking &amp; workshops</p><h2>Moments built to be <em>used</em> after the applause.</h2></header>
+          <article><span>01</span><h3>The Ripple Effect</h3><p>How one clear voice builds connection, influence, and reputation.</p><a href="/contact/">Explore this session ↗</a></article>
+          <article><span>02</span><h3>Stories That Move</h3><p>Turn experience into a story an audience can feel and act on.</p><a href="/contact/">Explore this session ↗</a></article>
+          <article><span>03</span><h3>Speak Under Pressure</h3><p>Structure, presence, and calm for high-stakes communication.</p><a href="/contact/">Explore this session ↗</a></article>
+        </section>
+        <section class="c15-coaching" id="coaching"><p>For speakers who want the work behind the moment</p><h2>Prepare. Perform. Review. Repeat.</h2><a href="/contact/">Coach with Kai ↗</a></section>
+      </main>
+    )}
+
+    {id === "16" && (
+      <main>
+        <header class="c16-nav">
+          <a href="/" class="c16-brand">SPEAK<span>KAI</span></a>
+          <p>Communication for the moments that shape what comes next.</p>
+          <nav aria-label="Test 16 navigation"><a href="#standard">The standard</a><a href="#offers">Ways to work</a><a class="c16-cta" href="/contact/">Talk to Kai ↗</a></nav>
+        </header>
+        <section class="c16-hero">
+          <div class="c16-copy">
+            <p>Test 16 · World-stage synthesis</p>
+            <h1>A clear voice can <mark>change your trajectory.</mark></h1>
+            <p>High-touch coaching for students, leaders, and teams who want their ideas to arrive with clarity, credibility, and lasting influence.</p>
+            <div><a href="/contact/">Tell Kai what’s coming up ↗</a><a href="#standard">See the standard ↓</a></div>
+          </div>
+          <div class="c16-visual">
+            <img src="/images/coach-kai-headshot.webp" width="1254" height="1254" alt="Coach Kai" fetchpriority="high" />
+            <span class="c16-ring c16-ring-1"></span><span class="c16-ring c16-ring-2"></span><span class="c16-ring c16-ring-3"></span>
+            <p>Speak → Connect → Influence → Build → Reputation</p>
+          </div>
+        </section>
+        <section class="c16-standard" id="standard">
+          <header><p>What world-class speaker sites make clear</p><h2>Promise the change.<br />Prove the method.<br /><em>Invite the next step.</em></h2></header>
+          <div>
+            <article><b>01</b><h3>A memorable promise</h3><p>Your visitor should understand the transformation before they understand the curriculum.</p></article>
+            <article><b>02</b><h3>A visible human</h3><p>Coaching is personal. The person, point of view, and presence should lead.</p></article>
+            <article><b>03</b><h3>A usable method</h3><p>Inspiration becomes valuable when people can see how progress will happen.</p></article>
+            <article><b>04</b><h3>A decisive invitation</h3><p>Every section should make the next meaningful action easier.</p></article>
+          </div>
+        </section>
+        <section class="c16-offers" id="offers">
+          <header><p>Ways to work with Kai</p><h2>Choose the room.<br />Build the voice.</h2></header>
+          <a href="/contact/"><span>01</span><b>Private coaching</b><em>Students &amp; professionals ↗</em></a>
+          <a href="/contact/"><span>02</span><b>Schools &amp; teams</b><em>Programs &amp; workshops ↗</em></a>
+          <a href="/contact/"><span>03</span><b>Speaking &amp; events</b><em>Talks &amp; facilitation ↗</em></a>
+        </section>
+        <section class="c16-close"><span>YOUR NEXT ROOM</span><h2>What should your voice make possible?</h2><a href="/contact/">Start the conversation ↗</a></section>
+      </main>
+    )}
+
+    <TestSwitcher current={id} tone={page.tone} />
+  </body>
+</html>
