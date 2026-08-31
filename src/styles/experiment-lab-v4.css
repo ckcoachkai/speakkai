@@ -550,8 +550,11 @@ img { display: block; max-width: 100%; }
 /* Version 3 refinement lab — controlled color, contrast, frame, and type variations */
 .v4-version-5 .glass-canvas { background: radial-gradient(circle at 39% 42%, #5e88c7 0, #28518d 37%, #10224a 78%); }
 .v4-version-5 .glass-plane { background: rgba(245, 249, 255, .17); border-color: rgba(220, 235, 255, .55); }
+.production-v5 .glass-planes { gap: 8px; }
+.production-v5 .glass-plane { min-height: 78px; padding: 10px 12px; }
+.production-v5 .glass-plane strong { margin-top: 5px; }
 .v4-version-5 .glass-panel { background: rgba(249, 251, 255, .97); }
-.v4-version-5 .glass-panel section.is-active { animation: glass-panel-v5-in 2.4s cubic-bezier(.2, .76, .24, 1) both; }
+.v4-version-5 .glass-panel section.is-active { animation: glass-panel-v5-in 3.6s cubic-bezier(.2, .76, .24, 1) both; }
 [data-home-control] { cursor: pointer; }
 [data-home-control][aria-selected="true"] { outline: 2px solid var(--yellow); outline-offset: 2px; }
 @keyframes glass-panel-v5-in { from { opacity: 0; translate: 42vw 0; } to { opacity: 1; translate: 0; } }

@@ -6,6 +6,33 @@ const homepage = activeExperimentV4ByNumber.get(5);
 if (!homepage) throw new Error("Version 5 is missing from the active experiment registry.");
 const { content } = homepage;
 const panelId = (index: number) => `homepage-panel-${index}`;
+const homePanels = [
+  {
+    label: "About",
+    title: "Meet Coach Kai",
+    copy: "Read Kai's current background, roles, and coaching approach on the public About page.",
+  },
+  {
+    label: "Philosophy",
+    title: "Clarify. Practise. Refine.",
+    copy: "Start with the audience and goal, shape the message, rehearse, notice the effect, and choose the next adjustment.",
+  },
+  {
+    label: "Programs",
+    title: "Start with the speaking need",
+    copy: "Speech, debate, storytelling, presentation, and communication coaching.",
+  },
+  {
+    label: "Paradigm",
+    title: "Goal. Attempt. Feedback. Next attempt.",
+    copy: "Speaking develops through concrete attempts, specific feedback, and deliberate revision.",
+  },
+  {
+    label: "Media",
+    title: "Explore public resources",
+    copy: "Open SpeakKai's working tools, site pages, and current public materials.",
+  },
+];
 ---
 
 <article class="v4-experiment v4-modern production-v5" data-qa="homepage-root" data-source-number="41">
@@ -18,7 +45,7 @@ const panelId = (index: number) => `homepage-panel-${index}`;
       <p>{content.summary}</p>
     </section>
     <div class="glass-planes" role="tablist" aria-label="Explore SpeakKai">
-      {content.panels.map((item, index) => (
+      {homePanels.map((item, index) => (
         <button
           class={`glass-plane plane-${index + 1}`}
           type="button"
@@ -36,7 +63,7 @@ const panelId = (index: number) => `homepage-panel-${index}`;
       ))}
     </div>
     <aside class="glass-panel">
-      {content.panels.map((item, index) => (
+      {homePanels.map((item, index) => (
         <section id={panelId(index)} role="tabpanel" data-home-panel hidden={index !== 0}>
           <h2>{item.title}</h2>
           <p>{item.copy}</p>
@@ -99,7 +126,7 @@ const panelId = (index: number) => `homepage-panel-${index}`;
         if (Date.now() < pauseUntil || document.hidden) return;
         const current = buttons.findIndex((button) => button.getAttribute('aria-selected') === 'true');
         activate(buttons[(current + 1) % buttons.length]);
-      }, 3000);
+      }, 4500);
     }
   })();
 </script>

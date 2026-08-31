@@ -11,7 +11,9 @@ const { current, compact = false } = Astro.props;
 
 <header class="spatial-site-header">
   <div class="spatial-brand-block">
-    <a class="spatial-brand" href="/" aria-label="SpeakKai home">SpeakKai</a>
+    <a class="spatial-brand" href="/" aria-label="SpeakKai 说开 home">
+      <span>SpeakKai</span><span class="spatial-brand-chinese" lang="zh-CN">说开</span>
+    </a>
     <slot name="context" />
   </div>
   <SiteNavigation current={current} compact={compact} />
@@ -34,12 +36,22 @@ const { current, compact = false } = Astro.props;
 
   .spatial-brand-block { min-width: 0; }
   .spatial-brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
     color: #10224a;
     font-family: "Manrope", Inter, system-ui, sans-serif;
     font-size: 17px;
     font-weight: 800;
     letter-spacing: -.035em;
     text-decoration: none;
+  }
+
+  .spatial-brand-chinese {
+    color: #a77d00;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: .04em;
   }
 
   .spatial-header-action { min-width: 0; justify-self: end; }

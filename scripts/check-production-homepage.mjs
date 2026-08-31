@@ -17,7 +17,9 @@ const initial = await desktop.evaluate(() => ({
   h1Count: document.querySelectorAll("h1").length,
   labNavCount: document.querySelectorAll(".v4-nav, [data-qa='test-switcher']").length,
   productionHeaderCount: document.querySelectorAll(".spatial-site-header").length,
+  brandText: document.querySelector(".spatial-brand")?.textContent?.replace(/\s+/g, " ").trim() || "",
   controls: document.querySelectorAll("[data-home-control]").length,
+  controlLabels: [...document.querySelectorAll("[data-home-control] strong")].map((item) => item.textContent?.trim()),
   primaryCtaCount: document.querySelectorAll('[data-qa="primary-cta"]').length,
   horizontalOverflow: Math.max(0, document.documentElement.scrollWidth - innerWidth),
   imagesLoaded: [...document.images].every((image) => image.complete && image.naturalWidth > 0),
@@ -30,12 +32,14 @@ assert(!initial.robots.toLowerCase().includes("noindex"), "Production homepage m
 assert(initial.h1Count === 1, "Production homepage must contain exactly one H1.");
 assert(initial.labNavCount === 0, "Experiment-lab toolbar leaked onto the production homepage.");
 assert(initial.productionHeaderCount === 1, "Production navigation is missing.");
-assert(initial.controls === 3, "Production homepage must contain three information controls.");
+assert(initial.brandText === "SpeakKai 说开", "Homepage brand does not include 说开 after SpeakKai.");
+assert(initial.controls === 5, "Production homepage must contain five information controls.");
+assert(JSON.stringify(initial.controlLabels) === JSON.stringify(["About", "Philosophy", "Programs", "Paradigm", "Media"]), "Homepage information controls are not labelled as requested.");
 assert(initial.primaryCtaCount === 1, "Production homepage must contain one primary CTA.");
 assert(initial.horizontalOverflow <= 4, "Desktop homepage has horizontal overflow.");
 assert(initial.imagesLoaded, "A production homepage image failed to load.");
 
-await desktop.waitForTimeout(3200);
+await desktop.waitForTimeout(4700);
 const motion = await desktop.evaluate(() => {
   const controls = [...document.querySelectorAll("[data-home-control]")];
   const activeControl = controls.findIndex((control) => control.getAttribute("aria-selected") === "true");
@@ -49,7 +53,7 @@ const motion = await desktop.evaluate(() => {
   };
 });
 assert(motion.activeControl === 1, "Automatic rotation did not advance from item one to item two.");
-assert(motion.animationDuration === 2400, "Panel entrance is not using the requested 2.4-second duration.");
+assert(motion.animationDuration === 3600, "Panel entrance is not using the requested 3.6-second duration.");
 assert(["running", "finished"].includes(motion.animationPlayState), "Panel entrance animation did not run.");
 
 const controls = desktop.locator("[data-home-control]");
@@ -68,7 +72,7 @@ const mobileState = await mobile.evaluate(() => ({
 assert(mobileState.horizontalOverflow <= 4, "Mobile homepage has horizontal overflow.");
 assert(mobileState.navVisible, "Mobile production navigation is missing.");
 assert(mobileState.h1Visible, "Mobile homepage heading is missing.");
-assert(mobileState.controls === 3, "Mobile homepage controls are incomplete.");
+assert(mobileState.controls === 5, "Mobile homepage controls are incomplete.");
 assert(consoleErrors.length === 0, `Homepage logged console errors: ${consoleErrors.join(" | ")}`);
 
 await browser.close();
@@ -79,4 +83,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("Production Version 5 homepage check passed: metadata, clean navigation, responsive layout, keyboard controls, automatic rotation, and 2.4-second entrance motion.");
+console.log("Production Version 5 homepage check passed: metadata, bilingual brand, responsive layout, keyboard controls, 4.5-second automatic rotation, and 3.6-second entrance motion.");
