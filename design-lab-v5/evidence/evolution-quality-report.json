@@ -1,0 +1,1306 @@
+{
+  "report": [
+    {
+      "version": 5,
+      "viewport": {
+        "name": "desktop-1920",
+        "width": 1920,
+        "height": 1080
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 154442,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 6,
+      "viewport": {
+        "name": "desktop-1920",
+        "width": 1920,
+        "height": 1080
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 7,
+      "viewport": {
+        "name": "desktop-1920",
+        "width": 1920,
+        "height": 1080
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 8,
+      "viewport": {
+        "name": "desktop-1920",
+        "width": 1920,
+        "height": 1080
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 9,
+      "viewport": {
+        "name": "desktop-1920",
+        "width": 1920,
+        "height": 1080
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 2806,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 10,
+      "viewport": {
+        "name": "desktop-1920",
+        "width": 1920,
+        "height": 1080
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 11,
+      "viewport": {
+        "name": "desktop-1920",
+        "width": 1920,
+        "height": 1080
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 12,
+      "viewport": {
+        "name": "desktop-1920",
+        "width": 1920,
+        "height": 1080
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 5,
+      "viewport": {
+        "name": "desktop-1440",
+        "width": 1440,
+        "height": 900
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 154442,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 6,
+      "viewport": {
+        "name": "desktop-1440",
+        "width": 1440,
+        "height": 900
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 7,
+      "viewport": {
+        "name": "desktop-1440",
+        "width": 1440,
+        "height": 900
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 8,
+      "viewport": {
+        "name": "desktop-1440",
+        "width": 1440,
+        "height": 900
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 9,
+      "viewport": {
+        "name": "desktop-1440",
+        "width": 1440,
+        "height": 900
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 2806,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 10,
+      "viewport": {
+        "name": "desktop-1440",
+        "width": 1440,
+        "height": 900
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 11,
+      "viewport": {
+        "name": "desktop-1440",
+        "width": 1440,
+        "height": 900
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 12,
+      "viewport": {
+        "name": "desktop-1440",
+        "width": 1440,
+        "height": 900
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 5,
+      "viewport": {
+        "name": "laptop",
+        "width": 1366,
+        "height": 768
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 154442,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 6,
+      "viewport": {
+        "name": "laptop",
+        "width": 1366,
+        "height": 768
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 7,
+      "viewport": {
+        "name": "laptop",
+        "width": 1366,
+        "height": 768
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 8,
+      "viewport": {
+        "name": "laptop",
+        "width": 1366,
+        "height": 768
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 9,
+      "viewport": {
+        "name": "laptop",
+        "width": 1366,
+        "height": 768
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 2806,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 10,
+      "viewport": {
+        "name": "laptop",
+        "width": 1366,
+        "height": 768
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 11,
+      "viewport": {
+        "name": "laptop",
+        "width": 1366,
+        "height": 768
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 12,
+      "viewport": {
+        "name": "laptop",
+        "width": 1366,
+        "height": 768
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 5,
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 154442,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 6,
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 7,
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 8,
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 9,
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 2806,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 10,
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 11,
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 12,
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 5,
+      "viewport": {
+        "name": "mobile-large",
+        "width": 390,
+        "height": 844
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 154442,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 6,
+      "viewport": {
+        "name": "mobile-large",
+        "width": 390,
+        "height": 844
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 7,
+      "viewport": {
+        "name": "mobile-large",
+        "width": 390,
+        "height": 844
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 8,
+      "viewport": {
+        "name": "mobile-large",
+        "width": 390,
+        "height": 844
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 9,
+      "viewport": {
+        "name": "mobile-large",
+        "width": 390,
+        "height": 844
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 2806,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 10,
+      "viewport": {
+        "name": "mobile-large",
+        "width": 390,
+        "height": 844
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 11,
+      "viewport": {
+        "name": "mobile-large",
+        "width": 390,
+        "height": 844
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 12,
+      "viewport": {
+        "name": "mobile-large",
+        "width": 390,
+        "height": 844
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 5,
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 800
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 154442,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 6,
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 800
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 7,
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 800
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 8,
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 800
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1500,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 0,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 9,
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 800
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 2806,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 10,
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 800
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 11,
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 800
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 4,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "version": 12,
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 800
+      },
+      "checks": {
+        "status": true,
+        "h1Count": 1,
+        "sectionCount": 5,
+        "horizontalOverflow": 0,
+        "imagesLoaded": true,
+        "unnamedButtons": 0,
+        "emptyLinks": 0,
+        "primaryCtaCount": 2,
+        "editorUiPremature": false,
+        "visualEditorLoaded": false,
+        "totalTransfer": 1800,
+        "autoplayMedia": 0,
+        "httpStatus": 200,
+        "editButton": 1,
+        "failed": false
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    }
+  ],
+  "gallery": {
+    "cards": 12,
+    "horizontalOverflow": 0,
+    "failed": false
+  },
+  "keyboardTabs": true
+}

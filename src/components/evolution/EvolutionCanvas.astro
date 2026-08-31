@@ -1,0 +1,307 @@
+---
+import type { EvolutionConfig } from "../../data/evolutionConfigs";
+
+interface Props {
+  config: EvolutionConfig;
+  editable?: boolean;
+}
+
+const { config, editable = false } = Astro.props;
+const edit = (id: string, type: string, label: string) => ({
+  "data-edit-id": id,
+  "data-edit-type": type,
+  "data-edit-label": label,
+});
+---
+
+<main class:list={["evo-canvas", `evo-${config.theme}`, { "is-editable-template": editable }]} data-evolution-version={config.version} data-editor-canvas>
+  {config.theme === "atelier" && (
+    <>
+      <section class="atelier-hero" data-editor-section="hero" data-section-label="Hero">
+        <div class="atelier-hero-copy">
+          <p class="evo-eyebrow" {...edit("hero-eyebrow", "text", "Hero eyebrow")}>{config.hero.eyebrow}</p>
+          <h1 {...edit("hero-title", "text", "Hero heading")}>{config.hero.headline}</h1>
+          <p class="evo-lede" {...edit("hero-summary", "text", "Hero summary")}>{config.hero.summary}</p>
+          <div class="evo-actions" {...edit("hero-actions", "container", "Hero actions")}>
+            <a class="evo-button primary" href={config.hero.primaryHref} {...edit("hero-primary-cta", "button", "Primary button")}>{config.hero.primaryCta}</a>
+            <a class="evo-button text" href={config.hero.secondaryHref} {...edit("hero-secondary-cta", "button", "Secondary button")}>{config.hero.secondaryCta}</a>
+          </div>
+        </div>
+        <figure class="atelier-portrait" {...edit("hero-image", "image", "Coach Kai portrait")}>
+          <div class="portrait-mat"><img src="/images/coach-kai-headshot.webp" width="1400" height="1400" alt="Coach Kai" fetchpriority="high" decoding="async" /></div>
+          <figcaption>Coach Kai · Communication coach</figcaption>
+        </figure>
+        <div class="atelier-note" {...edit("hero-note", "container", "Coaching note")}>
+          <span>Working principle</span>
+          <strong>Specific feedback. Another purposeful attempt.</strong>
+        </div>
+        <div class="atelier-rule" aria-hidden="true"></div>
+      </section>
+
+      <section class="atelier-proof" data-editor-section="proof" data-section-label="Verified experience">
+        <header>
+          <p class="evo-eyebrow" {...edit("proof-eyebrow", "text", "Proof eyebrow")}>Verified public experience</p>
+          <h2 {...edit("proof-title", "text", "Proof heading")}>A human practice, backed by a public record.</h2>
+        </header>
+        <div class="atelier-metrics" {...edit("proof-grid", "container", "Experience cards")}>
+          {config.metrics.map((item, index) => (
+            <article {...edit(`metric-${index}`, "card", `${item.label} metric`)}>
+              <span>{item.label}</span><strong>{item.title}</strong><p>{item.copy}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="atelier-process" data-editor-section="process" data-section-label="Coaching process">
+        <div class="section-intro">
+          <p class="evo-eyebrow" {...edit("process-eyebrow", "text", "Process eyebrow")}>Inside the coaching process</p>
+          <h2 {...edit("process-title", "text", "Process heading")}>From first idea to the next stronger attempt.</h2>
+          <p {...edit("process-copy", "text", "Process introduction")}>The structure stays practical: understand the moment, prepare the message, try it aloud, and refine a specific choice.</p>
+        </div>
+        <ol class="atelier-steps" {...edit("process-list", "container", "Process steps")}>
+          {config.process.map((item, index) => (
+            <li {...edit(`process-${index}`, "card", `${item.label} step`)}>
+              <span>{String(index + 1).padStart(2, "0")}</span><small>{item.label}</small><h3>{item.title}</h3><p>{item.copy}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="atelier-paths" data-editor-section="paths" data-section-label="Coaching paths">
+        <header>
+          <p class="evo-eyebrow" {...edit("paths-eyebrow", "text", "Paths eyebrow")}>Possible coaching paths</p>
+          <h2 {...edit("paths-title", "text", "Paths heading")}>Begin with the real speaking task.</h2>
+        </header>
+        <div class="atelier-path-grid" {...edit("paths-grid", "container", "Coaching path cards")}>
+          {config.paths.map((item, index) => (
+            <article {...edit(`path-${index}`, "card", `${item.title} card`)}>
+              <span>{item.label}</span><h3>{item.title}</h3><p>{item.copy}</p><a href="/contact/">Ask about this path →</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="atelier-closing" data-editor-section="closing" data-section-label="Closing call to action">
+        <p class="evo-eyebrow" {...edit("closing-eyebrow", "text", "Closing eyebrow")}>{config.closing.eyebrow}</p>
+        <h2 {...edit("closing-title", "text", "Closing heading")}>{config.closing.headline}</h2>
+        <p {...edit("closing-copy", "text", "Closing copy")}>{config.closing.copy}</p>
+        <a class="evo-button primary" href={config.closing.href} {...edit("closing-cta", "button", "Closing button")}>{config.closing.cta}</a>
+      </section>
+    </>
+  )}
+
+  {config.theme === "cinematic" && (
+    <>
+      <section class="cinematic-hero-v2" data-editor-section="hero" data-section-label="Hero">
+        <div class="cinematic-light" aria-hidden="true"></div>
+        <figure class="cinematic-portrait-v2" {...edit("hero-image", "image", "Coach Kai portrait")}>
+          <img src="/images/coach-kai-headshot.webp" width="1400" height="1400" alt="Coach Kai" fetchpriority="high" decoding="async" />
+          <figcaption>Coach Kai · Communication in practice</figcaption>
+        </figure>
+        <div class="cinematic-copy-v2">
+          <p class="evo-eyebrow" {...edit("hero-eyebrow", "text", "Hero eyebrow")}>{config.hero.eyebrow}</p>
+          <h1 {...edit("hero-title", "text", "Hero heading")}>{config.hero.headline}</h1>
+          <p class="evo-lede" {...edit("hero-summary", "text", "Hero summary")}>{config.hero.summary}</p>
+          <div class="evo-actions" {...edit("hero-actions", "container", "Hero actions")}>
+            <a class="evo-button primary" href={config.hero.primaryHref} {...edit("hero-primary-cta", "button", "Primary button")}>{config.hero.primaryCta}</a>
+            <a class="evo-button text" href={config.hero.secondaryHref} {...edit("hero-secondary-cta", "button", "Secondary button")}>{config.hero.secondaryCta}</a>
+          </div>
+        </div>
+        <nav class="cinematic-cues" aria-label="Explore this page" {...edit("hero-cues", "container", "Hero chapter links")}>
+          <a href="#cinematic-paths"><span>01</span>Choose a path</a>
+          <a href="#cinematic-method"><span>02</span>See the method</a>
+          <a href="#cinematic-evidence"><span>03</span>Check experience</a>
+        </nav>
+      </section>
+
+      <section class="cinematic-evidence" id="cinematic-evidence" data-editor-section="proof" data-section-label="Verified experience">
+        <header>
+          <p class="evo-eyebrow" {...edit("proof-eyebrow", "text", "Proof eyebrow")}>Public record / no invented endorsements</p>
+          <h2 {...edit("proof-title", "text", "Proof heading")}>Authority visitors can inspect.</h2>
+        </header>
+        <div class="cinematic-reel" {...edit("proof-grid", "container", "Experience reel")}>
+          {config.metrics.map((item, index) => (
+            <article {...edit(`metric-${index}`, "card", `${item.label} credential`)}><span>0{index + 1} / {item.label}</span><strong>{item.title}</strong><p>{item.copy}</p></article>
+          ))}
+        </div>
+        <a class="reel-link" href="/about/">Read the complete public background →</a>
+      </section>
+
+      <section class="cinematic-paths-v2" id="cinematic-paths" data-editor-section="paths" data-section-label="Audience paths">
+        <header>
+          <p class="evo-eyebrow" {...edit("paths-eyebrow", "text", "Paths eyebrow")}>Three entrances to the stage</p>
+          <h2 {...edit("paths-title", "text", "Paths heading")}>Choose the moment you are preparing for.</h2>
+        </header>
+        <div class="cinematic-chapters" {...edit("paths-grid", "container", "Audience path cards")}>
+          {config.paths.map((item, index) => (
+            <article {...edit(`path-${index}`, "card", `${item.label} path`)}>
+              <span>CHAPTER 0{index + 1}</span><small>{item.label}</small><h3>{item.title}</h3><p>{item.copy}</p><a href="/contact/">Prepare this path →</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="cinematic-method" id="cinematic-method" data-editor-section="process" data-section-label="Practice method">
+        <div class="cinematic-method-title">
+          <p class="evo-eyebrow" {...edit("process-eyebrow", "text", "Process eyebrow")}>Rehearsal, not magic</p>
+          <h2 {...edit("process-title", "text", "Process heading")}>Four deliberate choices before the lights come up.</h2>
+        </div>
+        <ol class="cinematic-timeline" {...edit("process-list", "container", "Practice timeline")}>
+          {config.process.map((item, index) => (
+            <li {...edit(`process-${index}`, "card", `${item.label} step`)}><span>{String(index + 1).padStart(2, "0")}</span><div><small>{item.label}</small><h3>{item.title}</h3><p>{item.copy}</p></div></li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="cinematic-closing" data-editor-section="closing" data-section-label="Closing call to action">
+        <div>
+          <p class="evo-eyebrow" {...edit("closing-eyebrow", "text", "Closing eyebrow")}>{config.closing.eyebrow}</p>
+          <h2 {...edit("closing-title", "text", "Closing heading")}>{config.closing.headline}</h2>
+        </div>
+        <div>
+          <p {...edit("closing-copy", "text", "Closing copy")}>{config.closing.copy}</p>
+          <a class="evo-button primary" href={config.closing.href} {...edit("closing-cta", "button", "Closing button")}>{config.closing.cta}</a>
+        </div>
+      </section>
+    </>
+  )}
+
+  {config.theme === "glass" && (
+    <>
+      <section class="glass-hero-v2" data-editor-section="hero" data-section-label="Hero">
+        <div class="glass-orbits-v2" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="glass-copy-v2">
+          <p class="evo-eyebrow" {...edit("hero-eyebrow", "text", "Hero eyebrow")}>{config.hero.eyebrow}</p>
+          <h1 {...edit("hero-title", "text", "Hero heading")}>{config.hero.headline}</h1>
+          <p class="evo-lede" {...edit("hero-summary", "text", "Hero summary")}>{config.hero.summary}</p>
+          <div class="evo-actions" {...edit("hero-actions", "container", "Hero actions")}>
+            <a class="evo-button primary" href={config.hero.primaryHref} {...edit("hero-primary-cta", "button", "Primary button")}>{config.hero.primaryCta}</a>
+            <a class="evo-button text" href={config.hero.secondaryHref} {...edit("hero-secondary-cta", "button", "Secondary button")}>{config.hero.secondaryCta}</a>
+          </div>
+        </div>
+        <figure class="glass-portrait-v2" {...edit("hero-image", "image", "Coach Kai portrait")}>
+          <img src="/images/coach-kai-headshot.webp" width="1400" height="1400" alt="Coach Kai" fetchpriority="high" decoding="async" />
+          <figcaption>Coach Kai · focus point</figcaption>
+        </figure>
+        <div class="glass-proof-planes" {...edit("proof-grid", "container", "Hero evidence planes")}>
+          {config.metrics.map((item, index) => (
+            <article {...edit(`metric-${index}`, "card", `${item.label} plane`)}><span>0{index + 1}</span><small>{item.label}</small><strong>{item.title}</strong><p>{item.copy}</p></article>
+          ))}
+        </div>
+      </section>
+
+      <section class="glass-focus" data-editor-section="paths" data-section-label="Goal finder">
+        <header>
+          <p class="evo-eyebrow" {...edit("paths-eyebrow", "text", "Goal eyebrow")}>Focus the next challenge</p>
+          <h2 {...edit("paths-title", "text", "Goal heading")}>What feels hardest right now?</h2>
+          <p {...edit("paths-copy", "text", "Goal introduction")}>These are conversation starters, not diagnoses or scores.</p>
+        </header>
+        <div class="glass-focus-grid" {...edit("paths-grid", "container", "Goal cards")}>
+          {config.paths.map((item, index) => (
+            <article {...edit(`path-${index}`, "card", `${item.label} goal card`)}><span>0{index + 1}</span><small>{item.label}</small><h3>{item.title}</h3><p>{item.copy}</p><a href="/contact/">Ask about this focus →</a></article>
+          ))}
+        </div>
+      </section>
+
+      <section class="glass-process" data-editor-section="process" data-section-label="Practice loop">
+        <div class="glass-process-intro">
+          <p class="evo-eyebrow" {...edit("process-eyebrow", "text", "Process eyebrow")}>The practice loop</p>
+          <h2 {...edit("process-title", "text", "Process heading")}>Progress becomes visible through the next attempt.</h2>
+        </div>
+        <div class="glass-process-track" {...edit("process-list", "container", "Practice steps")}>
+          {config.process.map((item, index) => (
+            <article {...edit(`process-${index}`, "card", `${item.label} step`)}><span>{String(index + 1).padStart(2, "0")}</span><div><small>{item.label}</small><h3>{item.title}</h3><p>{item.copy}</p></div></article>
+          ))}
+        </div>
+      </section>
+
+      <section class="glass-closing" data-editor-section="closing" data-section-label="Closing call to action">
+        <div class="glass-closing-card">
+          <p class="evo-eyebrow" {...edit("closing-eyebrow", "text", "Closing eyebrow")}>{config.closing.eyebrow}</p>
+          <h2 {...edit("closing-title", "text", "Closing heading")}>{config.closing.headline}</h2>
+          <p {...edit("closing-copy", "text", "Closing copy")}>{config.closing.copy}</p>
+          <a class="evo-button primary" href={config.closing.href} {...edit("closing-cta", "button", "Closing button")}>{config.closing.cta}</a>
+        </div>
+      </section>
+    </>
+  )}
+
+  {config.theme === "architecture" && (
+    <>
+      <section class="architecture-hero-v2" data-editor-section="hero" data-section-label="Hero">
+        <div class="architecture-grid-lines" aria-hidden="true"></div>
+        <div class="architecture-copy-v2">
+          <p class="evo-eyebrow" {...edit("hero-eyebrow", "text", "Hero eyebrow")}>{config.hero.eyebrow}</p>
+          <h1 {...edit("hero-title", "text", "Hero heading")}>{config.hero.headline}</h1>
+          <p class="evo-lede" {...edit("hero-summary", "text", "Hero summary")}>{config.hero.summary}</p>
+          <div class="evo-actions" {...edit("hero-actions", "container", "Hero actions")}>
+            <a class="evo-button primary" href={config.hero.primaryHref} {...edit("hero-primary-cta", "button", "Primary button")}>{config.hero.primaryCta}</a>
+            <a class="evo-button text" href={config.hero.secondaryHref} {...edit("hero-secondary-cta", "button", "Secondary button")}>{config.hero.secondaryCta}</a>
+          </div>
+        </div>
+        <figure class="architecture-portrait-v2" {...edit("hero-image", "image", "Coach Kai portrait")}>
+          <img src="/images/coach-kai-headshot.webp" width="1400" height="1400" alt="Coach Kai" fetchpriority="high" decoding="async" />
+          <figcaption>Program lead · Coach Kai</figcaption>
+        </figure>
+        <div class="architecture-stamp" aria-hidden="true"><span>SK</span><small>Communication systems</small></div>
+      </section>
+
+      <section class="architecture-programs" data-editor-section="paths" data-section-label="Program paths">
+        <header>
+          <p class="evo-eyebrow" {...edit("paths-eyebrow", "text", "Paths eyebrow")}>Program map / selectable</p>
+          <h2 {...edit("paths-title", "text", "Paths heading")}>Open the path that matches the communication need.</h2>
+        </header>
+        <div class="architecture-selector" data-evo-tabs {...edit("paths-grid", "container", "Program selector")}>
+          <div class="architecture-deck" role="tablist" aria-label="Program paths">
+            {config.paths.map((item, index) => (
+              <button type="button" role="tab" data-evo-control data-target={`architecture-panel-${index}`} aria-controls={`architecture-panel-${index}`} aria-selected={index === 0 ? "true" : "false"} {...edit(`path-${index}`, "card", `${item.title} program card`)}><span>{item.label}</span><strong>{item.title}</strong><small>Inspect path →</small></button>
+            ))}
+          </div>
+          <aside class="architecture-inspector">
+            <span>Selected program direction</span>
+            {config.paths.map((item, index) => (
+              <article id={`architecture-panel-${index}`} role="tabpanel" data-evo-panel hidden={index !== 0}><small>{item.label}</small><h3>{item.title}</h3><p>{item.copy}</p><a href="/contact/">Discuss this direction →</a></article>
+            ))}
+            <p class="architecture-boundary">Directions are starting points, not fixed packages, prices, capacity, or guaranteed outcomes.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="architecture-proof" data-editor-section="proof" data-section-label="Verified capability">
+        <div>
+          <p class="evo-eyebrow" {...edit("proof-eyebrow", "text", "Proof eyebrow")}>Verified leadership scale</p>
+          <h2 {...edit("proof-title", "text", "Proof heading")}>Capability described with public facts.</h2>
+          <a href="/about/">Review the full public record →</a>
+        </div>
+        <div class="architecture-metrics" {...edit("proof-grid", "container", "Capability cards")}>
+          {config.metrics.map((item, index) => (
+            <article {...edit(`metric-${index}`, "card", `${item.label} metric`)}><span>0{index + 1}</span><small>{item.label}</small><strong>{item.title}</strong><p>{item.copy}</p></article>
+          ))}
+        </div>
+      </section>
+
+      <section class="architecture-process" data-editor-section="process" data-section-label="Planning process">
+        <header>
+          <p class="evo-eyebrow" {...edit("process-eyebrow", "text", "Process eyebrow")}>Planning sequence</p>
+          <h2 {...edit("process-title", "text", "Process heading")}>From communication brief to practical next step.</h2>
+        </header>
+        <ol class="architecture-steps" {...edit("process-list", "container", "Planning steps")}>
+          {config.process.map((item, index) => (
+            <li {...edit(`process-${index}`, "card", `${item.label} step`)}><span>{String(index + 1).padStart(2, "0")}</span><small>{item.label}</small><h3>{item.title}</h3><p>{item.copy}</p></li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="architecture-closing" data-editor-section="closing" data-section-label="Closing call to action">
+        <div>
+          <p class="evo-eyebrow" {...edit("closing-eyebrow", "text", "Closing eyebrow")}>{config.closing.eyebrow}</p>
+          <h2 {...edit("closing-title", "text", "Closing heading")}>{config.closing.headline}</h2>
+        </div>
+        <div>
+          <p {...edit("closing-copy", "text", "Closing copy")}>{config.closing.copy}</p>
+          <a class="evo-button primary" href={config.closing.href} {...edit("closing-cta", "button", "Closing button")}>{config.closing.cta}</a>
+        </div>
+      </section>
+    </>
+  )}
+</main>

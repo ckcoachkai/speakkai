@@ -1,0 +1,22 @@
+---
+interface Props {
+  current: number;
+  parentVersion: number;
+  editable?: boolean;
+}
+
+const { current, parentVersion, editable = false } = Astro.props;
+---
+
+<nav class="evo-nav" aria-label="Homepage evolution navigation">
+  <a class="evo-brand" href="/tests/" aria-label="Return to homepage versions">
+    <span aria-hidden="true">SK</span>
+    <b>SpeakKai Lab</b>
+  </a>
+  <div class="evo-lineage">
+    <span>{editable ? "Editable" : "AI evolution"}</span>
+    <strong>Version {current}</strong>
+    <a href={`/tests/${parentVersion}/`}>Based on Version {parentVersion}</a>
+  </div>
+  <a class="evo-compare" href="/tests/">Compare versions</a>
+</nav>

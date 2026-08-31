@@ -1,0 +1,71 @@
+---
+import type { EvolutionConfig } from "../../data/evolutionConfigs";
+import EvolutionCanvas from "./EvolutionCanvas.astro";
+import EvolutionNavigator from "./EvolutionNavigator.astro";
+import "../../styles/evolution-lab.css";
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/700.css";
+import "@fontsource/playfair-display/700.css";
+import "@fontsource/space-mono/400.css";
+
+interface Props {
+  config: EvolutionConfig;
+  editable?: boolean;
+}
+
+const { config, editable = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content={config.description} />
+    <meta name="theme-color" content={config.theme === "atelier" ? "#f2e8d5" : "#0b1020"} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{`Version ${config.version}: ${config.title} | SpeakKai`}</title>
+  </head>
+  <body class:list={["evo-page", `evo-page-${config.theme}`, { "has-visual-editor": editable }]} data-editor-version={editable ? config.version : undefined}>
+    <EvolutionNavigator current={config.version} parentVersion={config.parentVersion} editable={editable} />
+    <EvolutionCanvas config={config} editable={editable} />
+    {editable && (
+      <button class="editor-launch" type="button" data-editor-launch aria-haspopup="dialog">
+        <span aria-hidden="true">✦</span> Edit Page
+      </button>
+    )}
+    <script is:inline>
+      (() => {
+        document.querySelectorAll('[data-evo-tabs]').forEach((group) => {
+          const controls = [...group.querySelectorAll('[data-evo-control]')];
+          const panels = [...group.querySelectorAll('[data-evo-panel]')];
+          const activate = (control, focus = false) => {
+            const target = control.getAttribute('data-target');
+            controls.forEach((item) => {
+              const selected = item === control;
+              item.setAttribute('aria-selected', String(selected));
+              item.tabIndex = selected ? 0 : -1;
+            });
+            panels.forEach((panel) => { panel.hidden = panel.id !== target; });
+            if (focus) control.focus();
+          };
+          controls.forEach((control, index) => {
+            control.addEventListener('click', () => activate(control));
+            control.addEventListener('keydown', (event) => {
+              if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+              event.preventDefault();
+              let next = index;
+              if (event.key === 'ArrowRight') next = (index + 1) % controls.length;
+              if (event.key === 'ArrowLeft') next = (index - 1 + controls.length) % controls.length;
+              if (event.key === 'Home') next = 0;
+              if (event.key === 'End') next = controls.length - 1;
+              activate(controls[next], true);
+            });
+          });
+        });
+      })();
+    </script>
+    {editable && <script is:inline type="module" src="/scripts/editor-bootstrap.js"></script>}
+  </body>
+</html>
