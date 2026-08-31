@@ -121,6 +121,24 @@ const description = `${experiment.content.headline} ${experiment.content.summary
             });
           });
         });
+
+        const mobileDialog = document.querySelector('[data-mobile-dialog]');
+        const mobileFrame = document.querySelector('[data-mobile-frame]');
+        const mobileOpen = document.querySelector('[data-mobile-preview]');
+        const mobileClose = document.querySelector('[data-mobile-close]');
+        if (new URL(window.location.href).searchParams.has('mobile-preview')) {
+          mobileOpen?.setAttribute('hidden', '');
+          mobileDialog?.remove();
+        } else if (mobileDialog instanceof HTMLDialogElement && mobileFrame instanceof HTMLIFrameElement) {
+          mobileOpen?.addEventListener('click', () => {
+            if (!mobileFrame.src) mobileFrame.src = mobileFrame.dataset.mobileSrc || '';
+            mobileDialog.showModal();
+          });
+          mobileClose?.addEventListener('click', () => mobileDialog.close());
+          mobileDialog.addEventListener('click', (event) => {
+            if (event.target === mobileDialog) mobileDialog.close();
+          });
+        }
       })();
     </script>
   </body>

@@ -21,21 +21,34 @@ const next = experimentsV4[(currentIndex + 1) % experimentsV4.length];
     <strong>Version {current}</strong>
     <a href={`/tests/${next.number}/`} aria-label={`Next: Version ${next.number}`}>{next.number} →</a>
   </div>
-  <details class="v4-jump">
-    <summary>Jump to</summary>
-    <div class="v4-jump-panel">
-      <p>Four selected directions</p>
-      <ol>
-        {experimentsV4.map((experiment) => (
-          <li>
-            <a href={`/tests/${experiment.number}/`} aria-current={experiment.number === current ? "page" : undefined}>
-              <span>V{experiment.number}</span>
-              {experiment.title}
-            </a>
-          </li>
-        ))}
-      </ol>
-      <a class="v4-gallery-link" href="/tests/">Compare all four</a>
-    </div>
-  </details>
+  <div class="v4-nav-tools">
+    <button class="v4-mobile-preview" type="button" data-mobile-preview>Mobile preview</button>
+    <details class="v4-jump">
+      <summary>Jump to</summary>
+      <div class="v4-jump-panel">
+        <p>Four selected directions</p>
+        <ol>
+          {experimentsV4.map((experiment) => (
+            <li>
+              <a href={`/tests/${experiment.number}/`} aria-current={experiment.number === current ? "page" : undefined}>
+                <span>V{experiment.number}</span>
+                {experiment.title}
+              </a>
+            </li>
+          ))}
+        </ol>
+        <a class="v4-gallery-link" href="/tests/">Compare all four</a>
+      </div>
+    </details>
+  </div>
 </nav>
+
+<dialog class="v4-mobile-dialog" data-mobile-dialog aria-labelledby="mobile-preview-title">
+  <header>
+    <div><span>390 × 844</span><strong id="mobile-preview-title">Version {current} on mobile</strong></div>
+    <button type="button" data-mobile-close aria-label="Close mobile preview">Close</button>
+  </header>
+  <div class="v4-phone-frame">
+    <iframe data-mobile-frame data-mobile-src={`/tests/${current}/?mobile-preview=1`} title={`Mobile preview of Version ${current}`}></iframe>
+  </div>
+</dialog>

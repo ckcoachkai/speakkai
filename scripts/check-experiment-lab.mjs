@@ -13,8 +13,9 @@ assert(fs.existsSync(galleryPath), "Evolution gallery route is missing.");
 if (fs.existsSync(galleryPath)) {
   const gallery = fs.readFileSync(galleryPath, "utf8");
   assert(gallery.includes("Homepage Evolution Lab"), "Gallery title must identify the evolution lab.");
-  assert((gallery.match(/class="card"/g) || []).length === 8, "Gallery must contain exactly eight active version cards.");
-  for (const label of ["Original Versions 1–4", "Editable Versions 5–8"]) assert(gallery.includes(label), `Gallery is missing ${label}.`);
+  assert((gallery.match(/class="card"/g) || []).length === 4, "Gallery must contain exactly four active version cards.");
+  assert(gallery.includes("Versions 1–4"), "Gallery is missing the selected Versions 1–4 heading.");
+  assert(!gallery.includes("Editable Versions 5–8"), "Editable Versions 5–8 must not appear in the active gallery.");
 }
 
 for (const { version, source } of selected) {
@@ -25,6 +26,7 @@ for (const { version, source } of selected) {
   assert(html.includes(`data-test-number="${version}"`), `Original Version ${version} route identity is missing.`);
   assert(html.includes(`data-source-number="${source}"`), `Original Version ${version} must preserve source ${source}.`);
   assert(!html.includes("data-editor-launch"), `Original Version ${version} must remain editor-free.`);
+  assert(html.includes("data-mobile-preview"), `Original Version ${version} needs a mobile preview control.`);
 }
 
 for (let version = 5; version <= 8; version += 1) {
@@ -54,4 +56,4 @@ if (failures.length) {
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
-console.log("Homepage evolution check passed: four original references, four editable twins, eight active gallery entries, and four unlisted rollback routes.");
+console.log("Homepage evolution check passed: four active directions with mobile preview controls; editable and rollback routes remain unlisted backups.");

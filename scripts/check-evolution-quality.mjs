@@ -56,7 +56,7 @@ for (const viewport of viewports) {
 const galleryPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
 await galleryPage.goto(`${baseUrl}/tests/`, { waitUntil: "networkidle" });
 const gallery = { cards: await galleryPage.locator(".card").count(), horizontalOverflow: await galleryPage.evaluate(() => Math.max(0, document.documentElement.scrollWidth - innerWidth)) };
-gallery.failed = gallery.cards !== 8 || gallery.horizontalOverflow > 4;
+gallery.failed = gallery.cards !== 4 || gallery.horizontalOverflow > 4;
 
 const architecturePage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 await architecturePage.goto(`${baseUrl}/tests/8/`, { waitUntil: "networkidle" });
@@ -75,4 +75,4 @@ if (failures.length || gallery.failed || !keyboardTabs) {
   if (!keyboardTabs) console.error("Architecture tabs failed keyboard navigation");
   process.exit(1);
 }
-console.log(`Homepage editor quality check passed: ${report.length}/${report.length} route/viewport states, eight-card gallery, keyboard tabs, and lazy editor loading.`);
+console.log(`Homepage quality check passed: ${report.length}/${report.length} route/viewport states, four-card active gallery, keyboard tabs, and lazy editor loading.`);
