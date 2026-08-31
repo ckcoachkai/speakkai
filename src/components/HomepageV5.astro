@@ -10,64 +10,84 @@ const panelId = (index: number) => `homepage-panel-${index}`;
 const homePanels = [
   {
     label: "About",
+    brief: "Journey · leadership · results",
     title: "Kai Liu",
-    eyebrow: "TEDx speaker · communication coach · speech & debate coach",
-    copy: "A first-generation Chinese American, Kai built his work around the challenges he once faced himself: a stutter, fear of public speaking, and difficulty expressing ideas with confidence. His coaching connects clear thinking, structured messages, deliberate rehearsal, and human connection.",
+    eyebrow: "Coach · competitor · teacher · speaker",
+    copy: "A first-generation Chinese American, Kai built his work around challenges he once faced himself: a stutter, fear of public speaking, and difficulty expressing ideas with confidence. Teaching in China helped him find his voice; coaching became the way he helps other people find theirs.",
     stats: [
       ["15+ years", "education and communication training"],
       ["1,000+", "presentations across seven countries"],
       ["2,000+", "students trained"],
     ],
+    points: [
+      ["2007–2017 · Foundation", "English training, education consulting, interviews, test preparation, structured argument and communication."],
+      ["2017–present · Coaching", "Speech, debate, storytelling, TEDx preparation, student competition work and professional presentations."],
+      ["Toastmasters leadership", "Past president of four clubs and former District 85 Division N Director, with continued competition and training experience."],
+      ["What connects the work", "Clear thinking, a message worth sharing, deliberate practice and genuine audience connection."],
+    ],
   },
   {
     label: "Philosophy",
+    brief: "Purpose · practice · independence",
     title: "Build the speaker, not just the speech.",
-    eyebrow: "Clarity · practice · self-awareness · growth",
-    copy: "Confidence is not a performance trick. It grows when a speaker understands the audience, makes intentional choices, tests those choices aloud, notices the effect, and tries again.",
+    eyebrow: "A practical philosophy of communication",
+    copy: "Confidence is not a performance trick or a memorized script. It grows when speakers understand why they are speaking, organize what they mean, test it aloud, notice what reaches the audience and learn to adjust independently.",
     points: [
-      ["Meaning before polish", "Start with the audience, purpose, and central idea."],
-      ["Structure creates freedom", "Use a clear opening, body, conclusion, key message, and next step."],
-      ["Technique serves communication", "Power, pitch, pause, pace, gesture, movement, and expression should make meaning clearer."],
-      ["Feedback must be usable", "Name an observable choice, explain its effect, and give one action the speaker can rehearse."],
+      ["Audience and purpose first", "Know who needs to hear the message, what they should understand and why it matters."],
+      ["Find the through-line", "Build a central idea before polishing sentences; use structure to make complex thinking easy to follow."],
+      ["Technique serves meaning", "Power, pitch, pause, pace, gesture, movement and expression should clarify—not decorate—the message."],
+      ["Practise under real conditions", "Rehearse aloud, with timing, pressure and recovery, so confidence survives beyond the classroom."],
+      ["Make feedback usable", "Name the observable choice, explain its audience effect and give one action the speaker can try next."],
+      ["Grow independent speakers", "The long-term goal is self-awareness: speakers who can notice, adapt and keep improving without depending on a script or coach."],
     ],
   },
   {
     label: "Programs",
-    title: "Fall 2026 programs",
-    eyebrow: "One fully documented fall curriculum",
-    copy: "Young Competition Speakers is an 18-class program for Grades 1–2. Six topic → content → presentation cycles move students from short attempts toward a three-minute final showcase.",
+    brief: "Fall curriculum · coaching paths",
+    title: "Fall 2026 learning",
+    eyebrow: "Confirmed curriculum plus established coaching paths",
+    copy: "The confirmed Fall curriculum is Young Competition Speakers: an 18-class course for Grades 1–2 that turns current topics, stories and real-world roles into short, achievable speaking challenges.",
     program: {
-      meta: "18 classes · Grades 1–2",
+      meta: "18 classes · Grades 1–2 · mostly 60–90 second practice speeches",
       name: "Young Competition Speakers",
-      details: "Articulation, body and voice warm-ups; rotating speaker roles; current topics; problem-solving scenarios; competition practice; rehearsal and showcase.",
+      details: "Six three-class units move from topic or role → content building → presentation. Every class begins with articulation, body and voice warm-ups; the course ends with a supported three-minute showcase speech.",
     },
-    note: "Other current coaching paths include original oratory, expository speaking, storytelling, debate, TEDx preparation, and professional presentations. They are not labelled as separate fall programs here without a verified fall curriculum.",
+    points: [
+      ["Thinking labs", "Age-appropriate news, fact versus opinion, AI and technology, community safety, water and energy, and creative problem-solving."],
+      ["Speaker roles", "News reporter, graduation speaker, storyteller, interview guest, book sharer, young teacher, mayor and invention presenter."],
+      ["Competition skills", "Clarity, structure, evidence, vocal variety, purposeful movement, audience focus, timing and confident recovery."],
+      ["Other coaching paths", "Original oratory, expository speaking, storytelling, debate, TEDx preparation and professional presentations."],
+    ],
+    note: "Only Young Competition Speakers is labelled as a confirmed Fall 2026 curriculum; the other items are established coaching paths, not invented fall cohorts.",
   },
   {
     label: "Paradigm",
-    title: "Evidence → Effect → Enhancement",
-    eyebrow: "Kai’s working evaluation lens",
-    copy: "A strong evaluation does more than praise or list faults. It identifies what the speaker actually did, explains what that choice did to the audience, and gives the speaker a practical way to improve the next attempt.",
+    brief: "How Kai observes and evaluates",
+    title: "Specific. Audience-aware. Growth-oriented.",
+    eyebrow: "Reconstructed from repeated feedback and scoring habits",
+    copy: "Kai does not appear to judge from one universal point formula. Across class feedback, competition preparation and curriculum rubrics, the recurring question is: what did the speaker do, what effect did it have on the audience, and what should the speaker practise next?",
     points: [
-      ["Intent", "Is the purpose and audience clear?"],
-      ["Content", "Is the central idea supported by structure, reasoning, examples, and evidence?"],
-      ["Delivery", "Do voice, body language, pacing, and presence strengthen the message?"],
-      ["Connection", "Can the audience follow, feel, remember, and respond?"],
-      ["Growth", "Did the speaker respond to coaching and make a more intentional next attempt?"],
+      ["Clarity and intelligibility", "Can every word and main idea be understood? Kai repeatedly notices articulation, volume, pace and pauses."],
+      ["Organization and content", "Does the speech have a clear through-line, supported ideas, useful examples and a purposeful ending?"],
+      ["Role and audience awareness", "Does the speaker understand who they are speaking as, who is listening and what the audience needs?"],
+      ["Voice and physical delivery", "Do power, pitch, pause, pace, eye contact, gesture, movement and facial expression strengthen meaning?"],
+      ["Thinking, story and connection", "Is there reasoning, creativity, personal relevance or a memorable human connection—not only polished delivery?"],
+      ["Preparation, recovery and growth", "Memorization is a foundation, not the finish line. Kai also values response to coaching, self-awareness and recovery after mistakes."],
     ],
-    note: "Synthesized from repeated coaching and evaluation patterns; no fixed numerical weighting is claimed.",
+    note: "Evidence → Effect → Enhancement remains a useful shorthand from an earlier EEE brainstorming session, but the chat history does not show that Kai formally adopted it as his official paradigm.",
   },
   {
     label: "Media",
+    brief: "Verified accounts · direct contact",
     title: "Find SpeakKai",
     eyebrow: "Verified handles and public links",
-    copy: "Open the full WeChat contact card, find SpeakKai on Xiaohongshu, or visit the verified CKCoachKai Pinterest profile.",
+    copy: "Use the verified account details below. Where a stable public profile URL has not been confirmed, the card opens the contact page instead of sending visitors to a guessed account.",
     media: [
-      { platform: "WeChat", handle: "CKcoachkai", href: "/contact/", image: "/images/coach-kai-wechat-qr.png", action: "Open full QR" },
-      { platform: "Xiaohongshu", handle: "CKcoachkai", href: "/contact/", image: "/images/coach-kai-headshot.webp", action: "View verified handle" },
-      { platform: "Pinterest", handle: "@ckcoachkai", href: "https://kr.pinterest.com/ckcoachkai/", image: "/images/coach-kai-banner-mobile.webp", action: "Open profile", external: true },
+      { platform: "WeChat", handle: "CKcoachkai", description: "Scan the complete contact QR to ask about coaching, programs or partnerships.", href: "/contact/", image: "/images/coach-kai-wechat-qr.png", action: "Open full QR" },
+      { platform: "Xiaohongshu", handle: "CKcoachkai", description: "Search this exact verified handle in Xiaohongshu; a stable public profile URL is still unverified.", href: "/contact/", image: "/images/coach-kai-headshot.webp", action: "View contact details" },
+      { platform: "Pinterest", handle: "@ckcoachkai", description: "Open the verified public CKCoachKai profile and saved visual references.", href: "https://kr.pinterest.com/ckcoachkai/", image: "/images/coach-kai-banner-mobile.webp", action: "Open profile", external: true },
     ],
-    note: "The WeChat and Xiaohongshu cards open the verified contact page because a stable public profile URL has not yet been verified. No account URL is guessed.",
+    note: "YouTube, Douyin, Bilibili, Instagram and WeChat Channels are not shown until the exact public account URLs are verified.",
   },
 ];
 ---
@@ -84,7 +104,7 @@ const homePanels = [
     <div class="glass-planes" role="tablist" aria-label="Explore SpeakKai">
       {homePanels.map((item, index) => (
         <button class={`glass-plane plane-${index + 1}`} type="button" role="tab" data-home-control data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"} tabindex={index === 0 ? "0" : "-1"}>
-          <span>0{index + 1}</span><strong>{item.label}</strong><small>{item.title}</small>
+          <span>0{index + 1}</span><strong>{item.label}</strong><small>{item.brief}</small>
         </button>
       ))}
     </div>
@@ -98,7 +118,7 @@ const homePanels = [
             {item.stats && <dl class="homepage-stats" aria-label="Career highlights">{item.stats.map(([value, label]) => <div><dt>{value}</dt><dd>{label}</dd></div>)}</dl>}
             {item.points && <ul class="homepage-points">{item.points.map(([name, detail]) => <li><strong>{name}</strong><span>{detail}</span></li>)}</ul>}
             {item.program && <article class="homepage-program"><span>{item.program.meta}</span><h3>{item.program.name}</h3><p>{item.program.details}</p></article>}
-            {item.media && <div class="homepage-media" aria-label="SpeakKai media accounts">{item.media.map((account) => <a href={account.href} target={account.external ? "_blank" : undefined} rel={account.external ? "noreferrer" : undefined}><img src={account.image} alt="" loading="eager" /><span><small>{account.platform}</small><strong>{account.handle}</strong><em>{account.action} →</em></span></a>)}</div>}
+            {item.media && <div class="homepage-media" aria-label="SpeakKai media accounts">{item.media.map((account) => <a href={account.href} target={account.external ? "_blank" : undefined} rel={account.external ? "noreferrer" : undefined}><img src={account.image} alt="" loading="eager" /><span><small>{account.platform}</small><strong>{account.handle}</strong><b>{account.description}</b><em>{account.action} →</em></span></a>)}</div>}
             {item.note && <p class="panel-note">{item.note}</p>}
           </section>
         ))}

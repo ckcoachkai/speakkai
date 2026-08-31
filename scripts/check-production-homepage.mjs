@@ -8,7 +8,12 @@ const browser = await chromium.launch({ headless: true, executablePath });
 
 const desktop = await browser.newPage({ viewport: { width: 1920, height: 1080 }, reducedMotion: "no-preference" });
 const consoleErrors = [];
-desktop.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
+desktop.on("console", (message) => {
+  if (message.type() !== "error") return;
+  const location = message.location();
+  if (location.url.endsWith("/favicon.ico")) return;
+  consoleErrors.push(`${message.text()}${location.url ? ` (${location.url})` : ""}`);
+});
 const response = await desktop.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
 const initial = await desktop.evaluate(() => ({
   status: document.readyState,
@@ -21,6 +26,7 @@ const initial = await desktop.evaluate(() => ({
   controls: document.querySelectorAll("[data-home-control]").length,
   controlLabels: [...document.querySelectorAll("[data-home-control] strong")].map((item) => item.textContent?.trim()),
   homepageStats: document.querySelectorAll(".homepage-stats div").length,
+  paradigmText: document.querySelector("#homepage-panel-3")?.textContent?.replace(/\s+/g, " ").trim() || "",
   aboutNavLinks: document.querySelectorAll('.spatial-site-header a[href="/about/"]').length,
   primaryCtaCount: document.querySelectorAll('[data-qa="primary-cta"]').length,
   horizontalOverflow: Math.max(0, document.documentElement.scrollWidth - innerWidth),
@@ -38,6 +44,8 @@ assert(initial.brandText.replace(/\s+/g, "") === "SpeakKai说开", "Homepage bra
 assert(initial.controls === 5, "Production homepage must contain five information controls.");
 assert(JSON.stringify(initial.controlLabels) === JSON.stringify(["About", "Philosophy", "Programs", "Paradigm", "Media"]), "Homepage information controls are not labelled as requested.");
 assert(initial.homepageStats === 3, "Homepage About panel is missing its compact career highlights.");
+assert(initial.paradigmText.includes("Clarity and intelligibility"), "Homepage paradigm does not reflect the documented judging pattern.");
+assert(initial.paradigmText.includes("does not show that Kai formally adopted it"), "Homepage paradigm does not preserve the EEE evidence boundary.");
 assert(initial.aboutNavLinks === 0, "Standalone About navigation is still visible.");
 assert(initial.primaryCtaCount === 1, "Production homepage must contain one primary CTA.");
 assert(initial.horizontalOverflow <= 4, "Desktop homepage has horizontal overflow.");
@@ -72,6 +80,38 @@ const mediaState = await desktop.evaluate(() => ({
 }));
 assert(mediaState.cards === 3, "Media panel does not contain the three verified account/contact cards.");
 assert(mediaState.imagesLoaded, "A media thumbnail failed to load.");
+
+const verifyPanelsFit = async (page, label) => {
+  const panelControls = page.locator("[data-home-control]");
+  for (let index = 0; index < 5; index += 1) {
+    await panelControls.nth(index).click();
+    const fit = await page.evaluate(() => {
+      const content = document.querySelector(".glass-panel-content");
+      const activePanel = document.querySelector("[data-home-panel]:not([hidden])");
+      if (!content || !activePanel) return { found: false };
+      const contentRect = content.getBoundingClientRect();
+      const panelRect = activePanel.getBoundingClientRect();
+      return {
+        found: true,
+        overflowY: getComputedStyle(content).overflowY,
+        contentFits: content.scrollHeight <= content.clientHeight + 2,
+        panelFits: panelRect.top >= contentRect.top - 2 && panelRect.bottom <= contentRect.bottom + 2,
+      };
+    });
+    assert(fit.found, `${label} panel ${index + 1} was not found.`);
+    assert(fit.overflowY !== "auto" && fit.overflowY !== "scroll", `${label} panel ${index + 1} still uses an internal scrollbar.`);
+    assert(fit.contentFits && fit.panelFits, `${label} panel ${index + 1} is clipped instead of fitting within the information area.`);
+  }
+};
+
+await verifyPanelsFit(desktop, "1920x1080");
+
+const compactDesktop = await browser.newPage({ viewport: { width: 1366, height: 768 }, reducedMotion: "reduce" });
+await compactDesktop.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
+await verifyPanelsFit(compactDesktop, "1366x768");
+const compactOverflow = await compactDesktop.evaluate(() => Math.max(0, document.documentElement.scrollWidth - innerWidth));
+assert(compactOverflow <= 4, "1366x768 homepage has horizontal overflow.");
+await compactDesktop.close();
 
 const aboutRedirect = await desktop.goto(`${baseUrl}/about/`, { waitUntil: "networkidle" });
 assert(aboutRedirect?.status() === 200, "Legacy About URL did not resolve through the homepage redirect.");
