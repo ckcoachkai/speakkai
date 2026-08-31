@@ -205,7 +205,7 @@ img { display: block; max-width: 100%; }
 
 /* 27 — Coaching Atelier */
 .coaching-atelier { display: grid; grid-template: minmax(0, 1fr) 92px / 31% 37% 32%; gap: 0; padding: 0 !important; background: #f2eadb; color: #2b241e; }
-.atelier-monogram { position: absolute; right: 2vw; top: 0; font: clamp(9rem, 22vw, 23rem)/.7 "Playfair Display", serif; color: #e6dbc6; }
+.atelier-monogram { display: none; }
 .coaching-atelier .portrait-atelier { grid-area: 1 / 1 / 3 / 2; margin: clamp(18px, 2vw, 34px); z-index: 1; }
 .v4-version-1 .coaching-atelier .portrait-atelier { width: 80%; height: 80%; margin: 0; place-self: center; }
 .portrait-atelier .v4-portrait-frame { border: 12px solid #e2d2b8; outline: 1px solid #866f58; }
@@ -214,16 +214,19 @@ img { display: block; max-width: 100%; }
 .atelier-copy h1 { font-family: "Playfair Display", serif; font-size: clamp(2.8rem, 4.6vw, 5.3rem); }
 .atelier-copy > p:last-child { max-width: 50ch; font-size: 13px; color: #67584c; }
 .atelier-swatches { grid-area: 2 / 2; display: grid; grid-template-columns: repeat(3, 1fr); align-self: stretch; }
-.atelier-swatches button { border: 0; border-top: 1px solid #9d8d7c; border-right: 1px solid #c1b5a6; background: transparent; text-align: left; padding: 12px; }
+.atelier-swatches button { position: relative; border: 0; border-top: 1px solid #9d8d7c; border-right: 1px solid #c1b5a6; background: transparent; text-align: left; padding: 12px; transition: transform .28s ease, background-color .28s ease, box-shadow .28s ease, border-color .28s ease; }
+.atelier-swatches button[aria-selected="true"] { z-index: 2; border: 2px solid #c59600; background: #fff0a6; box-shadow: 0 18px 36px rgba(91, 65, 20, .24); transform: translateY(-18px) scale(1.06); }
 .atelier-swatches i { display: block; width: 24px; height: 24px; border-radius: 50%; margin-bottom: 8px; background: #273d5b; }
 .atelier-swatches button:nth-child(2) i { background: #a45c40; }
 .atelier-swatches button:nth-child(3) i { background: #d6aa25; }
 .atelier-swatches span { font-size: 11px; font-weight: 800; }
-.atelier-note { grid-area: 1 / 3 / 3 / 4; margin: clamp(20px, 3vw, 52px) clamp(18px, 2vw, 32px); padding: clamp(20px, 2vw, 34px); align-self: center; background: #fffdf8; border: 1px solid #a99680; box-shadow: 0 20px 50px rgba(55,43,36,.12); z-index: 1; }
+.atelier-note { grid-area: 1 / 3 / 3 / 4; margin: 0; padding: clamp(24px, 3vw, 52px); align-self: stretch; display: flex; flex-direction: column; justify-content: center; background: #fffdf8; border: 0; border-left: 1px solid #a99680; box-shadow: -18px 0 50px rgba(55,43,36,.14); z-index: 1; }
+.atelier-note section.is-active { padding: clamp(18px, 2vw, 30px); border-left: 8px solid #ffcc00; background: #fff7ce; animation: atelier-note-in .42s ease both; }
 .atelier-note section > span { color: #8f643b; font: 9px "Space Mono", monospace; text-transform: uppercase; }
 .atelier-note h2 { margin-top: 18px; font-family: "Playfair Display", serif; font-size: clamp(1.8rem, 2.5vw, 3rem); }
 .atelier-note p { color: #685c52; font-size: 12px; }
 .atelier-note small { display: block; margin-top: 22px; color: #88796b; }
+@keyframes atelier-note-in { from { opacity: 0; translate: 24px 0; } to { opacity: 1; translate: 0; } }
 
 /* 28 — Case Study Wall */
 .case-study-wall { display: grid; grid-template: auto minmax(0, 1fr) / 20% 51% 29%; gap: 14px; background: #f4f2ed; }
@@ -528,6 +531,8 @@ img { display: block; max-width: 100%; }
 .glass-panel h2 { font-size: clamp(1.8rem, 2.5vw, 3rem); }
 .glass-panel p { color: #53677d; font-size: 12px; }
 .glass-panel small { display: block; margin-top: 22px; color: #6d7b89; }
+.glass-panel section.is-active { animation: glass-panel-in .46s ease both; }
+@keyframes glass-panel-in { from { opacity: 0; translate: 28px 0; } to { opacity: 1; translate: 0; } }
 
 /* 42 — Neo-Brutalist Studio */
 .brutalist-studio { display: grid; grid-template: 36% minmax(0, 1fr) 24px / 27% 46% 27%; gap: 0; background: #f4f1e8; color: #0b0b0c; }
@@ -552,13 +557,13 @@ img { display: block; max-width: 100%; }
 .brutalist-studio .v4-boundary { grid-area: 3 / 1 / 4 / 4; padding-top: 6px; }
 
 /* 43 — 3D Card Architecture */
-.card-architecture { display: grid; grid-template: auto 20px minmax(0, 1fr) / 28% 32% 40%; gap: 10px 14px; overflow: hidden; background: linear-gradient(160deg, #eaf1f7, #bacce0); color: #14263b; perspective: 1200px; }
+.card-architecture { display: grid; grid-template: auto 20px minmax(0, 1fr) / 28% 32% 40%; gap: 10px 14px; overflow: hidden; background: linear-gradient(145deg, #ffffff 0 54%, #bcecff 100%); color: #0b2442; perspective: 1200px; }
 .card-architecture > section { grid-area: 1 / 2 / 2 / 4; display: grid; grid-template-columns: 1fr 1.25fr; gap: 18px; align-items: end; padding-bottom: 4px; text-align: right; }
 .card-architecture > section .v4-kicker { text-align: left; }
 .card-architecture > section h1 { grid-column: 2; font-size: clamp(2.3rem, 3.6vw, 4.2rem); }
 .card-architecture > section > p:last-child { grid-column: 2; margin: 0; font-size: 11px; color: #536a80; }
-.card-logo-belt { grid-area: 2 / 1 / 3 / 4; display: flex; align-items: center; min-width: 0; border-top: 2px solid #7890a8; border-bottom: 1px solid rgba(120,144,168,.6); color: #64788b; }
-.card-logo-belt span { padding-left: 8px; background: #cad8e4; font: 8px "Space Mono", monospace; letter-spacing: .09em; text-transform: uppercase; }
+.card-logo-belt { grid-area: 2 / 1 / 3 / 4; display: flex; align-items: center; min-width: 0; border-top: 2px solid #17395f; border-bottom: 1px solid #6fbce0; background: #d8f4ff; color: #244a70; }
+.card-logo-belt span { padding-inline: 8px; background: #d8f4ff; font: 8px "Space Mono", monospace; letter-spacing: .09em; text-transform: uppercase; }
 .card-architecture .portrait-anchor-card { grid-area: 3 / 1; align-self: center; height: 68%; transform: rotateY(12deg) rotateZ(-2deg); }
 .portrait-anchor-card .v4-portrait-frame { border-radius: 18px; box-shadow: 18px 25px 40px rgba(30,55,80,.25); }
 .card-deck { grid-area: 3 / 2; position: relative; min-height: 0; transform-style: preserve-3d; }
@@ -639,18 +644,19 @@ img { display: block; max-width: 100%; }
 .speakkai-os .v4-boundary { grid-area: 4 / 1 / 5 / 4; }
 
 /* 47 — Cinematic Hotspot Portrait */
-.cinematic-hotspots { overflow: hidden; background: #030710; color: white; }
+.cinematic-hotspots { overflow: hidden; background: linear-gradient(90deg, #07152d 0 48%, #f8fbff 48%); color: white; }
 .cinematic-hotspots .portrait-cinematic { position: absolute; inset: 0; }
-.portrait-cinematic .v4-portrait-frame { position: relative; height: 100%; background: #030710; }
-.portrait-cinematic .v4-portrait-frame::before { content: ""; position: absolute; z-index: 1; top: 0; right: 0; width: 58%; height: 78px; background: linear-gradient(90deg, #102d60, #194c98); }
-.portrait-cinematic img { width: 58%; height: calc(100% - 78px); margin-top: 78px; margin-left: auto; object-position: 50% 18%; filter: saturate(.76) contrast(1.04) brightness(.74); -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%); mask-image: linear-gradient(90deg, transparent 0, #000 22%); }
+.portrait-cinematic .v4-portrait-frame { position: relative; height: 100%; background: linear-gradient(90deg, #07152d 0 48%, #f8fbff 48%); }
+.portrait-cinematic .v4-portrait-frame::before { content: ""; position: absolute; z-index: 0; top: 92px; right: 2%; width: 49%; height: calc(100% - 112px); border: 1px solid #c7d9eb; border-radius: 52% 52% 18px 18px; background: linear-gradient(145deg, #ffffff, #eaf5ff); box-shadow: 0 28px 70px rgba(7, 21, 45, .25); }
+.portrait-cinematic img { position: relative; z-index: 1; width: 54%; height: calc(100% - 86px); margin-top: 86px; margin-left: auto; object-position: 50% 18%; -webkit-mask-image: none; mask-image: none; border-radius: 48% 48% 12px 12px; filter: saturate(.96) contrast(1.02) brightness(1.04) drop-shadow(0 24px 26px rgba(10, 29, 55, .24)); }
 .portrait-cinematic figcaption { left: auto; right: 3%; width: max-content; background: rgba(4,8,16,.78); }
-.cinematic-hotspots::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #030710 0 36%, rgba(3,7,16,.72) 51%, transparent 72%); pointer-events: none; }
+.cinematic-hotspots::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #07152d 0 37%, rgba(7,21,45,.92) 46%, transparent 62%); pointer-events: none; }
 .cinematic-title { position: absolute; z-index: 3; left: 3%; top: 8%; width: 42%; }
 .cinematic-title h1 { font: clamp(3.3rem, 6vw, 7rem)/.82 "Playfair Display", serif; }
 .cinematic-title p:last-child { max-width: 46ch; color: #b5c1d1; font-size: 12px; }
-.hotspot-layer { position: absolute; z-index: 4; top: 2.1%; right: 3%; width: 52%; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
-.hotspot-layer button { position: relative; min-width: 74px; min-height: 38px; padding: 7px 10px; border: 1px solid rgba(169,205,255,.65); border-radius: 8px; background: rgba(22,72,155,.86); color: white; backdrop-filter: blur(6px); font-size: 10px; }
+.hotspot-layer { position: absolute; z-index: 4; top: 2.1%; right: 3%; width: 52%; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; padding: 5px; border: 1px solid #d5e1ed; border-radius: 12px; background: rgba(255,255,255,.9); box-shadow: 0 12px 28px rgba(12,39,70,.16); }
+.hotspot-layer button { position: relative; min-width: 74px; min-height: 38px; padding: 7px 10px; border: 1px solid #b8cce0; border-radius: 8px; background: #f7fbff; color: #102d55; font-size: 10px; transition: transform .22s ease, background-color .22s ease, box-shadow .22s ease; }
+.hotspot-layer button[aria-selected="true"] { border-color: #d4a900; background: #ffdf47; color: #0b1020; box-shadow: 0 8px 18px rgba(108,80,0,.2); transform: translateY(-2px); }
 .hotspot-layer button:nth-child(n) { inset: auto; }
 .hotspot-layer span { display: inline-grid; place-items: center; width: 19px; height: 19px; margin-right: 5px; border-radius: 50%; background: var(--yellow); color: var(--navy); }
 .hotspot-card { position: absolute; z-index: 5; left: 3%; bottom: 15%; width: min(46vw, 660px); min-height: 24%; padding: clamp(18px, 2.4vw, 36px); background: rgba(7,20,46,.92); color: white; border: 1px solid rgba(126,170,236,.45); }
@@ -659,6 +665,11 @@ img { display: block; max-width: 100%; }
 .hotspot-card p { font-size: 11px; color: #c5d3e8; }
 .cinematic-actions { position: absolute; z-index: 5; left: 3%; bottom: 7%; }
 .cinematic-hotspots .v4-boundary { position: absolute; z-index: 5; right: 3%; bottom: 2%; width: 44%; color: #8ea0b5; text-align: right; }
+
+@media (prefers-reduced-motion: reduce) {
+  .atelier-swatches button, .hotspot-layer button { transition: none; }
+  .atelier-note section.is-active, .glass-panel section.is-active { animation: none; }
+}
 
 /* 48 — Fluid Typography Field */
 .fluid-type-field { display: grid; grid-template: minmax(0, 1fr) 78px / 42% 30% 28%; gap: 10px; overflow: hidden; background: linear-gradient(145deg, #f6efe2, #e3edf8); color: #0d1c32; }
@@ -754,6 +765,11 @@ img { display: block; max-width: 100%; }
   .v4-experiment .v4-portrait-frame { height: 100%; min-height: 360px; clip-path: none; border-radius: 16px; }
   .v4-experiment .v4-portrait img { width: 100%; height: 100%; margin: 0; -webkit-mask-image: none; mask-image: none; }
   .portrait-cinematic .v4-portrait-frame::before { display: none; }
+  .cinematic-hotspots { background: #07152d; }
+  .portrait-cinematic .v4-portrait-frame { background: #f8fbff; }
+  .glass-message { display: block !important; }
+  .glass-message .v4-kicker, .glass-message h1, .glass-message > p:last-child { display: block; width: 100%; margin-top: 0; }
+  .glass-message h1 { margin-block: 12px; }
   .v4-experiment [role="tablist"] { position: relative !important; inset: auto !important; display: grid !important; grid-template-columns: 1fr 1fr !important; grid-template-rows: none !important; gap: 8px; min-height: 0; height: auto !important; order: 3; }
   .v4-experiment [role="tablist"] > button { position: relative !important; inset: auto !important; width: 100% !important; height: auto !important; min-height: 64px; transform: none !important; clip-path: none; }
   .v4-experiment aside, .v4-experiment .os-window, .v4-experiment .comic-bubble, .v4-experiment .brutal-output { order: 4; min-height: 240px; align-self: stretch; }

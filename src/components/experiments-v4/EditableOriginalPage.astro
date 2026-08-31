@@ -66,12 +66,20 @@ const description = `Editable copy of Version ${experiment.number}. ${experiment
 
         groups.forEach((group) => {
           const buttons = [...group.querySelectorAll('[data-v4-control]')];
+          const root = group.closest('[data-qa="experiment-root"]');
+          const shouldRotate = ['27', '41'].includes(root?.getAttribute('data-source-number') || '');
+          let pauseUntil = 0;
+          const pauseRotation = () => { pauseUntil = Date.now() + 9000; };
           buttons.forEach((button, index) => {
-            button.addEventListener('click', () => activate(group, button));
+            button.addEventListener('click', () => {
+              pauseRotation();
+              activate(group, button);
+            });
             button.addEventListener('keydown', (event) => {
               const keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'];
               if (!keys.includes(event.key)) return;
               event.preventDefault();
+              pauseRotation();
               let nextIndex = index;
               if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (index + 1) % buttons.length;
               if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (index - 1 + buttons.length) % buttons.length;
@@ -82,6 +90,14 @@ const description = `Editable copy of Version ${experiment.number}. ${experiment
           });
           const initial = buttons.find((button) => button.getAttribute('aria-selected') === 'true') || buttons[0];
           if (initial) activate(group, initial);
+
+          if (shouldRotate && buttons.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            window.setInterval(() => {
+              if (document.hidden || document.body.classList.contains('editor-is-open') || Date.now() < pauseUntil) return;
+              const current = buttons.findIndex((button) => button.getAttribute('aria-selected') === 'true');
+              activate(group, buttons[(current + 1 + buttons.length) % buttons.length]);
+            }, 3000);
+          }
         });
 
         document.querySelectorAll('.v4-jump').forEach((details) => {
