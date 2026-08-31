@@ -1,7 +1,10 @@
 ---
 import ContactStrip from "../components/ContactStrip.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import SiteNavigation from "../components/SiteNavigation.astro";
+import SpatialSiteHeader from "../components/SpatialSiteHeader.astro";
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/700.css";
+import "@fontsource/space-mono/400.css";
 
 const pageTitle = "Contact Coach Kai | SpeakKai";
 ---
@@ -15,6 +18,8 @@ const pageTitle = "Contact Coach Kai | SpeakKai";
       name="description"
       content="Contact Coach Kai on WeChat or Xiaohongshu."
     />
+    <link rel="canonical" href="https://speakkai.com/contact/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{pageTitle}</title>
     <style>
       :global(*) { box-sizing: border-box; }
@@ -27,10 +32,8 @@ const pageTitle = "Contact Coach Kai | SpeakKai";
       }
 
       :global(body) {
-        background: #f4f8fd;
-        font-family:
-          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
+        background: #10224a;
+        font-family: "Manrope", Inter, system-ui, sans-serif;
       }
 
       .site-header {
@@ -83,14 +86,33 @@ const pageTitle = "Contact Coach Kai | SpeakKai";
           text-align: center;
         }
       }
+
+      .contact-spatial-shell {
+        position: relative;
+        min-height: calc(100vh - 78px);
+        overflow: hidden;
+        background: radial-gradient(circle at 72% 38%, #5e88c7 0, #28518d 38%, #10224a 78%);
+      }
+
+      .contact-spatial-shell::before,
+      .contact-spatial-shell::after {
+        position: absolute;
+        width: min(72vw, 900px);
+        aspect-ratio: 1;
+        right: -18%;
+        top: -42%;
+        border: 1px solid rgb(183 211 255 / 28%);
+        border-radius: 50%;
+        content: "";
+        pointer-events: none;
+      }
+
+      .contact-spatial-shell::after { inset: -18% -2% auto auto; width: min(48vw, 620px); }
     </style>
   </head>
   <body>
-    <header class="site-header">
-      <SiteNavigation current="contact" />
-    </header>
-
-    <ContactStrip variant="page" />
+    <SpatialSiteHeader current="contact" />
+    <main class="contact-spatial-shell"><ContactStrip variant="page" /></main>
     <SiteFooter />
   </body>
 </html>

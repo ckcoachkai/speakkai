@@ -16,7 +16,7 @@ const initial = await desktop.evaluate(() => ({
   robots: document.querySelector('meta[name="robots"]')?.getAttribute("content") || "",
   h1Count: document.querySelectorAll("h1").length,
   labNavCount: document.querySelectorAll(".v4-nav, [data-qa='test-switcher']").length,
-  productionHeaderCount: document.querySelectorAll(".production-header").length,
+  productionHeaderCount: document.querySelectorAll(".spatial-site-header").length,
   controls: document.querySelectorAll("[data-home-control]").length,
   primaryCtaCount: document.querySelectorAll('[data-qa="primary-cta"]').length,
   horizontalOverflow: Math.max(0, document.documentElement.scrollWidth - innerWidth),
@@ -61,7 +61,7 @@ const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, ha
 await mobile.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
 const mobileState = await mobile.evaluate(() => ({
   horizontalOverflow: Math.max(0, document.documentElement.scrollWidth - innerWidth),
-  navVisible: Boolean(document.querySelector(".production-header .site-nav")),
+  navVisible: Boolean(document.querySelector(".spatial-site-header .site-nav")),
   h1Visible: Boolean(document.querySelector("h1")),
   controls: document.querySelectorAll("[data-home-control]").length,
 }));

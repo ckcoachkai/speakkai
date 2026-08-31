@@ -1,6 +1,10 @@
 ---
 import SiteFooter from "../components/SiteFooter.astro";
-import SiteNavigation from "../components/SiteNavigation.astro";
+import SpatialPageHero from "../components/SpatialPageHero.astro";
+import SpatialSiteHeader from "../components/SpatialSiteHeader.astro";
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/700.css";
+import "@fontsource/space-mono/400.css";
 ---
 
 <!doctype html>
@@ -12,6 +16,8 @@ import SiteNavigation from "../components/SiteNavigation.astro";
       name="description"
       content="Meet Kai Liu, a TEDx speaker, communication coach, speech and debate trainer, and award-winning Toastmasters leader."
     />
+    <link rel="canonical" href="https://speakkai.com/about/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>About Coach Kai | SpeakKai</title>
     <style>
       :root {
@@ -131,14 +137,14 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         text-transform: uppercase;
       }
 
-      .about-copy h1,
+      .about-copy h2,
       .section-heading h2 {
         margin: 0;
         color: #10284d;
         letter-spacing: 0;
       }
 
-      .about-copy h1 {
+      .about-copy h2 {
         font-size: clamp(42px, 7vw, 72px);
         line-height: 0.98;
       }
@@ -414,35 +420,41 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         }
 
       }
+
+      body { font-family: "Manrope", Inter, system-ui, sans-serif; }
+      .about-section { background: #f4f7fb; }
+      .about-intro { gap: clamp(34px, 5vw, 72px); }
+      .about-copy, .about-metrics { padding: clamp(24px, 3vw, 38px); border: 1px solid #c5d5e8; background: rgb(255 255 255 / 88%); box-shadow: 0 22px 52px rgb(16 34 74 / 9%); }
+      .about-metrics { margin: 0; border-top: 5px solid #ffcc00; }
+      .about-role, .section-kicker, .career-year { color: #28518d; }
+      .leadership-section { color: white; background: radial-gradient(circle at 78% 12%, #28518d 0, #10224a 64%); border-color: #365785; }
+      .leadership-section .section-heading h2, .leadership-section .credential-list strong { color: white; }
+      .leadership-section .section-heading > p:last-child, .leadership-section .credential-list li, .leadership-section .achievement-list span { color: #d6e3f5; }
+      .leadership-section .credential-list, .leadership-section .achievement-list, .leadership-section .credential-list li, .leadership-section .achievement-list li { border-color: rgb(214 227 245 / 28%); }
+      .leadership-section .section-kicker, .leadership-section .achievement-list time { color: #ffcc00; }
+      .coaching-section { background: #eef4fb; }
+      .coaching-column { padding: clamp(24px, 3vw, 34px); border: 1px solid #c5d5e8; background: white; box-shadow: 0 18px 42px rgb(16 34 74 / 8%); }
+      .coaching-column + .coaching-column { padding-left: clamp(24px, 3vw, 34px); border-left: 1px solid #c5d5e8; }
+      @media (max-width: 640px) {
+        .coaching-column + .coaching-column { padding-left: clamp(24px, 3vw, 34px); border-left: 1px solid #c5d5e8; }
+      }
     </style>
   </head>
   <body>
+    <SpatialSiteHeader current="about" />
+    <SpatialPageHero
+      eyebrow="Coach Kai / Public profile"
+      title="Meet the coach behind SpeakKai."
+      summary="Communication coaching shaped by teaching, competition, leadership, and years of helping speakers turn ideas into clear performance."
+      portrait
+    />
     <main>
-      <section class="coach-banner" aria-label="Coach Kai">
-        <picture>
-          <source
-            media="(max-width: 640px)"
-            srcset="/images/coach-kai-banner-mobile.png"
-          />
-          <img
-            src="/images/coach-kai-banner-desktop.png"
-            width="2508"
-            height="627"
-            alt="Coach Kai"
-          />
-        </picture>
-      </section>
-
-      <header class="site-header">
-        <SiteNavigation current="about" />
-      </header>
-
       <section class="about-section" id="about" aria-labelledby="about-title">
         <div class="about-inner">
           <div class="about-intro">
             <div class="about-copy">
               <p class="section-kicker">About Coach Kai</p>
-              <h1 id="about-title">Kai Liu</h1>
+              <h2 id="about-title">Kai Liu</h2>
               <p class="about-role">
                 TEDx Speaker | Communication Coach | Speech &amp; Debate Coach
               </p>

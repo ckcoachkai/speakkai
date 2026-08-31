@@ -1,0 +1,61 @@
+---
+import SiteNavigation from "./SiteNavigation.astro";
+
+interface Props {
+  current?: "home" | "about" | "schedule" | "resources" | "contact";
+  compact?: boolean;
+}
+
+const { current, compact = false } = Astro.props;
+---
+
+<header class="spatial-site-header">
+  <div class="spatial-brand-block">
+    <a class="spatial-brand" href="/" aria-label="SpeakKai home">SpeakKai</a>
+    <slot name="context" />
+  </div>
+  <SiteNavigation current={current} compact={compact} />
+  <div class="spatial-header-action"><slot name="action" /></div>
+</header>
+
+<style>
+  .spatial-site-header {
+    position: relative;
+    z-index: 100;
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) auto minmax(44px, 1fr);
+    min-height: 52px;
+    align-items: center;
+    gap: clamp(16px, 3vw, 44px);
+    padding: 0 clamp(16px, 2.2vw, 38px);
+    border-bottom: 1px solid rgb(14 31 50 / 14%);
+    background: rgb(248 250 252 / 98%);
+  }
+
+  .spatial-brand-block { min-width: 0; }
+  .spatial-brand {
+    color: #10224a;
+    font-family: "Manrope", Inter, system-ui, sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.035em;
+    text-decoration: none;
+  }
+
+  .spatial-header-action { min-width: 0; justify-self: end; }
+
+  @media (max-width: 760px) {
+    .spatial-site-header {
+      position: sticky;
+      top: 0;
+      grid-template-columns: 1fr auto;
+      min-height: 56px;
+      gap: 8px;
+      padding: 0 8px;
+    }
+
+    .spatial-brand-block { display: none; }
+    .spatial-site-header :global(.site-nav) { justify-self: stretch; }
+    .spatial-header-action:empty { display: none; }
+  }
+</style>

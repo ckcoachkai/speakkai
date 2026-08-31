@@ -96,12 +96,23 @@ const { id, variant = "strip" } = Astro.props;
     min-height: calc(100vh - 62px);
     height: auto;
     border-bottom: 0;
+    color: #10224a;
+    background: transparent;
   }
 
   .is-page .contact-inner {
+    position: relative;
+    z-index: 2;
+    width: min(100% - 40px, 900px);
     justify-content: center;
     gap: clamp(28px, 6vw, 72px);
-    padding: 48px 0;
+    height: auto;
+    margin: auto;
+    padding: clamp(34px, 6vw, 72px);
+    border: 1px solid rgb(255 255 255 / 62%);
+    border-left: 8px solid #ffcc00;
+    background: rgb(249 251 255 / 95%);
+    box-shadow: 0 34px 90px rgb(3 10 28 / 32%);
   }
 
   .is-page .contact-qr-wrap {
@@ -109,13 +120,17 @@ const { id, variant = "strip" } = Astro.props;
     height: min(34vw, 320px);
     flex-basis: min(34vw, 320px);
     border-color: #afc1d7;
-    box-shadow: 0 14px 34px rgb(28 58 91 / 12%);
+    border-radius: 50% 50% 14px 14px;
+    box-shadow: 0 20px 48px rgb(16 34 74 / 18%);
   }
 
   .is-page .contact-copy {
     gap: 9px;
     font-size: 18px;
   }
+
+  .is-page .contact-copy h1 { color: #10224a; letter-spacing: -.055em; }
+  .is-page .contact-copy::before { color: #9b7400; font: 700 10px "Space Mono", monospace; letter-spacing: .12em; text-transform: uppercase; content: "SpeakKai / Start a conversation"; }
 
   @media (max-width: 640px) {
     .contact-strip { height: 88px; }
@@ -141,7 +156,7 @@ const { id, variant = "strip" } = Astro.props;
       width: min(100% - 32px, 420px);
       flex-direction: column;
       gap: 24px;
-      padding: 36px 0 54px;
+      padding: 32px 20px 42px;
       text-align: center;
     }
 

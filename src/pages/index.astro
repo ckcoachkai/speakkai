@@ -1,6 +1,6 @@
 ---
 import HomepageV5 from "../components/HomepageV5.astro";
-import SiteNavigation from "../components/SiteNavigation.astro";
+import SpatialSiteHeader from "../components/SpatialSiteHeader.astro";
 import "../styles/experiment-lab-v4.css";
 
 const title = "SpeakKai | Speech, Debate and Communication Coaching";
@@ -31,10 +31,7 @@ const socialImage = "https://speakkai.com/images/coach-kai-headshot.webp";
     <title>{title}</title>
   </head>
   <body class="v4-page v4-family-modern v4-version-5 v4-source-41 production-home">
-    <header class="production-header">
-      <a class="production-brand" href="/" aria-label="SpeakKai home">SpeakKai</a>
-      <SiteNavigation current="home" compact />
-    </header>
+    <SpatialSiteHeader current="home" compact />
     <main class="v4-main production-main">
       <HomepageV5 />
     </main>
@@ -42,41 +39,5 @@ const socialImage = "https://speakkai.com/images/coach-kai-headshot.webp";
 </html>
 
 <style is:global>
-  .production-header {
-    position: relative;
-    z-index: 100;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    height: 52px;
-    align-items: center;
-    gap: clamp(18px, 3vw, 48px);
-    padding: 0 clamp(16px, 2.2vw, 38px);
-    border-bottom: 1px solid rgba(14, 31, 50, .14);
-    background: rgba(248, 250, 252, .98);
-  }
-
-  .production-brand {
-    color: #10224a;
-    font-family: "Manrope", system-ui, sans-serif;
-    font-size: 17px;
-    font-weight: 800;
-    letter-spacing: -.035em;
-    text-decoration: none;
-  }
-
-  .production-header .site-nav { justify-self: end; }
   .production-v5 { height: 100%; }
-
-  @media (max-width: 900px) {
-    .production-header {
-      position: sticky;
-      top: 0;
-      height: 56px;
-      grid-template-columns: 1fr;
-      padding: 0 8px;
-    }
-
-    .production-brand { display: none; }
-    .production-header .site-nav { justify-self: stretch; }
-  }
 </style>

@@ -88,11 +88,14 @@ const tools = [
 
   .tool-card {
     overflow: hidden;
-    border: 1px solid #cbd7e7;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 14px 34px rgb(26 55 89 / 10%);
+    border: 1px solid #b8cbe2;
+    border-radius: 0;
+    background: rgb(255 255 255 / 94%);
+    box-shadow: 0 20px 46px rgb(16 34 74 / 11%);
+    transition: translate .2s ease, box-shadow .2s ease;
   }
+
+  .tool-card:hover { translate: 0 -5px; box-shadow: 0 28px 58px rgb(16 34 74 / 16%); }
 
   .tool-preview {
     display: block;
@@ -117,7 +120,7 @@ const tools = [
     width: fit-content;
     align-items: center;
     gap: 7px;
-    color: #087c98;
+    color: #28518d;
     font-size: 12px;
     font-weight: 900;
     letter-spacing: 0;
@@ -147,16 +150,17 @@ const tools = [
     gap: 9px;
     margin-top: 3px;
     padding: 11px 16px;
-    border-radius: 5px;
-    background: #0b68bb;
-    color: #fff;
+    border: 1px solid #d4a900;
+    border-radius: 999px;
+    background: #ffcc00;
+    color: #10224a;
     font-size: 15px;
     font-weight: 850;
     text-decoration: none;
   }
 
-  .tool-link:hover { background: #07589f; }
-  .tool-link:focus-visible { outline: 3px solid #80d6d1; outline-offset: 3px; }
+  .tool-link:hover { background: #ffdf57; }
+  .tool-link:focus-visible { outline: 3px solid #10224a; outline-offset: 3px; }
 
   @media (max-width: 920px) {
     .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

@@ -1,7 +1,9 @@
 ---
 import { RefreshCw } from "@lucide/astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import SiteNavigation from "../components/SiteNavigation.astro";
+import SpatialSiteHeader from "../components/SpatialSiteHeader.astro";
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/700.css";
 ---
 
 <!doctype html>
@@ -11,6 +13,8 @@ import SiteNavigation from "../components/SiteNavigation.astro";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <meta name="color-scheme" content="light" />
+    <link rel="canonical" href="https://speakkai.com/schedule/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta
       name="description"
       content="View Coach Kai's general availability and contact him to confirm a suitable coaching time."
@@ -536,41 +540,42 @@ import SiteNavigation from "../components/SiteNavigation.astro";
         .contact-section { grid-column: auto; }
         .notes-section + .notes-section { border-top: 1px solid #a0aaa6; border-left: 0; }
       }
+
+      body { font-family: "Manrope", Inter, system-ui, sans-serif; background: #eaf1f9; }
+      .spatial-schedule-context h1 { margin: 0; color: #10224a; font-size: 15px; letter-spacing: -.02em; }
+      .spatial-schedule-context p { margin: 2px 0 0; color: #65758a; font-size: 9px; }
+      .refresh-button { border-color: #d4a900; border-radius: 999px; color: #10224a; background: #ffcc00; }
+      .refresh-button:hover { background: #ffdf57; }
+      .refresh-button:focus-visible, .sheet-tab:focus-visible { outline-color: #ffcc00; }
+      main { position: relative; padding-top: 18px; background: radial-gradient(circle at 88% 0, rgb(94 136 199 / 20%), transparent 34%); }
+      .availability-note { border: 1px solid #b8cbe2; border-left: 6px solid #ffcc00; border-radius: 0; background: rgb(255 255 255 / 92%); box-shadow: 0 14px 34px rgb(16 34 74 / 8%); }
+      .availability-note a { border-radius: 999px; color: #10224a; background: #ffcc00; }
+      .availability-note a:hover { background: #ffdf57; }
+      .schedule-toolbar { min-height: 46px; padding: 0 12px; color: white; background: #10224a; }
+      .sheet-tab { color: #d6e3f5; border-color: #58749a; }
+      .sheet-tab[aria-selected="true"] { color: #10224a; background: #f8fbff; }
+      .sheet-tab[aria-selected="true"]::after { background: #ffcc00; }
+      .table-shell { border-color: #10224a; box-shadow: 0 22px 54px rgb(16 34 74 / 13%); }
+      th { background: #10224a; }
+      .date-line { background: #28518d; }
+      .notes-rail { border-color: #9fb4ce; background: rgb(255 255 255 / 88%); }
+      @media (max-width: 760px) {
+        .spatial-schedule-context { display: none; }
+        main { padding-top: 10px; }
+        .schedule-toolbar { padding-inline: 9px; }
+      }
     </style>
   </head>
   <body>
-    <section class="coach-banner" aria-label="Coach Kai social media">
-      <picture>
-        <source
-          media="(max-width: 640px)"
-          srcset="/images/coach-kai-banner-mobile.png"
-          width="1683"
-          height="935"
-        />
-        <img
-          src="/images/coach-kai-banner-desktop.png"
-          alt="Coach Kai"
-          width="2508"
-          height="627"
-          fetchpriority="high"
-          decoding="async"
-        />
-      </picture>
-      <div class="banner-socials">
-        <span>WeChat: <strong>CKcoachkai</strong></span>
-        <span>小红书: <strong>CKcoachkai</strong></span>
-      </div>
-    </section>
-    <header class="page-header">
-      <div class="identity">
+    <SpatialSiteHeader current="schedule">
+      <div slot="context" class="spatial-schedule-context">
         <h1 id="schedule-title">Coach Kai's Availability</h1>
         <p id="updated-time">正在载入 Loading</p>
       </div>
-      <SiteNavigation current="schedule" />
-      <button class="refresh-button" type="button" title="Refresh" aria-label="Refresh schedule">
+      <button slot="action" class="refresh-button" type="button" title="Refresh" aria-label="Refresh schedule">
         <RefreshCw size={17} stroke-width={2} aria-hidden="true" />
       </button>
-    </header>
+    </SpatialSiteHeader>
 
     <main>
       <div class="availability-note">
