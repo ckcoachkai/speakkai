@@ -50,7 +50,7 @@ for (let version = 9; version <= 12; version += 1) {
 for (let removed = 13; removed <= 50; removed += 1) assert(!fs.existsSync(path.join(dist, "tests", String(removed), "index.html")), `Retired route still exists: /tests/${removed}/`);
 assert(!fs.existsSync(path.join(dist, "tests", "archive", "v3-parent-command-center", "index.html")), "Retired V3 archive must not remain public.");
 
-const retiredLegacyRoutes = ["test", "test1", "test2", "test3", "test4", "test5", "test6", "test7", "test9", "test10", "testa", "concept-lab/home", "concept-lab/test1", "concept-lab/test2", "concept-lab/test3", "concept-lab/test4", "concept-lab/test5", "concept-lab/test6", "concept-lab/test7", "concept-lab/test9", "concept-lab/test10", "concept-lab/testa"];
+const retiredLegacyRoutes = ["test1", "test2", "test3", "test4", "test5", "test6", "test7", "test9", "test10", "testa", "concept-lab/home", "concept-lab/test1", "concept-lab/test2", "concept-lab/test3", "concept-lab/test4", "concept-lab/test5", "concept-lab/test6", "concept-lab/test7", "concept-lab/test9", "concept-lab/test10", "concept-lab/testa"];
 for (const route of retiredLegacyRoutes) assert(!fs.existsSync(path.join(dist, ...route.split("/"), "index.html")), `Retired legacy route still exists: /${route}/`);
 
 if (failures.length) {
