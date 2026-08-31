@@ -1,6 +1,9 @@
 ---
-import EvolutionPage from "../../components/evolution/EvolutionPage.astro";
-import { getEvolutionConfig } from "../../data/evolutionConfigs";
+import EditableOriginalPage from "../../components/experiments-v4/EditableOriginalPage.astro";
+import { experimentV4ByNumber } from "../../data/experimentLabV4";
+
+const experiment = experimentV4ByNumber.get(1);
+if (!experiment) throw new Error("Original Version 1 is missing.");
 ---
 
-<EvolutionPage config={getEvolutionConfig(5)} />
+<EditableOriginalPage experiment={experiment} version={5} />

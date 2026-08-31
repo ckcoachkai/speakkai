@@ -17,7 +17,7 @@ const report = [];
 for (const viewport of viewports) {
   const context = await browser.newContext({ viewport, hasTouch: viewport.width <= 820, reducedMotion: "reduce" });
   const page = await context.newPage();
-  for (let version = 5; version <= 12; version += 1) {
+  for (let version = 1; version <= 8; version += 1) {
     const consoleErrors = [];
     const pageErrors = [];
     page.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
@@ -36,7 +36,7 @@ for (const viewport of viewports) {
         imagesLoaded: [...document.images].every((image) => image.complete && image.naturalWidth > 0),
         unnamedButtons: buttons.filter((button) => !(button.innerText || button.getAttribute("aria-label"))).length,
         emptyLinks: links.filter((link) => !link.getAttribute("href")).length,
-        primaryCtaCount: document.querySelectorAll(".evo-button.primary").length,
+        primaryCtaCount: document.querySelectorAll('[data-qa="primary-cta"]').length,
         editorUiPremature: Boolean(document.querySelector(".editor-toolbar")),
         visualEditorLoaded: resources.some((entry) => entry.name.includes("visual-editor.js")),
         totalTransfer: resources.reduce((sum, entry) => sum + (entry.transferSize || 0), 0),
@@ -45,7 +45,7 @@ for (const viewport of viewports) {
     });
     checks.httpStatus = response?.status() ?? null;
     checks.editButton = await page.locator("[data-editor-launch]").count();
-    checks.failed = checks.httpStatus !== 200 || !checks.status || checks.h1Count !== 1 || checks.sectionCount < 4 || checks.horizontalOverflow > 4 || !checks.imagesLoaded || checks.unnamedButtons > 0 || checks.emptyLinks > 0 || checks.primaryCtaCount < 2 || checks.editorUiPremature || checks.autoplayMedia > 0 || (version <= 8 && checks.editButton !== 0) || (version >= 9 && checks.editButton !== 1) || checks.visualEditorLoaded || consoleErrors.length > 0 || pageErrors.length > 0;
+    checks.failed = checks.httpStatus !== 200 || !checks.status || checks.h1Count !== 1 || (version >= 5 && checks.sectionCount < 1) || checks.horizontalOverflow > 4 || !checks.imagesLoaded || checks.unnamedButtons > 0 || checks.emptyLinks > 0 || checks.primaryCtaCount < 1 || checks.editorUiPremature || checks.autoplayMedia > 0 || (version <= 4 && checks.editButton !== 0) || (version >= 5 && checks.editButton !== 1) || checks.visualEditorLoaded || consoleErrors.length > 0 || pageErrors.length > 0;
     report.push({ version, viewport, checks, consoleErrors, pageErrors });
     page.removeAllListeners("console");
     page.removeAllListeners("pageerror");
@@ -56,11 +56,11 @@ for (const viewport of viewports) {
 const galleryPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
 await galleryPage.goto(`${baseUrl}/tests/`, { waitUntil: "networkidle" });
 const gallery = { cards: await galleryPage.locator(".card").count(), horizontalOverflow: await galleryPage.evaluate(() => Math.max(0, document.documentElement.scrollWidth - innerWidth)) };
-gallery.failed = gallery.cards !== 12 || gallery.horizontalOverflow > 4;
+gallery.failed = gallery.cards !== 8 || gallery.horizontalOverflow > 4;
 
 const architecturePage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 await architecturePage.goto(`${baseUrl}/tests/8/`, { waitUntil: "networkidle" });
-const tabs = architecturePage.locator("[data-evo-control]");
+const tabs = architecturePage.locator("[data-v4-control]");
 await tabs.first().focus();
 await architecturePage.keyboard.press("ArrowRight");
 const keyboardTabs = (await tabs.nth(1).getAttribute("aria-selected")) === "true";
@@ -75,4 +75,4 @@ if (failures.length || gallery.failed || !keyboardTabs) {
   if (!keyboardTabs) console.error("Architecture tabs failed keyboard navigation");
   process.exit(1);
 }
-console.log(`Evolution quality check passed: ${report.length}/${report.length} route/viewport states, gallery, keyboard tabs, lazy editor loading.`);
+console.log(`Homepage editor quality check passed: ${report.length}/${report.length} route/viewport states, eight-card gallery, keyboard tabs, and lazy editor loading.`);

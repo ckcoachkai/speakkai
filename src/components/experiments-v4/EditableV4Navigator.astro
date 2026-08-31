@@ -1,0 +1,48 @@
+---
+import { experimentsV4 } from "../../data/experimentLabV4";
+
+interface Props {
+  current: number;
+  original: number;
+}
+
+const { current, original } = Astro.props;
+const editableVersions = experimentsV4.map((experiment) => ({
+  number: experiment.number + 4,
+  original: experiment.number,
+  title: experiment.title,
+}));
+const currentIndex = editableVersions.findIndex((item) => item.number === current);
+const previous = editableVersions[(currentIndex - 1 + editableVersions.length) % editableVersions.length];
+const next = editableVersions[(currentIndex + 1) % editableVersions.length];
+---
+
+<nav class="v4-nav" aria-label="Editable homepage navigation" data-qa="test-switcher">
+  <a class="v4-brand" href="/tests/" data-qa="brand" aria-label="SpeakKai Experiment Lab gallery">
+    <span class="v4-brand-mark" aria-hidden="true">SK</span>
+    <span>SpeakKai Lab</span>
+  </a>
+  <div class="v4-stepper" aria-label={`Current editable homepage direction: Version ${current}`}>
+    <a href={`/tests/${previous.number}/`} aria-label={`Previous: Editable Version ${previous.number}`}>← {previous.number}</a>
+    <strong>Editable Version {current}</strong>
+    <a href={`/tests/${next.number}/`} aria-label={`Next: Editable Version ${next.number}`}>{next.number} →</a>
+  </div>
+  <details class="v4-jump">
+    <summary>Jump to</summary>
+    <div class="v4-jump-panel">
+      <p>Four editable copies</p>
+      <ol>
+        {editableVersions.map((item) => (
+          <li>
+            <a href={`/tests/${item.number}/`} aria-current={item.number === current ? "page" : undefined}>
+              <span>V{item.number}</span>
+              {item.title}
+            </a>
+          </li>
+        ))}
+      </ol>
+      <a class="v4-gallery-link" href={`/tests/${original}/`}>View original Version {original}</a>
+      <a class="v4-gallery-link" href="/tests/">Compare all eight</a>
+    </div>
+  </details>
+</nav>

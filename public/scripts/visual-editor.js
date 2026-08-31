@@ -1,7 +1,7 @@
 const EDITABLE_STYLES = [
   "fontFamily", "fontSize", "fontWeight", "lineHeight", "letterSpacing", "textAlign", "color",
   "backgroundColor", "padding", "margin", "gap", "borderRadius", "opacity", "width", "height",
-  "maxWidth", "boxShadow", "borderColor", "borderWidth", "borderStyle", "aspectRatio",
+  "maxWidth", "boxShadow", "borderColor", "borderWidth", "borderStyle", "aspectRatio", "translate",
 ];
 
 const esc = (value = "") => String(value).replace(/[&<>\"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
@@ -50,13 +50,19 @@ function makeControl(label, control) {
   return `<label><span>${label}</span>${control}</label>`;
 }
 
+function readTranslate(element) {
+  const values = (element?.style.translate || "").match(/-?[\d.]+/g)?.map(Number) || [];
+  return { x: values[0] || 0, y: values[1] || 0 };
+}
+
 export function launchEditor({ version, canvas, storageKey, applyState }) {
   if (!canvas || document.body.classList.contains("editor-is-open")) return;
   injectStyles();
   document.body.classList.add("editor-is-open");
   document.querySelector("[data-editor-launch]")?.setAttribute("hidden", "");
 
-  const nav = document.querySelector(".evo-nav");
+  const nav = document.querySelector(".evo-nav, .v4-nav");
+  if (!nav) return;
   const stage = document.createElement("div");
   const artboard = document.createElement("div");
   stage.className = "editor-stage";
@@ -70,6 +76,7 @@ export function launchEditor({ version, canvas, storageKey, applyState }) {
   const future = [];
   let selected = null;
   let dragSection = null;
+  let dragElement = null;
 
   const applyViewport = (mode = "desktop") => {
     const targets = { desktop: 1440, tablet: 768, mobile: 390 };
@@ -182,6 +189,7 @@ export function launchEditor({ version, canvas, storageKey, applyState }) {
     shell.querySelector("[data-selection-name]").textContent = labelFor(selected);
     shell.querySelectorAll("[data-layer-id]").forEach((button) => button.classList.toggle("is-selected", button.dataset.layerId === selected.dataset.editId));
     renderProperties();
+    status("Selected — drag this element directly on the page");
   }
 
   function renderProperties() {
@@ -204,12 +212,14 @@ export function launchEditor({ version, canvas, storageKey, applyState }) {
       </fieldset>
       <fieldset><legend>Layout & style</legend>
         <div class="property-grid">${makeControl("Width", `<input data-prop="width" value="${esc(selected.style.width || "")}" placeholder="auto / 80%">`)}${makeControl("Height", `<input data-prop="height" value="${esc(selected.style.height || "")}" placeholder="auto / 420px">`)}</div>
+        <div class="property-grid">${makeControl("Position X", `<input data-prop="translateX" type="number" step="8" value="${readTranslate(selected).x}">`)}${makeControl("Position Y", `<input data-prop="translateY" type="number" step="8" value="${readTranslate(selected).y}">`)}</div>
         <div class="property-grid">${makeControl("Padding", `<input data-prop="padding" value="${esc(selected.style.padding || "")}" placeholder="24px">`)}${makeControl("Margin", `<input data-prop="margin" value="${esc(selected.style.margin || "")}" placeholder="0">`)}</div>
         <div class="property-grid">${makeControl("Gap", `<input data-prop="gap" value="${esc(selected.style.gap || "")}" placeholder="24px">`)}${makeControl("Radius", `<input data-prop="borderRadius" value="${esc(selected.style.borderRadius || computed.borderRadius)}">`)}</div>
         ${makeControl("Opacity", `<input data-prop="opacity" type="range" min="0.1" max="1" step="0.05" value="${esc(selected.style.opacity || computed.opacity)}">`)}
       </fieldset>
       <fieldset><legend>Actions</legend><div class="property-actions">
         <button type="button" data-element-action="move-up">Move up</button><button type="button" data-element-action="move-down">Move down</button>
+        <button type="button" data-element-action="reset-position">Reset position</button>
         ${!isSection ? `<button type="button" data-element-action="duplicate">Duplicate</button>` : ""}
         <button type="button" data-element-action="toggle">${selected.hidden ? "Show" : "Hide"}</button>
         ${selected.dataset.editorDuplicate === "true" ? `<button type="button" data-element-action="delete" class="danger">Delete copy</button>` : ""}
@@ -237,6 +247,11 @@ export function launchEditor({ version, canvas, storageKey, applyState }) {
       const reader = new FileReader();
       reader.onload = () => { image.src = reader.result; status("Image replaced locally"); };
       reader.readAsDataURL(control.files[0]);
+    } else if (["translateX", "translateY"].includes(prop)) {
+      const current = readTranslate(selected);
+      const x = prop === "translateX" ? Number(control.value) || 0 : current.x;
+      const y = prop === "translateY" ? Number(control.value) || 0 : current.y;
+      selected.style.translate = `${x}px ${y}px`;
     } else selected.style[prop] = control.value;
     status("Change applied — Save to keep it");
   }
@@ -247,6 +262,7 @@ export function launchEditor({ version, canvas, storageKey, applyState }) {
     if (action === "toggle") selected.hidden = !selected.hidden;
     if (action === "move-up" && selected.previousElementSibling) selected.parentElement.insertBefore(selected, selected.previousElementSibling);
     if (action === "move-down" && selected.nextElementSibling) selected.parentElement.insertBefore(selected.nextElementSibling, selected);
+    if (action === "reset-position") selected.style.translate = "";
     if (action === "duplicate") {
       const clone = selected.cloneNode(true);
       clone.dataset.editId = `${selected.dataset.editId}-copy-${Date.now()}`;
@@ -269,6 +285,52 @@ export function launchEditor({ version, canvas, storageKey, applyState }) {
 
   function bindCanvasElement(element) {
     element.addEventListener("click", (event) => { event.preventDefault(); event.stopPropagation(); select(element); });
+    element.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0 || element.isContentEditable) return;
+      event.stopPropagation();
+      if (selected !== element) { select(element); return; }
+
+      const scale = Math.max(.05, artboard.getBoundingClientRect().width / artboard.offsetWidth);
+      const start = { x: event.clientX, y: event.clientY };
+      const initial = readTranslate(element);
+      const elementRect = element.getBoundingClientRect();
+      const canvasRect = canvas.getBoundingClientRect();
+      let moved = false;
+
+      const move = (moveEvent) => {
+        const rawX = (moveEvent.clientX - start.x) / scale;
+        const rawY = (moveEvent.clientY - start.y) / scale;
+        if (!moved && Math.hypot(rawX, rawY) < 4) return;
+        if (!moved) {
+          capture();
+          moved = true;
+          dragElement = element;
+          document.body.classList.add("editor-is-dragging");
+          element.setPointerCapture?.(event.pointerId);
+        }
+        const minimumX = initial.x + (canvasRect.left - elementRect.left) / scale;
+        const maximumX = initial.x + (canvasRect.right - elementRect.right) / scale;
+        const minimumY = initial.y + (canvasRect.top - elementRect.top) / scale;
+        const maximumY = initial.y + (canvasRect.bottom - elementRect.bottom) / scale;
+        const x = Math.round(Math.min(maximumX, Math.max(minimumX, initial.x + rawX)) / 8) * 8;
+        const y = Math.round(Math.min(maximumY, Math.max(minimumY, initial.y + rawY)) / 8) * 8;
+        element.style.translate = `${x}px ${y}px`;
+      };
+      const finish = () => {
+        removeEventListener("pointermove", move);
+        removeEventListener("pointerup", finish);
+        removeEventListener("pointercancel", finish);
+        if (moved) {
+          dragElement = null;
+          document.body.classList.remove("editor-is-dragging");
+          renderProperties();
+          status("Position updated — Save to keep it");
+        }
+      };
+      addEventListener("pointermove", move);
+      addEventListener("pointerup", finish);
+      addEventListener("pointercancel", finish);
+    });
     if (["text", "button"].includes(element.dataset.editType)) {
       element.addEventListener("dblclick", (event) => {
         event.preventDefault(); capture(); element.contentEditable = "true"; element.focus();
@@ -311,6 +373,8 @@ export function launchEditor({ version, canvas, storageKey, applyState }) {
       stage.before(nav, canvas);
       stage.remove();
       shell.remove();
+      dragElement = null;
+      document.body.classList.remove("editor-is-dragging");
       document.querySelector("[data-editor-launch]")?.removeAttribute("hidden");
     }
   });

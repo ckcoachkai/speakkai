@@ -52,6 +52,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
   {experiment.sourceNumber === 43 && (
     <div class="card-architecture" data-interaction data-active={panelId(0)}>
       <section data-qa="primary-message"><p class="v4-kicker">3D Card Architecture / Version {experiment.number}</p><h1>{content.headline}</h1><p>{content.summary}</p></section>
+      <div class="card-logo-belt" aria-label="Reserved space for approved organization logos"><span>Approved organization logos will appear here</span></div>
       <Portrait treatment="portrait-anchor-card" label="Coach Kai / practice architect" />
       <div class="card-deck" role="tablist" aria-label="Program path cards">
         {content.panels.map((item, index) => <button style={`--card-index:${index}`} type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}><span>0{index + 1}</span><strong>{item.label}</strong><small>Open card</small></button>)}

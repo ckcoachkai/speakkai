@@ -1,0 +1,23 @@
+.editor-launch {
+  position: fixed;
+  z-index: 9000;
+  right: 22px;
+  bottom: 22px;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, .34);
+  border-radius: 999px;
+  color: white;
+  background: #0b1020;
+  box-shadow: 0 14px 38px rgba(11, 16, 32, .28);
+  font: 700 12px/1 "Manrope", system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.editor-launch:hover { color: #0b1020; border-color: #ffcc00; background: #ffcc00; }
+.editor-launch span { margin-right: 6px; color: #ffcc00; }
+.editor-launch:hover span { color: #0b1020; }
+
+@media (max-width: 520px) {
+  .editor-launch { right: 14px; bottom: 14px; }
+}

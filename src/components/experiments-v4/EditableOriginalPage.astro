@@ -1,0 +1,99 @@
+---
+import type { ExperimentV4 } from "../../data/experimentLabV4";
+import CorporateExperiment from "./families/CorporateExperiment.astro";
+import MotionExperiment from "./families/MotionExperiment.astro";
+import ModernExperiment from "./families/ModernExperiment.astro";
+import EditableV4Navigator from "./EditableV4Navigator.astro";
+import "../../styles/experiment-lab-v4.css";
+import "../../styles/editable-originals.css";
+
+interface Props {
+  experiment: ExperimentV4;
+  version: number;
+}
+
+const { experiment, version } = Astro.props;
+const description = `Editable copy of Version ${experiment.number}. ${experiment.content.headline} ${experiment.content.summary}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0B1020" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{`Editable Version ${version}: ${experiment.title} | SpeakKai`}</title>
+  </head>
+  <body
+    class:list={["v4-page", `v4-family-${experiment.family}`, `v4-version-${experiment.number}`, `v4-source-${experiment.sourceNumber}`, "has-visual-editor"]}
+    data-editor-version={version}
+    data-original-version={experiment.number}
+  >
+    <EditableV4Navigator current={version} original={experiment.number} />
+    <main class="v4-main" data-editor-canvas>
+      {experiment.family === "corporate" && <CorporateExperiment experiment={experiment} />}
+      {experiment.family === "fun-motion" && <MotionExperiment experiment={experiment} />}
+      {experiment.family === "modern" && <ModernExperiment experiment={experiment} />}
+    </main>
+    <button class="editor-launch" type="button" data-editor-launch aria-haspopup="dialog">
+      <span aria-hidden="true">✦</span> Edit Page
+    </button>
+    <script is:inline>
+      (() => {
+        const groups = document.querySelectorAll('[data-interaction]');
+
+        const activate = (group, button, focus = false) => {
+          const target = button.getAttribute('data-target');
+          const buttons = [...group.querySelectorAll('[data-v4-control]')];
+          const panels = [...group.querySelectorAll('[data-v4-panel]')];
+          buttons.forEach((item) => {
+            const active = item === button;
+            item.setAttribute('aria-selected', String(active));
+            item.setAttribute('aria-pressed', String(active));
+            item.tabIndex = active ? 0 : -1;
+          });
+          panels.forEach((panel) => {
+            const active = panel.id === target;
+            panel.hidden = !active;
+            panel.classList.toggle('is-active', active);
+          });
+          group.setAttribute('data-active', target || '');
+          if (focus) button.focus();
+        };
+
+        groups.forEach((group) => {
+          const buttons = [...group.querySelectorAll('[data-v4-control]')];
+          buttons.forEach((button, index) => {
+            button.addEventListener('click', () => activate(group, button));
+            button.addEventListener('keydown', (event) => {
+              const keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'];
+              if (!keys.includes(event.key)) return;
+              event.preventDefault();
+              let nextIndex = index;
+              if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (index + 1) % buttons.length;
+              if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (index - 1 + buttons.length) % buttons.length;
+              if (event.key === 'Home') nextIndex = 0;
+              if (event.key === 'End') nextIndex = buttons.length - 1;
+              activate(group, buttons[nextIndex], true);
+            });
+          });
+          const initial = buttons.find((button) => button.getAttribute('aria-selected') === 'true') || buttons[0];
+          if (initial) activate(group, initial);
+        });
+
+        document.querySelectorAll('.v4-jump').forEach((details) => {
+          details.addEventListener('toggle', () => {
+            if (!details.open) return;
+            document.querySelectorAll('.v4-jump[open]').forEach((other) => {
+              if (other !== details) other.removeAttribute('open');
+            });
+          });
+        });
+      })();
+    </script>
+    <script is:inline type="module" src="/scripts/editor-bootstrap.js"></script>
+  </body>
+</html>
