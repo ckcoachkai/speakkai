@@ -12,7 +12,7 @@
     "check:original-baseline": "node scripts/check-original-baseline.mjs",
     "check:original-visuals": "python scripts/compare-original-screenshots.py",
     "check:evolution-quality": "node scripts/check-evolution-quality.mjs",
-    "check:visual-editor": "node scripts/check-evolution-editor.mjs",
+    "check:version3-variants": "node scripts/check-evolution-quality.mjs",
     "check:experiment-viewports": "node design-lab-v4/scripts/check-one-screen.mjs",
     "check:experiment-interactions": "node design-lab-v4/scripts/check-interactions.mjs",
     "check:experiment-responsive": "node design-lab-v4/scripts/check-responsive.mjs",

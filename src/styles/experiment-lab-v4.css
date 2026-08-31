@@ -547,6 +547,83 @@ img { display: block; max-width: 100%; }
 .glass-panel section.is-active { animation: glass-panel-in .46s ease both; }
 @keyframes glass-panel-in { from { opacity: 0; translate: 28px 0; } to { opacity: 1; translate: 0; } }
 
+/* Version 3 refinement lab — controlled color, contrast, frame, and type variations */
+.v4-version-5 .glass-canvas { background: radial-gradient(circle at 39% 42%, #5e88c7 0, #28518d 37%, #10224a 78%); }
+.v4-version-5 .glass-plane { background: rgba(245, 249, 255, .17); border-color: rgba(220, 235, 255, .55); }
+.v4-version-5 .glass-panel { background: rgba(249, 251, 255, .97); }
+
+.v4-version-6 .glass-canvas { background: radial-gradient(circle at 38% 45%, #233f76 0, #0a1a3a 42%, #030916 82%); }
+.v4-version-6 .glass-orbit { border-color: rgba(255, 255, 255, .24); box-shadow: 0 0 100px rgba(37, 99, 235, .16); }
+.v4-version-6 .glass-plane { background: rgba(8, 23, 52, .72); border-color: rgba(255, 255, 255, .48); box-shadow: 0 24px 56px rgba(0, 0, 0, .42); }
+.v4-version-6 .glass-panel { border-color: #dce8f8; box-shadow: -22px 0 60px rgba(0, 0, 0, .25); }
+
+.v4-version-7 .glass-canvas { background: radial-gradient(circle at 38% 42%, #f7eddb 0, #e4d3b9 48%, #b9a083 100%); color: #2b241e; }
+.v4-version-7 .glass-orbit { border-color: rgba(92, 73, 53, .25); box-shadow: 0 0 90px rgba(111, 79, 48, .12); }
+.v4-version-7 .glass-orbit::before, .v4-version-7 .glass-orbit::after { border-color: rgba(92, 73, 53, .18); }
+.v4-version-7 .glass-message { border-color: rgba(92, 73, 53, .36); }
+.v4-version-7 .glass-message > p:last-child { color: #67584c; }
+.v4-version-7 .glass-plane { background: rgba(255, 253, 248, .72); border-color: #a99680; color: #2b241e; box-shadow: 0 20px 45px rgba(55, 43, 36, .16); }
+.v4-version-7 .glass-plane small { color: #685c52; }
+.v4-version-7 .glass-plane[aria-selected="true"] { background: #fff0a6; border-color: #c59600; }
+.v4-version-7 .glass-panel { background: #fffdf8; color: #2b241e; border-color: #d8c7ad; box-shadow: -18px 0 50px rgba(55, 43, 36, .14); }
+.v4-version-7 .glass-panel p { color: #685c52; }
+.v4-version-7 .glass-panel small { color: #88796b; }
+
+.v4-version-8 .glass-canvas { background: linear-gradient(118deg, #f4ead8 0 28%, #d9c4a5 28% 50%, #273d5b 50% 100%); color: #2b241e; }
+.v4-version-8 .glass-orbit { border-color: rgba(255, 240, 166, .35); box-shadow: 0 0 100px rgba(255, 204, 0, .1); }
+.v4-version-8 .glass-message { border-color: rgba(255, 255, 255, .48); }
+.v4-version-8 .glass-message h1, .v4-version-8 .glass-panel h2 { font-family: "Playfair Display", serif; letter-spacing: -.035em; }
+.v4-version-8 .glass-message > p:last-child { color: #edf1f5; }
+.v4-version-8 .glass-plane { background: rgba(255, 253, 248, .82); border-color: #8f755e; color: #2b241e; box-shadow: 0 20px 45px rgba(55, 43, 36, .2); }
+.v4-version-8 .glass-plane small { color: #685c52; }
+.v4-version-8 .glass-plane[aria-selected="true"] { background: #ffeca0; border-color: #ffcc00; }
+.v4-version-8 .glass-panel { background: #fffdf8; color: #2b241e; border-color: #e2d2b8; }
+.v4-version-8 .glass-panel p { color: #685c52; }
+.v4-version-8 .glass-panel small { color: #88796b; }
+
+.v4-version-9 .glass-canvas { background: linear-gradient(104deg, #f2eadb 0 47%, #ffcc00 47% 49%, #10243a 49% 100%); color: #2b241e; }
+.v4-version-9 .glass-orbit { border-color: rgba(255, 204, 0, .42); box-shadow: 0 0 110px rgba(255, 204, 0, .14); }
+.v4-version-9 .glass-message { border-color: rgba(255, 255, 255, .5); }
+.v4-version-9 .glass-message > p:last-child { color: #eff4fa; }
+.v4-version-9 .glass-plane { background: rgba(255, 253, 248, .9); border-color: #8f755e; color: #2b241e; box-shadow: 0 20px 45px rgba(31, 29, 26, .24); }
+.v4-version-9 .glass-plane span { color: #765600; }
+.v4-version-9 .glass-plane small { color: #685c52; }
+.v4-version-9 .glass-plane[aria-selected="true"] { background: #ffcc00; border-color: #634b00; outline-color: #fff; transform: translateX(9px); }
+.v4-version-9 .glass-panel { background: #fffdf8; color: #2b241e; border: 8px solid #ffcc00; }
+.v4-version-9 .glass-panel p { color: #685c52; }
+.v4-version-9 .glass-panel small { color: #88796b; }
+
+.v4-version-10 .glass-canvas { background: radial-gradient(circle at 42% 45%, #78c8e5 0, #2f94bf 42%, #13517d 80%); }
+.v4-version-10 .glass-orbit { border-color: rgba(255, 255, 255, .46); box-shadow: 0 0 100px rgba(255, 255, 255, .16); }
+.v4-version-10 .glass-plane { background: rgba(241, 252, 255, .22); border-color: rgba(255, 255, 255, .64); }
+.v4-version-10 .glass-plane small, .v4-version-10 .glass-message > p:last-child { color: #eefbff; }
+
+.v4-version-11 .glass-canvas { background: linear-gradient(135deg, #050812, #0b1020 48%, #15213a); }
+.v4-version-11 .glass-orbit { border-color: rgba(255, 255, 255, .16); box-shadow: none; }
+.v4-version-11 .glass-plane { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .32); box-shadow: none; }
+.v4-version-11 .glass-panel { background: #f6f8fb; border-color: #b9c4d1; box-shadow: -1px 0 0 #fff; }
+
+.v4-version-12 .glass-canvas { background: radial-gradient(circle at 36% 46%, #f1f8ff 0, #c9e1f7 47%, #8cb9df 100%); color: #10243a; }
+.v4-version-12 .glass-orbit { border-color: rgba(25, 82, 139, .22); box-shadow: 0 0 90px rgba(37, 99, 235, .1); }
+.v4-version-12 .glass-orbit::before, .v4-version-12 .glass-orbit::after { border-color: rgba(25, 82, 139, .15); }
+.v4-version-12 .glass-message { border-color: rgba(16, 36, 58, .24); }
+.v4-version-12 .glass-message > p:last-child { color: #385c7d; }
+.v4-version-12 .glass-plane { background: rgba(255, 255, 255, .55); border-color: rgba(41, 94, 146, .38); color: #10243a; box-shadow: 0 20px 45px rgba(44, 90, 130, .12); }
+.v4-version-12 .glass-plane small { color: #486b89; }
+.v4-version-12 .glass-plane[aria-selected="true"] { background: rgba(255, 236, 160, .9); }
+.v4-version-12 .glass-panel { background: rgba(255, 255, 255, .88); border-color: rgba(41, 94, 146, .25); }
+
+.v4-version-13 .glass-canvas { background: linear-gradient(125deg, #14264f 0 49%, #234d8c 49% 50%, #0b1732 50% 100%); }
+.v4-version-13 .glass-plane { background: rgba(13, 31, 66, .82); border: 3px solid rgba(255, 255, 255, .74); box-shadow: 8px 8px 0 rgba(255, 204, 0, .72); }
+.v4-version-13 .glass-panel { margin: 12px 12px 12px 0; border: 3px solid #10243a; box-shadow: 10px 10px 0 #ffcc00; }
+.v4-version-13 .portrait-glass .v4-portrait-frame { border: 4px solid white; box-shadow: 10px 10px 0 rgba(255, 204, 0, .72); }
+
+.v4-version-14 .glass-canvas { background: radial-gradient(circle at 40% 43%, #4275c7 0, #1d4686 38%, #0b1835 78%); }
+.v4-version-14 .glass-orbit { border-color: rgba(183, 211, 255, .34); }
+.v4-version-14 .glass-plane { background: rgba(236, 244, 255, .15); border-color: rgba(224, 236, 255, .5); box-shadow: 0 18px 42px rgba(2, 10, 26, .24); }
+.v4-version-14 .glass-plane[aria-selected="true"] { background: rgba(255, 204, 0, .2); border-color: #ffcc00; }
+.v4-version-14 .glass-panel { background: #fffdf8; border-color: #d9e0e9; box-shadow: -16px 0 48px rgba(2, 10, 26, .2); }
+
 /* 42 — Neo-Brutalist Studio */
 .brutalist-studio { display: grid; grid-template: 36% minmax(0, 1fr) 24px / 27% 46% 27%; gap: 0; background: #f4f1e8; color: #0b0b0c; }
 .brutalist-studio > header { grid-area: 1 / 1 / 2 / 3; border: 5px solid #0b0b0c; padding: clamp(14px, 1.8vw, 28px); display: grid; grid-template-columns: auto 1.2fr 1fr; gap: 16px; align-items: center; background: var(--yellow); }

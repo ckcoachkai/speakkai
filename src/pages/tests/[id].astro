@@ -1,9 +1,9 @@
 ---
 import ExperimentShell from "../../components/experiments-v4/ExperimentShell.astro";
-import { experimentsV4 } from "../../data/experimentLabV4";
+import { activeExperimentsV4 } from "../../data/experimentLabV4";
 
 export function getStaticPaths() {
-  return experimentsV4.map((experiment) => ({
+  return activeExperimentsV4.map((experiment) => ({
     params: { id: String(experiment.number) },
     props: { experiment },
   }));

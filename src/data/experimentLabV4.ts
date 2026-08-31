@@ -500,3 +500,80 @@ export const experimentsV4 = selectedVersions.map(({ number, sourceNumber }) => 
   };
 });
 export const experimentV4ByNumber = new Map(experimentsV4.map((item) => [item.number, item]));
+
+const version3Source = experimentsBySourceNumber.get(41);
+if (!version3Source) throw new Error("Missing Version 3 source experiment 41.");
+
+const version3VariantSpecs = [
+  {
+    number: 5,
+    title: "Spatial Glass — Quiet Focus",
+    hypothesis: "A softer blue field and calmer glass surfaces can make Version 3 feel more welcoming without weakening its spatial clarity.",
+    visualLanguage: "Soft cobalt glass with cool white panels and restrained yellow emphasis",
+  },
+  {
+    number: 6,
+    title: "Spatial Glass — Deep Focus",
+    hypothesis: "A deeper navy field and sharper white contrast can make Version 3 feel more authoritative and presentation-ready.",
+    visualLanguage: "Deep navy glass with crisp white panels and high-contrast controls",
+  },
+  {
+    number: 7,
+    title: "Spatial Atelier",
+    hypothesis: "Version 1's cream, brown, navy, and yellow palette can give Version 3 a warmer premium character while preserving its interaction model.",
+    visualLanguage: "Warm cream atelier with espresso text, navy depth, and yellow highlights",
+  },
+  {
+    number: 8,
+    title: "Editorial Atelier Glass",
+    hypothesis: "The Version 1 palette plus editorial typography can make Version 3 feel more personal and considered for parents and private clients.",
+    visualLanguage: "Cream editorial glass with brown framing, serif display type, and yellow emphasis",
+  },
+  {
+    number: 9,
+    title: "Golden Focus",
+    hypothesis: "A stronger Version 1 yellow signal against cream and navy can make the active path and next action easier to recognize.",
+    visualLanguage: "Cream and navy spatial canvas with highlighter-yellow active states",
+  },
+  {
+    number: 10,
+    title: "Robin Glass",
+    hypothesis: "A brighter robin-blue field can make Version 3 feel more energetic and youthful without relying on neon or novelty graphics.",
+    visualLanguage: "Bright robin blue with ice-white glass and navy typography",
+  },
+  {
+    number: 11,
+    title: "Ink and Ice",
+    hypothesis: "A nearly monochrome navy-and-white treatment can make Version 3 feel precise, calm, and institutionally credible.",
+    visualLanguage: "Near-monochrome navy, ice white, and minimal yellow accents",
+  },
+  {
+    number: 12,
+    title: "Soft Horizon",
+    hypothesis: "An airy pale-blue treatment can reduce visual weight and keep the three-part decision path approachable.",
+    visualLanguage: "Pale blue horizon with translucent white glass and cobalt type",
+  },
+  {
+    number: 13,
+    title: "Gallery Frame",
+    hypothesis: "Stronger frames and more deliberate panel boundaries can improve scanability while retaining Version 3's spatial composition.",
+    visualLanguage: "Gallery-white framing over navy glass with precise yellow markers",
+  },
+  {
+    number: 14,
+    title: "Balanced Focus",
+    hypothesis: "A balanced mix of blue depth, warm white, and measured yellow can become the most production-ready refinement of Version 3.",
+    visualLanguage: "Balanced royal blue, warm white, navy, and restrained yellow",
+  },
+] as const;
+
+export const version3Variants: ExperimentV4[] = version3VariantSpecs.map((spec) => ({
+  ...version3Source,
+  ...spec,
+  number: spec.number,
+  sourceNumber: 41,
+  slug: `version-${spec.number}-spatial-glass`,
+}));
+
+export const activeExperimentsV4 = [...experimentsV4, ...version3Variants];
+export const activeExperimentV4ByNumber = new Map(activeExperimentsV4.map((item) => [item.number, item]));

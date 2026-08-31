@@ -13,9 +13,10 @@ assert(fs.existsSync(galleryPath), "Evolution gallery route is missing.");
 if (fs.existsSync(galleryPath)) {
   const gallery = fs.readFileSync(galleryPath, "utf8");
   assert(gallery.includes("Homepage Evolution Lab"), "Gallery title must identify the evolution lab.");
-  assert((gallery.match(/class="card"/g) || []).length === 4, "Gallery must contain exactly four active version cards.");
-  assert(gallery.includes("Versions 1–4"), "Gallery is missing the selected Versions 1–4 heading.");
-  assert(!gallery.includes("Editable Versions 5–8"), "Editable Versions 5–8 must not appear in the active gallery.");
+  assert((gallery.match(/class="card"/g) || []).length === 14, "Gallery must contain exactly fourteen active version cards.");
+  assert(gallery.includes("Versions 1–4"), "Gallery is missing the reference Versions 1–4 heading.");
+  assert(gallery.includes("Versions 5–14"), "Gallery is missing the Version 3 refinement heading.");
+  assert(!gallery.includes("Editable Versions 5–8"), "The retired visual-editor set must not appear in the gallery.");
 }
 
 for (const { version, source } of selected) {
@@ -29,23 +30,18 @@ for (const { version, source } of selected) {
   assert(html.includes("data-mobile-preview"), `Original Version ${version} needs a mobile preview control.`);
 }
 
-for (let version = 5; version <= 8; version += 1) {
+for (let version = 5; version <= 14; version += 1) {
   const htmlPath = path.join(dist, "tests", String(version), "index.html");
-  assert(fs.existsSync(htmlPath), `Editable-copy route missing: /tests/${version}/`);
+  assert(fs.existsSync(htmlPath), `Version 3 refinement route missing: /tests/${version}/`);
   if (!fs.existsSync(htmlPath)) continue;
   const html = fs.readFileSync(htmlPath, "utf8");
-  assert(html.includes(`data-editor-version="${version}"`), `Editable Version ${version} identity is missing.`);
-  assert(html.includes(`data-original-version="${version - 4}"`), `Editable Version ${version} must map to Original Version ${version - 4}.`);
-  assert(html.includes("data-editor-launch"), `Editable Version ${version} needs an Edit Page control.`);
-  assert(html.includes("/scripts/editor-bootstrap.js"), `Editable Version ${version} needs the lightweight state bootstrap.`);
+  assert(html.includes(`data-test-number="${version}"`), `Refinement Version ${version} route identity is missing.`);
+  assert(html.includes('data-source-number="41"'), `Refinement Version ${version} must derive from Version 3 source 41.`);
+  assert(!html.includes("data-editor-launch"), `Refinement Version ${version} must remain editor-free.`);
+  assert(html.includes("data-mobile-preview"), `Refinement Version ${version} needs a mobile preview control.`);
 }
 
-for (let version = 9; version <= 12; version += 1) {
-  const htmlPath = path.join(dist, "tests", String(version), "index.html");
-  assert(fs.existsSync(htmlPath), `Legacy rollback route missing: /tests/${version}/`);
-}
-
-for (let removed = 13; removed <= 50; removed += 1) assert(!fs.existsSync(path.join(dist, "tests", String(removed), "index.html")), `Retired route still exists: /tests/${removed}/`);
+for (let removed = 15; removed <= 50; removed += 1) assert(!fs.existsSync(path.join(dist, "tests", String(removed), "index.html")), `Retired route still exists: /tests/${removed}/`);
 assert(!fs.existsSync(path.join(dist, "tests", "archive", "v3-parent-command-center", "index.html")), "Retired V3 archive must not remain public.");
 
 const retiredLegacyRoutes = ["test1", "test2", "test3", "test4", "test5", "test6", "test7", "test9", "test10", "testa", "concept-lab/home", "concept-lab/test1", "concept-lab/test2", "concept-lab/test3", "concept-lab/test4", "concept-lab/test5", "concept-lab/test6", "concept-lab/test7", "concept-lab/test9", "concept-lab/test10", "concept-lab/testa"];
@@ -56,4 +52,4 @@ if (failures.length) {
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
-console.log("Homepage evolution check passed: four active directions with mobile preview controls; editable and rollback routes remain unlisted backups.");
+console.log("Homepage evolution check passed: four references plus ten Version 3 refinements, all with mobile preview controls.");

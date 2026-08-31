@@ -1,14 +1,16 @@
 ---
-import { experimentsV4 } from "../../data/experimentLabV4";
+import { experimentsV4, version3Variants } from "../../data/experimentLabV4";
 
 interface Props {
   current: number;
 }
 
 const { current } = Astro.props;
-const currentIndex = experimentsV4.findIndex((experiment) => experiment.number === current);
-const previous = experimentsV4[(currentIndex - 1 + experimentsV4.length) % experimentsV4.length];
-const next = experimentsV4[(currentIndex + 1) % experimentsV4.length];
+const navigationItems = current <= 4 ? experimentsV4 : version3Variants;
+const currentIndex = navigationItems.findIndex((experiment) => experiment.number === current);
+const previous = navigationItems[(currentIndex - 1 + navigationItems.length) % navigationItems.length];
+const next = navigationItems[(currentIndex + 1) % navigationItems.length];
+const groupLabel = current <= 4 ? "Four reference directions" : "Ten Version 3 refinements";
 ---
 
 <nav class="v4-nav" aria-label="Homepage experiment navigation" data-qa="test-switcher">
@@ -26,9 +28,9 @@ const next = experimentsV4[(currentIndex + 1) % experimentsV4.length];
     <details class="v4-jump">
       <summary>Jump to</summary>
       <div class="v4-jump-panel">
-        <p>Four selected directions</p>
+        <p>{groupLabel}</p>
         <ol>
-          {experimentsV4.map((experiment) => (
+          {navigationItems.map((experiment) => (
             <li>
               <a href={`/tests/${experiment.number}/`} aria-current={experiment.number === current ? "page" : undefined}>
                 <span>V{experiment.number}</span>
@@ -37,7 +39,7 @@ const next = experimentsV4[(currentIndex + 1) % experimentsV4.length];
             </li>
           ))}
         </ol>
-        <a class="v4-gallery-link" href="/tests/">Compare all four</a>
+        <a class="v4-gallery-link" href="/tests/">Compare all versions</a>
       </div>
     </details>
   </div>
