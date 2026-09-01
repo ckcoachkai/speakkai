@@ -23,12 +23,29 @@ const initial = await desktop.evaluate(() => ({
   labNavCount: document.querySelectorAll(".v4-nav, [data-qa='test-switcher']").length,
   productionHeaderCount: document.querySelectorAll(".spatial-site-header").length,
   brandText: document.querySelector(".spatial-brand")?.textContent?.replace(/\s+/g, " ").trim() || "",
+  brandLockup: (() => {
+    const brand = document.querySelector(".spatial-brand");
+    const latin = brand?.children[0];
+    const chinese = brand?.children[1];
+    if (!(brand instanceof HTMLElement) || !(latin instanceof HTMLElement) || !(chinese instanceof HTMLElement)) return null;
+    const latinStyle = getComputedStyle(latin);
+    const chineseStyle = getComputedStyle(chinese);
+    return {
+      colorMatches: latinStyle.color === chineseStyle.color,
+      fontSizeMatches: latinStyle.fontSize === chineseStyle.fontSize,
+      gap: parseFloat(getComputedStyle(brand).gap),
+      alignItems: getComputedStyle(brand).alignItems,
+    };
+  })(),
+  headline: document.querySelector("[data-qa='primary-message'] h1")?.textContent?.trim() || "",
+  redundantHomepageLabels: document.querySelectorAll(".production-v5 .v4-kicker, .production-v5 .homepage-service-line").length,
   controls: document.querySelectorAll("[data-home-control]").length,
   controlLabels: [...document.querySelectorAll("[data-home-control] strong")].map((item) => item.textContent?.trim()),
   homepageStats: document.querySelectorAll(".homepage-stats div").length,
   paradigmText: document.querySelector("#homepage-panel-3")?.textContent?.replace(/\s+/g, " ").trim() || "",
   aboutNavLinks: document.querySelectorAll('.spatial-site-header a[href="/about/"]').length,
   primaryCtaCount: document.querySelectorAll('[data-qa="primary-cta"]').length,
+  primaryCtaText: document.querySelector('[data-qa="primary-cta"]')?.textContent?.trim() || "",
   horizontalOverflow: Math.max(0, document.documentElement.scrollWidth - innerWidth),
   imagesLoaded: [...document.images].every((image) => image.complete && image.naturalWidth > 0),
 }));
@@ -41,6 +58,9 @@ assert(initial.h1Count === 1, "Production homepage must contain exactly one H1."
 assert(initial.labNavCount === 0, "Experiment-lab toolbar leaked onto the production homepage.");
 assert(initial.productionHeaderCount === 1, "Production navigation is missing.");
 assert(initial.brandText.replace(/\s+/g, "") === "SpeakKai说开", "Homepage brand does not include 说开 after SpeakKai.");
+assert(initial.brandLockup?.colorMatches && initial.brandLockup?.fontSizeMatches && initial.brandLockup?.gap <= 4 && initial.brandLockup?.alignItems === "center", "Bilingual brand lockup is not visually unified.");
+assert(initial.headline === "Take your speech to the next level.", "Homepage headline was not updated.");
+assert(initial.redundantHomepageLabels === 0, "Low-value homepage labels are still present.");
 assert(initial.controls === 5, "Production homepage must contain five information controls.");
 assert(JSON.stringify(initial.controlLabels) === JSON.stringify(["About", "Philosophy", "Programs", "Paradigm", "Media"]), "Homepage information controls are not labelled as requested.");
 assert(initial.homepageStats === 3, "Homepage About panel is missing its compact career highlights.");
@@ -48,6 +68,7 @@ assert(initial.paradigmText.includes("Clarity and intelligibility"), "Homepage p
 assert(initial.paradigmText.includes("does not show that Kai formally adopted it"), "Homepage paradigm does not preserve the EEE evidence boundary.");
 assert(initial.aboutNavLinks === 0, "Standalone About navigation is still visible.");
 assert(initial.primaryCtaCount === 1, "Production homepage must contain one primary CTA.");
+assert(initial.primaryCtaText === "Take your speech to the next level", "Homepage CTA was not updated.");
 assert(initial.horizontalOverflow <= 4, "Desktop homepage has horizontal overflow.");
 assert(initial.imagesLoaded, "A production homepage image failed to load.");
 
@@ -56,17 +77,21 @@ const motion = await desktop.evaluate(() => {
   const controls = [...document.querySelectorAll("[data-home-control]")];
   const activeControl = controls.findIndex((control) => control.getAttribute("aria-selected") === "true");
   const activePanel = document.querySelector("[data-home-panel]:not([hidden])");
-  const animation = activePanel?.getAnimations()[0];
+  const title = activePanel?.querySelector("h2");
+  const panelAnimations = activePanel?.getAnimations({ subtree: false }) || [];
+  const titleAnimation = title?.getAnimations()[0];
   return {
     activeControl,
     activePanel: activePanel?.id || "",
-    animationDuration: animation?.effect?.getTiming().duration || 0,
-    animationPlayState: animation?.playState || "missing",
+    panelAnimations: panelAnimations.length,
+    titleAnimationDuration: titleAnimation?.effect?.getTiming().duration || 0,
+    titleAnimationPlayState: titleAnimation?.playState || "missing",
   };
 });
 assert(motion.activeControl === 1, "Automatic rotation did not advance from item one to item two.");
-assert(motion.animationDuration === 3600, "Panel entrance is not using the requested 3.6-second duration.");
-assert(["running", "finished"].includes(motion.animationPlayState), "Panel entrance animation did not run.");
+assert(motion.panelAnimations === 0, "The entire panel still moves instead of keeping its content stable.");
+assert(motion.titleAnimationDuration === 2800, "Panel title is not using the requested slower 2.8-second duration.");
+assert(["running", "finished"].includes(motion.titleAnimationPlayState), "Panel title entrance animation did not run.");
 
 const controls = desktop.locator("[data-home-control]");
 await controls.nth(1).focus();
@@ -139,4 +164,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("Production Version 5 homepage check passed: metadata, bilingual brand, responsive layout, keyboard controls, 4.5-second automatic rotation, and 3.6-second entrance motion.");
+console.log("Production Version 5 homepage check passed: unified bilingual brand, simplified copy, responsive layout, keyboard controls, 4.5-second automatic rotation, and title-only entrance motion.");

@@ -37,21 +37,21 @@ const { current, compact = false } = Astro.props;
   .spatial-brand-block { min-width: 0; }
   .spatial-brand {
     display: inline-flex;
-    align-items: baseline;
-    gap: 8px;
+    align-items: center;
+    gap: 3px;
     color: #10224a;
     font-family: "Manrope", Inter, system-ui, sans-serif;
     font-size: 17px;
     font-weight: 800;
+    line-height: 1;
     letter-spacing: -.035em;
     text-decoration: none;
   }
 
   .spatial-brand-chinese {
-    color: #a77d00;
-    font-size: 14px;
-    font-weight: 800;
-    letter-spacing: .04em;
+    color: inherit;
+    font: inherit;
+    letter-spacing: -.035em;
   }
 
   .spatial-header-action { min-width: 0; justify-self: end; }

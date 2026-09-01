@@ -45,6 +45,8 @@ for (const viewport of viewports) {
       scheduleTabs: routeName === "schedule" ? [...document.querySelectorAll(".sheet-tab")].map((tab) => tab.textContent?.trim()) : null,
       scheduleMonth: routeName === "schedule" ? document.querySelector("#month-heading")?.textContent?.trim() : null,
       contactPanel: routeName === "contact" ? document.querySelectorAll(".contact-strip.is-page").length : null,
+      contactHeading: routeName === "contact" ? document.querySelector("h1")?.textContent?.trim() : null,
+      contactPrefix: routeName === "contact" ? getComputedStyle(document.querySelector(".contact-copy"), "::before").content : null,
       contactQrFrame: routeName === "contact" ? (() => {
         const frame = document.querySelector(".contact-strip.is-page .contact-qr-wrap");
         if (!(frame instanceof HTMLElement)) return null;
@@ -52,8 +54,12 @@ for (const viewport of viewports) {
         return { width: rect.width, height: rect.height, radius: getComputedStyle(frame).borderRadius };
       })() : null,
       resourceCards: routeName === "resources" ? document.querySelectorAll(".tool-card").length : null,
+      resourceHeaderHeight: routeName === "resources" ? document.querySelector(".page-heading")?.getBoundingClientRect().height : null,
+      scheduleLegendUpdated: routeName === "schedule" ? Boolean(document.querySelector(".schedule-legend #updated-time")) : null,
+      scheduleGuidanceInContact: routeName === "schedule" ? Boolean(document.querySelector(".contact-section .contact-guidance")) : null,
+      scheduleTopNote: routeName === "schedule" ? document.querySelectorAll(".availability-note").length : null,
     }), { routeName: route.name, expectedNavigation });
-    const failed = response?.status() !== 200 || checks.h1Count !== 1 || checks.navCount !== 1 || checks.canonical !== route.canonical || !checks.navigationComplete || checks.activeNavigation !== route.path || checks.horizontalOverflow > 4 || !checks.imagesLoaded || consoleErrors.length > 0 || pageErrors.length > 0 || failedRequests.length > 0 || (route.name === "schedule" && (checks.scheduleTable !== 1 || checks.scheduleMonth !== "September 2026" || checks.scheduleTabs?.length !== 1)) || (route.name === "contact" && (checks.contactPanel !== 1 || !checks.contactQrFrame || Math.abs(checks.contactQrFrame.width - checks.contactQrFrame.height) > 2 || checks.contactQrFrame.radius !== "14px")) || (route.name === "resources" && checks.resourceCards < 5);
+    const failed = response?.status() !== 200 || checks.h1Count !== 1 || checks.navCount !== 1 || checks.canonical !== route.canonical || !checks.navigationComplete || checks.activeNavigation !== route.path || checks.horizontalOverflow > 4 || !checks.imagesLoaded || consoleErrors.length > 0 || pageErrors.length > 0 || failedRequests.length > 0 || (route.name === "schedule" && (checks.scheduleTable !== 1 || checks.scheduleMonth !== "September 2026" || checks.scheduleTabs?.length !== 1 || !checks.scheduleLegendUpdated || !checks.scheduleGuidanceInContact || checks.scheduleTopNote !== 0)) || (route.name === "contact" && (checks.contactPanel !== 1 || checks.contactHeading !== "Contact" || !["none", "normal", "\"\""].includes(checks.contactPrefix) || !checks.contactQrFrame || Math.abs(checks.contactQrFrame.width - checks.contactQrFrame.height) > 2 || checks.contactQrFrame.radius !== "14px")) || (route.name === "resources" && (checks.resourceCards < 5 || checks.resourceHeaderHeight > (viewport.width > 720 ? 170 : 145)));
     if (failed) failures.push(`${route.name} at ${viewport.name}: ${JSON.stringify({ checks, consoleErrors, pageErrors, failedRequests })}`);
     const screenshot = path.join(outputDir, `test-${String(index + 1).padStart(2, "0")}-${viewport.width}x${viewport.height}.png`);
     await page.screenshot({ path: screenshot, fullPage: true, animations: "disabled" });

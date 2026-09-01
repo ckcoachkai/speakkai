@@ -312,7 +312,7 @@ const contentByNumber: Record<number, ExperimentContent> = {
     boundary: "The festival is a visual metaphor and does not imply a real event or competition.",
   },
   41: {
-    headline: "Bring your goal into focus.",
+    headline: "Take your speech to the next level.",
     summary: "A spatial glass canvas layers Coach Kai, communication programs, and public evidence into one calm parent-first view.",
     panels: [
       panel("Identity", "Meet the coach", "Use the public About page for Kai's current background and approach."),

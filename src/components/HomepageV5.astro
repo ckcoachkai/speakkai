@@ -95,11 +95,9 @@ const homePanels = [
 <article class="v4-experiment v4-modern production-v5" data-qa="homepage-root" data-source-number="41">
   <div class="glass-canvas" data-interaction data-active={panelId(0)}>
     <div class="glass-orbit" aria-hidden="true"></div>
-    <Portrait treatment="portrait-glass" label="Coach Kai / communication coach" />
+    <Portrait treatment="portrait-glass" label="Coach Kai · Communication Coach" />
     <section class="glass-message" data-qa="primary-message">
-      <p class="v4-kicker">SpeakKai / Communication coaching</p>
       <h1>{content.headline}</h1>
-      <p>{content.summary}</p>
     </section>
     <div class="glass-planes" role="tablist" aria-label="Explore SpeakKai">
       {homePanels.map((item, index) => (
@@ -127,7 +125,6 @@ const homePanels = [
         <a href={homepage.primaryHref} data-qa="primary-cta">{homepage.primaryCta}</a>
         <a href="/resources/">Explore resources</a>
       </div>
-      <small class="homepage-service-line">Speech, debate, storytelling, presentation, and communication coaching in Shanghai and online.</small>
     </aside>
   </div>
 </article>

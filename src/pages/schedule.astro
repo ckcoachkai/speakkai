@@ -162,47 +162,19 @@ import "@fontsource/manrope/700.css";
 
       main { padding: 12px clamp(10px, 1.7vw, 26px) 20px; }
 
-      .availability-note {
-        display: flex;
-        width: min(100%, 920px);
-        align-items: center;
-        justify-content: space-between;
-        gap: 18px;
-        margin: 0 auto 12px;
-        padding: 12px 16px;
-        border: 1px solid #c5d5e8;
-        border-radius: 6px;
-        color: #40546f;
-        background: #fff;
-        font-size: 13px;
-        line-height: 1.5;
-      }
-
-      .availability-note p { margin: 0; }
-
-      .availability-note a {
-        flex: 0 0 auto;
-        padding: 9px 13px;
-        border-radius: 5px;
-        color: #fff;
-        background: #0b5fc7;
-        font-weight: 800;
-        text-decoration: none;
-      }
-
-      .availability-note a:hover { background: #074a9f; }
-      .availability-note a:focus-visible { outline: 3px solid #80d6d1; outline-offset: 2px; }
-
       .schedule-legend {
         display: flex;
-        width: min(1140px, calc(100% - 36px));
+        width: 100%;
+        align-items: center;
         flex-wrap: wrap;
         gap: 6px 12px;
-        margin: -4px auto 12px;
+        margin: 0 auto 8px;
         color: #334155;
         font-size: 11px;
         line-height: 1.3;
       }
+
+      .updated-time { margin-left: auto; color: #65758a; font-size: 10px; }
 
       .legend-item { display: inline-flex; align-items: center; gap: 5px; }
       .legend-swatch {
@@ -468,6 +440,30 @@ import "@fontsource/manrope/700.css";
         height: auto;
       }
 
+      .contact-guidance {
+        margin: 0;
+        padding: 0 12px 10px;
+        color: #40546f;
+        font-size: 10px;
+        line-height: 1.45;
+      }
+
+      .contact-confirm {
+        display: block;
+        margin: 0 12px 14px;
+        padding: 8px 10px;
+        border-radius: 999px;
+        color: #10224a;
+        background: #ffcc00;
+        font-size: 10px;
+        font-weight: 800;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .contact-confirm:hover { background: #ffdf57; }
+      .contact-confirm:focus-visible { outline: 3px solid #ffcc00; outline-offset: 2px; }
+
       .status {
         display: grid;
         min-height: 45vh;
@@ -523,14 +519,8 @@ import "@fontsource/manrope/700.css";
         }
         .refresh-button { grid-column: 2; grid-row: 1; }
         main { padding: 8px 0 0; }
-        .availability-note {
-          width: calc(100% - 18px);
-          align-items: flex-start;
-          flex-direction: column;
-          gap: 10px;
-          margin-bottom: 10px;
-        }
         .schedule-legend { width: calc(100% - 18px); margin-bottom: 10px; font-size: 10px; }
+        .updated-time { width: 100%; margin-left: 0; }
         .schedule-toolbar { align-items: center; padding: 0 9px; }
         .month-heading { font-size: 17px; }
         .sheet-tab { padding-right: 9px; padding-left: 9px; }
@@ -542,15 +532,12 @@ import "@fontsource/manrope/700.css";
       }
 
       body { font-family: "Manrope", Inter, system-ui, sans-serif; background: #eaf1f9; }
-      .spatial-schedule-context h1 { margin: 0; color: #10224a; font-size: 15px; letter-spacing: -.02em; }
-      .spatial-schedule-context p { margin: 2px 0 0; color: #65758a; font-size: 9px; }
+      body > .spatial-site-header { min-height: 44px; }
+      .spatial-schedule-context h1 { margin: 0; color: #10224a; font-size: 14px; letter-spacing: -.02em; }
       .refresh-button { border-color: #d4a900; border-radius: 999px; color: #10224a; background: #ffcc00; }
       .refresh-button:hover { background: #ffdf57; }
       .refresh-button:focus-visible, .sheet-tab:focus-visible { outline-color: #ffcc00; }
-      main { position: relative; padding-top: 18px; background: radial-gradient(circle at 88% 0, rgb(94 136 199 / 20%), transparent 34%); }
-      .availability-note { border: 1px solid #b8cbe2; border-left: 6px solid #ffcc00; border-radius: 0; background: rgb(255 255 255 / 92%); box-shadow: 0 14px 34px rgb(16 34 74 / 8%); }
-      .availability-note a { border-radius: 999px; color: #10224a; background: #ffcc00; }
-      .availability-note a:hover { background: #ffdf57; }
+      main { position: relative; padding-top: 8px; background: radial-gradient(circle at 88% 0, rgb(94 136 199 / 20%), transparent 34%); }
       .schedule-toolbar { min-height: 46px; padding: 0 12px; color: white; background: #10224a; }
       .sheet-tab { color: #d6e3f5; border-color: #58749a; }
       .sheet-tab[aria-selected="true"] { color: #10224a; background: #f8fbff; }
@@ -570,7 +557,6 @@ import "@fontsource/manrope/700.css";
     <SpatialSiteHeader current="schedule">
       <div slot="context" class="spatial-schedule-context">
         <h1 id="schedule-title">Coach Kai's Availability</h1>
-        <p id="updated-time">正在载入 Loading</p>
       </div>
       <button slot="action" class="refresh-button" type="button" title="Refresh" aria-label="Refresh schedule">
         <RefreshCw size={17} stroke-width={2} aria-hidden="true" />
@@ -578,19 +564,13 @@ import "@fontsource/manrope/700.css";
     </SpatialSiteHeader>
 
     <main>
-      <div class="availability-note">
-        <p>
-          Bright green times are available. Other displayed times are already booked.
-          Please contact Coach Kai to confirm an available coaching time.
-        </p>
-        <a href="/contact/">Confirm a time</a>
-      </div>
       <div class="schedule-legend" aria-label="Schedule colour legend">
         <span class="legend-item kind-free"><i class="legend-swatch" aria-hidden="true"></i>Free</span>
         <span class="legend-item kind-group"><i class="legend-swatch" aria-hidden="true"></i>Class booked</span>
         <span class="legend-item kind-reserved"><i class="legend-swatch" aria-hidden="true"></i>Time booked</span>
         <span class="legend-item kind-tmc"><i class="legend-swatch" aria-hidden="true"></i>TMC</span>
         <span class="legend-item kind-travel"><i class="legend-swatch" aria-hidden="true"></i>Travel</span>
+        <span class="updated-time" id="updated-time">正在载入 Loading</span>
       </div>
       <div class="status" id="status" role="status">
         <div><strong>正在载入</strong><span>Loading schedule</span></div>
@@ -780,7 +760,14 @@ import "@fontsource/manrope/700.css";
         qrImage.loading = "eager";
         qrImage.decoding = "async";
         imageWrap.append(qrImage);
-        section.append(heading, imageWrap);
+        const guidance = document.createElement("p");
+        guidance.className = "contact-guidance";
+        guidance.textContent = "Bright green times are available. Other displayed times are already booked. Contact Coach Kai to confirm an available coaching time.";
+        const contactLink = document.createElement("a");
+        contactLink.className = "contact-confirm";
+        contactLink.href = "/contact/";
+        contactLink.textContent = "Confirm a time";
+        section.append(heading, imageWrap, guidance, contactLink);
         return section;
       }
 
