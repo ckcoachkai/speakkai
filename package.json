@@ -15,6 +15,7 @@
     "check:version3-variants": "node scripts/check-evolution-quality.mjs",
     "check:production-homepage": "node scripts/check-production-homepage.mjs",
     "check:spatial-pages": "node scripts/check-spatial-pages.mjs",
+    "check:business-test": "node scripts/check-business-test.mjs",
     "check:experiment-viewports": "node design-lab-v4/scripts/check-one-screen.mjs",
     "check:experiment-interactions": "node design-lab-v4/scripts/check-interactions.mjs",
     "check:experiment-responsive": "node design-lab-v4/scripts/check-responsive.mjs",

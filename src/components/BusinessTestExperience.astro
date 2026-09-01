@@ -1,0 +1,276 @@
+---
+import scheduleData from "../../public/data/schedule.json";
+
+const homePanels = [
+  {
+    label: "About",
+    title: "Kai Liu",
+    kicker: "Communication coach · speaker · educator",
+    summary: "Kai helps students, professionals, schools, and organizations communicate with greater clarity, confidence, and purpose.",
+    details: [
+      ["Experience", "More than 15 years across education and communication training, with presentations delivered across seven countries."],
+      ["Approach", "Begin with the audience and the real communication moment, then develop the message, structure, delivery, and capacity to adapt."],
+      ["Working style", "Personal coaching and practical training shaped around what the speaker or organization actually needs."],
+    ],
+  },
+  {
+    label: "Philosophy",
+    title: "Build the speaker, not just the speech.",
+    summary: "Strong communication grows from clear thinking, purposeful practice, and genuine connection—not from memorizing a polished script.",
+    details: [
+      ["Audience first", "Clarify who needs to hear the message, what they should understand, and why it matters."],
+      ["Practice that transfers", "Rehearse under realistic conditions so the speaker can stay clear under timing, pressure, and questions."],
+      ["Independent growth", "Use specific feedback that helps speakers notice, adjust, and continue improving on their own."],
+    ],
+  },
+  {
+    label: "Programs",
+    title: "Programs built around your audience.",
+    summary: "SpeakKai can shape short- or long-term curricula, half-day or full-day corporate training, and online, in-person, or hybrid delivery.",
+    details: [
+      ["Schools", "Custom speaking, presentation, debate, storytelling, and leadership-communication curricula for different ages and goals."],
+      ["Organizations", "Focused workshops for clearer presentations, persuasive communication, leadership presence, and important speaking moments."],
+      ["Flexible delivery", "One-off sessions, multi-session development, or longer programs delivered online, in person, or through a hybrid format."],
+    ],
+  },
+  {
+    label: "Paradigm",
+    title: "Specific. Audience-aware. Growth-oriented.",
+    summary: "Feedback connects an observable speaking choice to its effect on the audience, then identifies the next practical adjustment.",
+    details: [
+      ["Clarity", "Can the audience understand the main point, structure, evidence, and intended meaning?"],
+      ["Persuasion", "Do voice, language, examples, and delivery help the message land with the room?"],
+      ["Growth", "Can the speaker recover, respond to coaching, and make a stronger choice in the next attempt?"],
+    ],
+  },
+  {
+    label: "Media",
+    title: "See the work in motion.",
+    summary: "Explore SpeakKai teaching tools and verified public channels, or start a direct conversation about a school or business need.",
+    details: [
+      ["WeChat", "CKcoachkai — the fastest direct route for coaching, workshops, and partnership conversations."],
+      ["Xiaohongshu", "CKcoachkai — speaking, education, and communication content."],
+      ["Resources", "A growing collection of practical classroom and speaking tools created by Coach Kai."],
+    ],
+  },
+];
+
+const gallery = [
+  { src: "/images/coach-kai-headshot.webp", alt: "Portrait of Coach Kai", position: "center 18%" },
+  { src: "/images/test-business/kai-international-speech-final.webp", alt: "Kai Liu speaking at an international speech contest final", position: "center" },
+  { src: "/images/test-business/kai-training-stage.webp", alt: "Kai Liu leading a professional training session", position: "center" },
+  { src: "/images/test-business/kai-wsda-stage.webp", alt: "Kai Liu speaking at a WSDA event", position: "center" },
+  { src: "/images/test-business/kai-awards-display.webp", alt: "Kai Liu's public speaking awards display", position: "center" },
+];
+
+const tools = [
+  ["Marble Name Picker", "Classroom participation", "/images/marble-name-picker-preview.png", "/tools/marble-name-picker/"],
+  ["Class Charades", "Fast-paced speaking practice", "/images/class-charades-preview.png", "/tools/class-charades/"],
+  ["Toastmasters Timer", "Clear timing signals", "/images/toastmasters-timer-preview.png", "/tools/toastmasters-timer/"],
+  ["Wheel of Doom", "Playful participant selection", "/images/wheel-of-doom-preview.png", "/tools/wheel-of-doom/"],
+  ["Speech & Debate Timer", "Competition-ready timing", "/images/speech-debate-timer-preview.png", "/tools/speech-debate-timer/"],
+];
+
+const september = scheduleData.sheets.find((sheet) => sheet.title === "September 2026") ?? scheduleData.sheets[0];
+const weekdays = september?.rows[1]?.cells ?? [];
+const weeks = september?.rows.slice(2) ?? [];
+const cellClass = (value: string) => {
+  const normalized = value.toLowerCase();
+  if (normalized.includes("online available")) return "is-available";
+  if (normalized.includes("holiday") || normalized.includes("travel")) return "is-travel";
+  if (normalized.includes("limited availability")) return "is-limited";
+  if (/^\d+$/.test(value.trim())) return "is-open";
+  return "";
+};
+const publicCellLines = (value: string) => {
+  const lines = value.split("\n");
+  if (!lines[0]) return lines;
+  return lines.map((line, index) => {
+    if (index < 2 || !value.toLowerCase().includes("limited availability")) return line;
+    const time = line.match(/^\d{2}:\d{2}[–-]\d{2}:\d{2}/)?.[0];
+    return time ? `${time} · Booked` : "Booked";
+  });
+};
+---
+
+<div class="business-test" data-business-test>
+  <header class="test-header">
+    <a class="test-brand" href="#home" data-view-link="home" aria-label="SpeakKai 说开 test homepage">
+      <span class="test-brand-crop" aria-hidden="true"><img src="/images/speakkai-logo-header-source.png" alt="" width="1254" height="1254" /></span>
+      <span lang="zh-CN">说开</span>
+    </a>
+    <nav class="test-main-nav" aria-label="Test website navigation">
+      {[["home", "Home"], ["schedule", "Schedule"], ["resources", "Resources"], ["contact", "Contact"]].map(([target, label], index) => (
+        <button type="button" data-view-link={target} aria-selected={index === 0 ? "true" : "false"}>{label}</button>
+      ))}
+    </nav>
+    <span class="test-badge">Business concept · Test</span>
+  </header>
+
+  <main class="test-stage">
+    <section class="test-view home-view is-active" data-view="home" aria-label="SpeakKai business homepage">
+      <div class="home-visual">
+        <div class="visual-rings" aria-hidden="true"></div>
+        <div class="home-message">
+          <p>Communication programs for schools and organizations</p>
+          <h1>Make the message clear.<br /><em>Make the speaker ready.</em></h1>
+        </div>
+        <figure class="portrait-gallery" data-gallery>
+          <div class="portrait-stage-echo" aria-hidden="true"></div>
+          {gallery.map((image, index) => (
+            <img class:list={["gallery-image", { "is-active": index === 0 }]} src={image.src} alt={image.alt} style={`object-position:${image.position}`} loading={index < 2 ? "eager" : "lazy"} data-gallery-image />
+          ))}
+          <figcaption>Coach Kai · Communication Coach</figcaption>
+        </figure>
+        <div class="home-section-tabs" role="tablist" aria-label="Explore SpeakKai">
+          {homePanels.map((panel, index) => (
+            <button type="button" role="tab" data-home-tab={index} aria-selected={index === 0 ? "true" : "false"} aria-controls={`business-panel-${index}`}>
+              {panel.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <aside class="home-content">
+        <div class="home-content-inner">
+          {homePanels.map((panel, index) => (
+            <section id={`business-panel-${index}`} data-home-panel hidden={index !== 0}>
+              {panel.kicker && <p class="panel-kicker">{panel.kicker}</p>}
+              <h2>{panel.title}</h2>
+              <p class="panel-summary">{panel.summary}</p>
+              <div class="panel-details" data-panel-details>
+                {panel.details.map(([name, detail]) => <article><h3>{name}</h3><p>{detail}</p></article>)}
+              </div>
+            </section>
+          ))}
+        </div>
+        <div class="home-actions">
+          <button type="button" data-select-programs>Explore ways to work</button>
+          <button type="button" data-view-link="schedule">Check availability</button>
+        </div>
+      </aside>
+    </section>
+
+    <section class="test-view schedule-view" data-view="schedule" hidden aria-label="Schedule demo">
+      <div class="compact-section-heading schedule-heading">
+        <div><h2>September 2026</h2><strong>Coach Kai’s Availability</strong></div>
+        <div class="schedule-legend" aria-label="Schedule legend">
+          <span><i class="legend-free"></i>Free</span><span><i class="legend-limited"></i>Limited</span><span><i class="legend-booked"></i>Booked</span><span><i class="legend-travel"></i>Travel</span>
+        </div>
+      </div>
+      <div class="test-schedule-layout">
+        <div class="test-calendar" role="region" aria-label="September 2026 availability calendar" tabindex="0">
+          <table>
+            <thead><tr>{weekdays.map((cell) => <th scope="col">{cell.value}</th>)}</tr></thead>
+            <tbody>{weeks.map((week) => <tr>{week.cells.map((cell) => {
+              const lines = publicCellLines(cell.value);
+              return <td class={cellClass(cell.value)}><b>{lines[0]}</b>{lines.slice(1).map((line) => <span>{line}</span>)}</td>;
+            })}</tr>)}</tbody>
+          </table>
+        </div>
+        <aside class="schedule-contact-card">
+          <img src="/images/coach-kai-wechat-qr.png" width="938" height="1340" alt="Coach Kai WeChat QR code" />
+          <h3>Contact Coach Kai</h3>
+          <p>WeChat: <strong>CKcoachkai</strong></p>
+          <h4>Important note</h4>
+          <p class="availability-note">Bright green times are available. Other displayed times are already booked. Contact Coach Kai to confirm all available coaching times.</p>
+          <a href="/schedule/">Open full schedule →</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="test-view resources-view" data-view="resources" hidden aria-label="Resources demo">
+      <header class="compact-section-heading resources-heading">
+        <h2>Resources</h2>
+        <p>Classroom tools for participation, practice, and playful learning.</p>
+      </header>
+      <div class="test-tools-grid">
+        {tools.map(([name, description, image, href]) => (
+          <article class="test-tool-card">
+            <img src={image} alt={`${name} preview`} loading="lazy" />
+            <div><small>{description}</small><h3>{name}</h3><a href={href}>Open tool →</a></div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="test-view contact-view" data-view="contact" hidden aria-label="Contact Coach Kai">
+      <div class="contact-card-test">
+        <div class="contact-qr-full"><img src="/images/coach-kai-wechat-qr.png" width="938" height="1340" alt="Complete Coach Kai WeChat QR code" /></div>
+        <div class="contact-copy-test">
+          <p>Start with the communication goal</p>
+          <h2>Contact Coach Kai</h2>
+          <ul><li>The audience or team</li><li>The presentation or communication challenge</li><li>Your preferred timing and delivery format</li></ul>
+          <div><strong>WeChat</strong><span>CKcoachkai</span></div>
+          <div><strong>Xiaohongshu</strong><span>CKcoachkai</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-business-test]');
+    if (!root) return;
+    const viewLinks = [...root.querySelectorAll('[data-view-link]')];
+    const views = [...root.querySelectorAll('[data-view]')];
+    const activateView = (name, updateHash = true) => {
+      const target = views.find((view) => view.dataset.view === name) || views[0];
+      views.forEach((view) => {
+        const active = view === target;
+        view.hidden = !active;
+        view.classList.toggle('is-active', active);
+      });
+      viewLinks.forEach((link) => link.setAttribute('aria-selected', String(link.dataset.viewLink === target.dataset.view)));
+      if (updateHash) history.replaceState(null, '', `#${target.dataset.view}`);
+      target.scrollTop = 0;
+    };
+    viewLinks.forEach((link) => link.addEventListener('click', (event) => {
+      event.preventDefault();
+      activateView(link.dataset.viewLink);
+    }));
+    window.addEventListener('hashchange', () => activateView(location.hash.slice(1), false));
+
+    const tabs = [...root.querySelectorAll('[data-home-tab]')];
+    const panels = [...root.querySelectorAll('[data-home-panel]')];
+    const images = [...root.querySelectorAll('[data-gallery-image]')];
+    let galleryIndex = 0;
+    const activateImage = (index) => {
+      galleryIndex = (index + images.length) % images.length;
+      images.forEach((image, imageIndex) => image.classList.toggle('is-active', imageIndex === galleryIndex));
+    };
+    const activatePanel = (index, focus = false) => {
+      tabs.forEach((tab, tabIndex) => {
+        const active = tabIndex === index;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+        if (active && focus) tab.focus();
+      });
+      panels.forEach((panel, panelIndex) => {
+        panel.hidden = panelIndex !== index;
+        panel.classList.toggle('is-active', panelIndex === index);
+      });
+      activateImage(index);
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activatePanel(index));
+      tab.addEventListener('keydown', (event) => {
+        if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        let next = index;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = tabs.length - 1;
+        activatePanel(next, true);
+      });
+    });
+
+    root.querySelector('[data-select-programs]')?.addEventListener('click', () => activatePanel(2));
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.setInterval(() => { if (!document.hidden) activateImage(galleryIndex + 1); }, 4000);
+    }
+    activateView(location.hash.slice(1) || 'home', false);
+  })();
+</script>
