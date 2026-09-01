@@ -12,7 +12,10 @@ const { current, compact = false } = Astro.props;
 <header class="spatial-site-header">
   <div class="spatial-brand-block">
     <a class="spatial-brand" href="/" aria-label="SpeakKai 说开 home">
-      <span>SpeakKai</span><span class="spatial-brand-chinese" lang="zh-CN">说开</span>
+      <span class="spatial-brand-image" aria-hidden="true">
+        <img src="/images/speakkai-logo-header-source.png" alt="" width="1254" height="1254" />
+      </span>
+      <span class="spatial-brand-chinese" lang="zh-CN">说开</span>
     </a>
     <slot name="context" />
   </div>
@@ -38,8 +41,8 @@ const { current, compact = false } = Astro.props;
   .spatial-brand {
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-    color: #10224a;
+    gap: 2px;
+    color: #000;
     font-family: "Manrope", Inter, system-ui, sans-serif;
     font-size: 17px;
     font-weight: 800;
@@ -48,10 +51,30 @@ const { current, compact = false } = Astro.props;
     text-decoration: none;
   }
 
+  .spatial-brand-image {
+    position: relative;
+    display: block;
+    width: 143px;
+    height: 32px;
+    flex: 0 0 143px;
+    overflow: hidden;
+  }
+
+  .spatial-brand-image img {
+    position: absolute;
+    top: -60px;
+    left: -9px;
+    width: 158px;
+    max-width: none;
+    height: auto;
+  }
+
   .spatial-brand-chinese {
     color: inherit;
-    font: inherit;
-    letter-spacing: -.035em;
+    font-size: 18px;
+    font-weight: 850;
+    line-height: 1;
+    letter-spacing: -.06em;
   }
 
   .spatial-header-action { min-width: 0; justify-self: end; }

@@ -551,15 +551,15 @@ img { display: block; max-width: 100%; }
 .v4-version-5 .glass-canvas { background: radial-gradient(circle at 39% 42%, #5e88c7 0, #28518d 37%, #10224a 78%); }
 .v4-version-5 .glass-plane { background: rgba(245, 249, 255, .17); border-color: rgba(220, 235, 255, .55); }
 .production-v5 .glass-planes { gap: 8px; }
-.production-v5 .glass-plane { min-height: 78px; padding: 10px 12px; }
-.production-v5 .glass-plane strong { margin-top: 5px; }
+.production-v5 .glass-plane { display: flex; min-height: 70px; align-items: center; padding: 12px 16px; }
+.production-v5 .glass-plane strong { margin: 0; font-size: clamp(1rem, 1.15vw, 1.3rem); }
 .production-v5 .glass-message { grid-area: 1 / 1 / 2 / 3; display: flex; align-items: end; }
 .production-v5 .glass-message h1 { max-width: 16ch; font-size: clamp(2.35rem, 3.65vw, 4.35rem); }
 .production-v5 .glass-panel { grid-area: 1 / 3 / 3 / 4; justify-content: flex-start; gap: 10px; overflow: hidden; padding: clamp(20px, 2.15vw, 36px); }
 .production-v5 .glass-panel-content { min-height: 0; flex: 1 1 auto; display: flex; align-items: center; overflow: hidden; padding: 0; }
 .production-v5 .glass-panel-content > section { width: 100%; }
 .production-v5 .glass-panel h2 { margin: 7px 0 14px; font-size: clamp(2rem, 2.45vw, 3rem); line-height: 1; }
-.production-v5 .glass-panel .panel-eyebrow { margin: 0; color: #28518d; font: 700 10px/1.4 "Space Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.production-v5 .glass-panel .panel-eyebrow { margin: 0; color: #28518d; font: 700 clamp(12px, .8vw, 14px)/1.4 "Space Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
 .production-v5 .glass-panel .panel-lead { margin: 0; font-size: clamp(13px, .88vw, 16px); line-height: 1.52; }
 .homepage-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 18px 0 0; }
 .homepage-stats div { padding: 12px; border-top: 3px solid var(--yellow); background: #eef4fb; }
@@ -874,9 +874,8 @@ img { display: block; max-width: 100%; }
   .v4-experiment h1 { font-size: clamp(2.15rem, 4.1vw, 4.7rem); }
   .v4-experiment p { line-height: 1.4; }
   .v4-actions a { min-height: 38px; padding-block: 8px; }
-  .production-v5 .glass-plane { min-height: 64px; padding: 7px 10px; }
-  .production-v5 .glass-plane strong { margin-top: 2px; font-size: 12px; }
-  .production-v5 .glass-plane small { font-size: 9px; }
+  .production-v5 .glass-plane { min-height: 58px; padding: 8px 12px; }
+  .production-v5 .glass-plane strong { margin: 0; font-size: 15px; }
   .production-v5 .glass-panel { gap: 7px; padding: 14px 18px; }
   .production-v5 .glass-panel h2 { margin: 3px 0 6px; font-size: clamp(1.35rem, 1.7vw, 1.9rem); }
   .production-v5 .glass-panel .panel-lead { font-size: 11.5px; line-height: 1.38; }

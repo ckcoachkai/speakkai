@@ -10,7 +10,6 @@ const panelId = (index: number) => `homepage-panel-${index}`;
 const homePanels = [
   {
     label: "About",
-    brief: "Journey · leadership · results",
     title: "Kai Liu",
     eyebrow: "Coach · competitor · teacher · speaker",
     copy: "A first-generation Chinese American, Kai built his work around challenges he once faced himself: a stutter, fear of public speaking, and difficulty expressing ideas with confidence. Teaching in China helped him find his voice; coaching became the way he helps other people find theirs.",
@@ -28,9 +27,7 @@ const homePanels = [
   },
   {
     label: "Philosophy",
-    brief: "Purpose · practice · independence",
     title: "Build the speaker, not just the speech.",
-    eyebrow: "A practical philosophy of communication",
     copy: "Confidence is not a performance trick or a memorized script. It grows when speakers understand why they are speaking, organize what they mean, test it aloud, notice what reaches the audience and learn to adjust independently.",
     points: [
       ["Audience and purpose first", "Know who needs to hear the message, what they should understand and why it matters."],
@@ -43,9 +40,7 @@ const homePanels = [
   },
   {
     label: "Programs",
-    brief: "Fall curriculum · coaching paths",
     title: "Fall 2026 learning",
-    eyebrow: "Confirmed curriculum plus established coaching paths",
     copy: "The confirmed Fall curriculum is Young Competition Speakers: an 18-class course for Grades 1–2 that turns current topics, stories and real-world roles into short, achievable speaking challenges.",
     program: {
       meta: "18 classes · Grades 1–2 · mostly 60–90 second practice speeches",
@@ -58,13 +53,10 @@ const homePanels = [
       ["Competition skills", "Clarity, structure, evidence, vocal variety, purposeful movement, audience focus, timing and confident recovery."],
       ["Other coaching paths", "Original oratory, expository speaking, storytelling, debate, TEDx preparation and professional presentations."],
     ],
-    note: "Only Young Competition Speakers is labelled as a confirmed Fall 2026 curriculum; the other items are established coaching paths, not invented fall cohorts.",
   },
   {
     label: "Paradigm",
-    brief: "How Kai observes and evaluates",
     title: "Specific. Audience-aware. Growth-oriented.",
-    eyebrow: "Reconstructed from repeated feedback and scoring habits",
     copy: "Kai does not appear to judge from one universal point formula. Across class feedback, competition preparation and curriculum rubrics, the recurring question is: what did the speaker do, what effect did it have on the audience, and what should the speaker practise next?",
     points: [
       ["Clarity and intelligibility", "Can every word and main idea be understood? Kai repeatedly notices articulation, volume, pace and pauses."],
@@ -74,20 +66,16 @@ const homePanels = [
       ["Thinking, story and connection", "Is there reasoning, creativity, personal relevance or a memorable human connection—not only polished delivery?"],
       ["Preparation, recovery and growth", "Memorization is a foundation, not the finish line. Kai also values response to coaching, self-awareness and recovery after mistakes."],
     ],
-    note: "Evidence → Effect → Enhancement remains a useful shorthand from an earlier EEE brainstorming session, but the chat history does not show that Kai formally adopted it as his official paradigm.",
   },
   {
     label: "Media",
-    brief: "Verified accounts · direct contact",
     title: "Find SpeakKai",
-    eyebrow: "Verified handles and public links",
     copy: "Use the verified account details below. Where a stable public profile URL has not been confirmed, the card opens the contact page instead of sending visitors to a guessed account.",
     media: [
       { platform: "WeChat", handle: "CKcoachkai", description: "Scan the complete contact QR to ask about coaching, programs or partnerships.", href: "/contact/", image: "/images/coach-kai-wechat-qr.png", action: "Open full QR" },
       { platform: "Xiaohongshu", handle: "CKcoachkai", description: "Search this exact verified handle in Xiaohongshu; a stable public profile URL is still unverified.", href: "/contact/", image: "/images/coach-kai-headshot.webp", action: "View contact details" },
       { platform: "Pinterest", handle: "@ckcoachkai", description: "Open the verified public CKCoachKai profile and saved visual references.", href: "https://kr.pinterest.com/ckcoachkai/", image: "/images/coach-kai-banner-mobile.webp", action: "Open profile", external: true },
     ],
-    note: "YouTube, Douyin, Bilibili, Instagram and WeChat Channels are not shown until the exact public account URLs are verified.",
   },
 ];
 ---
@@ -102,7 +90,7 @@ const homePanels = [
     <div class="glass-planes" role="tablist" aria-label="Explore SpeakKai">
       {homePanels.map((item, index) => (
         <button class={`glass-plane plane-${index + 1}`} type="button" role="tab" data-home-control data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"} tabindex={index === 0 ? "0" : "-1"}>
-          <span>0{index + 1}</span><strong>{item.label}</strong><small>{item.brief}</small>
+          <strong>{item.label}</strong>
         </button>
       ))}
     </div>
@@ -110,14 +98,13 @@ const homePanels = [
       <div class="glass-panel-content">
         {homePanels.map((item, index) => (
           <section id={panelId(index)} role="tabpanel" data-home-panel hidden={index !== 0}>
-            <p class="panel-eyebrow">{item.eyebrow}</p>
+            {item.eyebrow && <p class="panel-eyebrow">{item.eyebrow}</p>}
             <h2>{item.title}</h2>
             <p class="panel-lead">{item.copy}</p>
             {item.stats && <dl class="homepage-stats" aria-label="Career highlights">{item.stats.map(([value, label]) => <div><dt>{value}</dt><dd>{label}</dd></div>)}</dl>}
             {item.points && <ul class="homepage-points">{item.points.map(([name, detail]) => <li><strong>{name}</strong><span>{detail}</span></li>)}</ul>}
             {item.program && <article class="homepage-program"><span>{item.program.meta}</span><h3>{item.program.name}</h3><p>{item.program.details}</p></article>}
             {item.media && <div class="homepage-media" aria-label="SpeakKai media accounts">{item.media.map((account) => <a href={account.href} target={account.external ? "_blank" : undefined} rel={account.external ? "noreferrer" : undefined}><img src={account.image} alt="" loading="eager" /><span><small>{account.platform}</small><strong>{account.handle}</strong><b>{account.description}</b><em>{account.action} →</em></span></a>)}</div>}
-            {item.note && <p class="panel-note">{item.note}</p>}
           </section>
         ))}
       </div>

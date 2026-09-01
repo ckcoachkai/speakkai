@@ -23,24 +23,31 @@ const initial = await desktop.evaluate(() => ({
   labNavCount: document.querySelectorAll(".v4-nav, [data-qa='test-switcher']").length,
   productionHeaderCount: document.querySelectorAll(".spatial-site-header").length,
   brandText: document.querySelector(".spatial-brand")?.textContent?.replace(/\s+/g, " ").trim() || "",
+  brandLabel: document.querySelector(".spatial-brand")?.getAttribute("aria-label") || "",
+  brandImageLoaded: (() => {
+    const image = document.querySelector(".spatial-brand-image img");
+    return image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0;
+  })(),
   brandLockup: (() => {
     const brand = document.querySelector(".spatial-brand");
-    const latin = brand?.children[0];
+    const latin = brand?.querySelector(".spatial-brand-image");
     const chinese = brand?.children[1];
     if (!(brand instanceof HTMLElement) || !(latin instanceof HTMLElement) || !(chinese instanceof HTMLElement)) return null;
-    const latinStyle = getComputedStyle(latin);
     const chineseStyle = getComputedStyle(chinese);
     return {
-      colorMatches: latinStyle.color === chineseStyle.color,
-      fontSizeMatches: latinStyle.fontSize === chineseStyle.fontSize,
+      chineseColor: chineseStyle.color,
       gap: parseFloat(getComputedStyle(brand).gap),
       alignItems: getComputedStyle(brand).alignItems,
+      imageHeight: latin.getBoundingClientRect().height,
     };
   })(),
   headline: document.querySelector("[data-qa='primary-message'] h1")?.textContent?.trim() || "",
   redundantHomepageLabels: document.querySelectorAll(".production-v5 .v4-kicker, .production-v5 .homepage-service-line").length,
   controls: document.querySelectorAll("[data-home-control]").length,
   controlLabels: [...document.querySelectorAll("[data-home-control] strong")].map((item) => item.textContent?.trim()),
+  controlMicrocopy: document.querySelectorAll("[data-home-control] span, [data-home-control] small").length,
+  panelEyebrows: document.querySelectorAll(".production-v5 .panel-eyebrow").length,
+  panelNotes: document.querySelectorAll(".production-v5 .panel-note").length,
   homepageStats: document.querySelectorAll(".homepage-stats div").length,
   paradigmText: document.querySelector("#homepage-panel-3")?.textContent?.replace(/\s+/g, " ").trim() || "",
   aboutNavLinks: document.querySelectorAll('.spatial-site-header a[href="/about/"]').length,
@@ -57,15 +64,19 @@ assert(!initial.robots.toLowerCase().includes("noindex"), "Production homepage m
 assert(initial.h1Count === 1, "Production homepage must contain exactly one H1.");
 assert(initial.labNavCount === 0, "Experiment-lab toolbar leaked onto the production homepage.");
 assert(initial.productionHeaderCount === 1, "Production navigation is missing.");
-assert(initial.brandText.replace(/\s+/g, "") === "SpeakKai说开", "Homepage brand does not include 说开 after SpeakKai.");
-assert(initial.brandLockup?.colorMatches && initial.brandLockup?.fontSizeMatches && initial.brandLockup?.gap <= 4 && initial.brandLockup?.alignItems === "center", "Bilingual brand lockup is not visually unified.");
+assert(initial.brandText.replace(/\s+/g, "") === "说开" && initial.brandLabel === "SpeakKai 说开 home", "Homepage brand does not preserve the bilingual name.");
+assert(initial.brandImageLoaded, "Selected SpeakKai logo image failed to load.");
+assert(initial.brandLockup?.chineseColor === "rgb(0, 0, 0)" && initial.brandLockup?.gap <= 3 && initial.brandLockup?.alignItems === "center" && initial.brandLockup?.imageHeight === 32, "Bilingual brand lockup is not visually unified.");
 assert(initial.headline === "Take your speech to the next level.", "Homepage headline was not updated.");
 assert(initial.redundantHomepageLabels === 0, "Low-value homepage labels are still present.");
 assert(initial.controls === 5, "Production homepage must contain five information controls.");
 assert(JSON.stringify(initial.controlLabels) === JSON.stringify(["About", "Philosophy", "Programs", "Paradigm", "Media"]), "Homepage information controls are not labelled as requested.");
+assert(initial.controlMicrocopy === 0, "Homepage controls still contain numbers or explanatory microcopy.");
+assert(initial.panelEyebrows === 1, "Internal panel labels are still exposed as customer-facing copy.");
+assert(initial.panelNotes === 0, "Internal evidence notes are still exposed as customer-facing copy.");
 assert(initial.homepageStats === 3, "Homepage About panel is missing its compact career highlights.");
 assert(initial.paradigmText.includes("Clarity and intelligibility"), "Homepage paradigm does not reflect the documented judging pattern.");
-assert(initial.paradigmText.includes("does not show that Kai formally adopted it"), "Homepage paradigm does not preserve the EEE evidence boundary.");
+assert(!initial.paradigmText.includes("formally adopted") && !initial.paradigmText.includes("Reconstructed from"), "Internal paradigm research notes leaked into customer-facing copy.");
 assert(initial.aboutNavLinks === 0, "Standalone About navigation is still visible.");
 assert(initial.primaryCtaCount === 1, "Production homepage must contain one primary CTA.");
 assert(initial.primaryCtaText === "Take your speech to the next level", "Homepage CTA was not updated.");
