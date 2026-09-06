@@ -8,6 +8,18 @@
   --speak-line: #2b3b56;
   --speak-muted: #a9b8cc;
 }
+#recognition-engine {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  background: #172945;
+  color: #f3f6fc;
+  border: 1px solid #637898;
+  border-radius: 6px;
+  padding: 10px;
+  font: inherit;
+  font-size: 14px;
+}
 .speak-page {
   margin: 0;
   min-width: 320px;
@@ -44,6 +56,7 @@
 }
 #speak-app button:focus-visible,
 #speak-app input:focus-visible,
+#speak-app select:focus-visible,
 #speak-app [tabindex]:focus-visible {
   outline: 3px solid var(--speak-accent);
   outline-offset: 4px;

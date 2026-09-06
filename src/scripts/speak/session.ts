@@ -3,6 +3,7 @@ import { findFillers, type Match } from "./detector.ts";
 export type Snapshot = {
   status:
     | "idle"
+    | "loading"
     | "starting"
     | "listening"
     | "reconnecting"
@@ -40,6 +41,8 @@ export type Recognition = {
 };
 export type RecognitionConstructor = new () => Recognition;
 type Dependencies = {
+  prepare?: () => Promise<void>;
+  cancelPrepare?: () => void;
   createRecognition: () => Recognition;
   microphone: () => Promise<void>;
   releaseMicrophone: () => void;
@@ -85,9 +88,13 @@ export class Session {
     this.selected = [...selected];
     this.wanted = true;
     const epoch = ++this.epoch;
-    this.snapshot.status = "starting";
+    this.snapshot.status = this.deps.prepare ? "loading" : "starting";
     this.emit();
     try {
+      if (this.deps.prepare) await this.deps.prepare();
+      if (!this.wanted || epoch !== this.epoch) return;
+      this.snapshot.status = "starting";
+      this.emit();
       await this.deps.microphone();
       if (!this.wanted || epoch !== this.epoch) return;
       this.connect(epoch);
@@ -95,11 +102,13 @@ export class Session {
       if (epoch !== this.epoch) return;
       const name = (error as Error).name;
       this.fail(
-        name === "NotAllowedError"
-          ? "Microphone access was denied. Allow it in browser site settings, then try again."
-          : name === "NotFoundError"
-            ? "No microphone was found. Connect one and try again."
-            : "Could not access the microphone. Check your device and browser permissions.",
+        name === "ModelLoadError"
+          ? (error as Error).message
+          : name === "NotAllowedError"
+            ? "Microphone access was denied. Allow it in browser site settings, then try again."
+            : name === "NotFoundError"
+              ? "No microphone was found. Connect one and try again."
+              : "Could not access the microphone. Check your device and browser permissions.",
       );
     }
   }
@@ -169,7 +178,9 @@ export class Session {
         "audio-capture":
           "The microphone stopped working. Check the connection and try again.",
         network:
-          "The browser speech service could not connect. Check your internet connection. This service may be unavailable on your network.",
+          "The browser speech service could not connect. Select On-device recognition in Setup, then start again. It does not use that service.",
+        "local-recognition":
+          "On-device recognition stopped. Reload the page to reset the English model, then try again.",
         "language-not-supported":
           "English recognition is unavailable in this browser.",
         aborted: "Recognition was interrupted. Start a new session to retry.",
@@ -237,6 +248,7 @@ export class Session {
   stop() {
     this.wanted = false;
     this.epoch++;
+    this.deps.cancelPrepare?.();
     if (this.timer) clearInterval(this.timer);
     if (this.retry) clearTimeout(this.retry);
     if (this.watchdog) clearTimeout(this.watchdog);

@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { findFillers, DEFAULT_FILLERS } from "../src/scripts/speak/detector.ts";
 import { Session } from "../src/scripts/speak/session.ts";
 import { AudioEngine } from "../src/scripts/speak/audio.ts";
+import { LocalRecognition } from "../src/scripts/speak/local.ts";
 
 test("detects hesitation sounds and stretched spellings, ignoring word substrings", () => {
   assert.deepEqual(
@@ -41,6 +42,8 @@ function harness(options = {}) {
     now = 0;
   const session = new Session({
     microphone: options.microphone ?? (async () => {}),
+    prepare: options.prepare,
+    cancelPrepare: options.cancelPrepare,
     releaseMicrophone: () => released++,
     now: () => now,
     createRecognition: () => {
@@ -184,7 +187,7 @@ test("network failure stops the microphone and does not claim to be listening", 
   await h.session.start(DEFAULT_FILLERS);
   h.records[0].onerror({ error: "network" });
   assert.equal(h.session.snapshot.status, "error");
-  assert.match(h.session.snapshot.error, /network/);
+  assert.match(h.session.snapshot.error, /On-device recognition/);
   assert.ok(h.records[0].aborted);
 });
 test("recognition can restart without replacing earlier transcript or counting it twice", async (t) => {
@@ -255,4 +258,83 @@ test("siren uses bounded gain and ends automatically; mute creates no oscillator
   assert.ok(calls.some((c) => c[0] === "stop" && c[1] === 0.86));
   audio.silence();
   assert.equal(audio.oscillators.size, 0);
+});
+
+test("model preparation happens before microphone capture and cancellation prevents capture", async () => {
+  let resolve,
+    microphoneCalls = 0,
+    cancelCalls = 0;
+  const h = harness({
+    prepare: () => new Promise((r) => (resolve = r)),
+    cancelPrepare: () => cancelCalls++,
+    microphone: async () => microphoneCalls++,
+  });
+  const pending = h.session.start(DEFAULT_FILLERS);
+  assert.equal(h.session.snapshot.status, "loading");
+  assert.equal(microphoneCalls, 0);
+  h.session.stop();
+  resolve();
+  await pending;
+  assert.equal(microphoneCalls, 0);
+  assert.equal(h.records.length, 0);
+  assert.ok(cancelCalls > 0);
+});
+test("model download failure remains explicit and does not request the microphone", async () => {
+  let microphoneCalls = 0;
+  const h = harness({
+    prepare: async () => {
+      const e = new Error("The English model could not download.");
+      e.name = "ModelLoadError";
+      throw e;
+    },
+    microphone: async () => microphoneCalls++,
+  });
+  await h.session.start(DEFAULT_FILLERS);
+  assert.equal(h.session.snapshot.status, "error");
+  assert.match(h.session.snapshot.error, /model could not download/);
+  assert.equal(microphoneCalls, 0);
+});
+test("local adapter emits standard interim and final results and stops consuming audio", () => {
+  const callbacks = {},
+    events = [];
+  let consume,
+    removed = 0,
+    forwarded = 0;
+  const audio = {
+    context: { sampleRate: 48000 },
+    startProcessing: (fn) => (consume = fn),
+    stopProcessing() {},
+  };
+  const model = {
+    KaldiRecognizer: class {
+      constructor(rate) {
+        assert.equal(rate, 48000);
+      }
+      on(name, fn) {
+        callbacks[name] = fn;
+      }
+      acceptWaveform() {
+        forwarded++;
+      }
+      remove() {
+        removed++;
+      }
+    },
+  };
+  const recognition = new LocalRecognition(model, audio);
+  recognition.onresult = (e) => events.push(e);
+  recognition.start();
+  callbacks.partialresult({ result: { partial: "um" } });
+  callbacks.result({ result: { text: "um today" } });
+  callbacks.partialresult({ result: { partial: "uh" } });
+  assert.equal(events[2].resultIndex, 1);
+  assert.equal(events[2].results[0][0].transcript, "um today");
+  assert.equal(events[2].results[1][0].transcript, "uh");
+  consume({});
+  recognition.abort();
+  consume({});
+  callbacks.result({ result: { text: "ignored" } });
+  assert.equal(forwarded, 1);
+  assert.equal(removed, 1);
+  assert.equal(events.length, 3);
 });

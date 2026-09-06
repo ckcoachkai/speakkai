@@ -4,6 +4,8 @@ export class AudioEngine {
   source: MediaStreamAudioSourceNode | null = null;
   analyser: AnalyserNode | null = null;
   frame = 0;
+  private processor: ScriptProcessorNode | null = null;
+  private mute: GainNode | null = null;
   epoch = 0;
   oscillators = new Set<OscillatorNode>();
   private onLevel: (level: number) => void;
@@ -82,7 +84,33 @@ export class AudioEngine {
     });
     this.oscillators.clear();
   }
+  startProcessing(consume: (buffer: AudioBuffer) => void) {
+    if (!this.context || !this.source)
+      throw new Error("Microphone is not ready");
+    this.stopProcessing();
+    // A worker performs recognition; this small node only forwards PCM samples.
+    this.processor = this.context.createScriptProcessor(4096, 1, 1);
+    this.processor.onaudioprocess = (event) => consume(event.inputBuffer);
+    this.mute = this.context.createGain();
+    this.mute.gain.value = 0;
+    this.source.connect(this.processor);
+    this.processor.connect(this.mute);
+    this.mute.connect(this.context.destination);
+  }
+  stopProcessing() {
+    if (this.processor) {
+      this.processor.onaudioprocess = null;
+      try {
+        this.source?.disconnect(this.processor);
+      } catch {}
+      this.processor.disconnect();
+      this.processor = null;
+    }
+    this.mute?.disconnect();
+    this.mute = null;
+  }
   releaseMicrophone() {
+    this.stopProcessing();
     this.epoch++;
     cancelAnimationFrame(this.frame);
     this.stream?.getTracks().forEach((t) => t.stop());

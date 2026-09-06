@@ -40,13 +40,14 @@ import '../styles/speak.css';
         </section>
         <aside class="settings-panel" aria-label="Practice settings">
           <div class="panel-heading"><h2>Make it your practice.</h2><span>01 / SETUP</span></div>
+          <section class="setting-group"><label for="recognition-engine">Recognition</label><select id="recognition-engine"><option value="local" selected>On-device recognition</option><option value="browser">Browser speech service</option></select><p id="engine-note">About 40 MB on first start. Audio is processed on your device.</p></section>
           <section class="setting-group"><div class="row"><label for="siren">Siren alert</label><input type="checkbox" role="switch" class="toggle" id="siren" checked /></div><p>A short rising siren with each red alert.</p><div class="volume-label"><label for="volume">Volume</label><output id="volume-value" for="volume">35%</output></div><input type="range" id="volume" min="0" max="100" step="5" value="35" /><div class="headphone-note"><Headphones size={16} /><span>Use headphones to keep the siren out of your microphone.</span></div></section>
           <fieldset class="setting-group filler-group" id="filler-selection"><legend>Listen for</legend><p>Select the sounds you want to catch.</p><div class="chips">{DEFAULT_FILLERS.map(word => <button class="chip selected" data-filler={word} aria-pressed="true">{word}<span aria-hidden="true">−</span></button>)}</div><h3>Optional words & phrases</h3><p>These can be meaningful, too. Every selected occurrence will count.</p><div class="chips">{OPTIONAL_FILLERS.map(word => <button class="chip" data-filler={word} aria-pressed="false">{word}<span aria-hidden="true">+</span></button>)}</div><p id="selection-warning" hidden>Select at least one filler to begin.</p></fieldset>
           <section class="setting-group"><h3>This session</h3><div id="breakdown"><p>Your filler breakdown will appear here.</p></div></section>
-          <div class="detection-note"><ArrowUpRight size={20} /><div><h3>A practice aid, still experimental.</h3><p>Browsers can omit “um” and “uh.” If a filler is missing from the transcript, it cannot trigger an alert. This version detects words, not raw hesitation sounds.</p></div></div>
+          <div class="detection-note"><ArrowUpRight size={20} /><div><h3>A practice aid, still experimental.</h3><p>Recognition can miss “um” and “uh.” If a filler is missing from the transcript, it cannot trigger an alert. This version detects words, not raw hesitation sounds.</p></div></div>
         </aside>
       </div>
-      <footer class="app-footer"><span><AudioLines size={17} />Fewer fillers. More space to think.</span><p>No audio recordings or session history are saved by this app. Your browser may send audio to its speech service. Internet access may be required.</p></footer>
+      <footer class="app-footer"><span><AudioLines size={17} />Fewer fillers. More space to think.</span><p>No audio recordings or session history are saved. On-device mode keeps speech on your device after the model downloads. Optional browser-service mode may send audio to its provider.</p></footer>
       <div id="alert-announcement" class="sr-only" role="status" aria-live="polite"></div>
       <noscript><p class="error-box">Enable JavaScript to use live microphone detection.</p></noscript>
     </main>

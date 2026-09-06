@@ -6,6 +6,7 @@ import {
 } from "./session";
 import { AudioEngine } from "./audio";
 import { DEFAULT_FILLERS } from "./detector";
+import { LocalEngine } from "./local";
 
 const element = <T extends HTMLElement = HTMLElement>(id: string) =>
   document.getElementById(id) as T;
@@ -29,8 +30,12 @@ const win = window as unknown as {
   webkitSpeechRecognition?: RecognitionConstructor;
 };
 const Recognition = win.SpeechRecognition || win.webkitSpeechRecognition;
-const supported =
-  Boolean(Recognition) &&
+const engine = element<HTMLSelectElement>("recognition-engine");
+const local = new LocalEngine();
+const supported = () =>
+  (engine.value === "local"
+    ? typeof WebAssembly === "object"
+    : Boolean(Recognition)) &&
   window.isSecureContext &&
   Boolean(navigator.mediaDevices?.getUserMedia);
 const bars = Array.from(element("level").children) as HTMLElement[];
@@ -46,7 +51,7 @@ const audio = new AudioEngine((level) => {
   );
 });
 const active = () =>
-  ["starting", "listening", "reconnecting"].includes(latest.status);
+  ["loading", "starting", "listening", "reconnecting"].includes(latest.status);
 function renderStage() {
   if (document.body.classList.contains("has-alert")) return;
   element("stage-kicker").textContent = active()
@@ -54,14 +59,20 @@ function renderStage() {
     : latest.status === "stopped"
       ? "NICE WORK. TAKE A BREATH."
       : "MAKE ROOM FOR THE PAUSE";
-  element("stage-title").textContent = active()
-    ? "Keep speaking."
-    : latest.status === "stopped"
-      ? "Practice, then repeat."
-      : "Speak with intention.";
-  element("stage-help").textContent = active()
-    ? "A quiet pause is better than a filler."
-    : "Catch your fillers as you speak. One thought at a time.";
+  element("stage-title").textContent =
+    latest.status === "loading"
+      ? "Preparing your practice…"
+      : active()
+        ? "Keep speaking."
+        : latest.status === "stopped"
+          ? "Practice, then repeat."
+          : "Speak with intention.";
+  element("stage-help").textContent =
+    latest.status === "loading"
+      ? "Loading the English model. The first start may take a minute."
+      : active()
+        ? "A quiet pause is better than a filler."
+        : "Catch your fillers as you speak. One thought at a time.";
 }
 function clearAlert() {
   if (alertTimer) clearTimeout(alertTimer);
@@ -96,15 +107,20 @@ function render(snapshot: Snapshot) {
   const running = active();
   start.hidden = running;
   stop.hidden = !running;
-  start.disabled = !supported || !fillers.length;
+  start.disabled = !supported() || !fillers.length;
+  engine.disabled = running;
   test.disabled = running || Boolean(alertTimer);
   selection.disabled = running;
   start.querySelector("span")!.textContent =
     snapshot.status === "stopped" ? "Start a new session" : "Start practice";
   element("status").textContent = {
     idle: "Ready when you are",
+    loading: "Loading on-device model…",
     starting: "Connecting microphone…",
-    listening: "● Listening",
+    listening:
+      engine.value === "local"
+        ? "● Listening on this device"
+        : "● Listening via browser service",
     reconnecting: "Reconnecting…",
     stopped: "Session complete",
     error: "Needs attention",
@@ -177,11 +193,15 @@ function render(snapshot: Snapshot) {
     row.append(label, track, total);
     breakdown.append(row);
   }
+  element("engine-note").textContent =
+    engine.value === "local"
+      ? "About 40 MB on first start. Audio is processed on your device. The model may be cached by your browser."
+      : "Uses your browser’s online speech service. It may be unavailable in embedded browsers or on some networks.";
   const error =
     snapshot.error ||
     audioError ||
-    (!supported
-      ? "Live recognition is unavailable here. Open this page in desktop Google Chrome over HTTPS. Browser support and speech-service access vary."
+    (!supported()
+      ? "This recognition option is unavailable here. Try On-device recognition, or open this page in a current desktop Chrome or Edge browser."
       : "");
   element("error").textContent = error;
   element("error").hidden = !error;
@@ -189,7 +209,14 @@ function render(snapshot: Snapshot) {
   else renderStage();
 }
 const session = new Session({
-  createRecognition: () => new Recognition!(),
+  prepare: async () => {
+    if (engine.value === "local") await local.prepare();
+  },
+  cancelPrepare: () => local.cancelPreparing(),
+  createRecognition: () =>
+    engine.value === "local"
+      ? local.createRecognition(audio)
+      : new Recognition!(),
   microphone: () => audio.microphone(),
   releaseMicrophone: () => audio.releaseMicrophone(),
   onChange: render,
@@ -205,6 +232,13 @@ start.addEventListener("click", () => {
     render(latest);
   });
   void session.start(fillers);
+});
+engine.addEventListener("change", () => {
+  if (!active()) {
+    audioError = "";
+    session.reset();
+    clearAlert();
+  }
 });
 function endPractice() {
   session.stop();
@@ -263,6 +297,7 @@ window.addEventListener("pagehide", () => {
   session.dispose();
   clearAlert();
   audio.dispose();
+  local.dispose();
 });
 render(latest);
 
