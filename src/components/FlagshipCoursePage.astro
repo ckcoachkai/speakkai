@@ -40,10 +40,15 @@ const inquiry = chinese ? "#course-contact" : "/contact/?audience=coaching";
     <div><p class="eyebrow">{copy.worldsLabel}</p><h2>{copy.worldsTitle[0]}<br />{copy.worldsTitle[1]}</h2><p>{copy.worldsIntro}</p><ul>{copy.themes.map(theme => <li>{theme}</li>)}</ul></div>
     <div><h3>{copy.rolesTitle}</h3><p>{copy.rolesIntro}</p><ul class="role-list">{copy.roles.map(role => <li>{role}</li>)}</ul><p class="section-note">{copy.rangeNote}</p></div>
   </section>
-  <section class="practice-section">
+  <section class="practice-section" id="feedback-example" aria-labelledby="feedback-title">
     <div class="wrap feedback-example">
-      <div><p class="eyebrow">{copy.feedbackLabel}</p><h2>{copy.feedbackTitle[0]}<br /><em>{copy.feedbackTitle[1]}</em></h2><p>{copy.feedbackIntro}</p></div>
-      <div class="feedback-card"><p class="example-label">{copy.exampleLabel}</p><p>{copy.example}</p><p class="field-note">{copy.retry}</p></div>
+      <div class="feedback-heading"><p class="eyebrow">{copy.feedbackLabel}</p><h2 id="feedback-title">{copy.feedbackTitle[0]}<br /><em>{copy.feedbackTitle[1]}</em></h2><p>{copy.feedbackIntro}</p><p class="example-label">{copy.exampleLabel}</p></div>
+      <ol class="feedback-sequence">
+        <li><h3><span aria-hidden="true">01 / </span>{copy.firstTry}</h3><p class="spoken-example" data-attempt="first"><span data-opening>{copy.practiceOpening}</span>{" "}<span data-ending>{copy.practiceEnding}</span></p></li>
+        <li class="feedback-card"><h3><span aria-hidden="true">02 / </span>{copy.coachFeedback}</h3><p class="coach-feedback">{copy.example}</p></li>
+        <li><h3><span aria-hidden="true">03 / </span>{copy.pauseRetry}</h3><p class="spoken-example" data-attempt="retry"><span data-opening>{copy.practiceOpening}</span><span class="pause-cue">{copy.pauseCue}</span><strong data-ending>{copy.practiceEnding}</strong></p><p class="field-note">{copy.pauseHelp}</p></li>
+      </ol>
+      <div class="feedback-listener"><p>{copy.retry}</p><p>{copy.listenerCheck}</p></div>
     </div>
   </section>
   <section class="wrap section course-decide">
@@ -136,7 +141,6 @@ const inquiry = chinese ? "#course-contact" : "/contact/?audience=coaching";
     line-height: 1.4;
   }
   .course-worlds,
-  .feedback-example,
   .course-decide {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -169,23 +173,16 @@ const inquiry = chinese ? "#course-contact" : "/contact/?audience=coaching";
   .role-list {
     grid-template-columns: 1fr 1fr;
   }
-  .feedback-card {
-    padding: 30px;
-    border-left: 4px solid var(--yellow);
-    background: white;
-  }
-  .feedback-card .example-label {
-    font-size: 14px;
-    margin: 0;
-  }
-  .feedback-card > p:nth-child(2) {
-    font-size: 22px;
-    color: var(--ink);
-    line-height: 1.6;
-  }
-  .feedback-card .field-note {
-    font-size: 14px;
-  }
+  .feedback-heading, .feedback-listener { max-width: 720px; }
+  .feedback-example .example-label, .feedback-example .field-note { font-size: 14px; }
+  .feedback-sequence { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding: 0; margin: 32px 0 0; list-style: none; }
+  .feedback-sequence li { background: white; border-top: 3px solid var(--line); padding: 26px; }
+  .feedback-sequence .feedback-card { border-top-color: var(--yellow); }
+  .feedback-sequence h3 { font-size: 18px; line-height: 1.5; letter-spacing: -.02em; }
+  .feedback-sequence h3 span { color: var(--blue); }
+  .feedback-sequence .spoken-example, .feedback-sequence .coach-feedback { font-size: 20px; color: var(--ink); line-height: 1.6; }
+  .pause-cue { display: block; border-block: 1px solid var(--line); padding-block: 8px; margin-block: 16px; font-size: 14px; color: var(--blue); font-weight: 700; }
+  .feedback-listener { margin-top: 28px; }
   .course-decide aside {
     background: var(--wash);
     padding: 30px;
@@ -204,7 +201,6 @@ const inquiry = chinese ? "#course-contact" : "/contact/?audience=coaching";
       font-size: 18px;
     }
     .course-worlds,
-    .feedback-example,
     .course-decide {
       grid-template-columns: 1fr;
       gap: 34px;
@@ -215,5 +211,6 @@ const inquiry = chinese ? "#course-contact" : "/contact/?audience=coaching";
     .course-intro {
       padding-top: 24px;
     }
+    .feedback-sequence { grid-template-columns: minmax(0, 1fr); }
   }
 </style>

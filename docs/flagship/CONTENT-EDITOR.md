@@ -26,12 +26,18 @@ Its generated dependency scan includes the server API. `vite.optimizeDeps.exclud
 
 ## Editing the Fall course in two languages (V11)
 
-Open **Fall course — English & Chinese** from the local CMS dashboard. It contains seven narrative fields in each language: introduction, topic purpose, role purpose, feedback introduction, illustrative quote, retry description and parent guidance. Edit the matching fields together, record the translation review date and add a non-sensitive source/review note.
+Open **Fall course — English & Chinese** from the local CMS dashboard. As of V18 it contains nine narrative fields in each language: introduction, topic purpose, role purpose, feedback introduction, fictional story opening, fictional story ending, illustrative quote, retry description and parent guidance. Edit the matching fields together, record the translation review date and add a non-sensitive source/review note.
 
 Saving updates `src/content/flagship/course-editorial.json` locally. It does not publish. Preview both course routes and review the diff before deployment. This is an editorial form, not an automatic translation or factual-accuracy checker.
 
 Course numbers, season, grade range, programme name, sequence, themes/roles, contact details, fees/availability boundaries and metadata remain outside this form. Request a separately reviewed source update when the actual course scope changes. Do not add new scope, prices, credentials or results to narrative fields as a workaround.
 
-Required fields are limited to 10–700 characters. The build rejects missing language fields, invalid review dates and absent source notes. `npm run check:course-editorial` verifies that all fourteen public paragraphs match the content file and that the editor-only note is absent from generated HTML, JavaScript, JSON, XML and source maps. Language/fact parity and privacy checks remain required.
+Required fields are limited to 10–700 characters. The build rejects missing language fields, invalid review dates and absent source notes. `npm run check:course-editorial` verifies all eighteen public fields against the content file, confirms that the first attempt and retry use identical story wording with a pause cue only in the retry, and checks that the editor-only note is absent from generated HTML, JavaScript, JSON, XML and source maps. Language/fact parity and privacy checks remain required.
 
 Verified: a paired temporary introduction edit was saved in the real CMS, survived editor reload and appeared in both Astro-rendered pages. Both original introductions were then restored through the editor and verified in the production build. This test did not modify or publish course scope.
+
+## Review the pause example as a pair (V18)
+
+Keep the opening and final sentence short and fictional. The template reuses both sentences, inserts a pause cue before the ending on the retry, and explains that the cue is not spoken. Edit the story in English and Chinese together: same object, same event, same reason it matters. Check that the coach's feedback and the listener question still fit. The checker verifies structure and presence; it does not judge translation, age suitability, factual accuracy or pedagogy.
+
+Verified in V18: a temporary red-to-blue kite change was saved in both language fields, survived CMS reload and appeared twice in each development page. Both fields were restored to red through the CMS; source and production content checks confirmed the intended final wording. Agent language review is recorded separately from real parent or independent professional translation research.

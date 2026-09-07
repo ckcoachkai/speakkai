@@ -3,20 +3,24 @@
     "introduction": "Turn current topics, stories and real-world roles into short, achievable speaking challenges.",
     "worldsIntro": "Speaking has a purpose when there is something interesting to think about.",
     "rolesIntro": "A role gives the learner an audience and a reason to speak.",
-    "feedbackIntro": "This illustrative exchange shows how feedback can point to a next action.",
+    "feedbackIntro": "Read this fictional mini-story aloud. On the second try, keep the words and pause before the final sentence.",
+    "practiceOpening": "My red kite went higher than the trees.",
+    "practiceEnding": "I felt proud because I kept trying.",
     "example": "“Your example helped me picture the scene. Try pausing before your last sentence so I can hear why it matters.”",
-    "retry": "The learner tries the ending again. The listener notices what changed.",
+    "retry": "The learner says the same words again, adding one pause before the final sentence. The listener notices what changed.",
     "decideIntro": "Share their grade, speaking experience and any event they are preparing for. Kai can discuss whether this course or another coaching format is a suitable fit."
   },
   "zh-CN": {
     "introduction": "把时事话题、故事和真实生活中的角色，变成简短、可尝试的表达挑战。",
     "worldsIntro": "有了值得思考的内容，表达就有了目的。",
     "rolesIntro": "角色让学生知道自己在对谁说话，以及为什么要表达。",
-    "feedbackIntro": "下面的示例展示了如何把反馈转化为下一次可以尝试的行动。",
+    "feedbackIntro": "试着把这个虚构的小故事读出来。第二次使用同样的话，在最后一句前停顿一下。",
+    "practiceOpening": "我的红风筝飞得比树还高。",
+    "practiceEnding": "我很自豪，因为我一直在尝试。",
     "example": "“你的例子让我想象出了那个场景。试着在最后一句前停顿一下，让我听清它为什么重要。”",
-    "retry": "学生再试一次结尾，听众观察这次有什么变化。",
+    "retry": "学生用同样的话再试一次，在最后一句前加一处停顿。听众观察这次有什么变化。",
     "decideIntro": "请说明孩子的年级、表达经验，以及正在准备的演讲或展示。Kai 可以与你讨论这门课程或其他辅导形式是否合适。"
   },
   "reviewedOn": "2026-09-07",
-  "editorialNote": "Course narrative approved against the published V10 source. Numerical scope and operational boundaries remain in the shared programme model and fixed copy. Review English and Chinese together before publication."
+  "editorialNote": "V18 extends the published course narrative with an original fictional kite story and a written pause cue. Existing coach feedback retained; both displays reuse the same opening and ending. EF China and Cambridge children activity pages inform bounded practice context, not outcome claims. English/Chinese meaning reviewed by the agent; no independent parent translation study. Numerical scope remains in the shared programme model."
 }

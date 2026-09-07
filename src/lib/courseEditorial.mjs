@@ -3,6 +3,8 @@ export const courseEditorialFields = {
   worldsIntro: "Why the topics matter",
   rolesIntro: "Why practise a role",
   feedbackIntro: "Introduce the feedback example",
+  practiceOpening: "Fictional practice — opening sentence",
+  practiceEnding: "Fictional practice — final sentence",
   example: "Illustrative feedback quote",
   retry: "What the learner tries next",
   decideIntro: "Guidance before an inquiry",

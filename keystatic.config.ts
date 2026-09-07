@@ -5,6 +5,7 @@ const requiredText = (label: string, multiline = false) => fields.text({ label, 
 const courseLanguageFields = () => Object.fromEntries(
   Object.entries(courseEditorialFields).map(([key, label]) => [key, fields.text({
     label, multiline: true, validation: { isRequired: true, length: { min: 10, max: 700 } },
+    ...(key.startsWith("practice") ? { description: "One short fictional sentence. Used unchanged in the first try and retry; the page adds the pause cue. Review the matching field in both languages." } : {}),
   })]),
 );
 export default config({
