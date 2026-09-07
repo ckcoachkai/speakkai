@@ -41,6 +41,8 @@ jobs:
         run: npm run check:schedule-privacy
       - name: Build
         run: npm run build
+      - name: Verify speech detector and worker lifecycle
+        run: node --test scripts/check-speak-v1.mjs scripts/check-speak-engine-v1.mjs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

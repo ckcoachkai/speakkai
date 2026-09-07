@@ -1,56 +1,46 @@
 ---
 import SpatialSiteHeader from '../components/SpatialSiteHeader.astro';
-import { Mic, AudioLines, Volume2, Square, Headphones, ArrowUpRight } from '@lucide/astro';
-import { DEFAULT_FILLERS, OPTIONAL_FILLERS } from '../scripts/speak/detector';
+import { Mic, AudioLines, Volume2, Square, Headphones, ShieldCheck } from '@lucide/astro';
 import '../styles/speak.css';
+import '../styles/speak-v1.css';
 ---
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Practice speaking with live filler-word detection, red screen alerts, and an adjustable siren. A free SpeakKai practice tool." />
-    <meta name="theme-color" content="#10224a" />
-    <link rel="canonical" href="https://speakkai.com/speak/" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <title>Filler Alarm | SpeakKai Speaking Practice</title>
-  </head>
-  <body class="speak-page">
-    <SpatialSiteHeader current="resources" compact />
-    <main id="speak-app">
-      <div class="app-heading"><div class="app-title"><AudioLines size={23} /><h1>Filler Alarm</h1><span>PRACTICE LAB</span></div><span class="language-note"><i></i>English · Live practice</span></div>
-      <div class="workspace">
-        <section class="practice" aria-label="Speaking practice">
-          <div class="section-top"><p class="eyebrow">YOUR SPEAKING SPACE</p><span id="status" role="status">Checking browser…</span></div>
-          <div class="stage" id="stage">
-            <div class="stage-grid" aria-hidden="true"></div>
-            <div class="stage-content">
-              <div class="mic-orbit" id="mic-orbit"><Mic size={42} stroke-width={1.5} /></div>
-              <p class="stage-kicker" id="stage-kicker">MAKE ROOM FOR THE PAUSE</p>
-              <h2 id="stage-title">Speak with intention.</h2>
-              <p class="stage-help" id="stage-help">Catch your fillers as you speak. One thought at a time.</p>
-              <div class="level" id="level" aria-label="Microphone inactive">{Array.from({length:35}, () => <span></span>)}</div>
-              <div class="main-actions"><button id="start" class="primary-button" disabled><Mic size={19} /><span>Start practice</span></button><button id="stop" class="primary-button stop-button" hidden><Square size={16} fill="currentColor" />End practice</button><button id="test-alert" class="secondary-button"><Volume2 size={18} />Test alert</button></div>
-              <p class="permission-note" id="permission-note">Allow microphone access when prompted. Headphones recommended.</p>
-            </div>
-          </div>
-          <div class="stats" aria-label="Session statistics"><div><span>SESSION TIME</span><strong id="elapsed">00:00</strong></div><div><span>DETECTED FILLERS</span><strong id="total">00</strong></div><div><span>FILLERS / MIN</span><strong id="rate">—</strong></div></div>
-          <div id="error" class="error-box" role="alert" hidden></div>
-          <section class="transcript-panel"><div class="section-top"><h2>Live transcript</h2><span class="subtle" id="transcript-state">Only for this session</span></div><div id="transcript" class="transcript empty" tabindex="0" aria-label="Live transcript">Your words will appear here when recognition starts. Fillers will be highlighted.</div><div class="transcript-footer"><span>Counts can change when the browser corrects its transcript.</span><button class="text-button" id="clear" hidden>Clear session</button></div></section>
-        </section>
-        <aside class="settings-panel" aria-label="Practice settings">
-          <div class="panel-heading"><h2>Make it your practice.</h2><span>01 / SETUP</span></div>
-          <section class="setting-group"><label for="recognition-engine">Recognition</label><select id="recognition-engine"><option value="local" selected>On-device recognition</option><option value="browser">Browser speech service</option></select><p id="engine-note">About 40 MB on first start. Audio is processed on your device.</p></section>
-          <section class="setting-group"><div class="row"><label for="siren">Siren alert</label><input type="checkbox" role="switch" class="toggle" id="siren" checked /></div><p>A short rising siren with each red alert.</p><div class="volume-label"><label for="volume">Volume</label><output id="volume-value" for="volume">35%</output></div><input type="range" id="volume" min="0" max="100" step="5" value="35" /><div class="headphone-note"><Headphones size={16} /><span>Use headphones to keep the siren out of your microphone.</span></div></section>
-          <fieldset class="setting-group filler-group" id="filler-selection"><legend>Listen for</legend><p>Select the sounds you want to catch.</p><div class="chips">{DEFAULT_FILLERS.map(word => <button class="chip selected" data-filler={word} aria-pressed="true">{word}<span aria-hidden="true">−</span></button>)}</div><h3>Optional words & phrases</h3><p>These can be meaningful, too. Every selected occurrence will count.</p><div class="chips">{OPTIONAL_FILLERS.map(word => <button class="chip" data-filler={word} aria-pressed="false">{word}<span aria-hidden="true">+</span></button>)}</div><p id="selection-warning" hidden>Select at least one filler to begin.</p></fieldset>
-          <section class="setting-group"><h3>This session</h3><div id="breakdown"><p>Your filler breakdown will appear here.</p></div></section>
-          <div class="detection-note"><ArrowUpRight size={20} /><div><h3>A practice aid, still experimental.</h3><p>Recognition can miss “um” and “uh.” If a filler is missing from the transcript, it cannot trigger an alert. This version detects words, not raw hesitation sounds.</p></div></div>
-        </aside>
-      </div>
-      <footer class="app-footer"><span><AudioLines size={17} />Fewer fillers. More space to think.</span><p>No audio recordings or session history are saved. On-device mode keeps speech on your device after the model downloads. Optional browser-service mode may send audio to its provider.</p></footer>
-      <div id="alert-announcement" class="sr-only" role="status" aria-live="polite"></div>
-      <noscript><p class="error-box">Enable JavaScript to use live microphone detection.</p></noscript>
-    </main>
-    <script>import '../scripts/speak/app';</script>
-  </body>
-</html>
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Free speaking practice with on-device hesitation detection, a red alert, and an adjustable siren. Your microphone audio stays on your device."/>
+<meta name="theme-color" content="#10224a"/><link rel="canonical" href="https://speakkai.com/speak/"/><link rel="icon" href="/favicon.svg"/>
+<title>Filler Alarm 1.0 | SpeakKai</title>
+</head>
+<body class="speak-page">
+<SpatialSiteHeader current="resources" compact/>
+<main id="speak-app">
+<div class="app-heading"><div class="app-title"><AudioLines size={23}/><h1>Filler Alarm</h1><span class="release-tag">VERSION 1.0</span></div><span class="language-note"><ShieldCheck size={17}/>English · On your device</span></div>
+<div class="workspace">
+<section class="practice" aria-label="Speaking practice">
+<div class="section-top"><p class="eyebrow">YOUR SPEAKING SPACE</p><span id="status" role="status">Ready when you are</span></div>
+<div class="stage" id="stage"><div class="stage-grid" aria-hidden="true"></div><div class="stage-content">
+<div class="mic-orbit"><Mic size={42} stroke-width={1.5}/></div><p class="stage-kicker" id="stage-kicker">MAKE ROOM FOR THE PAUSE</p>
+<h2 id="stage-title">Speak with intention.</h2><p class="stage-help" id="stage-help">Catch hesitation sounds as you speak.</p>
+<div class="level" id="level" aria-label="Microphone inactive">{Array.from({length:35},()=> <span></span>)}</div>
+<div class="main-actions"><button id="start" class="primary-button"><Mic size={19}/><span>Start practice</span></button><button id="stop" class="primary-button stop-button" hidden><Square size={16} fill="currentColor"/><span>Stop</span></button><button id="test-alert" class="secondary-button"><Volume2 size={18}/>Test alert</button></div>
+<p class="permission-note" id="permission-note">Allow the microphone when prompted. First start downloads about 71 MB.</p>
+</div></div>
+<div id="error" class="error-box" role="alert" hidden></div><div id="mic-warning" class="notice" role="status" hidden></div>
+<div class="stats" aria-label="Session statistics"><div><span>SESSION TIME</span><strong id="elapsed">00:00</strong></div><div><span>FILLER SOUNDS</span><strong id="total">00</strong></div><div><span>FILLERS / MIN</span><strong id="rate">—</strong></div></div>
+<section class="transcript-panel"><div class="section-top"><h2>Detected sounds</h2><span class="subtle" id="session-kind">Live practice</span></div><p id="empty-events" class="empty-events">Your detections will appear here. The model listens to your voice directly; no transcript is needed.</p><ol id="events" class="event-list" aria-label="Detected sounds"></ol><div class="transcript-footer"><span id="session-summary">Sound labels are estimates. Some hesitations may be missed.</span><button class="text-button" id="clear" hidden>Clear session</button></div></section>
+<details class="clip-panel"><summary>Check a short audio recording</summary><p>Choose an English audio clip up to 60 seconds and 20 MB. It is processed locally and is never uploaded.</p><label class="file-label" for="clip">Audio recording</label><input type="file" accept="audio/*" id="clip"/><audio id="clip-player" controls hidden></audio></details>
+</section>
+<aside class="settings-panel" aria-label="Practice settings">
+<div class="panel-heading"><h2>Make it your practice.</h2><span>01 / SETUP</span></div>
+<section class="setting-group"><label for="sensitivity">Sensitivity</label><select id="sensitivity"><option value="0.7" selected>Balanced</option><option value="0.55">Catch more</option><option value="0.8">Fewer false alarms</option></select><p>Use Catch more if it misses hesitations. Choose Fewer false alarms if normal speech triggers it.</p></section>
+<fieldset class="setting-group" id="sound-selection"><legend>Sounds to flag</legend><div class="sound-options"><label><input type="checkbox" value="um" checked/> um</label><label><input type="checkbox" value="uh" checked/> uh / ah</label><label><input type="checkbox" value="hmm" checked/> hmm</label><label><input type="checkbox" value="other" checked/> other hesitations</label></div><p>Exact sound names can be uncertain. Words such as “like” and “so” are not counted.</p></fieldset>
+<section class="setting-group"><div class="row"><label for="siren">Siren alert</label><input id="siren" class="toggle" type="checkbox" role="switch" checked/></div><p>A short siren with each red alert.</p><div class="volume-label"><label for="volume">Volume</label><output id="volume-value" for="volume">25%</output></div><input type="range" id="volume" min="0" max="100" step="5" value="25"/><div class="row flash-row"><label for="red-alert">Red screen alert</label><input id="red-alert" class="toggle" type="checkbox" role="switch" checked/></div><div class="headphone-note"><Headphones size={16}/><span>Use headphones to keep the siren out of your microphone.</span></div></section>
+<section class="setting-group"><label for="microphone">Microphone</label><select id="microphone"><option value="">System default</option></select><p id="microphone-note">Available microphones appear after you allow access.</p></section>
+<details class="setting-group"><summary>Device &amp; performance</summary><label class="cpu-option"><input type="checkbox" id="force-cpu"/> Use CPU compatibility mode</label><p id="performance">Recognition runs on your device. Faster devices give quicker feedback.</p><p id="delay">Alert delay will appear after a detection.</p></details>
+<div class="detection-note"><ShieldCheck size={20}/><div><h3>A practice aid, not a score.</h3><p>The model can miss fillers or flag normal speech, especially with background noise. Practice in a quiet place and compare its feedback with what you hear.</p></div></div>
+</aside></div>
+<footer class="app-footer"><span><AudioLines size={17}/><a href="https://desertant.com">Powered by Desert Ant Labs</a></span><p>Free, with no account or per-minute charges. Your audio stays on your device and is not saved by SpeakKai. <a href="/speech-v1/LICENSE.txt">Model license</a> · <a href="/speech-v1/THIRD_PARTY_NOTICES.md">Credits</a></p></footer>
+<div id="alert-announcement" class="sr-only" role="status" aria-live="polite"></div><noscript><p class="error-box">Enable JavaScript to use the Filler Alarm.</p></noscript>
+</main><script>import '../scripts/speak/app-v1';</script>
+</body></html>

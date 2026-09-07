@@ -17,13 +17,14 @@ export class AudioEngine {
       this.context = new AudioContext();
     if (this.context.state === "suspended") await this.context.resume();
   }
-  async microphone() {
+  async microphone(deviceId = '', noiseSuppression = true) {
     const epoch = ++this.epoch;
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: {
         echoCancellation: true,
-        noiseSuppression: true,
+        noiseSuppression,
         autoGainControl: true,
+        ...(deviceId ? { deviceId: { exact: deviceId } } : {}),
       },
     });
     if (epoch !== this.epoch) {
