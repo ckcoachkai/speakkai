@@ -21,6 +21,8 @@ SpeakKai / 说开. Kai Liu is presented as a communication coach and speaker. Th
 
 Manrope is served locally at weights400/600/700, with system sans-serif fallback. Body text is16px with1.65 line height. Display sizes use responsive clamps. Do not assume numeric token choices alone prove contrast or legibility: test their actual combinations.
 
+V16 reflow rules: long tokens may wrap as a last resort; numeric practice-step labels stay together in content-sized tracks. Mobile course facts, roles and experience figures use font-relative grid minimums so enlarged text can stack. Do not hide horizontal overflow to make a layout check pass. The twelve flagship routes passed a scripted doubled-font stress test at 320px; native browser zoom remains a separate check.
+
 ## Current components
 
 - FlagshipLayout: metadata, organization/person/page graph, header, skip link, main landmark and footer.
