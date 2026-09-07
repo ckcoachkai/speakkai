@@ -1,6 +1,6 @@
 # V27 global benchmark: rehearse the room with a user-controlled illustration
 
-**Checked:** 2026-09-07 (Asia/Shanghai)  
+**Checked:** 2026-09-07 (Asia/Shanghai)
 **Scope:** Bounded pre-edit research for an original fictional Blender stage diorama. No product files, builds, browser actions or venue claim was created.
 
 ## Fresh speaker reference
