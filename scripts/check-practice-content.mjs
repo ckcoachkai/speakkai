@@ -44,6 +44,30 @@ async function inspect(dir) {
   }
 }
 await inspect("dist");
+const story = JSON.parse(await read("src/content/practice/one-object-story.json"));
+const zhPath = "dist/zh/resources/one-object-story/index.html";
+if (story.published) {
+  const en = await read("dist/resources/one-object-story/index.html");
+  const zh = await read(zhPath);
+  for (const html of [en, zh]) {
+    for (const [lang, route] of [["en", "/resources/one-object-story/"], ["zh-CN", "/zh/resources/one-object-story/"]]) {
+      assert.ok(html.includes(`hreflang="${lang}" href="https://speakkai.com${route}"`), "Practice alternate missing");
+    }
+  }
+  assert.match(zh, /<html lang="zh-CN"/);
+  assert.ok(zh.includes('rel="canonical" href="https://speakkai.com/zh/resources/one-object-story/"'));
+  assert.ok(sitemap.includes("/zh/resources/one-object-story/"));
+  const times = [...zh.matchAll(/class="step-time"[^>]*>(\d+) 分钟/g)].map(m => Number(m[1]));
+  assert.deepEqual(times, story.steps.map(step => step.minutes));
+  for (const phrase of ["一件物品的故事", "我选择了……", "有一次……", "它对我重要，是因为……", "30–60 秒", "下次我想尝试的一件事", "不录音，也不保存进度", "切换语言会重新开始练习"]) assert.ok(zh.includes(phrase), `Chinese practice missing ${phrase}`);
+  assert.ok(zh.includes('href="/zh/coaching/young-competition-speakers/"'));
+  const course = await read("dist/zh/coaching/young-competition-speakers/index.html");
+  assert.equal((course.match(/href="\/zh\/resources\/one-object-story\/"/g) || []).length, 2);
+  console.log("Chinese practice PASS: timing, prompts, reciprocal language/course links, canonical, sitemap and privacy text.");
+} else {
+  assert.equal(await stat(zhPath).catch(() => null), null, "Draft Chinese story emitted");
+  assert.ok(!sitemap.includes("/zh/resources/one-object-story/"));
+}
 for (const target of ["dist/keystatic", "dist/api/keystatic"]) assert.equal(await stat(target).catch(() => null), null);
 assert.ok(!(await read("dist/index.html")).includes("<astro-island"), "Homepage gained client hydration");
 console.log(`Practice PASS: ${published} public lessons, ${drafts} drafts excluded; source parity, listing, sitemap, editor isolation and static homepage.`);

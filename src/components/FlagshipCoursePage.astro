@@ -23,7 +23,7 @@ const inquiry = chinese ? "#course-contact" : "/contact/?audience=coaching";
     <p class="hero-lead">{copy.introduction}</p>
     <div class="actions">
       <a class="button" href={inquiry}>{copy.ask} <span aria-hidden="true">↗</span></a>
-      <a class="text-link" href="/resources/one-object-story/">{copy.try} <span aria-hidden="true">↗</span></a>
+      <a class="text-link" href={chinese ? "/zh/resources/one-object-story/" : "/resources/one-object-story/"}>{copy.try} <span aria-hidden="true">↗</span></a>
     </div>
     <dl class="course-facts">
       {copy.factLabels.map((label, index) => <div><dt>{label}</dt><dd>{copy.factValues[index]}</dd></div>)}
@@ -49,7 +49,7 @@ const inquiry = chinese ? "#course-contact" : "/contact/?audience=coaching";
     <div><p class="eyebrow">{copy.decideLabel}</p><h2>{copy.decideTitle[0]}<br />{copy.decideTitle[1]}</h2><p>{copy.decideIntro}</p><p>{copy.limits}</p>
       <div class="actions"><a class="button" href={inquiry}>{copy.parentInquiry} <span aria-hidden="true">↗</span></a><a class="text-link" href="/coaching/">{copy.allCoaching}</a></div>
     </div>
-    <aside><h3>{copy.starterTitle}</h3><p>{copy.starterIntro}</p><a class="text-link" href="/resources/one-object-story/">{copy.sheet} <span aria-hidden="true">↗</span></a><p class="section-note">{copy.starterNote}</p></aside>
+    <aside><h3>{copy.starterTitle}</h3><p>{copy.starterIntro}</p><a class="text-link" href={chinese ? "/zh/resources/one-object-story/" : "/resources/one-object-story/"}>{copy.sheet} <span aria-hidden="true">↗</span></a><p class="section-note">{copy.starterNote}</p></aside>
   </section>
   <section class="practice-section" id="course-contact" aria-labelledby="course-contact-title">
     <div class="wrap course-direct-contact">

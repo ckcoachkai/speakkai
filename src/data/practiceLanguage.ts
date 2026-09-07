@@ -1,0 +1,41 @@
+export type PracticeLanguage = "en" | "zh-CN";
+export const storyLanguages = [
+  { lang: "en", label: "English", href: "/resources/one-object-story/" },
+  { lang: "zh-CN", label: "中文", href: "/zh/resources/one-object-story/" },
+];
+export const practiceLabels = {
+  en: {
+    pageTitle: "Free Speaking Practice", language: "Practice language", reset: "Changing language starts a new practice.",
+    free: "Free practice", about: "about", minutes: "minutes", min: "min", need: "You need:",
+    adapt: "Suggested activity. Adapt the time and language to your learners.",
+    readAll: "Read all steps", print: "Print practice sheet", allSteps: "Complete practice steps",
+    prompts: "Prompts to remember", ownWords: "Prompts are starting points. The speaker can use their own words.",
+    listener: "For the listener", try: "Try:", small: "Keep the next change small. Speaking again should feel achievable.",
+    reflection: "One thing I will try next time", reflectionNote: "Say it aloud or write a few words here.",
+    boundary: "This standalone practice is not a test or a full course lesson.", allResources: "All practice resources",
+    course: "Explore the Fall course", guided: "Guided practice:", oneStep: "One step at a time",
+    progressIntro: (n: number) => `${n} steps · go at your own pace`,
+    progress: (n: number, total: number, minutes: number) => `Step ${n} of ${total} · about ${minutes} min`,
+    finished: "Practice finished", nextTime: "Choose one thing for next time.",
+    complete: "Tell your listener one thing that felt clearer and one thing you want to practise again. There is no score to chase.",
+    start: "Start guided practice", again: "Practise again", last: "Back to last step", intro: "Back to introduction", previous: "Previous step", finish: "Finish practice", next: "Next step", fullSheet: "Read the full sheet",
+    privacy: "No recording or saved progress. Start again whenever you like.",
+  },
+  "zh-CN": {
+    pageTitle: "免费表达练习", language: "练习语言", reset: "切换语言会重新开始练习。",
+    free: "免费示例练习", about: "约", minutes: "分钟", min: "分钟", need: "准备：",
+    adapt: "这是一项示例活动。请根据练习者的情况调整时间和表达语言。",
+    readAll: "阅读完整步骤", print: "打印练习单", allSteps: "完整练习步骤",
+    prompts: "可以记住的提示", ownWords: "提示只是起点。表达者可以使用自己的话。",
+    listener: "给倾听者", try: "试着说：", small: "每次只调整一点，让再次开口变得容易。",
+    reflection: "下次我想尝试的一件事", reflectionNote: "说出来，或者在这里写下几个词。",
+    boundary: "这是独立的示例练习，不是测试，也不是一节完整课程。", allResources: "所有练习资源（英文）",
+    course: "了解秋季课程", guided: "分步练习：", oneStep: "一次练习一步",
+    progressIntro: (n: number) => `共 ${n} 步 · 按自己的节奏练习`,
+    progress: (n: number, total: number, minutes: number) => `第 ${n} 步，共 ${total} 步 · 约 ${minutes} 分钟`,
+    finished: "本次练习已完成", nextTime: "选一个下次想尝试的调整。",
+    complete: "告诉倾听者，这次哪一点更清楚了，以及你还想练习什么。这里没有评分。",
+    start: "开始分步练习", again: "再练一次", last: "返回最后一步", intro: "返回练习介绍", previous: "上一步", finish: "完成练习", next: "下一步", fullSheet: "阅读完整练习单",
+    privacy: "不录音，也不保存进度。你可以随时重新开始。",
+  },
+};

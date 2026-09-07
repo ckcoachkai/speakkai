@@ -1,0 +1,10 @@
+---
+import { getEntry } from "astro:content";
+import FlagshipPracticePage from "../../../components/FlagshipPracticePage.astro";
+import { storyChinese } from "../../../data/storyChinese";
+export async function getStaticPaths() {
+  const source = await getEntry("practice", "one-object-story");
+  return source?.data.published ? [{ params: { lesson: "one-object-story" } }] : [];
+}
+---
+<FlagshipPracticePage data={storyChinese} slug="one-object-story" language="zh-CN" />
