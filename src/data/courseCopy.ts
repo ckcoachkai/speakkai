@@ -1,3 +1,6 @@
+import editorial from "../content/flagship/course-editorial.json";
+import { validateCourseEditorial } from "../lib/courseEditorial.mjs";
+validateCourseEditorial(editorial);
 import { currentProgram as program } from "./currentProgram";
 export const courseLanguages = [
   { lang: "en", label: "English", href: program.href },
@@ -5,11 +8,11 @@ export const courseLanguages = [
 ];
 export const courseCopy = {
   en: {
+    ...editorial.en,
     title: "Young Competition Speakers · Fall 2026 | SpeakKai",
     description: "An 18-class public speaking course for Grades 1–2. Explore the practice cycle, speaking roles, feedback and a free sample activity.",
     season: program.season, audience: program.audience,
     headline: ["Small speaking moments.", "A voice of their own."],
-    introduction: "Turn current topics, stories and real-world roles into short, achievable speaking challenges.",
     ask: "Ask about the course", try: "Try a free practice activity",
     factLabels: ["Course", "Structure", "Practice speeches", "Final showcase"],
     factValues: [`${program.classes} classes`, `${program.units} × ${program.classesPerUnit}-class units`, `${program.practiceSeconds.join("–")} seconds`, `Supported · ${program.showcaseMinutes} minutes`],
@@ -17,17 +20,12 @@ export const courseCopy = {
     cycleIntro: "Each three-class unit follows this sequence. Every class begins with articulation, body and voice warm-ups.",
     sequence: program.sequence,
     worldsLabel: "Ideas worth talking about", worldsTitle: ["Real questions.", "Different points of view."],
-    worldsIntro: "Speaking has a purpose when there is something interesting to think about.",
     themes: program.themes, roles: program.roles,
-    rolesTitle: "Try a speaker’s role", rolesIntro: "A role gives the learner an audience and a reason to speak.",
+    rolesTitle: "Try a speaker’s role",
     rangeNote: "Themes and roles describe the course’s range. Their order and specific class activities are shaped for the group.",
     feedbackLabel: "What useful feedback sounds like", feedbackTitle: ["Notice a choice.", "Try one change."],
-    feedbackIntro: "This illustrative exchange shows how feedback can point to a next action.",
     exampleLabel: "Example feedback · not a student testimonial",
-    example: "“Your example helped me picture the scene. Try pausing before your last sentence so I can hear why it matters.”",
-    retry: "The learner tries the ending again. The listener notices what changed.",
     decideLabel: "Before you decide", decideTitle: ["Bring the learner’s", "starting point."],
-    decideIntro: "Share their grade, speaking experience and any event they are preparing for. Kai can discuss whether this course or another coaching format is a suitable fit.",
     limits: "Exact dates, class length, location or online format, fees and availability are confirmed with Kai. The course does not guarantee competition results.",
     parentInquiry: "Prepare a parent inquiry", allCoaching: "All student coaching",
     starterTitle: "Start with one object.", starterIntro: "A familiar object can become a short story. Try the free 10-minute starter with a listener at home.",
@@ -37,11 +35,11 @@ export const courseCopy = {
     qr: "Open WeChat QR image", contactNote: "An inquiry does not reserve a place. Scope, fees and availability are agreed directly with Kai.",
   },
   "zh-CN": {
+    ...editorial["zh-CN"],
     title: "Young Competition Speakers 少儿表达课程 · 2026年秋季 | SpeakKai",
     description: "面向1–2年级学生的2026年秋季表达课程，共18节课，分为6个三节课单元。了解60–90秒练习演讲、在支持下完成的3分钟期末展示，以及课程适合度咨询方式。",
     season: "2026 年秋季", audience: "1–2 年级",
     headline: ["从一次次开口，", "找到自己的声音。"],
-    introduction: "把时事话题、故事和真实生活中的角色，变成简短、可尝试的表达挑战。",
     ask: "咨询课程", try: "尝试免费示例练习（英文）",
     factLabels: ["课时", "课程结构", "练习演讲", "期末展示"],
     factValues: [`共 ${program.classes} 节课`, `${program.units} 个${program.classesPerUnit}节课单元`, `${program.practiceSeconds.join("–")} 秒`, `在支持下完成 · ${program.showcaseMinutes} 分钟`],
@@ -53,18 +51,13 @@ export const courseCopy = {
       { title: "表达与回顾", detail: "完成一次短演讲，根据反馈选择一个下一次要尝试的调整。" },
     ],
     worldsLabel: "值得讨论的想法", worldsTitle: ["真实的问题，", "不同的视角。"],
-    worldsIntro: "有了值得思考的内容，表达就有了目的。",
     themes: ["适龄新闻，以及事实与观点的区别", "人工智能、科技与创造性解决问题", "社区安全、水与能源"],
     roles: ["新闻记者", "故事讲述者", "受访嘉宾", "图书分享者", "小老师", "市长", "发明介绍者", "毕业演讲者"],
-    rolesTitle: "尝试不同的表达角色", rolesIntro: "角色让学生知道自己在对谁说话，以及为什么要表达。",
+    rolesTitle: "尝试不同的表达角色",
     rangeNote: "主题和角色说明课程涉及的范围；具体顺序和课堂活动会根据学生群体调整。",
     feedbackLabel: "有用的反馈是什么样的", feedbackTitle: ["看见一个选择，", "尝试一个调整。"],
-    feedbackIntro: "下面的示例展示了如何把反馈转化为下一次可以尝试的行动。",
     exampleLabel: "反馈示例 · 并非学生评价",
-    example: "“你的例子让我想象出了那个场景。试着在最后一句前停顿一下，让我听清它为什么重要。”",
-    retry: "学生再试一次结尾，听众观察这次有什么变化。",
     decideLabel: "决定之前", decideTitle: ["从孩子现在的", "表达起点聊起。"],
-    decideIntro: "请说明孩子的年级、表达经验，以及正在准备的演讲或展示。Kai 可以与你讨论这门课程或其他辅导形式是否合适。",
     limits: "具体日期、每节课时长、地点或线上形式、费用和名额由 Kai 直接确认。课程不保证竞赛结果。",
     parentInquiry: "与 Kai 讨论课程是否适合孩子", allCoaching: "查看学生辅导（英文）",
     starterTitle: "从一个熟悉的物品开始。", starterIntro: "一个熟悉的物品也能成为一个小故事。可以在家与一位听众尝试免费的 10 分钟入门练习。",

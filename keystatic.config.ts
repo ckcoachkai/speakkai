@@ -1,9 +1,28 @@
-import { config, collection, fields } from "@keystatic/core";
+import { config, collection, singleton, fields } from "@keystatic/core";
+import { courseEditorialFields } from "./src/lib/courseEditorial.mjs";
 
 const requiredText = (label: string, multiline = false) => fields.text({ label, multiline, validation: { isRequired: true } });
+const courseLanguageFields = () => Object.fromEntries(
+  Object.entries(courseEditorialFields).map(([key, label]) => [key, fields.text({
+    label, multiline: true, validation: { isRequired: true, length: { min: 10, max: 700 } },
+  })]),
+);
 export default config({
   storage: { kind: "local" },
   ui: { brand: { name: "SpeakKai content" } },
+  singletons: {
+    courseEditorial: singleton({
+      label: "Fall course — English & Chinese",
+      path: "src/content/flagship/course-editorial",
+      format: { data: "json" },
+      schema: {
+        en: fields.object(courseLanguageFields(), { label: "English", description: "Edit narrative copy only. Course facts, dates, fees and booking boundaries are managed separately. Review both languages before publishing." }),
+        "zh-CN": fields.object(courseLanguageFields(), { label: "Simplified Chinese", description: "Keep meaning aligned with English. Examples are illustrative, not student testimonials or promised results." }),
+        reviewedOn: fields.date({ label: "Translation review date", validation: { isRequired: true } }),
+        editorialNote: requiredText("Source and review note (editor only)", true),
+      },
+    }),
+  },
   collections: {
     practice: collection({
       label: "Practice lessons",

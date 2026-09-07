@@ -23,3 +23,15 @@ The local form read the existing JSON, saved a temporary introduction sentence, 
 The pinned Keystatic integration adds routes only in `astro:config:setup`. The wrapper invokes that hook only for an explicitly enabled development server; public builds omit it, even if the launcher environment is inherited. Recheck that assumption if updating the integration.
 
 Its generated dependency scan includes the server API. `vite.optimizeDeps.exclude` keeps that API out of browser prebundling so Astro can resolve `astro:env/server` normally. The editor has a separate Vite cache so an `astro check` or build cannot replace the development JSX runtime with a production cache. Do not remove these settings without testing editor startup, a real save, guide hydration and a public build.
+
+## Editing the Fall course in two languages (V11)
+
+Open **Fall course — English & Chinese** from the local CMS dashboard. It contains seven narrative fields in each language: introduction, topic purpose, role purpose, feedback introduction, illustrative quote, retry description and parent guidance. Edit the matching fields together, record the translation review date and add a non-sensitive source/review note.
+
+Saving updates `src/content/flagship/course-editorial.json` locally. It does not publish. Preview both course routes and review the diff before deployment. This is an editorial form, not an automatic translation or factual-accuracy checker.
+
+Course numbers, season, grade range, programme name, sequence, themes/roles, contact details, fees/availability boundaries and metadata remain outside this form. Request a separately reviewed source update when the actual course scope changes. Do not add new scope, prices, credentials or results to narrative fields as a workaround.
+
+Required fields are limited to 10–700 characters. The build rejects missing language fields, invalid review dates and absent source notes. `npm run check:course-editorial` verifies that all fourteen public paragraphs match the content file and that the editor-only note is absent from generated HTML, JavaScript, JSON, XML and source maps. Language/fact parity and privacy checks remain required.
+
+Verified: a paired temporary introduction edit was saved in the real CMS, survived editor reload and appeared in both Astro-rendered pages. Both original introductions were then restored through the editor and verified in the production build. This test did not modify or publish course scope.

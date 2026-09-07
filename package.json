@@ -25,7 +25,8 @@
     "sync:schedule": "node scripts/sync-google-sheet.mjs",
     "check:schedule-privacy": "node scripts/check-schedule-privacy.mjs",
     "check:practice-content": "node scripts/check-practice-content.mjs",
-    "check:course-languages": "node scripts/check-course-languages.mjs"
+    "check:course-languages": "node scripts/check-course-languages.mjs",
+    "check:course-editorial": "node scripts/check-course-editorial.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
