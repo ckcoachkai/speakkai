@@ -23,6 +23,12 @@ const {
   noindex = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
+const navigation = [
+  { href: "/#work", label: "Work with Kai" },
+  { href: "/#story", label: "Meet Kai" },
+  { href: "/resources/", label: "Resources" },
+  { href: "/schedule/", label: "Schedule" },
+];
 ---
 
 <!doctype html>
@@ -32,7 +38,7 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b1020" />
-    <meta name="speakkai-version" content="08" />
+    <meta name="speakkai-version" content="09" />
     {noindex && <meta name="robots" content="noindex" />}
     {
       !noindex && (
@@ -69,7 +75,7 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
     />
     <title>{title}</title>
   </head>
-  <body class="flagship" data-version="08">
+  <body class="flagship" data-version="09">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <a class="brand" href="/" aria-label="SpeakKai home"
@@ -82,15 +88,18 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
           /></span
         ><span lang="zh-CN">说开</span></a
       >
-      <nav aria-label="Main navigation">
-        <a href="/#work">Work with Kai</a><a
-          href="/#story"
-          aria-current={current === "about" ? "page" : undefined}>Meet Kai</a
-        ><a href="/resources/">Resources</a><a href="/schedule/">Schedule</a>
+      <nav class="desktop-navigation" aria-label="Main navigation">
+        {navigation.map(({ href, label }) => <a href={href}>{label}</a>)}
       </nav>
       <a class="header-cta" href={contactHref}
         >Let’s talk <span aria-hidden="true">↗</span></a
       >
+      <details class="mobile-navigation">
+        <summary>Menu <span aria-hidden="true">+</span></summary>
+        <nav aria-label="Main navigation">
+          {navigation.map(({ href, label }) => <a href={href}>{label}</a>)}
+        </nav>
+      </details>
     </header>
     <main id="main"><slot /></main>
     <footer class="site-footer">
@@ -113,3 +122,33 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
     </footer>
   </body>
 </html>
+
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>(".mobile-navigation");
+  const summary = menu?.querySelector("summary");
+  menu?.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menu.open) {
+      menu.open = false;
+      summary?.focus();
+    }
+  });
+  menu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const destination = new URL(link.href);
+      if (destination.pathname === location.pathname && destination.hash) {
+        const target = document.getElementById(destination.hash.slice(1));
+        menu.open = false;
+        if (target) {
+          const originalTabindex = target.getAttribute("tabindex");
+          target.setAttribute("tabindex", "-1");
+          target.focus({ preventScroll: true });
+          target.addEventListener("blur", () => {
+            if (originalTabindex === null) target.removeAttribute("tabindex");
+            else target.setAttribute("tabindex", originalTabindex);
+          }, { once: true });
+        }
+      }
+    });
+  });
+</script>

@@ -99,6 +99,7 @@ em {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 28px;
   background: #fff;
   position: relative;
@@ -151,6 +152,9 @@ em {
   align-items: center;
   border-bottom: 2px solid var(--ink);
   padding-block: 10px;
+}
+.mobile-navigation {
+  display: none;
 }
 .hero {
   display: grid;
@@ -588,26 +592,66 @@ em {
   .site-header {
     min-height: 75px;
     flex-wrap: wrap;
-    gap: 8px 16px;
-    padding-block: 14px;
+    gap: 4px 12px;
+    padding-block: 10px;
   }
-  .site-header nav {
-    order: 3;
-    flex-basis: 100%;
-    justify-content: space-between;
-    border-top: 1px solid var(--line);
-    padding-top: 7px;
-    margin-top: 5px;
-  }
-  .site-header nav a {
-    font-size: 14px;
+  .site-header .desktop-navigation {
+    display: none;
   }
   .header-cta {
-    font-size: 14px;
-    gap: 18px;
+    font-size: 0.875rem;
+    gap: 6px;
+    min-height: 44px;
+    margin-left: auto;
+  }
+  .brand {
+    font-size: 1rem;
   }
   .brand-image {
-    width: 146px;
+    width: 116px;
+    height: 28px;
+  }
+  .brand-image img {
+    width: 126px;
+    top: -48px;
+    left: -7px;
+  }
+  .mobile-navigation {
+    display: block;
+    flex-basis: 100%;
+    min-width: 0;
+    border-top: 1px solid var(--line);
+  }
+  .mobile-navigation summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 44px;
+    padding-block: 8px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 700;
+    list-style: none;
+  }
+  .mobile-navigation summary::-webkit-details-marker {
+    display: none;
+  }
+  .mobile-navigation[open] summary span {
+    transform: rotate(45deg);
+  }
+  .site-header .mobile-navigation nav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-block: 4px 8px;
+  }
+  .site-header .mobile-navigation nav a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-block: 10px;
+    font-size: 1rem;
+    overflow-wrap: anywhere;
   }
   .hero {
     grid-template-columns: 1fr;
@@ -840,11 +884,6 @@ em {
     align-items: start;
     gap: 24px;
   }
-  .site-header nav {
-    flex-wrap: wrap;
-    gap: 4px 20px;
-    justify-content: flex-start;
-  }
   .home-qr {
     width: 160px;
   }
@@ -1074,14 +1113,6 @@ em {
   }
   .faq-list details p {
     font-size: 16px;
-  }
-  .site-header nav {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 20px;
-  }
-  .site-header nav a {
-    padding-block: 6px;
   }
   .hero h1 {
     font-size: clamp(43px, 10.8vw, 70px);
