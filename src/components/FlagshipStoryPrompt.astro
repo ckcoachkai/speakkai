@@ -5,7 +5,7 @@ const tr=(en:string,zh:string)=>language==="zh-CN"?zh:en;
 const description=tr("A closed blue book rests on a wooden bench beside an open yellow umbrella. Trees, a wet path and a small bridge fill the background. No people are shown.","一本合上的蓝色书放在木长椅上，旁边是一把撑开的黄色雨伞。背景中有树木、湿润的小路和一座小桥。画面中没有人物。");
 ---
 <section class="story-prompt wrap" aria-labelledby="story-prompt-title">
-  <div class="prompt-heading"><p class="eyebrow">{tr("A picture. More than one possibility.","一幅画，不止一种可能。")}</p><h2 id="story-prompt-title">{tr("Notice first. Then imagine.","先观察，再想象。")}</h2><p>{tr("Look closely, or use the description below. Build a short story while keeping what you see separate from what you invent.","仔细看看画面，也可以使用下方的文字描述。试着讲一个小故事，把看到的细节与想象的情节分开。")}</p></div>
+  <div class="prompt-heading"><p class="eyebrow">{tr("A picture. More than one possibility.","一幅画，不止一种可能。")}</p><h2 id="story-prompt-title" tabindex="-1">{tr("Notice first. Then imagine.","先观察，再想象。")}</h2><p>{tr("Look closely, or use the description below. Build a short story while keeping what you see separate from what you invent.","仔细看看画面，也可以使用下方的文字描述。试着讲一个小故事，把看到的细节与想象的情节分开。")}</p></div>
   <div class="prompt-grid">
     <figure><img src="/media/umbrella-story.webp" width="960" height="720" loading="lazy" alt={description} /><figcaption>{tr("AI-generated fictional illustration for this speaking exercise.","本次表达练习的 AI 生成虚构插图。")}</figcaption><p class="scene-description"><strong>{tr("Scene description: ","画面描述：")}</strong>{description}</p></figure>
     <div><ol class="prompt-steps">

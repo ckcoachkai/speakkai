@@ -4,7 +4,7 @@ const {language="en"}=Astro.props;
 const tr=(en:string,zh:string)=>language==="zh-CN"?zh:en;
 ---
 <section class="stage-practice wrap" aria-labelledby="stage-title">
-  <div class="stage-heading"><p class="eyebrow">{tr("Imagine the room","想象一下表达的空间")}</p><h2 id="stage-title">{tr("Before the first word.","在第一句话之前。")}</h2><p>{tr("Use this imagined room to rehearse an opening. You can practise seated or standing, in a space that works for you.","用这个想象中的空间练习开场。你可以坐着或站着，在适合自己的空间里练习。")}</p></div>
+  <div class="stage-heading"><p class="eyebrow">{tr("Imagine the room","想象一下表达的空间")}</p><h2 id="stage-title" tabindex="-1">{tr("Before the first word.","在第一句话之前。")}</h2><p>{tr("Use this imagined room to rehearse an opening. You can practise seated or standing, in a space that works for you.","用这个想象中的空间练习开场。你可以坐着或站着，在适合自己的空间里练习。")}</p></div>
   <div class="stage-grid">
     <figure><img src="/media/rehearsal-stage.webp" width="960" height="720" loading="lazy" alt={tr("Fictional miniature stage with a gold speaking mark, a lectern on the left and six chairs facing the stage.","虚构的舞台微缩场景：金色圆点标出表达位置，左侧有讲台，六把椅子面向舞台。")} /><figcaption>{tr("Original 3D illustration of an imagined room. It does not depict a SpeakKai venue or a real event.","原创三维概念插图，展示想象中的空间，并非 SpeakKai 的实际场地或真实活动。")}</figcaption></figure>
     <div class="stage-cues">
