@@ -6,6 +6,8 @@ export const publicRoutes = [
   "/companies/",
   "/contact/",
   "/resources/",
+  "/coaching/young-competition-speakers/",
+  "/resources/one-object-story/",
   "/speak/",
   "/tools/class-charades/",
   "/tools/marble-name-picker/",

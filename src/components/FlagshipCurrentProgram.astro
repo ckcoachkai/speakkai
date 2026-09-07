@@ -1,14 +1,18 @@
+---
+import { currentProgram as program } from "../data/currentProgram";
+---
+
 <section class="current-program wrap" aria-labelledby="current-program-title">
   <div>
-    <p class="eyebrow">Fall 2026 · Grades 1–2 · 18 classes</p>
-    <h2 id="current-program-title">Young Competition Speakers</h2>
+    <p class="eyebrow">
+      {program.season} · {program.audience} · {program.classes} classes
+    </p>
+    <h2 id="current-program-title">{program.name}</h2>
     <p>
-      Short, achievable speaking challenges. Six three-class units build from a
-      topic or role to a presentation, with 60–90 second practice speeches and a
-      supported three-minute final showcase.
+      Short, achievable speaking challenges. {program.description}
     </p>
   </div>
-  <a class="button" href="/contact/?audience=coaching"
-    >Ask about the course <span aria-hidden="true">↗</span></a
+  <a class="button" href={program.href}
+    >Explore the course <span aria-hidden="true">↗</span></a
   >
 </section>
