@@ -42,6 +42,6 @@ export const homeCopy = {
     storyAction: "与 Kai 开始一次交流", methodLabel: "SpeakKai 的方法", methodTitle: ["培养表达者，", "不只打磨一篇演讲。"], methodIntro: "进步来自你能理解、练习，并再次运用的表达选择。",
     method: [["思考", "找到真正要说的重点。", "从听众、目的，以及最值得记住的一个想法开始。"], ["练习", "把内容真正说出来。", "在接近实际表达的情境中，练习结构、声音和呈现。"], ["成长", "知道下一次尝试什么。", "把具体反馈变成一个有用的调整，然后再试一次。"]],
     connectLabel: "一次交流，是好的开始", connectTitle: ["你希望自己的表达，", "带来什么？"], connectIntro: "告诉 Kai 谁需要表达、正在准备什么，以及目前觉得困难的地方。一起讨论适合的下一步。",
-    contactAction: "打开微信二维码", scheduleAction: "查看时间安排", qrLabel: "打开完整微信联系二维码", qrAlt: "Kai 教练的完整微信联系卡及二维码", before: "联系之前", brief: "请说明听众、目标、偏好的形式和时间。", confirmation: "项目范围、费用和可安排时间由你与 Kai 直接商定。", practiceAction: "探索免费练习",
+    contactAction: "准备咨询内容", scheduleAction: "查看时间安排", qrLabel: "打开完整微信联系二维码", qrAlt: "Kai 教练的完整微信联系卡及二维码", before: "联系之前", brief: "请说明听众、目标、偏好的形式和时间。", confirmation: "项目范围、费用和可安排时间由你与 Kai 直接商定。", practiceAction: "探索免费练习",
   },
 };

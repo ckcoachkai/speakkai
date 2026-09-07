@@ -50,7 +50,7 @@ const label = (text: string, path: string) => destinationLabel(text, path, langu
 <section class="connect-section" id="connect" aria-labelledby="connect-title">
   <div class="wrap connect-grid">
     <div><p class="eyebrow">{copy.connectLabel}</p><h2 id="connect-title">{copy.connectTitle[0]}<br />{copy.connectTitle[1]}</h2><p>{copy.connectIntro}</p>
-      <a class="button button-yellow" href={chinese ? '/images/coach-kai-wechat-qr.png' : link('/contact/')}>{copy.contactAction}<span aria-hidden="true">↗</span></a>
+      <a class="button button-yellow" href={link('/contact/')}>{copy.contactAction}<span aria-hidden="true">↗</span></a>
       <p class="contact-note"><span lang="en">WeChat: <strong>CKcoachkai</strong></span> · <a href="/schedule/">{label(copy.scheduleAction,'/schedule/')}</a></p>
     </div>
     <div class="contact-aside"><a href="/images/coach-kai-wechat-qr.png" class="home-qr" aria-label={copy.qrLabel}><img src="/images/coach-kai-wechat-qr.png" width="938" height="1340" loading="lazy" alt={copy.qrAlt} /></a>

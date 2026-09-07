@@ -18,7 +18,7 @@ for (const [english,chinese] of languagePairs) {
 assert.equal(localizedPath('/#work','zh-CN'),'/zh/#work');
 assert.equal(localizedPath('/coaching/young-competition-speakers/#feedback-example','zh-CN'),'/zh/coaching/young-competition-speakers/#feedback-example');
 assert.equal(localizedPath('/schedule/','zh-CN'),'/schedule/');
-const fallback = await readFile('dist/contact/index.html','utf8');
+const fallback = await readFile('dist/404.html','utf8');
 assert.ok(fallback.includes('中文首页'));
 assert.doesNotMatch(fallback,/<link rel="alternate" hreflang="zh-CN"/);
 const zhHome = await readFile('dist/zh/index.html','utf8');
@@ -32,8 +32,9 @@ for (const slug of ['coaching','schools','companies']) {
   for (const id of ['formats','next-step','faq-title']) assert.ok(zh.includes(`id="${id}"`));
   assert.equal((zh.match(/<article class="offer"/g)||[]).length,3);
   assert.equal((zh.match(/<details\b/g)||[]).length,(en.match(/<details\b/g)||[]).length);
-  assert.ok(zh.includes(`/contact/?audience=${slug}`));
-  assert.ok(zh.includes('准备咨询内容（英文）'));
+  assert.ok(zh.includes(`/zh/contact/?audience=${slug}`));
+  assert.ok(zh.includes('准备咨询内容'));
+  assert.ok(!zh.includes('准备咨询内容（英文）'));
   assert.ok(!zh.includes('<astro-island'));
 }
 const zhSchool = await readFile('dist/zh/schools/index.html','utf8');
@@ -43,4 +44,4 @@ const zhCompany = await readFile('dist/zh/companies/index.html','utf8');
 assert.ok(zhCompany.includes('虚构练习示例'));
 assert.ok(zhCompany.includes('咨询或查看时间安排并不代表预订成功'));
 assert.ok(zhCompany.includes('发送内部文件前，先商定保密与材料分享安排'));
-console.log('Chinese offers PASS: three formats per audience, full disclosures, query directions, static reading and explicit English inquiry fallback.');
+console.log('Chinese offers PASS: three formats per audience, full disclosures, query directions, static reading and Chinese inquiry routes.');

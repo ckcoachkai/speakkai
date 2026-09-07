@@ -61,6 +61,35 @@ test("Chinese clipboard success, denial and empty states stay explicit", async (
   const empty = await copyInquiry(" ", () => assert.fail("No clipboard write for blank input"), "zh-CN");
   assert.match(empty.message, /咨询稿为空/);
 });
+test("Chinese general inquiry preserves each audience and omits undecided details", () => {
+  for (const [audience, topic] of Object.entries({coaching:"学生辅导", schools:"学校项目", companies:"主题演讲或团队培训", unsure:"表达辅导或培训"})) {
+    const draft = buildInquiry({audience, goal:" ", group:"", timing:""}, "zh-CN");
+    assert.ok(draft.includes(topic));
+    assert.doesNotMatch(draft, /目标：|参与者：|年龄或年级：|形式偏好：|时间范围：|项目方向：/);
+    assert.match(draft, /费用与可安排时间/);
+  }
+  for (const [format, label] of Object.entries({Online:"线上", "In person":"线下", "A mix of both":"线上与线下结合"})) {
+    const draft = buildInquiry({audience:"coaching",goal:"  讲清一个观点  ",group:"二年级",format,timing:"十月"}, "zh-CN");
+    assert.ok(draft.includes(`形式偏好：${label}`));
+    assert.match(draft,/目标：讲清一个观点/);
+    assert.match(draft,/年龄或年级：二年级/);
+    assert.match(draft,/时间范围：十月/);
+  }
+  const bounded = buildInquiry({goal:"字".repeat(900),group:"人".repeat(200),timing:"时".repeat(200),format:"式".repeat(200)}, "zh-CN");
+  for (const [character, limit] of [["字",600],["人",100],["时",100],["式",100]]) assert.ok(!bounded.includes(character.repeat(limit + 1)));
+});
+test("Chinese school directions are allowlisted and confined to school drafts", () => {
+  for (const [schoolDirection, label] of Object.entries({workshop:"主题工作坊",sequence:"系列课程",teachers:"教师发展"})) {
+    assert.ok(buildInquiry({audience:"schools",schoolDirection},"zh-CN").includes(`项目方向：${label}`));
+    for (const audience of ["coaching","companies","unsure"]) assert.doesNotMatch(buildInquiry({audience,schoolDirection},"zh-CN"), /项目方向：/);
+  }
+  for (const value of [null,"unknown","constructor","__proto__","<script>alert(1)</script>"]) {
+    const draft = buildInquiry({audience:value,schoolDirection:value},"zh-CN");
+    assert.match(draft,/表达辅导或培训/);
+    assert.doesNotMatch(draft,/项目方向：|constructor|__proto__|<script>|unknown/);
+    assert.doesNotMatch(buildInquiry({audience:"schools",schoolDirection:value},"zh-CN"),/项目方向：/);
+  }
+});
 test("audience-specific briefs omit blank optional fields and preserve entered goals", () => {
   const parent = buildInquiry({
     audience: "coaching",

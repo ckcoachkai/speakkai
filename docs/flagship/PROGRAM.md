@@ -35,5 +35,5 @@ Scores in category order: 2,2,1,2,2,3,2,2,3,2,2 = 23/55. Other browser engines: 
 - Branch: `codex/speakkai-flagship-30`
 - Research: `C:\Users\kai\Documents\ChatGPT\HQ\outputs\speakkai-flagship-research`
 - Preview: `http://127.0.0.1:4326/`
-- V23 completed and live. Completed live cycles: 23/30. Champion V23 (45.5/55). Astro retained under objective migration gates; V24 begins Chinese resource library research.
+- V24 completed and live. Completed live cycles: 24/30. Champion V24 (45.75/55). V25 begins Chinese general inquiry and final architecture review.
 - See cycle records and `releases.json` for exact completed releases. Do not infer completion from source versions alone.

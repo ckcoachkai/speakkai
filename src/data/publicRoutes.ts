@@ -6,6 +6,7 @@ export const publicRoutes = [
   "/zh/schools/",
   "/zh/companies/",
   "/zh/resources/",
+  "/zh/contact/",
   "/coaching/",
   "/schools/",
   "/companies/",

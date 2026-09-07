@@ -50,7 +50,7 @@ const navigation = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b1020" />
-    <meta name="speakkai-version" content="24" />
+    <meta name="speakkai-version" content="25" />
     {noindex && <meta name="robots" content="noindex" />}
     {
       !noindex && (
@@ -91,7 +91,7 @@ const navigation = [
     />
     <title>{title}</title>
   </head>
-  <body class="flagship" data-version="24">
+  <body class="flagship" data-version="25">
     <a class="skip-link" href="#main">{chinese ? "跳到正文" : "Skip to content"}</a>
     <div class="site-language-bar">
       <div class="wrap site-language" role="group" aria-label={chinese ? "页面语言" : "Page language"}>
@@ -135,7 +135,7 @@ const navigation = [
         ><p>{chinese ? "清楚地思考。有目的地练习。真诚地连接。" : "Clear thinking. Purposeful practice. Human connection."}</p>
       </div><nav aria-label={chinese ? "页脚导航" : "Footer navigation"}>
         <a href={localizedPath("/#work",language)}>{chinese ? "辅导与培训" : "Coaching & training"}</a><a href="/schedule/">{chinese ? "时间安排（英文）" : "Schedule"}</a
-        ><a href={localizedPath("/resources/",language)}>{destinationLabel(chinese ? "练习资源" : "Practice resources","/resources/",language)}</a><a href={chinese ? "/zh/#connect" : "/contact/"}
+        ><a href={localizedPath("/resources/",language)}>{destinationLabel(chinese ? "练习资源" : "Practice resources","/resources/",language)}</a><a href={localizedPath("/contact/",language)}
           >{chinese ? "联系 Kai" : "Contact Kai"}</a
         ><span class="footer-social">{chinese ? "小红书" : "Xiaohongshu"}: <span lang="en">CKcoachkai</span></span><a
           href="https://kr.pinterest.com/ckcoachkai/"

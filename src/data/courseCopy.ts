@@ -65,7 +65,7 @@ export const courseCopy = {
     listenerCheck: "问问听众：这件事对讲述者为什么重要？留意加上停顿后，你听到的感觉是否不同。停顿不需要固定的时长。",
     decideLabel: "决定之前", decideTitle: ["从孩子现在的", "表达起点聊起。"],
     limits: "具体日期、每节课时长、地点或线上形式、费用和名额由 Kai 直接确认。课程不保证竞赛结果。",
-    parentInquiry: "与 Kai 讨论课程是否适合孩子", allCoaching: "查看学生辅导（英文）",
+    parentInquiry: "与 Kai 讨论课程是否适合孩子", allCoaching: "查看学生辅导",
     starterTitle: "从一个熟悉的物品开始。", starterIntro: "一个熟悉的物品也能成为一个小故事。可以在家与一位听众尝试免费的 10 分钟入门练习。",
     sheet: "打开中文练习单", starterNote: "这是可以尝试的示例练习，不是一节完整课程，也不是水平评估。",
     contactLabel: "联系 Kai", contactTitle: "一起讨论适合孩子的下一步。",

@@ -57,7 +57,7 @@ const storyHref = localizedPath("/resources/one-object-story/",language);
   </section>
   <section class="wrap section course-decide">
     <div><p class="eyebrow">{copy.decideLabel}</p><h2>{copy.decideTitle[0]}<br />{copy.decideTitle[1]}</h2><p>{copy.decideIntro}</p><p>{copy.limits}</p>
-      <div class="actions"><a class="button" href={inquiry}>{copy.parentInquiry} <span aria-hidden="true">↗</span></a><a class="text-link" href="/coaching/">{copy.allCoaching}</a></div>
+      <div class="actions"><a class="button" href={inquiry}>{copy.parentInquiry} <span aria-hidden="true">↗</span></a><a class="text-link" href={localizedPath("/coaching/",language)}>{copy.allCoaching}</a></div>
     </div>
     {hasStory && <aside><h3>{copy.starterTitle}</h3><p>{copy.starterIntro}</p><a class="text-link" href={storyHref}>{copy.sheet} <span aria-hidden="true">↗</span></a><p class="section-note">{copy.starterNote}</p></aside>}
   </section>

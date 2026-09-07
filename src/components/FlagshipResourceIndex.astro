@@ -20,7 +20,7 @@ const lessons = (await getCollection("practice", ({ data }) => data.published)).
   description={tr("Choose a free speaking activity for a child, a classroom or a workplace team. Follow short practice steps, use a printable sheet, or explore classroom tools.", "为孩子、课堂或职场团队选择一个免费的表达活动。按步骤练习，使用可打印的练习单，或探索课堂工具。")}
   language={language}
   current="resources"
-  contactHref={chinese ? "/zh/#connect" : "/contact/"}
+  contactHref={link("/contact/")}
 >
   <section class="wrap resource-intro">
     <p class="eyebrow">{tr("Put an idea into practice", "把一个想法说出来")}</p><h1>
@@ -64,7 +64,7 @@ const lessons = (await getCollection("practice", ({ data }) => data.published)).
     </p><div class="actions">
       <a class="button" href={link("/coaching/young-competition-speakers/")}
         >{tr("Explore the Fall course", "了解秋季课程")} <span aria-hidden="true">↗</span></a
-      ><a class="text-link" href={chinese ? "/zh/#connect" : "/contact/"}>{tr("Talk with Kai", "联系 Kai")}</a>
+      ><a class="text-link" href={link("/contact/")}>{tr("Talk with Kai", "联系 Kai")}</a>
     </div>
   </section>
 </FlagshipLayout>
