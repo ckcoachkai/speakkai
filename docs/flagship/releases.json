@@ -1,8 +1,27 @@
 {
-  "champion": "01",
-  "completedCycles": 1,
+  "champion": "02",
+  "completedCycles": 2,
   "releases": [
-    {"version":"01","commit":"0381faeb4f8ea1b4f4bcfa6dd871b60a89db2646","workflowRun":34094884997,"url":"https://speakkai.com/","verifiedAt":"2026-09-07","score":33,"status":"live-verified","rollbackCommit":"ae6969f57f3a905320bcbeca82f1c44fff6a927a"}
+    {
+      "version": "01",
+      "commit": "0381faeb4f8ea1b4f4bcfa6dd871b60a89db2646",
+      "workflowRun": 34094884997,
+      "url": "https://speakkai.com/",
+      "verifiedAt": "2026-09-07",
+      "score": 33,
+      "status": "live-verified",
+      "rollbackCommit": "ae6969f57f3a905320bcbeca82f1c44fff6a927a"
+    },
+    {
+      "version": "02",
+      "commit": "5f33ca1b22e9dc3c447e81528197bf747f78322b",
+      "deployedCommit": "15ddd6dce4a59b9cbcc2edf5f232866d78521b13",
+      "workflowRun": 34095895369,
+      "url": "https://speakkai.com/",
+      "verifiedAt": "2026-09-07",
+      "score": 36,
+      "status": "live-verified",
+      "rollbackCommit": "0381faeb4f8ea1b4f4bcfa6dd871b60a89db2646"
+    }
   ]
 }
-

@@ -43,6 +43,10 @@ jobs:
         run: npm run build
       - name: Verify speech detector and worker lifecycle
         run: node --test scripts/check-speak-v1.mjs scripts/check-speak-engine-v1.mjs
+      - name: Verify flagship pages and inquiry behavior
+        run: |
+          node --test scripts/check-inquiry.mjs
+          node scripts/check-flagship.mjs / /coaching/ /schools/ /companies/ /contact/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

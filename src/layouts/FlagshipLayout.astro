@@ -25,7 +25,7 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b1020" />
-    <meta name="speakkai-version" content="02" />
+    <meta name="speakkai-version" content="03" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
@@ -46,7 +46,7 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
     />
     <title>{title}</title>
   </head>
-  <body class="flagship" data-version="02">
+  <body class="flagship" data-version="03">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <a class="brand" href="/" aria-label="SpeakKai home"
@@ -60,10 +60,7 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
         ><span lang="zh-CN">说开</span></a
       >
       <nav aria-label="Main navigation">
-        <a
-          href="/#work"
-          >Work with Kai</a
-        ><a
+        <a href="/#work">Work with Kai</a><a
           href="/#story"
           aria-current={current === "about" ? "page" : undefined}>Meet Kai</a
         ><a href="/resources/">Resources</a><a href="/schedule/">Schedule</a>
