@@ -39,6 +39,10 @@ const lessons = (await getCollection("practice", ({ data }) => data.published)).
       </article>)}
     </div>
   </section>
+  <section class="wrap resource-voice" aria-labelledby="visual-lesson">
+    <div><p class="eyebrow">{tr("Watch a small example","看看一个小示例")}</p><h2 id="visual-lesson">{tr("Point. Example. Check.","重点。例子。确认。")}</h2><p>{tr("18 seconds, silent, with a complete text alternative. Then try your own version.","18 秒，无旁白，配有完整文字。看完后试着说出你自己的版本。")}</p></div>
+    <a class="text-link" href={link('/watch/')}>{tr("Open the visual lesson","打开视觉练习")} ↗</a>
+  </section>
   <section class="wrap resource-voice" aria-labelledby="voice-tool">
     <div>
       <p class="eyebrow">{tr("Listen to your delivery", "听听自己的表达")}</p><h2 id="voice-tool" lang="en">

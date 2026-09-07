@@ -55,6 +55,7 @@ jobs:
           node scripts/check-course-editorial.mjs
           node scripts/check-practice-content.mjs
           node scripts/check-flagship-budget.mjs
+          node scripts/check-premium-media.mjs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

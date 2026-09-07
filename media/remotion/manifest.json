@@ -1,0 +1,43 @@
+{
+  "generator": "Remotion 4.0.522",
+  "source": "src/PointExampleCheck.tsx",
+  "fonts": "Windows Arial and Microsoft YaHei; font files are not distributed",
+  "records": [
+    {
+      "file": "point-example-check-en.mp4",
+      "bytes": 285220,
+      "sha256": "a41084c00e0ed63b4d66e6ba37a4fa5285ed249fa3b184bdbb9458c309142cab",
+      "duration": 18,
+      "width": 1080,
+      "height": 1080,
+      "fps": 30,
+      "audio": false,
+      "codec": "h264"
+    },
+    {
+      "file": "point-example-check-en.webp",
+      "bytes": 16194,
+      "sha256": "6ba3e9ff7520d992fd064d3b21b2f46b6f7dd7c013068899ae7c231fb8cc915c",
+      "width": 720,
+      "height": 720
+    },
+    {
+      "file": "point-example-check-zh.mp4",
+      "bytes": 265572,
+      "sha256": "bfba9387a5d1c8d590d4ced8a894677d9e7eebeee13bea8d348ddb079c828957",
+      "duration": 18,
+      "width": 1080,
+      "height": 1080,
+      "fps": 30,
+      "audio": false,
+      "codec": "h264"
+    },
+    {
+      "file": "point-example-check-zh.webp",
+      "bytes": 17532,
+      "sha256": "17912d22c1541e8687a215023b83ddd0831dd5806766e33e30c94f70aa8ded33",
+      "width": 720,
+      "height": 720
+    }
+  ]
+}

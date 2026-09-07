@@ -5,7 +5,7 @@ param(
   [string[]]$Routes = @('/', '/coaching/', '/schools/', '/companies/', '/contact/')
 )
 $ErrorActionPreference = 'Stop'
-$releaseRun = Invoke-RestMethod "https://api.github.com/repos/ckcoachkai/speakkai/actions/runs/$RunId" -Headers @{'User-Agent'='SpeakKai-release-verifier'}
+$releaseRun = Invoke-RestMethod ("https://api.github.com/repos/ckcoachkai/speakkai/actions/runs/${RunId}?verify=" + [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()) -Headers @{'User-Agent'='SpeakKai-release-verifier';'Cache-Control'='no-cache'}
 if ($releaseRun.status -ne 'completed' -or $releaseRun.conclusion -ne 'success') { throw "Workflow is $($releaseRun.status) / $($releaseRun.conclusion)" }
 if ($releaseRun.head_sha -ne $Commit) { throw 'Workflow commit does not match the expected release' }
 $routeResults = foreach ($route in $Routes) {

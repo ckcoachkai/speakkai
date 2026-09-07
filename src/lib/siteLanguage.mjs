@@ -7,6 +7,7 @@ export const languagePairs = [
   ["/companies/", "/zh/companies/"],
   ["/resources/", "/zh/resources/"],
   ["/contact/", "/zh/contact/"],
+  ["/watch/", "/zh/watch/"],
   ["/coaching/young-competition-speakers/", "/zh/coaching/young-competition-speakers/"],
   ...practiceLanguagePairs,
 ];

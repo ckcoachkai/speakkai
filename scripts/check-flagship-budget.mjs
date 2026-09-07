@@ -8,7 +8,7 @@ const root = path.resolve("dist");
 const origin = "https://speakkai.com";
 const cache = new Map();
 const aggregate = new Map();
-const limits = { html: 30000, css: 50000, fonts: 120000, images: 400000, other: 10000 };
+const limits = { html: 30000, css: 50000, fonts: 120000, images: 400000, other: 10000, media: 2000000 };
 function resolveLocal(value, parent = "/") {
   if (value.startsWith("data:")) return null; // Inline bytes already counted in HTML/CSS.
   const url = new URL(value, origin + parent);
@@ -23,7 +23,7 @@ async function asset(value, parent) {
   if (!resolved) return null;
   if (cache.has(resolved.url)) return cache.get(resolved.url);
   const bytes = await readFile(resolved.file);
-  const kind = /\.css$/.test(resolved.url) ? "css" : /\.m?js$/.test(resolved.url) ? "js" : /\.(woff2?|ttf|otf)$/.test(resolved.url) ? "fonts" : /\.(png|jpe?g|webp|avif|svg|gif)$/.test(resolved.url) ? "images" : "other";
+  const kind = /\.css$/.test(resolved.url) ? "css" : /\.m?js$/.test(resolved.url) ? "js" : /\.(woff2?|ttf|otf)$/.test(resolved.url) ? "fonts" : /\.(png|jpe?g|webp|avif|svg|gif)$/.test(resolved.url) ? "images" : /\.(mp4|webm)$/.test(resolved.url) ? "media" : "other";
   const entry = { ...resolved, bytes: bytes.length, kind, text: ["css", "js"].includes(kind) ? bytes.toString("utf8") : "" };
   cache.set(resolved.url, entry);
   return entry;
@@ -44,9 +44,10 @@ async function inventory(html, route) {
       for (const match of entry.text.matchAll(/(?:from\s*|import\s*\(?\s*)["']([^"']+\.m?js(?:\?[^"']*)?)["']/g)) await add(match[1], entry.url);
     }
   };
-  for (const [tag] of html.matchAll(/<(?:img|source|script|link|astro-island)\b[^>]*>/g)) {
+  for (const [tag] of html.matchAll(/<(?:img|video|source|script|link|astro-island)\b[^>]*>/g)) {
     if (tag.startsWith("<link") && !/rel="(?:stylesheet|modulepreload|preload)"/.test(tag)) continue;
-    for (const key of ["src", "href", "component-url", "renderer-url"]) await add(attribute(tag, key));
+    for (const key of ["src", "poster", "href", "component-url", "renderer-url"]) await add(attribute(tag, key));
+    if (tag.startsWith("<video")) assert.ok(/controls/.test(tag) && /preload="none"/.test(tag) && !/autoplay|loop/.test(tag), `${route}: media must be user-controlled with no preload`);
     const srcset = attribute(tag, "srcset");
     if (srcset) for (const candidate of srcset.split(",")) await add(candidate.trim().split(/\s+/)[0]);
   }
@@ -56,7 +57,7 @@ const rows = [];
 for (const route of routes) {
   const html = await readFile(path.join(root, route, "index.html"), "utf8");
   const found = await inventory(html, route);
-  const totals = { html: Buffer.byteLength(html), css: 0, js: 0, fonts: 0, images: 0, other: 0 };
+  const totals = { html: Buffer.byteLength(html), css: 0, js: 0, fonts: 0, images: 0, other: 0, media: 0 };
   for (const entry of found.values()) { totals[entry.kind] += entry.bytes; aggregate.set(entry.url, entry); }
   for (const [kind, limit] of Object.entries(limits)) assert.ok(totals[kind] <= limit, `${route} ${kind}: ${totals[kind]} > ${limit}`);
   const hasPractice = /component-export="default"/.test(html);
