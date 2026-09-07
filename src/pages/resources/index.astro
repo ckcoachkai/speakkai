@@ -1,6 +1,8 @@
 ---
+import { getCollection } from "astro:content";
 import ToolsGallery from "../../components/ToolsGallery.astro";
 import FlagshipLayout from "../../layouts/FlagshipLayout.astro";
+const lessons = await getCollection("practice", ({ data }) => data.published);
 ---
 
 <FlagshipLayout
@@ -17,20 +19,10 @@ import FlagshipLayout from "../../layouts/FlagshipLayout.astro";
       teaching.
     </p>
   </section>
-  <section class="wrap resource-feature" aria-labelledby="featured-lesson">
-    <div>
-      <p class="eyebrow">Guided practice · about 10 minutes</p><h2
-        id="featured-lesson"
-      >
-        The one-object story.
-      </h2><p>
-        Choose an everyday object. Tell one real moment. Ask a listener for one
-        useful next step.
-      </p><span class="resource-meta"
-        >Early speakers · parent or partner · printable sheet</span>
-    </div><a class="button" href="/resources/one-object-story/"
-      >Try the activity <span aria-hidden="true">↗</span></a>
-  </section>
+  {lessons.map(lesson => <section class="wrap resource-feature" aria-labelledby={`lesson-${lesson.id}`}>
+    <div><p class="eyebrow">Guided practice · about {lesson.data.minutes} minutes</p><h2 id={`lesson-${lesson.id}`}>{lesson.data.title}.</h2><p>{lesson.data.introduction}</p><span class="resource-meta">{lesson.data.audience} · parent or partner · printable sheet</span></div>
+    <a class="button" href={`/resources/${lesson.id}/`} aria-label={`Try the activity: ${lesson.data.title}`}>Try the activity <span aria-hidden="true">↗</span></a>
+  </section>)}
   <section class="wrap resource-voice" aria-labelledby="voice-tool">
     <div>
       <p class="eyebrow">Listen to your delivery</p><h2 id="voice-tool">

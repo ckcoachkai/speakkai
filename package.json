@@ -2,9 +2,10 @@
   "name": "speakkai-site",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@11.7.0",
+  "packageManager": "pnpm@11.19.0",
   "scripts": {
     "dev": "astro dev",
+    "cms": "node scripts/start-cms.mjs",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
@@ -22,21 +23,29 @@
     "check:experiment-performance": "node design-lab-v4/scripts/check-performance.mjs",
     "capture:experiments": "node design-lab-v4/scripts/capture-tests.mjs",
     "sync:schedule": "node scripts/sync-google-sheet.mjs",
-    "check:schedule-privacy": "node scripts/check-schedule-privacy.mjs"
+    "check:schedule-privacy": "node scripts/check-schedule-privacy.mjs",
+    "check:practice-content": "node scripts/check-practice-content.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/react": "4.4.2",
     "@astrojs/tailwind": "^5.1.2",
     "@fontsource/archivo-black": "^5.3.0",
     "@fontsource/dm-sans": "^5.3.0",
     "@fontsource/manrope": "^5.3.0",
     "@fontsource/playfair-display": "^5.3.0",
     "@fontsource/space-mono": "^5.3.0",
+    "@keystatic/astro": "6.0.0",
+    "@keystatic/core": "0.6.9",
     "@lucide/astro": "^1.21.0",
-    "astro": "^5.13.11"
+    "astro": "^5.13.11",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
     "playwright": "1.55.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.5.3"

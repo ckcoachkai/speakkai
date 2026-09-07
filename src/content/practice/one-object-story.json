@@ -1,0 +1,46 @@
+{
+  "title": "The one-object story",
+  "summary": "A free 10-minute speaking activity for early speakers and a parent or partner. Choose an object, tell a moment, listen and try one change.",
+  "introduction": "A familiar object. One real moment. A listener who helps you find the next step.",
+  "audience": "Early speakers",
+  "minutes": 10,
+  "materials": "One everyday object",
+  "steps": [
+    {
+      "title": "Choose one object",
+      "minutes": 2,
+      "detail": "Pick something familiar: a pencil, a toy, a book or a small keepsake. Tell your listener why you chose it."
+    },
+    {
+      "title": "Find one moment",
+      "minutes": 2,
+      "detail": "Think of a time you used it, found it or shared it. What happened? Choose one detail your listener could picture."
+    },
+    {
+      "title": "Tell the story",
+      "minutes": 1,
+      "detail": "Name the object, tell the moment and finish with why it matters. Aim for 30–60 seconds. A shorter attempt is fine."
+    },
+    {
+      "title": "Listen for one thing",
+      "minutes": 2,
+      "detail": "The listener names one clear detail, then asks one useful question. Choose a single change to try."
+    },
+    {
+      "title": "Try it again",
+      "minutes": 3,
+      "detail": "Retell the story with that change. Talk about what became clearer. Finish with something the speaker wants to try next time."
+    }
+  ],
+  "frameTitle": "Object. Moment. Meaning.",
+  "prompts": [
+    "I chose…",
+    "One time…",
+    "It matters to me because…"
+  ],
+  "listenerGuide": "Give them time to finish. Name something specific you understood, then ask one question.",
+  "feedbackExample": "I could picture the bright blue cover. What happened when you opened the book?",
+  "published": true,
+  "reviewedOn": "2026-09-07",
+  "editorialNote": "Original illustrative practice activity introduced in flagship V05. No student information or outcome claims."
+}

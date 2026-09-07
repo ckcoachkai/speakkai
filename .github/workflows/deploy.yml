@@ -32,9 +32,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - name: Install
-        run: npm install
+          node-version: 24
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
       - name: Discover and sync published monthly Google Sheet tabs
         run: npm run sync:schedule
       - name: Verify public schedule contains availability only
@@ -48,6 +50,7 @@ jobs:
           node --test scripts/check-inquiry.mjs
           node scripts/check-flagship.mjs / /coaching/ /schools/ /companies/ /contact/ /resources/ /coaching/young-competition-speakers/ /resources/one-object-story/
           node scripts/check-flagship-seo.mjs
+          node scripts/check-practice-content.mjs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

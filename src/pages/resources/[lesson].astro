@@ -1,134 +1,49 @@
 ---
+import { getCollection } from "astro:content";
 import FlagshipLayout from "../../layouts/FlagshipLayout.astro";
 import FlagshipBreadcrumbs from "../../components/FlagshipBreadcrumbs.astro";
-const steps = [
-  {
-    time: "2 min",
-    title: "Choose one object",
-    detail:
-      "Pick something familiar: a pencil, a toy, a book or a small keepsake. Tell your listener why you chose it.",
-  },
-  {
-    time: "2 min",
-    title: "Find one moment",
-    detail:
-      "Think of a time you used it, found it or shared it. What happened? Choose one detail your listener could picture.",
-  },
-  {
-    time: "1 min",
-    title: "Tell the story",
-    detail:
-      "Name the object, tell the moment and finish with why it matters. Aim for 30–60 seconds. A shorter attempt is fine.",
-  },
-  {
-    time: "2 min",
-    title: "Listen for one thing",
-    detail:
-      "The listener names one clear detail, then asks one useful question. Choose a single change to try.",
-  },
-  {
-    time: "3 min",
-    title: "Try it again",
-    detail:
-      "Retell the story with that change. Talk about what became clearer. Finish with something the speaker wants to try next time.",
-  },
-];
+import PracticeGuide from "../../components/PracticeGuide";
+export async function getStaticPaths() {
+  const lessons = await getCollection("practice", ({ data }) => data.published);
+  return lessons.map(lesson => ({ params: { lesson: lesson.id }, props: { lesson } }));
+}
+const { lesson } = Astro.props;
+const { data } = lesson;
 ---
-
-<FlagshipLayout
-  title="The One-Object Story · Free Speaking Practice | SpeakKai"
-  description="A free 10-minute speaking activity for early speakers and a parent or partner. Choose an object, tell a moment, listen and try one change."
-  contactHref="/contact/?audience=coaching"
-  breadcrumb="The one-object story"
->
+<FlagshipLayout title={`${data.title} · Free Speaking Practice | SpeakKai`} description={data.summary} contactHref="/contact/?audience=coaching" breadcrumb={data.title}>
   <article class="wrap practice-sheet">
-    <FlagshipBreadcrumbs label="The one-object story" />
+    <FlagshipBreadcrumbs label={data.title} />
     <header class="sheet-intro">
-      <p class="eyebrow">Free practice · about 10 minutes</p><h1>
-        The one-object<br /><em>story.</em>
-      </h1><p>
-        A familiar object. One real moment. A listener who helps you find the
-        next step.
-      </p><div class="sheet-meta">
-        <span>For early speakers</span><span
-          >With a parent, teacher or partner</span
-        ><span>You need: one everyday object</span>
-      </div><p class="sheet-note">
-        This is a suggested practice activity. Adjust the length and language to
-        the learner; it is not a test or a full course lesson.
-      </p><div class="actions no-print">
-        <button class="button" id="print-practice" type="button" hidden
-          >Print practice sheet <span aria-hidden="true">↗</span></button
-        ><a class="text-link" href="#practice-steps"
-          >Start the activity <span aria-hidden="true">↓</span></a>
+      <p class="eyebrow">Free practice · about {data.minutes} minutes</p>
+      <h1>{data.title}<em>.</em></h1>
+      <p>{data.introduction}</p>
+      <div class="sheet-meta"><span>{data.audience}</span><span>With a parent, teacher or partner</span><span>You need: {data.materials}</span></div>
+      <p class="sheet-note">This is a suggested practice activity. Adjust the length and language to the learner; it is not a test or a full course lesson.</p>
+      <div class="actions no-print">
+        <button class="button" id="print-practice" type="button" hidden>Print practice sheet <span aria-hidden="true">↗</span></button>
+        <a class="text-link" href="#practice-steps">Start the activity <span aria-hidden="true">↓</span></a>
       </div>
     </header>
-    <ol id="practice-steps" class="practice-steps">
-      {
-        steps.map((step, index) => (
-          <li>
-            <>
-              <div class="step-number" aria-hidden="true">
-                0{index + 1}
-              </div>
-              <div>
-                <>
-                  <p class="step-time">{step.time}</p>
-                  <h2>{step.title}</h2>
-                  <p>{step.detail}</p>
-                </>
-              </div>
-            </>
-          </li>
-        ))
-      }
+    <PracticeGuide title={data.title} steps={data.steps} client:load />
+    <ol id="practice-steps" class="practice-steps" tabindex="-1" aria-label="Complete practice steps">
+      {data.steps.map((step, index) => <li><div class="step-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</div><div><p class="step-time">{step.minutes} min</p><h2>{step.title}</h2><p>{step.detail}</p></div></li>)}
     </ol>
     <section class="story-frame">
-      <div>
-        <p class="eyebrow">Three prompts to remember</p><h2>
-          Object. Moment. Meaning.
-        </h2><p>
-          “I chose…”<br />“One time…”<br />“It matters to me because…”
-        </p><p class="sheet-note">
-          Prompts are starting points. The speaker can use their own words.
-        </p>
-      </div><div class="listener-note">
-        <h3>For the listener</h3><p>
-          Give them time to finish. Name something specific you understood, then
-          ask one question.
-        </p><p>
-          <strong>Try:</strong> “I could picture the bright blue cover. What happened
-          when you opened the book?”
-        </p><p class="sheet-note">
-          Keep the next change small. Speaking again should feel achievable.
-        </p>
-      </div>
+      <div><p class="eyebrow">Prompts to remember</p><h2>{data.frameTitle}</h2><p>{data.prompts.map(prompt => <span class="speaking-prompt">“{prompt}”</span>)}</p><p class="sheet-note">Prompts are starting points. The speaker can use their own words.</p></div>
+      <div class="listener-note"><h3>For the listener</h3><p>{data.listenerGuide}</p><p><strong>Try:</strong> “{data.feedbackExample}”</p><p class="sheet-note">Keep the next change small. Speaking again should feel achievable.</p></div>
     </section>
-    <section class="reflection">
-      <h2>One thing I will try next time</h2><p>
-        Say it aloud or write a few words here.
-      </p><div class="writing-lines" aria-hidden="true">
-        <div></div><div></div>
-      </div>
-    </section>
-    <footer class="sheet-footer">
-      <p>SpeakKai · speakkai.com/resources/one-object-story/</p><div
-        class="actions no-print"
-      >
-        <a class="button" href="/coaching/young-competition-speakers/"
-          >Explore the Fall course <span aria-hidden="true">↗</span></a
-        ><a class="text-link" href="/resources/">All practice resources</a>
-      </div>
-    </footer>
+    <section class="reflection"><h2>One thing I will try next time</h2><p>Say it aloud or write a few words here.</p><div class="writing-lines" aria-hidden="true"><div></div><div></div></div></section>
+    <footer class="sheet-footer"><p>SpeakKai · speakkai.com/resources/{lesson.id}/</p><div class="actions no-print"><a class="button" href="/coaching/young-competition-speakers/">Explore the Fall course <span aria-hidden="true">↗</span></a><a class="text-link" href="/resources/">All practice resources</a></div></footer>
   </article>
 </FlagshipLayout>
 <script>
-  const printButton =
-    document.querySelector<HTMLButtonElement>("#print-practice")!;
+  const printButton = document.querySelector<HTMLButtonElement>("#print-practice")!;
   printButton.hidden = false;
   printButton.addEventListener("click", () => window.print());
 </script>
 <style>
+  .speaking-prompt { display: block; }
+  h1 { max-width: 800px; }
   .practice-sheet {
     max-width: 960px;
     padding-block: 36px 72px;

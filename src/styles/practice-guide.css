@@ -1,0 +1,13 @@
+.practice-guide { margin: 0 0 36px; padding: clamp(22px, 4vw, 36px); border: 2px solid var(--blue); background: var(--wash); }
+.practice-guide[hidden] { display: none; }
+.guide-kicker { color: var(--blue); font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.guide-progress { margin-top: 12px; font-size: 14px; color: var(--muted); }
+.practice-guide h2 { margin-top: 16px; font-size: clamp(25px, 3vw, 32px); font-weight: 600; line-height: 1.25; }
+.practice-guide h2:focus { outline: 2px solid var(--blue); outline-offset: 6px; }
+.guide-detail { margin-top: 18px; max-width: 660px; min-height: 5.4em; }
+.guide-controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 24px; }
+.guide-controls button { font: inherit; cursor: pointer; }
+.guide-back { border: 1px solid var(--line); background: white; padding: 13px 18px; min-height: 48px; color: var(--ink); }
+.guide-controls a { font-size: 14px; text-decoration: underline; text-underline-offset: 4px; padding-block: 12px; }
+.guide-note { margin-top: 20px; font-size: 14px; color: var(--muted); }
+@media print { .practice-guide { display: none !important; } }
