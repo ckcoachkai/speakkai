@@ -4,6 +4,13 @@ import assert from "node:assert/strict";
 
 const root = path.resolve("dist");
 const routes = process.argv.slice(2).length ? process.argv.slice(2) : ["/"];
+const decodeAttribute = value => value.replace(/&(?:#(x[0-9a-f]+|[0-9]+)|(amp|quot|apos|lt|gt));/gi, (match, numeric, named) => {
+  if (numeric) {
+    const point = numeric[0].toLowerCase() === "x" ? parseInt(numeric.slice(1), 16) : Number(numeric);
+    return point > 0 && point <= 0x10ffff ? String.fromCodePoint(point) : match;
+  }
+  return { amp: "&", quot: '"', apos: "'", lt: "<", gt: ">" }[named.toLowerCase()];
+});
 const results = [];
 for (const route of routes) {
   const file = path.join(root, route, "index.html");
@@ -43,13 +50,16 @@ for (const route of routes) {
     ),
   ];
   for (const target of targets) {
-    const url = new URL(target, `https://speakkai.com${route}`);
+    const url = new URL(decodeAttribute(target), `https://speakkai.com${route}`);
     const isPage = !path.extname(url.pathname);
     const local = path.join(root, url.pathname, isPage ? "index.html" : "");
     const info = await stat(local).catch(() => null);
     assert(info?.isFile(), `${route}: missing local target ${target}`);
-    if (url.hash && url.pathname === route)
-      assert(ids.has(url.hash.slice(1)), `${route}: broken anchor ${target}`);
+    if (url.hash && isPage) {
+      const targetHtml = url.pathname === route ? html : await readFile(local, "utf8");
+      const targetIds = url.pathname === route ? ids : new Set([...targetHtml.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]));
+      assert(targetIds.has(decodeURIComponent(url.hash.slice(1))), `${route}: broken anchor ${target}`);
+    }
   }
   for (const image of html.matchAll(/<img\b[^>]*>/g)) {
     // Astro's image serializer may emit a bare alt attribute for alt="".
