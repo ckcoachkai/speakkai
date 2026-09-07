@@ -1,0 +1,48 @@
+{
+  "title": "The one-minute brief",
+  "summary": "A free 10-minute workplace speaking exercise. Shape one recommendation for a listener, give a short brief, check what came through and try it again.",
+  "introduction": "One recommendation. A reason that matters. A next action your listener can name.",
+  "audience": "Adults and workplace teams",
+  "setting": "With a colleague or practice partner",
+  "followUp": "companies",
+  "minutes": 10,
+  "materials": "A generic scenario; a few notes if helpful",
+  "steps": [
+    {
+      "title": "Choose your listener",
+      "minutes": 2,
+      "detail": "Use this fictional scenario: a team is considering a short weekly check-in. Choose a listener, such as a team lead or project partner. Decide what they need to understand or do. Keep real customer, personnel and confidential company details out of the practice."
+    },
+    {
+      "title": "Build the brief",
+      "minutes": 2,
+      "detail": "Write three short lines: the recommendation, one reason it matters to this listener, and the next action you want to discuss. You might propose a short trial of the check-in. State assumptions as assumptions; do not invent evidence or results."
+    },
+    {
+      "title": "Say it in one minute",
+      "minutes": 1,
+      "detail": "Explain the recommendation, reason and next action aloud in about 45–60 seconds. Use the notes if helpful. Leave out background that the listener does not need for this decision. Finish with a specific question rather than trailing off."
+    },
+    {
+      "title": "Check what came through",
+      "minutes": 2,
+      "detail": "The listener says what they understood the recommendation and reason to be, then names the requested next action. Ask one question about anything missing. Focus on the explanation, not the speaker’s personality or accent."
+    },
+    {
+      "title": "Make one change and retry",
+      "minutes": 3,
+      "detail": "Choose one unclear part to improve: a more direct opening, a concrete reason or a clearer request. Give a second short version and ask the listener what changed. If time allows, swap roles. Finish by naming one choice to use in your next rehearsal."
+    }
+  ],
+  "frameTitle": "Recommendation. Reason. Request.",
+  "prompts": [
+    "I recommend…",
+    "This matters to you because…",
+    "The next step I would like to discuss is…"
+  ],
+  "listenerGuide": "Name the recommendation, the reason and the next action in your own words. If one is unclear, ask a precise question. Feedback is about what the listener understood; it is not a prediction of approval or business success.",
+  "feedbackExample": "I heard that you want to try a weekly check-in. What decision would you like the team lead to make today?",
+  "published": true,
+  "reviewedOn": "2026-09-07",
+  "editorialNote": "Original illustrative V08 workplace briefing exercise, informed by public audience/action design signals from Duarte and role-specific inquiry structure from 21tb checked 2026-09-07. Fictional scenario; no copied proprietary method, client result, private company information or affiliation claim."
+}
