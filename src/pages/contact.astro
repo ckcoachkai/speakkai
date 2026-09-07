@@ -1,5 +1,6 @@
 ---
 import FlagshipLayout from "../layouts/FlagshipLayout.astro";
+import { schoolDirections } from "../lib/inquiry.mjs";
 ---
 
 <FlagshipLayout
@@ -36,6 +37,13 @@ import FlagshipLayout from "../layouts/FlagshipLayout.astro";
           <option value="schools">A school or education team</option>
           <option value="companies">A company or event team</option>
         </select>
+        <div id="school-direction-field" hidden>
+          <label for="inquiry-school-direction">Program direction <span>(optional)</span></label>
+          <select id="inquiry-school-direction">
+            <option value="">Open to advice</option>
+            {Object.entries(schoolDirections).map(([value, label]) => <option value={value}>{label}</option>)}
+          </select>
+        </div>
         <label for="inquiry-goal">What would you like to work on?</label>
         <textarea
           id="inquiry-goal"
@@ -60,7 +68,7 @@ import FlagshipLayout from "../layouts/FlagshipLayout.astro";
         />
         <div class="inquiry-field-pair">
           <div>
-            <label for="inquiry-format">Preferred format</label><select
+            <label for="inquiry-format">Delivery preference</label><select
               id="inquiry-format"
               ><option value="">Open to advice</option><option>Online</option
               ><option>In person</option><option>A mix of both</option></select>
@@ -160,6 +168,7 @@ import FlagshipLayout from "../layouts/FlagshipLayout.astro";
 <script>
   import {
     normalizeAudience,
+    normalizeSchoolDirection,
     buildInquiry,
     copyInquiry,
   } from "../lib/inquiry.mjs";
@@ -168,6 +177,7 @@ import FlagshipLayout from "../layouts/FlagshipLayout.astro";
     document.querySelector<HTMLSelectElement>("#inquiry-audience")!;
   const group = document.querySelector<HTMLInputElement>("#inquiry-group")!;
   const goal = document.querySelector<HTMLTextAreaElement>("#inquiry-goal")!;
+  const schoolDirection = document.querySelector<HTMLSelectElement>("#inquiry-school-direction")!;
   const preview =
     document.querySelector<HTMLTextAreaElement>("#inquiry-preview")!;
   const status = document.querySelector<HTMLElement>("#inquiry-status")!;
@@ -176,6 +186,7 @@ import FlagshipLayout from "../layouts/FlagshipLayout.astro";
   function updateAudience() {
     const label = document.querySelector<HTMLLabelElement>("#group-label")!;
     const kind = normalizeAudience(audience.value);
+    document.querySelector<HTMLElement>("#school-direction-field")!.hidden = kind !== "schools";
     label.textContent =
       kind === "coaching"
         ? "Learner’s age or grade (optional)"
@@ -196,11 +207,15 @@ import FlagshipLayout from "../layouts/FlagshipLayout.astro";
   audience.value = normalizeAudience(
     new URLSearchParams(window.location.search).get("audience"),
   );
+  schoolDirection.value = audience.value === "schools"
+    ? normalizeSchoolDirection(new URLSearchParams(window.location.search).get("schoolDirection"))
+    : "";
   updateAudience();
   audience.addEventListener("change", updateAudience);
   document.querySelector("#build-inquiry")!.addEventListener("click", () => {
     preview.value = buildInquiry({
       audience: audience.value,
+      schoolDirection: schoolDirection.value,
       goal: goal.value,
       group: group.value,
       format:
@@ -229,6 +244,11 @@ import FlagshipLayout from "../layouts/FlagshipLayout.astro";
   });
   preview.addEventListener("input", () => {
     status.textContent = "Message edited. Copy again to use these changes.";
+  });
+  document.querySelector(".inquiry-fields")!.addEventListener("input", () => {
+    if (!document.querySelector<HTMLElement>("#inquiry-result")!.hidden) {
+      status.textContent = "Details changed. Your draft is unchanged. Rebuild to use these details; rebuilding replaces any message edits.";
+    }
   });
   composer.hidden = false;
 </script>

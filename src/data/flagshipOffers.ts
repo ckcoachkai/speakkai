@@ -9,7 +9,7 @@ export type Offer = {
   label: string;
   fitTitle: string;
   fit: string[];
-  formats: { title: string; detail: string }[];
+  formats: { title: string; detail: string; prepare?: string; schoolDirection?: "workshop" | "sequence" | "teachers" }[];
   outcomes: { title: string; detail: string }[];
   example: { title: string; prompt: string; steps: string[] };
   questions: { question: string; answer: string }[];
@@ -123,16 +123,22 @@ export const flagshipOffers: Offer[] = [
     formats: [
       {
         title: "A focused workshop",
+        schoolDirection: "workshop",
+        prepare: "Bring one speaking task or event, the age and language level, and approximate group size.",
         detail:
           "A shared speaking task, guided practice and useful feedback around a clear learning focus. Discuss a one-off session that fits your school’s context.",
       },
       {
         title: "A sequence of lessons",
+        schoolDirection: "sequence",
+        prepare: "Bring your curriculum focus, starting level, timetable and the speaking task you want to work towards.",
         detail:
           "Develop speaking progressively across a short or longer curriculum. Agree learning aims, lesson length, group size and the final speaking task together.",
       },
       {
         title: "Teacher development",
+        schoolDirection: "teachers",
+        prepare: "Bring the team’s priorities, approximate participant count and a classroom situation you want to explore.",
         detail:
           "Explore clear instruction, classroom presentation, speaking tasks and feedback that students can act on. Scope the workshop around the team’s priorities.",
       },

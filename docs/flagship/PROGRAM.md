@@ -35,5 +35,5 @@ Scores in category order: 2,2,1,2,2,3,2,2,3,2,2 = 23/55. Other browser engines: 
 - Branch: `codex/speakkai-flagship-30`
 - Research: `C:\Users\kai\Documents\ChatGPT\HQ\outputs\speakkai-flagship-research`
 - Preview: `http://127.0.0.1:4326/`
-- V17 completed and live. Completed live cycles: 17/30. Champion V17. Astro retained under objective migration gates; V18 begins bilingual parent-demonstration research.
+- V18 completed and live. Completed live cycles: 18/30. Champion V18. Astro retained under objective migration gates; V19 begins school decision-support research.
 - See cycle records and `releases.json` for exact completed releases. Do not infer completion from source versions alone.

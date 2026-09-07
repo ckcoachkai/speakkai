@@ -7,16 +7,26 @@ const audiences = {
 export function normalizeAudience(value) {
   return Object.hasOwn(audiences, value) ? value : "unsure";
 }
+export const schoolDirections = Object.freeze({
+  workshop: "A focused workshop",
+  sequence: "A sequence of lessons",
+  teachers: "Teacher development",
+});
+export function normalizeSchoolDirection(value) {
+  return typeof value === "string" && Object.hasOwn(schoolDirections, value) ? value : "";
+}
 const clean = (value, limit) =>
   typeof value === "string" ? value.trim().slice(0, limit) : "";
-export function buildInquiry({ audience, goal, group, format, timing }) {
+export function buildInquiry({ audience, schoolDirection, goal, group, format, timing }) {
   const kind = normalizeAudience(audience);
+  const direction = kind === "schools" ? normalizeSchoolDirection(schoolDirection) : "";
   return [
     `Hi Kai, I’d like to ask about ${audiences[kind]}.`,
+    direction && `Program direction: ${schoolDirections[direction]}`,
     clean(goal, 600) && `Goal: ${clean(goal, 600)}`,
     clean(group, 100) &&
       `${kind === "coaching" ? "Age / grade" : "Participants"}: ${clean(group, 100)}`,
-    clean(format, 100) && `Preferred format: ${clean(format, 100)}`,
+    clean(format, 100) && `Delivery preference: ${clean(format, 100)}`,
     clean(timing, 100) && `Timing: ${clean(timing, 100)}`,
     "Could we discuss the fit, approach, fees and availability?",
   ]

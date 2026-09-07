@@ -2,10 +2,28 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   normalizeAudience,
+  normalizeSchoolDirection,
+  schoolDirections,
   buildInquiry,
   copyInquiry,
   buildChineseCourseInquiry,
 } from "../src/lib/inquiry.mjs";
+
+test("school direction is allowlisted and independent of delivery", () => {
+  for (const [value, label] of Object.entries(schoolDirections)) {
+    assert.equal(normalizeSchoolDirection(value), value);
+    const draft = buildInquiry({ audience: "schools", schoolDirection: value, format: "Online" });
+    assert.equal(draft.split(`Program direction: ${label}`).length, 2);
+    assert.match(draft, /Delivery preference: Online/);
+    for (const audience of ["coaching", "companies", "unsure"]) {
+      assert.doesNotMatch(buildInquiry({ audience, schoolDirection: value }), /Program direction:/);
+    }
+  }
+  for (const value of [undefined, null, "", "constructor", "__proto__", "unknown", "<img onerror=alert(1)>"]) {
+    assert.equal(normalizeSchoolDirection(value), "");
+    assert.doesNotMatch(buildInquiry({ audience: "schools", schoolDirection: value }), /Program direction:/);
+  }
+});
 
 test("unrecognized query values never become an audience or reflect HTML", () => {
   for (const value of [
