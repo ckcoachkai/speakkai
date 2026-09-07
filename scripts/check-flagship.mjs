@@ -52,7 +52,8 @@ for (const route of routes) {
       assert(ids.has(url.hash.slice(1)), `${route}: broken anchor ${target}`);
   }
   for (const image of html.matchAll(/<img\b[^>]*>/g)) {
-    assert.match(image[0], /\balt="[^"]*"/, `${route}: image missing alt`);
+    // Astro's image serializer may emit a bare alt attribute for alt="".
+    assert.match(image[0], /\salt(?:="[^"]*"|(?=\s|\/?>))/, `${route}: image missing alt`);
     assert.match(
       image[0],
       /\bwidth="\d+"/,

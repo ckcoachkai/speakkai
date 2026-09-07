@@ -26,7 +26,8 @@
     "check:schedule-privacy": "node scripts/check-schedule-privacy.mjs",
     "check:practice-content": "node scripts/check-practice-content.mjs",
     "check:course-languages": "node scripts/check-course-languages.mjs",
-    "check:course-editorial": "node scripts/check-course-editorial.mjs"
+    "check:course-editorial": "node scripts/check-course-editorial.mjs",
+    "check:flagship-budget": "node scripts/check-flagship-budget.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -42,7 +43,8 @@
     "@lucide/astro": "^1.21.0",
     "astro": "^5.13.11",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "sharp": "0.34.5"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",

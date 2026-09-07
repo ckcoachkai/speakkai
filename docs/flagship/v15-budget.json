@@ -1,0 +1,138 @@
+{
+  "semantics": "Raw UTF-8/file bytes; every srcset candidate and CSS font fallback included conservatively. Inline assets are counted only in their containing file. Not selected-candidate transfer or field performance.",
+  "limits": {
+    "html": 30000,
+    "css": 50000,
+    "fonts": 120000,
+    "images": 400000,
+    "other": 10000,
+    "staticJs": 8000,
+    "practiceJs": 215000,
+    "individualLogo": 80000
+  },
+  "routes": [
+    {
+      "route": "/",
+      "html": 13740,
+      "css": 23524,
+      "js": 0,
+      "fonts": 97580,
+      "images": 261616,
+      "other": 0,
+      "assets": 14
+    },
+    {
+      "route": "/coaching/",
+      "html": 14028,
+      "css": 23524,
+      "js": 0,
+      "fonts": 97580,
+      "images": 12784,
+      "other": 0,
+      "assets": 11
+    },
+    {
+      "route": "/schools/",
+      "html": 13305,
+      "css": 23524,
+      "js": 0,
+      "fonts": 97580,
+      "images": 12784,
+      "other": 0,
+      "assets": 11
+    },
+    {
+      "route": "/companies/",
+      "html": 13330,
+      "css": 23524,
+      "js": 0,
+      "fonts": 97580,
+      "images": 12784,
+      "other": 0,
+      "assets": 11
+    },
+    {
+      "route": "/contact/",
+      "html": 14992,
+      "css": 23524,
+      "js": 3509,
+      "fonts": 97580,
+      "images": 140380,
+      "other": 0,
+      "assets": 14
+    },
+    {
+      "route": "/resources/",
+      "html": 23387,
+      "css": 23524,
+      "js": 0,
+      "fonts": 97580,
+      "images": 350803,
+      "other": 0,
+      "assets": 16
+    },
+    {
+      "route": "/coaching/young-competition-speakers/",
+      "html": 14832,
+      "css": 29391,
+      "js": 0,
+      "fonts": 97580,
+      "images": 140380,
+      "other": 0,
+      "assets": 13
+    },
+    {
+      "route": "/zh/coaching/young-competition-speakers/",
+      "html": 18114,
+      "css": 29391,
+      "js": 2818,
+      "fonts": 97580,
+      "images": 140380,
+      "other": 0,
+      "assets": 15
+    },
+    {
+      "route": "/resources/one-object-story/",
+      "html": 18317,
+      "css": 30572,
+      "js": 199796,
+      "fonts": 97580,
+      "images": 12784,
+      "other": 0,
+      "assets": 15
+    },
+    {
+      "route": "/resources/explain-then-swap/",
+      "html": 18996,
+      "css": 30572,
+      "js": 199796,
+      "fonts": 97580,
+      "images": 12784,
+      "other": 0,
+      "assets": 15
+    },
+    {
+      "route": "/resources/one-minute-brief/",
+      "html": 19233,
+      "css": 30572,
+      "js": 199796,
+      "fonts": 97580,
+      "images": 12784,
+      "other": 0,
+      "assets": 15
+    },
+    {
+      "route": "/zh/resources/one-object-story/",
+      "html": 18949,
+      "css": 30572,
+      "js": 199796,
+      "fonts": 97580,
+      "images": 12784,
+      "other": 0,
+      "assets": 15
+    }
+  ],
+  "uniqueReferencedAssetBytes": 938054,
+  "publishedArtifactBytes": 153860433,
+  "status": "PASS"
+}

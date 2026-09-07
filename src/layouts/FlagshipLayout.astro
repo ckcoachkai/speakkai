@@ -1,7 +1,9 @@
 ---
-import "@fontsource/manrope/400.css";
-import "@fontsource/manrope/600.css";
-import "@fontsource/manrope/700.css";
+import "@fontsource/manrope/latin-400.css";
+import "@fontsource/manrope/latin-600.css";
+import "@fontsource/manrope/latin-700.css";
+import { Image } from "astro:assets";
+import logo from "../assets/brand/speakkai-logo.png";
 import "../styles/flagship.css";
 import { structuredData } from "../lib/structuredData.mjs";
 interface Props {
@@ -43,7 +45,7 @@ const navigation = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b1020" />
-    <meta name="speakkai-version" content="14" />
+    <meta name="speakkai-version" content="15" />
     {noindex && <meta name="robots" content="noindex" />}
     {
       !noindex && (
@@ -84,15 +86,20 @@ const navigation = [
     />
     <title>{title}</title>
   </head>
-  <body class="flagship" data-version="14">
+  <body class="flagship" data-version="15">
     <a class="skip-link" href="#main">{chinese ? "跳到正文" : "Skip to content"}</a>
     <header class="site-header">
       <a class="brand" href="/" aria-label={chinese ? "SpeakKai 首页（英文）" : "SpeakKai home"}
         ><span class="brand-image" aria-hidden="true"
-          ><img
-            src="/images/speakkai-logo-header-source.png"
-            width="1254"
-            height="1254"
+          ><Image
+            src={logo}
+            width={480}
+            height={480}
+            widths={[160, 320, 480]}
+            sizes="(max-width: 760px) 126px, 158px"
+            format="webp"
+            quality={90}
+            loading="eager"
             alt=""
           /></span
         ><span lang="zh-CN">说开</span></a
