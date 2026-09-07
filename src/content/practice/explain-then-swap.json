@@ -1,0 +1,48 @@
+{
+  "title": "Explain it, then swap",
+  "summary": "A free 12-minute paired speaking activity for school groups. Explain one idea, listen for a useful detail, swap roles and try a clearer version.",
+  "introduction": "One idea. Two turns. A listener who can tell you what came through.",
+  "audience": "School groups",
+  "setting": "In pairs, with a teacher or facilitator",
+  "followUp": "schools",
+  "minutes": 12,
+  "materials": "One familiar topic; notes are optional",
+  "steps": [
+    {
+      "title": "Choose an idea together",
+      "minutes": 2,
+      "detail": "The teacher names a familiar, age-appropriate topic: a game rule, a classroom routine or an idea from today’s lesson. Model a short explanation. Partners choose something they can explain without sharing private experiences."
+    },
+    {
+      "title": "Plan one point and one example",
+      "minutes": 2,
+      "detail": "Each partner picks one point they want the other person to understand. Think of an everyday example. Use a few notes or practise quietly first. The teacher can simplify the prompt or offer another way to participate."
+    },
+    {
+      "title": "Speak, listen, then swap",
+      "minutes": 3,
+      "detail": "Partner A explains for about 30 seconds. Partner B names one detail they understood and asks one useful question. Swap roles so both partners get a speaking and listening turn. Leave a little thinking time before each answer."
+    },
+    {
+      "title": "Try one clearer version",
+      "minutes": 3,
+      "detail": "Each partner chooses one small change from the question they heard: state the main point sooner, use a clearer example or pause before an important detail. Give the explanation again. The listener says what became easier to follow."
+    },
+    {
+      "title": "Choose a next step",
+      "minutes": 2,
+      "detail": "Each partner names one speaking choice they want to keep. If they wish, pairs can share that choice with the group. The teacher closes with a concrete observation about listening or explanation, without ranking speakers."
+    }
+  ],
+  "frameTitle": "Point. Example. Check.",
+  "prompts": [
+    "The main idea is…",
+    "For example…",
+    "Which part would you like me to explain again?"
+  ],
+  "listenerGuide": "Listen to the whole attempt before responding. Name a detail you heard, then ask a question about the idea. Describe the explanation rather than judging the person. In a pair, the listener also asks the question.",
+  "feedbackExample": "I understood the first game rule. Could you show me what happens on the next turn?",
+  "published": true,
+  "reviewedOn": "2026-09-07",
+  "editorialNote": "Original illustrative V07 paired explanation activity. Teacher-led practice and peer feedback are design signals from public TED-Ed Student Talks and EF Corporate Learning pages checked 2026-09-07. No copied exercise, TED affiliation, approved syllabus claim, student data or outcome claim."
+}

@@ -10,4 +10,10 @@
 .guide-back { border: 1px solid var(--line); background: white; padding: 13px 18px; min-height: 48px; color: var(--ink); }
 .guide-controls a { font-size: 14px; text-decoration: underline; text-underline-offset: 4px; padding-block: 12px; }
 .guide-note { margin-top: 20px; font-size: 14px; color: var(--muted); }
+.guide-intro { margin-bottom: 18px; padding: 22px 24px; }
+.guide-intro .guide-kicker { display: none; }
+.guide-intro .guide-intro-heading { margin-top: 12px; font-size: 24px; }
+.guide-intro .guide-controls { margin-top: 16px; }
+.guide-intro .guide-note { margin-top: 12px; }
+.guide-intro .guide-progress { margin-top: 8px; }
 @media print { .practice-guide { display: none !important; } }

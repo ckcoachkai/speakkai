@@ -19,19 +19,19 @@ export default function PracticeGuide({ title, steps }: Props) {
   }
   const complete = step === steps.length;
   return (
-    <section className="practice-guide no-print" aria-label={`Guided practice: ${title}`} hidden={!ready}>
+    <section className={`practice-guide no-print${step < 0 ? " guide-intro" : ""}`} aria-label={`Guided practice: ${title}`} hidden={!ready}>
       <p className="guide-kicker">One step at a time</p>
       <p className="guide-progress" role="status" aria-live="polite">
         {step < 0 ? `${steps.length} steps · go at your own pace` : complete ? "Practice finished" : `Step ${step + 1} of ${steps.length} · about ${steps[step].minutes} min`}
       </p>
-      <h2 ref={heading} tabIndex={-1}>
-        {step < 0 ? "Would a little guidance help?" : complete ? "Choose one thing for next time." : steps[step].title}
+      <h2 ref={heading} tabIndex={-1} className={step < 0 ? "guide-intro-heading" : undefined}>
+        {step < 0 ? "One step at a time." : complete ? "Choose one thing for next time." : steps[step].title}
       </h2>
-      <p className="guide-detail">
-        {step < 0 ? "Keep one instruction in view while you practise. Take as long as you need; the complete sheet stays below." : complete ? "Tell your listener one thing that felt clearer and one thing you want to practise again. There is no score to chase." : steps[step].detail}
-      </p>
+      {step >= 0 && <p className="guide-detail">
+        {complete ? "Tell your listener one thing that felt clearer and one thing you want to practise again. There is no score to chase." : steps[step].detail}
+      </p>}
       <div className="guide-controls">
-        {step < 0 ? <button type="button" className="button" onClick={() => go(0)}>Guide me through it</button> : complete ? <>
+        {step < 0 ? <button type="button" className="button" onClick={() => go(0)}>Start guided practice</button> : complete ? <>
           <button type="button" className="button" onClick={() => go(0)}>Practise again</button>
           <button type="button" className="guide-back" onClick={() => go(steps.length - 1)}>Back to last step</button>
         </> : <>

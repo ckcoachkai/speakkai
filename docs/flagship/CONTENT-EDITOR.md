@@ -5,7 +5,7 @@ V06 uses Keystatic in local mode. It is a real form editor that writes repositor
 1. In this website checkout, use Node 24 and the pnpm version declared in package.json. Run `pnpm install --frozen-lockfile` if dependencies are missing.
 2. Run `npm run cms`, then open `http://127.0.0.1:4326/keystatic` on the same computer.
 3. Open Practice lessons, then an existing lesson or Add. Keep an existing URL slug unchanged unless you also plan its redirect and link updates.
-4. Edit the title, introduction, audience, materials, step instructions, prompts and listener guidance. Step minutes must add up to the total. Required length limits and totals are validated by the website build.
+4. Edit the title, introduction, audience, practice setting, materials, step instructions, prompts and listener guidance. Choose the related coaching path so the lesson links to the right audience. Step minutes must add up to the total. Required length limits and totals are validated by the website build.
 5. Keep unpublished work unchecked. Include in the next public release controls the page, resource listing and sitemap. Save writes `src/content/practice/<slug>.json` locally; it does not publish.
 6. Read the preview, use the complete guide and print preview, and inspect the repository diff. Run `npm run build`, `npm run check:practice-content`, the flagship/SEO checks and schedule privacy check before the release.
 7. Publish through the existing reviewed GitHub Pages release process. Verify the public version and affected routes after the workflow succeeds.

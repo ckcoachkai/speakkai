@@ -24,13 +24,14 @@ for (const file of files) {
   }
   published++;
   const html = await read(target);
-  for (const text of [lesson.title, lesson.introduction, lesson.materials, lesson.frameTitle, lesson.listenerGuide, lesson.feedbackExample, ...lesson.prompts, ...lesson.steps.flatMap(step => [step.title, step.detail])]) {
+  for (const text of [lesson.title, lesson.introduction, lesson.setting, lesson.materials, lesson.frameTitle, lesson.listenerGuide, lesson.feedbackExample, ...lesson.prompts, ...lesson.steps.flatMap(step => [step.title, step.detail])]) {
     assert.ok(html.includes(escape(text)), `${slug}: missing authored text ${text}`);
   }
   assert.equal(lesson.steps.reduce((sum, step) => sum + step.minutes, 0), lesson.minutes);
   assert.ok(index.includes(`/resources/${slug}/`));
   assert.ok(sitemap.includes(`/resources/${slug}/`));
   assert.match(html, /component-export="default"/);
+  assert.ok(html.includes(`/contact/?audience=${lesson.followUp}`), `${slug}: wrong inquiry audience`);
 }
 async function inspect(dir) {
   for (const item of await readdir(dir, { withFileTypes: true })) {

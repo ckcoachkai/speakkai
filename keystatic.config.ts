@@ -15,6 +15,8 @@ export default config({
         summary: requiredText("Short description", true),
         introduction: requiredText("Introduction", true),
         audience: requiredText("Who is it for?"),
+        setting: requiredText("Practice partners or group setting"),
+        followUp: fields.select({ label: "Related coaching path", options: [{ label: "Student coaching", value: "coaching" }, { label: "School programs", value: "schools" }, { label: "Company training", value: "companies" }], defaultValue: "coaching" }),
         minutes: fields.integer({ label: "Approximate total minutes", validation: { min: 1, max: 60 } }),
         materials: requiredText("What the learner needs"),
         steps: fields.array(fields.object({

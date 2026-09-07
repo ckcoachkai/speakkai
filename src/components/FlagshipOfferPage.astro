@@ -1,11 +1,13 @@
 ---
 import type { Offer } from "../data/flagshipOffers";
+import { getCollection } from "astro:content";
 import FlagshipCurrentProgram from "./FlagshipCurrentProgram.astro";
 import FlagshipBreadcrumbs from "./FlagshipBreadcrumbs.astro";
 interface Props {
   offer: Offer;
 }
 const { offer } = Astro.props;
+const lessons = await getCollection("practice", ({ data }) => data.published && data.followUp === offer.slug);
 ---
 
 <section class="offer-hero wrap">
@@ -81,6 +83,7 @@ const { offer } = Astro.props;
     </p><p class="section-note">
       Try it aloud, then choose one thing to make clearer.
     </p>
+    {lessons.length > 0 && <nav aria-label="Related practice">{lessons.map(lesson => <p class="section-note"><a class="text-link" href={`/resources/${lesson.id}/`}>Free activity: {lesson.data.title} <span aria-hidden="true">↗</span></a></p>)}</nav>}
   </div><ol>{offer.example.steps.map((step) => <li>{step}</li>)}</ol>
 </section>
 <section class="faq-section wrap" aria-labelledby="faq-title">

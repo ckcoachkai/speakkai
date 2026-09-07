@@ -7,6 +7,8 @@ const practice = defineCollection({
     summary: z.string().min(40).max(260),
     introduction: z.string().min(20).max(400),
     audience: z.string().min(3).max(100),
+    setting: z.string().min(3).max(140),
+    followUp: z.enum(["coaching", "schools", "companies"]),
     minutes: z.number().int().min(1).max(60),
     materials: z.string().min(3).max(200),
     steps: z.array(z.object({ title: z.string().min(3).max(120), minutes: z.number().int().min(1).max(20), detail: z.string().min(20).max(700) })).min(2).max(10),
