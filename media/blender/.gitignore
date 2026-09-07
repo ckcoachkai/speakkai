@@ -1,0 +1,5 @@
+graybox/
+*.log
+output/*.blend1
+output/*.png
+output/evidence/

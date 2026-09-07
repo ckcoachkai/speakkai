@@ -1,0 +1,12 @@
+[
+  {
+    "file": "rehearsal-stage.webp",
+    "generator": "Blender 5.2.1 LTS",
+    "source": "media/blender/create_stage.py",
+    "bytes": 26990,
+    "width": 960,
+    "height": 720,
+    "sha256": "0d5c52026d588c8c19336aae326030aac08d94fa2b4f84275de2ecfb8d0ca888",
+    "fictional": true
+  }
+]

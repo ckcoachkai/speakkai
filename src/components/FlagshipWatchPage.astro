@@ -1,5 +1,6 @@
 ---
 import FlagshipLayout from "../layouts/FlagshipLayout.astro";
+import FlagshipStagePractice from "./FlagshipStagePractice.astro";
 import { localizedPath } from "../lib/siteLanguage.mjs";
 interface Props {language?: "en" | "zh-CN"}
 const {language="en"}=Astro.props;
@@ -37,6 +38,7 @@ const steps=chinese ? [
       <ol class="watch-steps">{steps.map(([label,quote,help],index)=><li><span class="eyebrow">0{index+1} / {label}</span><blockquote>{quote}</blockquote><p>{help}</p></li>)}</ol>
     </div>
   </section>
+  <FlagshipStagePractice language={language} />
   <section class="wrap watch-next">
     <h2>{tr("Your turn to make it real.","轮到你试一试。")}</h2>
     <p>{tr("Choose an everyday suggestion. Say the point, add a true detail and ask a question. Listen to the answer before trying again.","选择一个日常建议。说出重点，补充一个真实细节，再问一个问题。听完对方的回答，再尝试一次。")}</p>
