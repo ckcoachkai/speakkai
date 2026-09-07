@@ -4,6 +4,7 @@ import {
   normalizeAudience,
   buildInquiry,
   copyInquiry,
+  buildChineseCourseInquiry,
 } from "../src/lib/inquiry.mjs";
 
 test("unrecognized query values never become an audience or reflect HTML", () => {
@@ -20,6 +21,27 @@ test("unrecognized query values never become an audience or reflect HTML", () =>
       /speaking coaching or training/,
     );
   }
+});
+test("Chinese course draft keeps optional fields blank and preserves bounded entered text", () => {
+  const empty = buildChineseCourseInquiry({}, "Young Competition Speakers（Fall 2026）");
+  assert.match(empty, /Young Competition Speakers（Fall 2026）/);
+  assert.doesNotMatch(empty, /年级：|表达目标：|时间范围：/);
+  const filled = buildChineseCourseInquiry({ grade: "二年级", goal: "  清楚地表达想法  ", timing: "十月" }, "Course");
+  assert.match(filled, /年级：二年级/);
+  assert.match(filled, /表达目标：清楚地表达想法/);
+  assert.match(filled, /时间范围：十月/);
+  assert.ok(buildChineseCourseInquiry({ goal: "字".repeat(900) }, "Course").length < 750);
+});
+test("Chinese clipboard success, denial and empty states stay explicit", async () => {
+  let copied;
+  const success = await copyInquiry("我的修改", async text => { copied = text; }, "zh-CN");
+  assert.equal(copied, "我的修改");
+  assert.match(success.message, /网站没有发送消息/);
+  const denied = await copyInquiry("我的修改", async () => { throw new Error("denied"); }, "zh-CN");
+  assert.equal(denied.ok, false);
+  assert.match(denied.message, /自动复制不可用/);
+  const empty = await copyInquiry(" ", () => assert.fail("No clipboard write for blank input"), "zh-CN");
+  assert.match(empty.message, /咨询稿为空/);
 });
 test("audience-specific briefs omit blank optional fields and preserve entered goals", () => {
   const parent = buildInquiry({

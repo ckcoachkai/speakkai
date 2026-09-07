@@ -1,6 +1,6 @@
 {
-  "champion": "12",
-  "completedCycles": 12,
+  "champion": "13",
+  "completedCycles": 13,
   "releases": [
     {
       "version": "01",
@@ -122,6 +122,16 @@
       "score": 42.5,
       "status": "live-verified",
       "rollbackCommit": "e3b5b0349d67ace04a8ad741416a4252dcb614b2"
+    },
+    {
+      "version": "13",
+      "commit": "3fabec27e84da8dd2fd05f29c0571bd4f5a49155",
+      "workflowRun": 34108743449,
+      "url": "https://speakkai.com/",
+      "verifiedAt": "2026-09-07",
+      "score": 42.75,
+      "status": "live-verified",
+      "rollbackCommit": "e546b6910d1f0f833b70f711863b7b3599b3d13a"
     }
   ]
 }

@@ -1,0 +1,83 @@
+---
+import { currentProgram } from "../data/currentProgram";
+import { buildChineseCourseInquiry } from "../lib/inquiry.mjs";
+const courseName = `${currentProgram.name}（${currentProgram.season}）`;
+const initial = buildChineseCourseInquiry({}, courseName);
+---
+<details class="course-inquiry" lang="zh-CN" data-course-name={courseName}>
+  <summary>课程咨询准备 <span aria-hidden="true">+</span></summary>
+  <div class="course-inquiry-body">
+    <p id="course-inquiry-help">所有信息都可选。你可以整理年级、表达目标和时间范围，再自行复制到微信。网站不会发送或保存咨询，也不会预约课程或确认名额。</p>
+    <p class="inquiry-note" id="course-inquiry-privacy">概括说明即可，请不要填写学生姓名、联系方式或私人记录。</p>
+    <fieldset hidden id="course-inquiry-fields" aria-describedby="course-inquiry-help course-inquiry-privacy">
+      <legend>整理咨询信息</legend>
+      <label for="course-grade">年级（可选）</label>
+      <input id="course-grade" type="text" maxlength="100" autocomplete="off" placeholder="例如：二年级" />
+      <label for="course-goal">表达目标（可选）</label>
+      <textarea id="course-goal" rows="3" maxlength="600" autocomplete="off" placeholder="例如：在课堂上更清楚地表达想法"></textarea>
+      <label for="course-timing">时间范围（可选）</label>
+      <input id="course-timing" type="text" maxlength="100" autocomplete="off" placeholder="例如：希望从十月开始" />
+      <button class="button" type="button" id="course-build">生成咨询稿</button>
+    </fieldset>
+    <label for="course-preview">检查并修改咨询稿</label>
+    <textarea id="course-preview" rows="7" maxlength="2000" autocomplete="off" aria-describedby="course-preview-help">{initial}</textarea>
+    <p class="inquiry-note" id="course-preview-help">请自行检查后复制到微信，与 <span lang="en">CKcoachkai</span> 联系。也可以直接选择上方文字，使用设备的复制功能。</p>
+    <div class="inquiry-actions"><button class="button" type="button" id="course-copy" hidden>复制中文咨询稿</button></div>
+    <p id="course-copy-status" role="status" aria-live="polite"></p>
+  </div>
+</details>
+<script>
+  import { buildChineseCourseInquiry, copyInquiry } from "../lib/inquiry.mjs";
+  const composer = document.querySelector<HTMLElement>(".course-inquiry");
+  if (composer) {
+    const query = <T extends HTMLElement>(selector: string) => composer.querySelector<T>(selector)!;
+    const preview = query<HTMLTextAreaElement>("#course-preview");
+    const status = query<HTMLElement>("#course-copy-status");
+    const build = query<HTMLButtonElement>("#course-build");
+    const copy = query<HTMLButtonElement>("#course-copy");
+    query<HTMLElement>("#course-inquiry-fields").hidden = false;
+    copy.hidden = false;
+    build.addEventListener("click", () => {
+      preview.value = buildChineseCourseInquiry({
+        grade: query<HTMLInputElement>("#course-grade").value,
+        goal: query<HTMLTextAreaElement>("#course-goal").value,
+        timing: query<HTMLInputElement>("#course-timing").value,
+      }, composer.dataset.courseName);
+      status.textContent = "咨询稿已生成，请检查后复制。再次生成会替换你在咨询稿中的修改。";
+      build.textContent = "根据填写内容重新生成";
+      preview.focus();
+    });
+    copy.addEventListener("click", async () => {
+      copy.disabled = true;
+      const result = await copyInquiry(preview.value, (text: string) => navigator.clipboard.writeText(text), "zh-CN");
+      status.textContent = result.message;
+      if (!result.ok) { preview.focus(); preview.select(); }
+      copy.disabled = false;
+    });
+    preview.addEventListener("input", () => { status.textContent = "咨询稿已修改，请重新复制以使用最新内容。"; });
+    for (const selector of ["#course-grade", "#course-goal", "#course-timing"]) {
+      query(selector).addEventListener("input", () => { status.textContent = "填写内容已修改。点击生成咨询稿后，再检查并复制。"; });
+    }
+  }
+</script>
+<style>
+  .course-inquiry { max-width: 720px; margin-top: 28px; background: white; border: 1px solid var(--line); }
+  summary { display: flex; align-items: center; justify-content: space-between; min-height: 52px; padding: 14px 20px; font-weight: 600; cursor: pointer; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary span { transition: transform .15s; }
+  details[open] summary span { transform: rotate(45deg); }
+  .course-inquiry-body { padding: 4px 20px 24px; }
+  .course-inquiry-body > p { margin-top: 14px; }
+  .inquiry-note { font-size: 14px; color: var(--muted); }
+  fieldset { min-width: 0; border: 0; padding: 0; margin-top: 24px; }
+  legend { font-weight: 600; }
+  label { display: block; font-size: 16px; font-weight: 600; margin: 20px 0 8px; }
+  input, textarea { width: 100%; min-width: 0; border: 1px solid #8491a8; border-radius: 4px; padding: 12px; color: var(--ink); font: inherit; font-size: 16px; background: white; }
+  input { min-height: 48px; }
+  textarea { resize: vertical; }
+  button { margin-top: 20px; font: inherit; cursor: pointer; }
+  button:disabled { opacity: .65; cursor: wait; }
+  [hidden] { display: none !important; }
+  #course-copy-status { font-size: 15px; font-weight: 600; }
+  @media (prefers-reduced-motion: reduce) { summary span { transition: none; } }
+</style>
