@@ -3,6 +3,10 @@ export const currentProgram = {
   season: "Fall 2026",
   audience: "Grades 1–2",
   classes: 18,
+  units: 6,
+  classesPerUnit: 3,
+  practiceSeconds: [60, 90],
+  showcaseMinutes: 3,
   href: "/coaching/young-competition-speakers/",
   description:
     "Six three-class units build from a topic or role to a presentation, with 60–90 second practice speeches and a supported three-minute final showcase.",

@@ -130,6 +130,7 @@ em {
 .site-header nav {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 32px;
 }
 .site-header nav a {
@@ -155,6 +156,15 @@ em {
 }
 .mobile-navigation {
   display: none;
+}
+html[lang="zh-CN"] h1,
+html[lang="zh-CN"] h2,
+html[lang="zh-CN"] h3 {
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+html[lang="zh-CN"] .eyebrow {
+  letter-spacing: 0.04em;
 }
 .hero {
   display: grid;

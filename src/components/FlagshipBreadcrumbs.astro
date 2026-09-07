@@ -1,12 +1,13 @@
 ---
 interface Props {
   label: string;
+  language?: "en" | "zh-CN";
 }
-const { label } = Astro.props;
+const { label, language = "en" } = Astro.props;
 ---
 
-<nav class="breadcrumbs" aria-label="Breadcrumb">
-  <a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page"
+<nav class="breadcrumbs" aria-label={language === "zh-CN" ? "当前位置" : "Breadcrumb"}>
+  <a href="/">{language === "zh-CN" ? "首页（英文）" : "Home"}</a><span aria-hidden="true">/</span><span aria-current="page" lang="en"
     >{label}</span>
 </nav>
 <style>

@@ -2,7 +2,7 @@ import { readFile, stat } from "node:fs/promises";
 import assert from "node:assert/strict";
 import { structuredData } from "../src/lib/structuredData.mjs";
 
-const routes = ["/", "/coaching/", "/schools/", "/companies/", "/contact/", "/resources/", "/coaching/young-competition-speakers/", "/resources/one-object-story/", "/resources/explain-then-swap/", "/resources/one-minute-brief/"];
+const routes = ["/", "/coaching/", "/schools/", "/companies/", "/contact/", "/resources/", "/coaching/young-competition-speakers/", "/resources/one-object-story/", "/resources/explain-then-swap/", "/resources/one-minute-brief/", "/zh/coaching/young-competition-speakers/"];
 for (const route of routes) {
   const html = await readFile(`dist${route}index.html`, "utf8");
   const match = html.match(
@@ -14,7 +14,7 @@ for (const route of routes) {
     (x) => x["@id"] === `https://speakkai.com${route}#page`,
   );
   assert.equal(page.url, `https://speakkai.com${route}`);
-  assert.equal(page.inLanguage, "en");
+  assert.equal(page.inLanguage, route.startsWith("/zh/") ? "zh-CN" : "en");
   assert.equal(
     graph.find((x) => x["@type"] === "Organization").name,
     "SpeakKai",

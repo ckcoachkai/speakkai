@@ -24,7 +24,8 @@
     "capture:experiments": "node design-lab-v4/scripts/capture-tests.mjs",
     "sync:schedule": "node scripts/sync-google-sheet.mjs",
     "check:schedule-privacy": "node scripts/check-schedule-privacy.mjs",
-    "check:practice-content": "node scripts/check-practice-content.mjs"
+    "check:practice-content": "node scripts/check-practice-content.mjs",
+    "check:course-languages": "node scripts/check-course-languages.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

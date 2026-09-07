@@ -6,6 +6,7 @@ export function structuredData({
   service,
   breadcrumb,
   pageType = "WebPage",
+  language = "en",
 }) {
   const organization = {
     "@type": "Organization",
@@ -30,7 +31,7 @@ export function structuredData({
     url: `${origin}${path}`,
     name: title,
     description,
-    inLanguage: "en",
+    inLanguage: language,
     isPartOf: { "@id": `${origin}/#website` },
     ...(service ? { mainEntity: { "@id": `${origin}${path}#service` } } : {}),
   };
@@ -59,7 +60,7 @@ export function structuredData({
     graph.push({
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${origin}/` },
+        { "@type": "ListItem", position: 1, name: language === "zh-CN" ? "首页（英文）" : "Home", item: `${origin}/` },
         {
           "@type": "ListItem",
           position: 2,

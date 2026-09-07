@@ -12,6 +12,8 @@ interface Props {
   service?: string;
   breadcrumb?: string;
   noindex?: boolean;
+  language?: "en" | "zh-CN";
+  alternates?: Array<{ lang: string; href: string }>;
 }
 const {
   title = "SpeakKai | Communication Coaching, Keynotes & Training",
@@ -21,24 +23,27 @@ const {
   service,
   breadcrumb,
   noindex = false,
+  language = "en",
+  alternates = [],
 } = Astro.props;
+const chinese = language === "zh-CN";
 const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
 const navigation = [
-  { href: "/#work", label: "Work with Kai" },
-  { href: "/#story", label: "Meet Kai" },
-  { href: "/resources/", label: "Resources" },
-  { href: "/schedule/", label: "Schedule" },
+  { href: "/#work", label: chinese ? "课程与培训（英文）" : "Work with Kai" },
+  { href: "/#story", label: chinese ? "认识 Kai（英文）" : "Meet Kai" },
+  { href: "/resources/", label: chinese ? "练习资源（英文）" : "Resources" },
+  { href: "/schedule/", label: chinese ? "时间安排（英文）" : "Schedule" },
 ];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={language}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b1020" />
-    <meta name="speakkai-version" content="09" />
+    <meta name="speakkai-version" content="10" />
     {noindex && <meta name="robots" content="noindex" />}
     {
       !noindex && (
@@ -50,15 +55,19 @@ const navigation = [
             description,
             service,
             breadcrumb,
+            language,
             pageType: current === "contact" ? "ContactPage" : "WebPage",
           })}
         />
       )
     }
     <link rel="canonical" href={canonical} />
+    {alternates.map(item => <link rel="alternate" hreflang={item.lang} href={new URL(item.href, "https://speakkai.com").href} />)}
+    {alternates.length > 0 && <link rel="alternate" hreflang="x-default" href={new URL(alternates[0].href, "https://speakkai.com").href} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="SpeakKai" />
+    <meta property="og:locale" content={chinese ? "zh_CN" : "en_US"} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -75,10 +84,10 @@ const navigation = [
     />
     <title>{title}</title>
   </head>
-  <body class="flagship" data-version="09">
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body class="flagship" data-version="10">
+    <a class="skip-link" href="#main">{chinese ? "跳到正文" : "Skip to content"}</a>
     <header class="site-header">
-      <a class="brand" href="/" aria-label="SpeakKai home"
+      <a class="brand" href="/" aria-label={chinese ? "SpeakKai 首页（英文）" : "SpeakKai home"}
         ><span class="brand-image" aria-hidden="true"
           ><img
             src="/images/speakkai-logo-header-source.png"
@@ -88,21 +97,21 @@ const navigation = [
           /></span
         ><span lang="zh-CN">说开</span></a
       >
-      <nav class="desktop-navigation" aria-label="Main navigation">
+      <nav class="desktop-navigation" aria-label={chinese ? "主导航" : "Main navigation"}>
         {navigation.map(({ href, label }) => <a href={href}>{label}</a>)}
       </nav>
       <a class="header-cta" href={contactHref}
-        >Let’s talk <span aria-hidden="true">↗</span></a
+        >{chinese ? "联系 Kai" : "Let’s talk"} <span aria-hidden="true">↗</span></a
       >
       <details class="mobile-navigation">
-        <summary>Menu <span aria-hidden="true">+</span></summary>
-        <nav aria-label="Main navigation">
+        <summary>{chinese ? "菜单" : "Menu"} <span aria-hidden="true">+</span></summary>
+        <nav aria-label={chinese ? "主导航" : "Main navigation"}>
           {navigation.map(({ href, label }) => <a href={href}>{label}</a>)}
         </nav>
       </details>
     </header>
     <main id="main"><slot /></main>
-    <footer class="site-footer">
+    <footer class="site-footer" lang="en">
       <div>
         <a href="/" class="footer-brand"
           >SpeakKai<span lang="zh-CN">说开</span></a
