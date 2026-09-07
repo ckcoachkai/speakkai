@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "cms": "node scripts/start-cms.mjs",
+    "build:portrait": "node scripts/build-portrait-variants.mjs",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",

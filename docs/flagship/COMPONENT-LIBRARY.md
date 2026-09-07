@@ -1,4 +1,4 @@
-# Component library — working reference through V19
+# Component library — working reference through V21
 
 Reconcile this inventory with the final V30 source. Components live under `src/components`; the shared shell is under `src/layouts`.
 
@@ -6,6 +6,7 @@ Reconcile this inventory with the final V30 source. Components live under `src/c
 |---|---|---|
 | FlagshipLayout | Page shell, metadata, language, header/navigation, footer | One main landmark; real canonical; selected language; explicit alternatives; no unnecessary hydration |
 | FlagshipHome | Homepage hero, audience routes, current program, story, method and contact | Real portrait; visible offer paths; published resource links |
+| FlagshipMethodExamples | Compact audience examples inside the homepage method | Static links to exact examples; school title/time/link gated by published CMS record; localized course alternative |
 | FlagshipBreadcrumbs | Page ancestry and current label | Current page is identifiable; preserve linked ancestors |
 | FlagshipOfferPage | Student, school and company offer structure | Typed audience data, valid contact target, published related practices |
 | FlagshipCurrentProgram | Confirmed course entry | Derive course scope from currentProgram; avoid extra promises |
