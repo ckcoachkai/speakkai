@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import ToolsGallery from "../../components/ToolsGallery.astro";
 import FlagshipLayout from "../../layouts/FlagshipLayout.astro";
+import FlagshipChineseCourseEntry from "../../components/FlagshipChineseCourseEntry.astro";
 const audienceOrder = { coaching: 0, schools: 1, companies: 2 };
 const audienceLabels = { coaching: "Students & parents", schools: "Schools & educators", companies: "Adults & teams" };
 const lessons = (await getCollection("practice", ({ data }) => data.published)).sort((a, b) => audienceOrder[a.data.followUp] - audienceOrder[b.data.followUp] || a.data.title.localeCompare(b.data.title));
@@ -19,6 +20,7 @@ const lessons = (await getCollection("practice", ({ data }) => data.published)).
     </h1><p>
       Choose a practice for your child, your class or your team. Each one includes a guided round and a printable sheet.
     </p>
+    <FlagshipChineseCourseEntry />
   </section>
   <section class="wrap resource-lessons" aria-labelledby="practice-library-title">
     <h2 id="practice-library-title">Find your starting point.</h2>

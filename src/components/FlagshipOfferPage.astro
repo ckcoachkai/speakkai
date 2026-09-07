@@ -3,6 +3,7 @@ import type { Offer } from "../data/flagshipOffers";
 import { getCollection } from "astro:content";
 import FlagshipCurrentProgram from "./FlagshipCurrentProgram.astro";
 import FlagshipBreadcrumbs from "./FlagshipBreadcrumbs.astro";
+import FlagshipChineseCourseEntry from "./FlagshipChineseCourseEntry.astro";
 interface Props {
   offer: Offer;
 }
@@ -22,6 +23,7 @@ const lessons = await getCollection("practice", ({ data }) => data.published && 
       >Explore the formats <span aria-hidden="true">↓</span></a
     >
   </div>
+  {offer.slug === "coaching" && <FlagshipChineseCourseEntry />}
 </section>
 <section class="fit-section">
   <div class="wrap fit-grid">
