@@ -1,0 +1,71 @@
+---
+import FlagshipLayout from "../layouts/FlagshipLayout.astro";
+---
+
+<FlagshipLayout
+  title="Page not found | SpeakKai"
+  description="Find student coaching, school programs, corporate training and practice resources at SpeakKai."
+  noindex
+  contactHref="/contact/"
+>
+  <section class="wrap recovery">
+    <p class="eyebrow">404 / Page not found</p><h1>
+      Let’s find your<br /><em>next step.</em>
+    </h1>
+    <p>This address may have changed. Choose where you’d like to go.</p>
+    <div class="recovery-links">
+      <a href="/coaching/">Student coaching <span>↗</span></a><a
+        href="/schools/">School programs <span>↗</span></a
+      ><a href="/companies/">Keynotes & team training <span>↗</span></a><a
+        href="/resources/">Free practice resources <span>↗</span></a>
+    </div>
+    <div class="actions">
+      <a class="button" href="/"
+        >Back to home <span aria-hidden="true">↗</span></a
+      ><a class="text-link" href="/contact/">Contact Kai</a>
+    </div>
+  </section>
+</FlagshipLayout>
+<style>
+  .recovery {
+    padding-block: 64px 90px;
+    max-width: 900px;
+  }
+  .eyebrow {
+    color: var(--blue);
+  }
+  h1 {
+    font-size: clamp(42px, 6vw, 72px);
+    margin-top: 24px;
+  }
+  .recovery > p:not(.eyebrow) {
+    margin-top: 24px;
+    color: var(--muted);
+  }
+  .recovery-links {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 32px;
+  }
+  .recovery-links a {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-block: 22px;
+    border-bottom: 1px solid var(--line);
+    font-size: 17px;
+    text-decoration: none;
+  }
+  .recovery-links a:hover {
+    color: var(--blue);
+  }
+  @media (max-width: 600px) {
+    .recovery-links {
+      grid-template-columns: 1fr;
+    }
+    .recovery {
+      padding-top: 40px;
+    }
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import type { Offer } from "../data/flagshipOffers";
 import FlagshipCurrentProgram from "./FlagshipCurrentProgram.astro";
+import FlagshipBreadcrumbs from "./FlagshipBreadcrumbs.astro";
 interface Props {
   offer: Offer;
 }
@@ -8,7 +9,7 @@ const { offer } = Astro.props;
 ---
 
 <section class="offer-hero wrap">
-  <a class="back-link" href="/#work">← All coaching & training</a>
+  <FlagshipBreadcrumbs label={offer.audience} />
   <p class="eyebrow">{offer.audience}</p>
   <h1>{offer.headline}<br /><em>{offer.emphasis}</em></h1>
   <p class="hero-lead">{offer.introduction}</p>

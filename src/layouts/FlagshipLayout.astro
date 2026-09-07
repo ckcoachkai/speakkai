@@ -3,17 +3,24 @@ import "@fontsource/manrope/400.css";
 import "@fontsource/manrope/600.css";
 import "@fontsource/manrope/700.css";
 import "../styles/flagship.css";
+import { structuredData } from "../lib/structuredData.mjs";
 interface Props {
   title?: string;
   description?: string;
   current?: string;
   contactHref?: string;
+  service?: string;
+  breadcrumb?: string;
+  noindex?: boolean;
 }
 const {
   title = "SpeakKai | Communication Coaching, Keynotes & Training",
   description = "Build the speaker, not just the speech. Kai Liu offers public speaking coaching, school programs, keynotes and communication training in Shanghai and online.",
   current = "home",
   contactHref = "/#connect",
+  service,
+  breadcrumb,
+  noindex = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
 ---
@@ -25,7 +32,23 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b1020" />
-    <meta name="speakkai-version" content="03" />
+    <meta name="speakkai-version" content="04" />
+    {noindex && <meta name="robots" content="noindex" />}
+    {
+      !noindex && (
+        <script
+          type="application/ld+json"
+          set:html={structuredData({
+            path: Astro.url.pathname,
+            title,
+            description,
+            service,
+            breadcrumb,
+            pageType: current === "contact" ? "ContactPage" : "WebPage",
+          })}
+        />
+      )
+    }
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
@@ -46,7 +69,7 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
     />
     <title>{title}</title>
   </head>
-  <body class="flagship" data-version="03">
+  <body class="flagship" data-version="04">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <a class="brand" href="/" aria-label="SpeakKai home"

@@ -14,5 +14,8 @@ const { offer } = Astro.props;
 <FlagshipLayout
   title={offer.title}
   description={offer.description}
-  current="programs" contactHref="#next-step"><FlagshipOfferPage offer={offer} /></FlagshipLayout
+  service={offer.title.replace(" | SpeakKai", "")}
+  breadcrumb={offer.audience}
+  current="programs"
+  contactHref="#next-step"><FlagshipOfferPage offer={offer} /></FlagshipLayout
 >

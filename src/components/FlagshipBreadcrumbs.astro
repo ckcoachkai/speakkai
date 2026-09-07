@@ -1,0 +1,26 @@
+---
+interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+---
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page"
+    >{label}</span>
+</nav>
+<style>
+  .breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    font-size: 14px;
+    color: var(--muted);
+    padding-block: 8px;
+  }
+  .breadcrumbs a {
+    padding-block: 4px;
+    text-underline-offset: 4px;
+  }
+</style>
