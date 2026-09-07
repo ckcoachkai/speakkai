@@ -6,6 +6,7 @@ import { Image } from "astro:assets";
 import logo from "../assets/brand/speakkai-logo.png";
 import "../styles/flagship.css";
 import { structuredData } from "../lib/structuredData.mjs";
+import { pageAlternates, languageChoices, localizedPath, destinationLabel } from "../lib/siteLanguage.mjs";
 interface Props {
   title?: string;
   description?: string;
@@ -26,16 +27,20 @@ const {
   breadcrumb,
   noindex = false,
   language = "en",
-  alternates = [],
+  alternates: explicitAlternates = [],
 } = Astro.props;
 const chinese = language === "zh-CN";
+const alternates = explicitAlternates.length ? explicitAlternates : pageAlternates(Astro.url.pathname);
+const choices = languageChoices(Astro.url.pathname, language);
+const homeHref = chinese ? "/zh/" : "/";
+const contactTarget = chinese && contactHref === "/#connect" ? "/zh/#connect" : contactHref;
 const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
 const navigation = [
-  { href: "/#work", label: chinese ? "课程与培训（英文）" : "Work with Kai" },
-  { href: "/#story", label: chinese ? "认识 Kai（英文）" : "Meet Kai" },
-  { href: "/resources/", label: chinese ? "练习资源（英文）" : "Resources" },
-  { href: "/schedule/", label: chinese ? "时间安排（英文）" : "Schedule" },
-];
+  { href: "/#work", label: chinese ? "课程与培训" : "Work with Kai" },
+  { href: "/#story", label: chinese ? "认识 Kai" : "Meet Kai" },
+  { href: "/resources/", label: chinese ? "练习资源" : "Resources" },
+  { href: "/schedule/", label: chinese ? "时间安排" : "Schedule" },
+].map(item => ({ href: localizedPath(item.href,language), label: destinationLabel(item.label,item.href,language) }));
 ---
 
 <!doctype html>
@@ -45,7 +50,7 @@ const navigation = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b1020" />
-    <meta name="speakkai-version" content="21" />
+    <meta name="speakkai-version" content="22" />
     {noindex && <meta name="robots" content="noindex" />}
     {
       !noindex && (
@@ -86,10 +91,15 @@ const navigation = [
     />
     <title>{title}</title>
   </head>
-  <body class="flagship" data-version="21">
+  <body class="flagship" data-version="22">
     <a class="skip-link" href="#main">{chinese ? "跳到正文" : "Skip to content"}</a>
+    <div class="site-language-bar">
+      <div class="wrap site-language" role="group" aria-label={chinese ? "页面语言" : "Page language"}>
+        {choices.map(choice => <a href={choice.href} lang={choice.lang} aria-current={choice.current ? "page" : undefined}>{choice.label}</a>)}
+      </div>
+    </div>
     <header class="site-header">
-      <a class="brand" href="/" aria-label={chinese ? "SpeakKai 首页（英文）" : "SpeakKai home"}
+      <a class="brand" href={homeHref} aria-label={chinese ? "SpeakKai 首页" : "SpeakKai home"}
         ><span class="brand-image" aria-hidden="true"
           ><Image
             src={logo}
@@ -107,7 +117,7 @@ const navigation = [
       <nav class="desktop-navigation" aria-label={chinese ? "主导航" : "Main navigation"}>
         {navigation.map(({ href, label }) => <a href={href}>{label}</a>)}
       </nav>
-      <a class="header-cta" href={contactHref}
+      <a class="header-cta" href={contactTarget}
         >{chinese ? "联系 Kai" : "Let’s talk"} <span aria-hidden="true">↗</span></a
       >
       <details class="mobile-navigation">
@@ -118,22 +128,22 @@ const navigation = [
       </details>
     </header>
     <main id="main"><slot /></main>
-    <footer class="site-footer" lang="en">
+    <footer class="site-footer">
       <div>
-        <a href="/" class="footer-brand"
+        <a href={homeHref} class="footer-brand"
           >SpeakKai<span lang="zh-CN">说开</span></a
-        ><p>Clear thinking. Purposeful practice. Human connection.</p>
-      </div><nav aria-label="Footer navigation">
-        <a href="/#work">Coaching & training</a><a href="/schedule/">Schedule</a
-        ><a href="/resources/">Practice resources</a><a href="/contact/"
-          >Contact Kai</a
-        ><span class="footer-social">Xiaohongshu: CKcoachkai</span><a
+        ><p>{chinese ? "清楚地思考。有目的地练习。真诚地连接。" : "Clear thinking. Purposeful practice. Human connection."}</p>
+      </div><nav aria-label={chinese ? "页脚导航" : "Footer navigation"}>
+        <a href={localizedPath("/#work",language)}>{chinese ? "辅导与培训" : "Coaching & training"}</a><a href="/schedule/">{chinese ? "时间安排（英文）" : "Schedule"}</a
+        ><a href={localizedPath("/resources/",language)}>{destinationLabel(chinese ? "练习资源" : "Practice resources","/resources/",language)}</a><a href={chinese ? "/zh/#connect" : "/contact/"}
+          >{chinese ? "联系 Kai" : "Contact Kai"}</a
+        ><span class="footer-social">{chinese ? "小红书" : "Xiaohongshu"}: <span lang="en">CKcoachkai</span></span><a
           href="https://kr.pinterest.com/ckcoachkai/"
           target="_blank"
           rel="noreferrer">Pinterest ↗</a
         >
       </nav><p class="footer-note">
-        © {new Date().getFullYear()} SpeakKai · Shanghai & online
+        © {new Date().getFullYear()} SpeakKai · {chinese ? "上海与线上" : "Shanghai & online"}
       </p>
     </footer>
   </body>

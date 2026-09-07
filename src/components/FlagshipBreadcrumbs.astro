@@ -8,7 +8,7 @@ const { label, language = "en", labelLanguage = "en" } = Astro.props;
 ---
 
 <nav class="breadcrumbs" aria-label={language === "zh-CN" ? "当前位置" : "Breadcrumb"}>
-  <a href="/">{language === "zh-CN" ? "首页（英文）" : "Home"}</a><span aria-hidden="true">/</span><span aria-current="page" lang={labelLanguage}
+  <a href={language === "zh-CN" ? "/zh/" : "/"}>{language === "zh-CN" ? "首页" : "Home"}</a><span aria-hidden="true">/</span><span aria-current="page" lang={labelLanguage}
     >{label}</span>
 </nav>
 <style>

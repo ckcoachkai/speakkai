@@ -1,9 +1,10 @@
 import { readFile, stat, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import assert from "node:assert/strict";
+import { flagshipRoutes } from "./flagship-routes.mjs";
 
 const root = path.resolve("dist");
-const routes = process.argv.slice(2).length ? process.argv.slice(2) : ["/"];
+const routes = process.argv.slice(2).length ? process.argv.slice(2) : flagshipRoutes;
 const decodeAttribute = value => value.replace(/&(?:#(x[0-9a-f]+|[0-9]+)|(amp|quot|apos|lt|gt));/gi, (match, numeric, named) => {
   if (numeric) {
     const point = numeric[0].toLowerCase() === "x" ? parseInt(numeric.slice(1), 16) : Number(numeric);

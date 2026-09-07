@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import path from "node:path";
 
 // Conservative referenced-file inventory, not a network waterfall or Core Web Vitals test.
-const routes = ["/", "/coaching/", "/schools/", "/companies/", "/contact/", "/resources/", "/coaching/young-competition-speakers/", "/zh/coaching/young-competition-speakers/", "/resources/one-object-story/", "/resources/explain-then-swap/", "/resources/one-minute-brief/", "/zh/resources/one-object-story/"];
+import { flagshipRoutes as routes } from "./flagship-routes.mjs";
 const root = path.resolve("dist");
 const origin = "https://speakkai.com";
 const cache = new Map();

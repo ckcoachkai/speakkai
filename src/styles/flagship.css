@@ -107,6 +107,11 @@ em {
   position: relative;
   z-index: 20;
 }
+.site-language-bar { background: var(--wash); border-bottom: 1px solid var(--line); }
+.site-language { display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
+.site-language a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 12px; font-size: 14px; text-decoration: none; color: var(--muted); }
+.site-language a[aria-current="page"] { color: var(--ink); font-weight: 700; text-decoration: underline; text-underline-offset: 5px; }
+.site-language a:hover { color: var(--blue); text-decoration: underline; text-underline-offset: 5px; }
 .brand {
   display: flex;
   align-items: center;

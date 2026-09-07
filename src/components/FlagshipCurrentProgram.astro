@@ -1,18 +1,23 @@
 ---
 import { currentProgram as program } from "../data/currentProgram";
+import { courseCopy } from "../data/courseCopy";
+interface Props { language?: "en" | "zh-CN" }
+const { language = "en" } = Astro.props;
+const chinese = language === "zh-CN";
+const copy = courseCopy[language];
 ---
 
 <section class="current-program wrap" aria-labelledby="current-program-title">
   <div>
     <p class="eyebrow">
-      {program.season} · {program.audience} · {program.classes} classes
+      {copy.season} · {copy.audience} · {program.classes}{chinese ? " 节课" : " classes"}
     </p>
-    <h2 id="current-program-title">{program.name}</h2>
+    <h2 id="current-program-title" lang="en">{program.name}</h2>
     <p>
-      Short, achievable speaking challenges. {program.description}
+      {chinese ? `从简短、可尝试的表达挑战开始。${program.units} 个单元，每单元 ${program.classesPerUnit} 节课，从主题或角色出发，逐步搭建并呈现内容；平时练习 ${program.practiceSeconds[0]}–${program.practiceSeconds[1]} 秒演讲，并在支持下完成 ${program.showcaseMinutes} 分钟期末展示。` : `Short, achievable speaking challenges. ${program.description}`}
     </p>
   </div>
-  <a class="button" href={program.href}
-    >Explore the course <span aria-hidden="true">↗</span></a
+  <a class="button" href={chinese ? `/zh${program.href}` : program.href}
+    >{chinese ? "了解课程" : "Explore the course"} <span aria-hidden="true">↗</span></a
   >
 </section>

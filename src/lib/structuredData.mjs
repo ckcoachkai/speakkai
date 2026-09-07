@@ -60,7 +60,7 @@ export function structuredData({
     graph.push({
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: language === "zh-CN" ? "首页（英文）" : "Home", item: `${origin}/` },
+        { "@type": "ListItem", position: 1, name: language === "zh-CN" ? "首页" : "Home", item: language === "zh-CN" ? `${origin}/zh/` : `${origin}/` },
         {
           "@type": "ListItem",
           position: 2,

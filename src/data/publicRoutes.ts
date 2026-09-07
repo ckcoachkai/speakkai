@@ -1,6 +1,7 @@
 // Deliberately curated. Excludes experiments, schedule, itinerary, lab and redirects.
 export const publicRoutes = [
   "/",
+  "/zh/",
   "/coaching/",
   "/schools/",
   "/companies/",

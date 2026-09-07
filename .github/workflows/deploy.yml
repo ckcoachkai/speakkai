@@ -48,9 +48,10 @@ jobs:
       - name: Verify flagship pages and inquiry behavior
         run: |
           node --test scripts/check-inquiry.mjs
-          node scripts/check-flagship.mjs / /coaching/ /schools/ /companies/ /contact/ /resources/ /coaching/young-competition-speakers/ /zh/coaching/young-competition-speakers/ /resources/one-object-story/ /resources/explain-then-swap/ /resources/one-minute-brief/ /zh/resources/one-object-story/
+          node scripts/check-flagship.mjs
           node scripts/check-flagship-seo.mjs
           node scripts/check-course-languages.mjs
+          node scripts/check-site-languages.mjs
           node scripts/check-course-editorial.mjs
           node scripts/check-practice-content.mjs
           node scripts/check-flagship-budget.mjs
