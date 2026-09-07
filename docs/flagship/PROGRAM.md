@@ -35,5 +35,5 @@ Scores in category order: 2,2,1,2,2,3,2,2,3,2,2 = 23/55. Other browser engines: 
 - Branch: `codex/speakkai-flagship-30`
 - Research: `C:\Users\kai\Documents\ChatGPT\HQ\outputs\speakkai-flagship-research`
 - Preview: `http://127.0.0.1:4326/`
-- V29 completed and live. Completed live cycles: 29/30. Champion V29 (47.25/55). V30 covers final reading/print polish, verification and handover. Astro retained at the V25 architecture gate.
+- V30 completed and live. Completed live cycles: 30/30. Champion V30 (47.5/55, heuristic only). All nine deliverables are indexed in HANDOVER.md. Final product commit 9995ed0d6ecd7748c356fd0849de410f08eac1ff; successful workflow 34130621019. Astro retained at the V25 architecture gate.
 - See cycle records and `releases.json` for exact completed releases. Do not infer completion from source versions alone.

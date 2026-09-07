@@ -2,7 +2,7 @@
 
 [English website](https://speakkai.com/) · [中文网站](https://speakkai.com/zh/) · [Visual practice](https://speakkai.com/watch/) · [中文视觉练习](https://speakkai.com/zh/watch/).
 
-The V30 package contains all nine requested deliverables. PROGRAM.md, cycles/30.md and releases.json establish completed release status; this inventory alone does not.
+All 30 cycles are complete and live-verified. V30 contains all nine requested deliverables. Product commit: 9995ed0d6ecd7748c356fd0849de410f08eac1ff; successful workflow: 34130621019; rollback product: cbd1faf8a6c74522bb51491184b3b9e9f774510f. PROGRAM.md, cycles/30.md and releases.json contain the full evidence.
 
 | Deliverable | Implementation and guide |
 |---|---|
