@@ -19,5 +19,8 @@ for(const [language,route] of [['en','watch'],['zh','zh/watch']]) {
   assert.ok(html.includes('/media/rehearsal-stage.webp'));
   assert.ok(html.includes(language==='en'?'It does not depict a SpeakKai venue':'并非 SpeakKai 的实际场地'));
   assert.ok(html.includes(language==='en'?'Pause, listen, try once more':'停一下，听一听，再试一次'));
+  assert.ok(html.includes('/media/umbrella-story.webp'));
+  assert.ok(html.includes(language==='en'?'AI-generated fictional illustration':'AI 生成虚构插图'));
+  assert.ok(html.includes(language==='en'?'Only the first sentence describes a visible detail':'只有第一句描述了画面中看得见的细节'));
 }
 console.log('Premium media PASS: verified rendered asset hashes, 18-second silent H264, native controls, no autoplay/preload and complete bilingual HTML.');

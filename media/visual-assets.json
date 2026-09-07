@@ -8,5 +8,15 @@
     "height": 720,
     "sha256": "0d5c52026d588c8c19336aae326030aac08d94fa2b4f84275de2ecfb8d0ca888",
     "fictional": true
+  },
+  {
+    "file": "umbrella-story.webp",
+    "generator": "Built-in image_gen",
+    "source": "media/story/umbrella-source.png",
+    "bytes": 159342,
+    "width": 960,
+    "height": 720,
+    "sha256": "52d378c4c4e11433df8740139222edb09a9542ed5c1eb4b31494cfa0c01aca3a",
+    "fictional": true
   }
 ]

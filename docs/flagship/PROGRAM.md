@@ -35,5 +35,5 @@ Scores in category order: 2,2,1,2,2,3,2,2,3,2,2 = 23/55. Other browser engines: 
 - Branch: `codex/speakkai-flagship-30`
 - Research: `C:\Users\kai\Documents\ChatGPT\HQ\outputs\speakkai-flagship-research`
 - Preview: `http://127.0.0.1:4326/`
-- V26 completed and live. Completed live cycles: 26/30. Champion V26 (46.5/55). V27 begins original Blender rehearsal illustration. Astro retained at the V25 architecture gate.
+- V27 completed and live. Completed live cycles: 27/30. Champion V27 (46.75/55). V28 begins an original AI story illustration. Astro retained at the V25 architecture gate.
 - See cycle records and `releases.json` for exact completed releases. Do not infer completion from source versions alone.
