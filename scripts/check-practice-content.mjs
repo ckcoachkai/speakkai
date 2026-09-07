@@ -1,6 +1,8 @@
 import { readFile, readdir, stat } from "node:fs/promises";
 import assert from "node:assert/strict";
 import path from "node:path";
+import { translatedPracticeSlugs, publishedTranslatedPracticeSlugs } from "../src/lib/practiceAvailability.mjs";
+import { languagePairs } from "../src/lib/siteLanguage.mjs";
 
 const read = file => readFile(file, "utf8");
 const escape = s => s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
@@ -8,6 +10,30 @@ const files = (await readdir("src/content/practice")).filter(file => file.endsWi
 const index = await read("dist/resources/index.html");
 const sitemap = await read("dist/sitemap.xml");
 const editorNotes = [];
+const zhIndex = await read('dist/zh/resources/index.html');
+for (const slug of translatedPracticeSlugs) {
+  const source = JSON.parse(await read(`src/content/practice/${slug}.json`));
+  const route = `/zh/resources/${slug}/`;
+  const target = `dist${route}index.html`;
+  if (!source.published) {
+    assert.equal(await stat(target).catch(() => null),null,`Chinese draft emitted: ${slug}`);
+    assert.ok(!zhIndex.includes(route));
+    assert.ok(!sitemap.includes(route));
+    assert.ok(!languagePairs.some(pair => pair.includes(route)));
+    continue;
+  }
+  assert.ok(publishedTranslatedPracticeSlugs.includes(slug));
+  const html = await read(target);
+  assert.ok(zhIndex.includes(route));
+  assert.ok(sitemap.includes(route));
+  assert.ok(html.includes('不录音，也不保存进度'));
+  assert.ok(html.includes('href="/zh/resources/"'));
+  const times = [...html.matchAll(/class="step-time"[^>]*>(\d+) 分钟/g)].map(m => Number(m[1]));
+  assert.deepEqual(times,source.steps.map(step => step.minutes));
+  assert.equal(times.reduce((sum,n)=>sum+n,0),source.minutes);
+  if (slug === 'explain-then-swap') for (const text of ['不需要分享私人经历','不评价对方这个人','不对表达者进行排名','/zh/schools/#next-step']) assert.ok(html.includes(text),text);
+  if (slug === 'one-minute-brief') for (const text of ['不要编造证据或结果','45–60 秒','不评价表达者的性格或口音','并不预测建议是否会获批','/zh/companies/#next-step']) assert.ok(html.includes(text),text);
+}
 let published = 0;
 let drafts = 0;
 for (const file of files) {

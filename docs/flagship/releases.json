@@ -222,6 +222,16 @@
       "score": 45.25,
       "status": "live-verified",
       "rollbackCommit": "6ab79ea8c2d9bb6d3d66592bc2c7be462a17c115"
+    },
+    {
+      "version": "23",
+      "commit": "2ca8f16b624d895c5d403dd01352ba18b8722d24",
+      "workflowRun": 34120705641,
+      "url": "https://speakkai.com/",
+      "verifiedAt": "2026-09-07",
+      "score": 45.5,
+      "status": "live-verified",
+      "rollbackCommit": "711d1949e560f900d0909ee8631aaf0d6b51c907"
     }
   ]
 }

@@ -1,8 +1,4 @@
 export type PracticeLanguage = "en" | "zh-CN";
-export const storyLanguages = [
-  { lang: "en", label: "English", href: "/resources/one-object-story/" },
-  { lang: "zh-CN", label: "中文", href: "/zh/resources/one-object-story/" },
-];
 export const practiceLabels = {
   en: {
     pageTitle: "Free Speaking Practice", language: "Practice language", reset: "Changing language starts a new practice.",
@@ -29,7 +25,7 @@ export const practiceLabels = {
     prompts: "可以记住的提示", ownWords: "提示只是起点。表达者可以使用自己的话。",
     listener: "给倾听者", try: "试着说：", small: "每次只调整一点，让再次开口变得容易。",
     reflection: "下次我想尝试的一件事", reflectionNote: "说出来，或者在这里写下几个词。",
-    boundary: "这是独立的示例练习，不是测试，也不是一节完整课程。", allResources: "所有练习资源（英文）",
+    boundary: "这是独立的示例练习，不是测试，也不是一节完整课程。", allResources: "所有练习资源",
     course: "了解秋季课程", guided: "分步练习：", oneStep: "一次练习一步",
     progressIntro: (n: number) => `共 ${n} 步 · 按自己的节奏练习`,
     progress: (n: number, total: number, minutes: number) => `第 ${n} 步，共 ${total} 步 · 约 ${minutes} 分钟`,

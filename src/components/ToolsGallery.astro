@@ -9,8 +9,10 @@ import {
 } from "@lucide/astro";
 interface Props {
   headingLevel?: "h2" | "h3";
+  language?: "en" | "zh-CN";
 }
-const { headingLevel = "h2" } = Astro.props;
+const { headingLevel = "h2", language = "en" } = Astro.props;
+const chinese = language === "zh-CN";
 const Heading = headingLevel;
 
 const tools = [
@@ -65,11 +67,19 @@ const tools = [
     icon: Swords,
   },
 ];
+const chineseTools = [
+  {name:'弹珠点名器',description:'释放代表参与者的弹珠，让物理轨道选出下一位参与者。',imageAlt:'弹珠点名器物理轨道预览',label:'课堂游戏'},
+  {name:'课堂比划猜词',description:'使用提示、计时器和实时小组计分，组织快速的比划猜词活动。',imageAlt:'课堂比划猜词游戏界面预览',label:'课堂游戏'},
+  {name:'Toastmasters 演讲计时器',description:'用清晰的计时信号，为演讲、点评与即兴演讲计时。',imageAlt:'Toastmasters 演讲计时器预览',label:'表达工具'},
+  {name:'随机点名转盘',description:'用可自定义的彩色随机转盘，选择下一位参与者。',imageAlt:'随机点名转盘预览',label:'课堂游戏'},
+  {name:'演讲与辩论计时器',description:'用于演讲与辩论竞赛及课堂活动的计时。',imageAlt:'学生演讲与辩论计时器预览',label:'竞赛工具'},
+];
+const visibleTools = tools.map((tool,index) => chinese ? {...tool,...chineseTools[index]} : tool);
 ---
 
-<div class="tools-grid" aria-label="Available tools">
+<div class="tools-grid" aria-label={chinese ? "可用工具" : "Available tools"}>
   {
-    tools.map((tool) => {
+    visibleTools.map((tool) => {
       const Icon = tool.icon;
       return (
         <article class="tool-card">
@@ -90,7 +100,7 @@ const tools = [
             <Heading class="tool-title">{tool.name}</Heading>
             <p>{tool.description}</p>
             <a class="tool-link" href={tool.href}>
-              Open tool
+              {chinese ? "打开工具（英文）" : "Open tool"}
               <ArrowRight size={17} stroke-width={2.2} aria-hidden="true" />
             </a>
           </div>

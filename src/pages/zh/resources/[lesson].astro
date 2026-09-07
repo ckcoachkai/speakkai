@@ -1,10 +1,12 @@
 ---
-import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import FlagshipPracticePage from "../../../components/FlagshipPracticePage.astro";
-import { storyChinese } from "../../../data/storyChinese";
+import { practiceChinese } from "../../../data/practiceChinese";
+import { publishedTranslatedPracticeSlugs } from "../../../lib/practiceAvailability.mjs";
 export async function getStaticPaths() {
-  const source = await getEntry("practice", "one-object-story");
-  return source?.data.published ? [{ params: { lesson: "one-object-story" } }] : [];
+  const sources = await getCollection("practice", ({data}) => data.published);
+  return sources.filter(source => publishedTranslatedPracticeSlugs.includes(source.id)).map(source => ({params:{lesson:source.id},props:{slug:source.id,data:practiceChinese[source.id]}}));
 }
+const {slug,data} = Astro.props;
 ---
-<FlagshipPracticePage data={storyChinese} slug="one-object-story" language="zh-CN" />
+<FlagshipPracticePage data={data} slug={slug} language="zh-CN" />
