@@ -1,0 +1,18 @@
+---
+import FlagshipLayout from "../layouts/FlagshipLayout.astro";
+import FlagshipOfferPage from "../components/FlagshipOfferPage.astro";
+import { flagshipOffers } from "../data/flagshipOffers";
+export function getStaticPaths() {
+  return flagshipOffers.map((offer) => ({
+    params: { offer: offer.slug },
+    props: { offer },
+  }));
+}
+const { offer } = Astro.props;
+---
+
+<FlagshipLayout
+  title={offer.title}
+  description={offer.description}
+  current="programs" contactHref="#next-step"><FlagshipOfferPage offer={offer} /></FlagshipLayout
+>

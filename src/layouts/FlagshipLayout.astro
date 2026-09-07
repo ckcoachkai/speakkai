@@ -7,11 +7,13 @@ interface Props {
   title?: string;
   description?: string;
   current?: string;
+  contactHref?: string;
 }
 const {
   title = "SpeakKai | Communication Coaching, Keynotes & Training",
   description = "Build the speaker, not just the speech. Kai Liu offers public speaking coaching, school programs, keynotes and communication training in Shanghai and online.",
   current = "home",
+  contactHref = "/#connect",
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
 ---
@@ -23,7 +25,7 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b1020" />
-    <meta name="speakkai-version" content="01" />
+    <meta name="speakkai-version" content="02" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
@@ -44,7 +46,7 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
     />
     <title>{title}</title>
   </head>
-  <body class="flagship" data-version="01">
+  <body class="flagship" data-version="02">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <a class="brand" href="/" aria-label="SpeakKai home"
@@ -60,14 +62,13 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
       <nav aria-label="Main navigation">
         <a
           href="/#work"
-          aria-current={current === "programs" ? "page" : undefined}
           >Work with Kai</a
         ><a
           href="/#story"
           aria-current={current === "about" ? "page" : undefined}>Meet Kai</a
         ><a href="/resources/">Resources</a><a href="/schedule/">Schedule</a>
       </nav>
-      <a class="header-cta" href="/#connect"
+      <a class="header-cta" href={contactHref}
         >Let’s talk <span aria-hidden="true">↗</span></a
       >
     </header>
@@ -84,7 +85,8 @@ const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
         ><span class="footer-social">Xiaohongshu: CKcoachkai</span><a
           href="https://kr.pinterest.com/ckcoachkai/"
           target="_blank"
-          rel="noreferrer">Pinterest ↗</a>
+          rel="noreferrer">Pinterest ↗</a
+        >
       </nav><p class="footer-note">
         © {new Date().getFullYear()} SpeakKai · Shanghai & online
       </p>

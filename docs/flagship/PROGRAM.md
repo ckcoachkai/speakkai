@@ -35,5 +35,6 @@ Scores in category order: 2,2,1,2,2,3,2,2,3,2,2 = 23/55. Other browser engines: 
 - Branch: `codex/speakkai-flagship-30`
 - Research: `C:\Users\kai\Documents\ChatGPT\HQ\outputs\speakkai-flagship-research`
 - Preview: `http://127.0.0.1:4326/`
-- V01 in validation. Completed live cycles: 0/30. Champion V00 until deployment gates pass.
+- V01 completed and live. Completed live cycles: 1/30. Champion V01. V02 begins with dedicated offer pages.
 - See cycle records and `releases.json` for exact completed releases. Do not infer completion from source versions alone.
+
