@@ -197,7 +197,7 @@ const inquiry = chinese ? "#course-contact" : "/contact/?audience=coaching";
   @media (max-width: 760px) {
     .course-direct-contact { grid-template-columns: minmax(0, 1fr); gap: 28px; }
     .course-facts {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 7em), 1fr));
       gap: 24px 16px;
     }
     dd {
@@ -210,7 +210,7 @@ const inquiry = chinese ? "#course-contact" : "/contact/?audience=coaching";
       gap: 34px;
     }
     .role-list {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 7em), 1fr));
     }
     .course-intro {
       padding-top: 24px;

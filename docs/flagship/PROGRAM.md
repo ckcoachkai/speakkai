@@ -35,5 +35,5 @@ Scores in category order: 2,2,1,2,2,3,2,2,3,2,2 = 23/55. Other browser engines: 
 - Branch: `codex/speakkai-flagship-30`
 - Research: `C:\Users\kai\Documents\ChatGPT\HQ\outputs\speakkai-flagship-research`
 - Preview: `http://127.0.0.1:4326/`
-- V14 completed and live. Completed live cycles: 14/30. Champion V14. V15 extends the Astro + React + CMS phase.
+- V15 completed and live. Completed live cycles: 15/30. Champion V15. V16 begins the evidence-led architecture review phase.
 - See cycle records and `releases.json` for exact completed releases. Do not infer completion from source versions alone.

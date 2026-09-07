@@ -110,13 +110,14 @@ const nextStep = nextSteps[data.followUp];
   }
   .practice-steps li {
     display: grid;
-    grid-template-columns: 50px 1fr;
+    grid-template-columns: minmax(50px, max-content) minmax(0, 1fr);
     gap: 25px;
     border-top: 1px solid var(--line);
     padding-block: 28px;
     break-inside: avoid;
   }
   .step-number {
+    white-space: nowrap;
     color: var(--blue);
     font-size: 22px;
     font-weight: 600;
@@ -189,7 +190,7 @@ const nextStep = nextSteps[data.followUp];
       padding: 24px;
     }
     .practice-steps li {
-      grid-template-columns: 32px 1fr;
+      grid-template-columns: minmax(32px, max-content) minmax(0, 1fr);
       gap: 14px;
     }
     .practice-steps h2 {
