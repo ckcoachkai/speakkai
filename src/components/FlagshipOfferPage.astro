@@ -5,15 +5,23 @@ import FlagshipCurrentProgram from "./FlagshipCurrentProgram.astro";
 import FlagshipBreadcrumbs from "./FlagshipBreadcrumbs.astro";
 import FlagshipChineseCourseEntry from "./FlagshipChineseCourseEntry.astro";
 import FlagshipBriefExample from "./FlagshipBriefExample.astro";
+import { localizedPath, destinationLabel } from "../lib/siteLanguage.mjs";
 interface Props {
   offer: Offer;
+  language?: "en" | "zh-CN";
 }
-const { offer } = Astro.props;
+const { offer, language = "en" } = Astro.props;
+const chinese = language === "zh-CN";
+const tr = (english: string, translated: string) => chinese ? translated : english;
+const link = (path: string) => localizedPath(path, language);
+const label = (text: string, path: string) => destinationLabel(text, path, language);
+const inquiryHref = link(`/contact/?audience=${offer.slug}`);
+const practiceTitles: Record<string, string> = { "one-object-story": "一个物品的故事", "explain-then-swap": "解释一个想法，再交换角色", "one-minute-brief": "一分钟简报" };
 const lessons = await getCollection("practice", ({ data }) => data.published && data.followUp === offer.slug);
 ---
 
 <section class="offer-hero wrap">
-  <FlagshipBreadcrumbs label={offer.audience} />
+  <FlagshipBreadcrumbs label={offer.audience} language={language} labelLanguage={language} />
   <p class="eyebrow">{offer.audience}</p>
   <h1>{offer.headline}<br /><em>{offer.emphasis}</em></h1>
   <p class="hero-lead">{offer.introduction}</p>
@@ -21,24 +29,24 @@ const lessons = await getCollection("practice", ({ data }) => data.published && 
     <a class="button" href="#next-step"
       >{offer.label}<span aria-hidden="true">↗</span></a
     ><a class="text-link" href="#formats"
-      >Explore the formats <span aria-hidden="true">↓</span></a
+      >{tr("Explore the formats", "了解合作形式")} <span aria-hidden="true">↓</span></a
     >
   </div>
-  {offer.slug === "coaching" && <FlagshipChineseCourseEntry />}
-  {offer.slug === "companies" && <p class="section-note"><a class="text-link" href="#brief-example">See a coaching example <span aria-hidden="true">↓</span></a></p>}
+  {offer.slug === "coaching" && !chinese && <FlagshipChineseCourseEntry />}
+  {offer.slug === "companies" && <p class="section-note"><a class="text-link" href="#brief-example">{tr("See a coaching example", "查看辅导示例")} <span aria-hidden="true">↓</span></a></p>}
 </section>
 <section class="fit-section">
   <div class="wrap fit-grid">
     <div>
-      <p class="eyebrow">Is this the right fit?</p><h2>{offer.fitTitle}</h2>
+      <p class="eyebrow">{tr("Is this the right fit?", "适合谁")}</p><h2>{offer.fitTitle}</h2>
     </div><ul>{offer.fit.map((item) => <li>{item}</li>)}</ul>
   </div>
 </section>
 <section class="section wrap" id="formats">
   <div class="section-heading">
-    <p class="eyebrow">Ways to work together</p><h2>
-      Choose a direction.<br /><span class="muted"
-        >Shape the details with Kai.</span
+    <p class="eyebrow">{tr("Ways to work together", "合作形式")}</p><h2>
+      {tr("Choose a direction.", "选择一个方向。")}<br /><span class="muted"
+        >{tr("Shape the details with Kai.", "与 Kai 一起商定细节。")}</span
       >
     </h2>
   </div><div class="offer-grid">
@@ -49,27 +57,27 @@ const lessons = await getCollection("practice", ({ data }) => data.published && 
             <span class="index">0{index + 1}</span>
             <h3>{format.title}</h3>
             <p>{format.detail}</p>
-            {format.prepare && <p class="format-prepare"><strong>Bring to the conversation</strong>{format.prepare}</p>}
-            {offer.slug === "schools" && format.schoolDirection && <a class="text-link" href={`/contact/?audience=schools&schoolDirection=${format.schoolDirection}`}>Discuss this direction <span class="sr-only">: {format.title}</span><span aria-hidden="true">↗</span></a>}
+            {format.prepare && <p class="format-prepare"><strong>{tr("Bring to the conversation", "可以先准备这些信息")}</strong>{format.prepare}</p>}
+            {offer.slug === "schools" && format.schoolDirection && <a class="text-link" href={link(`/contact/?audience=schools&schoolDirection=${format.schoolDirection}`)}>{label(tr("Discuss this direction", "讨论这个方向"), "/contact/")} <span class="sr-only">: {format.title}</span><span aria-hidden="true">↗</span></a>}
           </>
         </article>
       ))
     }
   </div><p class="section-note">
-    Scope, delivery, fees and availability are confirmed in conversation.
+    {tr("Scope, delivery, fees and availability are confirmed in conversation.", "范围、授课形式、费用与可安排时间，均在交流中确认。")}
   </p>
   {offer.slug === "schools" && <aside class="school-preparation" aria-labelledby="school-prepare-title">
-    <h3 id="school-prepare-title">What we confirm together</h3>
-    <p>Share your timetable, room or online setup, staff roles and safeguarding or supervision requirements. Discuss scope, materials, responsibilities, fees and availability with Kai before confirming a session.</p>
-    <p class="section-note">An initial brief can stay general. You do not need student names or individual records.</p>
+    <h3 id="school-prepare-title">{tr("What we confirm together", "我们需要共同确认的事项")}</h3>
+    <p>{tr("Share your timetable, room or online setup, staff roles and safeguarding or supervision requirements. Discuss scope, materials, responsibilities, fees and availability with Kai before confirming a session.", "请说明时间安排、场地或线上设置、教职人员职责，以及学生保护或监督要求。确认活动前，与 Kai 商定范围、材料、职责、费用与可安排时间。")}</p>
+    <p class="section-note">{tr("An initial brief can stay general. You do not need student names or individual records.", "初次介绍提供一般情况即可，不需要学生姓名或个人记录。")}</p>
   </aside>}
 </section>
-{offer.slug === "coaching" && <FlagshipCurrentProgram />}
+{offer.slug === "coaching" && <FlagshipCurrentProgram language={language} />}
 <section class="practice-section">
   <div class="wrap">
     <div class="section-heading">
-      <p class="eyebrow">What the practice develops</p><h2>
-        Progress you can<br /><em>put into practice.</em>
+      <p class="eyebrow">{tr("What the practice develops", "练习可以培养什么")}</p><h2>
+        {tr("Progress you can", "把进步落实到")}<br /><em>{tr("put into practice.", "下一次表达。")}</em>
       </h2>
     </div><ol class="method-grid">
       {
@@ -95,21 +103,21 @@ const lessons = await getCollection("practice", ({ data }) => data.published && 
   .school-preparation > p { max-width: 76ch; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 </style>
-{offer.slug === "companies" ? <FlagshipBriefExample practiceHref={lessons.find(lesson => lesson.id === "one-minute-brief") ? "/resources/one-minute-brief/" : undefined} /> : <section class="section wrap exercise-section">
+{offer.slug === "companies" ? <FlagshipBriefExample language={language} practiceHref={lessons.find(lesson => lesson.id === "one-minute-brief") ? link("/resources/one-minute-brief/") : undefined} /> : <section class="section wrap exercise-section">
   <div>
-    <p class="eyebrow">Try a speaking prompt</p><h2>{offer.example.title}</h2><p
+    <p class="eyebrow">{tr("Try a speaking prompt", "试一个表达练习")}</p><h2>{offer.example.title}</h2><p
     >
       {offer.example.prompt}
     </p><p class="section-note">
-      Try it aloud, then choose one thing to make clearer.
+      {tr("Try it aloud, then choose one thing to make clearer.", "先说出来，再选择一处，让它更清楚。")}
     </p>
-    {lessons.length > 0 && <nav aria-label="Related practice">{lessons.map(lesson => <p class="section-note"><a class="text-link" href={`/resources/${lesson.id}/`}>Free activity: {lesson.data.title} <span aria-hidden="true">↗</span></a></p>)}</nav>}
+    {lessons.length > 0 && <nav aria-label={tr("Related practice", "相关练习")}>{lessons.map(lesson => <p class="section-note"><a class="text-link" href={link(`/resources/${lesson.id}/`)}>{label(chinese ? `免费练习：${practiceTitles[lesson.id] ?? lesson.data.title}` : `Free activity: ${lesson.data.title}`, `/resources/${lesson.id}/`)} <span aria-hidden="true">↗</span></a></p>)}</nav>}
   </div><ol>{offer.example.steps.map((step) => <li>{step}</li>)}</ol>
 </section>}
 <section class="faq-section wrap" aria-labelledby="faq-title">
   <div class="section-heading">
-    <p class="eyebrow">Before you decide</p><h2 id="faq-title">
-      A few useful answers.
+    <p class="eyebrow">{tr("Before you decide", "决定之前")}</p><h2 id="faq-title">
+      {tr("A few useful answers.", "你可能想了解的事。")}
     </h2>
   </div><div class="faq-list">
     {
@@ -130,24 +138,24 @@ const lessons = await getCollection("practice", ({ data }) => data.published && 
 <section class="connect-section" id="next-step">
   <div class="wrap connect-grid">
     <div>
-      <p class="eyebrow">Talk through the fit</p><h2>
-        Bring the goal.<br />We’ll start there.
+      <p class="eyebrow">{tr("Talk through the fit", "讨论下一步")}</p><h2>
+        {tr("Bring the goal.", "说说你的目标。")}<br />{tr("We’ll start there.", "从这里开始。")}
       </h2><p>{offer.nextStep}</p><a
         class="button button-yellow"
-        href={`/contact/?audience=${offer.slug}`}
-        >Prepare your inquiry <span aria-hidden="true">↗</span></a
+        href={inquiryHref}
+        >{label(tr("Prepare your inquiry", "准备咨询内容"), "/contact/")} <span aria-hidden="true">↗</span></a
       ><p class="contact-note">
-        WeChat: <strong>CKcoachkai</strong> · <a href="/schedule/"
-          >View the schedule</a
+        {tr("WeChat:", "微信：")} <strong>CKcoachkai</strong> · <a href="/schedule/"
+          >{tr("View the schedule", "查看时间安排（英文）")}</a
         >
       </p>
     </div><aside class="contact-aside">
-      <p class="eyebrow">What happens next</p><ol class="next-steps">
-        <li>Share your situation and goal.</li><li>
-          Discuss a suitable approach with Kai.
-        </li><li>Agree the scope, fees and schedule before booking.</li>
-      </ol><a class="text-link" href="/resources/"
-        >Explore free practice resources <span aria-hidden="true">↗</span></a
+      <p class="eyebrow">{tr("What happens next", "接下来怎么做")}</p><ol class="next-steps">
+        <li>{tr("Share your situation and goal.", "介绍你的情况与目标。")}</li><li>
+          {tr("Discuss a suitable approach with Kai.", "与 Kai 讨论适合的方式。")}
+        </li><li>{tr("Agree the scope, fees and schedule before booking.", "预订前商定范围、费用与时间。")}</li>
+      </ol><a class="text-link" href={link("/resources/")}
+        >{label(tr("Explore free practice resources", "探索免费练习资源"), "/resources/")} <span aria-hidden="true">↗</span></a
       >
     </aside>
   </div>

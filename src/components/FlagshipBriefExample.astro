@@ -1,38 +1,40 @@
 ---
-interface Props { practiceHref?: string }
-const { practiceHref } = Astro.props;
-const opening = "I suggest a 15-minute weekly project check-in. It would give us a regular place to discuss questions.";
+import { destinationLabel } from "../lib/siteLanguage.mjs";
+interface Props { practiceHref?: string; language?: "en" | "zh-CN" }
+const { practiceHref, language = "en" } = Astro.props;
+const tr = (english: string, chinese: string) => language === "zh-CN" ? chinese : english;
+const opening = tr("I suggest a 15-minute weekly project check-in. It would give us a regular place to discuss questions.", "我建议每周安排一次 15 分钟的项目碰头会，这样我们就有固定的时间讨论问题。");
 ---
 
 <section class="section wrap brief-example" id="brief-example" aria-labelledby="brief-example-title">
   <div class="example-heading">
-    <p class="eyebrow">A coaching move you can try</p>
-    <h2 id="brief-example-title">Give the listener<br /><em>a decision.</em></h2>
-    <p>A recommendation can be clear while the next step is still missing. Read this update to a project partner. What are you asking them to do?</p>
-    <p class="example-boundary">Fictional practice example. The timings and scenario are invented for this exercise.</p>
+    <p class="eyebrow">{tr("A coaching move you can try", "试一个辅导中的调整")}</p>
+    <h2 id="brief-example-title">{tr("Give the listener", "让听众知道")}<br /><em>{tr("a decision.", "需要做什么决定。")}</em></h2>
+    <p>{tr("A recommendation can be clear while the next step is still missing. Read this update to a project partner. What are you asking them to do?", "建议本身可以很清楚，但下一步仍可能不明确。把这段简报读给一位项目伙伴听。你希望对方做什么？")}</p>
+    <p class="example-boundary">{tr("Fictional practice example. The timings and scenario are invented for this exercise.", "虚构练习示例。时间安排与情境均为本练习设计。")}</p>
   </div>
   <div class="example-pair">
     <div class="first-attempt">
-      <h3><span aria-hidden="true">01 / </span>Initial attempt</h3>
-      <blockquote><p>{opening}</p><p>That is what I wanted to share.</p></blockquote>
-      <p class="coaching-question"><strong>Pause here.</strong> What could the partner say or do next? Try your own closing sentence before opening the revision.</p>
+      <h3><span aria-hidden="true">01 / </span>{tr("Initial attempt", "第一次尝试")}</h3>
+      <blockquote><p>{opening}</p><p>{tr("That is what I wanted to share.", "这就是我想分享的内容。")}</p></blockquote>
+      <p class="coaching-question"><strong>{tr("Pause here.", "先停一下。")}</strong> {tr("What could the partner say or do next? Try your own closing sentence before opening the revision.", "伙伴接下来可以说什么或做什么？查看修改示例前，先试着说一句自己的结尾。")}</p>
     </div>
     <details class="example-revision">
-      <summary>See one possible revision <span aria-hidden="true">+</span></summary>
+      <summary>{tr("See one possible revision", "查看一种修改方式")} <span aria-hidden="true">+</span></summary>
       <div class="revision-body">
-        <h3><span aria-hidden="true">02 / </span>Change only the ending</h3>
-        <blockquote><p>{opening}</p><p><strong>Would you join a two-week trial and then help us decide whether to continue?</strong></p></blockquote>
-        <p class="revision-reason">The opening stays the same. The new ending gives this project partner a specific invitation and a decision to revisit.</p>
+        <h3><span aria-hidden="true">02 / </span>{tr("Change only the ending", "只调整结尾")}</h3>
+        <blockquote><p>{opening}</p><p><strong>{tr("Would you join a two-week trial and then help us decide whether to continue?", "你愿意先参加为期两周的试行，再和我们一起决定是否继续吗？")}</strong></p></blockquote>
+        <p class="revision-reason">{tr("The opening stays the same. The new ending gives this project partner a specific invitation and a decision to revisit.", "开头保持不变。新的结尾向这位伙伴提出具体邀请，并说明之后需要共同做出的决定。")}</p>
         <div class="listener-check">
-          <h3>Check what came through</h3>
-          <p>Ask the listener: “What was the recommendation, and what action or decision was requested?” If either is unclear, revise that part and try again.</p>
+          <h3>{tr("Check what came through", "确认听众听懂了什么")}</h3>
+          <p>{tr("Ask the listener: “What was the recommendation, and what action or decision was requested?” If either is unclear, revise that part and try again.", "问听众：“建议是什么？希望你采取什么行动，或做什么决定？”如果有一处不清楚，就调整那一部分，再试一次。")}</p>
         </div>
       </div>
     </details>
   </div>
   <div class="example-next">
-    <p>Try it with a safe scenario of your own. Adapt the request to your listener; use only facts you can support.</p>
-    {practiceHref && <a class="text-link" href={practiceHref}>Try the free 10-minute briefing practice <span aria-hidden="true">↗</span></a>}
+    <p>{tr("Try it with a safe scenario of your own. Adapt the request to your listener; use only facts you can support.", "用一个不涉及敏感信息的情境试试看。根据听众调整请求，只使用有依据的事实。")}</p>
+    {practiceHref && <a class="text-link" href={practiceHref}>{destinationLabel(tr("Try the free 10-minute briefing practice", "尝试免费的 10 分钟简报练习"), practiceHref, language)} <span aria-hidden="true">↗</span></a>}
   </div>
 </section>
 

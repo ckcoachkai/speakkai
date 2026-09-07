@@ -1,0 +1,14 @@
+---
+import FlagshipLayout from "../../layouts/FlagshipLayout.astro";
+import FlagshipOfferPage from "../../components/FlagshipOfferPage.astro";
+import { flagshipOffersZh } from "../../data/flagshipOffersZh";
+export function getStaticPaths() {
+  return flagshipOffersZh.map(offer => ({ params: { offer: offer.slug }, props: { offer } }));
+}
+const { offer } = Astro.props;
+---
+<FlagshipLayout title={offer.title} description={offer.description}
+  service={offer.title.replace(" | SpeakKai", "")} breadcrumb={offer.audience}
+  language="zh-CN" current="programs" contactHref="#next-step">
+  <FlagshipOfferPage offer={offer} language="zh-CN" />
+</FlagshipLayout>

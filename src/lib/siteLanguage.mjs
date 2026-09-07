@@ -1,6 +1,9 @@
 // Add a pair only after both complete pages exist. Visible fallbacks are not SEO alternates.
 export const languagePairs = [
   ["/", "/zh/"],
+  ["/coaching/", "/zh/coaching/"],
+  ["/schools/", "/zh/schools/"],
+  ["/companies/", "/zh/companies/"],
   ["/coaching/young-competition-speakers/", "/zh/coaching/young-competition-speakers/"],
   ["/resources/one-object-story/", "/zh/resources/one-object-story/"],
 ];

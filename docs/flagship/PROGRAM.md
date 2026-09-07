@@ -35,5 +35,5 @@ Scores in category order: 2,2,1,2,2,3,2,2,3,2,2 = 23/55. Other browser engines: 
 - Branch: `codex/speakkai-flagship-30`
 - Research: `C:\Users\kai\Documents\ChatGPT\HQ\outputs\speakkai-flagship-research`
 - Preview: `http://127.0.0.1:4326/`
-- V21 completed and live. Completed live cycles: 21/30. Champion V21. Astro retained under objective migration gates; V22 begins top language switch and Chinese homepage research.
+- V22 completed and live. Completed live cycles: 22/30. Champion V22 (45.25/55). Astro retained under objective migration gates; V23 begins Chinese audience offers research.
 - See cycle records and `releases.json` for exact completed releases. Do not infer completion from source versions alone.

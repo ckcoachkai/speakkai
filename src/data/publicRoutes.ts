@@ -2,6 +2,9 @@
 export const publicRoutes = [
   "/",
   "/zh/",
+  "/zh/coaching/",
+  "/zh/schools/",
+  "/zh/companies/",
   "/coaching/",
   "/schools/",
   "/companies/",
