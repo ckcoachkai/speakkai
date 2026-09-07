@@ -1,6 +1,6 @@
-# SpeakKai design system — working reference
+# SpeakKai design system — V30
 
-This records the current flagship implementation. Reconcile against V30 before final handover.
+Implementation reference for the V30 release. See HANDOVER.md for deliverables and cycles/30.md for final verification.
 
 ## Identity and voice
 
@@ -21,7 +21,7 @@ SpeakKai / 说开. Kai Liu is presented as a communication coach and speaker. Th
 
 Manrope is served locally at weights400/600/700, with system sans-serif fallback. Body text is16px with1.65 line height. Display sizes use responsive clamps. Do not assume numeric token choices alone prove contrast or legibility: test their actual combinations.
 
-V16 reflow rules: long tokens may wrap as a last resort; numeric practice-step labels stay together in content-sized tracks. Mobile course facts, roles and experience figures use font-relative grid minimums so enlarged text can stack. Do not hide horizontal overflow to make a layout check pass. The twelve flagship routes passed a scripted doubled-font stress test at 320px; native browser zoom remains a separate check.
+Reflow rules: long tokens may wrap as a last resort; numeric practice-step labels stay together in content-sized tracks. Mobile course facts, roles and experience figures use font-relative grid minimums so enlarged text can stack. Chinese headings have zero tracking and 1.35 line height. Do not hide horizontal overflow to pass checks. The final inventory has 22 core routes and 11 language pairs; cycle records distinguish ordinary geometry from doubled-font stress. Native browser text resizing remains a separate check.
 
 ## Current components
 
@@ -35,7 +35,11 @@ V16 reflow rules: long tokens may wrap as a last resort; numeric practice-step l
 
 ## Interaction and motion
 
-Use ordinary links for navigation and native controls for actions. Preserve keyboard focus. Guided practice focuses the next heading after the user advances. Mobile navigation uses native Enter/Space, Escape with focus return and same-page destination focus. Reduced-motion styles disable smooth scrolling and nonessential motion. No automatic audio or video is part of the current flagship.
+Use ordinary links for navigation and native controls for actions. Preserve keyboard focus. Guided practice focuses the next heading after the user advances. Mobile navigation uses native Enter/Space, Escape with focus return and same-page destination focus. Reduced-motion styles disable smooth scrolling and nonessential motion. The top English/中文 switch uses matching page links; there is no splash, stored language preference or automatic redirect. Switching discards query and local draft state.
+
+Video exists on /watch/ and /zh/watch/: native controls, muted, preload none, no autoplay/loop. The MP4s have no audio stream. Blender and AI visuals are static images with HTML alternatives. The three practice choices use native anchors and focusable destination headings. See ANIMATION-LIBRARY.md for sources and replay contracts.
+
+The visual practice print stylesheet removes navigation and video controls, preserves all prompts/provenance, supplies static copies from the same source strings for closed disclosures, and adds a writing/reflection page. Print layouts use dark text, reserved image dimensions and page breaks between activities. See the final cycle for the actual browser print verification scope.
 
 ## Content and asset rules
 

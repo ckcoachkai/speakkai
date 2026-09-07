@@ -1,54 +1,11 @@
-# Remotion video
+# SpeakKai: Point · Example · Check
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.apng">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
+Original bilingual fictional teaching animation. The website serves the committed videos from public/media and does not load Remotion in the browser.
 
-Welcome to your Remotion project!
+- Source: src/PointExampleCheck.tsx; composition IDs in src/Root.tsx.
+- Reproduce: [PROVENANCE.md](PROVENANCE.md) has exact install, preview, render and poster commands.
+- Verify: npx tsc --noEmit here, then node scripts/prepare-motion-assets.mjs from repository root after rendering both videos/posters.
+- Contract: 18 seconds, 1080 x 1080, 30fps, no audio stream, native user-started playback and full HTML in English/Chinese.
+- Inventory: [manifest.json](manifest.json); full guide: [ANIMATION-LIBRARY.md](../../docs/flagship/ANIMATION-LIBRARY.md).
 
-## Commands
-
-**Install Dependencies**
-
-```console
-npm i
-```
-
-**Start Preview**
-
-```console
-npm run dev
-```
-
-**Render video**
-
-```console
-npx remotion render
-```
-
-**Upgrade Remotion**
-
-```console
-npx remotion upgrade
-```
-
-## Docs
-
-Get started with Remotion by reading the [fundamentals page](https://www.remotion.dev/docs/the-fundamentals).
-
-## Help
-
-We provide help on our [Discord server](https://discord.gg/6VzzNDwUwV).
-
-## Issues
-
-Found an issue with Remotion? [File an issue here](https://github.com/remotion-dev/remotion/issues/new).
-
-## License
-
-Note that for some entities a company license is needed. [Read the terms here](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md).
+System fonts are referenced, not redistributed. No real learner, source footage, testimonial or outcome is depicted. Review both language outputs before publishing changed renders.

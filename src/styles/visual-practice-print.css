@@ -1,0 +1,29 @@
+@media print {
+  @page { margin: 16mm; }
+  body:has(.visual-practices) :is(.site-language-bar,.site-header,.site-footer,.skip-link) { display: none !important; }
+  .visual-practices.visual-practices { font-size: 11pt; color: #111; background: white; }
+  .visual-practices.visual-practices :is(.practice-choices,.watch-intro>a,.watch-next,video,details) { display: none !important; }
+  .visual-practices.visual-practices .wrap { width: 100%; max-width: none; margin: 0; padding: 0; }
+  .visual-practices.visual-practices .watch-intro { padding-bottom: 7mm; }
+  .visual-practices.visual-practices h1 { font-size: 28pt; margin-top: 4mm; }
+  .visual-practices.visual-practices h2 { font-size: 20pt; margin-top: 4mm; break-after: avoid; }
+  .visual-practices.visual-practices h3 { font-size: 12pt; letter-spacing: 0; line-height: 1.4; break-after: avoid; }
+  .visual-practices.visual-practices p { font-size: 11pt !important; line-height: 1.5; margin-top: 3mm !important; color: #111 !important; }
+  .visual-practices.visual-practices .eyebrow { margin-top: 0 !important; font-size: 9pt !important; color: #111 !important; }
+  .visual-practices.visual-practices .watch-grid { display: block; }
+  .visual-practices.visual-practices .watch-grid figure { display: none; }
+  .visual-practices.visual-practices blockquote { font-size: 14pt; line-height: 1.4; margin: 3mm 0; }
+  .visual-practices.visual-practices .watch-steps li { padding-top: 3mm; margin-top: 4mm; break-inside: avoid; }
+  .visual-practices.visual-practices :is(.stage-practice,.story-prompt) { break-before: page; border: 0; }
+  .visual-practices.visual-practices :is(.stage-grid,.prompt-grid) { display: block; margin-top: 5mm; }
+  .visual-practices.visual-practices figure { break-inside: avoid; margin-bottom: 5mm; }
+  .visual-practices.visual-practices img { width: 72mm; max-width: 100%; height: auto; }
+  .visual-practices.visual-practices figcaption { font-size: 9pt; margin-top: 2mm; color: #111; }
+  .visual-practices.visual-practices :is(.print-cues,.print-opening,.print-reflection,.print-video-provenance) { display: block; }
+  .visual-practices.visual-practices .print-cues { list-style: none; padding: 0; margin: 4mm 0; }
+  .visual-practices.visual-practices :is(.print-cues li,.prompt-steps li,.print-opening) { break-inside: avoid; margin-top: 4mm; }
+  .visual-practices.visual-practices .print-opening { border-top: 1px solid #999; padding-top: 4mm; }
+  .visual-practices.visual-practices .print-reflection { break-before: page; }
+  .visual-practices.visual-practices .writing-lines { height: 32mm; border-bottom: 1px solid #999; margin-bottom: 7mm; }
+  .visual-practices.visual-practices .print-source { font-size: 9pt !important; margin-top: 10mm !important; }
+}

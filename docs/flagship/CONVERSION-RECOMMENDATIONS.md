@@ -1,6 +1,6 @@
-# Conversion recommendations — working reference through V20
+# Conversion recommendations — V30
 
-Reconcile after V30. No visitor analytics, controlled experiment, conversion uplift or booking result is established. A heuristic cycle score is not a conversion metric. Local copy success does not mean an inquiry was sent.
+No visitor analytics, controlled experiment, conversion uplift or booking result is established. A heuristic cycle score is not a conversion metric. Local copy success does not mean an inquiry was sent. Use the final V30 site as the next research baseline.
 
 ## Begin with consented task observation
 
@@ -11,7 +11,7 @@ Ask participants from each audience to choose an appropriate offer, inspect an e
 | Question | Compare | Observe | Limits |
 |---|---|---|---|
 | Can visitors find their starting point? | Current audience shortcuts/cards against a clearly defined alternative placement or label | Correct offer choice, wrong routes, time to choice | Do not infer trust or enrollment from a click |
-| Do examples make the method understandable? | V19 homepage against V20 example links | Successful destination arrival and a participant's explanation of the next practice step | Comprehension is not learning improvement |
+| Do examples make the method understandable? | Current homepage examples and visual-practice choices against a defined alternative label/placement | Successful destination arrival and a participant's explanation of the next practice step | Comprehension is not learning improvement; playback is not trust |
 | Does preselection help school inquiries? | Generic school contact start against direction-prefilled path | Correct program direction, independent delivery preference, draft review and copy/manual-selection completion | Do not collect text or infer a WeChat send/booking |
 
 Test one primary hypothesis at a time. Define the audience, primary outcome, observation window and guardrails before comparing versions. Keep the existing champion unless evidence supports the challenger and release gates pass. Low traffic may favor moderated observation over a numerical A/B test. If a statistical experiment becomes appropriate, choose sample size and stopping rules from baseline rates and the smallest meaningful effect; do not invent those inputs.

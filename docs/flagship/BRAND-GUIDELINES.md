@@ -1,6 +1,6 @@
-# SpeakKai brand guidelines — working reference through V19
+# SpeakKai brand guidelines — V30
 
-Reconcile with the final V30 site and asset register before handover.
+Current identity and media rules. See HANDOVER.md and the source manifests for the release inventory.
 
 ## Identity
 
@@ -26,6 +26,9 @@ Keep the logo proportional and legible. The header source of truth is src/assets
 | public/images/coach-kai-banner-desktop.webp / coach-kai-banner-mobile.webp | Existing banner variants |
 | public/images/coach-kai-wechat-qr.png | Complete direct-contact card |
 | public/favicon.svg | Browser icon |
+| public/media/point-example-check-{en,zh}.mp4 and .webp | Original silent teaching animation and posters; Remotion sources in media/remotion |
+| public/media/rehearsal-stage.webp | Fictional rehearsal room; Blender source/native/export in media/blender |
+| public/media/umbrella-story.webp | AI-generated fictional story prompt; raw output and exact prompt in media/story |
 
 The similarly named public logo source is a legacy duplicate; preserve it while referenced elsewhere. Existing published photographs are retained. The presence of a file does not independently prove consent for a new use. Generated illustrations and 3D scenes must have provenance labels and must not be presented as real sessions, venues, participants or client results.
 

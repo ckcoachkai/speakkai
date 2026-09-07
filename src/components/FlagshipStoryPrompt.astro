@@ -3,6 +3,8 @@ interface Props{language?:"en"|"zh-CN"}
 const {language="en"}=Astro.props;
 const tr=(en:string,zh:string)=>language==="zh-CN"?zh:en;
 const description=tr("A closed blue book rests on a wooden bench beside an open yellow umbrella. Trees, a wet path and a small bridge fill the background. No people are shown.","一本合上的蓝色书放在木长椅上，旁边是一把撑开的黄色雨伞。背景中有树木、湿润的小路和一座小桥。画面中没有人物。");
+const opening=tr("I can see a blue book on the bench. Perhaps someone left it for the next visitor. What message might be inside?","我看见长椅上有一本蓝色的书。也许有人把它留给了下一位访客。里面可能藏着怎样的信息呢？");
+const distinction=tr("Only the first sentence describes a visible detail. The rest is an invented possibility. Your story can be different.","只有第一句描述了画面中看得见的细节。后面的内容是想象出的可能性。你的故事可以完全不同。");
 ---
 <section class="story-prompt wrap" aria-labelledby="story-prompt-title">
   <div class="prompt-heading"><p class="eyebrow">{tr("A picture. More than one possibility.","一幅画，不止一种可能。")}</p><h2 id="story-prompt-title" tabindex="-1">{tr("Notice first. Then imagine.","先观察，再想象。")}</h2><p>{tr("Look closely, or use the description below. Build a short story while keeping what you see separate from what you invent.","仔细看看画面，也可以使用下方的文字描述。试着讲一个小故事，把看到的细节与想象的情节分开。")}</p></div>
@@ -13,10 +15,12 @@ const description=tr("A closed blue book rests on a wooden bench beside an open 
       <li><h3>{tr("02 / Imagine","02 / 想象")}</h3><p>{tr("What might have happened? Use “might”, “could” or “perhaps” to make clear that it is your idea.","可能发生了什么？用“可能”或“也许”说明这是你的猜想。")}</p></li>
       <li><h3>{tr("03 / Tell and listen","03 / 讲述与倾听")}</h3><p>{tr("Add one sentence about what could happen next. Ask a listener which detail made them curious. Try a different next sentence.","再说一句接下来可能发生的事。问倾听者：哪个细节让你感到好奇？然后换一句不同的后续情节，再试一次。")}</p></li>
     </ol>
-    <details><summary>{tr("See one possible opening","看看一种可能的开场")}</summary><blockquote>{tr("I can see a blue book on the bench. Perhaps someone left it for the next visitor. What message might be inside?","我看见长椅上有一本蓝色的书。也许有人把它留给了下一位访客。里面可能藏着怎样的信息呢？")}</blockquote><p>{tr("Only the first sentence describes a visible detail. The rest is an invented possibility. Your story can be different.","只有第一句描述了画面中看得见的细节。后面的内容是想象出的可能性。你的故事可以完全不同。")}</p></details>
+    <details><summary>{tr("See one possible opening","看看一种可能的开场")}</summary><blockquote>{opening}</blockquote><p>{distinction}</p></details>
+    <div class="print-opening"><h3>{tr("One possible opening","一种可能的开场")}</h3><blockquote>{opening}</blockquote><p>{distinction}</p></div>
     </div>
   </div>
 </section>
 <style>
+ .print-opening{display:none}
  .story-prompt{padding-block:44px 64px;border-top:1px solid var(--line)}.prompt-heading{max-width:740px}.eyebrow{color:var(--blue)}h2{font-size:clamp(32px,3.5vw,48px);margin-top:16px}.prompt-heading>p:last-child{margin-top:20px;font-size:18px;color:var(--muted)}.prompt-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;margin-top:30px;align-items:start}img{width:100%;height:auto;border-radius:6px}figcaption{margin-top:14px;font-size:14px;color:var(--muted)}.scene-description{margin-top:18px;font-size:16px;line-height:1.7;color:var(--muted)}.prompt-steps{list-style:none;padding:0}.prompt-steps li+li{margin-top:24px}h3,summary{font-size:20px;font-weight:600;line-height:1.5}.prompt-steps p,details p{margin-top:12px;color:var(--muted)}details{border-top:1px solid var(--line);padding-top:20px;margin-top:26px}summary{cursor:pointer}blockquote{font-size:21px;margin:18px 0;line-height:1.6}@media(max-width:760px){.prompt-grid{grid-template-columns:1fr;gap:26px}}
 </style>

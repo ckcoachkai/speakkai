@@ -1,6 +1,6 @@
-# Component library — working reference through V21
+# Component library — V30
 
-Reconcile this inventory with the final V30 source. Components live under `src/components`; the shared shell is under `src/layouts`.
+Components live under `src/components`; the shared shell is under `src/layouts`. See HANDOVER.md for final validation and release evidence.
 
 | Component | Responsibility | Important contract |
 |---|---|---|
@@ -16,6 +16,12 @@ Reconcile this inventory with the final V30 source. Components live under `src/c
 | PracticeGuide | React enhancement for one-step practice | No recording/persistence; heading focus after user navigation; finish/retry; static sheet remains |
 | ChineseCourseInquiry | Optional local inquiry preparation | One instance per page: fixed IDs and single query selector; editable draft; explicit copy; no submission/reservation/persistence |
 | FlagshipBriefExample | Fictional company example and optional revision | Same opening, one changed ending, native details, listener check, published lesson link |
+| FlagshipResourceIndex | Shared bilingual resource landing page | Published-record gating; localized practices and visual examples |
+| FlagshipContactPage | Shared bilingual optional inquiry composer | Local editable draft; truthful copy state; no send, booking or persistence |
+| ToolsGallery | Existing tool discovery inside resource pages | Localized descriptions; English-only destinations explicitly labeled |
+| FlagshipWatchPage | Three visual practice choices, silent animation, complete text and print sheet | Native anchors and video; no page hydration; print reflection area |
+| FlagshipStagePractice | Original fictional 3D scene and three rehearsal cues | Native details; same source strings for complete print cues; no 3D runtime |
+| FlagshipStoryPrompt | Original AI picture, observation/possibility prompts and optional example | Full description and provenance; same source strings for print example |
 
 ## Use the smallest suitable component
 
@@ -31,7 +37,7 @@ Use existing primary `.button`, secondary `.text-link`, section `.eyebrow`, `.wr
 
 The shell uses local Manrope Latin weights 400/600/700. Its logo uses Astro Image, WebP candidates at 160/320/480px, rendered sizes 126/158px and eager loading. Preserve the page-specific asset contracts in docs/flagship/v15-budget.json and scripts/check-flagship-budget.mjs; deployment runs the budget check.
 
-The English contact composer owns a school-only, allowlisted program direction separate from delivery preference. Initial query selection applies only to the school audience. Generated drafts remain editable and only rebuild explicitly. Field changes announce that the existing draft is unchanged.
+The bilingual contact composer owns a school-only, allowlisted program direction separate from delivery preference. Initial query selection applies only to the school audience. Generated drafts remain editable and only rebuild explicitly. Field changes announce that the existing draft is unchanged. Language switching resets local draft/query state; it is not a translation or submission action.
 
 ## Content and state boundaries
 

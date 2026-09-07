@@ -1,6 +1,6 @@
-# Content strategy — working draft through V17
+# Content strategy — V30
 
-Reconcile against the final V30 release before handover.
+Current publishing strategy and content boundaries; see HANDOVER.md and CONTENT-EDITOR.md for the usable implementation.
 
 ## Serve a speaking moment
 
@@ -19,7 +19,7 @@ Give each audience a dedicated route. Use the shared Think / Practise / Grow met
 
 ## Language and provenance
 
-English is the current broad site language. The confirmed Fall course and one-object practice have Simplified Chinese routes. Keep reciprocal language links explicit, with warnings where switching resets local practice. Compare meaning, activity sequence and fixed facts across languages; do not infer fluency or professional translation review from schema parity.
+The core site has 11 English/Simplified Chinese pairs: homepage, three audience offers, contact, resource index, named Fall course, three full practices and visual practice. The compact top switch links directly to each counterpart and discards query/local draft state. Legacy tools and schedule remain English and are labeled in Chinese navigation. Compare meaning, activity sequence and fixed facts across languages; schema parity does not establish professional translation quality.
 
 Keep a source and review note with each practice and paired course narrative. Those notes are editor-only. Preserve uncertainty about dates, fees, delivery, availability and outcomes. Do not convert a fictional quote into a testimonial by adding a name or portrait.
 
@@ -28,6 +28,8 @@ Keep a source and review note with each practice and paired course narrative. Th
 Prioritize short approved demonstrations: a speaking task, one coaching adjustment and another attempt. Documentary footage requires verified public-use permission, particularly for identifiable children, schools or client work. Generated illustrations and animation should explain the practice and be presented with accurate provenance. They cannot supply missing testimonials, partnerships or authentic event footage.
 
 Use opt-in playback, a useful poster or static alternative, captions/transcript as applicable, local optimized assets and explicit byte budgets. Keep basic instruction and the next action available without playback.
+
+The delivered visual practice contains a silent bilingual Remotion example, a static Blender rehearsal scene and an AI-generated umbrella/book illustration. All are fictional, labeled beside the asset, and accompanied by complete HTML prompts. Browser print layouts retain instructions, examples, provenance and reflection space. The media manifests and ANIMATION-LIBRARY.md link the actual authoring sources. These examples do not replace authentic coaching footage or independently supported results.
 
 ## What to learn next
 
