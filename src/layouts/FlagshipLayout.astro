@@ -1,0 +1,93 @@
+---
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/600.css";
+import "@fontsource/manrope/700.css";
+import "../styles/flagship.css";
+interface Props {
+  title?: string;
+  description?: string;
+  current?: string;
+}
+const {
+  title = "SpeakKai | Communication Coaching, Keynotes & Training",
+  description = "Build the speaker, not just the speech. Kai Liu offers public speaking coaching, school programs, keynotes and communication training in Shanghai and online.",
+  current = "home",
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b1020" />
+    <meta name="speakkai-version" content="01" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SpeakKai" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta
+      property="og:image"
+      content="https://speakkai.com/images/coach-kai-headshot.webp"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta
+      name="twitter:image"
+      content="https://speakkai.com/images/coach-kai-headshot.webp"
+    />
+    <title>{title}</title>
+  </head>
+  <body class="flagship" data-version="01">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="SpeakKai home"
+        ><span class="brand-image" aria-hidden="true"
+          ><img
+            src="/images/speakkai-logo-header-source.png"
+            width="1254"
+            height="1254"
+            alt=""
+          /></span
+        ><span lang="zh-CN">说开</span></a
+      >
+      <nav aria-label="Main navigation">
+        <a
+          href="/#work"
+          aria-current={current === "programs" ? "page" : undefined}
+          >Work with Kai</a
+        ><a
+          href="/#story"
+          aria-current={current === "about" ? "page" : undefined}>Meet Kai</a
+        ><a href="/resources/">Resources</a><a href="/schedule/">Schedule</a>
+      </nav>
+      <a class="header-cta" href="/#connect"
+        >Let’s talk <span aria-hidden="true">↗</span></a
+      >
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <div>
+        <a href="/" class="footer-brand"
+          >SpeakKai<span lang="zh-CN">说开</span></a
+        ><p>Clear thinking. Purposeful practice. Human connection.</p>
+      </div><nav aria-label="Footer navigation">
+        <a href="/#work">Coaching & training</a><a href="/schedule/">Schedule</a
+        ><a href="/resources/">Practice resources</a><a href="/contact/"
+          >Contact Kai</a
+        ><span class="footer-social">Xiaohongshu: CKcoachkai</span><a
+          href="https://kr.pinterest.com/ckcoachkai/"
+          target="_blank"
+          rel="noreferrer">Pinterest ↗</a>
+      </nav><p class="footer-note">
+        © {new Date().getFullYear()} SpeakKai · Shanghai & online
+      </p>
+    </footer>
+  </body>
+</html>

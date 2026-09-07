@@ -1,43 +1,6 @@
 ---
-import HomepageV5 from "../components/HomepageV5.astro";
-import SpatialSiteHeader from "../components/SpatialSiteHeader.astro";
-import "../styles/experiment-lab-v4.css";
-
-const title = "SpeakKai | Speech, Debate and Communication Coaching";
-const description = "Speech, debate, storytelling, presentation, and communication coaching for students and professionals in Shanghai and online.";
-const canonical = "https://speakkai.com/";
-const socialImage = "https://speakkai.com/images/coach-kai-headshot.webp";
+import FlagshipLayout from "../layouts/FlagshipLayout.astro";
+import FlagshipHome from "../components/FlagshipHome.astro";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
-    <meta name="theme-color" content="#10224A" />
-    <link rel="canonical" href={canonical} />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="SpeakKai" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={socialImage} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={socialImage} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <title>{title}</title>
-  </head>
-  <body class="v4-page v4-family-modern v4-version-5 v4-source-41 production-home">
-    <SpatialSiteHeader current="home" compact />
-    <main class="v4-main production-main">
-      <HomepageV5 />
-    </main>
-  </body>
-</html>
-
-<style is:global>
-  .production-v5 { height: 100%; }
-</style>
+<FlagshipLayout><FlagshipHome /></FlagshipLayout>
