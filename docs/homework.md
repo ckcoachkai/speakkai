@@ -18,6 +18,12 @@ Time-based display does not generate or infer new homework. The static site cann
 
 Assignments were taken from the recovered September 5, 10 and 11 class dictation discussed with Kai. Saturday introductory homework was recorded in a September 7 follow-up. Thursday afternoon and Friday later class had no distinct recovered assignment. Class labels use day, broad course type and only recorded times; they deliberately avoid mapping the Grade 8/upper-grade curriculum to an unconfirmed roster.
 
+## Date and time display revision
+
+Kai requested exact dates and class times instead of weekday/course labels, and removal of the introductory marketing and update text. The selector and headings now use assignment date plus class time. The empty Thursday and Friday records retain the date of the recorded class. Existing hash links remain supported.
+
+Times checked against Kai Schedule 2026, September grid: September 10 Thursday 15:30–17:30 and 18:15–20:15; September 11 Friday 15:40–17:40 and 18:00–20:00. The scheduled Friday afternoon slot takes precedence over the dictated rounded 15:30–17:30. Kai explicitly confirmed Saturday Grade 8–9 as 13:00–15:00. The September 12/19 Saturday schedule lists 15:30–17:30 and 17:30–19:30 for the following classes; those recurring slots identify the earlier Saturday homework groups. September 5 is blank in that schedule, so it does not independently verify that day's attendance or actual start/end times. No schedule was edited.
+
 ## Rollback
 
 Revert the homework feature commit and deploy main to remove the new page. For a content correction, restore the preceding approved JSON version and deploy. The feature does not alter the schedule sync or existing pages.

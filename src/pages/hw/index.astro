@@ -2,7 +2,7 @@
 import SpatialSiteHeader from '../../components/SpatialSiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import data from '../../../public/data/homework.json';
-import {validateHomework, visibleAssignments} from '../../lib/homework.mjs';
+import {validateHomework, visibleAssignments, classHeading, sortedClasses} from '../../lib/homework.mjs';
 validateHomework(data);
 const displayDate=(value:string)=>new Date(value+'T12:00:00+08:00').toLocaleDateString('en-GB',{timeZone:'Asia/Shanghai',day:'numeric',month:'long',year:'numeric'});
 ---
@@ -11,21 +11,21 @@ const displayDate=(value:string)=>new Date(value+'T12:00:00+08:00').toLocaleDate
 <head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="robots" content="noindex"/><meta name="description" content="Find your class homework and prepare for your next SpeakKai presentation."/><link rel="canonical" href="https://speakkai.com/hw/"/><link rel="icon" href="/favicon.svg"/><title>Class homework | SpeakKai</title></head>
 <body>
 <SpatialSiteHeader />
-<main>
-  <header class="intro"><p class="eyebrow">SPEAKKAI · FALL 2026</p><h1>Ready for your next class.</h1><p class="lead">Find your homework. Practise it aloud. Come ready to present.</p><p class="timestamp">Dates use Shanghai time. <span id="updated">Assignments updated {displayDate(data.updatedAt.slice(0,10))}.</span></p></header>
-  <div class="toolbar"><label for="class-picker">Your class<select id="class-picker"><option value="all">All classes</option>{data.classes.map(g=><option value={g.id}>{g.label} · {g.schedule}</option>)}</select></label><button id="refresh" type="button">Check for updates</button></div>
+<main aria-label="Class homework">
+
+  <div class="toolbar"><label for="class-picker">Date & time<select id="class-picker"><option value="all">All classes</option>{sortedClasses(data.classes).map(g=><option value={g.id}>{classHeading(g)}</option>)}</select></label><button id="refresh" type="button">Check for updates</button></div>
   <p id="sync-status" role="status" aria-live="polite"></p>
-  <div id="homework-list">{data.classes.map(group=>{
+  <div id="homework-list">{sortedClasses(data.classes).map(group=>{
     const items=visibleAssignments(group), latest=items[0];
-    return <article id={group.id} data-class={group.id}><header class="class-heading"><div><p class="schedule">{group.schedule}</p><h2>{group.label}</h2></div><a href={`#${group.id}`} aria-label={`Link to ${group.label}`}>Class link ↗</a></header>
-      {latest?<><p class="date">Latest recorded homework · {displayDate(latest.assignedOn)}</p><h3>{latest.title}</h3><ol>{latest.steps.map((step:string)=><li>{step}</li>)}</ol><p class="prepare">{latest.prepareFor}</p>{latest.note&&<p class="note">{latest.note}</p>}</>:<p class="empty">No homework has been recorded for this class yet. Please check with Coach Kai.</p>}
+    return <article id={group.id} data-class={group.id}><header class="class-heading"><div><h2>{classHeading(group)}</h2></div><a href={`#${group.id}`} aria-label={`Link to ${classHeading(group)}`}>Class link ↗</a></header>
+      {latest?<><h3>{latest.title}</h3><ol>{latest.steps.map((step:string)=><li>{step}</li>)}</ol><p class="prepare">{latest.prepareFor}</p></>:<p class="empty">No homework has been recorded for this class yet. Please check with Coach Kai.</p>}
       {items.length>1&&<details><summary>Previous homework ({items.length-1})</summary>{items.slice(1).map(a=><section><p class="date">{displayDate(a.assignedOn)}</p><h3>{a.title}</h3><ol>{a.steps.map((step:string)=><li>{step}</li>)}</ol><p>{a.prepareFor}</p>{a.note&&<p class="note">{a.note}</p>}</section>)}</details>}
     </article>;
   })}</div>
-  <p class="footnote">Showing the latest recorded assignment for each class. An older assignment stays visible until a new one is posted. If your class is missing, check with Coach Kai.</p>
+
 </main><SiteFooter />
 <script>
-import {validateHomework,visibleAssignments,shanghaiDate} from '../../lib/homework.mjs';
+import {validateHomework,visibleAssignments,shanghaiDate,classHeading,sortedClasses} from '../../lib/homework.mjs';
 const picker=document.querySelector<HTMLSelectElement>('#class-picker')!, list=document.querySelector<HTMLElement>('#homework-list')!,status=document.querySelector<HTMLElement>('#sync-status')!;
 const fmt=(d:string)=>new Date(d+'T12:00:00+08:00').toLocaleDateString('en-GB',{timeZone:'Asia/Shanghai',day:'numeric',month:'long',year:'numeric'});
 const el=(tag:string,text='',cls='')=>{const n=document.createElement(tag);n.textContent=text;if(cls)n.className=cls;return n;};
@@ -41,17 +41,17 @@ async function refresh(manual=false){
   if(payload!==lastPayload){
     const selected=picker.value, fragment=document.createDocumentFragment();
     picker.replaceChildren(new Option('All classes','all'));
-    for(const g of d.classes){
-      picker.add(new Option(g.label+' · '+g.schedule,g.id));const a=el('article');a.id=g.id;a.dataset.class=g.id;
-      const heading=el('header','','class-heading'),label=el('div');label.append(el('p',g.schedule,'schedule'),el('h2',g.label));const link=el('a','Class link ↗') as HTMLAnchorElement;link.href='#'+g.id;link.setAttribute('aria-label','Link to '+g.label);heading.append(label,link);a.append(heading);
+    for(const g of sortedClasses(d.classes)){
+      picker.add(new Option(classHeading(g),g.id));const a=el('article');a.id=g.id;a.dataset.class=g.id;
+      const heading=el('header','','class-heading'),label=el('div');label.append(el('h2',classHeading(g)));const link=el('a','Class link ↗') as HTMLAnchorElement;link.href='#'+g.id;link.setAttribute('aria-label','Link to '+classHeading(g));heading.append(label,link);a.append(heading);
       const items=visibleAssignments(g);
-      function assignment(parent:HTMLElement,item:any,latest:boolean){parent.append(el('p',(latest?'Latest recorded homework · ':'')+fmt(item.assignedOn),'date'),el('h3',item.title));const steps=el('ol');for(const s of item.steps)steps.append(el('li',s));parent.append(steps,el('p',item.prepareFor,'prepare'));if(item.note)parent.append(el('p',item.note,'note'));}
+      function assignment(parent:HTMLElement,item:any,latest:boolean){if(!latest)parent.append(el('p',fmt(item.assignedOn),'date'));parent.append(el('h3',item.title));const steps=el('ol');for(const s of item.steps)steps.append(el('li',s));parent.append(steps,el('p',item.prepareFor,'prepare'));}
       if(items.length){assignment(a,items[0],true);if(items.length>1){const archive=el('details');archive.append(el('summary',`Previous homework (${items.length-1})`));for(const item of items.slice(1)){const section=el('section');assignment(section,item,false);archive.append(section);}a.append(archive);}}
       else a.append(el('p','No homework has been recorded for this class yet. Please check with Coach Kai.','empty'));
       fragment.append(a);
     }
     list.replaceChildren(fragment);picker.value=[...picker.options].some(o=>o.value===selected)?selected:'all';filter();fromHash();
-    document.querySelector('#updated')!.textContent='Assignments updated '+fmt(d.updatedAt.slice(0,10))+'.';lastPayload=payload;
+    lastPayload=payload;
   }
   if(manual)status.textContent='You’re viewing the latest published homework.';
  }catch{status.textContent='Could not check for updates. The last loaded homework is still shown.';}
@@ -61,6 +61,6 @@ document.querySelector('#refresh')!.addEventListener('click',()=>refresh(true));
 refresh();setInterval(()=>{if(!document.hidden)refresh();},60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
 </script>
 <style is:global>
-*{box-sizing:border-box}body{margin:0;background:#f4f6fa;color:#18283e;font-family:Inter,system-ui,sans-serif;line-height:1.65}main{max-width:960px;margin:auto;padding:48px 24px 64px}.eyebrow{font-size:12px;font-weight:750;letter-spacing:.16em;color:#276489}h1{font-size:clamp(32px,6vw,54px);line-height:1.1;letter-spacing:-.045em;margin:12px 0 18px}.lead{font-size:19px;max-width:620px}.timestamp,.footnote{color:#526478;font-size:14px}.toolbar{display:flex;align-items:end;gap:16px;margin:30px 0 4px}.toolbar label{font-weight:650;flex:1}select,button{font:inherit;min-height:46px;border:1px solid #acbac9;border-radius:8px;background:white;color:#18283e;padding:10px 14px}select{display:block;width:100%;margin-top:6px}button{cursor:pointer;font-weight:650}button:hover{background:#e5eff6}:focus-visible{outline:3px solid #147bc1;outline-offset:3px}#sync-status{font-size:14px;min-height:23px;margin:8px 0}article{background:white;border:1px solid #dbe2eb;border-radius:16px;margin:20px 0;padding:28px;scroll-margin-top:20px}.class-heading{display:flex;justify-content:space-between;align-items:start;gap:16px}.class-heading a{color:#24698e;font-size:13px;white-space:nowrap;padding:5px 0}.schedule{font-size:13px;color:#526478;margin:0}h2{font-size:23px;line-height:1.3;margin:4px 0 18px}h3{font-size:20px;margin:12px 0}.date{font-size:13px;color:#526478;border-top:1px solid #e7ebf1;padding-top:18px}ol{padding-left:24px}li{padding:4px 0}.prepare{border-left:3px solid #28769f;padding:8px 14px;background:#eef6fa;font-weight:650}.note,.empty{color:#526478;font-size:14px}details{border-top:1px solid #dbe2eb;margin-top:22px;padding-top:16px}summary{cursor:pointer;font-weight:650}section{padding-top:8px}article[hidden]{display:none}@media(max-width:600px){main{padding:28px 16px 40px}.toolbar{align-items:stretch;flex-direction:column}article{padding:20px}.class-heading{flex-direction:column;gap:0}.class-heading a{margin-bottom:12px}}@media print{.spatial-site-header,.toolbar,#sync-status,.class-heading a,.site-footer{display:none}body{background:white}main{padding:0}article{break-inside:avoid}}
+*{box-sizing:border-box}body{margin:0;background:#f4f6fa;color:#18283e;font-family:Inter,system-ui,sans-serif;line-height:1.65}main{max-width:960px;margin:auto;padding:20px 24px 40px}.eyebrow{font-size:12px;font-weight:750;letter-spacing:.16em;color:#276489}h1{font-size:clamp(32px,6vw,54px);line-height:1.1;letter-spacing:-.045em;margin:12px 0 18px}.lead{font-size:19px;max-width:620px}.timestamp,.footnote{color:#526478;font-size:14px}.toolbar{display:flex;align-items:end;gap:16px;margin:0 0 4px}.toolbar label{font-weight:650;flex:1}select,button{font:inherit;min-height:46px;border:1px solid #acbac9;border-radius:8px;background:white;color:#18283e;padding:10px 14px}select{display:block;width:100%;margin-top:6px}button{cursor:pointer;font-weight:650}button:hover{background:#e5eff6}:focus-visible{outline:3px solid #147bc1;outline-offset:3px}#sync-status{font-size:14px;margin:8px 0}article{background:white;border:1px solid #dbe2eb;border-radius:16px;margin:20px 0;padding:28px;scroll-margin-top:20px}.class-heading{display:flex;justify-content:space-between;align-items:start;gap:16px}.class-heading a{color:#24698e;font-size:13px;white-space:nowrap;padding:5px 0}.schedule{font-size:13px;color:#526478;margin:0}h2{font-size:23px;line-height:1.3;margin:4px 0 8px}h3{font-size:20px;margin:12px 0}.date{font-size:13px;color:#526478;border-top:1px solid #e7ebf1;padding-top:18px}ol{padding-left:24px;list-style:decimal}li{padding:4px 0}.prepare{border-left:3px solid #28769f;padding:8px 14px;background:#eef6fa;font-weight:650}.note,.empty{color:#526478;font-size:14px}details{border-top:1px solid #dbe2eb;margin-top:22px;padding-top:16px}summary{cursor:pointer;font-weight:650}section{padding-top:8px}article[hidden]{display:none}@media(max-width:600px){main{padding:28px 16px 40px}.toolbar{align-items:stretch;flex-direction:column}article{padding:20px}.class-heading{flex-direction:column;gap:0}.class-heading a{margin-bottom:12px}}@media print{.spatial-site-header,.toolbar,#sync-status,.class-heading a,.site-footer{display:none}body{background:white}main{padding:0}article{break-inside:avoid}}
 </style>
 </body></html>
