@@ -1,176 +1,319 @@
 {
-  "version": 1,
-  "updatedAt": "2026-09-12T17:19:43+08:00",
+  "version": 2,
+  "updatedAt": "2026-09-12T19:04:59+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
       "id": "sat-original-oratory",
-      "label": "Saturday · Original Oratory",
-      "schedule": "Advanced class",
-      "assignments": [
+      "sessions": [
         {
-          "id": "2026-09-05-oo",
-          "assignedOn": "2026-09-05",
-          "title": "Your perspective on the glacier event",
-          "steps": [
-            "Turn your impromptu response about the glacier collapse and mudslides into a roughly 200–400-word speech.",
-            "Develop your own perspective, with clearer structure, logic and supporting detail.",
-            "Use transitions such as first, second and finally.",
-            "Practise aloud once or twice."
+          "id": "2026-09-05-sat-original-oratory",
+          "date": "2026-09-05",
+          "time": "13:00–15:00",
+          "students": [
+            {
+              "name": "Louis",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E113:E113"
+            },
+            {
+              "name": "Kenny",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E114:E114"
+            },
+            {
+              "name": "Kailyn",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E115:E115"
+            },
+            {
+              "name": "Winston",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E116:E116"
+            },
+            {
+              "name": "Jennifer",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E117:E117"
+            }
           ],
-          "prepareFor": "Be ready to present at the beginning of the next class.",
-          "note": "The five-minute curriculum target is not the length assigned for this lesson."
+          "classContent": [
+            "Students introduced themselves and explored self-awareness, logic and personal viewpoints.",
+            "The class used the glacier-collapse and mudslide topic to develop an original perspective.",
+            "Students were asked to turn an impromptu response into a structured speech with clearer logic, transitions and supporting detail."
+          ],
+          "homework": {
+            "title": "Your perspective on the glacier event",
+            "steps": [
+              "Turn your impromptu response about the glacier collapse and mudslides into a roughly 200–400-word speech.",
+              "Develop your own perspective, with clearer structure, logic and supporting detail.",
+              "Use transitions such as first, second and finally.",
+              "Practise aloud once or twice."
+            ],
+            "prepareFor": "Be ready to present at the beginning of the next class.",
+            "note": "The five-minute curriculum target is not the length assigned for this lesson."
+          }
         }
-      ],
-      "classDate": "2026-09-05",
-      "classTime": "13:00–15:00",
-      "students": [
-        "Louis",
-        "Kenny",
-        "Kailyn",
-        "Winston",
-        "Jennifer"
       ]
     },
     {
       "id": "sat-foundations",
-      "label": "Saturday · Speaking foundations",
-      "schedule": "3:30–5:30 pm",
-      "assignments": [
+      "sessions": [
         {
-          "id": "2026-09-05-foundations",
-          "assignedOn": "2026-09-05",
-          "title": "A self-introduction with specific details",
-          "steps": [
-            "Introduce your name and one thing about yourself.",
-            "Develop three supporting parts: when you started, what you learned, and what you want to do in the future.",
-            "Include specific details so the audience learns more about you.",
-            "Say the speech aloud two or three times."
+          "id": "2026-09-05-sat-foundations",
+          "date": "2026-09-05",
+          "time": "15:30–17:30",
+          "students": [
+            {
+              "name": "Luise",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E111:E111"
+            },
+            {
+              "name": "Kyle",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E112:E112"
+            }
           ],
-          "prepareFor": "Prepare to present in the next class.",
-          "note": "Writing is the first step; rehearsal is part of the homework."
+          "classContent": [
+            "Students explored fear of the stage and fear of content.",
+            "The class practised awareness of eyes, feet, hands, face and emotion, along with articulation and emotional delivery.",
+            "A world-champion example, impromptu structures and specific details supported repeated speaking attempts.",
+            "Feedback was applied through repeat responses."
+          ],
+          "homework": {
+            "title": "A self-introduction with specific details",
+            "steps": [
+              "Introduce your name and one thing about yourself.",
+              "Develop three supporting parts: when you started, what you learned, and what you want to do in the future.",
+              "Include specific details so the audience learns more about you.",
+              "Say the speech aloud two or three times."
+            ],
+            "prepareFor": "Prepare to present in the next class.",
+            "note": "Writing is the first step; rehearsal is part of the homework."
+          }
         }
-      ],
-      "classDate": "2026-09-05",
-      "classTime": "15:30–17:30",
-      "students": [
-        "Luise",
-        "Kyle"
       ]
     },
     {
       "id": "sat-introductory",
-      "label": "Saturday · Introductory speaking",
-      "schedule": "Later class",
-      "assignments": [
+      "sessions": [
         {
-          "id": "2026-09-05-intro",
-          "assignedOn": "2026-09-05",
-          "title": "Self-introduction or glacier speech",
-          "steps": [
-            "Practise your self-introduction speech, the printed glacier speech, or both.",
-            "For the glacier speech, practise explaining the importance of being careful as the world and climate change."
+          "id": "2026-09-05-sat-introductory",
+          "date": "2026-09-05",
+          "time": "17:30–19:30",
+          "students": [
+            {
+              "name": "Stacey",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E118:E118"
+            },
+            {
+              "name": "Tianyou",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E119:E119"
+            },
+            {
+              "name": "Liam",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E120:E120"
+            },
+            {
+              "name": "Tongtong",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E121:E121"
+            }
           ],
-          "prepareFor": "Prepare to deliver your selected speech at the next class.",
-          "note": "Homework recorded in the teacher’s September 7 follow-up to this class."
+          "classContent": [
+            "Voice, body and articulation warm-ups led into self-introductions and impromptu structure.",
+            "Students considered finding RMB 10,000 in a wallet as an impromptu prompt.",
+            "The Nepal–China glacier-flooding topic was used to practise an organised speech.",
+            "Coaching included numbered points, voice and audience-appropriate language."
+          ],
+          "homework": {
+            "title": "Self-introduction or glacier speech",
+            "steps": [
+              "Practise your self-introduction speech, the printed glacier speech, or both.",
+              "For the glacier speech, practise explaining the importance of being careful as the world and climate change."
+            ],
+            "prepareFor": "Prepare to deliver your selected speech at the next class.",
+            "note": "Homework recorded in the teacher’s September 7 follow-up to this class."
+          }
         }
-      ],
-      "classDate": "2026-09-05",
-      "classTime": "17:30–19:30",
-      "students": [
-        "Stacey",
-        "Tianyou",
-        "Liam",
-        "Tongtong"
       ]
     },
     {
       "id": "thu-afternoon",
-      "label": "Thursday · Self-introduction",
-      "schedule": "3:30–5:30 pm",
-      "assignments": [],
-      "classDate": "2026-09-10",
-      "classTime": "15:30–17:30",
-      "students": [
-        "Remy",
-        "Pinkie",
-        "Elsa",
-        "Charlotte",
-        "Jarvis"
+      "sessions": [
+        {
+          "id": "2026-09-10-thu-afternoon",
+          "date": "2026-09-10",
+          "time": "15:30–17:30",
+          "students": [
+            {
+              "name": "Remy",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E122:E122"
+            },
+            {
+              "name": "Pinkie",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E123:E123"
+            },
+            {
+              "name": "Elsa",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E124:E124"
+            },
+            {
+              "name": "Charlotte",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E125:E125"
+            },
+            {
+              "name": "Jarvis",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E126:E126"
+            }
+          ],
+          "classContent": [
+            "Students repeatedly practised self-introductions around one central personal idea.",
+            "They developed when the idea began, what they learned, future plans and a return to the main idea at the end.",
+            "Coaching covered breath, voice, specific details, posture, grammar and managing time."
+          ],
+          "homework": null
+        }
       ]
     },
     {
       "id": "thu-later",
-      "label": "Thursday · Introductory speaking",
-      "schedule": "Later class",
-      "assignments": [
+      "sessions": [
         {
-          "id": "2026-09-10-intro",
-          "assignedOn": "2026-09-10",
-          "title": "Write your own self-introduction",
-          "steps": [
-            "Write a self-introduction in your own words, using your own ideas.",
-            "Rehearse it so you can speak with less reliance on the paper.",
-            "Try to memorise it if possible; use script support where needed."
+          "id": "2026-09-10-thu-later",
+          "date": "2026-09-10",
+          "time": "18:15–20:15",
+          "students": [
+            {
+              "name": "Richard",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E127:E127"
+            },
+            {
+              "name": "Molly",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E129:E129"
+            },
+            {
+              "name": "Angela",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E130:E130"
+            },
+            {
+              "name": "Juliana",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E131:E131"
+            },
+            {
+              "name": "Kiana",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E132:E132"
+            }
           ],
-          "prepareFor": "Present your self-introduction at the next class.",
-          "note": "The goal is a student-written speech."
+          "classContent": [
+            "Voice and body warm-ups led into self-introduction and impromptu structure.",
+            "Students practised answering a superpower prompt with structured speaking support.",
+            "The focus was developing students' own ideas and building readiness to present."
+          ],
+          "homework": {
+            "title": "Write your own self-introduction",
+            "steps": [
+              "Write a self-introduction in your own words, using your own ideas.",
+              "Rehearse it so you can speak with less reliance on the paper.",
+              "Try to memorise it if possible; use script support where needed."
+            ],
+            "prepareFor": "Present your self-introduction at the next class.",
+            "note": "The goal is a student-written speech."
+          }
         }
-      ],
-      "classDate": "2026-09-10",
-      "classTime": "18:15–20:15",
-      "students": [
-        "Richard",
-        "Molly",
-        "Angela",
-        "Juliana",
-        "Kiana"
       ]
     },
     {
       "id": "fri-afternoon",
-      "label": "Friday · Speaking and expression",
-      "schedule": "3:30–5:30 pm",
-      "assignments": [
+      "sessions": [
         {
-          "id": "2026-09-11-occupation",
-          "assignedOn": "2026-09-11",
-          "title": "Your chosen occupation speech",
-          "steps": [
-            "Practise and memorise your chosen occupation speech.",
-            "Record a video if possible as a record of your practice."
+          "id": "2026-09-11-fri-afternoon",
+          "date": "2026-09-11",
+          "time": "15:40–17:40",
+          "students": [
+            {
+              "name": "Ray",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E133:E133"
+            },
+            {
+              "name": "Harper",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E134:E134"
+            },
+            {
+              "name": "Evan",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E135:E135"
+            },
+            {
+              "name": "Mikaela",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E136:E136"
+            },
+            {
+              "name": "Rhea",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E137:E137"
+            },
+            {
+              "name": "Wendy",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E138:E138"
+            },
+            {
+              "name": "Ethan",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E139:E139"
+            }
           ],
-          "prepareFor": "Be ready to present at the next class.",
-          "note": "A video is preferred, rather than required."
+          "classContent": [
+            "Voice, articulation and body warm-ups led into unguided introductions.",
+            "Returning students added a clap or hooray challenge.",
+            "Students explored occupations and applied feedback in second or third rounds.",
+            "A shared story practised happy, scrunched, sad and shocked facial expressions, along with stronger projection."
+          ],
+          "homework": {
+            "title": "Your chosen occupation speech",
+            "steps": [
+              "Practise and memorise your chosen occupation speech.",
+              "Record a video if possible as a record of your practice."
+            ],
+            "prepareFor": "Be ready to present at the next class.",
+            "note": "A video is preferred, rather than required."
+          }
         }
-      ],
-      "classDate": "2026-09-11",
-      "classTime": "15:40–17:40",
-      "students": [
-        "Ray",
-        "Harper",
-        "Evan",
-        "Mikaela",
-        "Rhea",
-        "Wendy",
-        "Ethan"
       ]
     },
     {
       "id": "fri-later",
-      "label": "Friday · Later speaking class",
-      "schedule": "Later class",
-      "assignments": [],
-      "classDate": "2026-09-11",
-      "classTime": "18:00–20:00",
-      "students": [
-        "Zoey",
-        "Peter",
-        "Merlin",
-        "Oliver",
-        "Lucas",
-        "Arthur",
-        "Kaka"
+      "sessions": [
+        {
+          "id": "2026-09-11-fri-later",
+          "date": "2026-09-11",
+          "time": "18:00–20:00",
+          "students": [
+            {
+              "name": "Zoey",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E144:E144"
+            },
+            {
+              "name": "Peter",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E142:E142"
+            },
+            {
+              "name": "Merlin",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E141:E141"
+            },
+            {
+              "name": "Oliver",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E143:E143"
+            },
+            {
+              "name": "Lucas",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E145:E145"
+            },
+            {
+              "name": "Arthur",
+              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E140:E140"
+            },
+            {
+              "name": "Kaka",
+              "feedbackUrl": null
+            }
+          ],
+          "classContent": [
+            "The class practised voice, articulation, hand control and pace during speaking turns.",
+            "Students also worked on attentive listening while classmates were speaking."
+          ],
+          "homework": null
+        }
       ]
     }
   ]
