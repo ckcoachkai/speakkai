@@ -23,7 +23,14 @@
         }
       ],
       "classDate": "2026-09-05",
-      "classTime": "13:00–15:00"
+      "classTime": "13:00–15:00",
+      "students": [
+        "Louis",
+        "Kenny",
+        "Kailyn",
+        "Winston",
+        "Jennifer"
+      ]
     },
     {
       "id": "sat-foundations",
@@ -45,7 +52,11 @@
         }
       ],
       "classDate": "2026-09-05",
-      "classTime": "15:30–17:30"
+      "classTime": "15:30–17:30",
+      "students": [
+        "Luise",
+        "Kyle"
+      ]
     },
     {
       "id": "sat-introductory",
@@ -65,7 +76,13 @@
         }
       ],
       "classDate": "2026-09-05",
-      "classTime": "17:30–19:30"
+      "classTime": "17:30–19:30",
+      "students": [
+        "Stacey",
+        "Tianyou",
+        "Liam",
+        "Tongtong"
+      ]
     },
     {
       "id": "thu-afternoon",
@@ -73,7 +90,14 @@
       "schedule": "3:30–5:30 pm",
       "assignments": [],
       "classDate": "2026-09-10",
-      "classTime": "15:30–17:30"
+      "classTime": "15:30–17:30",
+      "students": [
+        "Remy",
+        "Pinkie",
+        "Elsa",
+        "Charlotte",
+        "Jarvis"
+      ]
     },
     {
       "id": "thu-later",
@@ -94,7 +118,14 @@
         }
       ],
       "classDate": "2026-09-10",
-      "classTime": "18:15–20:15"
+      "classTime": "18:15–20:15",
+      "students": [
+        "Richard",
+        "Molly",
+        "Angela",
+        "Juliana",
+        "Kiana"
+      ]
     },
     {
       "id": "fri-afternoon",
@@ -114,7 +145,16 @@
         }
       ],
       "classDate": "2026-09-11",
-      "classTime": "15:40–17:40"
+      "classTime": "15:40–17:40",
+      "students": [
+        "Ray",
+        "Harper",
+        "Evan",
+        "Mikaela",
+        "Rhea",
+        "Wendy",
+        "Ethan"
+      ]
     },
     {
       "id": "fri-later",
@@ -122,7 +162,16 @@
       "schedule": "Later class",
       "assignments": [],
       "classDate": "2026-09-11",
-      "classTime": "18:00–20:00"
+      "classTime": "18:00–20:00",
+      "students": [
+        "Zoey",
+        "Peter",
+        "Merlin",
+        "Oliver",
+        "Lucas",
+        "Arthur",
+        "Kaka"
+      ]
     }
   ]
 }

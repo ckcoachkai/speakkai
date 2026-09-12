@@ -20,7 +20,8 @@ export function validateHomework(data) {
   const ids=new Set(), assignments=new Set();
   const text=s=>typeof s==='string'&&s.trim().length>0;
   for(const g of data.classes){
-    if(!exact(g,['id','label','schedule','assignments','classDate','classTime'])||!text(g.id)||!/^[a-z0-9-]+$/.test(g.id)||ids.has(g.id)||!text(g.label)||!text(g.schedule)||!Array.isArray(g.assignments)||!/^\d{4}-\d{2}-\d{2}$/.test(g.classDate)||(g.classTime!==null&&!/^\d{2}:\d{2}–\d{2}:\d{2}$/.test(g.classTime)))throw Error('Invalid or duplicate class');
+    if(!exact(g,['id','label','schedule','assignments','classDate','classTime','students'])||!text(g.id)||!/^[a-z0-9-]+$/.test(g.id)||ids.has(g.id)||!text(g.label)||!text(g.schedule)||!Array.isArray(g.assignments)||!/^\d{4}-\d{2}-\d{2}$/.test(g.classDate)||(g.classTime!==null&&!/^\d{2}:\d{2}–\d{2}:\d{2}$/.test(g.classTime)))throw Error('Invalid or duplicate class');
+    if(!Array.isArray(g.students)||!g.students.length||!g.students.every(text)||new Set(g.students).size!==g.students.length)throw Error('Invalid students');
     ids.add(g.id);
     for(const a of g.assignments){
       if(!exact(a,['id','assignedOn','title','steps','prepareFor','note'])||!text(a.id)||assignments.has(a.id)||!/^\d{4}-\d{2}-\d{2}$/.test(a.assignedOn)||!Number.isFinite(Date.parse(a.assignedOn))||new Date(a.assignedOn).toISOString().slice(0,10)!==a.assignedOn||!text(a.title)||!text(a.prepareFor)||!Array.isArray(a.steps)||!a.steps.length||!a.steps.every(text)||(a.note!==undefined&&!text(a.note)))throw Error('Invalid assignment');

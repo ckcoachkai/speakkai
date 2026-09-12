@@ -1,6 +1,6 @@
 # Public homework page
 
-Route: `/hw/`. Public content: `public/data/homework.json`. No student rosters, individual feedback, private Sheet links, task IDs or source-message identifiers belong in this file.
+Route: `/hw/`. Public content: `public/data/homework.json`. Kai explicitly authorised publishing the recorded first-name rosters on September 12. Individual feedback, private Sheet links, task IDs and source-message identifiers remain excluded.
 
 ## Update procedure
 
@@ -27,3 +27,7 @@ Times checked against Kai Schedule 2026, September grid: September 10 Thursday 1
 ## Rollback
 
 Revert the homework feature commit and deploy main to remove the new page. For a content correction, restore the preceding approved JSON version and deploy. The feature does not alter the schedule sync or existing pages.
+
+## Card layout and roster update
+
+Homework appears in a responsive grid of cards with the class date/time, recorded first names and full assignment. At narrow widths cards stack. The unresolved name Cannon in the Thursday later dictation is not published as an additional student; the five clearly recorded names are retained until attribution is confirmed. Kaka is included from the explicit Friday roster even without an individual observation.
