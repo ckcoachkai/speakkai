@@ -43,6 +43,8 @@ jobs:
         run: npm run check:schedule-privacy
       - name: Build
         run: npm run build
+      - name: Verify public homework and Shanghai date handling
+        run: node --test scripts/check-homework.mjs
       - name: Verify speech detector and worker lifecycle
         run: node --test scripts/check-speak-v1.mjs scripts/check-speak-engine-v1.mjs
       - name: Verify flagship pages and inquiry behavior

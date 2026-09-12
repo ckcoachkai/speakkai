@@ -1,0 +1,11 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {validateHomework,visibleAssignments,shanghaiDate} from '../src/lib/homework.mjs';
+const data=JSON.parse(fs.readFileSync(new URL('../public/data/homework.json',import.meta.url)));
+test('public homework uses approved fields and distinct IDs',()=>{assert.equal(validateHomework(data),data);assert.equal(data.classes.length,7);});
+test('Shanghai midnight changes the assignment date independently of viewer timezone',()=>{assert.equal(shanghaiDate(new Date('2026-09-11T15:59:59Z')),'2026-09-11');assert.equal(shanghaiDate(new Date('2026-09-11T16:00:00Z')),'2026-09-12');});
+test('latest assignment sorts first, hides future dates, and preserves history',()=>{const a={assignments:[{id:'old',assignedOn:'2026-09-05'},{id:'future',assignedOn:'2026-09-19'},{id:'new',assignedOn:'2026-09-12'}]};assert.deepEqual(visibleAssignments(a,'2026-09-12').map(x=>x.id),['new','old']);assert.equal(a.assignments[0].id,'old');});
+test('missing homework stays missing',()=>{assert.deepEqual(visibleAssignments({assignments:[]}),[]);assert.equal(data.classes.filter(x=>!x.assignments.length).length,2);});
+test('reject unexpected private columns and invalid calendar dates',()=>{const bad=structuredClone(data);bad.classes[0].studentNames=['test'];assert.throws(()=>validateHomework(bad));const invalid=structuredClone(data);invalid.classes[0].assignments[0].assignedOn='2026-02-31';assert.throws(()=>validateHomework(invalid));});
+test('published content contains no private archive identifiers or known student names',()=>{const s=JSON.stringify(data);assert.doesNotMatch(s,/SRC-\d|FB-\d|ckcoachkai@gmail|Luise|Kyle|Jennifer|Winston|Kailyn|Tianyou|Tongtong|Remy|Pinkie|Jarvis|Juliana|Kiana|Zoey|Merlin|Kaka|private\\|dictation-archive/i);});

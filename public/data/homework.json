@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "updatedAt": "2026-09-12T15:10:20+08:00",
+  "timeZone": "Asia/Shanghai",
+  "classes": [
+    {"id":"sat-original-oratory","label":"Saturday · Original Oratory","schedule":"Advanced class","assignments":[{"id":"2026-09-05-oo","assignedOn":"2026-09-05","title":"Your perspective on the glacier event","steps":["Turn your impromptu response about the glacier collapse and mudslides into a roughly 200–400-word speech.","Develop your own perspective, with clearer structure, logic and supporting detail.","Use transitions such as first, second and finally.","Practise aloud once or twice."],"prepareFor":"Be ready to present at the beginning of the next class.","note":"The five-minute curriculum target is not the length assigned for this lesson."}]},
+    {"id":"sat-foundations","label":"Saturday · Speaking foundations","schedule":"3:30–5:30 pm","assignments":[{"id":"2026-09-05-foundations","assignedOn":"2026-09-05","title":"A self-introduction with specific details","steps":["Introduce your name and one thing about yourself.","Develop three supporting parts: when you started, what you learned, and what you want to do in the future.","Include specific details so the audience learns more about you.","Say the speech aloud two or three times."],"prepareFor":"Prepare to present in the next class.","note":"Writing is the first step; rehearsal is part of the homework."}]},
+    {"id":"sat-introductory","label":"Saturday · Introductory speaking","schedule":"Later class","assignments":[{"id":"2026-09-05-intro","assignedOn":"2026-09-05","title":"Self-introduction or glacier speech","steps":["Practise your self-introduction speech, the printed glacier speech, or both.","For the glacier speech, practise explaining the importance of being careful as the world and climate change."],"prepareFor":"Prepare to deliver your selected speech at the next class.","note":"Homework recorded in the teacher’s September 7 follow-up to this class."}]},
+    {"id":"thu-afternoon","label":"Thursday · Self-introduction","schedule":"3:30–5:30 pm","assignments":[]},
+    {"id":"thu-later","label":"Thursday · Introductory speaking","schedule":"Later class","assignments":[{"id":"2026-09-10-intro","assignedOn":"2026-09-10","title":"Write your own self-introduction","steps":["Write a self-introduction in your own words, using your own ideas.","Rehearse it so you can speak with less reliance on the paper.","Try to memorise it if possible; use script support where needed."],"prepareFor":"Present your self-introduction at the next class.","note":"The goal is a student-written speech."}]},
+    {"id":"fri-afternoon","label":"Friday · Speaking and expression","schedule":"3:30–5:30 pm","assignments":[{"id":"2026-09-11-occupation","assignedOn":"2026-09-11","title":"Your chosen occupation speech","steps":["Practise and memorise your chosen occupation speech.","Record a video if possible as a record of your practice."],"prepareFor":"Be ready to present at the next class.","note":"A video is preferred, rather than required."}]},
+    {"id":"fri-later","label":"Friday · Later speaking class","schedule":"Later class","assignments":[]}
+  ]
+}
+
