@@ -124,7 +124,10 @@ export function weeklyScheduleBlocks(
   }
 
   if (column === 1) {
-    return freeBlocks(lines, 7 * 60, 15 * 60, inPersonTitle);
+    return [
+      ...freeBlocks(lines, 7 * 60, 15 * 60, inPersonTitle),
+      ...freeBlocks(lines, 20 * 60 + 30, 23 * 60, inPersonTitle),
+    ];
   }
 
   if (column === 2) {
