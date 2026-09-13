@@ -22,7 +22,7 @@ export function structuredData({
     name: "Kai Liu",
     jobTitle: "Communication coach and speaker",
     url: `${origin}/#story`,
-    image: `${origin}/images/coach-kai-headshot.webp`,
+    image: `${origin}/images/coach-kai-headshot.webp?v=20260913`,
     worksFor: { "@id": organization["@id"] },
   };
   const page = {

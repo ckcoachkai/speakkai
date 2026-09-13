@@ -206,7 +206,7 @@ const panelId = (index: number) => `v4-${experiment.number}-panel-${index}`;
       <div class="contact-sheet" role="tablist" aria-label="Public context frames">
         {content.panels.map((item, index) => (
           <button class={`contact-frame frame-${index + 1}`} type="button" role="tab" data-v4-control data-qa="interaction-trigger" data-target={panelId(index)} aria-controls={panelId(index)} aria-selected={index === 0 ? "true" : "false"}>
-            {index === 0 ? <img src="/images/coach-kai-headshot.webp" width="1400" height="1400" alt="Coach Kai" data-qa="portrait" /> : <span class="frame-art" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>}
+            {index === 0 ? <img src="/images/coach-kai-headshot.webp?v=20260913" width="1400" height="1400" alt="Coach Kai" data-qa="portrait" /> : <span class="frame-art" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>}
             <strong>{item.label}</strong><small>{item.title}</small>
           </button>
         ))}
