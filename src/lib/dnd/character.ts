@@ -152,7 +152,7 @@ export const seed:Character = {
     }
   ],
   "slotsUsed": [
-    0,
+    1,
     0,
     0,
     0,
@@ -190,7 +190,7 @@ export const seed:Character = {
   "flaws": "I rush into danger too quickly.",
   "languages": "Common, Draconic, Celestial",
   "proficiencies": "All armor; shields; simple weapons; martial weapons; playing cards.",
-  "notes": "Imported from the June 17, 2026 character sheet and Greatsword Bob conversation. Uses the 2014 fifth-edition Paladin rules.\n\nDM CHECK — The paper sheet lists 120 gp alongside starting gear. Rolled starting gold normally replaces starting equipment; confirm which method your table uses. Do not automatically add the Noble’s 25 gp.\n\nSecond martial weapon: not confirmed. Greatsword was confirmed in the starting equipment; now lost.\n\nFire resistance: halve fire damage. Position of Privilege: Noble background feature.\n\nResource counters start full because spent uses were not recorded. XP is set to 0 as a starting placeholder. Equipment weights of 0 mean not recorded, not weightless.\n\nInventory update — September 13, 2026: greatsword lost (0 carried); javelins reduced from 5 to 4, per Kai.",
+  "notes": "Imported from the June 17, 2026 character sheet and Greatsword Bob conversation. Uses the 2014 fifth-edition Paladin rules.\n\nDM CHECK — The paper sheet lists 120 gp alongside starting gear. Rolled starting gold normally replaces starting equipment; confirm which method your table uses. Do not automatically add the Noble’s 25 gp.\n\nSecond martial weapon: not confirmed. Greatsword was confirmed in the starting equipment; now lost.\n\nFire resistance: halve fire damage. Position of Privilege: Noble background feature.\n\nResource counters start full because spent uses were not recorded. XP is set to 0 as a starting placeholder. Equipment weights of 0 mean not recorded, not weightless.\n\nInventory update — September 13, 2026: greatsword lost (0 carried); javelins reduced from 5 to 4, per Kai.\n\nEncounter update — September 13, 2026 (Kai): initiative 19 (rolled 18 + 1). Cast Bless on the druid, Cat, and Taric, spending one 1st-level spell slot; 1 of 2 slots remains. Bob maintains concentration, up to 1 minute (10 rounds), unless it ends earlier. These three targets add 1d4 to attack rolls and saving throws; Bob is not a target. Pulled right arm; Kai confirmed no HP damage, so HP remains 15/20. No mechanical penalty was specified; any penalty needs a DM ruling.",
   "custom": [
     {
       "id": "great-weapon-fighting",
