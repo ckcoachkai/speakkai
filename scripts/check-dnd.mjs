@@ -13,7 +13,7 @@ const cloud=await import(asUrl(transpile('../src/lib/dnd/cloud.ts').replace("'./
 
 test('published level 2 Bob data and 2014 Paladin calculations',()=>{
   const c=model.validateCharacter(model.seed);
-  assert.equal(c.level,2);assert.equal(c.hp,15);assert.equal(c.maxHp,20);assert.equal(c.ac,16);assert.equal(c.hitDice,2);assert.equal(model.modifier(c.scores.STR),3);
+  assert.equal(c.level,2);assert.equal(c.hp,13);assert.equal(c.maxHp,20);assert.equal(c.ac,16);assert.equal(c.hitDice,2);assert.equal(model.modifier(c.scores.STR),3);
   assert.equal(model.skillBonus(c,'Athletics'),5);assert.equal(model.skillBonus(c,'History'),1);
   assert.equal(model.preparedLimit(c),3);assert.equal(c.spells.filter(s=>s.prepared).length,3);assert.equal(c.resources.find(r=>r.id==='hands').max,10);assert.deepEqual(model.slots(1),[0,0,0,0,0]);
   c.level=2;assert.equal(model.preparedLimit(c),3);assert.deepEqual(model.slots(2),[2,0,0,0,0]);
