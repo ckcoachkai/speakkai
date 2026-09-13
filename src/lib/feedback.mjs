@@ -14,10 +14,14 @@ export function validateFeedback(data) {
     groups.add(group.id);
     const dates = new Set();
     for (const session of group.sessions) {
-      if (!exact(session,['id','date','time','status','students']) || !isText(session.id) || sessions.has(session.id) || !validDate(session.date) || !/^([01]\d|2[0-3]):[0-5]\d–([01]\d|2[0-3]):[0-5]\d$/.test(session.time) || session.time.slice(0,5) >= session.time.slice(6) || !['held','cancelled'].includes(session.status) || !Array.isArray(session.students)) throw Error('Invalid session');
+      if (!exact(session,['id','date','time','status','students','classContent','homework']) || !isText(session.id) || sessions.has(session.id) || !validDate(session.date) || !/^([01]\d|2[0-3]):[0-5]\d–([01]\d|2[0-3]):[0-5]\d$/.test(session.time) || session.time.slice(0,5) >= session.time.slice(6) || !['held','cancelled'].includes(session.status) || !Array.isArray(session.students)) throw Error('Invalid session');
       if (dates.has(session.date+'|'+session.time)) throw Error('Duplicate session');
       dates.add(session.date+'|'+session.time); sessions.add(session.id);
       if (session.status === 'cancelled' && session.students.length) throw Error('Cancelled sessions cannot contain student evaluations');
+      for (const key of ['classContent','homework']) {
+        const section = session[key];
+        if (section !== undefined && section !== null && (!exact(section,['en','zh']) || !isText(section.en) || !isText(section.zh))) throw Error('Invalid bilingual class section');
+      }
       const names = new Set(), ids = new Set();
       for (const student of session.students) {
         if (!exact(student,['id','name','en','zh']) || !/^[a-z0-9-]+$/.test(student.id) || !isText(student.name) || names.has(student.name) || ids.has(student.id) || !((student.en === null && student.zh === null) || (isText(student.en) && isText(student.zh)))) throw Error('Invalid bilingual feedback');
@@ -47,4 +51,10 @@ export function feedbackText(session,student,language='en') {
   const content=student[language];
   if (!content) return '';
   return `${formatDate(session.date,language)} · ${session.time}\n${student.name}\n\n${content}`;
+}
+
+export function classSectionText(session,kind,language='en') {
+  if (!['classContent','homework'].includes(kind)) return '';
+  const title = language==='zh' ? (kind==='classContent' ? '课堂内容' : '课后作业') : (kind==='classContent' ? 'Class content' : 'Homework');
+  return `${formatDate(session.date,language)} · ${session.time}\n${title}\n\n${session[kind]?.[language] || 'N/A'}`;
 }

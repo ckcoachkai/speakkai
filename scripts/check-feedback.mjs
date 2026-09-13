@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {validateFeedback,weekWindows,sessionsInWindow,newestClass,feedbackText,shanghaiDate} from '../src/lib/feedback.mjs';
+import {validateFeedback,weekWindows,sessionsInWindow,newestClass,feedbackText,classSectionText,shanghaiDate} from '../src/lib/feedback.mjs';
 import {isSafeFeedbackUrl,validateHomework} from '../src/lib/homework.mjs';
 const data=JSON.parse(fs.readFileSync(new URL('../public/data/feedback.json',import.meta.url)));
 test('published feedback contains matched bilingual pairs and only public fields',()=>{
@@ -34,4 +34,25 @@ test('homework links resolve to exact published feedback and preserve history',(
   for(const group of hw.classes)for(const session of group.sessions)for(const student of session.students){if(!student.feedbackUrl?.startsWith('/fb/'))continue;assert.equal(isSafeFeedbackUrl(student.feedbackUrl),true);const params=new URL(student.feedbackUrl,'https://speakkai.com').searchParams;const fg=data.classes.find(g=>g.id===params.get('class'));const fs=fg?.sessions.find(s=>s.date===params.get('date'));const match=fs?.students.find(s=>s.id===params.get('student'));assert.equal(match?.name,student.name);assert.ok(match?.en&&match?.zh);}
   assert.equal(isSafeFeedbackUrl('/fb/?class=test&date=2026-02-31&student=someone'),false);
   assert.equal(isSafeFeedbackUrl('/fb/?class=test&date=2026-09-13&student=someone&next=https://evil.example'),false);
+});
+
+
+test('class sections preserve their own dated lesson and assignment, including N/A',()=>{
+  const hw=JSON.parse(fs.readFileSync(new URL('../public/data/homework.json',import.meta.url)));
+  for(const group of data.classes)for(const session of group.sessions){
+    const original=hw.classes.find(g=>g.id===group.id)?.sessions.find(s=>s.date===session.date&&s.time===session.time);
+    if(session.status==='held')assert.equal(session.classContent?.en||'',original?.classContent.join('\n')||'');
+    for(const language of ['en','zh'])for(const kind of ['classContent','homework']){
+      const copied=classSectionText(session,kind,language);
+      assert.ok(copied.endsWith(session[kind]?.[language]||'N/A'));
+      if(session[kind])assert.match(session[kind].zh,/[\u4e00-\u9fff]/);
+    }
+  }
+  const sunday=data.classes.find(g=>g.id==='sun-1130').sessions[0];
+  assert.equal(sunday.homework,null);
+  assert.match(classSectionText(sunday,'homework'),/Homework\n\nN\/A$/);
+  const saturday=data.classes.find(g=>g.id==='sat-original-oratory').sessions;
+  assert.match(saturday.find(s=>s.date==='2026-09-05').homework.en,/200–400/);
+  assert.match(saturday.find(s=>s.date==='2026-09-12').homework.zh,/300–500/);
+  const bad=structuredClone(data);bad.classes[0].sessions[0].homework.zh=null;assert.throws(()=>validateFeedback(bad));
 });

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-13T12:34:40+08:00",
+  "updatedAt": "2026-09-13T04:58:17+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -46,7 +46,15 @@
               "en": "Jennifer managed the five-minute task well, moving from self-introduction to her perspective at about three minutes. Personal stories helped the connection, but her viewpoint needed greater depth.\n\n➜ Next step: Develop a paragraph in her own words before using AI for editing so the reasoning remains her own.",
               "zh": "Jennifer 较好地完成了五分钟的课堂任务，大约在第三分钟从自我介绍转向个人观点。个人故事增强了交流感，但观点还可以更深入。\n\n➜ 下一步：先用自己的话写出一段观点，再用 AI 辅助修改语言，确保推理来自自己的思考。"
             }
-          ]
+          ],
+          "classContent": {
+            "en": "Students introduced themselves and explored self-awareness, logic and personal viewpoints.\nThe class used the glacier-collapse and mudslide topic to develop an original perspective.\nStudents were asked to turn an impromptu response into a structured speech with clearer logic, transitions and supporting detail.",
+            "zh": "学生进行了自我介绍，并探讨了自我认知、逻辑和个人观点。\n课堂以冰川崩塌和泥石流事件为话题，练习形成自己的看法。\n学生需要把即兴回答发展成有结构的演讲，加强逻辑、过渡和支撑细节。"
+          },
+          "homework": {
+            "en": "Your perspective on the glacier event\n\n1. Turn your impromptu response about the glacier collapse and mudslides into a roughly 200–400-word speech.\n2. Develop your own perspective, with clearer structure, logic and supporting detail.\n3. Use transitions such as first, second and finally.\n4. Practise aloud once or twice.\n\nPreparation: Be ready to present at the beginning of the next class.\n\nThe five-minute curriculum target is not the length assigned for this lesson.",
+            "zh": "你对冰川事件的看法\n\n1. 把关于冰川崩塌和泥石流的即兴回答，写成约200–400词的英文演讲。\n2. 形成自己的观点，并用更清楚的结构、逻辑和细节加以支撑。\n3. 使用“第一、第二、最后”等过渡表达。\n4. 大声练习一到两遍。\n\n准备要求：下节课开始时进行演讲。\n\n课程大纲中的五分钟目标并不是本次作业规定的演讲时长。"
+          }
         },
         {
           "id": "2026-09-12-sat-original-oratory",
@@ -90,7 +98,15 @@
               "en": "Jennifer's delivery felt more genuine, with a personal story that helped listeners connect to her ideas. Her discussion of success would be stronger if it showed when the audience might experience a similar situation, such as high expectations, a setback, and learning from it.\n\n➜ Next step: Connect the personal story to one familiar audience experience and explain what listeners can take from it.",
               "zh": "Jennifer 的表达更加真诚，个人故事帮助听众与她的想法产生联系。谈到成功时，如果能说明听众在什么情况下也可能有类似经历，例如期待较高、遇到挫折并从中学习，内容会更有说服力。\n\n➜ 下一步：把个人故事与一个听众熟悉的经历连接起来，并说清楚大家可以从中得到什么。"
             }
-          ]
+          ],
+          "classContent": {
+            "en": "The class practised impromptu answers with a reason, an example and a useful audience message, applying feedback between attempts.\nStudents reviewed more than ten recent-news articles and used cause, effect, impact and solution to summarise an event and develop a viewpoint.\nGroup presentations introduced the structure of Original Oratory while highlighting the need to strengthen basic delivery skills.\nThe final topic was AI surveillance and the distribution of power.",
+            "zh": "课堂练习了用理由、例子和面向听众的信息来组织即兴回答，并在再次尝试时运用反馈。\n学生阅读了十多篇近期新闻报道，用原因、结果、影响和解决方案来概括事件、形成观点。\n小组展示介绍了原创演讲（Original Oratory）的结构，也帮助学生看清仍需加强的基本表达能力。\n最后讨论的话题是AI监控与权力分配。"
+          },
+          "homework": {
+            "en": "AI surveillance and the distribution of power\n\n1. Write a speech of roughly 300–500 words about AI surveillance and the distribution of power.\n2. Organise the speech around cause, effect, impact and solution.\n3. Practise delivering the ideas without reading directly from a full script; use note cards for guidance if needed.\n\nPreparation: Be ready to deliver the speech at the next class.",
+            "zh": "AI监控与权力分配\n\n1. 围绕AI监控与权力分配，写一篇约300–500词的英文演讲。\n2. 按原因、结果、影响和解决方案组织内容。\n3. 练习表达自己的想法，避免照着整篇稿子读；需要时可以用提示卡辅助。\n\n准备要求：下节课进行演讲。"
+          }
         }
       ]
     },
@@ -119,14 +135,24 @@
               "en": "Kyle spoke smoothly and confidently, used pauses, and made the audience laugh with family-related content. His responses were short and often used brief sentences.\n\n➜ Next step: Use a simple structure to expand one idea with supporting detail.",
               "zh": "Kyle 表达流畅自然，会使用停顿，也通过与家庭有关的内容让听众发笑。目前回答偏短，句子也较简短。\n\n➜ 下一步：用清晰的结构展开一个观点，并加入具体的支持细节。"
             }
-          ]
+          ],
+          "classContent": {
+            "en": "Students explored fear of the stage and fear of content.\nThe class practised awareness of eyes, feet, hands, face and emotion, along with articulation and emotional delivery.\nA world-champion example, impromptu structures and specific details supported repeated speaking attempts.\nFeedback was applied through repeat responses.",
+            "zh": "学生探讨了对上台和对演讲内容的担心。\n课堂练习了对眼神、双脚、双手、面部和情绪的觉察，以及吐字和情感表达。\n通过世界冠军演讲示例、即兴表达结构和具体细节，支持学生多次尝试发言。\n学生在再次回答时运用了反馈。"
+          },
+          "homework": {
+            "en": "A self-introduction with specific details\n\n1. Introduce your name and one thing about yourself.\n2. Develop three supporting parts: when you started, what you learned, and what you want to do in the future.\n3. Include specific details so the audience learns more about you.\n4. Say the speech aloud two or three times.\n\nPreparation: Prepare to present in the next class.\n\nWriting is the first step; rehearsal is part of the homework.",
+            "zh": "有具体细节的自我介绍\n\n1. 介绍自己的名字，以及关于自己的一件事。\n2. 从三个方面展开：什么时候开始、学到了什么、未来想做什么。\n3. 加入具体细节，让听众更加了解你。\n4. 把演讲大声说两到三遍。\n\n准备要求：下节课进行展示。\n\n写好内容只是第一步，练习表达也是作业的一部分。"
+          }
         },
         {
           "id": "2026-09-12-sat-foundations",
           "date": "2026-09-12",
           "time": "15:30–17:30",
           "status": "cancelled",
-          "students": []
+          "students": [],
+          "classContent": null,
+          "homework": null
         }
       ]
     },
@@ -167,7 +193,15 @@
               "en": "Tongtong was more expressive and spoke more loudly in this class. She still needed to filter language for the audience.\n\n➜ Next step: Build on her willingness to share by choosing wording that communicates her idea respectfully.",
               "zh": "Tongtong 这节课的表达更丰富，声音也更响亮了。她仍需要留意措辞是否适合听众。\n\n➜ 下一步：保持愿意分享的态度，选择能够尊重听众、清楚传达观点的说法。"
             }
-          ]
+          ],
+          "classContent": {
+            "en": "Voice, body and articulation warm-ups led into self-introductions and impromptu structure.\nStudents considered finding RMB 10,000 in a wallet as an impromptu prompt.\nThe Nepal–China glacier-flooding topic was used to practise an organised speech.\nCoaching included numbered points, voice and audience-appropriate language.",
+            "zh": "课堂从声音、身体和吐字热身开始，进入自我介绍和即兴表达结构的练习。\n学生以“在钱包里发现一万元人民币”为即兴话题。\n课堂也用尼泊尔与中国相关的冰川洪水话题，练习有条理的演讲。\n指导重点包括按顺序列出要点、声音表达，以及适合听众的语言。"
+          },
+          "homework": {
+            "en": "Self-introduction or glacier speech\n\n1. Practise your self-introduction speech, the printed glacier speech, or both.\n2. For the glacier speech, practise explaining the importance of being careful as the world and climate change.\n\nPreparation: Prepare to deliver your selected speech at the next class.\n\nHomework recorded in the teacher’s September 7 follow-up to this class.",
+            "zh": "自我介绍或冰川演讲\n\n1. 练习自我介绍、打印的冰川演讲稿，或两者都练习。\n2. 练习冰川演讲时，说明在世界和气候发生变化的背景下，保持谨慎为什么重要。\n\n准备要求：下节课展示你选择的演讲。\n\n这份作业记录来自老师9月7日对此次课堂的补充说明。"
+          }
         },
         {
           "id": "2026-09-12-sat-introductory",
@@ -205,7 +239,12 @@
               "en": null,
               "zh": null
             }
-          ]
+          ],
+          "classContent": {
+            "en": "The class reviewed the self-introduction and glacier-speech homework through speaking attempts.\nSelf-introductions focused on one thing about the speaker, supported by when it began, what they learned, and future plans.\nStudents tried presenting without relying on a full script, and later attempts were included in the feedback.",
+            "zh": "学生通过发言展示，回顾了自我介绍和冰川演讲作业。\n自我介绍围绕讲述者的一件事展开，并说明什么时候开始、学到了什么，以及未来的计划。\n学生尝试不依赖完整稿件进行演讲，后续尝试也纳入了反馈。"
+          },
+          "homework": null
         }
       ]
     },
@@ -252,7 +291,12 @@
               "en": "Jarvis initially held his hands behind his back and moved his leg. Later he stopped putting his hands behind him and delivered his ideas logically.\n\n➜ Next step: Continue rehearsing with a settled stance so his message remains clear.",
               "zh": "Jarvis 开始时把手放在背后，也有腿部小动作。后面他不再把手放在身后，能够有逻辑地表达想法。\n\n➜ 下一步：保持稳定的站姿继续练习，让信息更加清楚。"
             }
-          ]
+          ],
+          "classContent": {
+            "en": "Students repeatedly practised self-introductions around one central personal idea.\nThey developed when the idea began, what they learned, future plans and a return to the main idea at the end.\nCoaching covered breath, voice, specific details, posture, grammar and managing time.",
+            "zh": "学生围绕一个核心的个人主题，反复练习自我介绍。\n内容包括这件事什么时候开始、学到了什么、未来的计划，并在结尾回到核心主题。\n指导内容涵盖呼吸、声音、具体细节、站姿、语法和时间控制。"
+          },
+          "homework": null
         }
       ]
     },
@@ -299,7 +343,15 @@
               "en": "Kiana was confident on stage, although her presence seemed less assured than during the summer camp.\n\n➜ Next step: Rehearse her introduction aloud to rebuild familiarity with presenting.",
               "zh": "Kiana 上台时有一定自信，不过与夏令营相比，现场表现显得稍不自在。\n\n➜ 下一步：把自我介绍大声练习出来，重新建立对上台表达的熟悉感。"
             }
-          ]
+          ],
+          "classContent": {
+            "en": "Voice and body warm-ups led into self-introduction and impromptu structure.\nStudents practised answering a superpower prompt with structured speaking support.\nThe focus was developing students' own ideas and building readiness to present.",
+            "zh": "课堂从声音和身体热身开始，进入自我介绍和即兴表达结构的练习。\n学生借助表达结构，练习回答关于超能力的话题。\n重点是发展学生自己的想法，并做好展示准备。"
+          },
+          "homework": {
+            "en": "Write your own self-introduction\n\n1. Write a self-introduction in your own words, using your own ideas.\n2. Rehearse it so you can speak with less reliance on the paper.\n3. Try to memorise it if possible; use script support where needed.\n\nPreparation: Present your self-introduction at the next class.\n\nThe goal is a student-written speech.",
+            "zh": "写一篇自己的自我介绍\n\n1. 用自己的想法和语言写一篇自我介绍。\n2. 反复练习，减少对稿纸的依赖。\n3. 可以的话，尝试记住内容；需要时也可以使用稿件辅助。\n\n准备要求：下节课展示自我介绍。\n\n目标是由学生自己完成演讲内容。"
+          }
         }
       ]
     },
@@ -358,7 +410,15 @@
               "en": "Ethan spoke fluently with good pacing, pauses, and enthusiasm. His main refinement is choosing audience-appropriate language and more specific details.\n\n➜ Next step: Revise a general statement into a respectful, concrete example.",
               "zh": "Ethan 表达流畅，语速、停顿和热情都比较好。接下来需要留意适合听众的措辞，并加入更具体的细节。\n\n➜ 下一步：把一个笼统的说法改成尊重听众、细节明确的例子。"
             }
-          ]
+          ],
+          "classContent": {
+            "en": "Voice, articulation and body warm-ups led into unguided introductions.\nReturning students added a clap or hooray challenge.\nStudents explored occupations and applied feedback in second or third rounds.\nA shared story practised happy, scrunched, sad and shocked facial expressions, along with stronger projection.",
+            "zh": "课堂从声音、吐字和身体热身开始，再进行没有提示的自我介绍。\n老生增加了让听众鼓掌或欢呼的挑战。\n学生探讨了职业话题，并在第二轮或第三轮展示中运用反馈。\n通过一个共同的故事，练习开心、皱起脸、伤心和惊讶的表情，同时加强声音的传递。"
+          },
+          "homework": {
+            "en": "Your chosen occupation speech\n\n1. Practise and memorise your chosen occupation speech.\n2. Record a video if possible as a record of your practice.\n\nPreparation: Be ready to present at the next class.\n\nA video is preferred, rather than required.",
+            "zh": "你选择的职业演讲\n\n1. 练习并记住你选择的职业演讲。\n2. 可以的话，录一段视频，留下练习记录。\n\n准备要求：下节课进行展示。\n\n建议录制视频，但并非强制要求。"
+          }
         }
       ]
     },
@@ -417,7 +477,12 @@
               "en": null,
               "zh": null
             }
-          ]
+          ],
+          "classContent": {
+            "en": "The class practised voice, articulation, hand control and pace during speaking turns.\nStudents also worked on attentive listening while classmates were speaking.",
+            "zh": "学生在轮流发言时练习声音、吐字、手部控制和语速。\n也练习了在同学发言时专心倾听。"
+          },
+          "homework": null
         }
       ]
     },
@@ -457,8 +522,19 @@
               "name": "Berlingo",
               "en": "Berlingo completed the task, organised his thoughts, and did not need to read from the paper. At times he looked toward the screen instead of the people in front of him. A little more volume and a slower pace would make the words easier to understand.\n\n➜ Next step: Rehearse the answer facing the audience, speaking slightly louder and pausing between the numbered points.",
               "zh": "Berlingo 完成了任务，能够组织自己的想法，也不需要照着稿纸读。有时他看向屏幕，而没有面向前方的听众。再增加一些音量、放慢一些语速，会让词句更容易听清。\n\n➜ 下一步：面向听众练习回答，声音稍微大一些，并在编号要点之间留出停顿。"
+            },
+            {
+              "id": "yiyi",
+              "name": "Yiyi",
+              "en": "Yiyi appeared to take the speaking task seriously and was able to give her answers. Her reasoning needed a clearer structure at times, especially in the third point, so listeners could follow how each reason supported her answer.\n\n➜ Next step: Rehearse the three points using “first, second, finally,” and check that the final reason clearly supports her answer.",
+              "zh": "Yiyi 在发言时看起来比较认真，也能够给出自己的回答。有些地方的逻辑结构还需要更清楚，尤其是第三个要点，这样听众才能更容易理解每个理由如何支持她的回答。\n\n➜ 下一步：用“第一、第二、最后”练习三个要点，并检查最后一个理由是否清楚地支持自己的回答。"
             }
-          ]
+          ],
+          "classContent": {
+            "en": "Students discussed whether people should keep doing something they are not good at.\nThey practised taking a position and organising reasons with first, second and finally.\nCoaching focused on clear explanations, audience direction, audible articulation and respectful listening.",
+            "zh": "学生讨论了“如果不擅长一件事，是否还应该继续做”。\n他们练习表明立场，并用“第一、第二、最后”组织理由。\n指导重点包括清楚解释、面向听众、让人听清的吐字，以及尊重他人、认真倾听。"
+          },
+          "homework": null
         }
       ]
     }

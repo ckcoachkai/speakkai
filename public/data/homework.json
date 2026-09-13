@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-13T12:37:20+08:00",
+  "updatedAt": "2026-09-13T04:58:17+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -437,6 +437,10 @@
             {
               "name": "Berlingo",
               "feedbackUrl": "/fb/?class=sun-1130&date=2026-09-13&student=berlingo"
+            },
+            {
+              "name": "Yiyi",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-09-13&student=yiyi"
             }
           ],
           "classContent": [
