@@ -41,6 +41,8 @@ jobs:
         run: npm run sync:schedule
       - name: Verify public schedule contains availability only
         run: npm run check:schedule-privacy
+      - name: Verify schedule categories and chronological order
+        run: node --test scripts/check-schedule-presentation.mjs
       - name: Build
         run: npm run build
       - name: Verify forest game route and media

@@ -333,8 +333,8 @@ import "@fontsource/manrope/700.css";
       .event-line.kind-group { border-left-color: #c2410c; background: #ffedd5; }
       .event-line.kind-vip, .legend-item.kind-vip { color: #6d28d9; }
       .event-line.kind-vip { border-left-color: #7c3aed; background: #f3e8ff; }
-      .event-line.kind-sas, .legend-item.kind-sas { color: #075cbe; }
-      .event-line.kind-sas { border-left-color: #0b66d4; background: #e0f2fe; }
+      .event-line.kind-sas, .legend-item.kind-sas { color: #9a3412; }
+      .event-line.kind-sas { border-left-color: #c2410c; background: #ffedd5; }
       .event-line.kind-tmc, .legend-item.kind-tmc { color: #9a3412; }
       .event-line.kind-tmc { border-left-color: #c2410c; background: #ffedd5; }
       .event-line.kind-travel, .legend-item.kind-travel { color: #7a4b00; }
@@ -343,6 +343,8 @@ import "@fontsource/manrope/700.css";
       .event-line.kind-availability { border-left-color: #0f857d; background: #d9f7f4; }
       .event-line.kind-reserved, .legend-item.kind-reserved { color: #475569; }
       .event-line.kind-reserved { border-left-color: #64748b; background: #f1f5f9; }
+      .event-line.kind-reserved:has(.event-time), .legend-item.kind-reserved { color: #9a3412; }
+      .event-line.kind-reserved:has(.event-time) { border-left-color: #c2410c; background: #ffedd5; }
       .event-line.kind-free, .legend-item.kind-free { color: #166534; }
       .event-line.kind-free {
         border-left-color: #22c55e;
@@ -567,6 +569,7 @@ import "@fontsource/manrope/700.css";
       <div class="schedule-legend" aria-label="Schedule colour legend">
         <span class="legend-item kind-free"><i class="legend-swatch" aria-hidden="true"></i>Free</span>
         <span class="legend-item kind-group"><i class="legend-swatch" aria-hidden="true"></i>Class booked</span>
+        <span class="legend-item kind-vip"><i class="legend-swatch" aria-hidden="true"></i>VIP 1-to-1 booked</span>
         <span class="legend-item kind-reserved"><i class="legend-swatch" aria-hidden="true"></i>Time booked</span>
         <span class="legend-item kind-tmc"><i class="legend-swatch" aria-hidden="true"></i>TMC</span>
         <span class="legend-item kind-travel"><i class="legend-swatch" aria-hidden="true"></i>Travel</span>
@@ -590,6 +593,7 @@ import "@fontsource/manrope/700.css";
 
     <script>
       import { weeklyScheduleBlocks } from "../lib/weeklySchedule";
+      import { calendarDisplayEventKind, sortScheduleEvents, publicBookingPresentation } from "../lib/schedulePresentation";
 
       type Cell = { value?: string };
       type Sheet = {
@@ -632,26 +636,6 @@ import "@fontsource/manrope/700.css";
 
       function cellValue(sheet: Sheet, row: number, column: number) {
         return sheet.rows[row]?.cells?.[column]?.value?.trim() ?? "";
-      }
-
-      const nonNameCapitalizedWords = new Set([
-        "Class", "Demo", "Training", "Kunshan", "SAS", "TMC", "JH", "SH", "US", "Weds", "Thursday",
-        "Reserved", "Time", "Office", "Work", "Block", "Online", "Offline",
-      ]);
-
-      function calendarDisplayEventKind(label: string) {
-        if (/\bVIP\b|\b1\s*(?:-|v)\s*1\b|\b1\s*-?\s*on\s*-?\s*1\b|一对一/i.test(label)) return "vip";
-        if (/班课|年级|\bgroup\b|\bLogan\s*班\b/i.test(label)) return "group";
-        const words = label.match(/\b[A-Z][a-z]{1,}\b/g) ?? [];
-        if (
-          words.some((word) => !nonNameCapitalizedWords.has(word)) ||
-          /\b[A-Z][a-z]+(?:[A-Z][a-z]+)+\b/.test(label) ||
-          /[-–—]\s*[a-z][a-z]+(?:\.[a-z])?\b/.test(label)
-        ) return "vip";
-        if (/\bSAS\b/i.test(label)) return "sas";
-        if (/\bTMC\b|\(TMC\)/i.test(label)) return "tmc";
-        if (/班课|\bclass\b|\bgroup\b|\bJH\b|龙柏/i.test(label)) return "group";
-        return "reserved";
       }
 
       function availabilityKind(value: string) {
@@ -717,16 +701,8 @@ import "@fontsource/manrope/700.css";
 
           const eventMatch = line.match(/^((?:[01]\d|2[0-3]):[0-5]\d(?:[–-](?:[01]\d|2[0-3]):[0-5]\d)?) · (.+)$/);
           if (eventMatch) {
-            const originalKind = calendarDisplayEventKind(eventMatch[2]);
-            const isTmc = /\bTMC\b|\(TMC\)/i.test(eventMatch[2]);
-            const isClass = originalKind === "group" || originalKind === "sas";
-            content.append(
-              makePublicEvent(
-                isTmc ? "tmc" : isClass ? "group" : "reserved",
-                eventMatch[1],
-                isTmc ? eventMatch[2] : isClass ? "Class booked" : "Time booked",
-              ),
-            );
+            const booking = publicBookingPresentation(eventMatch[2]);
+            content.append(makePublicEvent(booking.kind, eventMatch[1], booking.title));
             continue;
           }
 
@@ -740,6 +716,7 @@ import "@fontsource/manrope/700.css";
             content.append(makePublicEvent("travel", "", "Travel"));
           }
         }
+        sortScheduleEvents(content);
         cell.append(content);
       }
 
