@@ -64,7 +64,7 @@ test('cloud login rejects an account other than the configured owner',async()=>{
 test('published JSON matches the app and Excel download exists',()=>{
   const published=JSON.parse(fs.readFileSync(new URL('../public/dnd/character.json',import.meta.url),'utf8'));
   assert.deepEqual(published,model.seed);
-  assert.deepEqual(published.spells.map(s=>s.name),['Command','Purify Food and Drink','Bless']);
+  assert.deepEqual(published.spells.map(s=>s.name),['Cure Wounds','Heroism','Thunderous Smite']);
   assert.equal(8+model.proficiency(published.level)+model.modifier(published.scores.CHA),11);
   assert.ok(fs.statSync(new URL('../public/dnd/Bob_the_Paladin.xlsx',import.meta.url)).size>10000);
 });
