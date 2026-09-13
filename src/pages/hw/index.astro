@@ -28,7 +28,7 @@ const copyKinds = [['content', 'Copy class content'], ['homework', 'Copy homewor
         <header class="class-heading"><h2 id={`${group.id}-heading`}>{sessionTitle(current)}</h2><a href={`#${group.id}`} aria-label={`Link to ${sessionTitle(current)}`}>Class link ↗</a></header>
         {current ? <>
           <div class="session-nav"><button type="button" data-action="older" disabled={!older} aria-label="Show older class session">← Older</button><span class="session-position">{visible.length > 1 ? `1 of ${visible.length} sessions` : 'Current session'}</span><button type="button" data-action="newer" disabled aria-label="Show newer class session">Newer →</button></div>
-          <div class="roster"><span>Students</span><div class="student-list">{current.students.map((student) => student.feedbackUrl ? <a href={student.feedbackUrl} target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label={`Private feedback for ${student.name}`}>{student.name}</a> : <button type="button" data-action="feedback" data-student={student.name} aria-label={`No individual feedback recorded for ${student.name} for this class`}>{student.name}</button>)}</div></div>
+          <div class="roster"><span>Students</span><div class="student-list">{current.students.map((student) => student.feedbackUrl ? <a href={student.feedbackUrl} target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label={`Feedback for ${student.name}`}>{student.name}</a> : <button type="button" data-action="feedback" data-student={student.name} aria-label={`No individual feedback recorded for ${student.name} for this class`}>{student.name}</button>)}</div></div>
           <section class="content-section"><h3>Class content</h3>{current.classContent.length ? <ul>{current.classContent.map((item) => <li>{item}</li>)}</ul> : <p class="empty">Not recorded for this class.</p>}</section>
           <section class="homework-section"><h3>Homework</h3>{current.homework ? <><h4>{current.homework.title}</h4><ol>{current.homework.steps.map((step) => <li>{step}</li>)}</ol><p class="prepare">Preparation: {current.homework.prepareFor}</p>{current.homework.note && <p class="note">{current.homework.note}</p>}</> : <p class="empty">Not recorded for this class.</p>}</section>
           <div class="copy-row" aria-label="Copy this session"><span class="copy-label">Copy</span>{copyKinds.map(([kind, label]) => <button type="button" data-action="copy" data-kind={kind}>{label}</button>)}</div>
@@ -93,7 +93,7 @@ function renderCard(group: ClassGroup) {
   const studentList = node('div', '', 'student-list');
   for (const student of current.students) {
     if (student.feedbackUrl) {
-      const link = node('a', student.name); link.href = student.feedbackUrl; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.referrerPolicy = 'no-referrer'; link.setAttribute('aria-label', `Private feedback for ${student.name}`); studentList.append(link);
+      const link = node('a', student.name); link.href = student.feedbackUrl; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.referrerPolicy = 'no-referrer'; link.setAttribute('aria-label', `Feedback for ${student.name}`); studentList.append(link);
     } else {
       const button = node('button', student.name); button.type = 'button'; button.dataset.action = 'feedback'; button.dataset.student = student.name; button.setAttribute('aria-label', `No individual feedback recorded for ${student.name} for this class`); studentList.append(button);
     }

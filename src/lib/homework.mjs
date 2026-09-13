@@ -37,6 +37,14 @@ export function isSafeFeedbackUrl(value) {
   if (value === null) return true;
   if (!text(value)) return false;
   try {
+    if (value.startsWith('/fb/?')) {
+      const url = new URL(value, 'https://speakkai.com');
+      return url.origin === 'https://speakkai.com' && url.pathname === '/fb/'
+        && [...url.searchParams.keys()].every(key => ['class','date','student'].includes(key))
+        && ID_RE.test(url.searchParams.get('class') || '')
+        && validDate(url.searchParams.get('date'))
+        && ID_RE.test(url.searchParams.get('student') || '');
+    }
     const url = new URL(value);
     return url.protocol === 'https:'
       && !url.username && !url.password

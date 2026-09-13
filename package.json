@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "cms": "node scripts/start-cms.mjs",
     "build:portrait": "node scripts/build-portrait-variants.mjs",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && node scripts/build-feedback-alias.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "check:experiment-lab": "node scripts/check-experiment-lab.mjs",

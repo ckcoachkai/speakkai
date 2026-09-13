@@ -6,7 +6,7 @@ The `/hw/` page presents one compact trading card for each class. Each card show
 
 The card has separate plain-text controls for class content, homework, or both. Copied text is headed by the selected date and time and uses readable bullets and numbered homework steps. If the browser denies clipboard access, a selectable text area appears so the user can press Ctrl+C or use the device copy command.
 
-Student names with a supplied feedback URL open the owner-private feedback row in a new tab with `noopener`, `noreferrer`, and no referrer. A name without a URL remains clickable and reports that no individual feedback is recorded for that student for the selected class. These links are expected to require the owner's Google account; publishing the link does not make the private workbook public.
+Following Kai's September 13 request for public bilingual feedback, student names now open the matching `/fb/` class/date/student view in a new tab with `noopener`, `noreferrer`, and no referrer. The validator also supports legacy private Google Sheet row links. A name without a URL remains clickable and reports that no individual feedback is recorded for that student for the selected class. The private workbook itself remains private.
 
 ## Public data contract
 
@@ -42,7 +42,7 @@ Student names with a supplied feedback URL open the owner-private feedback row i
 
 1. Read the newly dictated assignment or class content. Confirm which existing class and dated session it belongs to; do not infer identity from a student's name alone.
 2. Add or correct the matching session with its actual date, time, students, class content, and homework. Preserve earlier sessions. Do not fabricate a missing week or convert curriculum suggestions into historical homework.
-3. Verify the exact student and class against the current private Google Sheets row before adding its `feedbackUrl`. Confirm that the destination remains private. Use `null` when no individual feedback is recorded.
+3. Verify the exact student, class and session against the original feedback evidence before adding a link to its published `/fb/` entry. Legacy private Sheet links require checking the correct row and private destination. Use `null` when no individual feedback is recorded.
 4. Set `updatedAt` to the real update timestamp with timezone. Run `node --test scripts/check-homework.mjs`, `npm run build`, and the existing release checks.
 5. Commit and deploy through the site's existing main-branch GitHub Pages workflow, then verify `/data/homework.json` and `/hw/` live.
 
@@ -53,6 +53,8 @@ The browser fetches the public JSON on load, when the tab becomes visible, once 
 The initial content comes from the recovered September 5, 10, and 11 class dictation and the September 7 follow-up. Exact recurring times were checked against Kai Schedule 2026 where available. Student first names were explicitly authorised for this public page. Unresolved names remain excluded until attribution is confirmed. Individual feedback, task IDs, source-message identifiers, and the private archive remain outside the public JSON.
 
 The September 12 update contains one confidently matched session for each of seven current classes, 34 verified private feedback links, and one unlinked student name with a missing-feedback message. Older archive records could not safely be assigned to these current classes from their dates and rosters, so they remain unattached. Navigation buttons are disabled at the boundaries and will become available as confirmed sessions are appended. Browser-only fixtures test multiweek navigation; they are not published lesson records.
+
+The September 13 update adds the September 12 Saturday sessions and September 13 Sunday 11:30–13:00 session, giving eight groups and eleven dated records. The Saturday afternoon cancellation is explicit. The advanced class now has the recorded 300–500-word AI-surveillance assignment, while earlier glacier homework remains in history. Confirmed student names link to the new bilingual feedback page. No new homework was invented for sessions without a recorded assignment.
 
 September 5 is blank in the schedule. Its Saturday times come from Kai's confirmation and the following Saturday's recurring slots, not independent proof of attendance or actual start/end times on September 5. The archive's raw class-date uncertainty is preserved in the private workbook. The current card dates retain the September class mapping established in the conversation. Friday afternoon uses the scheduled 15:40–17:40 rather than the rounded dictated 15:30–17:30. Cannon remains unresolved; Kaka is on the roster without a recovered feedback entry. No schedule or workbook sharing permission was changed.
 

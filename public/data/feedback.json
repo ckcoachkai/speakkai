@@ -1,0 +1,466 @@
+{
+  "version": 1,
+  "updatedAt": "2026-09-13T12:34:40+08:00",
+  "timeZone": "Asia/Shanghai",
+  "classes": [
+    {
+      "id": "sat-original-oratory",
+      "label": {
+        "en": "Saturday · 13:00–15:00",
+        "zh": "周六 · 13:00–15:00"
+      },
+      "sessions": [
+        {
+          "id": "2026-09-05-sat-original-oratory",
+          "date": "2026-09-05",
+          "time": "13:00–15:00",
+          "status": "held",
+          "students": [
+            {
+              "id": "louis",
+              "name": "Louis",
+              "en": "Louis kept speaking for two minutes and twenty seconds, despite laughter and unsettled hand movements. This willingness to continue was a useful first step. His ideas needed more structure.\n\n➜ Next step: Rehearse a short outline to keep the introduction moving in a clear sequence.",
+              "zh": "Louis 持续讲了两分二十秒，过程中虽然有笑场和手部小动作，但愿意继续表达是一个好的开始。内容还需要更清晰的结构。\n\n➜ 下一步：先列一个简短提纲，再按照清楚的顺序练习自我介绍。"
+            },
+            {
+              "id": "kenny",
+              "name": "Kenny",
+              "en": "Kenny developed aviation content with good logic and depth. His hands and pacing sometimes distracted from the presentation. In the later exercise, the link to the glacier mudslide theme was missing.\n\n➜ Next step: State that connection clearly before developing his viewpoint.",
+              "zh": "Kenny 围绕航空话题展开了有逻辑、有深度的内容。不过，手部动作和走动有时会分散听众的注意力。在后面的练习中，内容与冰川泥石流主题之间的联系还不够清楚。\n\n➜ 下一步：先明确说明与主题的联系，再展开自己的观点。"
+            },
+            {
+              "id": "kailyn",
+              "name": "Kailyn",
+              "en": "Kailyn spoke conversationally and mostly smoothly, using personal connections that were comfortable to listen to. She later shared more of her own perspective. Some fidgeting remained.\n\n➜ Next step: Rehearse with relaxed hands between gestures so the personal message stays central.",
+              "zh": "Kailyn 的表达自然，大部分内容比较流畅。她能加入个人联系，让人听起来比较舒服，后面也分享了更多自己的看法。仍有一些手部小动作。\n\n➜ 下一步：练习在手势之间自然放松双手，让听众把注意力放在个人观点上。"
+            },
+            {
+              "id": "winston",
+              "name": "Winston",
+              "en": "Winston used good posture and a smooth, serious delivery despite a gap since his previous class. He shared substantial information but became stuck near the end and found personal perspective harder to develop.\n\n➜ Next step: Plan the final point before rehearsing within the time limit.",
+              "zh": "Winston 虽然与上一次上课间隔了一段时间，仍保持了较好的站姿，表达流畅、认真。他分享的信息较充分，但接近结尾时停住了，对个人观点的展开也比较困难。\n\n➜ 下一步：先想清楚最后一个要点，再练习在规定时间内完成表达。"
+            },
+            {
+              "id": "jennifer",
+              "name": "Jennifer",
+              "en": "Jennifer managed the five-minute task well, moving from self-introduction to her perspective at about three minutes. Personal stories helped the connection, but her viewpoint needed greater depth.\n\n➜ Next step: Develop a paragraph in her own words before using AI for editing so the reasoning remains her own.",
+              "zh": "Jennifer 较好地完成了五分钟的课堂任务，大约在第三分钟从自我介绍转向个人观点。个人故事增强了交流感，但观点还可以更深入。\n\n➜ 下一步：先用自己的话写出一段观点，再用 AI 辅助修改语言，确保推理来自自己的思考。"
+            }
+          ]
+        },
+        {
+          "id": "2026-09-12-sat-original-oratory",
+          "date": "2026-09-12",
+          "time": "13:00–15:00",
+          "status": "held",
+          "students": [
+            {
+              "id": "winston",
+              "name": "Winston",
+              "en": "Winston answered the question directly but needed support to develop the answer beyond the opening. Small hand movements sometimes distracted from his message. He also needed reminders to keep the room quiet while others were speaking.\n\n➜ Next step: Rehearse an answer with a reason, an example, and a closing message that gives the audience something practical to use.",
+              "zh": "Winston 能直接回答问题，但还需要支持，帮助他在开头之后继续展开。手部小动作有时会分散听众对内容的注意力，其他同学发言时也需要提醒他保持安静。\n\n➜ 下一步：按照回答、理由、例子和结束信息来练习，并在结尾给听众一个可以实际运用的建议。"
+            },
+            {
+              "id": "william",
+              "name": "William",
+              "en": "William's answer about video games remained general, and there were several small hand movements during the attempt. More specific information would help listeners understand what the activity means to him.\n\n➜ Next step: Choose one game or experience and explain what he does, what he has learned, and why it matters to him.",
+              "zh": "William 谈到电子游戏时，回答还比较笼统，表达过程中也有一些手部小动作。加入具体信息，能帮助听众了解这项活动对他的意义。\n\n➜ 下一步：选择一个游戏或一段经历，说清楚自己做了什么、学到了什么，以及这件事为什么重要。"
+            },
+            {
+              "id": "kailyn",
+              "name": "Kailyn",
+              "en": "Kailyn improved her answer by sharing a personal example and more specific details. Some hand positions distracted from the delivery, and the answer could reach its main point sooner.\n\n➜ Next step: Rehearse a shorter version with one clear example, allowing a pause instead of adding extra words and relaxing her hands between gestures.",
+              "zh": "Kailyn 加入个人例子和更具体的细节后，回答更清楚了。有些手部姿势会分散注意力，内容也可以更快进入重点。\n\n➜ 下一步：用一个清楚的例子练习更精简的版本，需要时用停顿代替多余的话，并在手势之间自然放松双手。"
+            },
+            {
+              "id": "louis",
+              "name": "Louis",
+              "en": "Louis attempted an unusual question. The next challenge is to identify the real choice underneath it, such as communication and emotional connection compared with movement and action. He also needed reminders to avoid distracting noises while classmates spoke.\n\n➜ Next step: Restate an unusual question as a familiar real-life choice, then give a clear answer and a message the audience can use.",
+              "zh": "Louis 尝试回答了一个不常见的问题。接下来要练习找出问题背后真正的选择，例如沟通和情感联系，与行动和移动之间的区别。其他同学发言时，也需要提醒他避免发出干扰性的声音。\n\n➜ 下一步：先把不熟悉的问题转化为一个贴近生活的选择，再给出清楚的回答和对听众有用的信息。"
+            },
+            {
+              "id": "kenny",
+              "name": "Kenny",
+              "en": "Kenny showed deeper thought about his topic. Picking at his nails distracted from the presentation, and the link between the topic and the audience's own lives needed to be clearer.\n\n➜ Next step: Add one realistic example showing how the audience could use the idea, then rehearse that passage with relaxed hands.",
+              "zh": "Kenny 对话题的思考更深入了。不过，抠指甲的动作会分散注意力，话题与听众自身生活之间的联系也需要更清楚。\n\n➜ 下一步：加入一个贴近生活的例子，说明听众如何运用这个观点，再用自然放松的双手练习这一段。"
+            },
+            {
+              "id": "jennifer",
+              "name": "Jennifer",
+              "en": "Jennifer's delivery felt more genuine, with a personal story that helped listeners connect to her ideas. Her discussion of success would be stronger if it showed when the audience might experience a similar situation, such as high expectations, a setback, and learning from it.\n\n➜ Next step: Connect the personal story to one familiar audience experience and explain what listeners can take from it.",
+              "zh": "Jennifer 的表达更加真诚，个人故事帮助听众与她的想法产生联系。谈到成功时，如果能说明听众在什么情况下也可能有类似经历，例如期待较高、遇到挫折并从中学习，内容会更有说服力。\n\n➜ 下一步：把个人故事与一个听众熟悉的经历连接起来，并说清楚大家可以从中得到什么。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sat-foundations",
+      "label": {
+        "en": "Saturday · 15:30–17:30",
+        "zh": "周六 · 15:30–17:30"
+      },
+      "sessions": [
+        {
+          "id": "2026-09-05-sat-foundations",
+          "date": "2026-09-05",
+          "time": "15:30–17:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "luise",
+              "name": "Luise",
+              "en": "Luise's later practice included gestures, stronger emotions, and a personal story. Her answers still needed more detail, and her voice faded as she continued.\n\n➜ Next step: Rehearse a developed answer while keeping the final sentence as audible as the opening.",
+              "zh": "Luise 在后续练习中加入了手势、更明显的情感表达和个人故事。回答还需要更具体的细节，声音也会随着发言逐渐变轻。\n\n➜ 下一步：练习一个展开充分的回答，让最后一句和开头一样清楚响亮。"
+            },
+            {
+              "id": "kyle",
+              "name": "Kyle",
+              "en": "Kyle spoke smoothly and confidently, used pauses, and made the audience laugh with family-related content. His responses were short and often used brief sentences.\n\n➜ Next step: Use a simple structure to expand one idea with supporting detail.",
+              "zh": "Kyle 表达流畅自然，会使用停顿，也通过与家庭有关的内容让听众发笑。目前回答偏短，句子也较简短。\n\n➜ 下一步：用清晰的结构展开一个观点，并加入具体的支持细节。"
+            }
+          ]
+        },
+        {
+          "id": "2026-09-12-sat-foundations",
+          "date": "2026-09-12",
+          "time": "15:30–17:30",
+          "status": "cancelled",
+          "students": []
+        }
+      ]
+    },
+    {
+      "id": "sat-introductory",
+      "label": {
+        "en": "Saturday · 17:30–19:30",
+        "zh": "周六 · 17:30–19:30"
+      },
+      "sessions": [
+        {
+          "id": "2026-09-05-sat-introductory",
+          "date": "2026-09-05",
+          "time": "17:30–19:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "stacey",
+              "name": "Stacey",
+              "en": "Stacey faced forward with good audience contact and no major distracting movements. Her response mostly summarised the source instead of giving her own view, and her voice faded.\n\n➜ Next step: Begin by answering the question directly, then add a personal reason.",
+              "zh": "Stacey 能面向前方，与听众保持较好的交流，也没有明显分散注意力的动作。回答更多是在概括材料，而不是表达自己的看法，声音也会逐渐变轻。\n\n➜ 下一步：先直接回答问题，再补充一个个人理由。"
+            },
+            {
+              "id": "tianyou",
+              "name": "Tianyou",
+              "en": "Tianyou answered the question but initially gave little detail and limited vocal energy. After a reminder, he spoke louder and became more involved. He also used numbered points to organise his response.\n\n➜ Next step: Keep that stronger voice while expanding one point with an example.",
+              "zh": "Tianyou 回答了问题，但开始时细节较少，声音的表现力也有限。提醒后，他提高了音量，参与感更强，也开始用编号要点组织回答。\n\n➜ 下一步：保持更响亮的声音，并用一个例子展开其中一个要点。"
+            },
+            {
+              "id": "liam",
+              "name": "Liam",
+              "en": "Liam came up with confidence. His priority is filtering language so that his ideas suit the audience, while using transitions such as “first, second, finally” to stay organised.\n\n➜ Next step: Check the wording of a response before delivering it.",
+              "zh": "Liam 愿意自信地上台表达。目前需要重点练习选择适合听众的措辞，并用“第一、第二、最后”等过渡语组织内容。\n\n➜ 下一步：在发言前检查一次措辞，确保表达得体、清楚。"
+            },
+            {
+              "id": "tongtong",
+              "name": "Tongtong",
+              "en": "Tongtong was more expressive and spoke more loudly in this class. She still needed to filter language for the audience.\n\n➜ Next step: Build on her willingness to share by choosing wording that communicates her idea respectfully.",
+              "zh": "Tongtong 这节课的表达更丰富，声音也更响亮了。她仍需要留意措辞是否适合听众。\n\n➜ 下一步：保持愿意分享的态度，选择能够尊重听众、清楚传达观点的说法。"
+            }
+          ]
+        },
+        {
+          "id": "2026-09-12-sat-introductory",
+          "date": "2026-09-12",
+          "time": "17:30–19:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "emily",
+              "name": "Emily",
+              "en": "Emily was willing to come up and speak, which was the main goal of this attempt. She worked to express her ideas even when vocabulary, including the word “exercise,” was difficult to retrieve. Her willingness to keep trying was a good start.\n\n➜ Next step: Rehearse a short familiar introduction and keep going even if one word needs help.",
+              "zh": "Emily 愿意上台表达，完成了这次练习最重要的目标。即使有些词不容易说出来，例如 exercise，她仍在努力表达自己的想法。愿意继续尝试是一个好的开始。\n\n➜ 下一步：练习一段熟悉的简短自我介绍，即使有一个词需要帮助，也继续把意思表达出来。"
+            },
+            {
+              "id": "stacey",
+              "name": "Stacey",
+              "en": "Stacey spoke for one minute and thirty seconds. The content covered several ideas and would benefit from a clearer connection between them and more vocal energy. In the second attempt, she showed that she had memorised the speech and could present it successfully.\n\n➜ Next step: Build the introduction around one thing about herself, explaining when it began, what she learned, and what she wants to do next.",
+              "zh": "Stacey 讲了一分三十秒，时长很好。内容涉及几个不同的想法，还可以加强彼此之间的联系，并增加声音的活力。第二次尝试中，她展示出自己已经记住了演讲，也能够顺利完成表达。\n\n➜ 下一步：围绕自己的一个特点展开自我介绍，说清楚什么时候开始、学到了什么，以及接下来想做什么。"
+            },
+            {
+              "id": "liam",
+              "name": "Liam",
+              "en": "Liam initially read from the paper. After a reminder to try the glacier speech from memory, his second attempt showed that he had memorised it and could present it successfully. This later attempt is the clearest evidence of his preparation.\n\n➜ Next step: Begin the next rehearsal by presenting from memory, using brief cues only when needed to continue.",
+              "zh": "Liam 开始时主要在读稿。经过提醒，尝试凭记忆讲冰川演讲后，第二次表现说明他已经记住内容，也能顺利讲出来。这次后续尝试更清楚地反映了他的准备情况。\n\n➜ 下一步：下次练习先尝试凭记忆表达，只有需要继续往下讲时才使用简短提示。"
+            },
+            {
+              "id": "tongtong",
+              "name": "Tongtong",
+              "en": "Tongtong initially stayed in her chair instead of taking a speaking turn. After further encouragement, she came to the stage and spoke. Not knowing every word did not prevent her from participating; coming up and sharing was the main achievement of this attempt.\n\n➜ Next step: Practise starting one short response, accepting help with unfamiliar words while continuing to speak.",
+              "zh": "Tongtong 开始时留在座位上，没有参加发言。经过进一步鼓励，她后来走上台并完成了表达。并不是每个词都认识，也没有妨碍她参与；愿意上台分享是这次尝试最重要的进展。\n\n➜ 下一步：练习主动开始一个简短回答，遇到不熟悉的词时接受帮助，并继续表达。"
+            },
+            {
+              "id": "tianyou",
+              "name": "Tianyou",
+              "en": null,
+              "zh": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thu-afternoon",
+      "label": {
+        "en": "Thursday · 15:30–17:30",
+        "zh": "周四 · 15:30–17:30"
+      },
+      "sessions": [
+        {
+          "id": "2026-09-10-thu-afternoon",
+          "date": "2026-09-10",
+          "time": "15:30–17:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "remy",
+              "name": "Remy",
+              "en": "Remy volunteered first and spoke loudly with plenty of content and clear gestures. He sometimes needed a breath, and briefly put a finger in his mouth. His structure also needed each required section.\n\n➜ Next step: Rehearse the introduction using the full sequence so the content stays clear and manageable.",
+              "zh": "Remy 主动第一个发言，声音响亮、内容丰富，也有清楚的手势。有时需要调整呼吸，过程中也短暂出现了把手指放到嘴边的动作。自我介绍的结构还需要包含全部要求的部分。\n\n➜ 下一步：按照完整的结构练习自我介绍，让内容清楚、容易掌握。"
+            },
+            {
+              "id": "pinkie",
+              "name": "Pinkie",
+              "en": "Pinkie spoke for over a minute in the first introduction, with a soft voice and limited gestures. Her later structured response contained one sentence per section and lasted 24 seconds.\n\n➜ Next step: Expand what she learned or why the future goal matters to give listeners more detail.",
+              "zh": "Pinkie 第一次自我介绍讲了一分多钟，声音比较轻，手势较少。后面的结构练习中，每个部分只有一句话，总时长为二十四秒。\n\n➜ 下一步：展开说明自己学到了什么，或未来目标为什么重要，让听众获得更多细节。"
+            },
+            {
+              "id": "elsa",
+              "name": "Elsa",
+              "en": "Elsa's first introduction focused heavily on the hamster story, making it the main thing listeners remembered. Later she used steady pacing and followed the structure with confidence. The plural “dogs” also needs checking.\n\n➜ Next step: Choose the central idea she wants the audience to remember and bring the ending back to it.",
+              "zh": "Elsa 第一次自我介绍较多地围绕仓鼠故事展开，因此这成了听众最容易记住的内容。后面她的语速平稳，也能较自信地按照结构表达。此外，要留意 dogs 的复数形式。\n\n➜ 下一步：先确定希望听众记住的核心观点，再让结尾回到这个观点。"
+            },
+            {
+              "id": "charlotte",
+              "name": "Charlotte",
+              "en": "Charlotte gave brief answers about drawing and needed prompts to explain details such as the futuristic city. She sometimes stopped while trying to formulate the answer, so the class repeated it two or three times.\n\n➜ Next step: Practise one expanded answer without stopping to perfect every phrase.",
+              "zh": "Charlotte 谈到画画时，回答比较简短，需要提示才能解释未来城市等具体细节。组织语言时，她有时会停下来，因此课堂中进行了两到三次重复练习。\n\n➜ 下一步：练习一个展开更充分的回答，不必为了每句话都完美而频繁停下。"
+            },
+            {
+              "id": "jarvis",
+              "name": "Jarvis",
+              "en": "Jarvis initially held his hands behind his back and moved his leg. Later he stopped putting his hands behind him and delivered his ideas logically.\n\n➜ Next step: Continue rehearsing with a settled stance so his message remains clear.",
+              "zh": "Jarvis 开始时把手放在背后，也有腿部小动作。后面他不再把手放在身后，能够有逻辑地表达想法。\n\n➜ 下一步：保持稳定的站姿继续练习，让信息更加清楚。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thu-later",
+      "label": {
+        "en": "Thursday · 18:15–20:15",
+        "zh": "周四 · 18:15–20:15"
+      },
+      "sessions": [
+        {
+          "id": "2026-09-10-thu-later",
+          "date": "2026-09-10",
+          "time": "18:15–20:15",
+          "status": "held",
+          "students": [
+            {
+              "id": "richard",
+              "name": "Richard",
+              "en": "Richard appeared hesitant but was willing to come up for a second attempt. The class found the superpower prompt challenging and used teacher-provided support.\n\n➜ Next step: Prepare a self-introduction in his own words so that familiar content can support the next presentation.",
+              "zh": "Richard 表现得有些犹豫，但愿意再次上台尝试。超能力话题对这个班有一定难度，课堂中使用了老师提供的支持。\n\n➜ 下一步：用自己的话准备一段自我介绍，让熟悉的内容帮助下一次表达。"
+            },
+            {
+              "id": "molly",
+              "name": "Molly",
+              "en": "Molly was willing to speak in an unfamiliar activity but needed more language support. She stayed close to her paper.\n\n➜ Next step: Use a short, personally written introduction with support so she can express her own ideas more comfortably.",
+              "zh": "Molly 愿意参与不熟悉的表达活动，但还需要更多语言支持，也比较依赖手中的稿纸。\n\n➜ 下一步：在适当支持下准备一段自己写的简短介绍，让她更自在地表达自己的想法。"
+            },
+            {
+              "id": "angela",
+              "name": "Angela",
+              "en": "Angela was confident about speaking and willing to try. She needed repeated reminders to remain in her seat and let other students finish.\n\n➜ Next step: Practise waiting for her turn so that her enthusiasm contributes to a supportive class.",
+              "zh": "Angela 愿意尝试，也有表达的信心。课堂中还需要多次提醒，帮助她留在座位上并等待其他同学说完。\n\n➜ 下一步：练习等待轮到自己再发言，让这份热情帮助大家共同学习。"
+            },
+            {
+              "id": "juliana",
+              "name": "Juliana",
+              "en": "Juliana spoke with confidence and a good command of English. These helped her express herself in an unfamiliar task.\n\n➜ Next step: Build on this by preparing her own introduction for the next class.",
+              "zh": "Juliana 表达自信，英语运用也比较熟练，这帮助她在不熟悉的任务中说出自己的想法。\n\n➜ 下一步：在此基础上，为下一节课准备一段自己写的自我介绍。"
+            },
+            {
+              "id": "kiana",
+              "name": "Kiana",
+              "en": "Kiana was confident on stage, although her presence seemed less assured than during the summer camp.\n\n➜ Next step: Rehearse her introduction aloud to rebuild familiarity with presenting.",
+              "zh": "Kiana 上台时有一定自信，不过与夏令营相比，现场表现显得稍不自在。\n\n➜ 下一步：把自我介绍大声练习出来，重新建立对上台表达的熟悉感。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fri-afternoon",
+      "label": {
+        "en": "Friday · 15:40–17:40",
+        "zh": "周五 · 15:40–17:40"
+      },
+      "sessions": [
+        {
+          "id": "2026-09-11-fri-afternoon",
+          "date": "2026-09-11",
+          "time": "15:40–17:40",
+          "status": "held",
+          "students": [
+            {
+              "id": "ray",
+              "name": "Ray",
+              "en": "Ray spoke for about a minute. He moved his legs frequently and provided limited new detail.\n\n➜ Next step: Rehearse from a settled stance so the audience can focus on what he is saying.",
+              "zh": "Ray 讲了大约一分钟，过程中腿部动作较多，新增的具体细节也较少。\n\n➜ 下一步：用稳定的站姿练习，让听众更容易专注于他的内容。"
+            },
+            {
+              "id": "harper",
+              "name": "Harper",
+              "en": "Harper spoke for 43 seconds with a steady pace, audible voice, and some enthusiasm.\n\n➜ Next step: A little more projection would help her delivery reach the room more comfortably.",
+              "zh": "Harper 讲了四十三秒，语速平稳，声音听得清楚，也有一定的热情。\n\n➜ 下一步：再增强一些声音的投射，让教室里的听众都能轻松听清。"
+            },
+            {
+              "id": "evan",
+              "name": "Evan",
+              "en": "Evan adjusted to the self-introduction task and remembered the clapping challenge. He then ran out of things to say.\n\n➜ Next step: Add one specific experience to develop an existing point.",
+              "zh": "Evan 能适应自我介绍任务，也记住了拍手挑战，后面则出现了不知道继续说什么的情况。\n\n➜ 下一步：加入一段具体经历，展开已经提到的一个要点。"
+            },
+            {
+              "id": "mikaela",
+              "name": "Mikaela",
+              "en": "Mikaela spoke audibly with some enthusiasm. Her introduction tapered off after about 30–40 seconds.\n\n➜ Next step: A deliberate closing would help listeners know she has finished, even when the response is short.",
+              "zh": "Mikaela 的声音清楚，也表现出一定的热情。自我介绍在大约三十到四十秒后逐渐停了下来。\n\n➜ 下一步：即使回答较短，也要有一个明确的结尾，让听众知道发言已经结束。"
+            },
+            {
+              "id": "rhea",
+              "name": "Rhea",
+              "en": "Rhea spoke fluently and had energy, while her voice remained soft.\n\n➜ Next step: Practise an audible phrase directed toward the listeners so that her ideas can be heard across the room.",
+              "zh": "Rhea 表达流畅，也有活力，但声音仍偏轻。\n\n➜ 下一步：面向听众练习一句清楚响亮的话，让教室里的听众都能听见她的想法。"
+            },
+            {
+              "id": "wendy",
+              "name": "Wendy",
+              "en": "Wendy spoke clearly and loudly and kept thinking of what to say next. She did not complete the clapping challenge.\n\n➜ Next step: More expressive vocal energy would help engage the audience.",
+              "zh": "Wendy 的声音清楚、响亮，也持续思考接下来可以说什么。她还没有完成拍手挑战。\n\n➜ 下一步：在声音里加入更多表现力和活力，帮助听众更投入。"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "Ethan spoke fluently with good pacing, pauses, and enthusiasm. His main refinement is choosing audience-appropriate language and more specific details.\n\n➜ Next step: Revise a general statement into a respectful, concrete example.",
+              "zh": "Ethan 表达流畅，语速、停顿和热情都比较好。接下来需要留意适合听众的措辞，并加入更具体的细节。\n\n➜ 下一步：把一个笼统的说法改成尊重听众、细节明确的例子。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fri-later",
+      "label": {
+        "en": "Friday · 18:00–20:00",
+        "zh": "周五 · 18:00–20:00"
+      },
+      "sessions": [
+        {
+          "id": "2026-09-11-fri-later",
+          "date": "2026-09-11",
+          "time": "18:00–20:00",
+          "status": "held",
+          "students": [
+            {
+              "id": "zoey",
+              "name": "Zoey",
+              "en": "Zoey delivered a one-minute response at a steady pace. The calm delivery was easy to follow.\n\n➜ Next step: A little more vocal energy would help emphasise her main idea.",
+              "zh": "Zoey 完成了一分钟的回答，语速平稳，表达比较从容，听众容易跟上。\n\n➜ 下一步：再增加一点声音的活力，突出最重要的观点。"
+            },
+            {
+              "id": "peter",
+              "name": "Peter",
+              "en": "Peter brought energy and later spoke with a loud, clear voice and good pronunciation. Earlier he became excited by classroom noise and jumped while speaking.\n\n➜ Next step: Practise maintaining a settled stance when distractions arise.",
+              "zh": "Peter 很有活力，后面能够用响亮、清楚的声音表达，发音也较好。前面受到课堂声音的影响，曾在说话时跳动。\n\n➜ 下一步：练习在周围有干扰时仍保持稳定的站姿。"
+            },
+            {
+              "id": "merlin",
+              "name": "Merlin",
+              "en": "Merlin began with energy that attracted attention. His articulation and fast pace made the message difficult to understand. He also made repeated noises while others spoke and needed support with class expectations.\n\n➜ Next step: Rehearse a short passage slowly enough for each word to be clear.",
+              "zh": "Merlin 开场很有活力，能吸引注意力。不过，吐字和较快的语速让信息不容易听懂。他在其他同学发言时也多次发出声音，需要继续练习课堂中的倾听要求。\n\n➜ 下一步：放慢速度练习一小段话，让每个词都说清楚。"
+            },
+            {
+              "id": "oliver",
+              "name": "Oliver",
+              "en": "Oliver used a loud voice but paused frequently while thinking and moved his hands in distracting ways. A later observation was clarified as an itchy nose rather than confirmed leg shaking.\n\n➜ Next step: Hold the paper lower in one hand so he can address the audience more easily.",
+              "zh": "Oliver 的声音响亮，但思考时停顿较多，手部动作也有些分散注意力。后续的一处观察已澄清为鼻子发痒，而不是确认的腿部晃动。\n\n➜ 下一步：用一只手把稿纸放低一些，更方便面向听众表达。"
+            },
+            {
+              "id": "lucas",
+              "name": "Lucas",
+              "en": "Lucas held the audience's attention at the beginning. His voice faded later, especially while holding the paper high with both hands, making the ending hard to hear.\n\n➜ Next step: Rehearse with the paper lower and keep the closing sentence audible.",
+              "zh": "Lucas 开始时能吸引听众注意力，后面声音逐渐变轻，尤其是双手把稿纸举得较高时，结尾不容易听清。\n\n➜ 下一步：把稿纸放低一些练习，并让结束句保持清楚响亮。"
+            },
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": "Arthur initially said only his name and then laughed rather than developing the introduction. Later he spoke loudly with a big smile. He also needed reminders to wait his turn.\n\n➜ Next step: Build his introduction with one concrete detail that he can say clearly.",
+              "zh": "Arthur 开始只说了自己的名字，随后笑了起来，没有继续展开介绍。后面他能够面带笑容、大声表达，也仍需要提醒来等待自己的发言顺序。\n\n➜ 下一步：在自我介绍里加入一个能够清楚说出来的具体细节。"
+            },
+            {
+              "id": "kaka",
+              "name": "Kaka",
+              "en": null,
+              "zh": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sun-1130",
+      "label": {
+        "en": "Sunday · 11:30–13:00",
+        "zh": "周日 · 11:30–13:00"
+      },
+      "sessions": [
+        {
+          "id": "2026-09-13-sun-1130",
+          "date": "2026-09-13",
+          "time": "11:30–13:00",
+          "status": "held",
+          "students": [
+            {
+              "id": "charles",
+              "name": "Charles",
+              "en": "Charles gave a short but complete answer to whether people should continue doing something they are not good at. He completed the response, and the next goal is to develop it beyond the brief answer.\n\n➜ Next step: Use “first, second, finally” to organise the reasons and add one specific example to explain a point.",
+              "zh": "Charles 围绕“如果不擅长一件事，是否还应该继续做”给出了简短但完整的回答。他完成了表达，接下来可以在简短回答的基础上进一步展开。\n\n➜ 下一步：用“第一、第二、最后”组织理由，并加入一个具体例子来解释其中一个要点。"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "Ethan needed reminders to listen without laughing while another student was speaking and to use shared classroom furniture respectfully. These habits help everyone have a fair opportunity to speak and learn.\n\n➜ Next step: Practise a clear listening routine: keep feet off the table, listen quietly, and wait until the speaker finishes before responding.",
+              "zh": "其他同学发言时，Ethan 需要提醒来安静倾听、避免笑声干扰，也需要练习尊重大家共同使用的课堂桌椅。这些习惯能帮助每个人获得公平的表达和学习机会。\n\n➜ 下一步：练习清楚的倾听习惯：脚不放在桌上，安静听完，并等发言者结束后再回应。"
+            },
+            {
+              "id": "james",
+              "name": "James",
+              "en": "James gave more detail and explained his thoughts clearly while keeping the answer concise. He put effort into explaining how he felt, so listeners received more useful information without losing the main point.\n\n➜ Next step: Keep this balance by organising the next response around clear reasons and one relevant example.",
+              "zh": "James 加入了更多细节，能清楚解释自己的想法，同时保持简洁。他认真说明自己的感受，让听众获得了更多有用的信息，也没有偏离重点。\n\n➜ 下一步：继续保持这种平衡，用清楚的理由和一个相关例子来组织下一次回答。"
+            },
+            {
+              "id": "berlingo",
+              "name": "Berlingo",
+              "en": "Berlingo completed the task, organised his thoughts, and did not need to read from the paper. At times he looked toward the screen instead of the people in front of him. A little more volume and a slower pace would make the words easier to understand.\n\n➜ Next step: Rehearse the answer facing the audience, speaking slightly louder and pausing between the numbered points.",
+              "zh": "Berlingo 完成了任务，能够组织自己的想法，也不需要照着稿纸读。有时他看向屏幕，而没有面向前方的听众。再增加一些音量、放慢一些语速，会让词句更容易听清。\n\n➜ 下一步：面向听众练习回答，声音稍微大一些，并在编号要点之间留出停顿。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

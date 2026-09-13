@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-12T19:04:59+08:00",
+  "updatedAt": "2026-09-13T12:37:20+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -13,23 +13,23 @@
           "students": [
             {
               "name": "Louis",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E113:E113"
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-05&student=louis"
             },
             {
               "name": "Kenny",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E114:E114"
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-05&student=kenny"
             },
             {
               "name": "Kailyn",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E115:E115"
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-05&student=kailyn"
             },
             {
               "name": "Winston",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E116:E116"
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-05&student=winston"
             },
             {
               "name": "Jennifer",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E117:E117"
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-05&student=jennifer"
             }
           ],
           "classContent": [
@@ -48,6 +48,52 @@
             "prepareFor": "Be ready to present at the beginning of the next class.",
             "note": "The five-minute curriculum target is not the length assigned for this lesson."
           }
+        },
+        {
+          "id": "2026-09-12-sat-original-oratory",
+          "date": "2026-09-12",
+          "time": "13:00–15:00",
+          "students": [
+            {
+              "name": "Winston",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-12&student=winston"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-12&student=william"
+            },
+            {
+              "name": "Kailyn",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-12&student=kailyn"
+            },
+            {
+              "name": "Louis",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-12&student=louis"
+            },
+            {
+              "name": "Kenny",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-12&student=kenny"
+            },
+            {
+              "name": "Jennifer",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-12&student=jennifer"
+            }
+          ],
+          "classContent": [
+            "The class practised impromptu answers with a reason, an example and a useful audience message, applying feedback between attempts.",
+            "Students reviewed more than ten recent-news articles and used cause, effect, impact and solution to summarise an event and develop a viewpoint.",
+            "Group presentations introduced the structure of Original Oratory while highlighting the need to strengthen basic delivery skills.",
+            "The final topic was AI surveillance and the distribution of power."
+          ],
+          "homework": {
+            "title": "AI surveillance and the distribution of power",
+            "steps": [
+              "Write a speech of roughly 300–500 words about AI surveillance and the distribution of power.",
+              "Organise the speech around cause, effect, impact and solution.",
+              "Practise delivering the ideas without reading directly from a full script; use note cards for guidance if needed."
+            ],
+            "prepareFor": "Be ready to deliver the speech at the next class."
+          }
         }
       ]
     },
@@ -61,11 +107,11 @@
           "students": [
             {
               "name": "Luise",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E111:E111"
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-09-05&student=luise"
             },
             {
               "name": "Kyle",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E112:E112"
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-09-05&student=kyle"
             }
           ],
           "classContent": [
@@ -85,6 +131,25 @@
             "prepareFor": "Prepare to present in the next class.",
             "note": "Writing is the first step; rehearsal is part of the homework."
           }
+        },
+        {
+          "id": "2026-09-12-sat-foundations",
+          "date": "2026-09-12",
+          "time": "15:30–17:30",
+          "students": [
+            {
+              "name": "Luise",
+              "feedbackUrl": null
+            },
+            {
+              "name": "Kyle",
+              "feedbackUrl": null
+            }
+          ],
+          "classContent": [
+            "This class was cancelled."
+          ],
+          "homework": null
         }
       ]
     },
@@ -98,19 +163,19 @@
           "students": [
             {
               "name": "Stacey",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E118:E118"
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-05&student=stacey"
             },
             {
               "name": "Tianyou",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E119:E119"
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-05&student=tianyou"
             },
             {
               "name": "Liam",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E120:E120"
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-05&student=liam"
             },
             {
               "name": "Tongtong",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E121:E121"
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-05&student=tongtong"
             }
           ],
           "classContent": [
@@ -128,6 +193,39 @@
             "prepareFor": "Prepare to deliver your selected speech at the next class.",
             "note": "Homework recorded in the teacher’s September 7 follow-up to this class."
           }
+        },
+        {
+          "id": "2026-09-12-sat-introductory",
+          "date": "2026-09-12",
+          "time": "17:30–19:30",
+          "students": [
+            {
+              "name": "Emily",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-12&student=emily"
+            },
+            {
+              "name": "Stacey",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-12&student=stacey"
+            },
+            {
+              "name": "Liam",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-12&student=liam"
+            },
+            {
+              "name": "Tongtong",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-12&student=tongtong"
+            },
+            {
+              "name": "Tianyou",
+              "feedbackUrl": null
+            }
+          ],
+          "classContent": [
+            "The class reviewed the self-introduction and glacier-speech homework through speaking attempts.",
+            "Self-introductions focused on one thing about the speaker, supported by when it began, what they learned, and future plans.",
+            "Students tried presenting without relying on a full script, and later attempts were included in the feedback."
+          ],
+          "homework": null
         }
       ]
     },
@@ -141,23 +239,23 @@
           "students": [
             {
               "name": "Remy",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E122:E122"
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-09-10&student=remy"
             },
             {
               "name": "Pinkie",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E123:E123"
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-09-10&student=pinkie"
             },
             {
               "name": "Elsa",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E124:E124"
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-09-10&student=elsa"
             },
             {
               "name": "Charlotte",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E125:E125"
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-09-10&student=charlotte"
             },
             {
               "name": "Jarvis",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E126:E126"
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-09-10&student=jarvis"
             }
           ],
           "classContent": [
@@ -179,23 +277,23 @@
           "students": [
             {
               "name": "Richard",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E127:E127"
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-10&student=richard"
             },
             {
               "name": "Molly",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E129:E129"
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-10&student=molly"
             },
             {
               "name": "Angela",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E130:E130"
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-10&student=angela"
             },
             {
               "name": "Juliana",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E131:E131"
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-10&student=juliana"
             },
             {
               "name": "Kiana",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E132:E132"
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-10&student=kiana"
             }
           ],
           "classContent": [
@@ -226,31 +324,31 @@
           "students": [
             {
               "name": "Ray",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E133:E133"
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-11&student=ray"
             },
             {
               "name": "Harper",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E134:E134"
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-11&student=harper"
             },
             {
               "name": "Evan",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E135:E135"
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-11&student=evan"
             },
             {
               "name": "Mikaela",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E136:E136"
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-11&student=mikaela"
             },
             {
               "name": "Rhea",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E137:E137"
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-11&student=rhea"
             },
             {
               "name": "Wendy",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E138:E138"
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-11&student=wendy"
             },
             {
               "name": "Ethan",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E139:E139"
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-11&student=ethan"
             }
           ],
           "classContent": [
@@ -281,27 +379,27 @@
           "students": [
             {
               "name": "Zoey",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E144:E144"
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-09-11&student=zoey"
             },
             {
               "name": "Peter",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E142:E142"
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-09-11&student=peter"
             },
             {
               "name": "Merlin",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E141:E141"
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-09-11&student=merlin"
             },
             {
               "name": "Oliver",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E143:E143"
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-09-11&student=oliver"
             },
             {
               "name": "Lucas",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E145:E145"
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-09-11&student=lucas"
             },
             {
               "name": "Arthur",
-              "feedbackUrl": "https://docs.google.com/spreadsheets/d/1LsDGCxDxNf3S8LUx1cV9wEE3_exEix6ICslwR34V2j0/edit#gid=1299174898&range=E140:E140"
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-09-11&student=arthur"
             },
             {
               "name": "Kaka",
@@ -311,6 +409,40 @@
           "classContent": [
             "The class practised voice, articulation, hand control and pace during speaking turns.",
             "Students also worked on attentive listening while classmates were speaking."
+          ],
+          "homework": null
+        }
+      ]
+    },
+    {
+      "id": "sun-1130",
+      "sessions": [
+        {
+          "id": "2026-09-13-sun-1130",
+          "date": "2026-09-13",
+          "time": "11:30–13:00",
+          "students": [
+            {
+              "name": "Charles",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-09-13&student=charles"
+            },
+            {
+              "name": "Ethan",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-09-13&student=ethan"
+            },
+            {
+              "name": "James",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-09-13&student=james"
+            },
+            {
+              "name": "Berlingo",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-09-13&student=berlingo"
+            }
+          ],
+          "classContent": [
+            "Students discussed whether people should keep doing something they are not good at.",
+            "They practised taking a position and organising reasons with first, second and finally.",
+            "Coaching focused on clear explanations, audience direction, audible articulation and respectful listening."
           ],
           "homework": null
         }
