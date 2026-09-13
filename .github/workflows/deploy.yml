@@ -43,6 +43,8 @@ jobs:
         run: npm run check:schedule-privacy
       - name: Build
         run: npm run build
+      - name: Verify forest game route and media
+        run: node scripts/check-forest.mjs
       - name: Verify public homework and Shanghai date handling
         run: node --test scripts/check-homework.mjs scripts/check-feedback.mjs
       - name: Verify speech detector and worker lifecycle

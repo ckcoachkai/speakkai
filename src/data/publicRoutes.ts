@@ -17,6 +17,7 @@ export const publicRoutes = [
   "/coaching/young-competition-speakers/",
   "/zh/coaching/young-competition-speakers/",
   "/speak/",
+  "/forest/",
   "/tools/class-charades/",
   "/tools/marble-name-picker/",
   "/tools/speech-debate-timer/",

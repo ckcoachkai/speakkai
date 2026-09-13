@@ -1,0 +1,302 @@
+[
+  {
+    "id": "dog",
+    "name": "Dog",
+    "phrases": [
+      "I am a big dog, bad wolf... but actually, I'm a dog!",
+      "I love to eat little children!",
+      "Mmm, yummy, yummy! Bone, bone, bones! I'm gonna eat all the bones!",
+      "Mmm, Charles is very delicious!",
+      "Uh, little children, little children, come here!",
+      "Who ordered a dancing dog with extra teeth?",
+      "These bananas are not for me. I ordered bones!",
+      "My tummy is rumbling louder than my bark!",
+      "I practiced my scary face, but my tail keeps wagging!",
+      "Run, run, run! Dinner is doing its homework!"
+    ],
+    "eyes": [
+      [
+        0.43,
+        0.22
+      ],
+      [
+        0.57,
+        0.22
+      ]
+    ],
+    "mouth": [
+      0.5,
+      0.3
+    ]
+  },
+  {
+    "id": "monkey",
+    "name": "Monkey",
+    "phrases": [
+      "I am the banana boss. Please form a very silly queue!",
+      "Who put all these bananas on my dance floor?",
+      "I have gone bananas, and I am taking you with me!",
+      "My tail has better dance moves than my feet!",
+      "One banana, two bananas, wait, where did my lunch go?",
+      "Keep running! I need a new banana detective!",
+      "I am not monkeying around. Well, maybe a little!",
+      "Your homework looks suspiciously like a banana!",
+      "I ordered a snack, not a sprinting competition!",
+      "Welcome to the jungle. Shoes optional, silliness required!"
+    ],
+    "eyes": [
+      [
+        0.41,
+        0.195
+      ],
+      [
+        0.55,
+        0.22
+      ]
+    ],
+    "mouth": [
+      0.465,
+      0.305
+    ]
+  },
+  {
+    "id": "parrot",
+    "name": "Parrot",
+    "phrases": [
+      "Squawk! Who wants to be the next superstar?",
+      "Pretty bird? I am a magnificent bird!",
+      "I can repeat your homework, but I will not do it!",
+      "Flap faster! The banana express is leaving!",
+      "Squawk! Somebody stole my cracker!",
+      "I have feathers, flair, and absolutely no indoor voice!",
+      "Repeat after me. Banana, banana, banana!",
+      "My wings are fabulous and my jokes are terrible!",
+      "You run. I will provide the sound effects!",
+      "Attention, class! Captain Feathers has chosen!"
+    ],
+    "eyes": [
+      [
+        0.412,
+        0.199
+      ],
+      [
+        0.55,
+        0.225
+      ]
+    ],
+    "mouth": [
+      0.455,
+      0.3
+    ]
+  },
+  {
+    "id": "rabbit",
+    "name": "Rabbit (original character)",
+    "phrases": [
+      "My ears are floppy, but my dance moves are sharp!",
+      "Has anyone seen my emergency carrot?",
+      "Hop to it! The forest show is starting!",
+      "This waistcoat has a secret carrot pocket!",
+      "I did three hops and forgot what I was doing!",
+      "My bowtie is the captain of this dance party!",
+      "Bananas are just carrots wearing yellow pajamas!",
+      "Welcome to the bunny bounce championship!",
+      "I hop, therefore I am hungry!",
+      "You have been chosen by a very important rabbit!"
+    ],
+    "eyes": [
+      [
+        0.36,
+        0.182
+      ],
+      [
+        0.511,
+        0.212
+      ]
+    ],
+    "mouth": [
+      0.408,
+      0.284
+    ]
+  },
+  {
+    "id": "cat",
+    "name": "Cat",
+    "phrases": [
+      "I meant to do that. Especially the falling over part!",
+      "You may approach my royal fluffiness!",
+      "I have nine lives and zero interest in homework!",
+      "Who put bananas where my tuna should be?",
+      "The floor is my dance floor. The sofa is also mine!",
+      "Meow. That means hurry up, probably!",
+      "I was not sleeping. I was planning dramatically!",
+      "Bring snacks and I might remember your name!",
+      "My whiskers predict a very silly winner!",
+      "I knocked over the rules. You are welcome!"
+    ],
+    "eyes": [
+      [
+        0.278,
+        0.299
+      ],
+      [
+        0.47,
+        0.261
+      ]
+    ],
+    "mouth": [
+      0.436,
+      0.372
+    ]
+  },
+  {
+    "id": "sock",
+    "name": "Big Pink Sock",
+    "phrases": [
+      "I am a big pink sock, and I have lost my other half!",
+      "Something smells funny. It might be my jokes!",
+      "I escaped the washing machine for this!",
+      "No feet allowed. This sock is on holiday!",
+      "I have no bones, but I have excellent dance moves!",
+      "My superpower is disappearing on laundry day!",
+      "Run faster! The spin cycle is starting!",
+      "I asked for fabric softener, not bananas!",
+      "I am pink, I am stretchy, and I am in charge!",
+      "Congratulations! You have been selected by laundry!"
+    ],
+    "eyes": [
+      [
+        0.39,
+        0.18
+      ],
+      [
+        0.508,
+        0.211
+      ]
+    ],
+    "mouth": [
+      0.49,
+      0.32
+    ]
+  },
+  {
+    "id": "queen",
+    "name": "Queen Elizabeth II",
+    "phrases": [
+      "One is ready for a rather spectacular dance!",
+      "Please bring the corgis. They are excellent judges!",
+      "A banana? How delightfully unexpected!",
+      "Royal announcement: everyone must do a silly wiggle!",
+      "One does not rush. One accelerates gracefully!",
+      "My hat has requested a round of applause!",
+      "Tea first, dramatic jumping second!",
+      "The royal wave is now a full-body workout!",
+      "Keep calm and watch the dancing hat!",
+      "By royal decree, it is your turn!"
+    ],
+    "eyes": [
+      [
+        0.452,
+        0.173
+      ],
+      [
+        0.522,
+        0.183
+      ]
+    ],
+    "mouth": [
+      0.482,
+      0.238
+    ]
+  },
+  {
+    "id": "elton",
+    "name": "Elton John",
+    "phrases": [
+      "These pink glasses can see a superstar coming!",
+      "I brought the sparkle. You bring the dance moves!",
+      "That banana needs a tiny glitter jacket!",
+      "My sunglasses are louder than the music!",
+      "The forest is my stage tonight!",
+      "Give me a big entrance and an even bigger wiggle!",
+      "I am running out of glitter. This is an emergency!",
+      "Your shoes have been invited to a dance party!",
+      "That was a five-star banana-powered performance!",
+      "Take a bow, superstar. It is your turn!"
+    ],
+    "eyes": [
+      [
+        0.44,
+        0.145
+      ],
+      [
+        0.532,
+        0.132
+      ]
+    ],
+    "mouth": [
+      0.493,
+      0.198
+    ]
+  },
+  {
+    "id": "trump",
+    "name": "Trump",
+    "phrases": [
+      "My hair has become its own campfire!",
+      "This is a tremendous banana. Very bendy!",
+      "My hair is doing all the warm-up exercises!",
+      "We need a bigger dance floor for this hairstyle!",
+      "Nobody told my hair to stop waving!",
+      "I came for the bananas and stayed for the wiggles!",
+      "That sprint deserves a very large silly trophy!",
+      "My tie is trying to win the race without me!",
+      "Please do not toast marshmallows on my hair!",
+      "The results are in. It is your turn to shine!"
+    ],
+    "eyes": [
+      [
+        0.367,
+        0.214
+      ],
+      [
+        0.435,
+        0.204
+      ]
+    ],
+    "mouth": [
+      0.415,
+      0.269
+    ]
+  },
+  {
+    "id": "koala",
+    "name": "Koala (provisional)",
+    "eyes": [
+      [
+        0.359,
+        0.269
+      ],
+      [
+        0.547,
+        0.302
+      ]
+    ],
+    "mouth": [
+      0.453,
+      0.377
+    ],
+    "phrases": [
+      "I woke up especially for this dance!",
+      "Is that a banana? I ordered eucalyptus!",
+      "I am not a bear. I am a sleepy superstar!",
+      "My ears have their own fan club!",
+      "Running? I thought you said napping!",
+      "One little wiggle, then five minutes of rest!",
+      "I climbed all the way down for this!",
+      "Please bring a pillow to the finish line!",
+      "My fluffy ears are picking up winner signals!",
+      "Wake me when it is my turn. Oh, it is your turn!"
+    ]
+  }
+]
