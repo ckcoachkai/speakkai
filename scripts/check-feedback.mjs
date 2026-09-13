@@ -43,15 +43,15 @@ test('full reports retain distinctive source details and later corrections',()=>
   assert.equal(student('fri-later','2026-09-11','Kaka').en,null);
   assert.equal(student('sat-introductory','2026-09-12','Tianyou').zh,null);
 });
-test('latest seven-day view handles Shanghai midnight and hides future sessions',()=>{
+test('latest fourteen-day view handles Shanghai midnight and hides future sessions',()=>{
   assert.equal(shanghaiDate(new Date('2026-09-12T16:00:00Z')),'2026-09-13');
   const windows=weekWindows(data,'2026-09-13');
-  assert.deepEqual(windows[0],{id:'0',start:'2026-09-07',end:'2026-09-13'});
-  assert.deepEqual(windows[1],{id:'1',start:'2026-08-31',end:'2026-09-06'});
+  assert.deepEqual(windows[0],{id:'0',start:'2026-08-31',end:'2026-09-13'});
+  assert.deepEqual(windows.at(-1),{id:'all',start:'2026-09-05',end:'2026-09-13'});
   assert.equal(newestClass(data,'2026-09-13'),'sun-1500');
   assert.equal(newestClass(data,'2026-09-12'),'sat-introductory');
   const saturday=data.classes.find(g=>g.id==='sat-original-oratory');
-  assert.deepEqual(sessionsInWindow(saturday,windows[1],'2026-09-13').map(s=>s.date),['2026-09-05']);
+  assert.deepEqual(sessionsInWindow(saturday,windows[0],'2026-09-13').map(s=>s.date),['2026-09-12','2026-09-05']);
 });
 test('copy keeps selected student, date and language without another student or source metadata',()=>{
   const group=data.classes.find(g=>g.id==='sun-1130'),session=group.sessions[0],student=session.students.find(s=>s.name==='Berlingo');
@@ -89,4 +89,14 @@ test('class sections preserve their own dated lesson and assignment, including N
   assert.match(saturday.find(s=>s.date==='2026-09-05').homework.en,/200–400/);
   assert.match(saturday.find(s=>s.date==='2026-09-12').homework.zh,/300–500/);
   const bad=structuredClone(data);bad.classes[0].sessions[0].homework.zh=null;assert.throws(()=>validateFeedback(bad));
+});
+
+
+test('fortnight archive covers boundaries and all history without future records',()=>{
+  const fixture={classes:[{sessions:[{date:'2026-09-14',time:'10:00–11:00'},{date:'2026-08-31',time:'10:00–11:00'},{date:'2026-08-30',time:'10:00–11:00'}]}]};
+  const windows=weekWindows(fixture,'2026-09-13');
+  assert.deepEqual(windows[0],{id:'0',start:'2026-08-31',end:'2026-09-13'});
+  assert.deepEqual(windows[1],{id:'1',start:'2026-08-17',end:'2026-08-30'});
+  assert.deepEqual(sessionsInWindow(fixture.classes[0],windows[0],'2026-09-13').map(s=>s.date),['2026-08-31']);
+  assert.deepEqual(sessionsInWindow(fixture.classes[0],windows.at(-1),'2026-09-13').map(s=>s.date),['2026-08-31','2026-08-30']);
 });

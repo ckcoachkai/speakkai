@@ -34,9 +34,9 @@ export function validateFeedback(data) {
 export function addDays(date, days) { const value = new Date(date+'T12:00:00Z'); value.setUTCDate(value.getUTCDate()+days); return value.toISOString().slice(0,10); }
 export function weekWindows(data, today=shanghaiDate()) {
   const dates = data.classes.flatMap(group => group.sessions.map(session => session.date)).filter(date => date <= today);
-  const offsets = [...new Set(dates.map(date => Math.floor((Date.parse(today)-Date.parse(date))/604800000)))].sort((a,b)=>a-b);
+  const offsets = [...new Set(dates.map(date => Math.floor((Date.parse(today)-Date.parse(date))/1209600000)))].sort((a,b)=>a-b);
   if (!offsets.includes(0)) offsets.unshift(0);
-  return offsets.map(offset => ({id:String(offset),start:addDays(today,-offset*7-6),end:addDays(today,-offset*7)}));
+  return [...offsets.map(offset => ({id:String(offset),start:addDays(today,-offset*14-13),end:addDays(today,-offset*14)})), {id:'all',start:dates.length ? dates.sort()[0] : addDays(today,-13),end:today}];
 }
 export function sessionsInWindow(group, window, today=shanghaiDate()) {
   return [...group.sessions].filter(session => session.date >= window.start && session.date <= window.end && session.date <= today).sort((a,b)=>b.date.localeCompare(a.date)||a.time.localeCompare(b.time));

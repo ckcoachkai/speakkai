@@ -1,4 +1,4 @@
-import {validateFeedback,weekWindows,sessionsInWindow,formatDate,feedbackText,classSectionText,shanghaiDate,sessionCompleteness} from './feedback.mjs';
+import {validateFeedback,weekWindows,sessionsInWindow,formatDate,feedbackText,classSectionText,shanghaiDate,sessionCompleteness,addDays} from './feedback.mjs';
 import type {FeedbackDocument,FeedbackSession,FeedbackLanguage,FeedbackStudent} from './feedback-types';
 
 if (location.pathname === '/FB/') history.replaceState(null, '', '/fb/' + location.search + location.hash);
@@ -17,7 +17,7 @@ let language:FeedbackLanguage='en';
 try {if(localStorage.getItem('speakkai-feedback-language')==='zh')language='zh';}catch{}
 let selectedClass='all', selectedWeek='0', selectedDate='', busy=false, manualRefreshRequested=false;
 let lastPayload='', lastCopyButton:HTMLButtonElement|null=null;
-const words={en:{classContent:'Class content',homework:'Homework',title:'Student feedback',class:'Class',all:'All classes',week:'Week',latest:'Latest 7 days',older:'← Earlier',newer:'Later →',refresh:'Refresh',copy:'Copy',missing:'No individual feedback recorded for this class.',cancelled:'Class cancelled.',empty:'No feedback recorded for this class in this week.',copied:'Copied',failed:'Could not check for updates. The last loaded feedback is still shown.',updated:'Showing the latest published feedback.',fallbackTitle:'Copy feedback',fallbackHelp:'Clipboard access was unavailable. The text is selected below; press Ctrl+C or use your device’s copy command.',done:'Done'},zh:{classContent:'课堂内容',homework:'课后作业',title:'学生课堂反馈',class:'班级',all:'全部班级',week:'日期范围',latest:'最近7天',older:'← 更早',newer:'更近 →',refresh:'刷新',copy:'复制',missing:'本次课堂暂无该学生的个人反馈记录。',cancelled:'本次课程已取消。',empty:'该班级在此日期范围内暂无反馈记录。',copied:'已复制',failed:'暂时无法检查更新，仍显示上次载入的反馈。',updated:'当前显示最新发布的反馈。',fallbackTitle:'复制反馈',fallbackHelp:'暂时无法使用剪贴板。下方文字已选中，请按 Ctrl+C 或使用设备的复制功能。',done:'完成'}};
+const words={en:{classContent:'Class content',homework:'Homework',title:'Student feedback',class:'Class',all:'All classes',week:'Dates',latest:'Latest 14 days',older:'← Earlier',newer:'Later →',refresh:'Refresh',copy:'Copy',missing:'No individual feedback recorded for this class.',cancelled:'Class cancelled.',empty:'No feedback recorded for this class in this date range.',copied:'Copied',failed:'Could not check for updates. The last loaded feedback is still shown.',updated:'Showing the latest published feedback.',fallbackTitle:'Copy feedback',fallbackHelp:'Clipboard access was unavailable. The text is selected below; press Ctrl+C or use your device’s copy command.',done:'Done'},zh:{classContent:'课堂内容',homework:'课后作业',title:'学生课堂反馈',class:'班级',all:'全部班级',week:'日期范围',latest:'最近14天',older:'← 更早',newer:'更近 →',refresh:'刷新',copy:'复制',missing:'本次课堂暂无该学生的个人反馈记录。',cancelled:'本次课程已取消。',empty:'该班级在此日期范围内暂无反馈记录。',copied:'已复制',failed:'暂时无法检查更新，仍显示上次载入的反馈。',updated:'当前显示最新发布的反馈。',fallbackTitle:'复制反馈',fallbackHelp:'暂时无法使用剪贴板。下方文字已选中，请按 Ctrl+C 或使用设备的复制功能。',done:'完成'}};
 function el<K extends keyof HTMLElementTagNameMap>(tag:K,text='',className=''):HTMLElementTagNameMap[K]{const n=document.createElement(tag);n.textContent=text;if(className)n.className=className;return n;}
 function applyLink(){const params=new URLSearchParams(location.search),id=params.get('class'),date=params.get('date');selectedClass=id&&data.classes.some(g=>g.id===id)?id:'all';selectedDate='';selectedWeek=params.get('week')||'0';if(date&&date<=shanghaiDate()){const window=weekWindows(data).find(w=>date>=w.start&&date<=w.end);if(window){selectedWeek=window.id;selectedDate=date;}}}
 function syncLink(){const params=new URLSearchParams();if(selectedClass!=='all')params.set('class',selectedClass);if(selectedDate)params.set('date',selectedDate);else if(selectedWeek!=='0')params.set('week',selectedWeek);history.replaceState(null,'',location.pathname+(params.size?'?'+params:''));}
@@ -37,7 +37,7 @@ function render(){
   for(const group of data.classes)classPicker.add(new Option(group.label[language],group.id));
   classPicker.value=selectedClass;
   weekPicker.replaceChildren();
-  for(const window of windows)weekPicker.add(new Option(`${window.id==='0'?text.latest+' · ':''}${formatDate(window.start,language)} – ${formatDate(window.end,language)}`,window.id));
+  for(const window of windows)weekPicker.add(new Option(`${window.id==='all'?(language==='zh'?'全部历史':'All history'):window.id==='0'?text.latest+' · ':''}${window.id==='all'?'':formatDate(window.start,language)+' – '+formatDate(window.end,language)}`,window.id));
   weekPicker.value=selectedWeek;
   const index=windows.findIndex(w=>w.id===selectedWeek);
   older.disabled=index>=windows.length-1;newer.disabled=index===0;older.textContent=text.older;newer.textContent=text.newer;refreshButton.textContent=text.refresh;
@@ -51,7 +51,11 @@ function render(){
     stats.append(el('span',`${entries.length} ${zh?'节课':'classes'}`),el('span',`${counts.filter(s=>s.state==='complete').length} ${zh?'已完整记录':'complete'}`),el('span',`${counts.filter(s=>s.state==='missing').length} ${zh?'信息待补充':'need information'}`));
     fragment.append(stats,el('p',zh?'状态表示报告是否完整，不代表学生表现。缺失作业信息不代表学生未完成作业。':'Status describes report completeness, not student performance. Missing homework information does not mean a student missed homework.','overview-help'));
     const grid=el('div','','overview-grid');
-    for(const {group,session} of entries){
+    for(let day=current.end;day>=current.start;day=addDays(day,-1)){
+      const dayEntries=entries.filter(entry=>entry.session.date===day);
+      grid.append(el('h2',formatDate(day,language),'timeline-date'));
+      if(!dayEntries.length)grid.append(el('p',zh?'暂无该日期的课堂报告。':'No class reports recorded for this date.','timeline-empty'));
+    for(const {group,session} of dayEntries){
       const progress=sessionCompleteness(session,language),card=el('section','',`overview-card ${progress.state}`),main=el('div');card.dataset.session=session.id;
       main.append(el('span',progress.state==='complete'?(zh?'✓ 已完整记录':'✓ Complete'):progress.state==='cancelled'?(zh?'已取消':'Cancelled'):(zh?'! 信息待补充':'! Missing information'),`completion-badge ${progress.state}`));
       const link=`?class=${encodeURIComponent(group.id)}&date=${session.date}`,heading=el('h2'),title=el('a',group.label[language]);title.href=link;heading.append(title);main.append(heading,el('p',`${formatDate(session.date,language)} · ${session.time}`));
@@ -63,6 +67,7 @@ function render(){
       if(progress.missing.length){const list=el('ul');progress.missing.forEach((item:string)=>list.append(el('li',item)));note.append(list);}else note.append(el('p',progress.state==='cancelled'?text.cancelled:(zh?'课堂内容、作业及所有已列学生的反馈均有中英文记录。':'Class content, homework and feedback for every listed student are available in both languages.')));
       if(progress.total)note.append(el('p',zh?`个人反馈：${progress.completed}/${progress.total}`:`Individual feedback: ${progress.completed}/${progress.total}`));
       card.append(main,note);grid.append(card);
+    }
     }
     fragment.append(grid);if(!entries.length)fragment.append(el('p',text.empty,'fb-empty'));content.replaceChildren(fragment);return;
   }
