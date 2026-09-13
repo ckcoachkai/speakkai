@@ -34,8 +34,8 @@ test('copy serialization is plain text, current-session scoped, and clearly sepa
   const session = fixture.classes[0].sessions[1];
   const both = serializeSession(session, 'both');
   assert.match(both, /12 September 2026 · 13:00–15:00/);
-  assert.match(both, /Class content\n- Opening and ending/);
-  assert.match(both, /Homework\nShort speech\n1\. Draft an opening\n2\. Say it aloud/);
+  assert.match(both, /Class content\n◆ Opening and ending/);
+  assert.match(both, /Homework\nShort speech\n➜ Draft an opening\n➜ Say it aloud/);
   assert.match(both, /Preparation: the next class/);
   assert.doesNotMatch(both, /<|>/);
   assert.equal(serializeSession(session, 'content').includes('Short speech'), false);

@@ -54,20 +54,22 @@ function render(){
     for(let day=current.end;day>=current.start;day=addDays(day,-1)){
       const dayEntries=entries.filter(entry=>entry.session.date===day);
       grid.append(el('h2',formatDate(day,language),'timeline-date'));
+      const dayGrid=el('div','','day-class-grid');
       if(!dayEntries.length)grid.append(el('p',zh?'暂无该日期的课堂报告。':'No class reports recorded for this date.','timeline-empty'));
     for(const {group,session} of dayEntries){
       const progress=sessionCompleteness(session,language),card=el('section','',`overview-card ${progress.state}`),main=el('div');card.dataset.session=session.id;
       main.append(el('span',progress.state==='complete'?(zh?'✓ 已完整记录':'✓ Complete'):progress.state==='cancelled'?(zh?'已取消':'Cancelled'):(zh?'! 信息待补充':'! Missing information'),`completion-badge ${progress.state}`));
-      const link=`?class=${encodeURIComponent(group.id)}&date=${session.date}`,heading=el('h2'),title=el('a',group.label[language]);title.href=link;heading.append(title);main.append(heading,el('p',`${formatDate(session.date,language)} · ${session.time}`));
+      const link=`?class=${encodeURIComponent(group.id)}&date=${session.date}`,heading=el('h2'),title=el('a',group.label[language]);title.href=link;heading.append(title);main.append(heading);
       const roster=el('p','','roster');
       session.students.forEach((student,index)=>{if(index)roster.append(document.createTextNode(' · '));const anchor=el('a',student.name,`student-link${!student.en||!student.zh?' missing-feedback':''}`);anchor.href=link+`&student=${encodeURIComponent(student.id)}`;roster.append(anchor);});
       if(!session.students.length)roster.textContent=progress.state==='cancelled'?(zh?'本次未上课':'No class held'):(zh?'学生名单未记录':'No roster recorded');
       const open=el('a',zh?'查看详情 →':'View class →','open-class');open.href=link;main.append(roster,open);
       const note=el('aside','','completion-note');note.append(el('strong',progress.state==='missing'?(zh?'缺少哪些信息':'What is missing'):progress.state==='cancelled'?(zh?'无需课堂报告':'No report required'):(zh?'全部已记录':'All recorded')));
-      if(progress.missing.length){const list=el('ul');progress.missing.forEach((item:string)=>list.append(el('li',item)));note.append(list);}else note.append(el('p',progress.state==='cancelled'?text.cancelled:(zh?'课堂内容、作业及所有已列学生的反馈均有中英文记录。':'Class content, homework and feedback for every listed student are available in both languages.')));
+      if(progress.missing.length){const list=el('ul');progress.missing.forEach((item:string)=>list.append(el('li',item)));note.append(list);}else note.append(el('p',progress.state==='cancelled'?text.cancelled:(zh?'课堂内容、作业与反馈已记录。':'Lesson, homework and feedback recorded.')));
       if(progress.total)note.append(el('p',zh?`个人反馈：${progress.completed}/${progress.total}`:`Individual feedback: ${progress.completed}/${progress.total}`));
-      card.append(main,note);grid.append(card);
+      card.append(main,note);dayGrid.append(card);
     }
+    if(dayEntries.length)grid.append(dayGrid);
     }
     fragment.append(grid);if(!entries.length)fragment.append(el('p',text.empty,'fb-empty'));content.replaceChildren(fragment);return;
   }
@@ -88,7 +90,7 @@ function render(){
     section.append(summary);
     if(session.status==='cancelled'){section.append(el('p',text.cancelled,'fb-empty'));fragment.append(section);continue;}
     const grid=el('div','','feedback-grid');
-    for(const student of session.students){const card=el('article','',student[language]?'':'missing-feedback');card.id=`student-${session.id}-${student.id}`;const top=el('div','','student-heading');const button=el('button',text.copy);button.type='button';button.dataset.copy=student.id;button.dataset.session=session.id;button.disabled=!student[language];button.setAttribute('aria-label',`${text.copy} ${student.name}`);top.append(el('h3',student.name),button);const body=el('p',student[language]||text.missing,'feedback-text');body.lang=language;card.append(top,body);grid.append(card);}
+    for(const student of session.students){const card=el('article','',student[language]?'':'missing-feedback');card.id=`student-${session.id}-${student.id}`;const top=el('div','','student-heading');const button=el('button',text.copy);button.type='button';button.dataset.copy=student.id;button.dataset.session=session.id;button.disabled=!student[language];button.setAttribute('aria-label',`${text.copy} ${student.name}`);top.append(el('h3',student.name),button);const body=el('p',student[language]||text.missing,'feedback-text');body.lang=language;card.append(top,body);const progressLink=el('a',language==='zh'?'成长记录 →':'Student progress →');const groupId=data.classes.find(g=>g.sessions.some(s=>s.id===session.id))!.id;progressLink.href='/fbs/?class='+groupId+'&student='+student.id;card.append(progressLink);grid.append(card);}
     section.append(grid);fragment.append(section);
   }
   if(!entries.length)fragment.append(el('p',text.empty,'fb-empty'));

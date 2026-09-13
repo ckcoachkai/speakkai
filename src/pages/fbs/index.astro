@@ -1,0 +1,59 @@
+---
+import SpatialSiteHeader from '../../components/SpatialSiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+---
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="robots" content="noindex,nofollow"/><link rel="canonical" href="https://speakkai.com/fbs/"/><title>Student progress | SpeakKai</title></head>
+<body><SpatialSiteHeader/><main><header><div><p class="eyebrow">SpeakKai</p><h1>Student progress</h1></div><div class="languages"><button data-lang="en" aria-pressed="true">EN</button><button data-lang="zh" aria-pressed="false">CN</button></div></header><nav><a href="/fb/">Full class feedback</a><a href="/fbs/" aria-current="page">Student progress</a><a href="/hw/">Homework</a></nav><p id="intro">Compare recorded observations over time. Full feedback remains available in each class report.</p><div class="filters"><label><span id="class-label">Class</span><select id="class-select"></select></label><label><span id="student-label">Student</span><select id="student-select"></select></label></div><p id="status" role="status"></p><section id="profiles" aria-label="Student progress"></section><section class="course"><h2 id="course-title">What we covered</h2><p id="course-note">Recorded lessons, not future course plans.</p><div id="course-history"></div></section><noscript>Please open the full class feedback page to read the reports, or enable JavaScript for the progress comparison.</noscript></main><SiteFooter/></body></html>
+<script>
+import {validateFeedback,formatDate,shanghaiDate} from '../../lib/feedback.mjs';
+import {progressProfiles,snapshot,evidenceSignature} from '../../lib/feedback-progress.mjs';
+if(location.pathname==='/FBS/')history.replaceState(null,'','/fbs/'+location.search+location.hash);
+let data:any,notes:any={},language:'en'|'zh'='en';
+const params=new URLSearchParams(location.search);let selectedClass=params.get('class')||'all',selectedStudent=params.get('student')||'all';
+const classPicker=document.querySelector<HTMLSelectElement>('#class-select')!,studentPicker=document.querySelector<HTMLSelectElement>('#student-select')!;
+const node=(tag:string,text='',className='')=>{const n=document.createElement(tag);n.textContent=text;n.className=className;return n;};
+function render(){
+ const zh=language==='zh',profiles=progressProfiles(data),classes=data.classes;
+ document.documentElement.lang=zh?'zh-CN':'en';document.querySelector('h1')!.textContent=zh?'学生成长记录':'Student progress';
+ document.querySelector('#intro')!.textContent=zh?'比较历次课堂记录。个人档案按班级区分，避免混合同名学生；一次记录不代表长期变化。':'Compare classroom records over time. Profiles stay within each class to avoid joining namesakes; one record cannot establish a trend.';
+ document.querySelector('#class-label')!.textContent=zh?'班级':'Class';document.querySelector('#student-label')!.textContent=zh?'学生':'Student';
+ document.querySelector('#course-title')!.textContent=zh?'已学习的课堂内容':'What we covered';document.querySelector('#course-note')!.textContent=zh?'这是实际课堂内容的简要回顾，不是未来课程计划。':'A concise history of recorded lessons, not future course plans.';
+ if(!classes.some((g:any)=>g.id===selectedClass))selectedClass='all';
+ classPicker.replaceChildren(new Option(zh?'全部班级':'All classes','all'));for(const g of classes)classPicker.add(new Option(g.label[language],g.id));classPicker.value=selectedClass;
+ const choices=profiles.filter((p:any)=>selectedClass==='all'||p.classId===selectedClass);
+ if(!choices.some((p:any)=>p.id===selectedStudent))selectedStudent='all';
+ studentPicker.replaceChildren(new Option(zh?'全部学生':'All students','all'));for(const p of choices)studentPicker.add(new Option(`${p.name}${selectedClass==='all'?' · '+p.label[language]:''}`,p.key));
+ // Student keys include the class; bare IDs from FB links are resolved only in that class.
+ const chosen=choices.find((p:any)=>p.key===selectedStudent||p.id===selectedStudent);if(chosen)studentPicker.value=chosen.key;else studentPicker.value='all';
+ const container=document.querySelector('#profiles')!;container.replaceChildren();
+ for(const p of choices.filter((p:any)=>selectedStudent==='all'||p===chosen)){
+  const card=node('article'),heading=node('h2',p.name),meta=node('p',p.label[language],'meta');card.dataset.profile=p.key;card.append(heading,meta);
+  const valid=p.records.filter((r:any)=>r.attendance!=='absent'&&r.en&&r.zh),review=notes.reviews?.find((r:any)=>r.key===p.key);
+  const ready=review&&review.signature===evidenceSignature(p.records);
+  const message=ready?review[language]:valid.length===0?(zh?'暂无可供比较的个人评价记录。':'No individual evaluations are available to compare.'):valid.length<2?(zh?'只有一次有效记录，尚不能判断跨课变化。可查看下面的课堂表现与练习方向。':'Only one recorded evaluation is available. A cross-class change cannot yet be established; see the observation and practice direction below.'):(zh?'已有多次记录。比较结论等待复核，不能把不同任务的表现直接当作进步或退步。':'Several records are available. A reviewed comparison is pending; differences between tasks alone do not establish improvement or regression.');
+  card.append(node('p',message,'comparison'));
+  const details=node('details'),summary=node('summary',zh?`${p.records.length} 次记录 · 查看历次反馈`:`${p.records.length} records · View timeline`);details.append(summary);if(chosen)details.setAttribute('open','');
+  for(const record of [...p.records].reverse()){
+   const entry=node('section','','record');entry.append(node('h3',`${formatDate(record.date,language)} · ${record.time}`));
+   entry.append(node('p',record.attendance==='absent'?(zh?'缺席；不作为进步或退步的依据。':'Absent; this is not evidence of improvement or regression.'):snapshot(record[language])||(zh?'暂无个人反馈。':'No individual feedback recorded.')));
+   const link=node('a',zh?'完整反馈 →':'Full feedback →') as HTMLAnchorElement;link.href=`/fb/?class=${p.classId}&date=${record.date}&student=${p.id}`;entry.append(link);details.append(entry);
+  }card.append(details);container.append(card);
+ }
+ const history=document.querySelector('#course-history')!;history.replaceChildren();
+ for(const g of classes.filter((g:any)=>selectedClass==='all'||g.id===selectedClass)){
+  const group=node('details');if(selectedClass!=='all')group.setAttribute('open','');group.append(node('summary',g.label[language]));
+  for(const s of [...g.sessions].filter((s:any)=>s.date<=shanghaiDate()).sort((a:any,b:any)=>b.date.localeCompare(a.date))){const row=node('section','','record');row.append(node('h3',`${formatDate(s.date,language)} · ${s.time}`),node('p',s.status==='cancelled'?(zh?'课程取消':'Class cancelled'):snapshot(s.classContent?.[language],360)||(zh?'课堂内容未记录。':'Class content not recorded.')));const link=node('a',zh?'完整课堂报告 →':'Full class report →') as HTMLAnchorElement;link.href=`/fb/?class=${g.id}&date=${s.date}`;row.append(link);group.append(row);}history.append(group);
+ }
+ document.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===language)));
+ const url=new URL(location.href);url.search='';if(selectedClass!=='all')url.searchParams.set('class',selectedClass);if(chosen)url.searchParams.set('student',chosen.id);historyReplace(url);
+}
+function historyReplace(url:URL){window.history.replaceState(null,'',url);}
+classPicker.addEventListener('change',()=>{selectedClass=classPicker.value;selectedStudent='all';render();});
+studentPicker.addEventListener('change',()=>{const parts=studentPicker.value.split('/');if(parts.length===2){selectedClass=parts[0];selectedStudent=parts[1];}else selectedStudent='all';render();});
+document.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach(b=>b.addEventListener('click',()=>{language=b.dataset.lang==='zh'?'zh':'en';render();}));
+async function load(){try{data=validateFeedback(await(await fetch('/data/feedback.json',{cache:'no-store'})).json());const response=await fetch('/data/feedback-progress.json',{cache:'no-store'});if(response.ok)notes=await response.json();render();}catch{document.querySelector('#status')!.textContent='Could not load progress. Please refresh or open full class feedback.';}}
+load();
+</script>
+<style>
+:global(body){margin:0;background:#f3f6f9;color:#172b43;font-family:system-ui,sans-serif}main{max-width:1380px;margin:auto;padding:28px 24px 64px}header{display:flex;justify-content:space-between;align-items:center;gap:20px}h1{font-size:32px;margin:0 0 18px}.eyebrow{color:#397789;font-weight:700}nav{display:flex;gap:20px;flex-wrap:wrap;margin:0 0 25px}a{color:#155d7c}.filters{display:flex;gap:18px;flex-wrap:wrap;margin:24px 0}.filters label{display:grid;gap:8px;flex:1;min-width:240px}button,select{font:inherit;min-height:44px;border:1px solid #becdda;border-radius:8px;padding:10px;background:white;color:#173b51}button[aria-pressed=true]{background:#173b51;color:white}.languages{display:flex;gap:5px}#profiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px;align-items:start}.course{margin-top:40px}:global(#profiles article){background:white;border:1px solid #d7e2ea;border-top:4px solid #287b8d;border-radius:14px;padding:22px}:global(#profiles h2){margin:0;font-size:22px}:global(.meta){color:#52687b;font-size:14px}:global(.comparison){line-height:1.8;white-space:pre-wrap}:global(details){border-top:1px solid #d7e2ea;padding:16px 0}:global(summary){cursor:pointer;font-weight:650;line-height:1.7}:global(.record){border-left:3px solid #bdd2df;margin:18px 0;padding:0 0 4px 15px}:global(.record h3){font-size:15px}:global(.record p){line-height:1.8;white-space:pre-wrap}:global(.record a){font-size:14px}:global(#course-history){background:white;border-radius:14px;padding:0 22px}#intro,#course-note{color:#52687b;line-height:1.7}@media(max-width:600px){main{padding:22px 16px}h1{font-size:26px}}:global(button:focus-visible),:global(select:focus-visible),:global(a:focus-visible){outline:3px solid #2686aa;outline-offset:3px}
+</style>

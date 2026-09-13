@@ -151,7 +151,7 @@ export function sessionNavigation(group, selectedId, date = shanghaiDate()) {
 }
 
 function listText(items) {
-  return items.length ? items.map((item) => `- ${item}`).join('\n') : 'Not recorded for this class.';
+  return items.length ? items.map((item) => `◆ ${item}`).join('\n') : 'Not recorded for this class.';
 }
 
 export function serializeSession(session, kind = 'both') {
@@ -162,7 +162,7 @@ export function serializeSession(session, kind = 'both') {
   }
   if (kind === 'homework' || kind === 'both') {
     if (session.homework) {
-      const homework = [session.homework.title, session.homework.steps.map((step, index) => `${index + 1}. ${step}`).join('\n'), `Preparation: ${session.homework.prepareFor}`];
+      const homework = [session.homework.title, session.homework.steps.map((step, index) => `➜ ${step}`).join('\n'), `Preparation: ${session.homework.prepareFor}`];
       if (session.homework.note) homework.push(`Note: ${session.homework.note}`);
       sections.push(`Homework\n${homework.join('\n')}`);
     } else {
