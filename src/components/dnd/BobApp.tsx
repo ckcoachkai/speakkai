@@ -130,7 +130,7 @@ export default function BobApp() {
     <main className={tab==='Spellbook'?'app-layout spellbook-layout':'app-layout'}>
       <aside className="character-sidebar">
         <div className="portrait-frame"><img src="/dnd/bob-paladin.webp" width="768" height="1152" alt="Bob, a bronze-scaled dragonborn paladin in chain mail, with an ivory tabard and a greatsword" fetchPriority="high"/><div className="portrait-shade"/><span className="portrait-tag"><Icon name="spark" size={13}/> THE ADVENTURER</span><div className="portrait-caption"><span className="eyebrow">{c.race} · {c.characterClass}</span><h1>{c.name}</h1><p>“I am Bob!”</p></div></div>
-        <div className="sidebar-content"><div className="level-row"><span className="level-medal">{c.level}</span><div><span className="eyebrow">LEVEL {c.level}</span><strong>{c.background} · {c.alignment}</strong></div></div><div className="sidebar-rule"/>
+        <div className="sidebar-content"><div className="level-row"><span className="level-medal">{c.level}</span><div><span className="eyebrow">LEVEL {c.level}</span><strong>{c.background} · {c.alignment}</strong></div></div><details className="character-context" data-print-expand><summary>Character & notebook</summary><div className="sidebar-rule"/>
         <p className="character-motto">A noble heart.<br/>{greatswordQty>0?'A very large sword.':'A sword to recover.'}<br/><em>A tendency to rush in.</em></p>
         <div className="sidebar-facts"><span><Icon name="shield" size={16}/> Fire resistance</span><span><Icon name="sword" size={16}/> {greatswordQty>0?'Greatsword wielder':'Greatsword not carried'}</span><span><Icon name="book" size={16}/> Fifth edition · 2014 rules</span></div>
         <details className="notebook-tools"><summary>Notebook & backups</summary><div className="notebook-note"><span className="eyebrow">YOUR CHRONICLE</span><p>{local?'Your notebook is unlocked on this device. Save changes before locking.':hasVault?'You have an encrypted notebook on this browser. Unlock it to load your saved Bob.':cloudReady?'View Bob’s latest sheet here. Only the owner account can save changes.':'Start a password-protected notebook to keep Bob’s adventures on this device.'}</p><small>{cloudReady?'Cloud saving connected.':'Cloud saving is not connected yet.'}</small></div>
@@ -138,7 +138,7 @@ export default function BobApp() {
         <a className="sidebar-link" href="/dnd/Bob_the_Paladin.xlsx" download><Icon name="download" size={16}/>Download published Excel</a>
         <button className="sidebar-link" onClick={()=>downloadFile('Bob-character.json',validateCharacter(c))}>Export for GitHub</button>
         {cloudReady&&!local&&<button className="sidebar-link" onClick={()=>startUnlock('local')}>Open local notebook</button>}
-        </details><small className="portrait-credit">Original character art · generated with ImageGen</small></div>
+        </details><small className="portrait-credit">Original character art · generated with ImageGen</small></details></div>
       </aside>
       <div className="workspace">
         <div className="workspace-heading"><div><span className="eyebrow gold-text">CHARACTER CHRONICLE</span><h2>{c.name}’s adventure sheet</h2><p>Level {c.level} {c.characterClass} · {c.race} · {c.background}</p></div><button className="button quiet desktop-only" onClick={()=>window.print()}>Print this tab ↗</button></div>
