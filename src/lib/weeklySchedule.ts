@@ -131,9 +131,14 @@ export function weeklyScheduleBlocks(
   }
 
   if (column === 2) {
-    return !dayIsBlocked(lines) && !hasBookingOverlap(lines, 9 * 60, 12 * 60)
+    const reserved: WeeklyScheduleBlock[] = !dayIsBlocked(lines) && !hasBookingOverlap(lines, 9 * 60, 12 * 60)
       ? [{ kind: "reserved", timeText: "09:00–12:00", title: "Booked" }]
       : [];
+    return [
+      ...freeBlocks(lines, 7 * 60, 9 * 60, inPersonTitle),
+      ...reserved,
+      ...freeBlocks(lines, 21 * 60, 23 * 60, inPersonTitle),
+    ];
   }
 
   if (column === 3) {
