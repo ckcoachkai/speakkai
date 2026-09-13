@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-13T10:44:48.200055+00:00",
+  "updatedAt": "2026-09-13T10:58:43.048076+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -243,7 +243,16 @@
           "classContent": [
             "Students practised self-introductions, answered follow-up questions, and delivered a second attempt using a clear speech structure. We focused on developing specific details so the audience could learn more about each speaker’s interests and experiences.\n\nThe structure was: “One thing about me is...,” “I started when...,” “What I learned was...,” and “In the future, I want to...,” followed by a conclusion returning to the main idea. We discussed how repeating the main point at the end helps listeners remember it.\n\nAt this stage, students are learning to feel comfortable speaking more and expanding their answers. As their confidence develops, they will also need to select and organize their content within a time limit. Individual delivery work included voice projection, pacing, pauses, gestures, and awareness of hands and feet on stage. As students become comfortable, they may be able to speak for three, five, or even ten minutes. For competitions and other timed presentations, they will then need to select what to keep and guide the speech toward its main point: first learning to say more, then learning to say it within a limit."
           ],
-          "homework": null
+          "homework": {
+            "title": "Write and rehearse your self-introduction",
+            "steps": [
+              "Introduce your name and one thing about yourself. Develop three supporting parts: when you started, what you learned, and what you would like to do in the future.",
+              "If possible, aim to write at least around 200 words. Use the writing process to organize your thoughts, logic and structure, rather than simply putting words on paper.",
+              "Practise and memorize the speech so you can deliver it in the next class. Aim for two minutes; one minute and thirty seconds is also acceptable.",
+              "Make sure you complete the task. If possible, send a video showing your completed speech."
+            ],
+            "prepareFor": "Deliver your memorized self-introduction in the next class."
+          }
         }
       ]
     },
@@ -377,9 +386,18 @@
             }
           ],
           "classContent": [
-            "Students practised introductions and repeated speaking turns, applying feedback on voice, articulation, pace, hand control, and audience contact. When using paper, they worked on holding it lower in one hand, looking up, and delivering a complete sentence before checking the next point.\n\nOur immediate delivery priority was a louder, clear voice that reaches the audience from the beginning to the end of each speech. Students also practised finishing with a clear closing, managing their movements while thinking, raising a hand before contributing, and listening quietly while classmates spoke."
+            "Students practised introductions and repeated speaking turns, applying feedback on voice, articulation, pace, hand control, and audience contact. When using paper, they worked on holding it lower in one hand, looking up, and delivering a complete sentence before checking the next point.\n\nOur immediate delivery priority was a louder, clear voice that reaches the audience from the beginning to the end of each speech. Students also practised finishing with a clear closing, managing their movements while thinking, raising a hand before contributing, and listening quietly while classmates spoke.\n\nThis first lesson included both new students and students who had attended classes before. We used articulation, voice and body-language warm-ups, impromptu speaking practice, and self-introductions. Even for students who had introduced themselves before, the aim was to express themselves more clearly.\n\nThe self-introduction structure was: “My name is…”; “One thing about me is…”; when I started; what I have learned through this experience; and what I want to do in the future. Students then returned to the main idea with a sentence such as “That is why one thing about me is…”, followed by a clear conclusion.\n\nThe objectives differed according to each student’s public-speaking experience. For returning students, the lesson was an opportunity to see how their speaking had improved. For new students, the priority was to feel comfortable speaking on stage in front of everyone. Students who had attended summer camp were encouraged to demonstrate eye contact, a loud voice, a slightly longer speech, more vivid details and hand gestures. For new students, simply coming up to speak was a worthwhile first step."
           ],
-          "homework": null
+          "homework": {
+            "title": "Write and practise your self-introduction",
+            "steps": [
+              "Write out your self-introduction: your name, one thing about yourself, when you started, what you have learned through the experience, and what you want to do in the future. Finish by returning to your main idea and adding a concluding sentence.",
+              "Practise the speech and, if possible, memorize it so you can deliver it in the next class.",
+              "For students who previously attended summer camp, focus on eye contact, a loud voice, a slightly longer speech with more vivid details, and hand gestures.",
+              "For new students, coming up to the stage and speaking in front of everyone is a good first goal. Expectations will reflect each student’s current stage in learning public speaking."
+            ],
+            "prepareFor": "Deliver your self-introduction in the next class, memorized if possible."
+          }
         }
       ]
     },
