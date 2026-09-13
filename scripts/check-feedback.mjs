@@ -40,7 +40,7 @@ test('full reports retain distinctive source details and later corrections',()=>
   assert.match(student('sat-introductory','2026-09-12','Liam').en,/second attempt.*memorized/s);
   assert.match(student('sat-introductory','2026-09-12','Tongtong').en,/third invitation.*successfully/s);
   assert.match(student('fri-later','2026-09-11','Peter').en,/pronunciation was clear/);
-  assert.equal(student('fri-later','2026-09-11','Kaka').en,null);
+  assert.equal(student('fri-later','2026-09-11','Kaka'),undefined);
   assert.equal(student('sat-introductory','2026-09-12','Tianyou').attendance,'absent');
 });
 test('latest fourteen-day view handles Shanghai midnight and hides future sessions',()=>{
