@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-13T05:39:30+00:00",
+  "updatedAt": "2026-09-13T08:54:40.913866+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -409,6 +409,82 @@
             "1. Choosing a position and supporting it\n\nStudents discussed “If we are bad at doing something, should we still do it?” They chose a side and practised explaining their reasoning through:\n\n“We should / shouldn’t, because... First... Second... Finally...”\n\nThe focus was on giving a clear argument with supporting explanations, while using purposeful hand gestures and speaking with conviction.\n\n2. Personal connection: Technology in my life\n\nStudents practised answering “What is one piece of technology in your life?” They introduced their choice and organized their ideas using first, second, and finally.\n\nThe aim was to connect the topic to their own experiences, giving specific personal details that help the audience understand technology’s role in their lives."
           ],
           "homework": null
+        }
+      ]
+    },
+    {
+      "id": "sun-1330",
+      "sessions": [
+        {
+          "id": "2026-09-13-sun-1330",
+          "date": "2026-09-13",
+          "time": "13:30–15:00",
+          "classContent": [
+            "Students began with a debate warm-up discussing whether AI-generated pictures could be considered “normal.” They practised stating a position, supporting it with evidence and examples, and organizing their responses so listeners could follow each argument. Feedback was shared between turns, giving students opportunities to apply the guidance they heard.\n\nThe main speaking and reasoning skills were:\n\n- Clear transitions: Introduce arguments with phrases such as “My first contention,” “My first argument,” or “My first point.” These signposts help judges and the opposing side follow the case, especially at faster debate speeds.\n- Evidence and explanation: Give specific examples, explain what they demonstrate, and connect them to the argument. With no time limit for this exercise, students were encouraged to develop their reasoning fully.\n- Impact and comparison: Explain who is affected, why the outcome matters, and why their side’s position produces a stronger outcome than the alternative.\n- Conviction and delivery: Use firm, respectful statements, purposeful emphasis, clear articulation, and pauses that allow important points to register.\n- Conclusions: Bring the arguments together and finish with a clear statement of the position and its significance.\n\nStudents then took part in mini debates: April versus Arthur, followed by Audrey versus Teresa and Ning. This gave them an opportunity to apply the earlier speaking guidance in an opposing-side format.\n\nWe also explored “Students should be able to grade their own teachers.” The discussion considered the perspectives of students, parents, teachers, principals, and education boards. Potential benefits included useful feedback for improvement, students raising concerns about safety, and better support for students. Possible concerns included retaliatory or false feedback, popularity and voting dynamics, differing perspectives, discrimination, and judging teachers before having sufficient information. These ideas provided a basis for considering competing interests and comparing the consequences of each side’s arguments.\n\nThe mini debates highlighted a shared priority: state a clear claim, identify the opponent’s claim accurately, and explain the disagreement. When both sides’ points remain unclear, the exchange becomes harder to follow and can turn into repeated assertions rather than a developing argument."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-09-13&student=arthur"
+            },
+            {
+              "name": "Audrey",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-09-13&student=audrey"
+            },
+            {
+              "name": "Teresa",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-09-13&student=teresa"
+            },
+            {
+              "name": "Ning",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-09-13&student=ning"
+            },
+            {
+              "name": "April",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-09-13&student=april"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sun-1500",
+      "sessions": [
+        {
+          "id": "2026-09-13-sun-1500",
+          "date": "2026-09-13",
+          "time": "15:00–16:30",
+          "classContent": [
+            "We began with an impromptu warm-up: “If we are bad at doing something, should we still do it?” Students chose a position and developed three reasons using “We should / shouldn’t, because… First… Second… Finally…” The focus was on forming their own ideas and supporting each point with an explanation or example.\n\nWe then explored the WCA competition topic: “Students should not be allowed to be on social media.” We discussed different arguments and viewed social-media examples to make the issues more concrete. Students considered the perspectives of students, parents, teachers, and social-media companies.\n\nArguments supporting restrictions included reduced sleep, copying dangerous activities, cheating, anxiety from comparison, unsafe online contact, inappropriate content, pressure to seek attention, and addictive use. Arguments against restrictions included opportunities to learn, access current information, maintain friendships, share experiences, find inspiration, connect with different communities, and support others.\n\nAfter this discussion, each student spoke for approximately one minute and 30 seconds, presenting arguments, supporting points, and examples. Their responses became more thorough, and they approached the task more seriously. This was an initial exercise in developing independent arguments and entering a debate mindset; we have not yet covered detailed competition structures or techniques."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "August",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-13&student=august"
+            },
+            {
+              "name": "Leo",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-13&student=leo"
+            },
+            {
+              "name": "Max",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-13&student=max"
+            },
+            {
+              "name": "Eva",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-13&student=eva"
+            },
+            {
+              "name": "Elsa",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-13&student=elsa"
+            },
+            {
+              "name": "Celia",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-13&student=celia"
+            }
+          ]
         }
       ]
     }
