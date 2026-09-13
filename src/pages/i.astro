@@ -958,6 +958,15 @@ import SiteNavigation from "../components/SiteNavigation.astro";
             }).format(new Date(data.updatedAt))}`
           : "";
 
+        const currentMonthTitle = new Intl.DateTimeFormat("en-US", {
+          timeZone: "Asia/Shanghai",
+          month: "long",
+          year: "numeric",
+        }).format(new Date());
+        const initialSheetIndex = Math.max(0, visibleSheets.findIndex(
+          (sheet) => sheet.title === currentMonthTitle,
+        ));
+
         tabsElement.replaceChildren();
         visibleSheets.forEach((sheet, index) => {
           const button = document.createElement("button");
@@ -965,7 +974,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
           button.type = "button";
           button.role = "tab";
           button.textContent = sheet.title;
-          button.ariaSelected = String(index === 0);
+          button.ariaSelected = String(index === initialSheetIndex);
           button.addEventListener("click", () => {
             tabsElement.querySelectorAll(".sheet-tab").forEach((tab) => {
               tab.setAttribute("aria-selected", String(tab === button));
@@ -977,7 +986,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
 
         statusElement.hidden = true;
         scheduleElement.hidden = false;
-        renderSheet(visibleSheets[0]);
+        renderSheet(visibleSheets[initialSheetIndex]);
       }
 
       const scheduleDataUrl = "/data/schedule-internal.json";
