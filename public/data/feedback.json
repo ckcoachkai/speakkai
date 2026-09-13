@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-13T10:41:26Z",
+  "updatedAt": "2026-09-13T10:44:48.196295+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -212,8 +212,8 @@
             {
               "id": "emily",
               "name": "Emily",
-              "en": "✓ What worked: Emily was willing and excited to come up to speak, even without practising beforehand. She showed a positive attitude and motivation to try. At this stage, taking that first step matters; mistakes are part of learning.\n\n→ Next focus: She sometimes struggled to find the words she wanted, including “exercise.” Practising a few useful words within simple sentences will help her express her ideas more comfortably. For now, the priority is to keep participating and build from what she can already say.",
-              "zh": "✓ 今天的表现：Emily 即使没有提前练习，也愿意、并带着积极的状态上台讲话。她展现了良好的态度和尝试意愿。现阶段，迈出这一步很重要，犯错也是学习的一部分。\n\n→ 下一步：她有时不容易找到想表达的词，包括“exercise”。把几个常用词放在简单句子中练习，可以帮助她更自在地表达想法。目前的重点是继续参与，并从已经能够说出的内容逐渐发展。"
+              "en": "First class: The previous homework requirement did not apply to Emily.\n\n✓ What worked: Emily was willing and excited to come up to speak, even without practising beforehand. She showed a positive attitude and motivation to try. At this stage, taking that first step matters; mistakes are part of learning.\n\n→ Next focus: She sometimes struggled to find the words she wanted, including “exercise.” Practising a few useful words within simple sentences will help her express her ideas more comfortably. For now, the priority is to keep participating and build from what she can already say.",
+              "zh": "首次上课：之前的作业要求不适用于 Emily。\n\n✓ 今天的表现：Emily 即使没有提前练习，也愿意、并带着积极的状态上台讲话。她展现了良好的态度和尝试意愿。现阶段，迈出这一步很重要，犯错也是学习的一部分。\n\n→ 下一步：她有时不容易找到想表达的词，包括“exercise”。把几个常用词放在简单句子中练习，可以帮助她更自在地表达想法。目前的重点是继续参与，并从已经能够说出的内容逐渐发展。"
             },
             {
               "id": "stacey",
@@ -230,21 +230,25 @@
             {
               "id": "tongtong",
               "name": "Tongtong",
-              "en": "✓ Progress: Tongtong initially said she had not had time to complete her homework and declined to present. After a third invitation and encouragement, she came up and was able to speak successfully. Not knowing a few words did not prevent her from participating.\n\n→ Main focus: Build the habit of trying, even when she is not fully prepared or is unsure of some vocabulary. The most important step today was coming to the stage and speaking—and she achieved that.\n\n→ Practice: Prepare a few simple sentences and rehearse saying them aloud, continuing even if a word is missing. This experience showed her that she can participate without having every word ready or getting everything perfect.",
-              "zh": "✓ 进步：Tongtong 起初表示没有时间完成作业，也不愿上台。经过第三次邀请和鼓励后，她走上台，并顺利进行了表达。即使有几个词不熟悉，也没有妨碍她参与。\n\n→ 主要方向：即使准备不完全、部分词汇不确定，也逐渐养成愿意尝试的习惯。今天最重要的一步是走到台前开口讲话，而她做到了。\n\n→ 练习建议：准备几个简单句子，大声练习；即使一时想不起某个词，也继续表达。这次经历让她看到，不需要每个词都准备好，也不需要完全正确，仍然可以参与。"
+              "en": "✓ Progress: Tongtong initially said she had not had time to complete her homework and declined to present. After a third invitation and encouragement, she came up and was able to speak successfully. Not knowing a few words did not prevent her from participating.\n\n→ Main focus: Build the habit of trying, even when she is unsure of some vocabulary. The most important step today was coming to the stage and speaking—and she achieved that.\n\n→ Practice: Prepare a few simple sentences and rehearse saying them aloud, continuing even if a word is missing. This experience showed her that she can participate without having every word ready or getting everything perfect.\n\nPreparation update: Tongtong had memorized her speech. Her successful presentation showed that her initial reluctance did not mean she had not prepared.",
+              "zh": "✓ 进步：Tongtong 起初表示没有时间完成作业，也不愿上台。经过第三次邀请和鼓励后，她走上台，并顺利进行了表达。即使有几个词不熟悉，也没有妨碍她参与。\n\n→ 主要方向：即使部分词汇不确定，也逐渐养成愿意尝试的习惯。今天最重要的一步是走到台前开口讲话，而她做到了。\n\n→ 练习建议：准备几个简单句子，大声练习；即使一时想不起某个词，也继续表达。这次经历让她看到，不需要每个词都准备好，也不需要完全正确，仍然可以参与。\n\n准备情况补充：Tongtong 已经背熟了演讲。她成功完成展示，说明最初不愿上台并不代表没有准备。"
             },
             {
               "id": "tianyou",
               "name": "Tianyou",
-              "en": null,
-              "zh": null
+              "en": "Absent from this class. No individual speaking feedback was recorded for this session.",
+              "zh": "本次缺席，因此没有记录本节课的个人演讲反馈。",
+              "attendance": "absent"
             }
           ],
           "classContent": {
-            "en": "Students reviewed the two earlier homework options: a self-introduction and the printed glacier speech. The self-introduction focused on one main interest, with supporting details about when it began, what the speaker learned, and a future goal, followed by a return to the main point.\n\nStudents were encouraged to present what they remembered instead of relying on reading the full script. Stacey and Liam both demonstrated complete memorized presentations in their second attempts, correcting the earlier impression that the prepared speeches had not been shown. Tongtong also came up and spoke successfully after further encouragement. The lesson emphasized that students can begin, continue through small mistakes, and participate even when some vocabulary is unfamiliar.",
-            "zh": "学生回顾了之前的两种作业选择：自我介绍和打印的冰川演讲稿。自我介绍围绕一个主要兴趣展开，加入兴趣何时开始、学到了什么和未来目标等细节，并在结尾回到核心主题。\n\n学生被鼓励讲出自己记住的内容，而不是依靠朗读完整稿件。Stacey和Liam在第二次尝试中都完整展示了背熟的演讲，修正了最初“还没有看到准备好的完整演讲”的印象。Tongtong也在进一步鼓励后上台，顺利进行了表达。课堂强调，即使有小错误或不熟悉的词，学生仍然可以开始、继续，并参与其中。"
+            "en": "Students reviewed the two earlier homework options: a self-introduction and the printed glacier speech. The self-introduction focused on one main interest, with supporting details about when it began, what the speaker learned, and a future goal, followed by a return to the main point.\n\nStudents were encouraged to present what they remembered instead of relying on reading the full script. Stacey and Liam both demonstrated complete memorized presentations in their second attempts, correcting the earlier impression that the prepared speeches had not been shown. Tongtong also came up and spoke successfully after further encouragement. The lesson emphasized that students can begin, continue through small mistakes, and participate even when some vocabulary is unfamiliar.\n\nThe lesson began with warm-up activities and a review of homework. Students warmed up their voices, articulation and bodies, then focused on adding hand gestures and organizing ideas with “first,” “second” and “finally.” They practised an impromptu speech, trying to apply the feedback they had received.\n\nFinally, students brainstormed and began crafting their next speech: “If I could have a dream robot.” They considered what their robot would do and what it would be capable of.\n\nPreparation and attendance: Tongtong, Stacey and Liam had all memorized their previous speeches, which was a welcome surprise. This was Emily’s first class, so the previous homework requirement did not apply to her. Tianyou was absent, which is why no individual speaking feedback was recorded for this session.",
+            "zh": "学生回顾了之前的两种作业选择：自我介绍和打印的冰川演讲稿。自我介绍围绕一个主要兴趣展开，加入兴趣何时开始、学到了什么和未来目标等细节，并在结尾回到核心主题。\n\n学生被鼓励讲出自己记住的内容，而不是依靠朗读完整稿件。Stacey和Liam在第二次尝试中都完整展示了背熟的演讲，修正了最初“还没有看到准备好的完整演讲”的印象。Tongtong也在进一步鼓励后上台，顺利进行了表达。课堂强调，即使有小错误或不熟悉的词，学生仍然可以开始、继续，并参与其中。\n\n课堂开始时，我们进行了热身并回顾作业。学生进行了声音、吐字和身体热身，随后重点练习加入手势，并使用“first”“second”“finally”来组织想法。他们还练习了即兴演讲，尝试应用自己收到的反馈。\n\n最后，学生围绕下一篇演讲“如果我能拥有一个梦想中的机器人”进行头脑风暴，并开始构思内容。他们思考了自己的机器人会做什么、具备哪些能力。\n\n准备与出勤情况：Tongtong、Stacey 和 Liam 都已经背熟了之前的演讲，这让老师感到惊喜。这是 Emily 的第一节课，因此之前的作业要求不适用于她。Tianyou 本次缺席，所以没有记录本节课的个人演讲反馈。"
           },
-          "homework": null
+          "homework": {
+            "en": "If I could have a dream robot\n\nUse the printed worksheet to develop your speech. Think about what your dream robot would do and what it would be capable of.\n\nTry to complete the worksheet, memorize your speech, and be ready to present it in the next class.",
+            "zh": "如果我能拥有一个梦想中的机器人\n\n使用打印的学习单来准备演讲，思考你的梦想机器人会做什么、具备哪些能力。\n\n请尝试完成学习单、记住自己的演讲，并准备在下节课展示。"
+          }
         }
       ]
     },

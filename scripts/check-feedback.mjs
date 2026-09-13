@@ -41,7 +41,7 @@ test('full reports retain distinctive source details and later corrections',()=>
   assert.match(student('sat-introductory','2026-09-12','Tongtong').en,/third invitation.*successfully/s);
   assert.match(student('fri-later','2026-09-11','Peter').en,/pronunciation was clear/);
   assert.equal(student('fri-later','2026-09-11','Kaka').en,null);
-  assert.equal(student('sat-introductory','2026-09-12','Tianyou').zh,null);
+  assert.equal(student('sat-introductory','2026-09-12','Tianyou').attendance,'absent');
 });
 test('latest fourteen-day view handles Shanghai midnight and hides future sessions',()=>{
   assert.equal(shanghaiDate(new Date('2026-09-12T16:00:00Z')),'2026-09-13');
@@ -99,4 +99,15 @@ test('fortnight archive covers boundaries and all history without future records
   assert.deepEqual(windows[1],{id:'1',start:'2026-08-17',end:'2026-08-30'});
   assert.deepEqual(sessionsInWindow(fixture.classes[0],windows[0],'2026-09-13').map(s=>s.date),['2026-08-31']);
   assert.deepEqual(sessionsInWindow(fixture.classes[0],windows.at(-1),'2026-09-13').map(s=>s.date),['2026-08-31','2026-08-30']);
+});
+
+
+test('recorded absence is not a missing evaluation',()=>{
+ const session=data.classes.find(g=>g.id==='sat-introductory').sessions.find(s=>s.date==='2026-09-12');
+ const progress=sessionCompleteness(session);
+ assert.equal(progress.total,4);
+ assert.equal(progress.completed,4);
+ assert.equal(progress.state,'complete');
+ const invalid=structuredClone(data);invalid.classes[0].sessions[0].students[0].attendance='guessed';
+ assert.throws(()=>validateFeedback(invalid));
 });

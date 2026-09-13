@@ -24,8 +24,9 @@ export function validateFeedback(data) {
       }
       const names = new Set(), ids = new Set();
       for (const student of session.students) {
-        if (!exact(student,['id','name','en','zh']) || !/^[a-z0-9-]+$/.test(student.id) || !isText(student.name) || names.has(student.name) || ids.has(student.id) || !((student.en === null && student.zh === null) || (isText(student.en) && isText(student.zh)))) throw Error('Invalid bilingual feedback');
-        names.add(student.name); ids.add(student.id);
+        if (!exact(student,['id','name','en','zh','attendance']) || !/^[a-z0-9-]+$/.test(student.id) || !isText(student.name) || names.has(student.name) || ids.has(student.id) || !((student.en === null && student.zh === null) || (isText(student.en) && isText(student.zh)))) throw Error('Invalid bilingual feedback');
+        if(student.attendance !== undefined && student.attendance !== 'absent') throw Error('Invalid attendance');
+      names.add(student.name); ids.add(student.id);
       }
     }
   }
@@ -67,7 +68,7 @@ export function sessionCompleteness(session, language='en') {
   if(!pair(session.classContent))missing.push(zh?'课堂内容未记录':'Class content not recorded');
   if(!pair(session.homework))missing.push(zh?'作业信息未记录':'Homework information not recorded');
   if(!session.students.length)missing.push(zh?'学生名单及反馈未记录':'Student roster and feedback not recorded');
-  for(const student of session.students)if(!pair(student))missing.push(zh?`${student.name}：个人反馈未完整记录`:`${student.name}: individual feedback incomplete`);
-  const completed=session.students.filter(pair).length;
-  return {state:missing.length?'missing':'complete',missing,completed,total:session.students.length};
+  for(const student of session.students)if(student.attendance!=='absent'&&!pair(student))missing.push(zh?`${student.name}：个人反馈未完整记录`:`${student.name}: individual feedback incomplete`);
+  const completed=session.students.filter(student=>student.attendance!=='absent'&&pair(student)).length;
+  return {state:missing.length?'missing':'complete',missing,completed,total:session.students.filter(student=>student.attendance!=='absent').length};
 }

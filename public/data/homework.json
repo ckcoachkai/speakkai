@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-13T10:41:26Z",
+  "updatedAt": "2026-09-13T10:44:48.200055+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -198,9 +198,16 @@
             }
           ],
           "classContent": [
-            "Students reviewed the two earlier homework options: a self-introduction and the printed glacier speech. The self-introduction focused on one main interest, with supporting details about when it began, what the speaker learned, and a future goal, followed by a return to the main point.\n\nStudents were encouraged to present what they remembered instead of relying on reading the full script. Stacey and Liam both demonstrated complete memorized presentations in their second attempts, correcting the earlier impression that the prepared speeches had not been shown. Tongtong also came up and spoke successfully after further encouragement. The lesson emphasized that students can begin, continue through small mistakes, and participate even when some vocabulary is unfamiliar."
+            "Students reviewed the two earlier homework options: a self-introduction and the printed glacier speech. The self-introduction focused on one main interest, with supporting details about when it began, what the speaker learned, and a future goal, followed by a return to the main point.\n\nStudents were encouraged to present what they remembered instead of relying on reading the full script. Stacey and Liam both demonstrated complete memorized presentations in their second attempts, correcting the earlier impression that the prepared speeches had not been shown. Tongtong also came up and spoke successfully after further encouragement. The lesson emphasized that students can begin, continue through small mistakes, and participate even when some vocabulary is unfamiliar.\n\nThe lesson began with warm-up activities and a review of homework. Students warmed up their voices, articulation and bodies, then focused on adding hand gestures and organizing ideas with “first,” “second” and “finally.” They practised an impromptu speech, trying to apply the feedback they had received.\n\nFinally, students brainstormed and began crafting their next speech: “If I could have a dream robot.” They considered what their robot would do and what it would be capable of.\n\nPreparation and attendance: Tongtong, Stacey and Liam had all memorized their previous speeches, which was a welcome surprise. This was Emily’s first class, so the previous homework requirement did not apply to her. Tianyou was absent, which is why no individual speaking feedback was recorded for this session."
           ],
-          "homework": null
+          "homework": {
+            "title": "If I could have a dream robot",
+            "steps": [
+              "Use the printed worksheet to develop your dream-robot speech: What would your robot do? What would it be capable of?",
+              "Try to complete the worksheet, memorize your speech, and present it in the next class."
+            ],
+            "prepareFor": "Present your dream-robot speech in the next class."
+          }
         }
       ]
     },
