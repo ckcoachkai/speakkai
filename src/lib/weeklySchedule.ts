@@ -147,6 +147,13 @@ export function weeklyScheduleBlocks(
     ];
   }
 
+  if (column === 6) {
+    return [
+      ...freeBlocks(lines, 19 * 60 + 30, 20 * 60, "Online free"),
+      ...freeBlocks(lines, 20 * 60, 23 * 60, inPersonTitle),
+    ];
+  }
+
   return [];
 }
 
