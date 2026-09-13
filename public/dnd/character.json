@@ -40,14 +40,14 @@
     {
       "id": "greatsword",
       "name": "Greatsword",
-      "quantity": 1,
+      "quantity": 0,
       "weight": 6,
-      "notes": "Two-handed · heavy · 2d6 slashing"
+      "notes": "Lost; not carried. Two-handed, heavy; 2d6 slashing."
     },
     {
       "id": "javelins",
       "name": "Javelin",
-      "quantity": 5,
+      "quantity": 4,
       "weight": 2,
       "notes": "Thrown · range 30/120 ft · 1d6 piercing"
     },
@@ -175,7 +175,7 @@
   "flaws": "I rush into danger too quickly.",
   "languages": "Common, Draconic, Celestial",
   "proficiencies": "All armor; shields; simple weapons; martial weapons; playing cards.",
-  "notes": "Imported from the June 17, 2026 character sheet and Greatsword Bob conversation. Uses the 2014 fifth-edition Paladin rules.\n\nDM CHECK — The paper sheet lists 120 gp alongside starting gear. Rolled starting gold normally replaces starting equipment; confirm which method your table uses. Do not automatically add the Noble’s 25 gp.\n\nSecond martial weapon: not confirmed. Greatsword is confirmed.\n\nFire resistance: halve fire damage. Position of Privilege: Noble background feature.\n\nResource counters start full because spent uses were not recorded. XP is set to 0 as a starting placeholder. Equipment weights of 0 mean not recorded, not weightless.",
+  "notes": "Imported from the June 17, 2026 character sheet and Greatsword Bob conversation. Uses the 2014 fifth-edition Paladin rules.\n\nDM CHECK — The paper sheet lists 120 gp alongside starting gear. Rolled starting gold normally replaces starting equipment; confirm which method your table uses. Do not automatically add the Noble’s 25 gp.\n\nSecond martial weapon: not confirmed. Greatsword was confirmed in the starting equipment; now lost.\n\nFire resistance: halve fire damage. Position of Privilege: Noble background feature.\n\nResource counters start full because spent uses were not recorded. XP is set to 0 as a starting placeholder. Equipment weights of 0 mean not recorded, not weightless.\n\nInventory update — September 13, 2026: greatsword lost (0 carried); javelins reduced from 5 to 4, per Kai.",
   "custom": [
     {
       "id": "great-weapon-fighting",
