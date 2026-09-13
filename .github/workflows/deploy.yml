@@ -45,6 +45,8 @@ jobs:
         run: node --test scripts/check-schedule-presentation.mjs
       - name: Build
         run: npm run build
+      - name: Verify Bob character data, encryption, and save conflicts
+        run: node --test scripts/check-dnd.mjs
       - name: Verify forest game route and media
         run: node scripts/check-forest.mjs
       - name: Verify public homework and Shanghai date handling
