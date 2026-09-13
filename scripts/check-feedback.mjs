@@ -1,13 +1,47 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {validateFeedback,weekWindows,sessionsInWindow,newestClass,feedbackText,classSectionText,shanghaiDate} from '../src/lib/feedback.mjs';
+import {validateFeedback,weekWindows,sessionsInWindow,newestClass,feedbackText,classSectionText,shanghaiDate,sessionCompleteness} from '../src/lib/feedback.mjs';
 import {isSafeFeedbackUrl,validateHomework} from '../src/lib/homework.mjs';
 const data=JSON.parse(fs.readFileSync(new URL('../public/data/feedback.json',import.meta.url)));
 test('published feedback contains matched bilingual pairs and only public fields',()=>{
   assert.equal(validateFeedback(data),data);
   assert.doesNotMatch(JSON.stringify(data),/SRC-\d|FB-\d|sourceTask|sourceOrdinal|docs\.google|dictation-archive|@gmail/);
-  for(const group of data.classes)for(const session of group.sessions)for(const student of session.students)if(student.en){assert.match(student.zh,/[\u4e00-\u9fff]/);assert.equal((student.en.match(/➜/g)||[]).length,1);assert.equal((student.zh.match(/➜/g)||[]).length,1);}
+  for(const group of data.classes)for(const session of group.sessions)for(const student of session.students)if(student.en){assert.match(student.zh,/[\u4e00-\u9fff]/);assert.ok(student.en.trim());assert.ok(student.zh.trim());}
+});
+
+test('overview completeness requires all bilingual sections and names missing feedback',()=>{
+  const pair={en:'Recorded',zh:'已记录'};
+  const session={status:'held',classContent:pair,homework:pair,students:[{name:'First',...pair},{name:'Second',en:null,zh:null}]};
+  assert.deepEqual(sessionCompleteness(session),{state:'missing',missing:['Second: individual feedback incomplete'],completed:1,total:2});
+  session.students[1]={name:'Second',...pair};
+  assert.equal(sessionCompleteness(session).state,'complete');
+  session.homework=null;
+  assert.deepEqual(sessionCompleteness(session).missing,['Homework information not recorded']);
+  assert.deepEqual(sessionCompleteness(session,'zh').missing,['作业信息未记录']);
+  session.classContent={en:'Present',zh:' '};
+  assert.equal(sessionCompleteness(session).missing.length,2);
+  session.students=[];
+  assert.ok(sessionCompleteness(session).missing.includes('Student roster and feedback not recorded'));
+  session.status='cancelled';
+  assert.deepEqual(sessionCompleteness(session),{state:'cancelled',missing:[],completed:0,total:0});
+});
+
+test('full reports retain distinctive source details and later corrections',()=>{
+  const session=(id,date)=>data.classes.find(g=>g.id===id).sessions.find(s=>s.date===date);
+  const student=(id,date,name)=>session(id,date).students.find(s=>s.name===name);
+  const sunday=session('sun-1130','2026-09-13');
+  assert.match(sunday.classContent.en,/Technology in my life/);
+  assert.match(sunday.classContent.en,/hand gestures and speaking with conviction/);
+  assert.match(sunday.classContent.zh,/我生活中的科技/);
+  assert.match(student('sun-1130','2026-09-13','Yiyi').en,/reason → explanation → link to her position/);
+  assert.match(student('thu-afternoon','2026-09-10','Pinkie').en,/24 seconds/);
+  assert.match(student('thu-afternoon','2026-09-10','Charlotte').en,/futuristic city/);
+  assert.match(student('sat-introductory','2026-09-12','Liam').en,/second attempt.*memorized/s);
+  assert.match(student('sat-introductory','2026-09-12','Tongtong').en,/third invitation.*successfully/s);
+  assert.match(student('fri-later','2026-09-11','Peter').en,/pronunciation was clear/);
+  assert.equal(student('fri-later','2026-09-11','Kaka').en,null);
+  assert.equal(student('sat-introductory','2026-09-12','Tianyou').zh,null);
 });
 test('latest seven-day view handles Shanghai midnight and hides future sessions',()=>{
   assert.equal(shanghaiDate(new Date('2026-09-12T16:00:00Z')),'2026-09-13');

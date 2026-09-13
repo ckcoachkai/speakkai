@@ -58,3 +58,16 @@ export function classSectionText(session,kind,language='en') {
   const title = language==='zh' ? (kind==='classContent' ? '课堂内容' : '课后作业') : (kind==='classContent' ? 'Class content' : 'Homework');
   return `${formatDate(session.date,language)} · ${session.time}\n${title}\n\n${session[kind]?.[language] || 'N/A'}`;
 }
+
+// Completeness describes the published report, never a student's performance.
+export function sessionCompleteness(session, language='en') {
+  if (session.status === 'cancelled') return {state:'cancelled', missing:[], completed:0, total:0};
+  const zh=language==='zh', missing=[];
+  const pair=value=>Boolean(value?.en?.trim()&&value?.zh?.trim());
+  if(!pair(session.classContent))missing.push(zh?'课堂内容未记录':'Class content not recorded');
+  if(!pair(session.homework))missing.push(zh?'作业信息未记录':'Homework information not recorded');
+  if(!session.students.length)missing.push(zh?'学生名单及反馈未记录':'Student roster and feedback not recorded');
+  for(const student of session.students)if(!pair(student))missing.push(zh?`${student.name}：个人反馈未完整记录`:`${student.name}: individual feedback incomplete`);
+  const completed=session.students.filter(pair).length;
+  return {state:missing.length?'missing':'complete',missing,completed,total:session.students.length};
+}
