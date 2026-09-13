@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-13T08:54:40.913866+00:00",
+  "updatedAt": "2026-09-13T10:38:45.769883+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -408,7 +408,16 @@
           "classContent": [
             "1. Choosing a position and supporting it\n\nStudents discussed “If we are bad at doing something, should we still do it?” They chose a side and practised explaining their reasoning through:\n\n“We should / shouldn’t, because... First... Second... Finally...”\n\nThe focus was on giving a clear argument with supporting explanations, while using purposeful hand gestures and speaking with conviction.\n\n2. Personal connection: Technology in my life\n\nStudents practised answering “What is one piece of technology in your life?” They introduced their choice and organized their ideas using first, second, and finally.\n\nThe aim was to connect the topic to their own experiences, giving specific personal details that help the audience understand technology’s role in their lives."
           ],
-          "homework": null
+          "homework": {
+            "title": "Technology is a part of our lives",
+            "steps": [
+              "If possible, write out your own speech about one piece of technology that is important to you and how it affects your life. Students are encouraged to write the speech themselves.",
+              "Organize your speech around what, why and how: What is the technology? Why is it important to you? How does it affect you?",
+              "Finish with a message for the audience.",
+              "Prepare a speech lasting one to two minutes."
+            ],
+            "prepareFor": "Your speech about technology’s role in your life."
+          }
         }
       ]
     },
@@ -422,7 +431,16 @@
           "classContent": [
             "Students began with a debate warm-up discussing whether AI-generated pictures could be considered “normal.” They practised stating a position, supporting it with evidence and examples, and organizing their responses so listeners could follow each argument. Feedback was shared between turns, giving students opportunities to apply the guidance they heard.\n\nThe main speaking and reasoning skills were:\n\n- Clear transitions: Introduce arguments with phrases such as “My first contention,” “My first argument,” or “My first point.” These signposts help judges and the opposing side follow the case, especially at faster debate speeds.\n- Evidence and explanation: Give specific examples, explain what they demonstrate, and connect them to the argument. With no time limit for this exercise, students were encouraged to develop their reasoning fully.\n- Impact and comparison: Explain who is affected, why the outcome matters, and why their side’s position produces a stronger outcome than the alternative.\n- Conviction and delivery: Use firm, respectful statements, purposeful emphasis, clear articulation, and pauses that allow important points to register.\n- Conclusions: Bring the arguments together and finish with a clear statement of the position and its significance.\n\nStudents then took part in mini debates: April versus Arthur, followed by Audrey versus Teresa and Ning. This gave them an opportunity to apply the earlier speaking guidance in an opposing-side format.\n\nWe also explored “Students should be able to grade their own teachers.” The discussion considered the perspectives of students, parents, teachers, principals, and education boards. Potential benefits included useful feedback for improvement, students raising concerns about safety, and better support for students. Possible concerns included retaliatory or false feedback, popularity and voting dynamics, differing perspectives, discrimination, and judging teachers before having sufficient information. These ideas provided a basis for considering competing interests and comparing the consequences of each side’s arguments.\n\nThe mini debates highlighted a shared priority: state a clear claim, identify the opponent’s claim accurately, and explain the disagreement. When both sides’ points remain unclear, the exchange becomes harder to follow and can turn into repeated assertions rather than a developing argument."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Opening statement: Students should be allowed to grade their teachers",
+            "steps": [
+              "Develop your ideas further and write a two-minute opening statement for the motion “Students should be allowed to grade their teachers.”",
+              "Suggested sides: Arthur and Audrey on the pro side; Teresa, Ning and April on the con side.",
+              "Each student should introduce the topic, define the key terms, and present three points supporting their side."
+            ],
+            "prepareFor": "A two-minute opening statement for your side of the debate.",
+            "note": "Conditional homework: Heidi may assign homework. If she does not, complete the assignment below."
+          },
           "students": [
             {
               "name": "Arthur",
@@ -458,7 +476,15 @@
           "classContent": [
             "We began with an impromptu warm-up: “If we are bad at doing something, should we still do it?” Students chose a position and developed three reasons using “We should / shouldn’t, because… First… Second… Finally…” The focus was on forming their own ideas and supporting each point with an explanation or example.\n\nWe then explored the WCA competition topic: “Students should not be allowed to be on social media.” We discussed different arguments and viewed social-media examples to make the issues more concrete. Students considered the perspectives of students, parents, teachers, and social-media companies.\n\nArguments supporting restrictions included reduced sleep, copying dangerous activities, cheating, anxiety from comparison, unsafe online contact, inappropriate content, pressure to seek attention, and addictive use. Arguments against restrictions included opportunities to learn, access current information, maintain friendships, share experiences, find inspiration, connect with different communities, and support others.\n\nAfter this discussion, each student spoke for approximately one minute and 30 seconds, presenting arguments, supporting points, and examples. Their responses became more thorough, and they approached the task more seriously. This was an initial exercise in developing independent arguments and entering a debate mindset; we have not yet covered detailed competition structures or techniques."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Reading and synthesis: Students should not be allowed to be on social media",
+            "steps": [
+              "Review the remaining reading material for the debate topic “Students should not be allowed to be on social media.” We discussed the pro and con arguments in class, but there is still substantial reading material to go through.",
+              "Work through the evidence and background information. Try to understand it, bring the ideas together, and summarize the content."
+            ],
+            "prepareFor": "A clearer understanding of the evidence and background for this debate topic.",
+            "note": "Conditional homework: Heidi may assign homework. If she does not, complete the assignment below."
+          },
           "students": [
             {
               "name": "August",

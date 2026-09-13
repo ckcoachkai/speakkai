@@ -83,8 +83,8 @@ test('class sections preserve their own dated lesson and assignment, including N
     }
   }
   const sunday=data.classes.find(g=>g.id==='sun-1130').sessions[0];
-  assert.equal(sunday.homework,null);
-  assert.match(classSectionText(sunday,'homework'),/Homework\n\nN\/A$/);
+  assert.match(sunday.homework.en,/one to two minutes/);
+  assert.match(classSectionText({...sunday,homework:null},'homework'),/Homework\n\nN\/A$/);
   const saturday=data.classes.find(g=>g.id==='sat-original-oratory').sessions;
   assert.match(saturday.find(s=>s.date==='2026-09-05').homework.en,/200–400/);
   assert.match(saturday.find(s=>s.date==='2026-09-12').homework.zh,/300–500/);
