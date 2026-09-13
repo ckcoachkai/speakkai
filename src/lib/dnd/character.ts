@@ -14,31 +14,197 @@ export type Character = {
   custom:{id:string; label:string; value:string}[];
 };
 export const seed:Character = {
-  schemaVersion:1, name:'Bob', player:'Kai', race:'Dragonborn', characterClass:'Paladin', level:1, background:'Noble', alignment:'Chaotic Neutral',
-  xp:0, hp:6, maxHp:11, tempHp:0, ac:16, speed:30, inspiration:false,
-  scores:{STR:17,DEX:12,CON:13,INT:8,WIS:10,CHA:14}, proficientSkills:['Athletics','History','Intimidation','Persuasion'], proficientSaves:['WIS','CHA'],
-  deathSuccesses:0, deathFailures:0, hitDice:1, gold:120,
-  equipment:[
-    {id:'greatsword',name:'Greatsword',quantity:1,weight:6,notes:'Two-handed · heavy · 2d6 slashing'},
-    {id:'javelins',name:'Javelin',quantity:5,weight:2,notes:'Thrown · range 30/120 ft · 1d6 piercing'},
-    {id:'chain',name:'Chain mail',quantity:1,weight:55,notes:'AC 16 · heavy armor · disadvantage on Stealth'},
-    {id:'symbol',name:'Holy symbol',quantity:1,weight:0,notes:'Form and weight to confirm'},
-    {id:'pack',name:'Explorer’s pack',quantity:1,weight:0,notes:'Contents and weight to confirm'},
-    {id:'clothes',name:'Fine clothes',quantity:1,weight:6,notes:'Noble background'},
-    {id:'ring',name:'Signet ring',quantity:1,weight:0,notes:'Noble background'},
-    {id:'pedigree',name:'Scroll of pedigree',quantity:1,weight:0,notes:'Noble background'},
-    {id:'cards',name:'Playing cards',quantity:1,weight:0,notes:'Gaming set proficiency'},
-  ], spells:[], slotsUsed:[0,0,0,0,0],
-  resources:[
-    {id:'breath',name:'Fire Breath',remaining:1,max:1,description:'15 ft cone · Dexterity save · half damage on success.',recharge:'Short or long rest'},
-    {id:'sense',name:'Divine Sense',remaining:3,max:3,description:'Sense celestials, fiends and undead within 60 ft, except behind total cover, until the end of your next turn.',recharge:'Long rest'},
-    {id:'hands',name:'Lay on Hands',remaining:5,max:5,description:'Touch to restore HP from the pool. Spend 5 points to cure one disease or neutralize one poison.',recharge:'Long rest'},
+  "schemaVersion": 1,
+  "name": "Bob",
+  "player": "Kai",
+  "race": "Dragonborn",
+  "characterClass": "Paladin",
+  "level": 2,
+  "background": "Noble",
+  "alignment": "Chaotic Neutral",
+  "xp": 0,
+  "hp": 15,
+  "maxHp": 20,
+  "tempHp": 0,
+  "ac": 16,
+  "speed": 30,
+  "inspiration": false,
+  "scores": {
+    "STR": 17,
+    "DEX": 12,
+    "CON": 13,
+    "INT": 8,
+    "WIS": 10,
+    "CHA": 14
+  },
+  "proficientSkills": [
+    "Athletics",
+    "History",
+    "Intimidation",
+    "Persuasion"
   ],
-  traits:'I proudly introduce myself before every battle: “I am Bob!” I act like a noble hero.', ideals:'Freedom.', bonds:'', flaws:'I rush into danger too quickly.',
-  languages:'Common, Draconic, Celestial', proficiencies:'All armor; shields; simple weapons; martial weapons; playing cards.',
-  notes:'Imported from the June 17, 2026 character sheet and Greatsword Bob conversation. Uses the 2014 fifth-edition Paladin rules.\n\nDM CHECK — The paper sheet lists 120 gp alongside starting gear. Rolled starting gold normally replaces starting equipment; confirm which method your table uses. Do not automatically add the Noble’s 25 gp.\n\nSecond martial weapon: not confirmed. Greatsword is confirmed.\n\nFire resistance: halve fire damage. Position of Privilege: Noble background feature.\n\nResource counters start full because spent uses were not recorded. XP is set to 0 as a starting placeholder. Equipment weights of 0 mean not recorded, not weightless.',
-  custom:[],
+  "proficientSaves": [
+    "WIS",
+    "CHA"
+  ],
+  "deathSuccesses": 0,
+  "deathFailures": 0,
+  "hitDice": 2,
+  "gold": 120,
+  "equipment": [
+    {
+      "id": "greatsword",
+      "name": "Greatsword",
+      "quantity": 1,
+      "weight": 6,
+      "notes": "Two-handed · heavy · 2d6 slashing"
+    },
+    {
+      "id": "javelins",
+      "name": "Javelin",
+      "quantity": 5,
+      "weight": 2,
+      "notes": "Thrown · range 30/120 ft · 1d6 piercing"
+    },
+    {
+      "id": "chain",
+      "name": "Chain mail",
+      "quantity": 1,
+      "weight": 55,
+      "notes": "AC 16 · heavy armor · disadvantage on Stealth"
+    },
+    {
+      "id": "symbol",
+      "name": "Holy symbol",
+      "quantity": 1,
+      "weight": 0,
+      "notes": "Form and weight to confirm"
+    },
+    {
+      "id": "pack",
+      "name": "Explorer’s pack",
+      "quantity": 1,
+      "weight": 0,
+      "notes": "Contents and weight to confirm"
+    },
+    {
+      "id": "clothes",
+      "name": "Fine clothes",
+      "quantity": 1,
+      "weight": 6,
+      "notes": "Noble background"
+    },
+    {
+      "id": "ring",
+      "name": "Signet ring",
+      "quantity": 1,
+      "weight": 0,
+      "notes": "Noble background"
+    },
+    {
+      "id": "pedigree",
+      "name": "Scroll of pedigree",
+      "quantity": 1,
+      "weight": 0,
+      "notes": "Noble background"
+    },
+    {
+      "id": "cards",
+      "name": "Playing cards",
+      "quantity": 1,
+      "weight": 0,
+      "notes": "Gaming set proficiency"
+    }
+  ],
+  "spells": [
+    {
+      "id": "command",
+      "name": "Command",
+      "level": 1,
+      "casting": "1 action",
+      "range": "60 ft",
+      "duration": "1 round",
+      "description": "Give a one-word command. A target that understands it makes a Wisdom save; restrictions apply.",
+      "prepared": true,
+      "concentration": false
+    },
+    {
+      "id": "purify-food-and-drink",
+      "name": "Purify Food and Drink",
+      "level": 1,
+      "casting": "1 action",
+      "range": "10 ft",
+      "duration": "Instantaneous",
+      "prepared": true,
+      "concentration": false,
+      "description": "All nonmagical food and drink within a 5-foot-radius sphere centered on a point within range is purified and rendered free of poison and disease. Components: V, S. Ritual tag; the 2014 Paladin class does not grant ritual casting."
+    },
+    {
+      "id": "bless",
+      "name": "Bless",
+      "level": 1,
+      "casting": "1 action",
+      "range": "30 ft",
+      "duration": "1 minute",
+      "description": "Up to three creatures add 1d4 to attack rolls and saving throws. Higher slots add targets.",
+      "prepared": true,
+      "concentration": true
+    }
+  ],
+  "slotsUsed": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "resources": [
+    {
+      "id": "breath",
+      "name": "Fire Breath",
+      "remaining": 1,
+      "max": 1,
+      "description": "15 ft cone · Dexterity save · half damage on success.",
+      "recharge": "Short or long rest"
+    },
+    {
+      "id": "sense",
+      "name": "Divine Sense",
+      "remaining": 3,
+      "max": 3,
+      "description": "Sense celestials, fiends and undead within 60 ft, except behind total cover, until the end of your next turn.",
+      "recharge": "Long rest"
+    },
+    {
+      "id": "hands",
+      "name": "Lay on Hands",
+      "remaining": 10,
+      "max": 10,
+      "description": "Touch to restore HP from the pool. Spend 5 points to cure one disease or neutralize one poison.",
+      "recharge": "Long rest"
+    }
+  ],
+  "traits": "I proudly introduce myself before every battle: “I am Bob!” I act like a noble hero.",
+  "ideals": "Freedom.",
+  "bonds": "",
+  "flaws": "I rush into danger too quickly.",
+  "languages": "Common, Draconic, Celestial",
+  "proficiencies": "All armor; shields; simple weapons; martial weapons; playing cards.",
+  "notes": "Imported from the June 17, 2026 character sheet and Greatsword Bob conversation. Uses the 2014 fifth-edition Paladin rules.\n\nDM CHECK — The paper sheet lists 120 gp alongside starting gear. Rolled starting gold normally replaces starting equipment; confirm which method your table uses. Do not automatically add the Noble’s 25 gp.\n\nSecond martial weapon: not confirmed. Greatsword is confirmed.\n\nFire resistance: halve fire damage. Position of Privilege: Noble background feature.\n\nResource counters start full because spent uses were not recorded. XP is set to 0 as a starting placeholder. Equipment weights of 0 mean not recorded, not weightless.",
+  "custom": [
+    {
+      "id": "great-weapon-fighting",
+      "label": "Fighting style — Great Weapon Fighting",
+      "value": "When a damage die for your two-handed melee weapon rolls 1 or 2, reroll it once. You must use the new result. Applies to both of your greatsword’s 2d6 weapon damage dice."
+    },
+    {
+      "id": "divine-smite",
+      "label": "Divine Smite",
+      "value": "When you hit with a melee weapon attack, you may expend a 1st-level spell slot to deal 2d8 extra radiant damage, or 3d8 against an undead or fiend. Decide after the hit. Uses the same two spell slots as your prepared spells; slots return on a long rest. Great Weapon Fighting rerolls only the weapon damage dice, not Divine Smite dice."
+    }
+  ]
 };
+
 export const clone = <T,>(value:T):T => structuredClone(value);
 export const modifier = (score:number) => Math.floor((score-10)/2);
 export const signed = (n:number) => `${n>=0?'+':''}${n}`;

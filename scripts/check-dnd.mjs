@@ -11,17 +11,17 @@ const model=await import(characterUrl);
 const vault=await import(asUrl(transpile('../src/lib/dnd/vault.ts').replace("'./character'",JSON.stringify(characterUrl))));
 const cloud=await import(asUrl(transpile('../src/lib/dnd/cloud.ts').replace("'./character'",JSON.stringify(characterUrl)).replaceAll('import.meta.env.PUBLIC_DND_SUPABASE_URL',"'https://example.supabase.co'").replaceAll('import.meta.env.PUBLIC_DND_SUPABASE_KEY',"'sb_publishable_TEST'")));
 
-test('original Bob data and 2014 Paladin calculations',()=>{
+test('published level 2 Bob data and 2014 Paladin calculations',()=>{
   const c=model.validateCharacter(model.seed);
-  assert.equal(c.hp,6);assert.equal(c.maxHp,11);assert.equal(model.modifier(c.scores.STR),3);
+  assert.equal(c.level,2);assert.equal(c.hp,15);assert.equal(c.maxHp,20);assert.equal(c.ac,16);assert.equal(c.hitDice,2);assert.equal(model.modifier(c.scores.STR),3);
   assert.equal(model.skillBonus(c,'Athletics'),5);assert.equal(model.skillBonus(c,'History'),1);
-  assert.equal(model.preparedLimit(c),0);assert.deepEqual(model.slots(1),[0,0,0,0,0]);
+  assert.equal(model.preparedLimit(c),3);assert.equal(c.spells.filter(s=>s.prepared).length,3);assert.equal(c.resources.find(r=>r.id==='hands').max,10);assert.deepEqual(model.slots(1),[0,0,0,0,0]);
   c.level=2;assert.equal(model.preparedLimit(c),3);assert.deepEqual(model.slots(2),[2,0,0,0,0]);
   assert.equal(model.proficiency(5),3);assert.equal(model.breathDice(6),3);
   assert.deepEqual(model.slots(20),[4,3,3,3,2]);
 });
 test('malformed, oversized, and inconsistent imports are rejected',()=>{
-  for(const mutate of [c=>c.hp=12,c=>c.scores.STR=0,c=>c.level=21,c=>c.level=1.5,c=>c.equipment[0].quantity=-1,c=>c.proficientSkills=['invented'],c=>c.slotsUsed=[1,0,0,0,0],c=>c.notes='x'.repeat(12001),c=>c.resources[0].remaining=3,c=>c.equipment.push(c.equipment[0])]){
+  for(const mutate of [c=>c.hp=c.maxHp+1,c=>c.scores.STR=0,c=>c.level=21,c=>c.level=1.5,c=>c.equipment[0].quantity=-1,c=>c.proficientSkills=['invented'],c=>c.slotsUsed=[3,0,0,0,0],c=>c.notes='x'.repeat(12001),c=>c.resources[0].remaining=3,c=>c.equipment.push(c.equipment[0])]){
     const c=model.clone(model.seed);mutate(c);assert.throws(()=>model.validateCharacter(c));
   }
   assert.throws(()=>model.validateCharacter(null));assert.throws(()=>vault.parseEnvelope('{}'));
@@ -58,4 +58,12 @@ test('cloud login rejects an account other than the configured owner',async()=>{
     globalThis.fetch=async(url)=>new Response(JSON.stringify(String(url).includes('/token')?{access_token:'test-token',expires_in:3600,user:{id:'intruder'}}:[{owner_id:'owner'}]),{status:200});
     await assert.rejects(cloud.signIn('test@example.com','test'),/not Bob’s editor/);
   }finally{globalThis.fetch=original;}
+});
+
+test('published JSON matches the app and Excel download exists',()=>{
+  const published=JSON.parse(fs.readFileSync(new URL('../public/dnd/character.json',import.meta.url),'utf8'));
+  assert.deepEqual(published,model.seed);
+  assert.deepEqual(published.spells.map(s=>s.name),['Command','Purify Food and Drink','Bless']);
+  assert.equal(8+model.proficiency(published.level)+model.modifier(published.scores.CHA),12);
+  assert.ok(fs.statSync(new URL('../public/dnd/Bob_the_Paladin.xlsx',import.meta.url)).size>10000);
 });
