@@ -68,13 +68,6 @@ function availableSegments(lines: string[], freeStart: number, freeEnd: number) 
   return segments.filter((segment) => segment.end - segment.start >= 15);
 }
 
-function hasBookingOverlap(lines: string[], start: number, end: number) {
-  return lines.slice(1).some((line) => {
-    const range = timeRange(line);
-    return range ? range.start < end && range.end > start : false;
-  });
-}
-
 function formatMinutes(total: number) {
   const hours = Math.floor(total / 60).toString().padStart(2, "0");
   const minutes = (total % 60).toString().padStart(2, "0");
@@ -131,12 +124,8 @@ export function weeklyScheduleBlocks(
   }
 
   if (column === 2) {
-    const reserved: WeeklyScheduleBlock[] = !dayIsBlocked(lines) && !hasBookingOverlap(lines, 9 * 60, 12 * 60)
-      ? [{ kind: "reserved", timeText: "09:00–12:00", title: "Booked" }]
-      : [];
     return [
-      ...freeBlocks(lines, 7 * 60, 9 * 60, inPersonTitle),
-      ...reserved,
+      ...freeBlocks(lines, 7 * 60, 15 * 60, inPersonTitle),
       ...freeBlocks(lines, 21 * 60, 23 * 60, inPersonTitle),
     ];
   }
