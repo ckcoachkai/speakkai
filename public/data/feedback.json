@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-13T10:38:45.769883+00:00",
+  "updatedAt": "2026-09-13T10:41:26Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -654,6 +654,220 @@
               "zh": "✓ Celia 在比赛题目的练习中表现突出。经过讨论和例子说明后，她的参与和表现给老师留下了特别好的印象。\n\n→ 下一步是让这种表现变得稳定可重复：选择一个清晰的论点，用具体例子支持它，并解释这个例子为什么对自己一方重要。随着课程逐步进入更详细的比赛准备，这将帮助她继续发展自己的推理能力。"
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "mon-afternoon",
+      "label": {
+        "en": "Monday · 15:30–17:30",
+        "zh": "周一 · 15:30–17:30"
+      },
+      "sessions": [
+        {
+          "id": "mon-afternoon-2026-09-07",
+          "date": "2026-09-07",
+          "time": "15:30–17:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "william",
+              "name": "William",
+              "en": "✓ William showed initiative by volunteering to speak first when others were hesitant. It was good to see his willingness to push himself and express his ideas. He also completed the task challenges.\n\n→ The main focus is preparation and structure. He had not written anything down, which raised some concern about how thoroughly he had prepared. As expectations for content and logic increase, he should take time to plan and write a short outline before presenting. His content leaned toward storytelling; adding specific facts, his perspective, and one or two “magical connectors” would help turn his willingness to speak into a well-prepared, informative speech. A prepared speech needs more planning than an impromptu response.\n\nThe specific facts and details should be followed by his own perspective so the audience understands both the information and his thinking. The “magical connectors,” like the transitions used by YouTube creators, can help him connect his ideas and explore them more deeply.",
+              "zh": "✓ William 主动第一个上台发言，即使当时其他同学还在犹豫。他愿意挑战自己、表达想法，这一点值得肯定。他也完成了课堂任务中的挑战。\n\n→ 主要练习方向是准备和结构。他没有把内容写下来，因此我有些担心他的准备是否充分。随着对内容和逻辑的要求提高，他需要在上台前花时间思考，并写一份简短提纲。他的内容偏向讲故事；加入具体事实、自己的观点，以及一两个“magical connectors”（帮助衔接和深入展开想法的过渡表达），能够让他的演讲更有准备，也更有信息量。有准备的演讲需要比即兴回答更充分的规划。\n\n讲完具体事实和细节后，还要解释自己的看法，让听众既了解信息，也理解他的思考。像 YouTube 创作者常用的那类过渡表达，可以帮助他连接不同想法，并进一步深入说明。"
+            },
+            {
+              "id": "cynthia",
+              "name": "Cynthia",
+              "en": "✓ Cynthia completed all three challenges: avoiding the word “I,” clapping at important points, and singing “Hooray” at the end. Her speech was rich in content, which matched our informative-speaking objective and made this a strong overall presentation.\n\n→ The next focus is fluency. There were slight stumbles, and she seemed less familiar with some of the wording. Rehearsing the speech aloud, especially those phrases, would help her deliver her content more smoothly.",
+              "zh": "✓ Cynthia 完成了全部三个挑战：不说“I”、在重要内容处拍手，以及在结尾唱出“Hooray”。她的演讲内容充实，符合这次信息型演讲的目标，整体展示很好。\n\n→ 下一步是提高流畅度。表达中有轻微停顿和卡顿，她对部分措辞似乎还不够熟悉。大声练习整篇演讲，尤其是这些不太顺畅的词句，会帮助她把内容表达得更流畅。"
+            },
+            {
+              "id": "kieran",
+              "name": "Kieran",
+              "en": "✓ Kieran had a brief stumble on his first attempt at his homework speech, but recovered on his second try and was able to remember everything he wanted to say. His slight pauses gave the impression that he was recalling prepared ideas rather than mechanically reciting words.\n\n→ The next step is stronger focus and smoother delivery. Things happening around him occasionally drew his attention away. Practising a complete run-through while keeping his attention on his message, and smoothing the places where he hesitates, would make the presentation more polished and easier to follow.\n\nIn his second speech, Kieran had power and energy, and he did well to complete it, although it felt less prepared than his homework speech. He spoke a little quickly in this second speech. Pausing between main ideas would help him retain his energy while making the delivery clearer and steadier.",
+              "zh": "✓ Kieran 在作业演讲的第一次尝试中有一次短暂卡顿，但第二次尝试时顺利调整过来，能够记住所想表达的全部内容。他的小停顿给人的感觉是在回忆准备好的想法，而不是机械地背诵词句。\n\n→ 下一步是加强专注，并让表达更顺畅。周围发生的事情偶尔会把他的注意力带走。练习从头到尾完整讲一遍，把注意力放在自己要传达的信息上，并把容易犹豫的地方练顺，会让演讲更成熟，也更容易听懂。\n\n在第二篇演讲中，Kieran 展现了力量感和充沛的能量，也完成了整次表达，这一点值得肯定；不过，相比作业演讲，这一篇给人的准备感少一些。第二篇的语速有些快。在主要想法之间稍作停顿，能帮助他保留能量，同时把内容表达得更清楚、更稳定。"
+            },
+            {
+              "id": "sean",
+              "name": "Sean",
+              "en": "✓ Sean brought a strong, loud voice and good stage presence to his presentation. He had memorized his speech and also included some clapping.\n\n→ His gestures and emotional delivery were sometimes overexaggerated. The next focus is more precise gestures and greater vocal variety: choose movements that support specific words or ideas, and move between louder and softer moments instead of keeping every emotion at maximum intensity. This would let the audience hear his softer side too and help his expression feel more natural and authentic.",
+              "zh": "✓ Sean 的声音有力量、音量充足，也有良好的台风。他记住了自己的演讲内容，并加入了一些拍手动作。\n\n→ 他的手势和情绪表达有时稍显夸张。下一步是让手势更准确，并增加声音的变化：选择能支持具体词句或想法的动作，在响亮和柔和的表达之间切换，而不是把每一种情绪都表现到最大程度。这样能让听众也听到他柔和的一面，使表达更自然、更真诚。"
+            },
+            {
+              "id": "ariel",
+              "name": "Ariel",
+              "en": "✓ Ariel delivered her speech with good overall presence and steady pacing. She also incorporated some of the challenge elements into her presentation.\n\n→ The next focus is clear pronunciation and familiarity with her words. She had difficulty pronouncing some words, so it would help to review their meanings and practise them in full sentences, choosing wording she can comfortably explain and say aloud. The practical priority is ensuring she can explain and comfortably say every part of her speech.",
+              "zh": "✓ Ariel 展现了良好的整体台风和稳定的语速，也把部分挑战元素加入了演讲。\n\n→ 下一步是让发音更清楚，并更加熟悉自己使用的词句。有些词她读起来比较困难，因此可以先确认词义，再放到完整句子里练习，并选择自己能够解释清楚、说得自然的表达。实际练习的重点是：确保演讲中的每一部分，她都能理解、解释，并舒适地说出来。"
+            },
+            {
+              "id": "royce",
+              "name": "Royce",
+              "en": "✓ Royce gave a good overall presentation. Although he said he could not remember his speech, he still presented with plenty of enthusiasm and energy.\n\n→ The next focus is more selective emphasis. Strong emotion on nearly every word and repeated vocal ups and downs can make the delivery feel predictable, so important moments lose their impact. He should use a calmer, conversational tone for supporting details and save stronger emotion and volume for key points. That contrast would make his speech more comfortable to listen to and give his strongest moments more impact.\n\n→ His content needs more specific detail. Adding a concrete example or fact to explain each main point would give the audience a clearer picture and leave a deeper impression.\n\n→ His enthusiasm can also feel overwhelming when nearly every word receives strong emotion. Aim for a softer, more relaxed tone through much of the speech, saving stronger volume and vocal changes for key moments. This would make him more comfortable to listen to and allow his emphasis to carry more impact.",
+              "zh": "✓ Royce 整体展示得不错。虽然他说自己不记得演讲内容了，但仍然带着充足的热情和能量完成表达。\n\n→ 下一步是更有选择地强调重点。几乎每个词都投入很强的情绪、声音不断起伏，会让表达变得容易预测，真正重要的部分反而失去力量。他可以在补充细节时使用平静、像交谈一样的语气，把更强的情绪和音量留给关键内容。这种对比会让演讲听起来更舒服，也让最重要的时刻更有感染力。\n\n→ 内容还需要更多具体细节。每个主要观点后加入一个具体例子或事实，能够让听众形成更清楚的画面，并留下更深的印象。\n\n→ 当几乎每个词都带着强烈情绪时，他的热情有时也会让听众感到有些应接不暇。大部分内容可以说得更柔和、更放松，把更强的音量和声音变化留给关键时刻。这样既更容易让人听下去，也能让强调真正发挥作用。"
+            }
+          ],
+          "classContent": {
+            "en": "We reviewed the previous homework: introducing a recent news event and sharing a personal perspective. After a warm-up game, we practised linking current events to our own experiences.\n\nThe discussion briefly touched on news such as the China–Nepal mudslide before focusing on the White House video examples discussed in class, which used game imagery to communicate political messages. We used these as a starting point for considering appropriateness, fairness, and public expectations. Would people view the same content differently if a YouTube creator, school, or government published it?\n\nThe game examples described during the discussion included a Tetris-style border-wall example, a boxer clearing rubbish, and a Snake-style immigration-detention example. We also considered how people are viewed when their actions fall outside the expectations associated with their role or public image.\n\nStudents explored their own responses without being expected to reach one particular judgment. They practised connecting the issue to something in their own lives and developing cause → effect → impact → solution. They then delivered an impromptu version, working on their personal voice and connection with the audience.",
+            "zh": "我们先回顾了上一次的作业：介绍一则近期新闻，并分享自己的观点。热身游戏后，我们练习把时事与个人经历连接起来。\n\n讨论先简要提到了中国—尼泊尔泥石流等新闻，再重点讨论课堂中提到的白宫视频例子：这些例子使用游戏画面来传达政治信息。我们把它们作为思考“是否合适”“是否公平”以及“公众期待”的切入点。同样的内容，如果由 YouTube 创作者、学校或政府发布，人们的看法会不会不同？\n\n课堂中描述的游戏例子包括类似俄罗斯方块的边境墙画面、拳击手清理垃圾的画面，以及类似贪吃蛇的移民拘留画面。我们也讨论了：当一个人的行为超出大家对其角色或公众形象的预期时，人们可能怎样看待这种行为。\n\n学生不需要得出某个统一的判断，而是探索自己的回应。他们练习把议题联系到自己的生活，并逐步展开“原因 → 结果 → 影响 → 解决方案”。随后，学生进行了即兴版本的演讲，练习形成有个人特色的表达方式，并与听众建立联系。"
+          },
+          "homework": {
+            "en": "Write out and develop the speech practised in class, ready to present next lesson.\n\n1. Briefly introduce the White House video example discussed in class.\n2. Link it to your experience: “This made me think about...”\n3. Describe a situation from your own life where you questioned whether something was appropriate or fair.\n4. Explain what happened, how you felt, and what it made you think.\n5. Explore why it happens, its effects and impact, and possible solutions.\n6. Finish with a clear personal message.\n\nKeep the news introduction brief so there is room for your own experience, specific details, and perspective.",
+            "zh": "把课堂上练习过的演讲写出来，并进一步充实内容，准备在下节课展示。\n\n1. 简要介绍课堂中讨论的白宫视频例子。\n2. 把它连接到自己的经历，例如：“This made me think about…”（这让我想到……）。\n3. 描述自己生活中一个让你思考“这样做是否合适或公平”的情境。\n4. 说明发生了什么、你有什么感受，以及这件事让你想到什么。\n5. 探讨为什么会发生、带来了什么结果和影响，以及可能的解决办法。\n6. 用一个明确的个人观点或想传达的信息收尾。\n\n新闻背景的介绍要简短，把更多空间留给自己的经历、具体细节和观点。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tue-afternoon",
+      "label": {
+        "en": "Tuesday · 15:30–17:30",
+        "zh": "周二 · 15:30–17:30"
+      },
+      "sessions": [
+        {
+          "id": "tue-afternoon-2026-09-08",
+          "date": "2026-09-08",
+          "time": "15:30–17:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "alyssa",
+              "name": "Alyssa",
+              "en": "✓ Alyssa had memorized her speech and showed good control in her delivery. She included specific information and details and presented with plenty of energy.\n\n→ The next step is to make her posture and gestures match that energy. Starting with an upright stance, facing the audience more directly, and keeping her hands a little higher when gesturing would give her a more polished speaking position and help her enthusiasm come through more clearly.",
+              "zh": "✓ Alyssa 记住了自己的演讲，并在表达中展现了良好的控制力。她提供了具体信息和细节，展示时也有充足的能量。\n\n→ 下一步是让站姿和手势与这份能量相配合。从一个挺拔、稳定的起始站姿开始，更直接地面向听众，做手势时把手稍微抬高一些，能够让她的演讲姿态更成熟，也让热情更清楚地传达出来。"
+            },
+            {
+              "id": "ethan-liu",
+              "name": "Ethan Liu",
+              "en": "✓ Ethan’s delivery was conversational and easy to listen to. He gave detailed explanations, making his speech accessible to the audience.\n\n→ To strengthen his content, he should add more specific, evidence-based information. A concrete fact or fresh example supporting a main point would give the audience something new to learn and make his explanations more convincing and memorable.\n\n→ He used very few hand gestures. Simple movements, such as counting one, two, three on his fingers as he introduces each point, would help the audience follow his structure and add expression to his delivery.",
+              "zh": "✓ Ethan 的表达像与人交谈，自然、容易听进去。他给出了较详细的解释，让听众能够理解内容。\n\n→ 为了加强内容，他可以补充更具体、有依据的信息。用一个具体事实或新的例子来支持主要观点，能让听众学到新东西，也让解释更有说服力、更容易被记住。\n\n→ 他使用的手势很少。可以加入简单动作，例如介绍各个要点时，用手指数出一、二、三，帮助听众看清内容结构，也让表达更有表现力。"
+            },
+            {
+              "id": "ethan-jia",
+              "name": "Ethan Jia",
+              "en": "✓ Ethan brought positive energy and good pacing to a speech that felt complete and concise. His content was good, and he showed vocal variety, including an enthusiastic “Yeah!” that added expression. I did not give him the three additional challenges this time, so his task had less added complexity.\n\n→ The next focus is clearer articulation in places. Taking care to pronounce each word fully, especially during energetic moments, would help his words stay clear while bringing out his enthusiasm.\n\n→ During listening time, Ethan was playing with a used food glove instead of attending to the speaker, and used food items remained on his table. He needs to clear away used items after eating and give the speaker his attention so he can learn from others’ presentations as well as his own.",
+              "zh": "✓ Ethan 带着积极的能量和良好的语速，完成了一篇完整、简洁的演讲。内容不错，声音也有变化，包括一句热情的“Yeah!”，为表达增添了表现力。这次我没有给他三个额外挑战，因此任务没有增加这一层复杂度。\n\n→ 下一步是在部分地方把咬字说得更清楚。尤其在情绪比较饱满的时候，注意把每个词完整地说出来，既能保留热情，也能让内容保持清晰。\n\n→ 在倾听时间，Ethan 玩起了用过的食物手套，没有把注意力放在发言者身上，桌面上也留着用餐后的物品。他需要在吃完后及时清理，并专注倾听发言者，这样不仅能从自己的演讲中学习，也能从同学的展示中获得收获。"
+            },
+            {
+              "id": "harry",
+              "name": "Harry",
+              "en": "✓ Harry spoke on stage with comfortable pacing and some confidence. His small hand gestures supported his delivery. Although he felt his speech was short, it was long enough, and overall he gave a very good performance.\n\n→ The next focus is a clearer conclusion. His ending could leave the audience unsure of the final point. Finishing with a brief summary or one clear message would help him close smoothly and give listeners something definite to take away.\n\n→ Harry also had used food items left on his table. Clearing them away after eating would help keep the shared classroom space tidy and ready for the lesson.",
+              "zh": "✓ Harry 上台时的语速让人听着舒服，也表现出了一定的自信。他的小手势为表达提供了支持。虽然他觉得自己的演讲有些短，但长度已经足够，整体表现很好。\n\n→ 下一步是把结尾说得更清楚。他的结尾可能让听众不太确定最后的重点是什么。用一个简短总结或一个清楚的信息结束，能够帮助他自然收尾，也让听众带走明确的收获。\n\n→ Harry 的桌面上也留着用餐后的物品。吃完后及时清理，有助于保持共用教室空间整洁，让桌面为接下来的学习做好准备。"
+            }
+          ],
+          "classContent": {
+            "en": "We reviewed the previous homework: introducing a recent news event and sharing a personal perspective. After a warm-up game, we practised linking current events to our own experiences.\n\nThe discussion briefly touched on news such as the China–Nepal mudslide before focusing on the White House video examples discussed in class, which used game imagery to communicate political messages. We used these as a starting point for considering appropriateness, fairness, and public expectations. Would people view the same content differently if a YouTube creator, school, or government published it?\n\nThe game examples described during the discussion included a Tetris-style border-wall example, a boxer clearing rubbish, and a Snake-style immigration-detention example. We also considered how people are viewed when their actions fall outside the expectations associated with their role or public image.\n\nStudents explored their own responses without being expected to reach one particular judgment. They practised connecting the issue to something in their own lives and developing cause → effect → impact → solution. They then delivered an impromptu version, working on their personal voice and connection with the audience.\n\nWe also discussed presenting even when not fully ready, using an impromptu response when necessary and gaining experience speaking under competition-like conditions. A competition date does not move because a speaker cannot remember everything, so students need practice continuing with what they can present.\n\nThe three additional challenges introduced on Monday for students with at least a semester of study were: avoid the word “I,” clap at important points, and finish with “Hooray!”",
+            "zh": "我们先回顾了上一次的作业：介绍一则近期新闻，并分享自己的观点。热身游戏后，我们练习把时事与个人经历连接起来。\n\n讨论先简要提到了中国—尼泊尔泥石流等新闻，再重点讨论课堂中提到的白宫视频例子：这些例子使用游戏画面来传达政治信息。我们把它们作为思考“是否合适”“是否公平”以及“公众期待”的切入点。同样的内容，如果由 YouTube 创作者、学校或政府发布，人们的看法会不会不同？\n\n课堂中描述的游戏例子包括类似俄罗斯方块的边境墙画面、拳击手清理垃圾的画面，以及类似贪吃蛇的移民拘留画面。我们也讨论了：当一个人的行为超出大家对其角色或公众形象的预期时，人们可能怎样看待这种行为。\n\n学生不需要得出某个统一的判断，而是探索自己的回应。他们练习把议题联系到自己的生活，并逐步展开“原因 → 结果 → 影响 → 解决方案”。随后，学生进行了即兴版本的演讲，练习形成有个人特色的表达方式，并与听众建立联系。\n\n我们也讨论了即使还没有完全准备好，仍然尝试表达的重要性；必要时可以即兴回应，积累类似比赛情境下的上台经验。比赛不会因为一位发言者记不住全部内容而改期，因此学生需要练习用自己能够表达的内容继续完成展示。\n\n周一为学习了至少一个学期的学生介绍了三个额外挑战：不说“I”、讲到重要内容时拍手，以及在结尾说“Hooray!”。"
+          },
+          "homework": {
+            "en": "Write out and develop the speech practised in class, ready to present next lesson.\n\n1. Briefly introduce the White House video example discussed in class.\n2. Link it to your experience: “This made me think about...”\n3. Describe a situation from your own life where you questioned whether something was appropriate or fair.\n4. Explain what happened, how you felt, and what it made you think.\n5. Explore why it happens, its effects and impact, and possible solutions.\n6. Finish with a clear personal message.\n\nKeep the news introduction brief so there is room for your own experience, specific details, and perspective.",
+            "zh": "把课堂上练习过的演讲写出来，并进一步充实内容，准备在下节课展示。\n\n1. 简要介绍课堂中讨论的白宫视频例子。\n2. 把它连接到自己的经历，例如：“This made me think about…”（这让我想到……）。\n3. 描述自己生活中一个让你思考“这样做是否合适或公平”的情境。\n4. 说明发生了什么、你有什么感受，以及这件事让你想到什么。\n5. 探讨为什么会发生、带来了什么结果和影响，以及可能的解决办法。\n6. 用一个明确的个人观点或想传达的信息收尾。\n\n新闻背景的介绍要简短，把更多空间留给自己的经历、具体细节和观点。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tue-later",
+      "label": {
+        "en": "Tuesday · 17:40–19:40",
+        "zh": "周二 · 17:40–19:40"
+      },
+      "sessions": [
+        {
+          "id": "tue-later-2026-09-08",
+          "date": "2026-09-08",
+          "time": "17:40–19:40",
+          "status": "held",
+          "students": [
+            {
+              "id": "nelson",
+              "name": "Nelson",
+              "en": "✓ Nelson was willing to come on stage and give his self-introduction despite feeling a little nervous. He shared some details about himself and stayed with the task, which was encouraging to see.\n\n→ His introduction was quite short, and he repeatedly linked ideas with “and.” The next focus is a simple, clear structure: choose a few things to share, finish each thought, and pause before the next idea. Adding a little detail to each point would make his introduction fuller and easier to follow.\n\n→ Later, Nelson had a burst of laughter that was difficult to stop. Practising a brief pause, taking a breath, and refocusing on the lesson would help him settle and rejoin the activity.",
+              "zh": "✓ Nelson 虽然看起来有一点紧张，但仍愿意上台进行自我介绍。他分享了一些关于自己的细节，并坚持完成了任务，这一点令人欣慰。\n\n→ 他的介绍比较短，也反复用“and”连接想法。下一步是建立简单、清楚的结构：选择几个想分享的内容，先把一个想法说完整，再停顿一下，进入下一个想法。每一点再补充一些细节，会让介绍更充实，也更容易听懂。\n\n→ 之后，Nelson 出现了一阵不太容易停下来的笑声。练习先短暂停顿、呼吸一下，再把注意力转回课堂，能够帮助他平静下来，重新参与活动。"
+            },
+            {
+              "id": "lyon",
+              "name": "Lyon",
+              "en": "✓ Lyon spoke with a clearly audible voice and good presence, although he appeared a little hesitant. His introduction was brief, and he kept his hands in his pockets.\n\n→ The next focus is open posture and more detail. Keeping his hands out of his pockets and adding a detail to each point would help his introduction feel more complete and make his body language match his strong voice.\n\n→ During class, Lyon had laughter that was difficult to stop and also played country music during the lesson. He needs to keep unrelated music off and practise pausing, settling, and returning his attention to the class so everyone can focus on the activity.",
+              "zh": "✓ Lyon 的声音清楚、音量足够，也有良好的台风，不过表达时看起来仍有一些犹豫。他的介绍比较简短，双手一直放在口袋里。\n\n→ 下一步是让说话姿态更舒展，并增加内容细节。把双手从口袋里拿出来，每个要点后再补充一个细节，能够让介绍更完整，也让身体语言与他有力量的声音相配合。\n\n→ 课堂中，Lyon 出现了不太容易停下来的笑声，也播放了乡村音乐。他需要关闭与课程无关的音乐，并练习暂停、平静下来，把注意力重新放回课堂，让大家都能专注于正在进行的活动。"
+            },
+            {
+              "id": "jayden",
+              "name": "Jayden",
+              "en": "✓ Jayden showed some confidence when introducing himself. His answer was still brief, with a similar speaking length to the other introductions.\n\n→ The next focus is expanding his ideas. After sharing a fact about himself, he can add a reason or an example. This would give his introduction more substance and help the audience get to know him better.",
+              "zh": "✓ Jayden 在自我介绍时表现出了一定的自信。他的回答仍然较简短，发言时长与前面的介绍相近。\n\n→ 下一步是把想法展开。分享一个关于自己的信息后，可以再加入一个理由或例子。这样能够让介绍更有内容，也帮助听众更了解他。"
+            }
+          ],
+          "classContent": {
+            "en": "We reviewed the previous homework: introducing a recent news event and sharing a personal perspective. After a warm-up game, we practised linking current events to our own experiences.\n\nThe discussion briefly touched on news such as the China–Nepal mudslide before focusing on the White House video examples discussed in class, which used game imagery to communicate political messages. We used these as a starting point for considering appropriateness, fairness, and public expectations. Would people view the same content differently if a YouTube creator, school, or government published it?\n\nThe game examples described during the discussion included a Tetris-style border-wall example, a boxer clearing rubbish, and a Snake-style immigration-detention example. We also considered how people are viewed when their actions fall outside the expectations associated with their role or public image.\n\nStudents explored their own responses without being expected to reach one particular judgment. They practised connecting the issue to something in their own lives and developing cause → effect → impact → solution. They then delivered an impromptu version, working on their personal voice and connection with the audience.\n\nAll three boys also gave brief self-introductions of similar length. The shared next step is to develop each answer with more detail so listeners can learn more about them.",
+            "zh": "我们先回顾了上一次的作业：介绍一则近期新闻，并分享自己的观点。热身游戏后，我们练习把时事与个人经历连接起来。\n\n讨论先简要提到了中国—尼泊尔泥石流等新闻，再重点讨论课堂中提到的白宫视频例子：这些例子使用游戏画面来传达政治信息。我们把它们作为思考“是否合适”“是否公平”以及“公众期待”的切入点。同样的内容，如果由 YouTube 创作者、学校或政府发布，人们的看法会不会不同？\n\n课堂中描述的游戏例子包括类似俄罗斯方块的边境墙画面、拳击手清理垃圾的画面，以及类似贪吃蛇的移民拘留画面。我们也讨论了：当一个人的行为超出大家对其角色或公众形象的预期时，人们可能怎样看待这种行为。\n\n学生不需要得出某个统一的判断，而是探索自己的回应。他们练习把议题联系到自己的生活，并逐步展开“原因 → 结果 → 影响 → 解决方案”。随后，学生进行了即兴版本的演讲，练习形成有个人特色的表达方式，并与听众建立联系。\n\n三位男生也进行了简短的自我介绍，发言时长相近。共同的下一步是用更多细节展开每个回答，让听众更了解他们。"
+          },
+          "homework": {
+            "en": "Write out and develop the speech practised in class, ready to present next lesson.\n\n1. Briefly introduce the White House video example discussed in class.\n2. Link it to your experience: “This made me think about...”\n3. Describe a situation from your own life where you questioned whether something was appropriate or fair.\n4. Explain what happened, how you felt, and what it made you think.\n5. Explore why it happens, its effects and impact, and possible solutions.\n6. Finish with a clear personal message.\n\nKeep the news introduction brief so there is room for your own experience, specific details, and perspective.",
+            "zh": "把课堂上练习过的演讲写出来，并进一步充实内容，准备在下节课展示。\n\n1. 简要介绍课堂中讨论的白宫视频例子。\n2. 把它连接到自己的经历，例如：“This made me think about…”（这让我想到……）。\n3. 描述自己生活中一个让你思考“这样做是否合适或公平”的情境。\n4. 说明发生了什么、你有什么感受，以及这件事让你想到什么。\n5. 探讨为什么会发生、带来了什么结果和影响，以及可能的解决办法。\n6. 用一个明确的个人观点或想传达的信息收尾。\n\n新闻背景的介绍要简短，把更多空间留给自己的经历、具体细节和观点。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "huaxin-summer-grade1-morning",
+      "label": {
+        "en": "Huaxin Grade 1 Summer Camp · 09:15–12:15",
+        "zh": "Huaxin 一年级夏令营 · 09:15–12:15"
+      },
+      "sessions": [
+        {
+          "id": "2026-08-26-huaxin-summer-grade1-morning",
+          "date": "2026-08-26",
+          "time": "09:15–12:15",
+          "status": "held",
+          "students": [
+            {
+              "id": "kiana",
+              "name": "Kiana",
+              "en": "Kiana showed strong persistence during her speech. She first tried presenting without her script and forgot part of it. After checking the paper once, she became more confident and tried again. She tried a third time. During her speech, she used a clear voice, spoke with a big smile, and appeared more comfortable onstage than she had in the past.\n\n! Improvement: Kiana can strengthen her independent recovery by pausing, thinking about her next idea, and continuing without immediately checking the script. This will help her maintain audience connection even when she forgets something.",
+              "zh": "Kiana 在演讲练习中表现出了坚持。第一次，她尝试不看稿子，但忘记了部分内容。看过一次稿子后，她更有信心，再次尝试，之后还进行了第三次尝试。她说话清楚，脸上带着大大的笑容，看起来比过去上台时更自在。\n\n! 改进方向：遇到忘词时，Kiana 可以先停一下，想一想接下来要表达的意思，再继续说，而不急着马上看稿。这能帮助她逐渐学会自己找回思路，即使忘记部分内容，也能保持与听众的联系。"
+            },
+            {
+              "id": "richard",
+              "name": "Richard",
+              "en": "Richard showed clear improvement across his three attempts. At first, he stood too close, relied on his paper, and spoke too quickly. When he presented without the paper on his third attempt, his delivery became slower, more natural, and more connected to the audience.\n\n! Improvement: Richard should rely less on the full script by presenting from memory or using only a few keywords. This will help him control his pace, maintain eye contact, and speak more naturally.",
+              "zh": "Richard 在三次尝试中有明显变化。刚开始，他站得太近，主要看着稿子，语速也偏快。第三次不看稿子时，他说得更慢、更自然，也更像是在直接与听众交流。\n\n! 改进方向：Richard 可以减少对完整稿子的依赖，尝试凭记忆表达，或只用几个关键词作提示。这样能帮助他控制语速、保持眼神交流，也让表达更加自然。"
+            },
+            {
+              "id": "jeremy",
+              "name": "Jeremy",
+              "en": "Jeremy was willing to express his own ideas and clearly explained the name he wanted to use. We also discussed adjusting some humorous details so that his content would remain suitable for the final presentation.\n\nAt first, Jeremy held his paper very tightly and found it difficult to move his hands naturally. After several attempts, he delivered the speech well and met the expected standard.\n\n! Improvement: Jeremy should loosen his grip on the paper and add one simple, purposeful hand gesture. This will help his body language appear more natural and allow him to communicate his ideas more confidently.",
+              "zh": "Jeremy 愿意表达自己的想法，也说明了自己希望使用的名字。我们讨论了如何调整部分幽默内容，让它更适合最后面向家长的展示。\n\n起初，Jeremy 把稿子握得很紧，双手不容易自然活动。经过几次尝试后，他能够较好地完成演讲，并达到了这次练习的要求。\n\n! 改进方向：Jeremy 可以先放松握稿子的手，再加入一个简单、有目的的手势。这能让肢体语言更自然，也帮助他更自信地表达自己的想法。"
+            },
+            {
+              "id": "merlin",
+              "name": "Merlin",
+              "en": "Merlin’s speech became stronger across his three attempts. His first attempt was too fast, his second was not clear enough, and by the third attempt he spoke much louder. This showed that he could adjust his delivery after receiving feedback.\n\n! Improvement: Merlin should combine a strong volume with clear pronunciation and a controlled pace. He can do this by completing each sentence clearly and then pausing briefly before continuing. This will make his speech easier to understand and help him hold the audience’s attention.",
+              "zh": "Merlin 在三次尝试中逐步调整了表达。第一次语速太快，第二次不够清楚，到第三次时，他的声音明显更响亮了。这说明他能够根据反馈调整自己的表达方式。\n\n! 改进方向：Merlin 接下来要把足够的音量、清楚的发音和稳定的语速结合起来。可以先把每个句子完整、清楚地说完，再稍作停顿后继续。这样会让演讲更容易听懂，也更能吸引听众的注意力。"
+            },
+            {
+              "id": "logan",
+              "name": "Logan",
+              "en": "Logan’s main focus is developing more natural pacing. At first, he left a similar pause between individual words, which made his speech sound less smooth. We want him to connect the words within each sentence and pause after the complete sentence instead.\n\nLogan also stood slightly too close and relied on his paper. Although he remembered one version, he chose to present material he did not remember as well. After several adjustments, however, his delivery became noticeably better.\n\n! Improvement: Logan should begin with the speech he remembers best, present it without the paper, and say each sentence smoothly before pausing. This will make his delivery sound more natural and allow the audience to focus on his ideas.",
+              "zh": "Logan 目前主要需要练习更自然的节奏。刚开始，他在单个词之间留下差不多长的停顿，让表达听起来不够连贯。我们希望他把一句话里的词连贯地说出来，再在完整的句子之后停顿。\n\nLogan 当时也站得稍近，并依赖手中的稿子。虽然他记住了其中一个版本，却选择讲自己记得没那么熟悉的内容。不过，经过几次调整后，他的表达有了明显改善。\n\n! 改进方向：Logan 可以先选自己最熟悉的那篇演讲，不看稿子练习，把每个句子连贯地说完后再停顿。这能让表达听起来更自然，也让听众更容易专注于他的想法。"
+            },
+            {
+              "id": "sofia",
+              "name": "Sofia",
+              "en": "Sofia began her first attempt with a louder voice and spoke with more confidence. During her second attempt, she was encouraged to increase her volume even further. This is a positive direction for her speaking development.\n\nSofia explained that she had memorized a different speech. She will present that version so we can see her overall presentation more clearly, including her volume, delivery, and audience connection.\n\n! Improvement: Sofia should present the speech she has memorized without the paper and maintain a strong, consistent volume from beginning to end. This will help her sound more confident and show the full strength of her presentation.",
+              "zh": "Sofia 第一次尝试时就能用较响亮的声音表达，也表现出了更多信心。第二次尝试时，我们鼓励她进一步提高音量。这是一个积极的练习方向。\n\nSofia 说自己已经记住了另一篇演讲。课堂上计划让她展示那一篇，以便更完整地观察她的音量、表达和与听众的联系。\n\n! 改进方向：Sofia 可以不看稿子，展示自己已经记住的那篇演讲，并从头到尾保持足够、稳定的音量。这样能让她听起来更有信心，也更完整地展现自己的演讲表现。"
+            }
+          ],
+          "classContent": {
+            "en": "Today’s main focus was the four vocal tools: Power, Pitch, Pace, and Pause.\n\n- Power refers to the strength and volume of the voice.\n- Pitch is how high or low the voice sounds.\n- Pace is the speed at which we speak.\n- Pause means using purposeful silence to separate ideas and create emphasis.\n\nThe students explored how voice actors change their voices when playing characters in video games and cartoons. We examined how changes in voice, tone, pitch, and pace can make different characters sound unique.\n\nWe also reviewed the students’ previous speeches, provided individual feedback, and asked them to present again so that we could see who had memorized their speech and how naturally they could deliver it without relying on the paper.\n\nDuring the dialogue activities, students practised playing different characters and tried to copy each character’s voice, tone, and hand gestures. They completed this through group practice, allowing them to explore how vocal and physical choices can make a character more believable.\n\nWe also completed warm-up exercises for the voice, self-awareness, and the body.",
+            "zh": "今天主要练习了声音表达的四个工具：Power、Pitch、Pace 和 Pause。\n\n• Power 指声音的力度和音量。\n• Pitch 指声音的高低。\n• Pace 指说话的速度。\n• Pause 指有目的的停顿，用来区分想法、突出重点。\n\n学生观察了配音演员在电子游戏和动画中如何改变声音来扮演不同角色。我们讨论了声音、语气、音高和语速的变化，怎样让不同角色听起来各有特点。\n\n我们也回顾了之前布置的演讲，逐一给予反馈，并让学生再次展示，以了解他们对内容的记忆情况，以及不依赖稿子时能否表达得更自然。\n\n在对话活动中，学生练习扮演不同角色，模仿角色的声音、语气和手势。大家通过小组练习，体会声音和肢体表达如何让角色更有表现力。\n\n课堂还进行了声音、自我觉察和身体热身。"
+          },
+          "homework": {
+            "en": "First priority: Students should spend their available practice time becoming more familiar with their final presentation. The goal is to get a clear grasp of the content so that the final delivery can become more natural and confident.\n\n2. If additional time is available, students should practise the dialogues, focusing on how to present two different characters or roles through changes in voice, tone, and body language.\n\n3. If time still remains, students can review the meaning and use of Power, Pitch, Pace, and Pause.",
+            "zh": "第一优先：根据自己可用的练习时间，先熟悉最后要展示的演讲。重点是掌握内容，让最后的表达逐渐更自然、更有信心。\n\n2. 如果还有时间，再练习课堂上的对话，通过声音、语气和肢体语言的变化来呈现两个不同的角色。\n\n3. 如果时间允许，可以继续复习 Power、Pitch、Pace 和 Pause 的含义与用法。"
+          }
         }
       ]
     }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-13T10:38:45.769883+00:00",
+  "updatedAt": "2026-09-13T10:41:26Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -509,6 +509,188 @@
             {
               "name": "Celia",
               "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-13&student=celia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mon-afternoon",
+      "sessions": [
+        {
+          "id": "mon-afternoon-2026-09-07",
+          "date": "2026-09-07",
+          "time": "15:30–17:30",
+          "classContent": [
+            "We reviewed the previous homework: introducing a recent news event and sharing a personal perspective. After a warm-up game, we practised linking current events to our own experiences.\n\nThe discussion briefly touched on news such as the China–Nepal mudslide before focusing on the White House video examples discussed in class, which used game imagery to communicate political messages. We used these as a starting point for considering appropriateness, fairness, and public expectations. Would people view the same content differently if a YouTube creator, school, or government published it?\n\nThe game examples described during the discussion included a Tetris-style border-wall example, a boxer clearing rubbish, and a Snake-style immigration-detention example. We also considered how people are viewed when their actions fall outside the expectations associated with their role or public image.\n\nStudents explored their own responses without being expected to reach one particular judgment. They practised connecting the issue to something in their own lives and developing cause → effect → impact → solution. They then delivered an impromptu version, working on their personal voice and connection with the audience."
+          ],
+          "homework": {
+            "title": "Write out and develop the speech practised in class, ready to present next lesson.",
+            "steps": [
+              "Briefly introduce the White House video example discussed in class.",
+              "Link it to your experience: “This made me think about...”",
+              "Describe a situation from your own life where you questioned whether something was appropriate or fair.",
+              "Explain what happened, how you felt, and what it made you think.",
+              "Explore why it happens, its effects and impact, and possible solutions.",
+              "Finish with a clear personal message."
+            ],
+            "prepareFor": "Deliver and present the developed speech in the next class.",
+            "note": "Keep the news introduction brief so there is room for your own experience, specific details, and perspective."
+          },
+          "students": [
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-07&student=william"
+            },
+            {
+              "name": "Cynthia",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-07&student=cynthia"
+            },
+            {
+              "name": "Kieran",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-07&student=kieran"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-07&student=sean"
+            },
+            {
+              "name": "Ariel",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-07&student=ariel"
+            },
+            {
+              "name": "Royce",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-07&student=royce"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tue-afternoon",
+      "sessions": [
+        {
+          "id": "tue-afternoon-2026-09-08",
+          "date": "2026-09-08",
+          "time": "15:30–17:30",
+          "classContent": [
+            "We reviewed the previous homework: introducing a recent news event and sharing a personal perspective. After a warm-up game, we practised linking current events to our own experiences.\n\nThe discussion briefly touched on news such as the China–Nepal mudslide before focusing on the White House video examples discussed in class, which used game imagery to communicate political messages. We used these as a starting point for considering appropriateness, fairness, and public expectations. Would people view the same content differently if a YouTube creator, school, or government published it?\n\nThe game examples described during the discussion included a Tetris-style border-wall example, a boxer clearing rubbish, and a Snake-style immigration-detention example. We also considered how people are viewed when their actions fall outside the expectations associated with their role or public image.\n\nStudents explored their own responses without being expected to reach one particular judgment. They practised connecting the issue to something in their own lives and developing cause → effect → impact → solution. They then delivered an impromptu version, working on their personal voice and connection with the audience.\n\nWe also discussed presenting even when not fully ready, using an impromptu response when necessary and gaining experience speaking under competition-like conditions. A competition date does not move because a speaker cannot remember everything, so students need practice continuing with what they can present.\n\nThe three additional challenges introduced on Monday for students with at least a semester of study were: avoid the word “I,” clap at important points, and finish with “Hooray!”"
+          ],
+          "homework": {
+            "title": "Write out and develop the speech practised in class, ready to present next lesson.",
+            "steps": [
+              "Briefly introduce the White House video example discussed in class.",
+              "Link it to your experience: “This made me think about...”",
+              "Describe a situation from your own life where you questioned whether something was appropriate or fair.",
+              "Explain what happened, how you felt, and what it made you think.",
+              "Explore why it happens, its effects and impact, and possible solutions.",
+              "Finish with a clear personal message."
+            ],
+            "prepareFor": "Deliver and present the developed speech in the next class.",
+            "note": "Keep the news introduction brief so there is room for your own experience, specific details, and perspective."
+          },
+          "students": [
+            {
+              "name": "Alyssa",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-08&student=alyssa"
+            },
+            {
+              "name": "Ethan Liu",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-08&student=ethan-liu"
+            },
+            {
+              "name": "Ethan Jia",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-08&student=ethan-jia"
+            },
+            {
+              "name": "Harry",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-08&student=harry"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tue-later",
+      "sessions": [
+        {
+          "id": "tue-later-2026-09-08",
+          "date": "2026-09-08",
+          "time": "17:40–19:40",
+          "classContent": [
+            "We reviewed the previous homework: introducing a recent news event and sharing a personal perspective. After a warm-up game, we practised linking current events to our own experiences.\n\nThe discussion briefly touched on news such as the China–Nepal mudslide before focusing on the White House video examples discussed in class, which used game imagery to communicate political messages. We used these as a starting point for considering appropriateness, fairness, and public expectations. Would people view the same content differently if a YouTube creator, school, or government published it?\n\nThe game examples described during the discussion included a Tetris-style border-wall example, a boxer clearing rubbish, and a Snake-style immigration-detention example. We also considered how people are viewed when their actions fall outside the expectations associated with their role or public image.\n\nStudents explored their own responses without being expected to reach one particular judgment. They practised connecting the issue to something in their own lives and developing cause → effect → impact → solution. They then delivered an impromptu version, working on their personal voice and connection with the audience.\n\nAll three boys also gave brief self-introductions of similar length. The shared next step is to develop each answer with more detail so listeners can learn more about them."
+          ],
+          "homework": {
+            "title": "Write out and develop the speech practised in class, ready to present next lesson.",
+            "steps": [
+              "Briefly introduce the White House video example discussed in class.",
+              "Link it to your experience: “This made me think about...”",
+              "Describe a situation from your own life where you questioned whether something was appropriate or fair.",
+              "Explain what happened, how you felt, and what it made you think.",
+              "Explore why it happens, its effects and impact, and possible solutions.",
+              "Finish with a clear personal message."
+            ],
+            "prepareFor": "Deliver and present the developed speech in the next class.",
+            "note": "Keep the news introduction brief so there is room for your own experience, specific details, and perspective."
+          },
+          "students": [
+            {
+              "name": "Nelson",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-09-08&student=nelson"
+            },
+            {
+              "name": "Lyon",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-09-08&student=lyon"
+            },
+            {
+              "name": "Jayden",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-09-08&student=jayden"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "huaxin-summer-grade1-morning",
+      "sessions": [
+        {
+          "id": "2026-08-26-huaxin-summer-grade1-morning",
+          "date": "2026-08-26",
+          "time": "09:15–12:15",
+          "classContent": [
+            "Today’s main focus was the four vocal tools: Power, Pitch, Pace, and Pause.\n\n- Power refers to the strength and volume of the voice.\n- Pitch is how high or low the voice sounds.\n- Pace is the speed at which we speak.\n- Pause means using purposeful silence to separate ideas and create emphasis.\n\nThe students explored how voice actors change their voices when playing characters in video games and cartoons. We examined how changes in voice, tone, pitch, and pace can make different characters sound unique.\n\nWe also reviewed the students’ previous speeches, provided individual feedback, and asked them to present again so that we could see who had memorized their speech and how naturally they could deliver it without relying on the paper.\n\nDuring the dialogue activities, students practised playing different characters and tried to copy each character’s voice, tone, and hand gestures. They completed this through group practice, allowing them to explore how vocal and physical choices can make a character more believable.\n\nWe also completed warm-up exercises for the voice, self-awareness, and the body."
+          ],
+          "homework": {
+            "title": "Recorded homework",
+            "steps": [
+              "First priority: Students should spend their available practice time becoming more familiar with their final presentation. The goal is to get a clear grasp of the content so that the final delivery can become more natural and confident.\n\n2. If additional time is available, students should practise the dialogues, focusing on how to present two different characters or roles through changes in voice, tone, and body language.\n\n3. If time still remains, students can review the meaning and use of Power, Pitch, Pace, and Pause."
+            ],
+            "prepareFor": "Follow the recorded assignment and presentation preparation below."
+          },
+          "students": [
+            {
+              "name": "Kiana",
+              "feedbackUrl": "/fb/?class=huaxin-summer-grade1-morning&date=2026-08-26&student=kiana"
+            },
+            {
+              "name": "Richard",
+              "feedbackUrl": "/fb/?class=huaxin-summer-grade1-morning&date=2026-08-26&student=richard"
+            },
+            {
+              "name": "Jeremy",
+              "feedbackUrl": "/fb/?class=huaxin-summer-grade1-morning&date=2026-08-26&student=jeremy"
+            },
+            {
+              "name": "Merlin",
+              "feedbackUrl": "/fb/?class=huaxin-summer-grade1-morning&date=2026-08-26&student=merlin"
+            },
+            {
+              "name": "Logan",
+              "feedbackUrl": "/fb/?class=huaxin-summer-grade1-morning&date=2026-08-26&student=logan"
+            },
+            {
+              "name": "Sofia",
+              "feedbackUrl": "/fb/?class=huaxin-summer-grade1-morning&date=2026-08-26&student=sofia"
             }
           ]
         }

@@ -47,7 +47,7 @@ test('latest fourteen-day view handles Shanghai midnight and hides future sessio
   assert.equal(shanghaiDate(new Date('2026-09-12T16:00:00Z')),'2026-09-13');
   const windows=weekWindows(data,'2026-09-13');
   assert.deepEqual(windows[0],{id:'0',start:'2026-08-31',end:'2026-09-13'});
-  assert.deepEqual(windows.at(-1),{id:'all',start:'2026-09-05',end:'2026-09-13'});
+  assert.deepEqual(windows.at(-1),{id:'all',start:'2026-08-26',end:'2026-09-13'});
   assert.equal(newestClass(data,'2026-09-13'),'sun-1500');
   assert.equal(newestClass(data,'2026-09-12'),'sat-introductory');
   const saturday=data.classes.find(g=>g.id==='sat-original-oratory');
