@@ -75,4 +75,22 @@ assert.equal(
 );
 assert.equal(sanitizeCalendarCell("1\nAll day Thailand (Planned)"), "1\nUnavailable");
 assert.equal(sanitizeCalendarCell("25\nHoliday"), "25\nHoliday");
+const holidayLesson = sanitizeCalendarCell("6\nHoliday\n20:00-21:00 Yilan Online 1-1");
+assert.equal(holidayLesson, "6\nHoliday\n20:00–21:00 · Yilan Online 1-1");
+const holidaySchedule = (value) => ({
+  privacyMode: publicSchedule.privacyMode,
+  sheets: [{
+    title: "October 2026",
+    columns: Array.from({ length: 7 }, () => ({ width: 120 })),
+    rows: [
+      ["October 2026", "", "", "", "", "", ""],
+      ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      ["", "", value, "", "", "", ""],
+    ].map((row) => ({ cells: row.map((value) => ({ value })) })),
+  }],
+});
+assert.doesNotThrow(() => assertCalendarDisplayPublicSchedule(holidaySchedule(holidayLesson)));
+for (const detail of ["Private note", "20:00–21:00 · contact@example.com", "20:00–21:00 · https://example.com", "20:00–21:00 · +86 138 0013 8000"]) {
+  assert.throws(() => assertCalendarDisplayPublicSchedule(holidaySchedule(`6\nHoliday\n${detail}`)));
+}
 console.log("Calendar Display schedule privacy check passed.");

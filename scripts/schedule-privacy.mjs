@@ -261,7 +261,7 @@ export function assertCalendarDisplayPublicScheduleSheet(sheet) {
         );
       const invalidStatusDetails =
         (!status && extra.length > 0) ||
-        (status === "Holiday" && extra.length > 0) ||
+        (status === "Holiday" && invalidLimitedDetails) ||
         (status === "Unavailable" && invalidUnavailableDetails) ||
         (status === "Limited availability" && invalidLimitedDetails) ||
         (status === "Online available" && invalidOnlineDetails);
