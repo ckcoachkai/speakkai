@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-14T07:58:45.530Z",
+  "updatedAt": "2026-09-14T18:41:00+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -582,6 +582,49 @@
             {
               "name": "Royce",
               "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-07&student=royce"
+            }
+          ]
+        },
+        {
+          "id": "mon-afternoon-2026-09-14",
+          "date": "2026-09-14",
+          "time": "15:30–17:30",
+          "classContent": [
+            "Students presented prepared speeches that used a current event as a starting point for a personal experience. Coaching focused on measured wording about the reference event, a clear transition into the speaker’s own story, specific details and emotions, and an ending that returns to the main message. Students also received individual guidance on organization, vocal variety, gestures and audience connection.\n\nStudents worked in pairs to prepare a speech about AI superintelligence, its potential risks, and regulation. The discussion prompt presented a warning attributed to AI industry leaders and employees: that unregulated superintelligence could threaten humanity in the coming years. Students were asked to examine this claim and develop their own responses.\n\nEach pair needed to divide speaking responsibilities and address four objectives:\n\n◆ Explain the prompt: Clearly introduce the claim and the concern it raises.\n◆ Share a position: Explain what they think about the claim and support their opinion with reasons.\n◆ Develop a hypothetical scenario: Describe a possible danger posed by AI, explaining how it might arise and who could be affected. Distinguish imagined possibilities from established facts.\n◆ Propose solutions: Suggest practical ways to address the risk, including actions children can take and responsibilities adults should have.\n\nKey learning focus → Move beyond broad statements such as “adults should fix this.” Students were encouraged to consider what they themselves could realistically do, while explaining where action from adults is needed. The activity combined teamwork, clear explanations, reasoned opinions, and practical problem-solving."
+          ],
+          "homework": {
+            "title": "Write and rehearse the paired AI speech",
+            "steps": [
+              "Write out the speech developed from the paired AI-superintelligence activity, with speaking responsibilities clearly divided.",
+              "Include the four parts practised in class: explain the prompt, share a reasoned position, describe a hypothetical risk scenario, and propose solutions. Include what children can do and where adults need to act.",
+              "Practise the speech aloud and prepare to present it in the next class."
+            ],
+            "prepareFor": "Present in the next class."
+          },
+          "students": [
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-14&student=william"
+            },
+            {
+              "name": "Cynthia",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-14&student=cynthia"
+            },
+            {
+              "name": "Kiran",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-14&student=kieran"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-14&student=sean"
+            },
+            {
+              "name": "Ariel",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-14&student=ariel"
+            },
+            {
+              "name": "Royce",
+              "feedbackUrl": null
             }
           ]
         }
