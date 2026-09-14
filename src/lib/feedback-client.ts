@@ -20,14 +20,17 @@ const fallback=dialog.querySelector('textarea')!;
 let language:FeedbackLanguage='en';
 try {if(localStorage.getItem('speakkai-feedback-language')==='zh')language='zh';}catch{}
 let selectedClass='all', selectedWeek='0', selectedDate='', busy=false, manualRefreshRequested=false;
-let lastPayload='', lastCopyButton:HTMLButtonElement|null=null;
-const words={en:{classContent:'Class content',homework:'Homework',title:'Student feedback',class:'Class',all:'All classes',week:'Dates',latest:'Latest 14 days',older:'← Earlier',newer:'Later →',refresh:'Refresh',copy:'Copy',missing:'No individual feedback recorded for this class.',cancelled:'Class cancelled.',empty:'No feedback recorded for this class in this date range.',copied:'Copied',failed:'Could not check for updates. The last loaded feedback is still shown.',updated:'Showing the latest published feedback.',fallbackTitle:'Copy feedback',fallbackHelp:'Clipboard access was unavailable. The text is selected below; press Ctrl+C or use your device’s copy command.',done:'Done'},zh:{classContent:'课堂内容',homework:'课后作业',title:'学生课堂反馈',class:'班级',all:'全部班级',week:'日期范围',latest:'最近14天',older:'← 更早',newer:'更近 →',refresh:'刷新',copy:'复制',missing:'本次课堂暂无该学生的个人反馈记录。',cancelled:'本次课程已取消。',empty:'该班级在此日期范围内暂无反馈记录。',copied:'已复制',failed:'暂时无法检查更新，仍显示上次载入的反馈。',updated:'当前显示最新发布的反馈。',fallbackTitle:'复制反馈',fallbackHelp:'暂时无法使用剪贴板。下方文字已选中，请按 Ctrl+C 或使用设备的复制功能。',done:'完成'}};
+let lastRenderedDate='', lastPayload='', lastCopyButton:HTMLButtonElement|null=null;
+const words={en:{classContent:'Class content',homework:'Homework',title:'Student feedback',class:'Class',all:'All classes',week:'Dates',latest:'This week',older:'← Earlier',newer:'Later →',refresh:'Refresh',copy:'Copy',missing:'No individual feedback recorded for this class.',cancelled:'Class cancelled.',empty:'No feedback recorded for this class in this date range.',copied:'Copied',failed:'Could not check for updates. The last loaded feedback is still shown.',updated:'Showing the latest published feedback.',fallbackTitle:'Copy feedback',fallbackHelp:'Clipboard access was unavailable. The text is selected below; press Ctrl+C or use your device’s copy command.',done:'Done'},zh:{classContent:'课堂内容',homework:'课后作业',title:'学生课堂反馈',class:'班级',all:'全部班级',week:'日期范围',latest:'本周',older:'← 更早',newer:'更近 →',refresh:'刷新',copy:'复制',missing:'本次课堂暂无该学生的个人反馈记录。',cancelled:'本次课程已取消。',empty:'该班级在此日期范围内暂无反馈记录。',copied:'已复制',failed:'暂时无法检查更新，仍显示上次载入的反馈。',updated:'当前显示最新发布的反馈。',fallbackTitle:'复制反馈',fallbackHelp:'暂时无法使用剪贴板。下方文字已选中，请按 Ctrl+C 或使用设备的复制功能。',done:'完成'}};
 function el<K extends keyof HTMLElementTagNameMap>(tag:K,text='',className=''):HTMLElementTagNameMap[K]{const n=document.createElement(tag);n.textContent=text;if(className)n.className=className;return n;}
 function applyLink(){const params=new URLSearchParams(location.search),id=params.get('class'),date=params.get('date');selectedClass=id&&[...data.classes,...curricula.classes].some(g=>g.id===id)?id:'all';selectedDate='';selectedWeek=params.get('week')||'0';if(date&&date<=shanghaiDate()){const window=weekWindows(data).find(w=>date>=w.start&&date<=w.end);if(window){selectedWeek=window.id;selectedDate=date;}}}
 function syncLink(){const params=new URLSearchParams();if(selectedClass!=='all')params.set('class',selectedClass);if(selectedDate)params.set('date',selectedDate);else if(selectedWeek!=='0')params.set('week',selectedWeek);history.replaceState(null,'',location.pathname+(params.size?'?'+params:''));}
 function windowChoices(){return weekWindows(data);}
 function render(){
-  const text=words[language], windows=windowChoices();
+  const today=shanghaiDate();
+  lastRenderedDate=today;
+  const text=words[language], windows=weekWindows(data,today);
+  if(selectedDate){const datedWindow=windows.find(w=>selectedDate>=w.start&&selectedDate<=w.end);if(datedWindow)selectedWeek=datedWindow.id;}
   if(selectedClass!=='all'&&![...data.classes,...curricula.classes].some(g=>g.id===selectedClass))selectedClass='all';
   if(!windows.some(w=>w.id===selectedWeek))selectedWeek='0';
   const current=windows.find(w=>w.id===selectedWeek)!;
@@ -55,7 +58,7 @@ function render(){
     stats.append(el('span',`${entries.length} ${zh?'节课':'classes'}`),el('span',`${counts.filter(s=>s.state==='complete').length} ${zh?'已完整记录':'complete'}`),el('span',`${counts.filter(s=>s.state==='missing').length} ${zh?'信息待补充':'need information'}`));
     fragment.append(stats,el('p',zh?'状态表示报告是否完整，不代表学生表现。缺失作业信息不代表学生未完成作业。':'Status describes report completeness, not student performance. Missing homework information does not mean a student missed homework.','overview-help'));
     const grid=el('div','','overview-grid');
-    for(let day=current.end;day>=current.start;day=addDays(day,-1)){
+    for(let day=current.start;day<=current.end;day=addDays(day,1)){
       const dayEntries=entries.filter(entry=>entry.session.date===day);
       grid.append(el('h2',formatDate(day,language),'timeline-date'));
       const dayGrid=el('div','','day-class-grid');
@@ -121,7 +124,7 @@ classPicker.addEventListener('change',()=>{selectedClass=classPicker.value;selec
 weekPicker.addEventListener('change',()=>{selectedWeek=weekPicker.value;selectedDate='';syncLink();status.textContent='';render();});
 for(const [button,direction] of [[older,1],[newer,-1]] as const)button.addEventListener('click',()=>{const options=windowChoices(),index=options.findIndex(w=>w.id===selectedWeek);if(options[index+direction])selectedWeek=options[index+direction].id;selectedDate='';syncLink();status.textContent='';render();});
 document.querySelectorAll<HTMLButtonElement>('[data-language]').forEach(button=>button.addEventListener('click',()=>{language=button.dataset.language==='zh'?'zh':'en';try{localStorage.setItem('speakkai-feedback-language',language);}catch{}status.textContent='';render();}));
-async function refresh(manual=false){manualRefreshRequested ||= manual;if(busy)return;busy=true;const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);try{const response=await fetch('/data/feedback.json',{cache:'no-store',signal:controller.signal});if(!response.ok)throw Error('Unavailable');const next:FeedbackDocument=validateFeedback(await response.json());const fingerprint=JSON.stringify(next)+shanghaiDate();if(fingerprint!==lastPayload){data=next;render();lastPayload=fingerprint;}status.textContent=manualRefreshRequested?words[language].updated:'';}catch{status.textContent=words[language].failed;}finally{clearTimeout(timeout);busy=false;manualRefreshRequested=false;}}
+async function refresh(manual=false){manualRefreshRequested ||= manual;if(lastRenderedDate!==shanghaiDate())render();if(busy)return;busy=true;const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);try{const response=await fetch('/data/feedback.json',{cache:'no-store',signal:controller.signal});if(!response.ok)throw Error('Unavailable');const next:FeedbackDocument=validateFeedback(await response.json());const fingerprint=JSON.stringify(next)+shanghaiDate();if(fingerprint!==lastPayload){data=next;render();lastPayload=fingerprint;}status.textContent=manualRefreshRequested?words[language].updated:'';}catch{status.textContent=words[language].failed;}finally{clearTimeout(timeout);busy=false;manualRefreshRequested=false;}}
 applyLink();render();
 const requestedStudent=new URLSearchParams(location.search).get('student');
 if(requestedStudent){const target=[...content.querySelectorAll<HTMLElement>('article')].find(card=>card.id.endsWith('-'+requestedStudent));target?.scrollIntoView({block:'center'});}

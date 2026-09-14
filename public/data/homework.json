@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-13T11:10:34.506651+00:00",
+  "updatedAt": "2026-09-14T07:58:45.530Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -568,7 +568,7 @@
               "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-07&student=cynthia"
             },
             {
-              "name": "Kieran",
+              "name": "Kiran",
               "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-07&student=kieran"
             },
             {

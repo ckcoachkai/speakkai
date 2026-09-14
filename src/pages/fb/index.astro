@@ -2,12 +2,13 @@
 import SpatialSiteHeader from '../../components/SpatialSiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import data from '../../../public/data/feedback.json';
-import {validateFeedback,weekWindows,sessionsInWindow,formatDate,sessionCompleteness} from '../../lib/feedback.mjs';
+import {validateFeedback,weekWindows,sessionsInWindow,formatDate,sessionCompleteness,addDays,shanghaiDate} from '../../lib/feedback.mjs';
 import type {FeedbackDocument,FeedbackSession,FeedbackClass} from '../../lib/feedback-types';
 validateFeedback(data);
 const initial=data as FeedbackDocument;
 const windows=weekWindows(data), current=windows[0];
 const selected='all';
+const currentDays=Array.from({length:7},(_,index)=>addDays(current.start,index));
 ---
 <!doctype html>
 <html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="robots" content="noindex,nofollow"/><meta name="description" content="SpeakKai student feedback, in English and Chinese, organised by class and week."/><link rel="canonical" href="https://speakkai.com/fb/"/><link rel="icon" href="/favicon.svg"/><title>Student feedback | SpeakKai</title></head>
@@ -17,17 +18,20 @@ const selected='all';
   <p id="fb-intro">Choose a class to see its lesson, homework and individual feedback.</p>
   <div class="fb-filters">
     <label><span id="class-label">Class</span><select id="fb-class"><option value="all">All classes</option>{initial.classes.map(group=><option value={group.id} selected={group.id===selected}>{group.label.en}</option>)}</select></label>
-    <label><span id="week-label">Dates</span><select id="fb-week">{windows.map(window=><option value={window.id}>{window.id==='all'?'All history':`${window.id==='0'?'Latest 14 days · ':''}${formatDate(window.start)} – ${formatDate(window.end)}`}</option>)}</select></label>
+    <label><span id="week-label">Dates</span><select id="fb-week">{windows.map(window=><option value={window.id}>{window.id==='all'?'All history':`${window.id==='0'?'This week · ':''}${formatDate(window.start)} – ${formatDate(window.end)}`}</option>)}</select></label>
     <div class="week-buttons"><button type="button" id="fb-older" disabled={windows.length<2}>← Earlier</button><button type="button" id="fb-newer" disabled>Later →</button></div>
     <button type="button" id="fb-refresh">Refresh</button>
   </div>
   <p id="fb-status" role="status" aria-live="polite"></p>
-  <div id="fb-content"><div class="overview-grid">{initial.classes.flatMap(group=>sessionsInWindow(group,current).map((session:FeedbackSession)=>({group,session}))).sort((a,b)=>b.session.date.localeCompare(a.session.date)||a.session.time.localeCompare(b.session.time)).map(({group,session})=>{
-    const progress=sessionCompleteness(session);
-    return <section class={`overview-card ${progress.state}`}><div><span class={`completion-badge ${progress.state}`}>{progress.state==='complete'?'✓ Complete':progress.state==='cancelled'?'Cancelled':'! Missing information'}</span><h2><a href={`?class=${group.id}&date=${session.date}`}>{group.label.en}</a></h2><p>{formatDate(session.date)} · {session.time}</p><p class="roster">{session.students.map(student=>student.name).join(' · ')||'No class held'}</p><a class="open-class" href={`?class=${group.id}&date=${session.date}`}>View class →</a></div><aside class="completion-note"><strong>{progress.state==='missing'?'What is missing':progress.state==='cancelled'?'No report required':'All recorded'}</strong><p>{progress.missing.join('\n')||(progress.state==='cancelled'?'Class cancelled.':'Class content, homework and feedback for every listed student are available in both languages.')}</p></aside></section>;
+  <div id="fb-content"><div class="overview-grid">{currentDays.map(day=>{
+    const entries=initial.classes.flatMap(group=>sessionsInWindow(group,current).filter((session:FeedbackSession)=>session.date===day).map((session:FeedbackSession)=>({group,session}))).sort((a,b)=>a.session.time.localeCompare(b.session.time));
+    return <><h2 class="timeline-date">{formatDate(day)}</h2>{!entries.length?<p class="timeline-empty">No class reports recorded for this date.</p>:<div class="day-class-grid">{entries.map(({group,session})=>{
+      const progress=sessionCompleteness(session);
+      return <section class={`overview-card ${progress.state}`}><div><span class={`completion-badge ${progress.state}`}>{progress.state==='complete'?'✓ Complete':progress.state==='cancelled'?'Cancelled':'! Missing information'}</span><h2><a href={`?class=${group.id}&date=${session.date}`}>{group.label.en}</a></h2><p class="roster">{session.students.map(student=>student.name).join(' · ')||'No class held'}</p><a class="open-class" href={`?class=${group.id}&date=${session.date}`}>View class →</a></div><aside class="completion-note"><strong>{progress.state==='missing'?'What is missing':progress.state==='cancelled'?'No report required':'All recorded'}</strong><p>{progress.missing.join('\n')||(progress.state==='cancelled'?'Class cancelled.':'Class content, homework and feedback for every listed student are available in both languages.')}</p></aside></section>;
+    })}</div>}</>;
   })}</div></div>
   <noscript><p>Without JavaScript, all past recorded details are available below. Status indicates report completeness, not student performance.</p>{initial.classes.map((group:FeedbackClass)=>{
-    const sessions:FeedbackSession[]=group.sessions.filter(session=>current.end >= session.date);
+    const sessions:FeedbackSession[]=group.sessions.filter(session=>shanghaiDate() >= session.date);
     return sessions.map(session=><section class="fb-session"><header><h2>{group.label.en} · {formatDate(session.date)} · {session.time}</h2></header><div class="class-summary">{(['classContent','homework'] as const).map(kind=><section class="class-section" data-section={kind}><div class="student-heading"><h3>{kind==='classContent'?'Class content':'Homework'}</h3><button type="button" data-copy-section={kind} data-session={session.id}>Copy</button></div><p class="feedback-text">{session[kind]?.en||'N/A'}</p></section>)}</div>{session.status==='cancelled'?<p>Class cancelled.</p>:<div class="feedback-grid">{session.students.map(student=><article id={`student-${student.id}`}><div class="student-heading"><h3>{student.name}</h3><button type="button" data-copy={student.id} data-session={session.id} disabled={!student.en}>Copy</button></div><p class="feedback-text">{student.en||'No individual feedback recorded for this class.'}</p></article>)}</div>}</section>);
   })}</noscript>
   <dialog id="fb-copy-dialog"><h2 id="fallback-heading">Copy feedback</h2><p id="fallback-help">Clipboard access was unavailable. Select and copy the text below.</p><textarea readonly aria-label="Feedback to copy"></textarea><button type="button" id="fb-close-copy">Done</button></dialog>

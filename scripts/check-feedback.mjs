@@ -43,15 +43,15 @@ test('full reports retain distinctive source details and later corrections',()=>
   assert.equal(student('fri-later','2026-09-11','Kaka'),undefined);
   assert.equal(student('sat-introductory','2026-09-12','Tianyou').attendance,'absent');
 });
-test('latest fourteen-day view handles Shanghai midnight and hides future sessions',()=>{
+test('calendar week handles Shanghai midnight and hides future sessions',()=>{
   assert.equal(shanghaiDate(new Date('2026-09-12T16:00:00Z')),'2026-09-13');
   const windows=weekWindows(data,'2026-09-13');
-  assert.deepEqual(windows[0],{id:'0',start:'2026-08-31',end:'2026-09-13'});
+  assert.deepEqual(windows[0],{id:'0',start:'2026-09-07',end:'2026-09-13'});
   assert.deepEqual(windows.at(-1),{id:'all',start:'2026-08-26',end:'2026-09-13'});
   assert.equal(newestClass(data,'2026-09-13'),'sun-1500');
   assert.equal(newestClass(data,'2026-09-12'),'sat-introductory');
   const saturday=data.classes.find(g=>g.id==='sat-original-oratory');
-  assert.deepEqual(sessionsInWindow(saturday,windows[0],'2026-09-13').map(s=>s.date),['2026-09-12','2026-09-05']);
+  assert.deepEqual(sessionsInWindow(saturday,windows[0],'2026-09-13').map(s=>s.date),['2026-09-12']);
 });
 test('copy keeps selected student, date and language without another student or source metadata',()=>{
   const group=data.classes.find(g=>g.id==='sun-1130'),session=group.sessions[0],student=session.students.find(s=>s.name==='Berlingo');
@@ -92,12 +92,12 @@ test('class sections preserve their own dated lesson and assignment, including N
 });
 
 
-test('fortnight archive covers boundaries and all history without future records',()=>{
+test('weekly archive covers boundaries and all history without future records',()=>{
   const fixture={classes:[{sessions:[{date:'2026-09-14',time:'10:00–11:00'},{date:'2026-08-31',time:'10:00–11:00'},{date:'2026-08-30',time:'10:00–11:00'}]}]};
   const windows=weekWindows(fixture,'2026-09-13');
-  assert.deepEqual(windows[0],{id:'0',start:'2026-08-31',end:'2026-09-13'});
-  assert.deepEqual(windows[1],{id:'1',start:'2026-08-17',end:'2026-08-30'});
-  assert.deepEqual(sessionsInWindow(fixture.classes[0],windows[0],'2026-09-13').map(s=>s.date),['2026-08-31']);
+  assert.deepEqual(windows[0],{id:'0',start:'2026-09-07',end:'2026-09-13'});
+  assert.deepEqual(windows[1],{id:'1',start:'2026-08-31',end:'2026-09-06'});
+  assert.deepEqual(sessionsInWindow(fixture.classes[0],windows[0],'2026-09-13').map(s=>s.date),[]);
   assert.deepEqual(sessionsInWindow(fixture.classes[0],windows.at(-1),'2026-09-13').map(s=>s.date),['2026-08-31','2026-08-30']);
 });
 
@@ -110,4 +110,25 @@ test('recorded absence is not a missing evaluation',()=>{
  assert.equal(progress.state,'complete');
  const invalid=structuredClone(data);invalid.classes[0].sessions[0].students[0].attendance='guessed';
  assert.throws(()=>validateFeedback(invalid));
+});
+
+
+test('new Monday appears without recorded lessons and archive weeks are contiguous',()=>{
+  const sunday=shanghaiDate(new Date('2026-09-13T15:59:59Z'));
+  const monday=shanghaiDate(new Date('2026-09-13T16:00:00Z'));
+  assert.deepEqual(weekWindows(data,sunday)[0],{id:'0',start:'2026-09-07',end:'2026-09-13'});
+  const windows=weekWindows(data,monday);
+  assert.deepEqual(windows[0],{id:'0',start:'2026-09-14',end:'2026-09-20'});
+  assert.deepEqual(windows[1],{id:'1',start:'2026-09-07',end:'2026-09-13'});
+  for(let i=1;i<windows.length-1;i++)assert.equal(Date.parse(windows[i-1].start)-Date.parse(windows[i].end),86400000);
+  assert.deepEqual(weekWindows({classes:[]},'2027-01-01')[0],{id:'0',start:'2026-12-28',end:'2027-01-03'});
+  const future={sessions:[{date:'2026-09-20',time:'10:00–11:00'}]};
+  assert.deepEqual(sessionsInWindow(future,windows[0],monday),[]);
+});
+
+test('Kiran spelling is corrected while previously shared student links still resolve',()=>{
+  const student=data.classes.find(g=>g.id==='mon-afternoon').sessions.find(s=>s.date==='2026-09-07').students.find(s=>s.id==='kieran');
+  assert.equal(student.name,'Kiran');
+  assert.match(student.en,/Kiran/);assert.match(student.zh,/Kiran/);
+  assert.doesNotMatch(JSON.stringify(data),/Kieran/);
 });
