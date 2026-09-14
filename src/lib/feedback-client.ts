@@ -1,3 +1,7 @@
+import initialCurricula from '../../public/data/class-curricula.json';
+import {validateCurricula} from './class-curricula.mjs';
+import {curriculumPanel,curriculumAlignment} from './curriculum-panel';
+let curricula=validateCurricula(initialCurricula);
 import {validateFeedback,weekWindows,sessionsInWindow,formatDate,feedbackText,classSectionText,shanghaiDate,sessionCompleteness,addDays} from './feedback.mjs';
 import type {FeedbackDocument,FeedbackSession,FeedbackLanguage,FeedbackStudent} from './feedback-types';
 
@@ -19,12 +23,12 @@ let selectedClass='all', selectedWeek='0', selectedDate='', busy=false, manualRe
 let lastPayload='', lastCopyButton:HTMLButtonElement|null=null;
 const words={en:{classContent:'Class content',homework:'Homework',title:'Student feedback',class:'Class',all:'All classes',week:'Dates',latest:'Latest 14 days',older:'← Earlier',newer:'Later →',refresh:'Refresh',copy:'Copy',missing:'No individual feedback recorded for this class.',cancelled:'Class cancelled.',empty:'No feedback recorded for this class in this date range.',copied:'Copied',failed:'Could not check for updates. The last loaded feedback is still shown.',updated:'Showing the latest published feedback.',fallbackTitle:'Copy feedback',fallbackHelp:'Clipboard access was unavailable. The text is selected below; press Ctrl+C or use your device’s copy command.',done:'Done'},zh:{classContent:'课堂内容',homework:'课后作业',title:'学生课堂反馈',class:'班级',all:'全部班级',week:'日期范围',latest:'最近14天',older:'← 更早',newer:'更近 →',refresh:'刷新',copy:'复制',missing:'本次课堂暂无该学生的个人反馈记录。',cancelled:'本次课程已取消。',empty:'该班级在此日期范围内暂无反馈记录。',copied:'已复制',failed:'暂时无法检查更新，仍显示上次载入的反馈。',updated:'当前显示最新发布的反馈。',fallbackTitle:'复制反馈',fallbackHelp:'暂时无法使用剪贴板。下方文字已选中，请按 Ctrl+C 或使用设备的复制功能。',done:'完成'}};
 function el<K extends keyof HTMLElementTagNameMap>(tag:K,text='',className=''):HTMLElementTagNameMap[K]{const n=document.createElement(tag);n.textContent=text;if(className)n.className=className;return n;}
-function applyLink(){const params=new URLSearchParams(location.search),id=params.get('class'),date=params.get('date');selectedClass=id&&data.classes.some(g=>g.id===id)?id:'all';selectedDate='';selectedWeek=params.get('week')||'0';if(date&&date<=shanghaiDate()){const window=weekWindows(data).find(w=>date>=w.start&&date<=w.end);if(window){selectedWeek=window.id;selectedDate=date;}}}
+function applyLink(){const params=new URLSearchParams(location.search),id=params.get('class'),date=params.get('date');selectedClass=id&&[...data.classes,...curricula.classes].some(g=>g.id===id)?id:'all';selectedDate='';selectedWeek=params.get('week')||'0';if(date&&date<=shanghaiDate()){const window=weekWindows(data).find(w=>date>=w.start&&date<=w.end);if(window){selectedWeek=window.id;selectedDate=date;}}}
 function syncLink(){const params=new URLSearchParams();if(selectedClass!=='all')params.set('class',selectedClass);if(selectedDate)params.set('date',selectedDate);else if(selectedWeek!=='0')params.set('week',selectedWeek);history.replaceState(null,'',location.pathname+(params.size?'?'+params:''));}
 function windowChoices(){return weekWindows(data);}
 function render(){
   const text=words[language], windows=windowChoices();
-  if(selectedClass!=='all'&&!data.classes.some(g=>g.id===selectedClass))selectedClass='all';
+  if(selectedClass!=='all'&&![...data.classes,...curricula.classes].some(g=>g.id===selectedClass))selectedClass='all';
   if(!windows.some(w=>w.id===selectedWeek))selectedWeek='0';
   const current=windows.find(w=>w.id===selectedWeek)!;
   document.documentElement.lang=language==='zh'?'zh-CN':'en';
@@ -34,7 +38,7 @@ function render(){
   document.querySelector('#week-label')!.textContent=text.week;
   document.querySelectorAll<HTMLButtonElement>('[data-language]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.language===language)));
   classPicker.replaceChildren(new Option(text.all,'all'));
-  for(const group of data.classes)classPicker.add(new Option(group.label[language],group.id));
+  for(const group of [...data.classes,...curricula.classes.filter((c:any)=>!data.classes.some(g=>g.id===c.id))])classPicker.add(new Option(group.label[language],group.id));
   classPicker.value=selectedClass;
   weekPicker.replaceChildren();
   for(const window of windows)weekPicker.add(new Option(`${window.id==='all'?(language==='zh'?'全部历史':'All history'):window.id==='0'?text.latest+' · ':''}${window.id==='all'?'':formatDate(window.start,language)+' – '+formatDate(window.end,language)}`,window.id));
@@ -74,6 +78,7 @@ function render(){
     fragment.append(grid);if(!entries.length)fragment.append(el('p',text.empty,'fb-empty'));content.replaceChildren(fragment);return;
   }
   const back=el('button',language==='zh'?'← 返回班级概览':'← All classes','back-overview');back.type='button';back.addEventListener('click',()=>{selectedClass='all';selectedDate='';syncLink();render();document.querySelector<HTMLElement>('#page-title')?.scrollIntoView();});fragment.append(back);
+  const course=curriculumPanel(curricula,data,selectedClass,language);if(course)fragment.append(course);
   for(const {session} of entries){
     const section=el('section','','fb-session');section.dataset.session=session.id;
     const heading=el('header');heading.append(el('h2',`${formatDate(session.date,language)} · ${session.time}`));section.append(heading);
@@ -88,6 +93,7 @@ function render(){
       card.append(top,body);summary.append(card);
     }
     section.append(summary);
+    const alignment=curriculumAlignment(curricula,data,selectedClass,session,language);if(alignment)section.append(alignment);
     if(session.status==='cancelled'){section.append(el('p',text.cancelled,'fb-empty'));fragment.append(section);continue;}
     const grid=el('div','','feedback-grid');
     for(const student of session.students){const card=el('article','',student[language]?'':'missing-feedback');card.id=`student-${session.id}-${student.id}`;const top=el('div','','student-heading');const button=el('button',text.copy);button.type='button';button.dataset.copy=student.id;button.dataset.session=session.id;button.disabled=!student[language];button.setAttribute('aria-label',`${text.copy} ${student.name}`);top.append(el('h3',student.name),button);const body=el('p',student[language]||text.missing,'feedback-text');body.lang=language;card.append(top,body);const progressLink=el('a',language==='zh'?'成长记录 →':'Student progress →');const groupId=data.classes.find(g=>g.sessions.some(s=>s.id===session.id))!.id;progressLink.href='/fbs/?class='+groupId+'&student='+student.id;card.append(progressLink);grid.append(card);}
@@ -119,4 +125,6 @@ async function refresh(manual=false){manualRefreshRequested ||= manual;if(busy)r
 applyLink();render();
 const requestedStudent=new URLSearchParams(location.search).get('student');
 if(requestedStudent){const target=[...content.querySelectorAll<HTMLElement>('article')].find(card=>card.id.endsWith('-'+requestedStudent));target?.scrollIntoView({block:'center'});}
-refreshButton.addEventListener('click',()=>void refresh(true));void refresh();setInterval(()=>{if(!document.hidden)void refresh();},60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)void refresh();});
+async function refreshCurricula(){try{const response=await fetch('/data/class-curricula.json',{cache:'no-store'});if(response.ok){const next=validateCurricula(await response.json());if(JSON.stringify(next)!==JSON.stringify(curricula)){curricula=next;render();}}}catch{/* Keep last validated planning data. */}}
+void refreshCurricula();
+refreshButton.addEventListener('click',()=>{void refresh(true);void refreshCurricula();});void refresh();setInterval(()=>{if(!document.hidden){void refresh();void refreshCurricula();}},60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){void refresh();void refreshCurricula();}});

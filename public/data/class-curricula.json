@@ -1,0 +1,2098 @@
+{
+  "version": 1,
+  "updatedAt": "2026-09-14",
+  "excludedClassIds": [
+    "sun-1130",
+    "sun-1330",
+    "sun-1500"
+  ],
+  "scope": {
+    "en": "Recurring group classes; Sunday STCC uses a separate curriculum. Archived summer classes and individual coaching are outside this fall group plan.",
+    "zh": "常规团体班；周日STCC使用独立课程。往期夏令营和一对一辅导不属于本秋季团体计划。"
+  },
+  "templates": {
+    "grade-1": {
+      "title": {
+        "en": "Little Speakers Adventure",
+        "zh": "小小演讲家探险"
+      },
+      "target": {
+        "en": "Approximately 1 minute, with support as needed",
+        "zh": "约一分钟，按需要提供支持"
+      },
+      "reference": "/curriculum-reference/grade-1.md",
+      "lessons": [
+        {
+          "number": 1,
+          "title": {
+            "en": "Welcome to the speaking space",
+            "zh": "认识演讲空间"
+          },
+          "skills": {
+            "en": "Share one familiar idea, then repeat it audibly.",
+            "zh": "分享一个熟悉的想法，再用清楚的声音说一次。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Share one familiar idea, then repeat it audibly.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 分享一个熟悉的想法，再用清楚的声音说一次。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 2,
+          "title": {
+            "en": "Add one useful detail",
+            "zh": "添加一个具体细节"
+          },
+          "skills": {
+            "en": "Show a familiar object and explain one detail that helps a listener picture it.",
+            "zh": "展示熟悉的物品，补充一个让听众想象出画面的细节。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Show a familiar object and explain one detail that helps a listener picture it.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 展示熟悉的物品，补充一个让听众想象出画面的细节。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 3,
+          "title": {
+            "en": "Put ideas in order",
+            "zh": "把想法按顺序组织"
+          },
+          "skills": {
+            "en": "Use first, next and finally to describe a simple routine or imaginary robot task.",
+            "zh": "用首先、接着、最后描述日常活动或想象中机器人的任务。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Use first, next and finally to describe a simple routine or imaginary robot task.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用首先、接着、最后描述日常活动或想象中机器人的任务。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 4,
+          "title": {
+            "en": "Baseline routine and listening response",
+            "zh": "基础展示与倾听回应"
+          },
+          "skills": {
+            "en": "Repeat a short introduction and answer one listener question in a complete sentence.",
+            "zh": "再次做简短介绍，并用完整句子回答听众的一个问题。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Repeat a short introduction and answer one listener question in a complete sentence.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 再次做简短介绍，并用完整句子回答听众的一个问题。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 5,
+          "title": {
+            "en": "Meet the character",
+            "zh": "认识故事人物"
+          },
+          "skills": {
+            "en": "Introduce a real or imaginary character with one clear want.",
+            "zh": "介绍一个真实或虚构的人物，说清楚他想要什么。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Introduce a real or imaginary character with one clear want.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 介绍一个真实或虚构的人物，说清楚他想要什么。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 6,
+          "title": {
+            "en": "Set the scene",
+            "zh": "描绘故事场景"
+          },
+          "skills": {
+            "en": "Describe where the character is and one thing the audience can see or hear.",
+            "zh": "说明人物在哪里，并补充一个听得到或看得到的细节。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Describe where the character is and one thing the audience can see or hear.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 说明人物在哪里，并补充一个听得到或看得到的细节。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 7,
+          "title": {
+            "en": "Give the character a problem",
+            "zh": "为人物设置问题"
+          },
+          "skills": {
+            "en": "Explain what goes wrong and how the character feels.",
+            "zh": "说明发生了什么问题以及人物的感受。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Explain what goes wrong and how the character feels.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 说明发生了什么问题以及人物的感受。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 8,
+          "title": {
+            "en": "Find a solution",
+            "zh": "寻找解决办法"
+          },
+          "skills": {
+            "en": "Complete a short character, place, problem and solution story.",
+            "zh": "完成一个包含人物、地点、问题和解决办法的短故事。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Complete a short character, place, problem and solution story.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 完成一个包含人物、地点、问题和解决办法的短故事。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 9,
+          "title": {
+            "en": "Fact or opinion?",
+            "zh": "事实还是观点？"
+          },
+          "skills": {
+            "en": "Sort familiar statements into things we can check and personal preferences.",
+            "zh": "区分可以核实的陈述与个人喜好。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Sort familiar statements into things we can check and personal preferences.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 区分可以核实的陈述与个人喜好。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 10,
+          "title": {
+            "en": "Add a reason",
+            "zh": "补充理由"
+          },
+          "skills": {
+            "en": "Explain a preference using because and repeat it without the teacher supplying the idea.",
+            "zh": "用因为解释喜好，再尝试不依赖老师提供内容表达一次。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Explain a preference using because and repeat it without the teacher supplying the idea.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用因为解释喜好，再尝试不依赖老师提供内容表达一次。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 11,
+          "title": {
+            "en": "Make the reason concrete",
+            "zh": "用例子说明理由"
+          },
+          "skills": {
+            "en": "Add one everyday example to a reason.",
+            "zh": "给理由补充一个日常生活中的例子。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Add one everyday example to a reason.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 给理由补充一个日常生活中的例子。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 12,
+          "title": {
+            "en": "State the message",
+            "zh": "说清楚想传达的信息"
+          },
+          "skills": {
+            "en": "Finish a mini-speech with one thing the listener should remember.",
+            "zh": "用一个希望听众记住的要点结束迷你演讲。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Finish a mini-speech with one thing the listener should remember.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用一个希望听众记住的要点结束迷你演讲。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 13,
+          "title": {
+            "en": "Change the voice for meaning",
+            "zh": "用声音变化表达意思"
+          },
+          "skills": {
+            "en": "Try a louder, softer or different character voice where the story calls for it.",
+            "zh": "在故事需要的地方尝试响亮、轻柔或不同的人物声音。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Try a louder, softer or different character voice where the story calls for it.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 在故事需要的地方尝试响亮、轻柔或不同的人物声音。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 14,
+          "title": {
+            "en": "Show feeling with face and body",
+            "zh": "用表情和身体表达情感"
+          },
+          "skills": {
+            "en": "Match one facial expression and gesture to the character's feeling.",
+            "zh": "用一个表情和手势配合人物的感受。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Match one facial expression and gesture to the character's feeling.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用一个表情和手势配合人物的感受。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 15,
+          "title": {
+            "en": "Bring characters to life with dialogue",
+            "zh": "用对话让人物生动起来"
+          },
+          "skills": {
+            "en": "Perform two short lines of dialogue with distinguishable voices.",
+            "zh": "用可以区分的声音表演两句简短对话。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Perform two short lines of dialogue with distinguishable voices.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用可以区分的声音表演两句简短对话。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 16,
+          "title": {
+            "en": "Connect action, voice and story meaning",
+            "zh": "结合动作、声音与故事意义"
+          },
+          "skills": {
+            "en": "Retell a short scene while choosing movements that help listeners understand.",
+            "zh": "复述一个短场景，选择帮助听众理解的动作。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Retell a short scene while choosing movements that help listeners understand.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 复述一个短场景，选择帮助听众理解的动作。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 17,
+          "title": {
+            "en": "Choose and shape the final speech",
+            "zh": "选择并组织最终演讲"
+          },
+          "skills": {
+            "en": "Choose a daily-life or imaginary topic and organize a beginning, middle and ending.",
+            "zh": "选择生活或想象主题，安排开头、中间和结尾。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Choose a daily-life or imaginary topic and organize a beginning, middle and ending.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 选择生活或想象主题，安排开头、中间和结尾。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 18,
+          "title": {
+            "en": "Rehearse for clarity and timing",
+            "zh": "练习清晰表达与时间控制"
+          },
+          "skills": {
+            "en": "Rehearse with picture or keyword cues, checking complete ideas and audible endings.",
+            "zh": "使用图片或关键词练习，检查想法是否完整、句尾是否清楚。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Rehearse with picture or keyword cues, checking complete ideas and audible endings.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 使用图片或关键词练习，检查想法是否完整、句尾是否清楚。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 19,
+          "title": {
+            "en": "Full rehearsal and useful retry",
+            "zh": "完整彩排与改进重试"
+          },
+          "skills": {
+            "en": "Give a full practice speech and repeat one section after a specific coaching cue.",
+            "zh": "进行完整练习，根据一个具体建议重讲一个部分。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Give a full practice speech and repeat one section after a specific coaching cue.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 进行完整练习，根据一个具体建议重讲一个部分。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 20,
+          "title": {
+            "en": "Supportive showcase and reflection",
+            "zh": "友善展示与反思"
+          },
+          "skills": {
+            "en": "Present an approximately one-minute speech with suitable support and identify one next goal.",
+            "zh": "在适当支持下展示约一分钟演讲，并确定一个下一步目标。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Present an approximately one-minute speech with suitable support and identify one next goal.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 在适当支持下展示约一分钟演讲，并确定一个下一步目标。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        }
+      ]
+    },
+    "grade-2": {
+      "title": {
+        "en": "Opinions and Expressive Performance",
+        "zh": "观点与生动表达"
+      },
+      "target": {
+        "en": "1–2 minutes",
+        "zh": "一至两分钟"
+      },
+      "reference": "/curriculum-reference/grade-2.md",
+      "lessons": [
+        {
+          "number": 1,
+          "title": {
+            "en": "Say what you think",
+            "zh": "表达自己的观点"
+          },
+          "skills": {
+            "en": "State an opinion about a familiar question so a listener can repeat the main point.",
+            "zh": "针对熟悉的问题表达观点，让听众能够复述要点。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ State an opinion about a familiar question so a listener can repeat the main point.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 针对熟悉的问题表达观点，让听众能够复述要点。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 2,
+          "title": {
+            "en": "Add a reason",
+            "zh": "为观点补充理由"
+          },
+          "skills": {
+            "en": "Explain why you hold an opinion using one clear because sentence.",
+            "zh": "用一个清楚的因为句解释为什么持有这个观点。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Explain why you hold an opinion using one clear because sentence.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用一个清楚的因为句解释为什么持有这个观点。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 3,
+          "title": {
+            "en": "Make the reason concrete with an example",
+            "zh": "用具体例子支持理由"
+          },
+          "skills": {
+            "en": "Support the reason with a small real or imagined everyday example.",
+            "zh": "用一个真实或假设的生活小例子支持理由。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Support the reason with a small real or imagined everyday example.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用一个真实或假设的生活小例子支持理由。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 4,
+          "title": {
+            "en": "Fact or opinion, then a supported mini-talk",
+            "zh": "区分事实观点并完成小演讲"
+          },
+          "skills": {
+            "en": "Separate checkable facts from preferences and deliver opinion, reason and example.",
+            "zh": "区分可核实事实与喜好，完成观点、理由、例子的表达。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Separate checkable facts from preferences and deliver opinion, reason and example.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 区分可核实事实与喜好，完成观点、理由、例子的表达。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 5,
+          "title": {
+            "en": "Diction that carries meaning",
+            "zh": "让发音传达清楚的意思"
+          },
+          "skills": {
+            "en": "Practise consonants and important words within a meaningful sentence.",
+            "zh": "在有意义的句子中练习辅音和关键词。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Practise consonants and important words within a meaningful sentence.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 在有意义的句子中练习辅音和关键词。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 6,
+          "title": {
+            "en": "Projection and useful orientation",
+            "zh": "声音投射与面向听众"
+          },
+          "skills": {
+            "en": "Deliver to the back of the room without shouting or turning away at sentence endings.",
+            "zh": "让声音传到教室后方，不喊叫，也不在句尾转身。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Deliver to the back of the room without shouting or turning away at sentence endings.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 让声音传到教室后方，不喊叫，也不在句尾转身。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 7,
+          "title": {
+            "en": "Expression, face and emotional clarity",
+            "zh": "表情与情感表达"
+          },
+          "skills": {
+            "en": "Perform the same sentence with emotions that match its meaning.",
+            "zh": "用符合句意的不同情感表演同一句话。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Perform the same sentence with emotions that match its meaning.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用符合句意的不同情感表演同一句话。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 8,
+          "title": {
+            "en": "Posture and a complete expressive talk",
+            "zh": "站姿与完整表达"
+          },
+          "skills": {
+            "en": "Combine supported opinion, steady posture and expressive delivery in a short talk.",
+            "zh": "在短演讲中结合有理由的观点、稳定站姿和生动表达。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Combine supported opinion, steady posture and expressive delivery in a short talk.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 在短演讲中结合有理由的观点、稳定站姿和生动表达。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 9,
+          "title": {
+            "en": "A personal growth story with a clear change",
+            "zh": "讲述有变化的成长故事"
+          },
+          "skills": {
+            "en": "Explain a before-and-after experience and what changed.",
+            "zh": "讲述一次前后有变化的经历，并说明变化是什么。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Explain a before-and-after experience and what changed.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 讲述一次前后有变化的经历，并说明变化是什么。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 10,
+          "title": {
+            "en": "Different perspectives and feelings",
+            "zh": "不同角度与感受"
+          },
+          "skills": {
+            "en": "Explain how two people could feel differently about the same situation.",
+            "zh": "解释同一件事为什么会让两个人产生不同感受。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Explain how two people could feel differently about the same situation.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 解释同一件事为什么会让两个人产生不同感受。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 11,
+          "title": {
+            "en": "Consequences and a possible action",
+            "zh": "后果与可采取的行动"
+          },
+          "skills": {
+            "en": "Connect a familiar problem to its consequence and one helpful action.",
+            "zh": "把熟悉的问题、可能的后果和一个有帮助的行动联系起来。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Connect a familiar problem to its consequence and one helpful action.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 把熟悉的问题、可能的后果和一个有帮助的行动联系起来。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 12,
+          "title": {
+            "en": "Message and structured issue speech",
+            "zh": "主题信息与问题型演讲"
+          },
+          "skills": {
+            "en": "Organize a problem, perspective, consequence and final message.",
+            "zh": "组织问题、不同角度、后果与结尾信息。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Organize a problem, perspective, consequence and final message.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 组织问题、不同角度、后果与结尾信息。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 13,
+          "title": {
+            "en": "Power and Pitch for emphasis",
+            "zh": "用力度与音高突出重点"
+          },
+          "skills": {
+            "en": "Choose a key phrase and test volume and pitch changes that support its meaning.",
+            "zh": "选择关键词句，尝试用音量和音高变化支持意思。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Choose a key phrase and test volume and pitch changes that support its meaning.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 选择关键词句，尝试用音量和音高变化支持意思。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 14,
+          "title": {
+            "en": "Pace and Pause for structure",
+            "zh": "用语速与停顿突出结构"
+          },
+          "skills": {
+            "en": "Place pauses between ideas and slow down where listeners need thinking time.",
+            "zh": "在要点之间停顿，并在听众需要思考时放慢速度。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Place pauses between ideas and slow down where listeners need thinking time.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 在要点之间停顿，并在听众需要思考时放慢速度。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 15,
+          "title": {
+            "en": "Audience questions and recovery",
+            "zh": "回应听众与失误恢复"
+          },
+          "skills": {
+            "en": "Answer one audience question and practise continuing after losing a word.",
+            "zh": "回答听众的一个问题，并练习忘词后继续表达。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Answer one audience question and practise continuing after losing a word.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 回答听众的一个问题，并练习忘词后继续表达。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 16,
+          "title": {
+            "en": "Delivery circuit and performance checkpoint",
+            "zh": "表达练习与阶段展示"
+          },
+          "skills": {
+            "en": "Rehearse voice, expression and recovery in a competition-style practice setting.",
+            "zh": "在模拟比赛练习中结合声音、表情和失误恢复。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Rehearse voice, expression and recovery in a competition-style practice setting.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 在模拟比赛练习中结合声音、表情和失误恢复。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 17,
+          "title": {
+            "en": "Choose the strongest message and revise",
+            "zh": "选择最清楚的信息并修改"
+          },
+          "skills": {
+            "en": "Choose a familiar speech and strengthen the main point and supporting detail.",
+            "zh": "选择熟悉的演讲，加强主旨和支持细节。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Choose a familiar speech and strengthen the main point and supporting detail.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 选择熟悉的演讲，加强主旨和支持细节。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 18,
+          "title": {
+            "en": "Full draft, timing and audience simulation",
+            "zh": "完整稿件、计时与模拟听众"
+          },
+          "skills": {
+            "en": "Practise the whole speech for an audience and check the one-to-two-minute target.",
+            "zh": "面向听众练习完整演讲，检查一至两分钟的目标。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Practise the whole speech for an audience and check the one-to-two-minute target.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 面向听众练习完整演讲，检查一至两分钟的目标。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 19,
+          "title": {
+            "en": "Final polish and recovery rehearsal",
+            "zh": "最终润色与恢复练习"
+          },
+          "skills": {
+            "en": "Improve one content section and one delivery choice, then retry the whole speech.",
+            "zh": "改进一个内容部分和一个表达选择，再完整重试。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Improve one content section and one delivery choice, then retry the whole speech.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 改进一个内容部分和一个表达选择，再完整重试。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 20,
+          "title": {
+            "en": "Showcase, reflection and next step",
+            "zh": "展示、反思与下一步"
+          },
+          "skills": {
+            "en": "Deliver the prepared speech and identify a skill to carry into the next course.",
+            "zh": "展示准备好的演讲，并选出下一阶段继续发展的技能。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Deliver the prepared speech and identify a skill to carry into the next course.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 展示准备好的演讲，并选出下一阶段继续发展的技能。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        }
+      ]
+    },
+    "grade-3": {
+      "title": {
+        "en": "Stories, Interests and Solutions",
+        "zh": "故事、兴趣与解决办法"
+      },
+      "target": {
+        "en": "2 minutes; optional extension to 3",
+        "zh": "两分钟；可选择延伸至三分钟"
+      },
+      "reference": "/curriculum-reference/grade-3.md",
+      "lessons": [
+        {
+          "number": 1,
+          "title": {
+            "en": "A change worth telling",
+            "zh": "值得分享的变化"
+          },
+          "skills": {
+            "en": "Choose a personal-growth experience and explain what changed.",
+            "zh": "选择一次成长经历，说明发生了什么变化。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Choose a personal-growth experience and explain what changed.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 选择一次成长经历，说明发生了什么变化。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 2,
+          "title": {
+            "en": "Character, setting and specific detail",
+            "zh": "人物、场景与具体细节"
+          },
+          "skills": {
+            "en": "Help the audience picture the person and place through precise details.",
+            "zh": "用具体细节帮助听众想象人物和场景。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Help the audience picture the person and place through precise details.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用具体细节帮助听众想象人物和场景。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 3,
+          "title": {
+            "en": "Conflict, climax, solution and message",
+            "zh": "冲突、高潮、解决与信息"
+          },
+          "skills": {
+            "en": "Build a clear problem, turning point and ending with a message.",
+            "zh": "建立清楚的问题、转折和带有意义的结尾。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Build a clear problem, turning point and ending with a message.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 建立清楚的问题、转折和带有意义的结尾。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 4,
+          "title": {
+            "en": "Growth story draft and phase check",
+            "zh": "成长故事初稿与阶段检查"
+          },
+          "skills": {
+            "en": "Deliver a one-to-two-minute growth story and revise an unclear connection.",
+            "zh": "展示一至两分钟成长故事，修改一个不清楚的衔接。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Deliver a one-to-two-minute growth story and revise an unclear connection.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 展示一至两分钟成长故事，修改一个不清楚的衔接。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 5,
+          "title": {
+            "en": "Narrator and character voices",
+            "zh": "旁白与人物声音"
+          },
+          "skills": {
+            "en": "Separate narration from dialogue through purposeful vocal choices.",
+            "zh": "用有目的的声音变化区分旁白与对话。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Separate narration from dialogue through purposeful vocal choices.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用有目的的声音变化区分旁白与对话。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 6,
+          "title": {
+            "en": "Emotion, gesture and show-not-tell",
+            "zh": "情感、手势与具体描绘"
+          },
+          "skills": {
+            "en": "Replace a vague feeling with one action, detail or line of dialogue.",
+            "zh": "用动作、细节或一句对话替代笼统的情感描述。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Replace a vague feeling with one action, detail or line of dialogue.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用动作、细节或一句对话替代笼统的情感描述。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 7,
+          "title": {
+            "en": "Pace, pause, emphasis and transitions",
+            "zh": "语速、停顿、重音与过渡"
+          },
+          "skills": {
+            "en": "Guide listeners through a scene using pacing and clear transitions.",
+            "zh": "运用节奏和清楚的过渡带领听众理解场景。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Guide listeners through a scene using pacing and clear transitions.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 运用节奏和清楚的过渡带领听众理解场景。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 8,
+          "title": {
+            "en": "Dramatic story midpoint performance",
+            "zh": "故事阶段表演"
+          },
+          "skills": {
+            "en": "Perform a complete story and apply one specific improvement on a retry.",
+            "zh": "表演完整故事，在重试中应用一个具体改进。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Perform a complete story and apply one specific improvement on a retry.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 表演完整故事，在重试中应用一个具体改进。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 9,
+          "title": {
+            "en": "Choose an interest and ask a useful question",
+            "zh": "选择兴趣并提出研究问题"
+          },
+          "skills": {
+            "en": "Turn an interest into a focused question that can be investigated.",
+            "zh": "把兴趣转化为可以调查的具体问题。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Turn an interest into a focused question that can be investigated.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 把兴趣转化为可以调查的具体问题。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 10,
+          "title": {
+            "en": "Facts, opinions and source notes",
+            "zh": "事实、观点与资料笔记"
+          },
+          "skills": {
+            "en": "Record useful facts from guided sources and explain them in your own words.",
+            "zh": "从老师指导的资料中记录事实，并用自己的话解释。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Record useful facts from guided sources and explain them in your own words.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 从老师指导的资料中记录事实，并用自己的话解释。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 11,
+          "title": {
+            "en": "Personal connection, problem and importance",
+            "zh": "个人联系、问题与重要性"
+          },
+          "skills": {
+            "en": "Connect an interest to a real problem and explain why it matters.",
+            "zh": "把兴趣联系到真实问题，解释为什么值得关注。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Connect an interest to a real problem and explain why it matters.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 把兴趣联系到真实问题，解释为什么值得关注。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 12,
+          "title": {
+            "en": "Solution, message and researched sections",
+            "zh": "解决办法、信息与研究段落"
+          },
+          "skills": {
+            "en": "Use relevant facts to explain one possible response and its message.",
+            "zh": "运用相关事实说明一种可能的应对办法及其意义。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Use relevant facts to explain one possible response and its message.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 运用相关事实说明一种可能的应对办法及其意义。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 13,
+          "title": {
+            "en": "Integrate story, research and audience purpose",
+            "zh": "结合故事、研究与听众目的"
+          },
+          "skills": {
+            "en": "Organize story and research around one audience takeaway.",
+            "zh": "围绕一个希望听众记住的要点组织故事与研究。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Organize story and research around one audience takeaway.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 围绕一个希望听众记住的要点组织故事与研究。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 14,
+          "title": {
+            "en": "Clarity, rhetoric and audience questions",
+            "zh": "清晰表达、修辞与听众问题"
+          },
+          "skills": {
+            "en": "Test an opening or comparison and answer a relevant audience question.",
+            "zh": "尝试一个开头或比喻，并回答相关的听众问题。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Test an opening or comparison and answer a relevant audience question.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 尝试一个开头或比喻，并回答相关的听众问题。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 15,
+          "title": {
+            "en": "Full rehearsal, recovery and optional extension",
+            "zh": "完整彩排、恢复与延伸"
+          },
+          "skills": {
+            "en": "Rehearse a two-minute speech, practising recovery; extend only with useful detail.",
+            "zh": "练习两分钟演讲和失误恢复，只用有意义的细节做延伸。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Rehearse a two-minute speech, practising recovery; extend only with useful detail.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 练习两分钟演讲和失误恢复，只用有意义的细节做延伸。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 16,
+          "title": {
+            "en": "Final integrated speech and reflection",
+            "zh": "综合演讲与反思"
+          },
+          "skills": {
+            "en": "Present a two-minute speech linking an interest or story to a problem and response.",
+            "zh": "展示两分钟演讲，把兴趣或故事与问题及应对联系起来。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Present a two-minute speech linking an interest or story to a problem and response.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 展示两分钟演讲，把兴趣或故事与问题及应对联系起来。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        }
+      ]
+    },
+    "grades-5-6": {
+      "title": {
+        "en": "Analytical Communication and Audience Connection",
+        "zh": "分析表达与听众联系"
+      },
+      "target": {
+        "en": "3–4 minutes",
+        "zh": "三至四分钟"
+      },
+      "reference": "/curriculum-reference/grades-5-6.md",
+      "lessons": [
+        {
+          "number": 1,
+          "title": {
+            "en": "Issue, audience and purpose",
+            "zh": "问题、听众与目的"
+          },
+          "skills": {
+            "en": "Choose a familiar issue and explain what this audience should understand.",
+            "zh": "选择熟悉的问题，说明希望这群听众理解什么。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Choose a familiar issue and explain what this audience should understand.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 选择熟悉的问题，说明希望这群听众理解什么。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 2,
+          "title": {
+            "en": "Context before judgment",
+            "zh": "先了解背景再作判断"
+          },
+          "skills": {
+            "en": "Explain background using two relevant facts and define unfamiliar terms.",
+            "zh": "使用两个相关事实说明背景，并解释陌生概念。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Explain background using two relevant facts and define unfamiliar terms.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 使用两个相关事实说明背景，并解释陌生概念。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 3,
+          "title": {
+            "en": "Facts, opinions and central idea",
+            "zh": "事实、观点与中心思想"
+          },
+          "skills": {
+            "en": "Build a focused central idea and connect one fact to it through reasoning.",
+            "zh": "形成具体主旨，通过推理把一个事实与主旨联系起来。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Build a focused central idea and connect one fact to it through reasoning.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 形成具体主旨，通过推理把一个事实与主旨联系起来。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 4,
+          "title": {
+            "en": "Openings and causes",
+            "zh": "开头与原因"
+          },
+          "skills": {
+            "en": "Create an audience-relevant opening and explain two causes in a logical order.",
+            "zh": "设计与听众有关的开头，按逻辑解释两个原因。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Create an audience-relevant opening and explain two causes in a logical order.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 设计与听众有关的开头，按逻辑解释两个原因。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 5,
+          "title": {
+            "en": "Diction and projection for meaning",
+            "zh": "清晰发音与声音投射"
+          },
+          "skills": {
+            "en": "Make key words and sentence endings audible without flattening meaning.",
+            "zh": "让关键词和句尾清楚可闻，同时保留表达的意义。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Make key words and sentence endings audible without flattening meaning.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 让关键词和句尾清楚可闻，同时保留表达的意义。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 6,
+          "title": {
+            "en": "Pace, pauses and emphasis",
+            "zh": "语速、停顿与强调"
+          },
+          "skills": {
+            "en": "Use pauses and emphasis to make the reasoning easier to follow.",
+            "zh": "运用停顿和强调，让推理更容易被听懂。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Use pauses and emphasis to make the reasoning easier to follow.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 运用停顿和强调，让推理更容易被听懂。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 7,
+          "title": {
+            "en": "Audience address and structured notes",
+            "zh": "面向听众与提纲表达"
+          },
+          "skills": {
+            "en": "Use keywords, relevant examples and listener-focused phrasing rather than reading a script.",
+            "zh": "使用关键词、相关例子和面向听众的表达，逐步减少照稿朗读。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Use keywords, relevant examples and listener-focused phrasing rather than reading a script.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 使用关键词、相关例子和面向听众的表达，逐步减少照稿朗读。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 8,
+          "title": {
+            "en": "Midpoint presentation",
+            "zh": "阶段展示"
+          },
+          "skills": {
+            "en": "Deliver a two-to-three-minute explanation and identify the least clear link.",
+            "zh": "展示两至三分钟的分析，找出最不清楚的逻辑衔接。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Deliver a two-to-three-minute explanation and identify the least clear link.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 展示两至三分钟的分析，找出最不清楚的逻辑衔接。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 9,
+          "title": {
+            "en": "Who is affected?",
+            "zh": "谁受到影响？"
+          },
+          "skills": {
+            "en": "Explain how one issue affects at least two groups differently.",
+            "zh": "解释同一问题如何不同地影响至少两类人。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Explain how one issue affects at least two groups differently.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 解释同一问题如何不同地影响至少两类人。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 10,
+          "title": {
+            "en": "Impacts and evidence",
+            "zh": "影响与证据"
+          },
+          "skills": {
+            "en": "Explain short- and longer-term effects using relevant evidence and reasoning.",
+            "zh": "运用相关证据和推理解释短期与较长期的影响。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Explain short- and longer-term effects using relevant evidence and reasoning.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 运用相关证据和推理解释短期与较长期的影响。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 11,
+          "title": {
+            "en": "Perspectives and respectful complexity",
+            "zh": "不同角度与尊重复杂性"
+          },
+          "skills": {
+            "en": "Represent another perspective accurately and explain agreement or tension.",
+            "zh": "准确呈现另一种角度，说明一致或分歧之处。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Represent another perspective accurately and explain agreement or tension.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 准确呈现另一种角度，说明一致或分歧之处。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 12,
+          "title": {
+            "en": "Solutions and personal relevance",
+            "zh": "解决办法与个人联系"
+          },
+          "skills": {
+            "en": "Propose a realistic response, discuss a trade-off and assemble the full outline.",
+            "zh": "提出实际可行的办法，讨论取舍，并完成完整提纲。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Propose a realistic response, discuss a trade-off and assemble the full outline.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 提出实际可行的办法，讨论取舍，并完成完整提纲。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 13,
+          "title": {
+            "en": "Vocal personality and purposeful movement",
+            "zh": "个人声音与有目的的动作"
+          },
+          "skills": {
+            "en": "Choose vocal variety and movement that support the message naturally.",
+            "zh": "自然地选择支持主旨的声音变化与动作。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Choose vocal variety and movement that support the message naturally.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 自然地选择支持主旨的声音变化与动作。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 14,
+          "title": {
+            "en": "Adaptable examples and audience questions",
+            "zh": "灵活例子与听众问题"
+          },
+          "skills": {
+            "en": "Adapt one example for a different audience and answer a content question.",
+            "zh": "为不同听众调整一个例子，并回答一个内容问题。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Adapt one example for a different audience and answer a content question.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 为不同听众调整一个例子，并回答一个内容问题。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 15,
+          "title": {
+            "en": "Recovery and full rehearsal",
+            "zh": "失误恢复与完整彩排"
+          },
+          "skills": {
+            "en": "Rehearse three to four minutes from notes and practise recovering a lost place.",
+            "zh": "根据提纲彩排三至四分钟，并练习忘记讲到哪里时恢复。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Rehearse three to four minutes from notes and practise recovering a lost place.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 根据提纲彩排三至四分钟，并练习忘记讲到哪里时恢复。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 16,
+          "title": {
+            "en": "Final integration and reflection",
+            "zh": "综合展示与反思"
+          },
+          "skills": {
+            "en": "Deliver a three-to-four-minute analytical speech and reflect on revision evidence.",
+            "zh": "展示三至四分钟分析型演讲，依据修改过程反思。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Deliver a three-to-four-minute analytical speech and reflect on revision evidence.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 展示三至四分钟分析型演讲，依据修改过程反思。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        }
+      ]
+    },
+    "grade-8": {
+      "title": {
+        "en": "Personal Voice and Original Oratory",
+        "zh": "个人声音与原创演讲"
+      },
+      "target": {
+        "en": "Reliable 5-minute Original Oratory",
+        "zh": "稳定完成五分钟原创演讲"
+      },
+      "reference": "/curriculum-reference/grade-8.md",
+      "lessons": [
+        {
+          "number": 1,
+          "title": {
+            "en": "Baseline and original perspective",
+            "zh": "基础展示与原创角度"
+          },
+          "skills": {
+            "en": "Explain a personal perspective and identify one content and delivery priority.",
+            "zh": "解释个人角度，确定一个内容重点和一个表达重点。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Explain a personal perspective and identify one content and delivery priority.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 解释个人角度，确定一个内容重点和一个表达重点。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 2,
+          "title": {
+            "en": "Topic scan before commitment",
+            "zh": "确定主题前广泛探索"
+          },
+          "skills": {
+            "en": "Explore several issues and explain why each could matter to listeners.",
+            "zh": "探索多个问题，解释每个问题与听众的关系。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Explore several issues and explain why each could matter to listeners.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 探索多个问题，解释每个问题与听众的关系。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 3,
+          "title": {
+            "en": "Two topic pitches",
+            "zh": "两个主题提案"
+          },
+          "skills": {
+            "en": "Pitch two possible speeches with an original angle and an audience takeaway.",
+            "zh": "提出两个演讲方案，各包含原创角度和听众收获。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Pitch two possible speeches with an original angle and an audience takeaway.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 提出两个演讲方案，各包含原创角度和听众收获。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 4,
+          "title": {
+            "en": "Selection, backup and baseline diagnosis",
+            "zh": "选题、备选与基础诊断"
+          },
+          "skills": {
+            "en": "Select a main and backup topic after testing scope and available evidence.",
+            "zh": "测试范围与资料后，选择主要主题和备选主题。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Select a main and backup topic after testing scope and available evidence.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 测试范围与资料后，选择主要主题和备选主题。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 5,
+          "title": {
+            "en": "Central message and audience journey",
+            "zh": "中心信息与听众理解路径"
+          },
+          "skills": {
+            "en": "Build one clear message and arrange the steps listeners need to follow it.",
+            "zh": "建立一个清楚的信息，安排听众理解它所需的步骤。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Build one clear message and arrange the steps listeners need to follow it.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 建立一个清楚的信息，安排听众理解它所需的步骤。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 6,
+          "title": {
+            "en": "Structure, transitions and explanation",
+            "zh": "结构、过渡与解释"
+          },
+          "skills": {
+            "en": "Connect sections with explicit reasoning and purposeful transitions.",
+            "zh": "用明确推理与有目的的过渡连接段落。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Connect sections with explicit reasoning and purposeful transitions.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用明确推理与有目的的过渡连接段落。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 7,
+          "title": {
+            "en": "Authentic wording and note-based delivery",
+            "zh": "真实措辞与提纲表达"
+          },
+          "skills": {
+            "en": "Rewrite borrowed-sounding language in the student's own voice and rehearse from notes.",
+            "zh": "用学生自己的语言修改不自然的措辞，并依据提纲练习。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Rewrite borrowed-sounding language in the student's own voice and rehearse from notes.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 用学生自己的语言修改不自然的措辞，并依据提纲练习。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 8,
+          "title": {
+            "en": "Research expansion and developmental checkpoint",
+            "zh": "研究深化与阶段检查"
+          },
+          "skills": {
+            "en": "Expand useful evidence and test a developing speech near the five-minute target.",
+            "zh": "补充有用证据，并尝试接近五分钟目标的发展稿。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Expand useful evidence and test a developing speech near the five-minute target.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 补充有用证据，并尝试接近五分钟目标的发展稿。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 9,
+          "title": {
+            "en": "Audience relevance and shared situations",
+            "zh": "听众关联与共同经历"
+          },
+          "skills": {
+            "en": "Connect the topic to situations listeners recognize without replacing evidence.",
+            "zh": "把主题联系到听众熟悉的情境，同时保留证据。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Connect the topic to situations listeners recognize without replacing evidence.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 把主题联系到听众熟悉的情境，同时保留证据。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 10,
+          "title": {
+            "en": "Conversational language and rhetorical craft",
+            "zh": "自然语言与修辞技巧"
+          },
+          "skills": {
+            "en": "Make phrasing conversational and test one rhetorical device for clarity.",
+            "zh": "让措辞自然，并测试一种有助于清晰表达的修辞。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Make phrasing conversational and test one rhetorical device for clarity.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 让措辞自然，并测试一种有助于清晰表达的修辞。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 11,
+          "title": {
+            "en": "Appropriate humor and respectful risk testing",
+            "zh": "恰当幽默与尊重边界"
+          },
+          "skills": {
+            "en": "Test whether humor supports the message and revise language that distracts or excludes.",
+            "zh": "检查幽默是否支持主旨，修改分散注意力或排斥他人的表达。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Test whether humor supports the message and revise language that distracts or excludes.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 检查幽默是否支持主旨，修改分散注意力或排斥他人的表达。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 12,
+          "title": {
+            "en": "Formal five-minute checkpoint",
+            "zh": "正式五分钟阶段展示"
+          },
+          "skills": {
+            "en": "Deliver a complete five-minute speech and identify a specific revision priority.",
+            "zh": "展示完整五分钟演讲，确定一个具体修改重点。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Deliver a complete five-minute speech and identify a specific revision priority.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 展示完整五分钟演讲，确定一个具体修改重点。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 13,
+          "title": {
+            "en": "Individual voice clinic",
+            "zh": "个人声音训练"
+          },
+          "skills": {
+            "en": "Work on the speaker's most useful vocal priority using recorded or live evidence.",
+            "zh": "依据录音或现场证据，练习对该学生最有用的声音重点。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Work on the speaker's most useful vocal priority using recorded or live evidence.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 依据录音或现场证据，练习对该学生最有用的声音重点。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 14,
+          "title": {
+            "en": "Purposeful movement and recovery",
+            "zh": "有目的的动作与恢复"
+          },
+          "skills": {
+            "en": "Coordinate gestures with meaning and practise continuing through an interruption.",
+            "zh": "让手势配合意义，并练习受到打断后继续表达。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Coordinate gestures with meaning and practise continuing through an interruption.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 让手势配合意义，并练习受到打断后继续表达。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 15,
+          "title": {
+            "en": "Full rehearsal and reliability",
+            "zh": "完整彩排与稳定发挥"
+          },
+          "skills": {
+            "en": "Complete timed rehearsals and check preparation, transitions and recovery.",
+            "zh": "完成计时彩排，检查准备、过渡与失误恢复。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Complete timed rehearsals and check preparation, transitions and recovery.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 完成计时彩排，检查准备、过渡与失误恢复。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        },
+        {
+          "number": 16,
+          "title": {
+            "en": "Final performance and readiness reflection",
+            "zh": "最终展示与准备度反思"
+          },
+          "skills": {
+            "en": "Deliver reliable five-minute Original Oratory and separate course growth from competition readiness.",
+            "zh": "稳定展示五分钟原创演讲，区分课程成长与参赛准备度。"
+          },
+          "activities": {
+            "en": "◆ Notice a short teacher model.\n◆ Deliver reliable five-minute Original Oratory and separate course growth from competition readiness.\n◆ Give a first attempt, receive one specific coaching cue, and retry the same section.",
+            "zh": "◆ 观察老师的简短示范。\n◆ 稳定展示五分钟原创演讲，区分课程成长与参赛准备度。\n◆ 先尝试一次，接受一个具体建议，再重试同一部分。"
+          },
+          "check": {
+            "en": "Ask a listener to explain the message they heard. Compare the first and second attempts using today’s focus; do not assume mastery from one success.",
+            "zh": "请听众说出听到的要点。根据本课重点比较第一次与第二次尝试，不以一次成功认定已经掌握。"
+          }
+        }
+      ]
+    }
+  },
+  "classes": [
+    {
+      "id": "sat-original-oratory",
+      "label": {
+        "en": "Saturday · 13:00–15:00",
+        "zh": "周六 · 13:00–15:00"
+      },
+      "template": "grade-8",
+      "extension": null,
+      "nextLesson": 2,
+      "adjustment": {
+        "en": "Use the recent current-events analysis to pitch two possible Original Oratory topics. Check the audience takeaway and one cause–impact link before expanding the speech.",
+        "zh": "利用最近的时事分析提出两个原创演讲选题。先检查听众收获和一个原因与影响的联系，再扩充演讲。"
+      },
+      "reason": {
+        "en": "The latest lesson introduced current-event analysis and audience messages; homework presentations were deferred. Topic exploration remains a useful next step, not proof that earlier preparation is complete.",
+        "zh": "最近一课介绍了时事分析与听众信息，原定作业展示未进行。下一步适合继续选题探索，不能据此认定前期准备已经完成。"
+      },
+      "reviewedAt": "2026-09-14",
+      "signature": "[[\"2026-09-05-sat-original-oratory\",\"held\",{\"en\":\"Today’s first class focused on getting everyone familiar with the class and comfortable speaking on stage.\\n\\nStudents began with self-introduction speeches, with a three-minute limit for Louis, Kenny, Kailyn, and Winston, and a five-minute limit for Jennifer.\\n\\nWe then introduced the basics of Original Oratory: choosing a personal perspective, developing ideas, and organizing them into a clear speech. Using the glacier collapse and resulting mudslides as a reference point, students practised sharing their own ideas through impromptu speeches.\\n\\nThe main focus today was self-awareness. At this stage, we are less concerned with polished results and more interested in helping students recognize what they did well, assess what needs improvement, and choose something specific to practise.\",\"zh\":\"第一节课主要帮助大家熟悉课堂，并逐渐适应站在台上表达。\\n\\n学生先进行了自我介绍演讲。Louis、Kenny、Kailyn和Winston的时限为三分钟，Jennifer的时限为五分钟。\\n\\n随后介绍了原创演讲（Original Oratory）的基础：选择个人视角、发展想法，并把内容组织成清楚的演讲。我们以冰川崩塌及随后的泥石流事件为切入点，让学生通过即兴演讲分享自己的思考。\\n\\n本节课的核心是自我觉察。现阶段，比起一次就达到成熟的展示效果，我们更希望学生能发现自己做得好的地方，判断哪些方面需要改进，并选择具体的练习方向。\"}],[\"2026-09-12-sat-original-oratory\",\"held\",{\"en\":\"We began by checking the previous homework. Preparation was not yet consistent across the group, so we moved on rather than holding the planned homework presentations.\\n\\nStudents started with impromptu speaking, received individual feedback, and practised organizing their responses through answer, reason, example, and message. We emphasized that the final message should offer something useful to listeners, such as a concrete action or an idea they can apply in their own lives.\\n\\nWe then introduced cause, effect, impact, and solution using more than ten articles about events from the past week. In a group presentation format, students practised summarizing the content and developing their own ideas: what happened, why it happened, its wider impact on society, and possible solutions.\\n\\nThis was an introductory exercise in organizing an original response to current events. We will continue developing these skills, but our main priority remains strengthening the foundations of public speaking, including clear delivery, purposeful gestures, focused content, and audience connection.\",\"zh\":\"课堂开始时检查了上一次作业。全班的准备情况还不够一致，因此没有按原计划进行作业展示，而是转入后面的练习。\\n\\n学生先进行即兴表达、接受个人反馈，并练习用“回答、理由、例子、面向听众的信息”来组织回应。我们强调，最后的信息要对听众有用，例如一个可以在日常生活中运用的具体行动或想法。\\n\\n随后，我们通过十多篇关于过去一周时事的文章，介绍“原因、结果、影响、解决方案”。学生以小组展示的形式，先概括内容，再发展自己的想法：发生了什么、为什么发生、对更广泛社会产生什么影响，以及可能有哪些解决办法。\\n\\n这是一次围绕时事组织原创回应的入门练习。我们会继续发展这些能力，但当前重点仍是加强公众演讲的基础，包括清楚表达、有目的的手势、集中的内容和与听众的联系。\"}]]",
+      "alignments": [
+        {
+          "sessionId": "2026-09-05-sat-original-oratory",
+          "lessons": [
+            1
+          ]
+        },
+        {
+          "sessionId": "2026-09-12-sat-original-oratory",
+          "lessons": [
+            2,
+            6,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sat-foundations",
+      "label": {
+        "en": "Saturday · 15:30–17:30",
+        "zh": "周六 · 15:30–17:30"
+      },
+      "template": "grades-5-6",
+      "extension": null,
+      "nextLesson": 2,
+      "adjustment": {
+        "en": "Turn one familiar interest or current issue into a clear background explanation with two checked facts. Rehearse projection and a pause before the main takeaway.",
+        "zh": "把熟悉的兴趣或时事转化为清楚的背景解释，加入两个核实过的事实。练习声音投射，并在核心信息前停顿。"
+      },
+      "reason": {
+        "en": "The September 5 lesson established delivery awareness and fuller impromptu answers. September 12 was cancelled, so it must not advance the course sequence.",
+        "zh": "9月5日建立了表达意识并练习扩展即兴回答。9月12日取消，不应推动课程进度。"
+      },
+      "reviewedAt": "2026-09-14",
+      "signature": "[[\"2026-09-05-sat-foundations\",\"held\",{\"en\":\"Today’s first lesson covered the foundations of public speaking through discussion, speech analysis, and practical exercises. We focused on both developing ideas and becoming more comfortable presenting on stage.\\n\\nUnderstanding public-speaking fears: We discussed fear of the stage and fear of the content—feeling nervous in front of others and feeling unsure about what to say. Repeated speaking practice helped students begin building comfort with both.\\n\\nBuilding self-awareness: We explored our eyes, feet, hands, facial expressions, and emotions, and how these affect what an audience experiences. Students practised paying attention to their posture, gestures, expression, and delivery.\\n\\nArticulation and emotional expression: We practised speaking clearly and communicating different emotions. We also explored a bigger, more powerful character voice to encourage projection and a stronger stage presence. Maintaining energy throughout a speech, rather than letting the voice fade, was an important coaching point.\\n\\nLearning from a world champion speech: We watched and discussed a world champion’s presentation, looking at gestures, strong emotions, personal storytelling, humor, pauses, and confident delivery. Students considered how these choices make a speech more engaging.\\n\\nImpromptu speaking structures: We introduced several ways to organise an unprepared response and had students practise using one. Answers were often short, so our next focus is developing each idea more fully and making better use of speaking time.\\n\\nAdding specific details: We worked on moving beyond simply listing facts about ourselves. Explaining when an interest began, what we learned, and what we hope to do next gives the audience a clearer picture and helps turn a brief answer into a fuller speech.\",\"zh\":\"第一节课通过讨论、演讲分析和实际练习，学习公众演讲的基础。我们同时关注如何发展想法，以及如何更自在地站在台上表达。\\n\\n理解演讲中的担心：讨论了对舞台的担心和对内容的担心，也就是站在别人面前会紧张，以及不确定该说什么。反复练习帮助学生开始适应这两个方面。\\n\\n建立自我觉察：观察眼神、双脚、双手、面部表情和情绪，以及它们会怎样影响听众的感受。学生练习留意自己的站姿、手势、表情和表达方式。\\n\\n吐字与情绪表达：练习清楚地说话，并传达不同情绪。我们也尝试了更夸张、更有力量的角色声音，鼓励学生把声音传出去，增强台风。保持整段演讲的能量，避免声音逐渐变小，是其中的重要指导点。\\n\\n学习世界冠军演讲：观看并讨论了一位世界冠军的演讲，观察手势、强烈情绪、个人故事、幽默、停顿和自信的表达。学生思考这些选择如何让演讲更吸引人。\\n\\n即兴表达结构：介绍了几种组织临场回答的方法，并让学生选择一种进行练习。回答普遍偏短，因此接下来要把每个想法说得更充分，更好地利用发言时间。\\n\\n加入具体细节：练习从单纯罗列个人信息，转向解释兴趣何时开始、学到了什么，以及未来想做什么。这些细节能帮助听众更了解讲述者，也让简短回答逐渐成为更完整的演讲。\"}],[\"2026-09-12-sat-foundations\",\"cancelled\",null]]",
+      "alignments": [
+        {
+          "sessionId": "2026-09-05-sat-foundations",
+          "lessons": [
+            1,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "sessionId": "2026-09-12-sat-foundations",
+          "lessons": []
+        }
+      ]
+    },
+    {
+      "id": "sat-introductory",
+      "label": {
+        "en": "Saturday · 17:30–19:30",
+        "zh": "周六 · 17:30–19:30"
+      },
+      "template": "grade-1",
+      "extension": null,
+      "nextLesson": 3,
+      "adjustment": {
+        "en": "Continue the dream-robot speech: what it does, why it helps, and first/second/finally. Use one gesture per function and retry a section after feedback, with worksheet or picture support as needed.",
+        "zh": "继续梦想机器人演讲：它能做什么、为什么有帮助，并使用首先、其次、最后。每项功能配一个手势，反馈后重试一个部分，按需要使用练习纸或图片。"
+      },
+      "reason": {
+        "en": "The latest class already practised transitions, gestures, impromptu application and robot brainstorming. Reuse that content rather than restarting with a disconnected topic.",
+        "zh": "最近一课已经练习过渡句、手势、即兴应用和机器人构思。应沿用这些内容，而不是重新开始无关主题。"
+      },
+      "reviewedAt": "2026-09-14",
+      "signature": "[[\"2026-09-05-sat-introductory\",\"held\",{\"en\":\"For our first class, we had two students returning from summer camp and two completely new students. The lesson gave everyone an opportunity to settle in and helped us understand their starting points in confidence, delivery, and speech organization.\\n\\nWe began with voice and body warm-up games, followed by articulation practice. Students then worked on self-introductions before moving into impromptu speaking, focusing on answering questions directly and organizing their reasons. The warm-up question was: “If you suddenly found a wallet containing RMB 10,000, what would you do? Would you spend it, give it to the police, or handle it another way?” This also led to a discussion about choosing language and ideas appropriate for an audience.\\n\\nLater, we discussed a recent glacier-related flooding event involving Nepal and China. Students explored a current event in more depth, discussed the importance of being careful as the climate and world around us change, and practised delivering a short, organized speech.\",\"zh\":\"第一节课有两位夏令营老生和两位新生。课堂让大家有机会逐渐进入状态，也帮助我们了解每位学生在自信、表达方式和内容组织方面的起点。\\n\\n我们先进行了声音和身体热身游戏，然后练习吐字。学生练习自我介绍后，进入即兴表达，重点是直接回答问题，并有条理地说明理由。热身题目是：“如果你突然发现一个装有一万元人民币的钱包，你会怎么做？会花掉、交给警察，还是用其他方式处理？”这个话题也引出了如何选择适合听众的语言和想法。\\n\\n之后，我们讨论了近期涉及尼泊尔与中国的冰川洪水事件。学生进一步了解时事，讨论在气候和周围世界不断变化的背景下保持谨慎的重要性，并练习发表一段简短、有条理的演讲。\"}],[\"2026-09-12-sat-introductory\",\"held\",{\"en\":\"Students reviewed the two earlier homework options: a self-introduction and the printed glacier speech. The self-introduction focused on one main interest, with supporting details about when it began, what the speaker learned, and a future goal, followed by a return to the main point.\\n\\nStudents were encouraged to present what they remembered instead of relying on reading the full script. Stacey and Liam both demonstrated complete memorized presentations in their second attempts, correcting the earlier impression that the prepared speeches had not been shown. Tongtong also came up and spoke successfully after further encouragement. The lesson emphasized that students can begin, continue through small mistakes, and participate even when some vocabulary is unfamiliar.\\n\\nThe lesson began with warm-up activities and a review of homework. Students warmed up their voices, articulation and bodies, then focused on adding hand gestures and organizing ideas with “first,” “second” and “finally.” They practised an impromptu speech, trying to apply the feedback they had received.\\n\\nFinally, students brainstormed and began crafting their next speech: “If I could have a dream robot.” They considered what their robot would do and what it would be capable of.\\n\\nPreparation and attendance: Tongtong, Stacey and Liam had all memorized their previous speeches, which was a welcome surprise. This was Emily’s first class, so the previous homework requirement did not apply to her. Tianyou was absent, which is why no individual speaking feedback was recorded for this session.\",\"zh\":\"学生回顾了之前的两种作业选择：自我介绍和打印的冰川演讲稿。自我介绍围绕一个主要兴趣展开，加入兴趣何时开始、学到了什么和未来目标等细节，并在结尾回到核心主题。\\n\\n学生被鼓励讲出自己记住的内容，而不是依靠朗读完整稿件。Stacey和Liam在第二次尝试中都完整展示了背熟的演讲，修正了最初“还没有看到准备好的完整演讲”的印象。Tongtong也在进一步鼓励后上台，顺利进行了表达。课堂强调，即使有小错误或不熟悉的词，学生仍然可以开始、继续，并参与其中。\\n\\n课堂开始时，我们进行了热身并回顾作业。学生进行了声音、吐字和身体热身，随后重点练习加入手势，并使用“first”“second”“finally”来组织想法。他们还练习了即兴演讲，尝试应用自己收到的反馈。\\n\\n最后，学生围绕下一篇演讲“如果我能拥有一个梦想中的机器人”进行头脑风暴，并开始构思内容。他们思考了自己的机器人会做什么、具备哪些能力。\\n\\n准备与出勤情况：Tongtong、Stacey 和 Liam 都已经背熟了之前的演讲，这让老师感到惊喜。这是 Emily 的第一节课，因此之前的作业要求不适用于她。Tianyou 本次缺席，所以没有记录本节课的个人演讲反馈。\"}]]",
+      "alignments": [
+        {
+          "sessionId": "2026-09-05-sat-introductory",
+          "lessons": [
+            1,
+            2,
+            10
+          ]
+        },
+        {
+          "sessionId": "2026-09-12-sat-introductory",
+          "lessons": [
+            3,
+            14,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thu-afternoon",
+      "label": {
+        "en": "Thursday · 15:30–17:30",
+        "zh": "周四 · 15:30–17:30"
+      },
+      "template": "grade-3",
+      "extension": null,
+      "nextLesson": 2,
+      "adjustment": {
+        "en": "Develop the prepared self-introduction into a growth story: when the interest began, a specific learning moment, and a future goal. Preserve the assigned duration and preparation requirements in the actual homework section.",
+        "zh": "把准备的自我介绍发展为成长故事：兴趣何时开始、一个具体学习时刻及未来目标。实际作业中的时长与准备要求保持不变。"
+      },
+      "reason": {
+        "en": "The recorded lesson used specific self-introduction details and a conclusion returning to the main point. Story detail is a bridge into the Grade 3 sequence, not a new historical assignment.",
+        "zh": "已记录课堂使用具体自我介绍细节，并在结尾回到主旨。故事细节可衔接三年级计划，但不是新补写的历史作业。"
+      },
+      "reviewedAt": "2026-09-14",
+      "signature": "[[\"2026-09-10-thu-afternoon\",\"held\",{\"en\":\"Students practised self-introductions, answered follow-up questions, and delivered a second attempt using a clear speech structure. We focused on developing specific details so the audience could learn more about each speaker’s interests and experiences.\\n\\nThe structure was: “One thing about me is...,” “I started when...,” “What I learned was...,” and “In the future, I want to...,” followed by a conclusion returning to the main idea. We discussed how repeating the main point at the end helps listeners remember it.\\n\\nAt this stage, students are learning to feel comfortable speaking more and expanding their answers. As their confidence develops, they will also need to select and organize their content within a time limit. Individual delivery work included voice projection, pacing, pauses, gestures, and awareness of hands and feet on stage. As students become comfortable, they may be able to speak for three, five, or even ten minutes. For competitions and other timed presentations, they will then need to select what to keep and guide the speech toward its main point: first learning to say more, then learning to say it within a limit.\",\"zh\":\"学生练习了自我介绍、回答追问，并按照清楚的演讲结构完成第二次尝试。我们重点练习加入具体细节，让听众更了解每位学生的兴趣和经历。\\n\\n使用的结构是：“One thing about me is…”“I started when…”“What I learned was…”“In the future, I want to…”，最后用结尾回到核心主题。我们也讨论了，为什么在结尾重复重点能帮助听众记住内容。\\n\\n现阶段，学生正在学习更自在地多说一些，把回答展开。随着自信增加，之后也需要学会在时间限制内选择和组织内容。个人表达指导包括声音投射、语速、停顿、手势，以及上台时对手脚动作的觉察。越来越自在后，学生可能能够讲三分钟、五分钟，甚至十分钟。但比赛和其他限时展示要求他们选择保留哪些内容，并让演讲始终围绕重点：先学会说得更多，再学会在规定时间内表达。\"}]]",
+      "alignments": [
+        {
+          "sessionId": "2026-09-10-thu-afternoon",
+          "lessons": [
+            1,
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thu-later",
+      "label": {
+        "en": "Thursday · 18:15–20:15",
+        "zh": "周四 · 18:15–20:15"
+      },
+      "template": "grade-1",
+      "extension": null,
+      "nextLesson": 2,
+      "adjustment": {
+        "en": "Let each student choose one superpower or familiar object and generate one original reason orally before using paper. Model a sentence, then gradually remove prompts and repeat it audibly.",
+        "zh": "让每位学生选择一种超能力或熟悉物品，先口头形成自己的理由，再使用纸张。示范句子后逐步减少提示，并用清楚声音重说。"
+      },
+      "reason": {
+        "en": "Teacher-supplied content supported participation in the first lesson. The next proposal prioritizes independent ideas and gradual removal of support rather than demanding immediate memorization.",
+        "zh": "第一课通过老师提供内容支持参与。下一步优先培养自主想法并逐步减少支持，而不是马上要求背诵。"
+      },
+      "reviewedAt": "2026-09-14",
+      "signature": "[[\"2026-09-10-thu-later\",\"held\",{\"en\":\"Today we worked on self-introductions, voice and body-language warm-ups, and an introduction to impromptu speech structure. During the superpower impromptu activity, students found it difficult to develop and express their own answers. Some were hesitant to share, so I provided speaking content to help them participate and practise the structure.\\n\\nThis does not mean they lack the ability to create their own speeches. They need more time and guided practice to develop their ideas and become comfortable expressing them. We will gradually reduce their reliance on paper, while continuing to use notes when needed. The priority is making sure they can form and communicate their own thoughts before expecting them to speak entirely without support.\",\"zh\":\"今天练习了自我介绍、声音与肢体语言热身，并初步学习即兴演讲结构。在超能力即兴活动中，学生觉得发展并表达自己的答案有些困难。有些学生不太敢主动分享，因此老师提供了表达内容，帮助他们先参与并练习结构。\\n\\n这不代表他们没有能力创作自己的演讲。他们需要更多时间和引导，去发展想法，并逐渐自在地表达。我们会慢慢减少对稿纸的依赖，同时在有需要时保留笔记支持。比起立即要求完全脱稿，更重要的是先确认学生能够形成并传达自己的思考。\"}]]",
+      "alignments": [
+        {
+          "sessionId": "2026-09-10-thu-later",
+          "lessons": [
+            1,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fri-afternoon",
+      "label": {
+        "en": "Friday · 15:40–17:40",
+        "zh": "周五 · 15:40–17:40"
+      },
+      "template": "grade-2",
+      "extension": "grade-3",
+      "nextLesson": 2,
+      "adjustment": {
+        "en": "Return to the occupation speeches: state a choice, add a reason and one example, then express it with a clear voice. For students ready for extension, add a short character scene and a meaningful ending.",
+        "zh": "继续职业演讲：说出选择、补充理由和一个例子，再用清楚声音表达。准备好延伸的学生可加入简短人物场景和有意义的结尾。"
+      },
+      "reason": {
+        "en": "The mixed Grades 2–3 class practised occupations, emotional storytelling, projection and repeated attempts. Use Grade 2 as the shared base and Grade 3 story detail as an extension.",
+        "zh": "二三年级混合班练习了职业、情感故事、声音投射和多次尝试。以二年级为共同基础，以三年级故事细节作为延伸。"
+      },
+      "reviewedAt": "2026-09-14",
+      "signature": "[[\"2026-09-11-fri-afternoon\",\"held\",{\"en\":\"We began with voice, articulation, and body warm-ups. Students then gave a brief self-introduction without hints or guidance, allowing us to see how independently they could organize and express their ideas. Returning students had an additional distraction challenge: clapping or saying “hooray” at the end of a sentence while keeping track of what they wanted to say.\\n\\nWe then explored different occupations and practised the related speeches. Students received feedback and worked on applying it during their second or third attempts. Together, we also created a story for emotional-expression practice, switching between happy, scrunched-up, sad, and shocked expressions. We repeated these exercises and practised stronger voice projection.\",\"zh\":\"我们先进行了声音、吐字和身体热身。随后，学生在没有提示或指导的情况下做简短自我介绍，以观察他们独立组织、表达想法的情况。老生还有一个额外的分心挑战：在句末拍手或说“hooray”，同时继续记住自己想说的内容。\\n\\n之后，我们探讨不同职业，并练习相关演讲。学生接受反馈后，在第二次或第三次尝试中练习运用。全班还共同创作了一个故事，用来练习情绪表达，在开心、皱起脸、伤心和惊讶之间切换。我们重复了这些练习，也加强了声音投射训练。\"}]]",
+      "alignments": [
+        {
+          "sessionId": "2026-09-11-fri-afternoon",
+          "lessons": [
+            1,
+            5,
+            6,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fri-later",
+      "label": {
+        "en": "Friday · 18:00–20:00",
+        "zh": "周五 · 18:00–20:00"
+      },
+      "template": "grade-1",
+      "extension": "grade-2",
+      "nextLesson": 2,
+      "adjustment": {
+        "en": "Revisit the prepared self-introduction with one interest and a useful detail. New speakers can use prompts; returning speakers can add a reason/example, eye contact and a purposeful gesture.",
+        "zh": "围绕一个兴趣和具体细节重练准备的自我介绍。新学生可使用提示；有经验的学生可补充理由、例子、眼神交流和有目的的手势。"
+      },
+      "reason": {
+        "en": "The first lesson explicitly differentiated new and returning students. Keep that difference in support while building a shared complete-message structure.",
+        "zh": "第一课明确区分新学生与有经验学生的目标。保留支持程度的差异，同时建立共同的完整信息结构。"
+      },
+      "reviewedAt": "2026-09-14",
+      "signature": "[[\"2026-09-11-fri-later\",\"held\",{\"en\":\"Students practised introductions and repeated speaking turns, applying feedback on voice, articulation, pace, hand control, and audience contact. When using paper, they worked on holding it lower in one hand, looking up, and delivering a complete sentence before checking the next point.\\n\\nOur immediate delivery priority was a louder, clear voice that reaches the audience from the beginning to the end of each speech. Students also practised finishing with a clear closing, managing their movements while thinking, raising a hand before contributing, and listening quietly while classmates spoke.\\n\\nThis first lesson included both new students and students who had attended classes before. We used articulation, voice and body-language warm-ups, impromptu speaking practice, and self-introductions. Even for students who had introduced themselves before, the aim was to express themselves more clearly.\\n\\nThe self-introduction structure was: “My name is…”; “One thing about me is…”; when I started; what I have learned through this experience; and what I want to do in the future. Students then returned to the main idea with a sentence such as “That is why one thing about me is…”, followed by a clear conclusion.\\n\\nThe objectives differed according to each student’s public-speaking experience. For returning students, the lesson was an opportunity to see how their speaking had improved. For new students, the priority was to feel comfortable speaking on stage in front of everyone. Students who had attended summer camp were encouraged to demonstrate eye contact, a loud voice, a slightly longer speech, more vivid details and hand gestures. For new students, simply coming up to speak was a worthwhile first step.\",\"zh\":\"学生练习了自我介绍和多轮发言，并运用有关声音、吐字、语速、手部控制和听众交流的反馈。使用稿纸时，练习单手把纸放低、抬头表达，并把一个完整句子说完后再查看下一个要点。\\n\\n当前的主要表达目标是声音更响亮、清楚，从开头到结尾都能传到听众那里。学生也练习了明确收尾、在思考时管理身体动作、发言前举手，以及同学讲话时安静倾听。\\n\\n这是本期的第一节课，班上既有新同学，也有之前上过课的学生。课堂包括吐字、声音和肢体表达热身、即兴表达练习，以及自我介绍。即使学生之前做过自我介绍，我们仍希望他们能把自己表达得更清楚。\\n\\n自我介绍的结构是：“My name is…”；“One thing about me is…”；我什么时候开始；我从这段经历中学到了什么；以及未来想做什么。然后用“That is why one thing about me is…”这样的句子回到主要特点，并用明确的总结句收尾。\\n\\n每位学生的目标根据公众演讲经验有所不同。对于老生，这节课帮助我们了解他们在表达上有哪些进步；对于新生，重点是逐渐适应站在舞台上，在大家面前讲话。参加过夏令营的学生，可以进一步展示眼神交流、响亮的声音、稍长的演讲、更生动的细节和手势。对于新同学，愿意上台开口就是值得肯定的第一步。\"}]]",
+      "alignments": [
+        {
+          "sessionId": "2026-09-11-fri-later",
+          "lessons": [
+            1,
+            2,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mon-afternoon",
+      "label": {
+        "en": "Monday · 15:30–17:30",
+        "zh": "周一 · 15:30–17:30"
+      },
+      "template": "grades-5-6",
+      "extension": null,
+      "nextLesson": 3,
+      "adjustment": {
+        "en": "Use the discussed media examples to separate a verifiable fact from an opinion. Form a central message, explain a cause and impact, and connect it to an audience-relevant example without prescribing a political judgment.",
+        "zh": "运用讨论过的媒体例子区分可核实事实与观点。形成中心信息，解释原因与影响，并联系听众熟悉的例子，不规定政治判断。"
+      },
+      "reason": {
+        "en": "The recorded Grade 5 session already explored current events, role expectations and cause–effect–impact–solution. This is an adaptation of the supplied Grades 5–6 plan; no separate Monday source curriculum was supplied.",
+        "zh": "已记录五年级课堂探讨了时事、角色期待及原因、结果、影响、解决办法。本方案改编自提供的五六年级计划；未提供独立的周一原始课程。"
+      },
+      "reviewedAt": "2026-09-14",
+      "signature": "[[\"mon-afternoon-2026-09-07\",\"held\",{\"en\":\"We reviewed the previous homework: introducing a recent news event and sharing a personal perspective. After a warm-up game, we practised linking current events to our own experiences.\\n\\nThe discussion briefly touched on news such as the China–Nepal mudslide before focusing on the White House video examples discussed in class, which used game imagery to communicate political messages. We used these as a starting point for considering appropriateness, fairness, and public expectations. Would people view the same content differently if a YouTube creator, school, or government published it?\\n\\nThe game examples described during the discussion included a Tetris-style border-wall example, a boxer clearing rubbish, and a Snake-style immigration-detention example. We also considered how people are viewed when their actions fall outside the expectations associated with their role or public image.\\n\\nStudents explored their own responses without being expected to reach one particular judgment. They practised connecting the issue to something in their own lives and developing cause → effect → impact → solution. They then delivered an impromptu version, working on their personal voice and connection with the audience.\",\"zh\":\"我们先回顾了上一次的作业：介绍一则近期新闻，并分享自己的观点。热身游戏后，我们练习把时事与个人经历连接起来。\\n\\n讨论先简要提到了中国—尼泊尔泥石流等新闻，再重点讨论课堂中提到的白宫视频例子：这些例子使用游戏画面来传达政治信息。我们把它们作为思考“是否合适”“是否公平”以及“公众期待”的切入点。同样的内容，如果由 YouTube 创作者、学校或政府发布，人们的看法会不会不同？\\n\\n课堂中描述的游戏例子包括类似俄罗斯方块的边境墙画面、拳击手清理垃圾的画面，以及类似贪吃蛇的移民拘留画面。我们也讨论了：当一个人的行为超出大家对其角色或公众形象的预期时，人们可能怎样看待这种行为。\\n\\n学生不需要得出某个统一的判断，而是探索自己的回应。他们练习把议题联系到自己的生活，并逐步展开“原因 → 结果 → 影响 → 解决方案”。随后，学生进行了即兴版本的演讲，练习形成有个人特色的表达方式，并与听众建立联系。\"}]]",
+      "alignments": [
+        {
+          "sessionId": "mon-afternoon-2026-09-07",
+          "lessons": [
+            2,
+            4,
+            9,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tue-afternoon",
+      "label": {
+        "en": "Tuesday · 15:30–17:30",
+        "zh": "周二 · 15:30–17:30"
+      },
+      "template": "grades-5-6",
+      "extension": null,
+      "nextLesson": 3,
+      "adjustment": {
+        "en": "Develop a current-event explanation with one central idea, a checked fact and the reasoning between them. Practise continuing from keywords when not fully memorized; retain optional distraction challenges only for ready speakers.",
+        "zh": "用一个中心思想、一个核实事实及两者之间的推理发展时事表达。练习未完全背诵时根据关键词继续；干扰挑战仅供准备好的学生选择。"
+      },
+      "reason": {
+        "en": "The Grade 5 class connected current events to personal experience and practised speaking before feeling fully ready. Consolidate message and evidence before increasing performance demands.",
+        "zh": "五年级课堂把时事联系到个人经历，并练习未完全准备好时表达。提高表演要求前，先巩固主旨与证据。"
+      },
+      "reviewedAt": "2026-09-14",
+      "signature": "[[\"tue-afternoon-2026-09-08\",\"held\",{\"en\":\"We reviewed the previous homework: introducing a recent news event and sharing a personal perspective. After a warm-up game, we practised linking current events to our own experiences.\\n\\nThe discussion briefly touched on news such as the China–Nepal mudslide before focusing on the White House video examples discussed in class, which used game imagery to communicate political messages. We used these as a starting point for considering appropriateness, fairness, and public expectations. Would people view the same content differently if a YouTube creator, school, or government published it?\\n\\nThe game examples described during the discussion included a Tetris-style border-wall example, a boxer clearing rubbish, and a Snake-style immigration-detention example. We also considered how people are viewed when their actions fall outside the expectations associated with their role or public image.\\n\\nStudents explored their own responses without being expected to reach one particular judgment. They practised connecting the issue to something in their own lives and developing cause → effect → impact → solution. They then delivered an impromptu version, working on their personal voice and connection with the audience.\\n\\nWe also discussed presenting even when not fully ready, using an impromptu response when necessary and gaining experience speaking under competition-like conditions. A competition date does not move because a speaker cannot remember everything, so students need practice continuing with what they can present.\\n\\nThe three additional challenges introduced on Monday for students with at least a semester of study were: avoid the word “I,” clap at important points, and finish with “Hooray!”\",\"zh\":\"我们先回顾了上一次的作业：介绍一则近期新闻，并分享自己的观点。热身游戏后，我们练习把时事与个人经历连接起来。\\n\\n讨论先简要提到了中国—尼泊尔泥石流等新闻，再重点讨论课堂中提到的白宫视频例子：这些例子使用游戏画面来传达政治信息。我们把它们作为思考“是否合适”“是否公平”以及“公众期待”的切入点。同样的内容，如果由 YouTube 创作者、学校或政府发布，人们的看法会不会不同？\\n\\n课堂中描述的游戏例子包括类似俄罗斯方块的边境墙画面、拳击手清理垃圾的画面，以及类似贪吃蛇的移民拘留画面。我们也讨论了：当一个人的行为超出大家对其角色或公众形象的预期时，人们可能怎样看待这种行为。\\n\\n学生不需要得出某个统一的判断，而是探索自己的回应。他们练习把议题联系到自己的生活，并逐步展开“原因 → 结果 → 影响 → 解决方案”。随后，学生进行了即兴版本的演讲，练习形成有个人特色的表达方式，并与听众建立联系。\\n\\n我们也讨论了即使还没有完全准备好，仍然尝试表达的重要性；必要时可以即兴回应，积累类似比赛情境下的上台经验。比赛不会因为一位发言者记不住全部内容而改期，因此学生需要练习用自己能够表达的内容继续完成展示。\\n\\n周一为学习了至少一个学期的学生介绍了三个额外挑战：不说“I”、讲到重要内容时拍手，以及在结尾说“Hooray!”。\"}]]",
+      "alignments": [
+        {
+          "sessionId": "tue-afternoon-2026-09-08",
+          "lessons": [
+            2,
+            4,
+            9,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tue-later",
+      "label": {
+        "en": "Tuesday · 17:40–19:40",
+        "zh": "周二 · 17:40–19:40"
+      },
+      "template": "grades-5-6",
+      "extension": null,
+      "nextLesson": 3,
+      "adjustment": {
+        "en": "Expand one short response with a cause, a specific example, an impact and a listener takeaway. Then compare which detail helped listeners understand, using concise notes rather than adding length without purpose.",
+        "zh": "给简短回答补充原因、具体例子、影响与听众收获。比较哪个细节帮助理解，使用简洁提纲，而非没有目的地增加篇幅。"
+      },
+      "reason": {
+        "en": "The recorded Grade 6 session used current-event analysis and identified fuller answers as a next focus. The schedule currently lists 17:30–19:30; the historical report retains Kai’s recorded 17:40–19:40 time.",
+        "zh": "已记录六年级课堂使用时事分析，并提出扩展回答的后续重点。当前课表列为17:30–19:30，历史报告保留Kai记录的17:40–19:40。"
+      },
+      "reviewedAt": "2026-09-14",
+      "signature": "[[\"tue-later-2026-09-08\",\"held\",{\"en\":\"We reviewed the previous homework: introducing a recent news event and sharing a personal perspective. After a warm-up game, we practised linking current events to our own experiences.\\n\\nThe discussion briefly touched on news such as the China–Nepal mudslide before focusing on the White House video examples discussed in class, which used game imagery to communicate political messages. We used these as a starting point for considering appropriateness, fairness, and public expectations. Would people view the same content differently if a YouTube creator, school, or government published it?\\n\\nThe game examples described during the discussion included a Tetris-style border-wall example, a boxer clearing rubbish, and a Snake-style immigration-detention example. We also considered how people are viewed when their actions fall outside the expectations associated with their role or public image.\\n\\nStudents explored their own responses without being expected to reach one particular judgment. They practised connecting the issue to something in their own lives and developing cause → effect → impact → solution. They then delivered an impromptu version, working on their personal voice and connection with the audience.\\n\\nAll three boys also gave brief self-introductions of similar length. The shared next step is to develop each answer with more detail so listeners can learn more about them.\",\"zh\":\"我们先回顾了上一次的作业：介绍一则近期新闻，并分享自己的观点。热身游戏后，我们练习把时事与个人经历连接起来。\\n\\n讨论先简要提到了中国—尼泊尔泥石流等新闻，再重点讨论课堂中提到的白宫视频例子：这些例子使用游戏画面来传达政治信息。我们把它们作为思考“是否合适”“是否公平”以及“公众期待”的切入点。同样的内容，如果由 YouTube 创作者、学校或政府发布，人们的看法会不会不同？\\n\\n课堂中描述的游戏例子包括类似俄罗斯方块的边境墙画面、拳击手清理垃圾的画面，以及类似贪吃蛇的移民拘留画面。我们也讨论了：当一个人的行为超出大家对其角色或公众形象的预期时，人们可能怎样看待这种行为。\\n\\n学生不需要得出某个统一的判断，而是探索自己的回应。他们练习把议题联系到自己的生活，并逐步展开“原因 → 结果 → 影响 → 解决方案”。随后，学生进行了即兴版本的演讲，练习形成有个人特色的表达方式，并与听众建立联系。\\n\\n三位男生也进行了简短的自我介绍，发言时长相近。共同的下一步是用更多细节展开每个回答，让听众更了解他们。\"}]]",
+      "alignments": [
+        {
+          "sessionId": "tue-later-2026-09-08",
+          "lessons": [
+            2,
+            4,
+            9,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mon-later",
+      "label": {
+        "en": "Monday · 18:15–20:15",
+        "zh": "周一 · 18:15–20:15"
+      },
+      "template": "grade-2",
+      "extension": null,
+      "nextLesson": 1,
+      "adjustment": {
+        "en": "Begin with a familiar opinion–reason–example baseline. Check each student’s current delivery and adjust support after actual class content is recorded.",
+        "zh": "先用熟悉主题进行观点、理由、例子的基础展示。观察当前表达水平，记录实际课堂后再调整支持。"
+      },
+      "reason": {
+        "en": "The schedule confirms a Monday Grade 2 group, but no matched class report is currently available here. This starting point is a proposal, not evidence that the course has just begun.",
+        "zh": "课表确认周一有二年级班，但这里尚无匹配课堂报告。此起点只是建议，不代表课程刚开始。"
+      },
+      "reviewedAt": "2026-09-14",
+      "signature": "[]",
+      "alignments": []
+    }
+  ]
+}
