@@ -1,0 +1,162 @@
+---
+import FlagshipLayout from "../../layouts/FlagshipLayout.astro";
+import {
+  topics,
+  topicPeriod,
+  topicHref,
+  illustrationHref,
+  displayDate,
+  type Topic,
+} from "../../lib/topics";
+import "../../styles/topic-story.css";
+
+export function getStaticPaths() {
+  return topics.map((topic) => ({
+    params: { number: String(topic.number) },
+    props: { topic },
+  }));
+}
+
+const topic = Astro.props.topic as Topic;
+const previous = topics.find((item) => item.number === topic.number - 1);
+const next = topics.find((item) => item.number === topic.number + 1);
+const storyNumber = String(topic.number).padStart(2, "0");
+const sourceNeedsCaution = topic.sources.some((source) => source.recheck_status !== 200);
+const dateLabel = displayDate(topic.date);
+const dateBasisLabel = topic.dateBasis.replaceAll("_", " ");
+const title = `${topic.title} | SpeakKai topics`;
+const description = topic.plainSummary || topic.summary;
+const speech = topic.speech;
+const sensitivityLabels:Record<string,string> = { Health:"health or medical issues", Crime:"crime", Violence:"violence", War:"war or conflict", Death:"death or loss", Drugs:"drug use", Politics:"public policy or political conflict", History:"historical conflict", Religion:"religion", Gambling:"gambling", Fraud:"fraud" };
+const sensitivityTopics = (topic.sensitivity && topic.sensitivity !== "None" ? topic.sensitivity.split("|").map((item) => sensitivityLabels[item] || "sensitive subject") : []);
+const sensitivityNote = sensitivityTopics.length ? `This story includes ${sensitivityTopics.join(", ")}. Keep discussion focused on the evidence; students do not need to share personal experiences.` : null;
+---
+
+<FlagshipLayout
+  title={title}
+  description={description}
+  current="resources"
+  breadcrumb="Topics"
+>
+  <article class="topic-page">
+    <header class="topic-hero topic-wrap">
+      <div class="topic-hero-copy">
+        <a class="topic-back" href="/topic/">← All topics</a>
+        <p class="topic-kicker"><span>Story {storyNumber}</span><span aria-hidden="true">·</span><span>{topicPeriod}</span></p>
+        <h1>{topic.title}</h1>
+        <p class="topic-lead">{topic.plainSummary}</p>
+        {sensitivityNote && <p class="topic-sensitivity" role="note"><strong>Content note:</strong> {sensitivityNote}</p>}
+        <dl class="topic-meta" aria-label="Story details">
+          <div><dt>Date</dt><dd>{dateLabel}</dd></div>
+          <div><dt>Country or region</dt><dd>{topic.country}</dd></div>
+          <div><dt>Topic</dt><dd>{topic.category}</dd></div>
+          <div><dt>Overall rank</dt><dd>#{topic.ranks?.overall ?? "—"} / 100</dd></div>
+        </dl>
+      </div>
+      <figure class="topic-art">
+        <img
+          src={illustrationHref(topic.imageKey)}
+          alt={topic.imageAlt}
+          width="1536"
+          height="1024"
+          loading="eager"
+          decoding="async"
+        />
+        <figcaption>AI-generated concept illustration, not a photograph of the event.</figcaption>
+      </figure>
+    </header>
+
+    <div class="topic-wrap topic-content">
+      <section class="topic-section topic-section--opening" aria-labelledby="what-happened">
+        <div class="topic-section-label"><span>01</span><span>Context</span></div>
+        <div class="topic-section-body">
+          <h2 id="what-happened">What happened</h2>
+          <p class="topic-summary">{topic.summary}</p>
+          <p class="topic-date-basis"><strong>Why this date is used:</strong> {dateBasisLabel} · {dateLabel}</p>
+        </div>
+      </section>
+
+      <section class="topic-concept-section" aria-labelledby="concepts-heading">
+        <div class="topic-section-label"><span>02</span><span>Three concepts</span></div>
+        <div class="topic-section-body">
+          <h2 id="concepts-heading">The pieces to keep in view</h2>
+          <div class="topic-concepts" aria-label="Three key concepts">
+            {topic.concepts.map((concept) => <span class="topic-concept">{concept}</span>)}
+          </div>
+        </div>
+      </section>
+
+      {
+        speech && (
+          <section class="topic-coaching" aria-labelledby="speaking-heading">
+            <div class="topic-section-label"><span>03</span><span>Speaking possibilities</span></div>
+            <div class="topic-section-body">
+              <h2 id="speaking-heading">Turn the facts into a thought</h2>
+              <div class="topic-angle-grid">
+                <section class="topic-angle topic-angle--teal">
+                  <p class="topic-angle-label">Expository</p>
+                  <p>{speech.expository}</p>
+                </section>
+                <section class="topic-angle topic-angle--orange">
+                  <p class="topic-angle-label">Original oratory</p>
+                  <p>{speech.oratory}</p>
+                </section>
+                <section class="topic-angle">
+                  <p class="topic-angle-label">Why it matters</p>
+                  <p>{speech.impact}</p>
+                </section>
+                <section class="topic-angle">
+                  <p class="topic-angle-label">What is unusual</p>
+                  <p>{speech.unusual}</p>
+                </section>
+              </div>
+              <div class="topic-reasoning">
+                <div>
+                  <p class="topic-angle-label">A judge may ask</p>
+                  <p>{speech.objection}</p>
+                </div>
+                <div>
+                  <p class="topic-angle-label">Strengthen the reasoning</p>
+                  <p>{speech.response}</p>
+                </div>
+              </div>
+              <div class="topic-student-notes">
+                <div><p class="topic-angle-label">Suggested age</p><p>{topic.ageMin}+ guidance</p></div>
+                <div><p class="topic-angle-label">For younger students</p><p>{speech.younger}</p></div>
+                <div><p class="topic-angle-label">Discussion starter</p><p>{speech.question}</p></div>
+              </div>
+            </div>
+          </section>
+        )
+      }
+
+      <section class="topic-evidence" aria-labelledby="evidence-heading">
+        <div class="topic-section-label"><span>04</span><span>Evidence</span></div>
+        <div class="topic-section-body">
+          <h2 id="evidence-heading">Sources and limits</h2>
+          <p class="topic-caveat">{topic.caveat}</p>
+          <div class="topic-sources">
+            {topic.sources.map((source) => (
+              <article class="topic-source">
+                <p class="topic-source-meta">
+                  {source.publisher} · {displayDate(source.published)} · {source.primary ? "Primary source" : "Reporting"}
+                </p>
+                <a href={source.url} target="_blank" rel="noreferrer">{source.title}</a>
+                <span class="topic-source-url">{source.url}</span>
+                {source.recheck_status !== 200 && (
+                  <p class="topic-source-caution">Automatic recheck unavailable; this source was read during initial research.</p>
+                )}
+              </article>
+            ))}
+          </div>
+          {sourceNeedsCaution && <p class="topic-recheck-note">One or more links could not be checked again automatically. Read the source and its caveat before using a detail.</p>}
+        </div>
+      </section>
+    </div>
+
+    <nav class="topic-pagination topic-wrap" aria-label="Topic navigation">
+      {previous ? <a href={topicHref(previous.number)}><span>Previous story</span><strong>← {previous.title}</strong></a> : <span></span>}
+      {next ? <a class="topic-pagination-next" href={topicHref(next.number)}><span>Next story</span><strong>{next.title} →</strong></a> : <span></span>}
+    </nav>
+  </article>
+</FlagshipLayout>

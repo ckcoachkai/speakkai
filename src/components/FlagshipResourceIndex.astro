@@ -30,6 +30,10 @@ const lessons = (await getCollection("practice", ({ data }) => data.published)).
     </p>
     {!chinese && <FlagshipChineseCourseEntry />}
   </section>
+  {!chinese && <section class="wrap resource-voice" aria-labelledby="topic-library-entry">
+    <div><p class="eyebrow">Current affairs, clearly explained</p><h2 id="topic-library-entry">100 stories to explore.</h2><p>Explore illustrated September news, follow the sources, and find a starting point for an expository or original-oratory speech.</p></div>
+    <a class="text-link" href="/topic/">Open the topic library <span aria-hidden="true">↗</span></a>
+  </section>}
   <section class="wrap resource-lessons" aria-labelledby="practice-library-title">
     <h2 id="practice-library-title">{tr("Find your starting point.", "找到适合你的起点。")}</h2>
     <div class="lesson-grid">

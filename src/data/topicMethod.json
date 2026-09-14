@@ -1,0 +1,75 @@
+{
+  "title": "September story bank",
+  "period": "September 1–14, 2026",
+  "age_range": "8–16",
+  "purpose": "Expository and original oratory topic selection, reviewed for evidence, logic, impact and age suitability.",
+  "score_keys": [
+    "impact",
+    "weirdness",
+    "accessibility",
+    "expository",
+    "oratory",
+    "logic"
+  ],
+  "weights": {
+    "overall": {
+      "impact": 0.2,
+      "weirdness": 0.1,
+      "accessibility": 0.1,
+      "expository": 0.2,
+      "oratory": 0.2,
+      "logic": 0.2
+    },
+    "expository": {
+      "impact": 0.1,
+      "weirdness": 0.05,
+      "accessibility": 0.2,
+      "expository": 0.4,
+      "oratory": 0,
+      "logic": 0.25
+    },
+    "oratory": {
+      "impact": 0.2,
+      "weirdness": 0.1,
+      "accessibility": 0.05,
+      "expository": 0,
+      "oratory": 0.4,
+      "logic": 0.25
+    },
+    "logic": {
+      "impact": 0.35,
+      "weirdness": 0,
+      "accessibility": 0.1,
+      "expository": 0.05,
+      "oratory": 0.05,
+      "logic": 0.45
+    },
+    "unusual": {
+      "impact": 0.35,
+      "weirdness": 0.45,
+      "accessibility": 0.05,
+      "expository": 0.05,
+      "oratory": 0.05,
+      "logic": 0.05
+    }
+  },
+  "definitions": {
+    "impact": "Scale, severity and duration of effects on people or institutions. Credible potential effects are distinguished from observed effects.",
+    "weirdness": "A surprising mechanism, contradiction or reversal, not the entertainment value of suffering.",
+    "accessibility": "Background knowledge and emotional readiness needed for students aged 8–16. Read alongside minimum-age guidance.",
+    "expository": "Potential to explain a meaningful mechanism clearly, accurately and memorably, with a useful structure or visual.",
+    "oratory": "Potential for an original, defensible thesis with relatable stakes, narrative, counterargument and a proportionate call to action.",
+    "logic": "Strength of the evidence-to-claim-to-impact chain; scope for honest causal reasoning and handling objections. Not agreement with a political viewpoint."
+  },
+  "notes": [
+    "Scores are editorial judgments for student-topic coaching, not official tournament rubrics or predictions of winning.",
+    "All 100 stories are ranked across five lenses: overall, expository, original oratory, logic and impact, and unusualness.",
+    "Minimum age is coaching guidance based on context and sensitivity. Ages 8–11 should use the younger adaptation only where recommended.",
+    "New studies and substantive investigations published in September qualify. Older underlying events are identified, and proposals, predictions and claims are not presented as completed outcomes.",
+    "A speech needs more than a headline. Original oratory should develop the student’s own thesis; expository should explain rather than quietly turn into advocacy.",
+    "Impact claims need a mechanism, affected group, scale and timeframe. Avoid claiming one story proves a universal trend.",
+    "Source access and evidence status refer to this research snapshot. Links and breaking-news facts may change later.",
+    "Ties use impact, then logic, then title. Small numerical differences should not override a student’s interest or experience.",
+    "The ranking is a transparent editorial judgment using the displayed weights. It supports topic selection and does not measure news importance objectively."
+  ]
+}
