@@ -35,9 +35,15 @@ export function validateFeedback(data) {
 export function addDays(date, days) { const value = new Date(date+'T12:00:00Z'); value.setUTCDate(value.getUTCDate()+days); return value.toISOString().slice(0,10); }
 export function weekWindows(data, today=shanghaiDate()) {
   const dates = data.classes.flatMap(group => group.sessions.map(session => session.date)).filter(date => date <= today);
-  const offsets = [...new Set(dates.map(date => Math.floor((Date.parse(today)-Date.parse(date))/1209600000)))].sort((a,b)=>a-b);
-  if (!offsets.includes(0)) offsets.unshift(0);
-  return [...offsets.map(offset => ({id:String(offset),start:addDays(today,-offset*14-13),end:addDays(today,-offset*14)})), {id:'all',start:dates.length ? dates.sort()[0] : addDays(today,-13),end:today}];
+  const weekday = new Date(today+'T12:00:00Z').getUTCDay();
+  const monday = addDays(today,-((weekday+6)%7));
+  const earliest = dates.length ? [...dates].sort()[0] : today;
+  const oldestOffset = Math.max(0,Math.ceil((Date.parse(monday)-Date.parse(earliest))/604800000));
+  const windows = Array.from({length:oldestOffset+1},(_,offset)=>{
+    const start=addDays(monday,-offset*7);
+    return {id:String(offset),start,end:addDays(start,6)};
+  });
+  return [...windows,{id:'all',start:earliest,end:today}];
 }
 export function sessionsInWindow(group, window, today=shanghaiDate()) {
   return [...group.sessions].filter(session => session.date >= window.start && session.date <= window.end && session.date <= today).sort((a,b)=>b.date.localeCompare(a.date)||a.time.localeCompare(b.time));
