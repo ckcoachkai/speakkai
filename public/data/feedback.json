@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-15T18:01:00+08:00",
+  "updatedAt": "2026-09-15T10:53:39.671412+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -900,6 +900,40 @@
             "en": "Write out and develop the speech practised in class, ready to present next lesson.\n\n1. Briefly introduce the White House video example discussed in class.\n2. Link it to your experience: “This made me think about...”\n3. Describe a situation from your own life where you questioned whether something was appropriate or fair.\n4. Explain what happened, how you felt, and what it made you think.\n5. Explore why it happens, its effects and impact, and possible solutions.\n6. Finish with a clear personal message.\n\nKeep the news introduction brief so there is room for your own experience, specific details, and perspective.",
             "zh": "把课堂上练习过的演讲写出来，并进一步充实内容，准备在下节课展示。\n\n1. 简要介绍课堂中讨论的白宫视频例子。\n2. 把它连接到自己的经历，例如：“This made me think about…”（这让我想到……）。\n3. 描述自己生活中一个让你思考“这样做是否合适或公平”的情境。\n4. 说明发生了什么、你有什么感受，以及这件事让你想到什么。\n5. 探讨为什么会发生、带来了什么结果和影响，以及可能的解决办法。\n6. 用一个明确的个人观点或想传达的信息收尾。\n\n新闻背景的介绍要简短，把更多空间留给自己的经历、具体细节和观点。"
           }
+        },
+        {
+          "id": "tue-later-2026-09-15",
+          "date": "2026-09-15",
+          "time": "17:40–19:40",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "nelson",
+              "name": "Nelson",
+              "en": "✓ Nelson spoke for 1 minute 30 seconds, giving his presentation a good length. His content was mostly understandable, and he included a message at the end, helping listeners recognise what he wanted them to take away.\n\n→ Gesture control: He often held one arm close to his body with the other hand. A more open, relaxed posture would help him connect with listeners. He could let his hands rest naturally between gestures, then use deliberate movements to support important ideas.\n\n→ Structure and opening: Clearer transition sentences would make the connections between his ideas easier to follow. Phrases such as “One reason is…,” “For example…,” and “What I learned was…” could guide listeners through his speech. A stronger opening would also help him gain attention immediately.\n\n➜ Practice: Rehearse an opening that directly includes the audience, such as “Have you ever…?” or “Dear friends, imagine…”. Combine it with eye contact and a brief pause, then continue with clear transitions. These choices can help Nelson attract attention naturally and keep listeners involved throughout his message.",
+              "zh": "✓ Nelson 讲了1分30秒，演讲时长较好。内容大部分清楚易懂，并在结尾给出了一个信息，帮助听众理解他希望大家记住的内容。\n\n→ 手势控制：他常用一只手抱住另一侧手臂，让手臂紧贴身体。更舒展、放松的姿态有助于与听众建立联系。他可以在手势之间让双手自然放松，再用有目的的动作支持重要想法。\n\n→ 结构与开头：更清楚的过渡句能让想法之间的联系更容易理解。例如“One reason is…”“For example…”和“What I learned was…”可以引导听众跟随演讲。开头也可以更有吸引力，让大家从一开始就愿意听。\n\n➜ 练习建议：排练一个直接邀请听众参与的开头，例如“Have you ever…?”或“Dear friends, imagine…”。结合眼神交流和短暂停顿，再使用清楚的过渡继续演讲。这些方法可以帮助 Nelson 自然吸引注意，并让听众持续参与。"
+            },
+            {
+              "id": "lyon",
+              "name": "Lyon",
+              "en": "→ Length and detail: The speech lasted approximately one minute and needed more development. Repeated use of “thingy” made parts of the explanation vague. Naming the device, its purpose, and how it would work would help listeners picture the idea and understand it more clearly.\n\n→ Exploring alternatives: The idea of a weather-control device could be developed further or compared with another environmental solution. For example, he could imagine a device that detects disposable plastic and suggests a reusable alternative. Explaining who would use it, what happens when it activates, and how it helps the environment would give the speech more substance.\n\n➜ Practice: Replace each “thingy” with a precise name or description. Add one concrete scenario and explain why the proposed solution would be useful. The aim is to lengthen the speech through meaningful detail.",
+              "zh": "→ 时长与细节：演讲约一分钟，内容还需要进一步展开。多次使用“thingy”使部分解释不够明确。说清装置的名称、用途以及工作方式，能够帮助听众想象这个创意，并更清楚地理解它。\n\n→ 探索其他方案：控制天气的装置可以继续展开，也可以与另一种环保方案作比较。例如，他可以设想一种检测一次性塑料、并推荐可重复使用替代品的装置。说明谁会使用它、启动时会发生什么，以及它如何帮助环境，能让演讲更充实。\n\n➜ 练习建议：把每一个“thingy”替换成准确的名称或描述。加入一个具体情境，并解释所提方案为什么有用。目标是通过有意义的细节来延长演讲。"
+            },
+            {
+              "id": "jayden",
+              "name": "Jayden",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "sean",
+              "name": "Sean",
+              "en": null,
+              "zh": null
+            }
+          ]
         }
       ]
     },
