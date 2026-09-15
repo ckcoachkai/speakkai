@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#152d28">
+<title>Food & movement · SpeakKai</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#18352d;background:#f4f5ef;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}a{color:inherit}header,main,footer{max-width:1100px;margin:auto;padding:24px}
+header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #d9dfd4}.brand{font-weight:800;text-decoration:none;font-size:20px}.tag{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#527366}
+.hero{padding:34px 0 24px;display:flex;align-items:end;justify-content:space-between;gap:24px}h1{font-size:clamp(36px,6vw,64px);letter-spacing:-.05em;line-height:1.05;margin:12px 0 18px}p{line-height:1.6}.muted{color:#5d7168}.hero p{max-width:570px;margin-bottom:0}.date{display:grid;gap:8px;font-size:14px}select,button{font:inherit;border:1px solid #b6c6ba;border-radius:10px;padding:12px;background:white;color:inherit;cursor:pointer}select:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #bd781d;outline-offset:3px}
+.banner{border-radius:12px;background:#e8eddc;padding:15px 20px;line-height:1.6;margin-bottom:22px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:#fff;border:1px solid #dce3d7;border-radius:18px;padding:24px}.card h2{font-size:14px;font-weight:500;margin:0 0 18px;color:#5d7168}.number{font-size:36px;font-weight:650;letter-spacing:-.04em}.unit{font-size:16px;font-weight:400;letter-spacing:0}.card small{display:block;margin-top:10px;color:#5d7168;line-height:1.5}.calories{background:#183b30;color:#fff;border-color:#183b30}.calories h2,.calories small{color:#c9ddcd}
+.columns{display:grid;grid-template-columns:1.7fr 1fr;gap:22px;margin-top:28px}.panel{background:white;border:1px solid #dce3d7;border-radius:18px;padding:24px}.panel h2{font-size:22px;letter-spacing:-.02em;margin:0 0 22px}.meal{border-top:1px solid #e1e7dd;padding:18px 0}.meal:first-child{border-top:0;padding-top:0}.meal p{margin:8px 0}.meal strong{font-size:18px}.pill{display:inline-block;border-radius:20px;background:#f2eddb;padding:5px 10px;font-size:12px;margin-bottom:10px}.weight{margin-top:22px;border-top:1px solid #e1e7dd;padding-top:22px}.weight strong{font-size:32px}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:14px 10px;text-align:left;border-bottom:1px solid #e2e7de;white-space:nowrap}th{font-weight:500;color:#5d7168}section.history{margin-top:22px}.footnote{font-size:13px;color:#5d7168}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}footer{font-size:12px;color:#5d7168;line-height:1.7}#error{color:#922d24} [hidden]{display:none!important}
+@media(max-width:700px){header,main,footer{padding:20px}.hero{display:block;padding-top:20px}.date{margin-top:24px}.metrics{grid-template-columns:repeat(2,1fr)}.card{padding:20px}.number{font-size:30px}.columns{grid-template-columns:1fr}.tag{font-size:10px}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="/">SpeakKai<span class="muted"> / food</span></a><span class="tag">A little more aware, every day</span></header>
+<main>
+<div class="hero"><div><span class="tag">Food · movement · progress</span><h1>One day at a time.</h1><p class="muted">A running record of what I eat and how I move. Small observations, honest estimates, and room to improve.</p></div><label class="date">Viewing date <select id="date" aria-label="Choose log date"></select></label></div>
+<p id="loading" role="status">Loading the food log…</p><p id="error" role="alert" hidden></p>
+<div id="dashboard" hidden>
+<div id="status" class="banner" role="status"></div>
+<div class="metrics">
+<article class="card calories"><h2>Logged energy</h2><div class="number"><span id="calories">—</span> <span class="unit">kcal</span></div><small id="range"></small></article>
+<article class="card"><h2>Protein</h2><div class="number"><span id="protein">—</span> <span class="unit">g</span></div><small id="protein-note"></small></article>
+<article class="card"><h2>Carbohydrates</h2><div class="number"><span id="carbs">—</span> <span class="unit">g</span></div><small id="carbs-note"></small></article>
+<article class="card"><h2>Fat</h2><div class="number"><span id="fat">—</span> <span class="unit">g</span></div><small id="fat-note"></small></article>
+</div>
+<div class="columns">
+<section class="panel"><h2>On the plate</h2><div id="meals"></div></section>
+<section class="panel"><h2>Movement & weight</h2><div id="exercise"></div><div class="weight"><p class="muted">Reported weight</p><strong id="weight">—</strong><p class="footnote">Exercise calories stay separate from food intake. No calorie target has been set.</p></div></section>
+</div>
+<section class="panel history"><h2>The running log</h2><div class="table-wrap"><table><caption class="footnote">Logged values only; unknown values appear as —.</caption><thead><tr><th scope="col">Date</th><th scope="col">Calories</th><th scope="col">Protein</th><th scope="col">Carbs</th><th scope="col">Fat</th><th scope="col">Weight</th><th scope="col">Coverage</th></tr></thead><tbody id="history"></tbody></table></div><div class="actions"><button id="download" type="button">Download log JSON</button></div></section>
+<p class="footnote">Keep logging meals, drinks, portions and completed workouts in ChatGPT. Corrections replace earlier estimates. Missing meals and unknown nutrients are never treated as zero.</p>
+</div>
+</main>
+<footer><span id="updated"></span><br>Daily check scheduled for 21:00 Asia/Shanghai. Updates appear after a successful sync and website deployment.<br>This tracker is publicly accessible. Nutrition values are estimates, not measurements.</footer>
+<script>
+const el = id => document.getElementById(id);
+const fmt = value => Number.isFinite(value) ? new Intl.NumberFormat("en",{maximumFractionDigits:1}).format(value) : "—";
+const total = (day,key) => day.meals.length && day.meals.every(m=>Number.isFinite(m[key])) ? day.meals.reduce((n,m)=>n+m[key],0) : null;
+function textNode(tag,text,className){const n=document.createElement(tag);n.textContent=text;if(className)n.className=className;return n;}
+let data;
+function render(day){
+ el("status").textContent=day.complete?"Complete food log for this date. Nutrition values may still be estimates.":"Partial day · Only reported meals are included. This is not a full-day calorie total.";
+ el("calories").textContent=fmt(total(day,"calories"));
+ const low=total(day,"caloriesLow"),high=total(day,"caloriesHigh");
+ el("range").textContent=low!==null&&high!==null?"Estimated range: "+fmt(low)+"–"+fmt(high)+" kcal":"Estimate range unavailable";
+ for(const key of ["protein","carbs","fat"]){const v=total(day,key);el(key).textContent=fmt(v);el(key+"-note").textContent=v===null?"Not enough information to total":"Total for logged meals";}
+ el("meals").replaceChildren();
+ if(!day.meals.length)el("meals").append(textNode("p","No meals logged."));
+ for(const meal of day.meals){
+ const row=textNode("article","","meal");row.append(textNode("span","Estimated meal","pill"),textNode("p",meal.description),textNode("strong",fmt(meal.calories)+" kcal"),textNode("p",meal.note||"","footnote"));el("meals").append(row);
+ }
+ el("exercise").replaceChildren();
+ if(!day.exercise.length)el("exercise").append(textNode("p","No completed exercise logged.","muted"));
+ for(const activity of day.exercise)el("exercise").append(textNode("p",activity.type+" · "+fmt(activity.minutes)+" min"+(Number.isFinite(activity.calories)?" · "+fmt(activity.calories)+" kcal estimated":"")));
+ el("weight").textContent=fmt(day.weightKg)+(Number.isFinite(day.weightKg)?" kg":"");
+}
+(async()=>{
+ try{
+ const response=await fetch("./data.json",{cache:"no-store"});
+ if(!response.ok)throw new Error("The log could not be loaded.");
+ data=await response.json();
+ if(!Array.isArray(data.days)||!data.days.length)throw new Error("No daily log is available yet.");
+ data.days.sort((a,b)=>b.date.localeCompare(a.date));
+ for(const day of data.days){
+ const option=document.createElement("option");option.value=day.date;option.textContent=day.date;el("date").append(option);
+ const row=document.createElement("tr");for(const value of [day.date,fmt(total(day,"calories")),fmt(total(day,"protein")),fmt(total(day,"carbs")),fmt(total(day,"fat")),fmt(day.weightKg),day.complete?"Complete":"Partial"])row.append(textNode("td",value));el("history").append(row);
+ }
+ el("date").addEventListener("change",()=>render(data.days.find(d=>d.date===el("date").value)));
+ el("download").addEventListener("click",()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="speakkai-food-log.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+ el("updated").textContent="Last log update: "+data.updatedAt+" · All dates use "+data.timeZone+".";
+ render(data.days[0]);el("dashboard").hidden=false;
+ }catch(error){el("error").textContent=error.message;el("error").hidden=false;}finally{el("loading").hidden=true;}
+})();
+</script>
+</body></html>
