@@ -92,6 +92,9 @@ export function weeklyScheduleBlocks(
   lines: string[],
   monthTitle: string,
 ): WeeklyScheduleBlock[] {
+  if (lines.some((line) => /^Free all day$/i.test(line)) && !lines.some((line) => timeRange(line))) {
+    return [{ kind: "free", timeText: "", title: "Free all day" }];
+  }
   const key = monthKey(monthTitle);
   const malaysiaAvailability = hasMalaysiaAvailability(lines);
   if (malaysiaAvailability) {

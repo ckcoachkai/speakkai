@@ -1,5 +1,5 @@
 const PUBLIC_COLUMN_COUNT = 7;
-const PUBLIC_STATUSES = new Set(["Holiday", "Limited availability", "Online available", "Unavailable"]);
+const PUBLIC_STATUSES = new Set(["Holiday", "Limited availability", "Online available", "Unavailable", "Free all day"]);
 export const PUBLIC_PRIVACY_MODE = "calendar-display-event-details";
 const PUBLIC_EVENT_LINE_PATTERN =
   /^(?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)? · .+$/;
@@ -156,6 +156,8 @@ export function sanitizeCalendarCell(value) {
   if (!details) return day;
 
   const timedEntries = extractCalendarDisplayEvents(detailLines);
+  const explicitlyFreeAllDay = detailLines.some((line) => /^Free all day$/i.test(line));
+  if (explicitlyFreeAllDay && timedEntries.length === 0) return `${day}\nFree all day`;
   const notices = detailLines.filter((line) => PUBLIC_SCHEDULE_NOTICES.has(line));
   const makeUpClasses = timedEntries.length > 0 && notices.includes("Schedule notice: Make-up classes from September 20.");
   if (isMalaysiaOnlineOpen(details)) {
@@ -172,7 +174,7 @@ export function sanitizeCalendarCell(value) {
   );
   const unavailable =
     !holiday &&
-    (/\ball\s*day\b|全天/i.test(details) ||
+    (/\ball\s*day\b|全天/i.test(detailLines.filter((line) => !/^Free all day$/i.test(line)).join(" ")) ||
       (timedEntries.length === 0 && /\btravel\b|\bbooked\b|\bplanned\b|旅行/i.test(details)));
 
   const publicLines = [
@@ -270,6 +272,7 @@ export function assertCalendarDisplayPublicScheduleSheet(sheet) {
         );
       const invalidStatusDetails =
         (!status && extra.length > 0) ||
+        (status === "Free all day" && extra.length > 0) ||
         (status === "Holiday" && invalidLimitedDetails) ||
         (status === "Unavailable" && invalidUnavailableDetails) ||
         (status === "Limited availability" && invalidLimitedDetails) ||

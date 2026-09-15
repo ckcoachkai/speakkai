@@ -4,6 +4,14 @@ import { calendarDisplayEventKind, publicBookingPresentation, scheduleStartMinut
 import { weeklyScheduleBlocks } from '../src/lib/weeklySchedule.ts';
 import { sanitizeCalendarCell } from './schedule-privacy.mjs';
 
+test('explicit all-day availability replaces Sunday windows without masking a booking', () => {
+  const free = sanitizeCalendarCell('20\nFree all day\nMake-up workday: September 25-27 holiday');
+  assert.equal(free, '20\nFree all day');
+  assert.deepEqual(weeklyScheduleBlocks(0, free.split('\n'), 'September 2026'), [{kind:'free',timeText:'',title:'Free all day'}]);
+  const booked = sanitizeCalendarCell('20\nFree all day\n10:00-11:30 STCC');
+  assert.equal(booked, '20\nLimited availability\n10:00–11:30 · STCC');
+});
+
 test('rescheduled Sunday classes retain the notice and override holiday unavailability', () => {
   const moved = 'Schedule notice: Classes moved to September 27 - make-up workday for the September 25-27 holiday.';
   const makeup = 'Schedule notice: Make-up classes from September 20.';
