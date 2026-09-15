@@ -12,6 +12,7 @@ const selected=Astro.props.date ?? lessons[0]?.date;
 const data=JSON.parse(document.getElementById('lessons')!.textContent!);
 const gate=document.getElementById('gate')!,notebook=document.getElementById('notebook')!,input=document.getElementById('password') as HTMLInputElement,error=document.getElementById('error')!,frame=document.getElementById('content') as HTMLIFrameElement;
 const decode=(s:string)=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+frame.addEventListener('load',()=>{frame.contentDocument?.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(link=>link.addEventListener('click',event=>{event.preventDefault();frame.contentDocument?.getElementById(link.getAttribute('href')!.slice(1))?.scrollIntoView({behavior:'smooth'});}));});
 let password='';
 async function open(date:string,secret:string){
  const lesson=data.lessons.find((l:{date:string})=>l.date===date);
