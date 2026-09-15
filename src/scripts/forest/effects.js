@@ -33,7 +33,11 @@ export function createForestEffects() {
   }
   function bite(x, width) {
     stats.chomps++;
-    play(Math.random() < 0.5 ? 'chomp' : 'crack', 0.82, x / width * 2 - 1, 0, 0.92 + Math.random() * 0.16);
+    const pan = x / width * 2 - 1;
+    // Five irregular chews make a longer cartoon crunch, with twice the old gain.
+    [0, 0.37, 0.79, 1.16, 1.61].forEach((delay, i) => {
+      play(i % 2 === 0 ? 'crack' : 'chomp', 1.65, pan, delay, 0.84 + Math.random() * 0.16);
+    });
     play('splat', 0.46, x / width * 2 - 1, 0.08, 0.94 + Math.random() * 0.12);
   }
   function pickup(x, width) {
