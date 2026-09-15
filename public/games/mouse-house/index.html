@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f9f5e9"><title>Mouse House — The classroom chase</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='.9em' font-size='56'%3E🐭%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Mouse House home"><span class="brand-icon">m<span>•</span></span><span>MOUSE<br>HOUSE<span class="brand-dot">.</span></span></a>
+    <div class="edition"><span class="tiny-dot"></span> THE CLASSROOM CHASE</div>
+    <div class="tools"><button id="sound" class="icon-button" aria-pressed="true" title="Toggle original chase music">♫ <span>Sound on</span></button><button id="fullscreen" class="icon-button" title="Fullscreen">⛶ <span>Fullscreen</span></button></div>
+  </header>
+  <main>
+    <section class="intro"><div><div class="eyebrow">A LITTLE CHAOS. EVERYONE GETS A TURN.</div><h1>Small mice.<br class="mobile-break"> <em>Big chase.</em></h1><p>Add your students. Follow the cheese. Find out who’s up next.</p></div><div class="intro-stamp"><span>100%</span><small>CLASSROOM<br>SHENANIGANS</small><i>✦</i></div></section>
+    <div class="workspace">
+      <aside class="roster-panel panel">
+        <div class="panel-heading"><h2>Your mouse crew</h2><span class="pill" id="roster-count">0 mice</span></div>
+        <div id="setup">
+          <label for="names">Student names <span>one per line</span></label>
+          <textarea id="names" placeholder="Amelia&#10;Ben&#10;Chloe&#10;Daniel&#10;…" spellcheck="false" rows="10"></textarea>
+          <div class="input-meta"><span id="name-count">Add 1–60 students</span><button id="demo" class="text-button">Try demo names ↗</button></div>
+          <p id="error" role="alert"></p>
+          <button id="start" class="primary">Let the chase begin <span>↗</span></button>
+          <p class="privacy">Names stay in this browser. No sign-in needed.</p>
+        </div>
+        <div id="live-roster" hidden><div class="roster-caption"><span>STILL IN THE CHASE</span><span>HP / SPEED</span></div><div id="mice-list"></div><button id="pause" class="secondary full">Ⅱ Pause round</button><button id="edit" class="text-button full">Edit crew / start over</button></div>
+        <div class="rule-card"><span class="rule-emoji">🧀</span><div><b>A cheesy little advantage</b><p>Every cheese doubles running speed.<br>Every bite: −1 HP + a quick dash.</p></div></div>
+        <div class="selected-box"><div class="roster-caption"><span>ALREADY CHOSEN</span><span id="chosen-count">0</span></div><div id="history"><p class="empty-history">The next name could be anyone…</p></div></div>
+      </aside>
+      <section class="arena-panel panel">
+        <div class="arena-top"><div><span class="live-dot" id="live-dot"></span><b id="round-label">THE GREAT CHEESE ESCAPE</b><span id="round-number" class="muted">Ready when you are</span></div><div><span id="cheese-count" class="cheese-count">🧀 320 cheeses</span><span id="timer">00:00</span></div></div>
+        <div class="arena-wrap"><canvas id="maze" width="1120" height="730" aria-label="Animated maze with named student mice, cheese and a chasing cat"></canvas>
+          <div id="welcome" class="welcome"><div class="welcome-art"><span class="big-cheese">🧀</span><span class="big-mouse">🐭</span><span class="spark one">✦</span><span class="spark two">✦</span></div><span class="eyebrow">YOUR NEXT STUDENT IS IN HERE SOMEWHERE</span><h2>Ready, set,<br><em>scurry.</em></h2><p>A maze full of mice. One hungry cat.<br>One very unexpected name picker.</p><div class="welcome-pills"><span>20 HP per mouse</span><span>Cat arrives at 30s</span></div></div>
+          <div id="paused-overlay" hidden><span>Ⅱ</span><h2>Taking a tiny breather.</h2><p>Press Resume to keep the chase going.</p></div>
+        </div>
+        <div class="arena-bottom"><div class="cat-status"><span id="cat-face">🐱</span><div><b id="cat-title">The cat is taking a nap</b><span id="cat-detail">A 30-second head start for your mice.</span></div></div><div class="cat-meter"><div id="cat-progress"></div></div><span class="exit-legend">EXIT <b>↗</b></span></div>
+      </section>
+    </div>
+    <footer><span><b>HOW TO PICK</b> First to escape or get eaten is chosen. Next round, one less mouse.</span><span>Little paws. Big possibilities. <b>✦</b></span></footer>
+  </main>
+  <dialog id="result" aria-labelledby="result-title"><div class="result-card"><span class="eyebrow" id="result-kicker">WE HAVE OUR NEXT STUDENT</span><div id="result-art">🐭</div><h2 id="result-title">You escaped!</h2><div id="winner-name"></div><p id="result-copy"></p><div id="result-stats"></div><button id="next" class="primary">Next round <span>→</span></button><button id="reset" class="text-button full">Reset with the whole crew</button></div></dialog>
+  <dialog id="edit-dialog" aria-labelledby="edit-title"><div class="result-card compact"><div class="eyebrow">FRESH START?</div><h2 id="edit-title">Back to the crew?</h2><p>This ends the current chase and clears the chosen list. Your names will still be in the editor.</p><button id="confirm-edit" class="primary">Edit names</button><button id="cancel-edit" class="secondary full">Keep this chase</button></div></dialog>
+  <script src="engine.js"></script><script src="app.js"></script>
+</body>
+</html>
