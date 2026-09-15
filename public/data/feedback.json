@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-15T10:55:36.5485359+00:00",
+  "updatedAt": "2026-09-15T21:01:00+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -907,8 +907,14 @@
           "date": "2026-09-15",
           "time": "17:40–19:40",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "Students began by presenting their homework on global warming and an imagined weather-changing device. Feedback focused on developing specific details, using clearer transitions, controlling gestures, and connecting with the audience. Sean joined as a new student and participated in the activities.\n\nWe briefly revisited the White House website and the game discussed previously, then moved into a new speaking prompt: a claim attributed to an AI company CEO that AI could destroy humanity by 2030. Students practised responding to this claim with their own reasoning. The claim served as a discussion prompt, rather than an established prediction.\n\nThe teacher demonstrated a three-minute response. Students then worked through two rounds of revision, applying earlier feedback to improve their speeches.",
+            "zh": "学生首先展示了关于全球变暖与想象中的天气改变装置的作业。反馈重点包括展开具体细节、使用更清楚的过渡、控制手势，以及与听众建立联系。Sean 作为新学生加入，并参与了课堂活动。\n\n我们简短回顾了白宫网站及之前讨论的游戏，然后进入新的演讲题目：一项归于某人工智能公司首席执行官的说法，称人工智能可能在2030年前毁灭人类。学生练习用自己的推理回应这一说法。这是供讨论的题目，而不是已经确定的预测。\n\n老师示范了一个三分钟的回答。随后，学生进行了两轮修改，运用之前收到的反馈来改进自己的演讲。"
+          },
+          "homework": {
+            "en": "Discussion statement: “Global warming and natural disasters will leave only 10% of the world habitable by 2040.”\n\nTreat this as a claim to evaluate, rather than a confirmed fact. Habitable means suitable for people to live in.\n\n◆ State your opinion: Explain whether you agree or disagree with the statement, and give reasons for your position.\n\n◆ Create a hypothetical situation: Use “Imagine if…” to help the audience picture what the world could look like in 2040. Include specific details about the setting, people’s daily lives, and the effects of climate change or natural disasters.\n\n◆ Develop your ideas: Explain the connections between your opinion and your imagined situation. Give enough detail for listeners to understand why your scenario matters.\n\n◆ Write and rehearse: Aim for approximately 200–300 words. The main speaking target is at least three minutes, with two to three minutes as the practical range discussed in class. Time the speech aloud; the word count alone does not guarantee the speaking length. Add meaningful detail where needed.\n\n◆ Prepare to present next class: Completing a written draft is only the first step. Students need to practise until they can deliver their ideas clearly in front of the class.\n\nMaterials: Bring pencils, pens, and a notebook. Student electronic devices will no longer be used in this class.\n\nStarting next class, students should bring pencils, pens, and a notebook only. Student electronic devices will no longer be used in this class. This will help everyone focus on developing their own ideas, practising speaking, and listening respectfully to classmates.",
+            "zh": "讨论陈述：“到2040年，全球变暖和自然灾害将使世界上只有10%的地区适合人类居住。”\n\n请把它当作需要评估的说法，而不是已确认的事实。Habitable 的意思是适合人类居住的。\n\n◆ 表达观点：说明你同意还是不同意这一陈述，并给出支持立场的理由。\n\n◆ 创造假设情境：使用“Imagine if…”帮助听众想象2040年的世界可能是什么样。加入具体细节，包括环境、人们的日常生活，以及气候变化或自然灾害造成的影响。\n\n◆ 展开想法：解释你的观点与想象情境之间的联系。提供足够的细节，让听众理解这个情境为什么重要。\n\n◆ 写稿并排练：争取写约200–300词。主要演讲目标是至少三分钟，课堂讨论的实际练习范围为两到三分钟。请朗读计时；字数本身不能保证演讲时长。需要时补充有意义的细节。\n\n◆ 准备下节课展示：完成书面稿件只是第一步。学生需要练习到能够在全班面前清楚表达自己的想法。\n\n所需材料：带铅笔、笔和笔记本。本班今后不再使用学生电子设备。\n\n从下节课开始，学生只需带铅笔、笔和笔记本。本班不再使用学生电子设备。这将帮助大家专注于发展自己的想法、练习演讲，并尊重地倾听同学发言。"
+          },
           "students": [
             {
               "id": "nelson",
@@ -919,8 +925,8 @@
             {
               "id": "lyon",
               "name": "Lyon",
-              "en": "→ Length and detail: The speech lasted approximately one minute and needed more development. Repeated use of “thingy” made parts of the explanation vague. Naming the device, its purpose, and how it would work would help listeners picture the idea and understand it more clearly.\n\n→ Exploring alternatives: The idea of a weather-control device could be developed further or compared with another environmental solution. For example, he could imagine a device that detects disposable plastic and suggests a reusable alternative. Explaining who would use it, what happens when it activates, and how it helps the environment would give the speech more substance.\n\n➜ Practice: Replace each “thingy” with a precise name or description. Add one concrete scenario and explain why the proposed solution would be useful. The aim is to lengthen the speech through meaningful detail.",
-              "zh": "→ 时长与细节：演讲约一分钟，内容还需要进一步展开。多次使用“thingy”使部分解释不够明确。说清装置的名称、用途以及工作方式，能够帮助听众想象这个创意，并更清楚地理解它。\n\n→ 探索其他方案：控制天气的装置可以继续展开，也可以与另一种环保方案作比较。例如，他可以设想一种检测一次性塑料、并推荐可重复使用替代品的装置。说明谁会使用它、启动时会发生什么，以及它如何帮助环境，能让演讲更充实。\n\n➜ 练习建议：把每一个“thingy”替换成准确的名称或描述。加入一个具体情境，并解释所提方案为什么有用。目标是通过有意义的细节来延长演讲。"
+              "en": "→ Length and detail: The speech lasted approximately one minute and needed more development. Repeated use of “thingy” made parts of the explanation vague. Naming the device, its purpose, and how it would work would help listeners picture the idea and understand it more clearly.\n\n→ Exploring alternatives: The idea of a weather-control device could be developed further or compared with another environmental solution. For example, he could imagine a device that detects disposable plastic and suggests a reusable alternative. Explaining who would use it, what happens when it activates, and how it helps the environment would give the speech more substance.\n\n➜ Practice: Replace each “thingy” with a precise name or description. Add one concrete scenario and explain why the proposed solution would be useful. The aim is to lengthen the speech through meaningful detail.\n\n→ Additional classroom feedback:\n\nLyon continued flipping his drink bottle during the lesson. His next focus is keeping distracting objects still and directing his attention towards the speaker or task. A simple routine is to place the bottle securely beside his bag before each activity.\n\nLyon continued flipping his bottle after reminders to stop, which distracted from the lesson. His next focus is responding promptly to instructions and keeping objects still while others speak. Placing the bottle inside his bag before activities would help him stay focused and support a respectful learning environment for everyone.",
+              "zh": "→ 时长与细节：演讲约一分钟，内容还需要进一步展开。多次使用“thingy”使部分解释不够明确。说清装置的名称、用途以及工作方式，能够帮助听众想象这个创意，并更清楚地理解它。\n\n→ 探索其他方案：控制天气的装置可以继续展开，也可以与另一种环保方案作比较。例如，他可以设想一种检测一次性塑料、并推荐可重复使用替代品的装置。说明谁会使用它、启动时会发生什么，以及它如何帮助环境，能让演讲更充实。\n\n➜ 练习建议：把每一个“thingy”替换成准确的名称或描述。加入一个具体情境，并解释所提方案为什么有用。目标是通过有意义的细节来延长演讲。\n\n→ 补充课堂反馈：\n\nLyon 在课堂中继续翻转饮料瓶。下一步的重点是让容易分散注意力的物品保持静止，并把注意力放在发言者或当前任务上。一个简单的方法是在每项活动前，把瓶子稳妥地放在书包旁。\n\n在被提醒停止之后，Lyon 仍继续翻转瓶子，干扰了课堂。下一步需要及时回应指令，并在他人发言时让物品保持静止。活动前把瓶子放进书包，可以帮助他保持专注，也支持大家在相互尊重的环境中学习。"
             },
             {
               "id": "jayden",
@@ -932,8 +938,8 @@
             {
               "id": "sean",
               "name": "Sean",
-              "en": null,
-              "zh": null
+              "en": "✓ Sean’s first speech was well put together, and he participated in the lesson as a new student. This provided a useful starting point for developing his speaking confidence.\n\n→ His speech was relatively short. For this first attempt, the priority was helping him feel comfortable speaking in front of everyone, with a manageable number of expectations. As he becomes more comfortable, he can gradually expand his ideas.\n\n→ He can also begin noticing small, repeated movements during his presentation. Greater awareness of these habits will help him develop steadier, more deliberate delivery.\n\n➜ Practice: Rehearse a short section aloud, concentrating on a comfortable standing position and finishing each idea clearly. Choose one small presentation habit to work on at a time.",
+              "zh": "✓ Sean 的第一次演讲整体组织良好，并作为新学生参与了课堂。这为逐步建立演讲信心提供了一个有用的起点。\n\n→ 演讲篇幅相对较短。对于这次初次尝试，重点是帮助他适应在大家面前讲话，同时保持要求数量适中。随着他更加适应，可以逐步展开自己的想法。\n\n→ 他也可以开始留意展示过程中细小、重复的动作。提高对这些习惯的觉察，有助于形成更稳定、更有意识的表达。\n\n➜ 练习建议：朗读排练一小段内容，注意自然舒适的站姿，并把每个想法表达完整。每次选择一个小的展示习惯来练习。"
             }
           ]
         }

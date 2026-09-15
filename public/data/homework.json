@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-15T18:01:00+08:00",
+  "updatedAt": "2026-09-15T21:01:00+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -736,6 +736,39 @@
             {
               "name": "Jayden",
               "feedbackUrl": "/fb/?class=tue-later&date=2026-09-08&student=jayden"
+            }
+          ]
+        },
+        {
+          "id": "tue-later-2026-09-15",
+          "date": "2026-09-15",
+          "time": "17:40–19:40",
+          "classContent": [
+            "Students began by presenting their homework on global warming and an imagined weather-changing device. Feedback focused on developing specific details, using clearer transitions, controlling gestures, and connecting with the audience. Sean joined as a new student and participated in the activities.\n\nWe briefly revisited the White House website and the game discussed previously, then moved into a new speaking prompt: a claim attributed to an AI company CEO that AI could destroy humanity by 2030. Students practised responding to this claim with their own reasoning. The claim served as a discussion prompt, rather than an established prediction.\n\nThe teacher demonstrated a three-minute response. Students then worked through two rounds of revision, applying earlier feedback to improve their speeches."
+          ],
+          "homework": {
+            "title": "What might the world look like in 2040?",
+            "steps": [
+              "Discussion statement: “Global warming and natural disasters will leave only 10% of the world habitable by 2040.”\n\nTreat this as a claim to evaluate, rather than a confirmed fact. Habitable means suitable for people to live in.\n\n◆ State your opinion: Explain whether you agree or disagree with the statement, and give reasons for your position.\n\n◆ Create a hypothetical situation: Use “Imagine if…” to help the audience picture what the world could look like in 2040. Include specific details about the setting, people’s daily lives, and the effects of climate change or natural disasters.\n\n◆ Develop your ideas: Explain the connections between your opinion and your imagined situation. Give enough detail for listeners to understand why your scenario matters.\n\n◆ Write and rehearse: Aim for approximately 200–300 words. The main speaking target is at least three minutes, with two to three minutes as the practical range discussed in class. Time the speech aloud; the word count alone does not guarantee the speaking length. Add meaningful detail where needed.\n\n◆ Prepare to present next class: Completing a written draft is only the first step. Students need to practise until they can deliver their ideas clearly in front of the class.\n\nMaterials: Bring pencils, pens, and a notebook. Student electronic devices will no longer be used in this class.\n\nStarting next class, students should bring pencils, pens, and a notebook only. Student electronic devices will no longer be used in this class. This will help everyone focus on developing their own ideas, practising speaking, and listening respectfully to classmates."
+            ],
+            "prepareFor": "Present the speech in the next class."
+          },
+          "students": [
+            {
+              "name": "Nelson",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-09-15&student=nelson"
+            },
+            {
+              "name": "Lyon",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-09-15&student=lyon"
+            },
+            {
+              "name": "Jayden",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-09-15&student=jayden"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-09-15&student=sean"
             }
           ]
         }
