@@ -32,3 +32,11 @@ Photorealistic editorial lake photograph for a Suzhou escape website; 16:9, nati
 Only travel-specific files changed. Integrate current origin/main before pushing to avoid replacing concurrent forest/food changes. Rollback: revert the travel redesign commit (no data migrations). Saved UI preferences are localStorage-only under speakkai-travel-v2 and can be reset on page.
 
 Final release gate: 57 regression tests passed; merged current main; 166-page build passed; schedule privacy, premium-media, flagship-budget and forest checks passed. Ten directly referenced travel assets resolve locally; Figma capture code is excluded from production. The 3D model loads only near the route section.
+
+## Photo-led bilingual revision — September 15
+- Rebuilt the guide as full-height photographs with overlaid headings and compact captions. Hotel information, itinerary, budget and packing details expand on demand.
+- First-visit Chinese / English dialog remembers the selected language independently of trip preferences. Header control reopens it. Static text, accessibility labels, gallery, itinerary, budget, feedback and route messages translate; calendar exports use the selected language.
+- Browser verified at desktop and 390x844: first-visit chooser, both languages, reload persistence, no horizontal overflow, no broken images, experience-to-itinerary expansion, spa budget changes, numeric edit preservation across language changes, preference reset retaining language, translated gallery, 3D focus and film playback. Error log empty.
+- Build passed for 166 pages; 57 existing regression tests and schedule privacy check passed. Print opens details temporarily and restores them after printing; native print output was not visually inspected.
+- This revision changes the website layout; existing Figma frames document the earlier design iteration. Original Blender and HyperFrames deliverables are retained.
+- Rollback this revision with git revert; no data migrations. Language preference key: speakkai-travel-language.
