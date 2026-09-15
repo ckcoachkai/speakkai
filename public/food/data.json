@@ -407,8 +407,8 @@
           "id": "2026-09-16-soymilk-order",
           "kind": "meal",
           "name": "Soy milk & bao fillings",
-          "time": null,
-          "description": "Three sweet soy milks; fillings only from four vermicelli buns and four small steamed buns; shrimp-and-egg rice rolls with extra egg; one pork-and-egg cake; one salted duck egg. Both congees excluded. Date and remaining consumption provisional.",
+          "time": "01:00",
+          "description": "Three sweet soy milks; fillings only from four vermicelli buns and four small steamed buns; shrimp-and-egg rice rolls with extra egg; one pork-and-egg cake; one salted duck egg. Both congees excluded. Around 1 a.m. on September 16, late on the night of September 15. Consumption of the remaining items is assumed.",
           "items": [
             {
               "id": "three-soymilks",
@@ -434,7 +434,7 @@
               ],
               "confidence": "Low confidence",
               "assumptions": [
-                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "Order screenshot, not a photograph of the portions eaten. Meal time confirmed as about 1 a.m. September 16 (night of September 15). Consumption of the remaining items is assumed.",
                 "User reports three soy milks, overriding the order quantity of two. Menu identifies iced sweet soy milk; cup size and sugar level are unknown.",
                 "Working proxy: 900 ml of Vitasoy Original at 61 kcal, 3.3 g protein, 5 g carbs and 3 g fat per 100 ml. This is a different product, not the restaurant recipe; homemade dilution and sugar could change all values substantially."
               ],
@@ -470,7 +470,7 @@
               ],
               "confidence": "Low confidence",
               "assumptions": [
-                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "Order screenshot, not a photograph of the portions eaten. Meal time confirmed as about 1 a.m. September 16 (night of September 15). Consumption of the remaining items is assumed.",
                 "All four flour wrappers are excluded. Vermicelli inside the buns still contributes carbohydrate.",
                 "Recipe allowance for about 80 g moist vermicelli/vegetable filling including approximately 5 g oil; weights and recipe unmeasured. Chili oil and vinegar are included in the broad range."
               ],
@@ -501,7 +501,7 @@
               ],
               "confidence": "Low confidence",
               "assumptions": [
-                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "Order screenshot, not a photograph of the portions eaten. Meal time confirmed as about 1 a.m. September 16 (night of September 15). Consumption of the remaining items is assumed.",
                 "Assumes about 200 g rice-roll sheet, 40 g shrimp, two eggs total (one standard plus one added), and modest sauce/oil.",
                 "Ingredient-based recipe allowance, not restaurant nutrition. The bao-wrapper correction is not applied to the rice-roll sheet."
               ],
@@ -532,7 +532,7 @@
               ],
               "confidence": "Low confidence",
               "assumptions": [
-                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "Order screenshot, not a photograph of the portions eaten. Meal time confirmed as about 1 a.m. September 16 (night of September 15). Consumption of the remaining items is assumed.",
                 "Two order lines each show quantity two: four buns total, not two. All flour wrappers excluded.",
                 "Assumes approximately 60 g pork filling total; pork identity, fat content and filling weight unconfirmed. Explicit recipe allowance, not a whole-bun nutrition value."
               ],
@@ -563,7 +563,7 @@
               ],
               "confidence": "Low confidence",
               "assumptions": [
-                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "Order screenshot, not a photograph of the portions eaten. Meal time confirmed as about 1 a.m. September 16 (night of September 15). Consumption of the remaining items is assumed.",
                 "Assumes one egg, approximately 30 g pork, a small flour batter portion and cooking oil.",
                 "Counted whole: this menu item is an egg cake, not a bao. Exact batter, meat and oil amounts are unknown."
               ],
@@ -594,7 +594,7 @@
               ],
               "confidence": "Low confidence",
               "assumptions": [
-                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "Order screenshot, not a photograph of the portions eaten. Meal time confirmed as about 1 a.m. September 16 (night of September 15). Consumption of the remaining items is assumed.",
                 "Assumes the whole yolk and white were eaten. Size and nutrition label unknown; rounded recipe allowance. Sodium left unknown rather than inferred from the image."
               ],
               "sources": [],
@@ -606,7 +606,8 @@
           "carbs": 137,
           "fat": 85,
           "caloriesLow": 1070,
-          "caloriesHigh": 2270
+          "caloriesHigh": 2270,
+          "timeApproximate": true
         }
       ],
       "exercise": [],
@@ -615,7 +616,7 @@
       "photos": [
         {
           "src": "/food/photos/2026-09-16-soymilk-order.jpg",
-          "caption": "Order screenshot: three soy milks reported; bao wrappers and both congees not consumed. Other items assumed eaten; date provisional."
+          "caption": "Order screenshot: three soy milks reported; bao wrappers and both congees not consumed. About 1 a.m. September 16 (night of September 15); other items assumed eaten."
         }
       ],
       "references": [
@@ -640,7 +641,7 @@
           "caloriesRange": null,
           "confidence": "Not eaten",
           "assumptions": [
-            "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+            "Order screenshot, not a photograph of the portions eaten. Meal time confirmed as about 1 a.m. September 16 (night of September 15). Consumption of the remaining items is assumed.",
             "User said they did not have the century-egg and lean-pork congee. Both menu listings are excluded."
           ],
           "sources": [],
@@ -668,7 +669,7 @@
           "caloriesRange": null,
           "confidence": "Not eaten",
           "assumptions": [
-            "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+            "Order screenshot, not a photograph of the portions eaten. Meal time confirmed as about 1 a.m. September 16 (night of September 15). Consumption of the remaining items is assumed.",
             "User said they did not have the century-egg and lean-pork congee. Both menu listings are excluded."
           ],
           "sources": [],
