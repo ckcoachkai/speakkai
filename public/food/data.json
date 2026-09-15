@@ -321,20 +321,20 @@
           "name": "Mixed-beef pho",
           "time": "16:00",
           "timeApproximate": true,
-          "description": "One mixed-beef pho around 4 p.m.; portions and broth intake estimated.",
+          "description": "One whole mixed-beef pho, including all noodles, meat and broth, around 4 p.m.",
           "items": [
             {
               "id": "mixed-beef-pho",
               "name": "全家福火车头河粉 · Mixed-beef pho",
               "type": "meal",
               "emoji": "🍜",
-              "portion": "1 bowl · noodles and meat assumed eaten",
+              "portion": "1 whole bowl · all noodles, meat and broth",
               "photo": "/food/photos/2026-09-15-pho-1600.jpg",
               "nutrition": {
-                "calories": 600,
-                "protein": 40,
-                "carbs": 75,
-                "fat": 15,
+                "calories": 650,
+                "protein": 42,
+                "carbs": 78,
+                "fat": 18,
                 "fiber": null,
                 "sugar": null,
                 "saturatedFat": null,
@@ -342,15 +342,15 @@
                 "caffeine": null
               },
               "caloriesRange": [
-                450,
-                800
+                500,
+                850
               ],
               "confidence": "Low confidence",
               "assumptions": [
                 "User reported this meal around 4 p.m. September 15. Order names mixed beef pho; photo shows beef slices, meatballs, herbs and broth.",
-                "Assumes the noodles and meat were eaten; leftovers and amount of broth drunk have not been confirmed. Noodles underneath the broth cannot be weighed from the photo.",
-                "Working recipe allowance: roughly 300 g cooked rice noodles, 130–150 g mixed beef/meatballs, herbs and some broth. Portion weights, meat cuts and oil are unmeasured.",
-                "600 kcal and rounded macros are a portion-based estimate, not this restaurant's nutrition label. For comparison only, a different restaurant (Pho UK) lists its beef combo at 396 kcal, 39.2 g protein, 46.1 g carbs and 5.8 g fat. The larger noodle/fat allowance here is an assumption, not a measured difference.",
+                "User confirmed finishing the whole bowl, including all noodles, meat and broth. Noodles underneath the broth cannot be weighed from the photo.",
+                "Working recipe allowance: roughly 300 g cooked rice noodles, 130–150 g mixed beef/meatballs, herbs and all broth. Portion weights, meat cuts and oil are unmeasured. Includes an additional 50 kcal (2 g protein, 3 g carbs, 3 g fat, rounded) allowance compared with the provisional partial-broth estimate.",
+                "650 kcal and rounded macros are a portion-based estimate, not this restaurant's nutrition label. For comparison only, a different restaurant (Pho UK) lists its beef combo at 396 kcal, 39.2 g protein, 46.1 g carbs and 5.8 g fat. The larger noodle/fat allowance here is an assumption, not a measured difference.",
                 "No extra dipping sauce is counted because the amount used is unconfirmed. Sodium is unknown and depends strongly on broth and sauce intake."
               ],
               "sources": [
@@ -359,15 +359,15 @@
                   "url": "https://content.phocafe.co.uk/wp-content/uploads/2026/04/Pho-Nutritional-Guidelines-2026_web.pdf"
                 }
               ],
-              "tip": "Record how much noodle and broth you finished to tighten this estimate."
+              "tip": "All broth is counted; the recipe and bowl size still determine the estimate."
             }
           ],
-          "calories": 600,
-          "protein": 40,
-          "carbs": 75,
-          "fat": 15,
-          "caloriesLow": 450,
-          "caloriesHigh": 800
+          "calories": 650,
+          "protein": 42,
+          "carbs": 78,
+          "fat": 18,
+          "caloriesLow": 500,
+          "caloriesHigh": 850
         }
       ],
       "exercise": [],
