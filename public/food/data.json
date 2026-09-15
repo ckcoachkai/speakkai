@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "timeZone": "Asia/Shanghai",
   "updatedAt": "2026-09-15",
   "days": [
@@ -10,13 +10,310 @@
         {
           "id": "2026-09-15-hamburger-meal",
           "description": "Two hamburger patties, half serving of rice, egg, two servings of broccoli, seaweed soup with two fish/meat balls, and light sauce.",
-          "calories": 1080,
-          "caloriesLow": 925,
-          "caloriesHigh": 1250,
-          "protein": null,
-          "carbs": null,
-          "fat": null,
-          "note": "Revised ChatGPT estimate after half-rice and extra-broccoli correction. Portion weights are unknown; macros need a revised estimate."
+          "calories": 1061,
+          "caloriesLow": 870,
+          "caloriesHigh": 1405,
+          "protein": 85,
+          "carbs": 59.6,
+          "fat": 51.8,
+          "note": "Re-estimated item by item on 2026-09-15. Supersedes the earlier 1,080 kcal meal estimate; not an additional meal. All portions are assumptions unless explicitly reported.",
+          "items": [
+            {
+              "id": "beef-patties",
+              "name": "Hamburger patties",
+              "type": "protein",
+              "emoji": "🔥",
+              "portion": "2 patties · assumed 250 g cooked total",
+              "photo": "/food/photos/2026-09-15-38800.jpg",
+              "nutrition": {
+                "calories": 625,
+                "protein": 64.8,
+                "carbs": 0,
+                "fat": 38.5,
+                "fiber": 0,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                560,
+                850
+              ],
+              "confidence": "Estimated",
+              "assumptions": [
+                "Assumes 125 g cooked per patty and an 85%-lean ground-beef reference. Neither weight nor fat percentage was measured.",
+                "Reference per 100 g: 250 kcal, 25.93 g protein, 15.41 g fat. Restaurant binders and oil could change this."
+              ],
+              "sources": [
+                {
+                  "title": "USDA reference values via WhatYouEat",
+                  "url": "https://whatyoueat.io/foods/174032"
+                }
+              ],
+              "tip": "Ask for the patty weight or lean percentage next time; that would tighten the largest uncertainty in this meal."
+            },
+            {
+              "id": "half-rice",
+              "name": "Half portion of rice",
+              "type": "grain",
+              "emoji": "🍚",
+              "portion": "Half the bowl eaten · assumed 110 g cooked",
+              "photo": "/food/photos/2026-09-15-38801.jpg",
+              "nutrition": {
+                "calories": 143,
+                "protein": 3,
+                "carbs": 31,
+                "fat": 0.3,
+                "fiber": 0.4,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                125,
+                160
+              ],
+              "confidence": "Estimated",
+              "assumptions": [
+                "The photo shows the full bowl. Only half is counted, following your correction.",
+                "Assumes 110 g cooked white rice; reference is 130 kcal, 2.69 g protein, 28.17 g carbs and 0.28 g fat per 100 g. Egg and sauce have separate cards."
+              ],
+              "sources": [
+                {
+                  "title": "USDA reference values via WhatYouEat",
+                  "url": "https://whatyoueat.io/foods/168935"
+                }
+              ],
+              "tip": "Keep the portion comfortable for your appetite; add vegetables rather than treating rice as something you must eliminate."
+            },
+            {
+              "id": "soft-egg",
+              "name": "Soft egg",
+              "type": "protein",
+              "emoji": "🥚",
+              "portion": "1 large egg · assumed 50 g edible",
+              "photo": "/food/photos/2026-09-15-38801.jpg",
+              "nutrition": {
+                "calories": 72,
+                "protein": 6.3,
+                "carbs": 0.4,
+                "fat": 4.7,
+                "fiber": 0,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                65,
+                90
+              ],
+              "confidence": "Estimated",
+              "assumptions": [
+                "Uses a poached-egg reference as a proxy for the soft egg. No added butter or oil included.",
+                "Per 100 g: 143 kcal, 12.51 g protein, 0.71 g carbs and 9.47 g fat."
+              ],
+              "sources": [
+                {
+                  "title": "USDA reference values via WhatYouEat",
+                  "url": "https://whatyoueat.io/foods/172186"
+                }
+              ],
+              "tip": "The egg contributes protein. Any oil or extra sauce should be recorded separately."
+            },
+            {
+              "id": "broccoli",
+              "name": "Double broccoli",
+              "type": "vegetable",
+              "emoji": "🥦",
+              "portion": "2 servings · assumed 150 g cooked total",
+              "photo": "/food/photos/2026-09-15-38800.jpg",
+              "nutrition": {
+                "calories": 53,
+                "protein": 3.6,
+                "carbs": 10.8,
+                "fat": 0.6,
+                "fiber": 5,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                40,
+                65
+              ],
+              "confidence": "Estimated",
+              "assumptions": [
+                "Includes the extra broccoli you reported and very little sauce. Assumes no added cooking oil.",
+                "Cooked broccoli reference per 100 g: 35 kcal, 2.38 g protein, 7.18 g carbs, 0.41 g fat and 3.3 g fiber."
+              ],
+              "sources": [
+                {
+                  "title": "USDA reference values via WhatYouEat",
+                  "url": "https://whatyoueat.io/foods/169967"
+                }
+              ],
+              "tip": "Keep the extra vegetables. They add volume and fiber alongside the rest of the meal."
+            },
+            {
+              "id": "soup-balls",
+              "name": "Two soup balls",
+              "type": "protein",
+              "emoji": "🍥",
+              "portion": "2 fish/meat balls · assumed 50 g total",
+              "photo": "/food/photos/2026-09-15-38802.jpg",
+              "nutrition": {
+                "calories": 103,
+                "protein": 6.3,
+                "carbs": 4.4,
+                "fat": 6.7,
+                "fiber": 0.1,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                50,
+                140
+              ],
+              "confidence": "Low confidence",
+              "assumptions": [
+                "The exact fish/meat mixture, filling and brand are unknown. This is a proxy, not a product identification.",
+                "Uses a 50 g portion of a fish-roe-ball label (205 kcal, 12.5 g protein, 8.7 g carbs, 13.4 g fat per 100 g). Plain fish balls or meat balls can differ substantially."
+              ],
+              "sources": [
+                {
+                  "title": "Example fish-ball product label, not the confirmed product",
+                  "url": "https://www.fairprice.com.sg/product/jing-li-hwa-fish-ball-with-roe-500g-13006423"
+                }
+              ],
+              "tip": "A menu name or ingredient label would make this estimate much more useful."
+            },
+            {
+              "id": "seaweed-broth",
+              "name": "Seaweed broth",
+              "type": "soup",
+              "emoji": "🥣",
+              "portion": "1 bowl · broth only",
+              "photo": "/food/photos/2026-09-15-38802.jpg",
+              "nutrition": {
+                "calories": 25,
+                "protein": 1,
+                "carbs": 3,
+                "fat": 1,
+                "fiber": null,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                10,
+                40
+              ],
+              "confidence": "Low confidence",
+              "assumptions": [
+                "Recipe is unknown. A working allowance of 1 g protein, 3 g carbs and 1 g fat is used for a light seaweed broth.",
+                "This is an explicit recipe assumption, not a database measurement. The two soup balls are counted separately. Sodium cannot be estimated reliably from the photo."
+              ],
+              "sources": [],
+              "tip": "If the broth tastes salty, you can enjoy the solids without needing to finish all the broth."
+            },
+            {
+              "id": "sauces",
+              "name": "Light dipping sauces",
+              "type": "condiment",
+              "emoji": "🥢",
+              "portion": "Small amount actually eaten",
+              "photo": "/food/photos/2026-09-15-38804.jpg",
+              "nutrition": {
+                "calories": 40,
+                "protein": 0,
+                "carbs": 10,
+                "fat": 0,
+                "fiber": null,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                20,
+                60
+              ],
+              "confidence": "Low confidence",
+              "assumptions": [
+                "Models about 10 g carbohydrate from the lightly used sauces. Exact amount and recipe are unknown.",
+                "This assumes mostly sweet/soy-based sauces, not a mayonnaise-based sauce. Bottles shown are reference photos and are not extra servings."
+              ],
+              "sources": [],
+              "tip": "Keeping sauce on the side makes the amount you actually use easier to notice and log."
+            }
+          ],
+          "kind": "meal",
+          "name": "Hamburger set",
+          "time": null,
+          "previousEstimate": {
+            "calories": 1080,
+            "caloriesLow": 925,
+            "caloriesHigh": 1250
+          }
+        },
+        {
+          "id": "2026-09-15-coffee-1700",
+          "kind": "drink",
+          "name": "M Stand iced Americanos",
+          "time": "17:00",
+          "timeApproximate": true,
+          "description": "Two medium M Stand iced Americanos, black, no milk or sugar, around 17:00.",
+          "items": [
+            {
+              "id": "cold-coffees",
+              "name": "M Stand Americanos",
+              "type": "drink",
+              "emoji": "☕",
+              "portion": "2 medium cups · black · about 5 p.m.",
+              "photo": null,
+              "nutrition": {
+                "calories": 30,
+                "protein": 2,
+                "carbs": 4,
+                "fat": 0,
+                "fiber": 0,
+                "sugar": 0,
+                "saturatedFat": 0,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                10,
+                40
+              ],
+              "confidence": "Estimated",
+              "assumptions": [
+                "You confirmed M Stand black iced Americanos with no milk or sugar. Both medium cups are counted once.",
+                "Uses two 15-kcal plain iced Americano servings as a working proxy (1 g protein and 2 g carbs each). This is not a verified M Stand nutrition label.",
+                "Actual cup volume and espresso shots are unknown. Caffeine is left unknown; plain black coffee contributes little energy."
+              ],
+              "sources": [
+                {
+                  "title": "Starbucks plain iced Americano nutrition — proxy, not M Stand’s recipe",
+                  "url": "https://www.starbucks.com/menu/product/406/iced/nutrition"
+                }
+              ],
+              "tip": "Black coffee avoids calories from milk and syrups. Notice whether two late coffees affect your sleep; decaf or an earlier coffee are options."
+            }
+          ],
+          "calories": 30,
+          "protein": 2,
+          "carbs": 4,
+          "fat": 0,
+          "caloriesLow": 10,
+          "caloriesHigh": 40
         }
       ],
       "exercise": [],
@@ -48,9 +345,62 @@
           "src": "/food/photos/2026-09-15-38805.jpg",
           "caption": "Fruit and mint infused water; amount consumed not recorded"
         }
+      ],
+      "references": [
+        {
+          "id": "infused-water",
+          "name": "Fruit & mint water",
+          "type": "drink",
+          "emoji": "🍉",
+          "portion": "Photo reference · quantity consumed unconfirmed",
+          "photo": "/food/photos/2026-09-15-38805.jpg",
+          "consumed": false,
+          "nutrition": {
+            "calories": null,
+            "protein": null,
+            "carbs": null,
+            "fat": null,
+            "fiber": null,
+            "sugar": null,
+            "saturatedFat": null,
+            "sodium": null,
+            "caffeine": null
+          },
+          "caloriesRange": null,
+          "confidence": "Not counted",
+          "assumptions": [
+            "The photo is included in the diary. There is no confirmed amount drunk or fruit eaten, so it is excluded from totals."
+          ],
+          "sources": [],
+          "tip": "If you drank some or ate the fruit, log the amount and it can be added."
+        }
+      ],
+      "suggestions": [
+        {
+          "title": "Keep the vegetable boost",
+          "text": "You added a second serving of broccoli. At another meal, try a mix of vegetables and fruit alongside protein and a grain; no need to skip a meal to compensate for this one.",
+          "source": {
+            "title": "Canada’s food guide plate",
+            "url": "https://www.canada.ca/en/health-canada/services/food-guide/eating-support/cooking/make-healthy-meals-plate.html"
+          }
+        },
+        {
+          "title": "Make the next estimate easier",
+          "text": "The patties dominate the calorie uncertainty. A cooked weight or menu description would help more than trying to guess every trace of sauce.",
+          "source": null
+        },
+        {
+          "title": "Check the 5 p.m. coffees",
+          "text": "Your two M Stand Americanos were black, with no milk or sugar. If a 5 p.m. coffee affects sleep, consider an earlier coffee, a smaller serving or decaf. Caffeine depends on the number of espresso shots.",
+          "source": {
+            "title": "FDA: caffeine and individual sensitivity",
+            "url": "https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much"
+          }
+        }
       ]
     }
   ],
   "startingWeightKg": 115,
-  "startingWeightDate": null
+  "startingWeightDate": null,
+  "methodology": "Working estimates, not measured nutrition. Source values are scaled to explicitly stated portion assumptions; recipe proxies are labelled. Incomplete days and pending foods are never zero-filled."
 }
