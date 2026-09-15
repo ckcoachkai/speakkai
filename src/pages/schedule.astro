@@ -697,6 +697,10 @@ import "@fontsource/manrope/700.css";
         }
 
         for (const line of lines.slice(1)) {
+          if (line.startsWith("Schedule notice: ")) {
+            content.append(makePublicEvent("special", "", line.slice("Schedule notice: ".length)));
+            continue;
+          }
           if (/^(?:Limited availability|In-person: Malaysia only|Travel: Malaysia)$/i.test(line)) continue;
 
           const eventMatch = line.match(/^((?:[01]\d|2[0-3]):[0-5]\d(?:[–-](?:[01]\d|2[0-3]):[0-5]\d)?) · (.+)$/);

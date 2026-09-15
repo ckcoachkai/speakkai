@@ -5,6 +5,10 @@ const PUBLIC_EVENT_LINE_PATTERN =
   /^(?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)? · .+$/;
 const PUBLIC_TRAVEL_LABEL_PATTERN = /^Travel: Malaysia$/;
 const PUBLIC_IN_PERSON_LABEL = "In-person: Malaysia only";
+const PUBLIC_SCHEDULE_NOTICES = new Set([
+  "Schedule notice: Classes moved to September 27 - make-up workday for the September 25-27 holiday.",
+  "Schedule notice: Make-up classes from September 20.",
+]);
 const PUBLIC_DETAIL_FORBIDDEN_PATTERN =
   /(?:https?:\/\/|\bwww\.|[\w.+-]+@[\w.-]+\.[a-z]{2,}|\+?\d[\d\s()-]{6,}\d)/i;
 const RAW_TIME = String.raw`(?:[01]?\d|2[0-3])[:：][0-5]\d`;
@@ -152,6 +156,8 @@ export function sanitizeCalendarCell(value) {
   if (!details) return day;
 
   const timedEntries = extractCalendarDisplayEvents(detailLines);
+  const notices = detailLines.filter((line) => PUBLIC_SCHEDULE_NOTICES.has(line));
+  const makeUpClasses = timedEntries.length > 0 && notices.includes("Schedule notice: Make-up classes from September 20.");
   if (isMalaysiaOnlineOpen(details)) {
     return [
       day,
@@ -161,7 +167,9 @@ export function sanitizeCalendarCell(value) {
     ].join("\n");
   }
 
-  const holiday = /\bholiday\b|休假/i.test(details);
+  const holiday = !makeUpClasses && detailLines.some((line) =>
+    !PUBLIC_SCHEDULE_NOTICES.has(line) && !/^Make-up workday:/i.test(line) && /\bholiday\b|休假/i.test(line),
+  );
   const unavailable =
     !holiday &&
     (/\ball\s*day\b|全天/i.test(details) ||
@@ -170,6 +178,7 @@ export function sanitizeCalendarCell(value) {
   const publicLines = [
     day,
     holiday ? "Holiday" : unavailable ? "Unavailable" : "Limited availability",
+    ...notices,
   ];
   if (unavailable) {
     const publicTravelLabel = extractPublicTravelLabel(details);
@@ -247,7 +256,7 @@ export function assertCalendarDisplayPublicScheduleSheet(sheet) {
 
       const [day, status, ...extra] = cleanLines(value);
       const invalidLimitedDetails = extra.some(
-        (line) => !PUBLIC_EVENT_LINE_PATTERN.test(line) || PUBLIC_DETAIL_FORBIDDEN_PATTERN.test(line),
+        (line) => !PUBLIC_SCHEDULE_NOTICES.has(line) && (!PUBLIC_EVENT_LINE_PATTERN.test(line) || PUBLIC_DETAIL_FORBIDDEN_PATTERN.test(line)),
       );
       const invalidUnavailableDetails = extra.some(
         (line) => !PUBLIC_TRAVEL_LABEL_PATTERN.test(line),
