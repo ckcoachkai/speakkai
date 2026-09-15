@@ -30,3 +30,5 @@ Photorealistic editorial lake photograph for a Suzhou escape website; 16:9, nati
 
 ## Release and rollback
 Only travel-specific files changed. Integrate current origin/main before pushing to avoid replacing concurrent forest/food changes. Rollback: revert the travel redesign commit (no data migrations). Saved UI preferences are localStorage-only under speakkai-travel-v2 and can be reset on page.
+
+Final release gate: 57 regression tests passed; merged current main; 166-page build passed; schedule privacy, premium-media, flagship-budget and forest checks passed. Ten directly referenced travel assets resolve locally; Figma capture code is excluded from production. The 3D model loads only near the route section.
