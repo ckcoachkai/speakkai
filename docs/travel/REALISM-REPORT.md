@@ -35,3 +35,5 @@ Web rendering uses optimized real-time shadows/environment lighting, not Cycles-
 ## Rebuild and rollback
 
 Run scripts/travel-surface-textures.py with the documented texture inputs, then Blender background with scripts/build-travel-realism.py -- --final. Generate JPG/SVG deliverables using scripts/travel-render-deliverables.py. Source media stays local; runtime assets and durable scripts are versioned. Revert the release commit to restore the prior map; no data migrations.
+
+Validation completed: 166-page production build, 57 existing regression tests, 5 merged food-card tests, schedule privacy and diff whitespace checks passed. Browser console had no errors during map tests. Release includes the concurrent food-page commit ef1c408 without altering it.

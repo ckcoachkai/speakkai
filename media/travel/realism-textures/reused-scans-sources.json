@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "provider": "Poly Haven",
+  "license": {
+    "name": "CC0 1.0 Universal",
+    "url": "https://polyhaven.com/license",
+    "note": "Poly Haven texture assets are published under CC0; attribution is appreciated but not required."
+  },
+  "api": {
+    "texture_catalog": "https://api.polyhaven.com/assets?t=textures",
+    "file_template": "https://api.polyhaven.com/files/{asset_id}",
+    "selection_rule": "Only 1k JPG URLs returned by /files/{assetId} were downloaded."
+  },
+  "materials": {
+    "asphalt": {
+      "asset_id": "worn_asphalt",
+      "asset_page": "https://polyhaven.com/a/worn_asphalt",
+      "files_endpoint": "https://api.polyhaven.com/files/worn_asphalt",
+      "maps": {
+        "diffuse": {
+          "output": "game/assets/textures/asphalt_diff.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/worn_asphalt/worn_asphalt_diff_1k.jpg",
+          "md5": "8777234b139e454eaabcda0eb8115e45",
+          "bytes": 914719,
+          "source_size": 914719,
+          "resolution": "1k",
+          "format": "jpg"
+        },
+        "roughness": {
+          "output": "game/assets/textures/asphalt_rough.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/worn_asphalt/worn_asphalt_rough_1k.jpg",
+          "md5": "7a1258305d51852b6378508d57dcbe2e",
+          "bytes": 480395,
+          "source_size": 480395,
+          "resolution": "1k",
+          "format": "jpg"
+        },
+        "normal_opengl": {
+          "output": "game/assets/textures/asphalt_normal_gl.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/worn_asphalt/worn_asphalt_nor_gl_1k.jpg",
+          "md5": "706a5c4e817c4d927029920578c01312",
+          "bytes": 1503498,
+          "source_size": 1503498,
+          "resolution": "1k",
+          "format": "jpg"
+        }
+      }
+    },
+    "concrete": {
+      "asset_id": "dirty_concrete",
+      "asset_page": "https://polyhaven.com/a/dirty_concrete",
+      "files_endpoint": "https://api.polyhaven.com/files/dirty_concrete",
+      "maps": {
+        "diffuse": {
+          "output": "game/assets/textures/concrete_diff.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/dirty_concrete/dirty_concrete_diff_1k.jpg",
+          "md5": "c6a8dc8bd2aa5f81e7038561f7e602a8",
+          "bytes": 666452,
+          "source_size": 666452,
+          "resolution": "1k",
+          "format": "jpg"
+        },
+        "roughness": {
+          "output": "game/assets/textures/concrete_rough.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/dirty_concrete/dirty_concrete_rough_1k.jpg",
+          "md5": "8a2d15060edb6eee11f454670dd6d228",
+          "bytes": 276785,
+          "source_size": 276785,
+          "resolution": "1k",
+          "format": "jpg"
+        },
+        "normal_opengl": {
+          "output": "game/assets/textures/concrete_normal_gl.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/dirty_concrete/dirty_concrete_nor_gl_1k.jpg",
+          "md5": "bf8286fc94f90dbc117efafe5bb381c0",
+          "bytes": 350169,
+          "source_size": 350169,
+          "resolution": "1k",
+          "format": "jpg"
+        }
+      }
+    },
+    "brick": {
+      "asset_id": "worn_brick_wall",
+      "asset_page": "https://polyhaven.com/a/worn_brick_wall",
+      "files_endpoint": "https://api.polyhaven.com/files/worn_brick_wall",
+      "maps": {
+        "diffuse": {
+          "output": "game/assets/textures/brick_diff.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/worn_brick_wall/worn_brick_wall_diff_1k.jpg",
+          "md5": "17f8d2555ab15093c27e08a5f12397ac",
+          "bytes": 926182,
+          "source_size": 926182,
+          "resolution": "1k",
+          "format": "jpg"
+        },
+        "roughness": {
+          "output": "game/assets/textures/brick_rough.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/worn_brick_wall/worn_brick_wall_rough_1k.jpg",
+          "md5": "d972b8b8d46fad12ecae93627fbb9bb5",
+          "bytes": 516569,
+          "source_size": 516569,
+          "resolution": "1k",
+          "format": "jpg"
+        },
+        "normal_opengl": {
+          "output": "game/assets/textures/brick_normal_gl.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/worn_brick_wall/worn_brick_wall_nor_gl_1k.jpg",
+          "md5": "278a1d25a2c329eb21495e6f8bbe51d8",
+          "bytes": 1102090,
+          "source_size": 1102090,
+          "resolution": "1k",
+          "format": "jpg"
+        }
+      }
+    },
+    "wood": {
+      "asset_id": "weathered_planks",
+      "asset_page": "https://polyhaven.com/a/weathered_planks",
+      "files_endpoint": "https://api.polyhaven.com/files/weathered_planks",
+      "maps": {
+        "diffuse": {
+          "output": "game/assets/textures/wood_diff.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/weathered_planks/weathered_planks_diff_1k.jpg",
+          "md5": "5d7c9e7088bfa54490ba03ba15b660d8",
+          "bytes": 599581,
+          "source_size": 599581,
+          "resolution": "1k",
+          "format": "jpg"
+        },
+        "roughness": {
+          "output": "game/assets/textures/wood_rough.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/weathered_planks/weathered_planks_rough_1k.jpg",
+          "md5": "4ca50b076e1fc58f6862a5b039a7d5c9",
+          "bytes": 218802,
+          "source_size": 218802,
+          "resolution": "1k",
+          "format": "jpg"
+        },
+        "normal_opengl": {
+          "output": "game/assets/textures/wood_normal_gl.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/weathered_planks/weathered_planks_nor_gl_1k.jpg",
+          "md5": "119541f6b143f21f0a6e9774e9208905",
+          "bytes": 681552,
+          "source_size": 681552,
+          "resolution": "1k",
+          "format": "jpg"
+        }
+      }
+    }
+  }
+}
