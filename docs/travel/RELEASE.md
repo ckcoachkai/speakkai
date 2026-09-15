@@ -50,3 +50,9 @@ Final release gate: 57 regression tests passed; merged current main; 166-page bu
 - Verified desktop and 390x844 mobile: English/Chinese selection autoplay, first-visit silence, language-switch pause, correct file/duration, pause/resume, seeking, replay after completion, translated transcript, no horizontal overflow, no console errors. Both MP3s fully decoded with ffmpeg.
 - English audio transcribed with ElevenLabs Scribe; Chinese checked with cached local Whisper large-v3 after the Scribe quota was exhausted. Transcript review confirmed the itinerary and budget, with some proper-name/homophone recognition differences. No independent native-listener pronunciation review is claimed.
 - 166-page build, 57 regression tests, and schedule privacy check passed. Rollback by reverting this audio introduction commit; no migrations.
+
+## Photo-referenced Blender resort — September 15
+- Replaced imagined route map with detailed resort architecture, PBR surfaces, HDR lighting, bilingual anchored labels and four interactive camera views.
+- Added three native 4K Cycles stills and bilingual labeled SVG; selected camera controls the 4K link. Gallery uses the new render.
+- Source, evidence, metrics and explicit approximation boundaries: REALISM-REPORT.md. Packed editable Blender scene retained locally.
+- Desktop/mobile UI and fresh GLB inspection completed; two remote terrain slivers remain documented. No survey-accuracy claim.

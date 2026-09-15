@@ -1,25 +1,62 @@
 import * as THREE from 'three';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
+import {DRACOLoader} from './vendor/DRACOLoader.js';
+import {HDRLoader} from './vendor/HDRLoader.js';
 const canvas=document.querySelector('#scene'),wrap=canvas.parentElement,note=document.querySelector('.map-note');
-let noteKey=note.dataset.i18n;function setNote(key){noteKey=key;note.dataset.i18n=key;note.textContent=window.travelI18n.t(key);}document.addEventListener('travel-language',()=>setNote(noteKey));
+const labelLayer=document.createElement('div');labelLayer.className='scene-labels';wrap.append(labelLayer);
+const language=()=>window.travelI18n.language;
+const messages={ready:['Photo-based resort study · Drag to orbit · Pinch to zoom','照片参考重建 · 拖动旋转 · 双指缩放'],loading:['Loading the detailed resort…','正在加载精细酒店模型…'],error:['3D is unavailable. Explore the 4K render or open the live map.','三维暂不可用，可查看4K效果图或打开实时地图。']};
+let message='loading';function setNote(key){message=key;note.removeAttribute('data-i18n');note.textContent=messages[key][language()==='zh'?1:0];}
+const anchors=[
+ {en:'HUALUXE guest wings',zh:'华邑酒店客房楼',p:[-15,27,-31],view:'stay',priority:0},
+ {en:'Water garden',zh:'水景花园',p:[-20,5,23],view:'stay',priority:1},
+ {en:'Arrival lobby',zh:'抵达大堂',p:[88,13,-6],view:'home',priority:2},
+ {en:'East Taihu Lake',zh:'东太湖',p:[-155,3,-37],view:'hero',priority:3},
+ {en:'Garden suites',zh:'花园别墅',p:[-28,13,85],view:'hero',priority:4},
+ {en:'Event hall',zh:'宴会厅',p:[77,17,56],view:'overview',priority:5}
+];
+let labelsEnabled=true,loaded=false,visible=false,active=!document.hidden;
+function translate(){setNote(message);anchors.forEach(a=>{if(a.el)a.el.textContent=language()==='zh'?a.zh:a.en;});const button=document.querySelector('#map-labels');button.textContent=language()==='zh'?'地点标注':'Labels';}
 try{
- const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;
- const scene=new THREE.Scene();scene.background=new THREE.Color(0xd9e0cf);
- const camera=new THREE.PerspectiveCamera(38,1,.1,120);camera.position.set(-13,16,19);
- const controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.maxPolarAngle=Math.PI*.46;controls.minDistance=4;controls.maxDistance=32;controls.enablePan=false;controls.target.set(0,0,0);controls.enableZoom=false;
- // Prevent the map from trapping page scroll; pinch and explicit focus views remain available.
- controls.touches.TWO=THREE.TOUCH.DOLLY_PAN;canvas.addEventListener('touchstart',e=>{controls.enableZoom=e.touches.length>1;},{passive:true});canvas.addEventListener('touchend',()=>{controls.enableZoom=false;},{passive:true});
- scene.add(new THREE.HemisphereLight(0xfff7df,0x55734f,2.8));const sun=new THREE.DirectionalLight(0xffebc9,3.3);sun.position.set(-7,14,8);scene.add(sun);const fill=new THREE.DirectionalLight(0xd6efef,1);fill.position.set(8,6,-9);scene.add(fill);
- let loaded=false,visible=false,active=true,goal=null,requested=false;
- function loadModel(){requested=true;new GLTFLoader().load('/travel/assets/suzhou-route.glb',g=>{scene.add(g.scene);loaded=true;wrap.querySelector('.map-poster').hidden=true;setNote('Artist’s route sketch · Drag to explore · Pinch to zoom');},undefined,()=>{canvas.hidden=true;setNote('Explore the illustrated route or open the live map for directions.');document.querySelectorAll('[data-view],#reset').forEach(b=>b.disabled=true);});}
- const route=new THREE.CatmullRomCurve3([new THREE.Vector3(6.2,.23,3.5),new THREE.Vector3(5,.23,2.8),new THREE.Vector3(4,.23,1),new THREE.Vector3(2.7,.23,-.2),new THREE.Vector3(1.4,.23,-1.6),new THREE.Vector3(.5,.23,-2.3)]);
- const car=new THREE.Mesh(new THREE.SphereGeometry(.085,16,12),new THREE.MeshStandardMaterial({color:0xfff1d5,emissive:0xd6a253,emissiveIntensity:.25}));scene.add(car);
- const views={overview:{p:[-13,16,19],t:[0,0,0]},home:{p:[10,6,11],t:[6.5,.5,3]},stay:{p:[-6,6,4],t:[-.1,.4,-1.8]}};
- const reduced=matchMedia('(prefers-reduced-motion: reduce)');
- function focus(key){const v=views[key];goal={p:new THREE.Vector3(...v.p),t:new THREE.Vector3(...v.t)};if(reduced.matches){camera.position.copy(goal.p);controls.target.copy(goal.t);goal=null;}document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===key)));}
- document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>focus(b.dataset.view));document.querySelector('#reset').onclick=()=>focus('overview');controls.addEventListener('start',()=>goal=null);
- function resize(){const w=wrap.clientWidth,h=wrap.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}new ResizeObserver(resize).observe(wrap);resize();
- new IntersectionObserver(([e])=>{visible=e.isIntersecting;if(visible&&!requested)loadModel();},{rootMargin:'300px'}).observe(wrap);document.addEventListener('visibilitychange',()=>active=!document.hidden);
- renderer.setAnimationLoop(t=>{if(!visible||!active)return;if(goal){camera.position.lerp(goal.p,.065);controls.target.lerp(goal.t,.065);if(camera.position.distanceTo(goal.p)<.015)goal=null;}car.position.copy(route.getPointAt(reduced.matches?.5:(t/18000)%1));controls.update();if(loaded)renderer.render(scene,camera);});
-}catch{canvas.hidden=true;setNote('3D is unavailable here. The illustrated route and live map are still available.');document.querySelectorAll('[data-view],#reset').forEach(b=>b.disabled=true);}
+ const compact=()=>wrap.clientWidth<760;
+ const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});
+ renderer.setPixelRatio(Math.min(devicePixelRatio,compact()?1.25:1.7));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.08;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ const scene=new THREE.Scene();scene.background=new THREE.Color(0xc6d0d2);scene.fog=new THREE.Fog(0xc6d0d2,650,1650);
+ const camera=new THREE.PerspectiveCamera(33,1,.5,3200);
+ const controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.dampingFactor=.075;controls.minPolarAngle=.12;controls.maxPolarAngle=Math.PI*.465;controls.minDistance=80;controls.maxDistance=700;controls.enablePan=false;controls.enableZoom=false;
+ controls.touches.TWO=THREE.TOUCH.DOLLY_PAN;canvas.addEventListener('touchstart',e=>{controls.enableZoom=e.touches.length>1;},{passive:true});canvas.addEventListener('touchend',()=>controls.enableZoom=false,{passive:true});
+ scene.add(new THREE.HemisphereLight(0xdbe9f3,0x6c7054,.5));
+ const sun=new THREE.DirectionalLight(0xffddb4,3.0);sun.position.set(-160,160,230);sun.target.position.set(-5,0,0);sun.castShadow=true;sun.shadow.mapSize.setScalar(compact()?1024:2048);Object.assign(sun.shadow.camera,{left:-220,right:220,top:220,bottom:-220,near:5,far:700});sun.shadow.bias=-.00015;sun.shadow.normalBias=.14;sun.shadow.radius=2;scene.add(sun,sun.target);
+ const views={hero:{p:[-205,178,255],t:[-5,1,0]},overview:{p:[-180,355,255],t:[-5,0,-12]},stay:{p:[-92,53,123],t:[-13,9,-14]},home:{p:[176,82,82],t:[85,4,-5]}};
+ let goal=null,currentView='hero',requested=false,lastFrame=0;const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ function positionFor(key){const v=views[key],target=new THREE.Vector3(...v.t),position=new THREE.Vector3(...v.p);if(compact())position.sub(target).multiplyScalar(key==='stay'?1.15:1.25).add(target);return {p:position,t:target};}
+ function focus(key,instant=false){if(!views[key])return;currentView=key;document.querySelector('#map-render').href='/travel/assets/resort-'+(key==='overview'?'overview':key==='stay'?'courtyard':'hero')+'-4k.jpg';goal=positionFor(key);if(instant||reduced.matches){camera.position.copy(goal.p);controls.target.copy(goal.t);goal=null;controls.update();}document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===key)));}
+ for(const a of anchors){a.el=document.createElement('button');a.el.type='button';a.el.className='scene-pin';a.el.onclick=()=>focus(a.view);a.vector=new THREE.Vector3(...a.p);labelLayer.append(a.el);}
+ translate();
+ function updateLabels(){
+  labelLayer.hidden=!loaded||!labelsEnabled;const placed=[];const w=wrap.clientWidth,h=wrap.clientHeight;
+  for(const a of anchors){const projected=a.vector.clone().project(camera);const x=(projected.x*.5+.5)*w,y=(-projected.y*.5+.5)*h;const width=Math.min(155,a.el.textContent.length*6.4+28);const box={x:x-width/2,y:y-32,w:width,h:40};
+   const hide=projected.z<0||projected.z>1||x<width/2+10||x>w-width/2-10||y<120||y>h-(compact()?320:220)||(compact()&&a.priority>2)||placed.some(b=>box.x<b.x+b.w+12&&box.x+box.w+12>b.x&&box.y<b.y+b.h+12&&box.y+box.h+12>b.y);
+   a.el.hidden=hide;if(!hide){placed.push(box);a.el.style.left=x+'px';a.el.style.top=y+'px';}
+  }
+ }
+ const decoder=new DRACOLoader();decoder.setDecoderPath('/travel/vendor/');decoder.setDecoderConfig({type:'wasm'});decoder.setWorkerLimit(2);
+ function load(){requested=true;setNote('loading');
+  const pmrem=new THREE.PMREMGenerator(renderer);pmrem.compileEquirectangularShader();
+  new HDRLoader().load('/travel/assets/resort-sky-1k.hdr',texture=>{const env=pmrem.fromEquirectangular(texture).texture;scene.environment=env;scene.environmentIntensity=.65;texture.dispose();pmrem.dispose();},undefined,()=>pmrem.dispose());
+  new GLTFLoader().setDRACOLoader(decoder).load('/travel/assets/suzhou-bay-realistic.glb',g=>{
+   g.scene.traverse(o=>{if(o.isMesh){const isWater=/water|reflections/i.test(o.material?.name||'');o.castShadow=!isWater;o.receiveShadow=!isWater;if(o.material){o.material.envMapIntensity=.9;if(o.material.map)o.material.map.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());}}});
+   scene.add(g.scene);loaded=true;wrap.querySelector('.map-poster').hidden=true;setNote('ready');canvas.dataset.modelLoaded='true';decoder.dispose();
+  },undefined,()=>{canvas.hidden=true;labelLayer.hidden=true;setNote('error');document.querySelectorAll('[data-view],#reset,#map-labels').forEach(b=>b.disabled=true);decoder.dispose();});
+ }
+ document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>focus(b.dataset.view));document.querySelector('#reset').onclick=()=>focus('hero');
+ document.querySelector('#map-labels').onclick=()=>{labelsEnabled=!labelsEnabled;document.querySelector('#map-labels').setAttribute('aria-pressed',String(labelsEnabled));updateLabels();};
+ controls.addEventListener('start',()=>goal=null);
+ function resize(){const w=wrap.clientWidth,h=wrap.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=compact()?52:33;camera.updateProjectionMatrix();focus(currentView,true);updateLabels();}
+ new ResizeObserver(resize).observe(wrap);resize();
+ new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;if(visible&&!requested)load();},{rootMargin:'250px'}).observe(wrap);
+ document.addEventListener('visibilitychange',()=>active=!document.hidden);
+ renderer.setAnimationLoop(time=>{if(!visible||!active||time-lastFrame<(compact()?32:16))return;lastFrame=time;if(goal){camera.position.lerp(goal.p,.10);controls.target.lerp(goal.t,.10);if(camera.position.distanceTo(goal.p)<.08)goal=null;}controls.update();if(loaded){renderer.render(scene,camera);updateLabels();}});
+}catch{canvas.hidden=true;setNote('error');document.querySelectorAll('[data-view],#reset,#map-labels').forEach(b=>b.disabled=true);}
+document.addEventListener('travel-language',translate);

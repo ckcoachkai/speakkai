@@ -1,0 +1,32 @@
+{
+  "Hotel guest wings": [
+    -15,
+    31,
+    24
+  ],
+  "Water garden": [
+    -20,
+    -23,
+    1
+  ],
+  "Garden suites": [
+    -28,
+    -85,
+    10
+  ],
+  "Arrival lobby": [
+    88,
+    6,
+    10
+  ],
+  "East Taihu Lake": [
+    -155,
+    37,
+    1
+  ],
+  "Event hall": [
+    77,
+    -56,
+    14
+  ]
+}
