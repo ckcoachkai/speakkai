@@ -3,6 +3,30 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {WORLD,STRIDE,advanceRunner,runnerPose} from '../src/scripts/forest/motion.js';
+import {drawWinner,raceBase} from '../src/scripts/forest/selection.js';
+
+test('draw covers every eligible student equally and rejects biased random tail',()=>{
+ const eligible=[5,2,9];const counts=new Map(eligible.map(i=>[i,0]));
+ for(let n=0;n<300;n++){const winner=drawWinner(eligible,()=>n);counts.set(winner,counts.get(winner)+1);}
+ assert.deepEqual([...counts.values()],[100,100,100]);
+ const values=[4294967295,2];assert.equal(drawWinner(eligible,()=>values.shift()),9);
+ assert.equal(drawWinner([],()=>0),null);
+ const remaining=[0,1,2,3,4,5],order=[];
+ while(remaining.length){const winner=drawWinner(remaining,()=>17);order.push(winner);remaining.splice(remaining.indexOf(winner),1);}
+ assert.equal(new Set(order).size,6);assert.notDeepEqual(order,[0,1,2,3,4,5]);
+});
+
+test('randomly drawn winner reaches mouth first regardless of roster order or starting column',()=>{
+ for(const fps of [30,60,120])for(let winner=0;winner<6;winner++){
+  const runners=Array.from({length:6},(_,i)=>{const start=160+(i%4)*145;return {...runner(),i,start,base:raceBase(start,WORLD.finishX,i===winner,0.999)};});
+  let first=null;
+  for(let frame=0;frame<fps*30&&first===null;frame++){
+   for(const s of runners){advanceRunner(s,1/fps,frame/fps);if(s.progress>=.27)s.boost=true;}
+   first=runners.filter(s=>s.progress>=1).sort((a,b)=>b.progress-a.progress)[0]?.i??null;
+  }
+  assert.equal(first,winner);
+ }
+});
 
 const runner = () => ({i:0,start:160,ground:1280,distance:0,phase:0,speed:0,progress:0,base:1,boost:false});
 const mouth={x:2744,y:1035};
