@@ -314,6 +314,60 @@
           "fat": 0,
           "caloriesLow": 10,
           "caloriesHigh": 40
+        },
+        {
+          "id": "2026-09-15-pho-1600",
+          "kind": "meal",
+          "name": "Mixed-beef pho",
+          "time": "16:00",
+          "timeApproximate": true,
+          "description": "One mixed-beef pho around 4 p.m.; portions and broth intake estimated.",
+          "items": [
+            {
+              "id": "mixed-beef-pho",
+              "name": "全家福火车头河粉 · Mixed-beef pho",
+              "type": "meal",
+              "emoji": "🍜",
+              "portion": "1 bowl · noodles and meat assumed eaten",
+              "photo": "/food/photos/2026-09-15-pho-1600.jpg",
+              "nutrition": {
+                "calories": 600,
+                "protein": 40,
+                "carbs": 75,
+                "fat": 15,
+                "fiber": null,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                450,
+                800
+              ],
+              "confidence": "Low confidence",
+              "assumptions": [
+                "User reported this meal around 4 p.m. September 15. Order names mixed beef pho; photo shows beef slices, meatballs, herbs and broth.",
+                "Assumes the noodles and meat were eaten; leftovers and amount of broth drunk have not been confirmed. Noodles underneath the broth cannot be weighed from the photo.",
+                "Working recipe allowance: roughly 300 g cooked rice noodles, 130–150 g mixed beef/meatballs, herbs and some broth. Portion weights, meat cuts and oil are unmeasured.",
+                "600 kcal and rounded macros are a portion-based estimate, not this restaurant's nutrition label. For comparison only, a different restaurant (Pho UK) lists its beef combo at 396 kcal, 39.2 g protein, 46.1 g carbs and 5.8 g fat. The larger noodle/fat allowance here is an assumption, not a measured difference.",
+                "No extra dipping sauce is counted because the amount used is unconfirmed. Sodium is unknown and depends strongly on broth and sauce intake."
+              ],
+              "sources": [
+                {
+                  "title": "Pho UK beef combo nutrition — comparison only, different restaurant",
+                  "url": "https://content.phocafe.co.uk/wp-content/uploads/2026/04/Pho-Nutritional-Guidelines-2026_web.pdf"
+                }
+              ],
+              "tip": "Record how much noodle and broth you finished to tighten this estimate."
+            }
+          ],
+          "calories": 600,
+          "protein": 40,
+          "carbs": 75,
+          "fat": 15,
+          "caloriesLow": 450,
+          "caloriesHigh": 800
         }
       ],
       "exercise": [],
@@ -344,6 +398,10 @@
         {
           "src": "/food/photos/2026-09-15-38805.jpg",
           "caption": "Fruit and mint infused water; amount consumed not recorded"
+        },
+        {
+          "src": "/food/photos/2026-09-15-pho-1600.jpg",
+          "caption": "Mixed-beef pho with meatballs and herbs, September 15 around 4 p.m."
         }
       ],
       "references": [
@@ -385,8 +443,8 @@
           }
         },
         {
-          "title": "Make the next estimate easier",
-          "text": "The patties dominate the calorie uncertainty. A cooked weight or menu description would help more than trying to guess every trace of sauce.",
+          "title": "Record portions left behind",
+          "text": "For the pho, note how much noodle, meat and broth you finished. For the hamburger meal, patty weight would help. These details reduce uncertainty more than trying to guess from bowl size.",
           "source": null
         },
         {
