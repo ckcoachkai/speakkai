@@ -6,13 +6,29 @@ export function expressionCells(image){const out=[];for(let k=0;k<3;k++){const s
 export function dress(image,index,color){if(!color)return image;const c=surface(image.width,image.height),x=c.getContext('2d');x.drawImage(image,0,0);const d=x.getImageData(0,0,c.width,c.height),a=d.data;const target=[1,3,5].map(i=>parseInt(color.slice(i,i+2),16));for(let y=Math.floor(c.height*.19);y<c.height*.515;y++){for(let px=Math.floor(c.width*.17);px<c.width*.83;px++){const n=(y*c.width+px)*4,r=a[n],g=a[n+1],b=a[n+2];if(a[n+3]<100)continue;const skin=r>g*1.12&&g>b*1.08&&r>90;let cloth=false;if(index===0)cloth=Math.max(r,g,b)-Math.min(r,g,b)<55;else if(index===1)cloth=g>r*1.1&&g>b*.95;else if(index===2)cloth=!skin&&r>b*.94&&(r>g*1.08||Math.max(r,g,b)-Math.min(r,g,b)<25);else if(index===3)cloth=b>g*1.09&&b>r*.94;else cloth=Math.max(r,g,b)-Math.min(r,g,b)<27&&r>90;if(!cloth)continue;const lum=(r*.25+g*.6+b*.15)/255,shade=.33+lum*.75;for(let z=0;z<3;z++)a[n+z]=Math.min(255,target[z]*shade);}}x.putImageData(d,0,0);return c;}
 // Limbs use nested shoulder/elbow/wrist and hip/knee/ankle transforms.
 export function drawStudent(ctx,body,face,w,h,t=0,running=false,boost=false,gentle=false){
- const phase=t*(boost?19:12), strength=running?(gentle?.35:1.3):.12;
+ const phase=t, strength=running?(gentle?.45:1):0;
  function segment(length,width,color,texture=false){ctx.save();ctx.beginPath();ctx.roundRect(-width/2,-width*.3,width,length+width*.6,width/2);ctx.clip();ctx.fillStyle=color;ctx.fillRect(-width/2,-width*.3,width,length+width*.6);if(texture)ctx.drawImage(body,body.width*.43,body.height*.26,body.width*.13,body.height*.19,-width/2,-width*.3,width,length+width*.6);ctx.restore();}
- function leg(side){ctx.save();ctx.translate(side*w*.065,-h*.49);ctx.rotate(Math.sin(phase+side*1.57)*1.05*strength);segment(h*.22,w*.15,'#34516b');ctx.translate(0,h*.22);ctx.rotate((.3+Math.max(0,Math.cos(phase+side*1.57))*1.5)*strength);segment(h*.21,w*.12,'#294258');ctx.translate(0,h*.21);ctx.rotate(-.15+Math.sin(phase)*.22*strength);ctx.fillStyle='#e8e9e2';ctx.beginPath();ctx.roundRect(-w*.06,-h*.02,w*.22,h*.045,h*.02);ctx.fill();ctx.restore();}
- function arm(side){ctx.save();ctx.translate(side*w*.11,-h*.73);ctx.rotate((Math.sin(phase+side*1.57)*1.65+side*.4)*strength);segment(h*.14,w*.095,'#718096',true);ctx.translate(0,h*.14);ctx.rotate((Math.sin(phase*1.3+side)*1.45-.5)*strength);segment(h*.13,w*.075,'#d6a37f');ctx.translate(0,h*.13);ctx.rotate(Math.sin(phase*1.7)*.8*strength);ctx.fillStyle='#e4b18d';ctx.beginPath();ctx.ellipse(0,h*.018,w*.047,h*.034,0,0,Math.PI*2);ctx.fill();ctx.restore();}
+ function leg(side){
+  const u=((phase+(side<0?Math.PI:0))%(Math.PI*2))/(Math.PI*2),swing=Math.max(0,(u-.5)*2);
+  const step=running?(u<.5?1-u*4:-Math.cos(swing*Math.PI)):0;
+  const dx=step*h*.232,dy=h*(.442-Math.sin(swing*Math.PI)*.19*strength),upper=h*.25,lower=h*.26;
+  const distance=Math.min(upper+lower-.001,Math.hypot(dx,dy));
+  const hip=-Math.atan2(dx,dy)-Math.acos(Math.max(-1,Math.min(1,(upper*upper+distance*distance-lower*lower)/(2*upper*distance))));
+  const knee=Math.PI-Math.acos(Math.max(-1,Math.min(1,(upper*upper+lower*lower-distance*distance)/(2*upper*lower))));
+  ctx.save();ctx.translate(side*w*.065,-h*.45);ctx.rotate(hip);segment(upper,w*.15,'#34516b');ctx.translate(0,upper);ctx.rotate(knee);segment(lower,w*.12,'#294258');ctx.translate(0,lower);ctx.rotate(-hip-knee);ctx.fillStyle='#e8e9e2';ctx.beginPath();ctx.roundRect(-w*.06,-h*.02,w*.22,h*.045,h*.02);ctx.fill();ctx.restore();
+ }
+ function arm(side){ctx.save();ctx.translate(side*w*.11,-h*.73);ctx.rotate((Math.sin(phase+(side<0?0:Math.PI))*.95+side*.22)*strength);segment(h*.14,w*.095,'#718096',true);ctx.translate(0,h*.14);ctx.rotate((-.85+Math.sin(phase+(side<0?0:Math.PI))*.35)*strength);segment(h*.13,w*.075,'#d6a37f');ctx.translate(0,h*.13);ctx.rotate(Math.sin(phase+side)*.3*strength);ctx.fillStyle='#e4b18d';ctx.beginPath();ctx.ellipse(0,h*.018,w*.047,h*.034,0,0,Math.PI*2);ctx.fill();ctx.restore();}
  leg(-1);arm(-1);leg(1);
  ctx.save();ctx.beginPath();ctx.moveTo(-w*.13,-h*.8);ctx.lineTo(w*.13,-h*.8);ctx.lineTo(w*.16,-h*.48);ctx.lineTo(-w*.16,-h*.48);ctx.closePath();ctx.clip();ctx.drawImage(body,body.width*.37,body.height*.20,body.width*.27,body.height*.31,-w*.16,-h*.8,w*.32,h*.32);ctx.restore();arm(1);
  const size=h*.245;ctx.drawImage(face,-size*.48,-h*.995,size,size);
+}
+let runnerSurface;
+export function drawTintedStudent(ctx,body,face,w,h,phase,moving,boost,gentle,redness){
+ if(redness<.005){drawStudent(ctx,body,face,w,h,phase,moving,boost,gentle);return;}
+ runnerSurface ||= surface(512,512);
+ const x=runnerSurface.getContext('2d');x.clearRect(0,0,512,512);x.save();x.translate(256,450);
+ drawStudent(x,body,face,w,h,phase,moving,boost,gentle);x.restore();x.save();x.globalCompositeOperation='source-atop';x.fillStyle=`rgba(239,57,36,${redness})`;x.fillRect(0,0,512,512);x.restore();
+ ctx.drawImage(runnerSurface,-256,-450);
 }
 function flamingEyes(ctx,w,h,t){for(const [px,py,size] of [[-.223,-.853,1],[-.329,-.861,.48]]){ctx.save();ctx.translate(w*px,h*py);ctx.globalCompositeOperation='screen';ctx.shadowColor='#ff1000';ctx.shadowBlur=25;for(let k=0;k<5;k++){const flicker=Math.sin(t*13+k*2.1),x=(k-2)*5*size;ctx.fillStyle=k%2?'#ff7a16':'#ff2010';ctx.beginPath();ctx.moveTo(x-7*size,3);ctx.quadraticCurveTo(x-12*size,-13*size,x+flicker*9*size,-(24+12*Math.sin(t*9+k))*size);ctx.quadraticCurveTo(x+13*size,-10*size,x+7*size,3);ctx.fill();}ctx.fillStyle='#ff1607';ctx.beginPath();ctx.ellipse(0,0,12*size,6*size,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff0a1';ctx.beginPath();ctx.ellipse(0,0,4*size,5*size,0,0,Math.PI*2);ctx.fill();ctx.restore();}}
 

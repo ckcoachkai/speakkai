@@ -50,7 +50,9 @@ jobs:
       - name: Verify Bob character data, encryption, and save conflicts
         run: node --test scripts/check-dnd.mjs
       - name: Verify forest game route and media
-        run: node scripts/check-forest.mjs
+        run: |
+          node scripts/check-forest.mjs
+          node --test scripts/check-forest-motion.mjs
       - name: Verify public homework and Shanghai date handling
         run: node --test scripts/check-homework.mjs scripts/check-feedback.mjs scripts/check-feedback-progress.mjs scripts/check-class-curricula.mjs
       - name: Verify speech detector and worker lifecycle

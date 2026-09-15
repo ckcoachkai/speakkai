@@ -1,0 +1,54 @@
+{
+  "provider": "ElevenLabs",
+  "model": "eleven_text_to_sound_v2",
+  "effects": [
+    {
+      "id": "step-leaves",
+      "file": "step-leaves.mp3",
+      "prompt": "One single clean sneaker footstep landing on dry forest dirt and crunchy leaves. Close-up isolated foley impact, no speech, no music, no background ambience.",
+      "seconds": 0.48,
+      "bytes": 6626,
+      "sha256": "380e9375dc00e1c2a27e5e74779882b61b34fdb520015d62fb46b49e8a12fdd0"
+    },
+    {
+      "id": "step-dirt",
+      "file": "step-dirt.mp3",
+      "prompt": "A single soft sneaker footfall on a compact dirt forest path, with a tiny gravel scuff. Clean isolated cartoon game foley, no speech, no music.",
+      "seconds": 0.48,
+      "bytes": 6626,
+      "sha256": "4e7f43bded4d09f39b36676dee8cfcd163a96127787bffd3916c30d025792dd5"
+    },
+    {
+      "id": "chomp",
+      "file": "chomp.mp3",
+      "prompt": "One playful cartoon monster mouth chomp: a quick soft jaw clap and crunchy chewing impact. Silly friendly comic timing. Isolated dry foley, no voices or music.",
+      "seconds": 0.48,
+      "bytes": 6626,
+      "sha256": "0430d0281cfe043e00ff4fa0ea5c071e86dc5032ce4bfe356462e6aef5c8d8aa"
+    },
+    {
+      "id": "crack",
+      "file": "crack.mp3",
+      "prompt": "One short exaggerated cartoon bone-shaped biscuit snapping with a crisp brittle crack and tiny crunchy crumbs. Isolated prop foley for a slapstick game, no voice or music.",
+      "seconds": 0.48,
+      "bytes": 6626,
+      "sha256": "bfeadb6ebeff054f14ffeb360c638a7af97a771069420e69c8da6a1f725c959d"
+    },
+    {
+      "id": "splat",
+      "file": "splat.mp3",
+      "prompt": "One funny ketchup squeeze squirt ending in a wet rubbery splat. A small messy cartoon sauce splash, close-up isolated sound, no voice or music.",
+      "seconds": 0.48,
+      "bytes": 6626,
+      "sha256": "4d044effea92f01809188d87d1e3f700ee766dc74f24e5ce357492f688d3410d"
+    },
+    {
+      "id": "banana-pop",
+      "file": "banana-pop.mp3",
+      "prompt": "One bright funny rubber boing and tiny pop for picking up a banana power-up in a cartoon game. Short clean isolated sound, no voices or music.",
+      "seconds": 0.48,
+      "bytes": 6626,
+      "sha256": "fe59d34151b06cf294cba69bca238d57d3d2c7268f511ed1d575a16852869eea"
+    }
+  ]
+}
