@@ -639,7 +639,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
 
     <script>
       import { weeklyScheduleBlocks } from "../lib/weeklySchedule";
-      import { calendarDisplayEventKind, sortScheduleEvents } from "../lib/schedulePresentation";
+      import { calendarDisplayEventKind, internalBookingLabel, sortScheduleEvents } from "../lib/schedulePresentation";
 
       type Cell = { value?: string };
       type Sheet = {
@@ -755,7 +755,7 @@ import SiteNavigation from "../components/SiteNavigation.astro";
             time.textContent = eventMatch[1];
             const title = document.createElement("span");
             title.className = "event-title";
-            title.textContent = eventMatch[2];
+            title.textContent = internalBookingLabel(eventMatch[2]);
             event.append(time, title);
           } else {
             event.textContent = line;

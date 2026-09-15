@@ -18,6 +18,14 @@ export function calendarDisplayEventKind(label: string) {
   return "reserved";
 }
 
+export function internalBookingLabel(label: string) {
+  return label
+    .replace(/\bSTCC\b(?!\s*[·（(]\s*威宁路)/gi, "STCC · 威宁路")
+    .replace(/\bSAS\b(?!\s*[·（(]\s*华漕)/gi, "SAS · 华漕")
+    .replace(/井亭大厦/g, "龙柏")
+    .replace(/\bGubei\b|古北1699/gi, "古北");
+}
+
 export function publicBookingPresentation(label: string) {
   const originalKind = calendarDisplayEventKind(label);
   if (/\bTMC\b|\(TMC\)/i.test(label)) return { kind: "tmc", title: label };
