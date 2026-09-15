@@ -6,7 +6,7 @@
  const dialog=document.querySelector('#language-dialog');
  const api=window.travelI18n={language,t:source=>language==='zh'?(dictionary[source]||source):source,setLanguage(next){
   if(next!=='en'&&next!=='zh')return;language=next;api.language=next;chosen=true;
-  try{localStorage.setItem(key,next);}catch{}apply();dialog.close();
+  try{localStorage.setItem(key,next);}catch{}apply();dialog.close();document.dispatchEvent(new CustomEvent('travel-language-selected',{detail:{language:next}}));
  }};
  function apply(){
   document.documentElement.lang=language==='zh'?'zh-CN':'en';

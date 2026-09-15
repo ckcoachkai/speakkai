@@ -40,3 +40,13 @@ Final release gate: 57 regression tests passed; merged current main; 166-page bu
 - Build passed for 166 pages; 57 existing regression tests and schedule privacy check passed. Print opens details temporarily and restores them after printing; native print output was not visually inspected.
 - This revision changes the website layout; existing Figma frames document the earlier design iteration. Original Blender and HyperFrames deliverables are retained.
 - Rollback this revision with git revert; no data migrations. Language preference key: speakkai-travel-language.
+
+
+## Bilingual audio introduction — September 15
+- Original energetic script covers the complete one-night itinerary, estimates, optional spa, return deadline, packing and site interactions. Scripts: NARRATION.md; generation text: narration.json.
+- ElevenLabs v3, stock voice Liam, language codes en and zh. English 150.56 seconds; Chinese 142.8 seconds. Prerecorded mono MP3 at 96 kbps, normalized toward -18 LUFS / -2 dBTP. Hashes and request fingerprints recorded in narration-manifest.json.
+- Selecting a language starts its narration synchronously within the button activation. Changing languages stops the previous track and restarts the selected version. First visitors hear nothing before choosing. Returning visits attempt the remembered language and show a play control if browser autoplay policy blocks playback.
+- Persistent compact player includes pause/resume, replay, seek progress and localized full transcript. Opening language selection and hiding the tab pause audio. API credentials stay in local configuration; visitors only download static audio files.
+- Verified desktop and 390x844 mobile: English/Chinese selection autoplay, first-visit silence, language-switch pause, correct file/duration, pause/resume, seeking, replay after completion, translated transcript, no horizontal overflow, no console errors. Both MP3s fully decoded with ffmpeg.
+- English audio transcribed with ElevenLabs Scribe; Chinese checked with cached local Whisper large-v3 after the Scribe quota was exhausted. Transcript review confirmed the itinerary and budget, with some proper-name/homophone recognition differences. No independent native-listener pronunciation review is claimed.
+- 166-page build, 57 regression tests, and schedule privacy check passed. Rollback by reverting this audio introduction commit; no migrations.

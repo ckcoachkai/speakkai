@@ -1,0 +1,24 @@
+{
+  "provider": "ElevenLabs",
+  "model": "eleven_v3",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam — Energetic, Social Media Creator",
+  "clips": [
+    {
+      "language": "en",
+      "file": "introduction-en.mp3",
+      "seconds": 150.56,
+      "bytes": 1807508,
+      "sha256": "b348fbaf28b754c941c2ecc32b48b19de9dde8cb0d1a125b0588bd0439508080",
+      "request_sha256": "dd54d2df291f8c7787a37755e10fb52c79ee6cd0651657cee5dff2f229080dad"
+    },
+    {
+      "language": "zh",
+      "file": "introduction-zh.mp3",
+      "seconds": 142.8,
+      "bytes": 1714408,
+      "sha256": "f9633b429366f45e3bef8bbd08604d50c8e61e981cc620c0121cd41a345bbf02",
+      "request_sha256": "9138f453572d41645bb86fe47e888a1037bf7689cb235541661f668859ffae70"
+    }
+  ]
+}
