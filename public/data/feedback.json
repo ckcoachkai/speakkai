@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-15T10:53:39.671412+00:00",
+  "updatedAt": "2026-09-15T10:55:36.5485359+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -836,8 +836,9 @@
             {
               "id": "ethan-liu",
               "name": "Ethan Liu",
-              "en": null,
-              "zh": null
+              "en": "Ethan Liu was absent from this class.",
+              "zh": "Ethan Liu 本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "ethan-jia",
@@ -924,8 +925,9 @@
             {
               "id": "jayden",
               "name": "Jayden",
-              "en": null,
-              "zh": null
+              "en": "Jayden was absent from this class.",
+              "zh": "Jayden 本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "sean",
