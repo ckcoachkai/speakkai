@@ -1,7 +1,7 @@
 {
   "version": 2,
   "timeZone": "Asia/Shanghai",
-  "updatedAt": "2026-09-15",
+  "updatedAt": "2026-09-16",
   "days": [
     {
       "date": "2026-09-15",
@@ -395,6 +395,307 @@
           "source": {
             "title": "FDA: caffeine and individual sensitivity",
             "url": "https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much"
+          }
+        }
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "complete": false,
+      "meals": [
+        {
+          "id": "2026-09-16-soymilk-order",
+          "kind": "meal",
+          "name": "Soy milk & bao fillings",
+          "time": null,
+          "description": "Three sweet soy milks; fillings only from four vermicelli buns and four small steamed buns; shrimp-and-egg rice rolls with extra egg; one pork-and-egg cake; one salted duck egg. Both congees excluded. Date and remaining consumption provisional.",
+          "items": [
+            {
+              "id": "three-soymilks",
+              "name": "甜豆浆 · Three sweet soy milks",
+              "type": "drink",
+              "emoji": "🥛",
+              "portion": "3 cups/bowls · assumed 300 ml each",
+              "photo": "/food/photos/2026-09-16-soymilk-order.jpg",
+              "nutrition": {
+                "calories": 549,
+                "protein": 29.7,
+                "carbs": 45,
+                "fat": 27,
+                "fiber": null,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                270,
+                720
+              ],
+              "confidence": "Low confidence",
+              "assumptions": [
+                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "User reports three soy milks, overriding the order quantity of two. Menu identifies iced sweet soy milk; cup size and sugar level are unknown.",
+                "Working proxy: 900 ml of Vitasoy Original at 61 kcal, 3.3 g protein, 5 g carbs and 3 g fat per 100 ml. This is a different product, not the restaurant recipe; homemade dilution and sugar could change all values substantially."
+              ],
+              "sources": [
+                {
+                  "title": "Vitasoy Original manufacturer label — different-product proxy",
+                  "url": "https://soy.com.au/product/soy-milk-original/"
+                }
+              ],
+              "tip": "Knowing the cup volume and sweetness would improve this estimate most."
+            },
+            {
+              "id": "vermicelli-bao-fillings",
+              "name": "粉丝包 · Fillings only",
+              "type": "grain",
+              "emoji": "🥟",
+              "portion": "Fillings from 4 small vermicelli buns",
+              "photo": "/food/photos/2026-09-16-soymilk-order.jpg",
+              "nutrition": {
+                "calories": 140,
+                "protein": 2,
+                "carbs": 22,
+                "fat": 5,
+                "fiber": null,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                80,
+                220
+              ],
+              "confidence": "Low confidence",
+              "assumptions": [
+                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "All four flour wrappers are excluded. Vermicelli inside the buns still contributes carbohydrate.",
+                "Recipe allowance for about 80 g moist vermicelli/vegetable filling including approximately 5 g oil; weights and recipe unmeasured. Chili oil and vinegar are included in the broad range."
+              ],
+              "sources": [],
+              "tip": "Leaving the wrapper does not remove the noodles or oil inside."
+            },
+            {
+              "id": "shrimp-egg-rice-roll",
+              "name": "虾仁鸡蛋肠粉 · Extra egg",
+              "type": "meal",
+              "emoji": "🍤",
+              "portion": "1 serving with an extra egg",
+              "photo": "/food/photos/2026-09-16-soymilk-order.jpg",
+              "nutrition": {
+                "calories": 420,
+                "protein": 24,
+                "carbs": 45,
+                "fat": 16,
+                "fiber": null,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                320,
+                550
+              ],
+              "confidence": "Low confidence",
+              "assumptions": [
+                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "Assumes about 200 g rice-roll sheet, 40 g shrimp, two eggs total (one standard plus one added), and modest sauce/oil.",
+                "Ingredient-based recipe allowance, not restaurant nutrition. The bao-wrapper correction is not applied to the rice-roll sheet."
+              ],
+              "sources": [],
+              "tip": "Request sauce on the side to control how much you use."
+            },
+            {
+              "id": "xiaolong-fillings",
+              "name": "嵊州小笼 · Fillings only",
+              "type": "protein",
+              "emoji": "🥟",
+              "portion": "Fillings from 4 small steamed buns",
+              "photo": "/food/photos/2026-09-16-soymilk-order.jpg",
+              "nutrition": {
+                "calories": 160,
+                "protein": 10,
+                "carbs": 2,
+                "fat": 12,
+                "fiber": null,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                100,
+                240
+              ],
+              "confidence": "Low confidence",
+              "assumptions": [
+                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "Two order lines each show quantity two: four buns total, not two. All flour wrappers excluded.",
+                "Assumes approximately 60 g pork filling total; pork identity, fat content and filling weight unconfirmed. Explicit recipe allowance, not a whole-bun nutrition value."
+              ],
+              "sources": [],
+              "tip": "A photo or weight of the filling would narrow this estimate."
+            },
+            {
+              "id": "pork-egg-cake",
+              "name": "鲜肉鸡蛋汉堡 · Pork & egg cake",
+              "type": "meal",
+              "emoji": "🍳",
+              "portion": "1 Chinese-style pork-and-egg cake",
+              "photo": "/food/photos/2026-09-16-soymilk-order.jpg",
+              "nutrition": {
+                "calories": 280,
+                "protein": 15,
+                "carbs": 22,
+                "fat": 15,
+                "fiber": null,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                200,
+                380
+              ],
+              "confidence": "Low confidence",
+              "assumptions": [
+                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "Assumes one egg, approximately 30 g pork, a small flour batter portion and cooking oil.",
+                "Counted whole: this menu item is an egg cake, not a bao. Exact batter, meat and oil amounts are unknown."
+              ],
+              "sources": [],
+              "tip": "The batter and cooking oil are included in this estimate."
+            },
+            {
+              "id": "salted-duck-egg",
+              "name": "咸鸭蛋 · Salted duck egg",
+              "type": "protein",
+              "emoji": "🥚",
+              "portion": "1 egg · assumed 60 g edible portion",
+              "photo": "/food/photos/2026-09-16-soymilk-order.jpg",
+              "nutrition": {
+                "calories": 130,
+                "protein": 9,
+                "carbs": 1,
+                "fat": 10,
+                "fiber": null,
+                "sugar": null,
+                "saturatedFat": null,
+                "sodium": null,
+                "caffeine": null
+              },
+              "caloriesRange": [
+                100,
+                160
+              ],
+              "confidence": "Low confidence",
+              "assumptions": [
+                "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+                "Assumes the whole yolk and white were eaten. Size and nutrition label unknown; rounded recipe allowance. Sodium left unknown rather than inferred from the image."
+              ],
+              "sources": [],
+              "tip": "Taste before adding salty sauces."
+            }
+          ],
+          "calories": 1679,
+          "protein": 89.7,
+          "carbs": 137,
+          "fat": 85,
+          "caloriesLow": 1070,
+          "caloriesHigh": 2270
+        }
+      ],
+      "exercise": [],
+      "weightKg": null,
+      "weightNote": "No new weigh-in reported.",
+      "photos": [
+        {
+          "src": "/food/photos/2026-09-16-soymilk-order.jpg",
+          "caption": "Order screenshot: three soy milks reported; bao wrappers and both congees not consumed. Other items assumed eaten; date provisional."
+        }
+      ],
+      "references": [
+        {
+          "id": "small-congee",
+          "name": "皮蛋瘦肉粥 · Small bowl",
+          "type": "soup",
+          "emoji": "🥣",
+          "portion": "Ordered but not consumed",
+          "photo": "/food/photos/2026-09-16-soymilk-order.jpg",
+          "nutrition": {
+            "calories": null,
+            "protein": null,
+            "carbs": null,
+            "fat": null,
+            "fiber": null,
+            "sugar": null,
+            "saturatedFat": null,
+            "sodium": null,
+            "caffeine": null
+          },
+          "caloriesRange": null,
+          "confidence": "Not eaten",
+          "assumptions": [
+            "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+            "User said they did not have the century-egg and lean-pork congee. Both menu listings are excluded."
+          ],
+          "sources": [],
+          "tip": "Not included in the calorie or macro tally.",
+          "consumed": false
+        },
+        {
+          "id": "large-congee",
+          "name": "皮蛋瘦肉粥 · Loaded bowl",
+          "type": "soup",
+          "emoji": "🥣",
+          "portion": "Ordered but not consumed",
+          "photo": "/food/photos/2026-09-16-soymilk-order.jpg",
+          "nutrition": {
+            "calories": null,
+            "protein": null,
+            "carbs": null,
+            "fat": null,
+            "fiber": null,
+            "sugar": null,
+            "saturatedFat": null,
+            "sodium": null,
+            "caffeine": null
+          },
+          "caloriesRange": null,
+          "confidence": "Not eaten",
+          "assumptions": [
+            "Order screenshot, not a photograph of the portions eaten. Logged provisionally on September 16; meal date and consumption of remaining items await confirmation.",
+            "User said they did not have the century-egg and lean-pork congee. Both menu listings are excluded."
+          ],
+          "sources": [],
+          "tip": "Not included in the calorie or macro tally.",
+          "consumed": false
+        }
+      ],
+      "suggestions": [
+        {
+          "title": "Check the three soy milks",
+          "text": "The menu says sweet soy milk. Cup size and sugar are the largest drink uncertainties. For a future order, unsweetened or less-sweet soy milk is an option; record the cup size.",
+          "source": null
+        },
+        {
+          "title": "Add some vegetables",
+          "text": "This order has little clearly identified vegetable content. Include a vegetable side or fruit elsewhere in the day, alongside regular meals; no need to skip a meal to compensate.",
+          "source": {
+            "title": "CFS guidance on balanced dim sum meals",
+            "url": "https://www.cfs.gov.hk/english/programme/programme_rafs/programme_rafs_n_01_03_ra_dim_sum.html"
+          }
+        },
+        {
+          "title": "Keep sauces separate",
+          "text": "Try tasting the rice rolls and fillings before adding sauce, then dip lightly if needed. The salted egg also adds salt; exact sodium is unknown.",
+          "source": {
+            "title": "Hong Kong Centre for Food Safety: dim sum and sauces",
+            "url": "https://www.cfs.gov.hk/english/press/20220712_9621.html"
           }
         }
       ]
