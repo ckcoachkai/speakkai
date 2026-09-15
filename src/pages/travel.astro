@@ -1,4 +1,7 @@
 ---
 import page from '../data/travel/page.html?raw';
+const capture = import.meta.env.DEV;
+const output = capture ? page.replace('</head>', '<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script></head>') : page;
 ---
-<Fragment set:html={page} />
+<Fragment set:html={output} />
+
