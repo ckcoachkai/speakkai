@@ -6,13 +6,28 @@ const selected=Astro.props.date ?? lessons[0]?.date;
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="robots" content="noindex,nofollow"/><meta name="referrer" content="no-referrer"/><title>Ivy | SpeakKai</title></head>
 <body>
 <main id="gate"><a href="/">SpeakKai</a><h1>Ivy<span>.</span></h1><form id="unlock"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required/><button>Open class notebook</button><p id="error" role="status" aria-live="polite"></p></form></main>
-<div id="notebook" hidden><nav><a href="/ivy/">Latest class</a><label for="lesson">Class</label><select id="lesson">{lessons.map(l=><option value={l.date} selected={l.date===selected}>{l.date}</option>)}</select><button id="lock">Lock</button></nav><iframe id="content" title="Ivy class content" sandbox="allow-same-origin"></iframe></div>
+<dialog id="language-dialog" aria-labelledby="language-title"><h2 id="language-title">Choose your language<br/><span lang="zh">请选择语言</span></h2><div><button data-language="en" autofocus>English</button><button data-language="zh" lang="zh">中文</button></div></dialog>
+<div id="notebook" hidden><nav><a id="latest" href="/ivy/">Latest class</a><label id="class-label" for="lesson">Class</label><select id="lesson">{lessons.map(l=><option value={l.date} selected={l.date===selected}>{l.date}</option>)}</select><button id="language">English / 中文</button><button id="lock">Lock</button></nav><iframe id="content" title="Ivy class content" sandbox="allow-same-origin"></iframe></div>
 <script type="application/json" id="lessons" set:html={JSON.stringify({lessons,selected}).replaceAll('<','\\u003c')}/>
 <script>
 const data=JSON.parse(document.getElementById('lessons')!.textContent!);
 const gate=document.getElementById('gate')!,notebook=document.getElementById('notebook')!,input=document.getElementById('password') as HTMLInputElement,error=document.getElementById('error')!,frame=document.getElementById('content') as HTMLIFrameElement;
 const decode=(s:string)=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
-frame.addEventListener('load',()=>{frame.contentDocument?.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(link=>link.addEventListener('click',event=>{event.preventDefault();frame.contentDocument?.getElementById(link.getAttribute('href')!.slice(1))?.scrollIntoView({behavior:'smooth'});}));});
+let language='en';
+const chooser=document.getElementById('language-dialog') as HTMLDialogElement;
+function applyLanguage(){const doc=frame.contentDocument;if(doc){doc.documentElement.dataset.language=language;doc.documentElement.lang=language==='zh'?'zh-CN':'en';}document.getElementById('latest')!.textContent=language==='zh'?'最新课堂':'Latest class';document.getElementById('class-label')!.textContent=language==='zh'?'课程':'Class';document.getElementById('lock')!.textContent=language==='zh'?'锁定':'Lock';}
+chooser.addEventListener('cancel',event=>event.preventDefault());
+document.querySelectorAll<HTMLButtonElement>('[data-language]').forEach(button=>button.addEventListener('click',()=>{language=button.dataset.language!;applyLanguage();chooser.close();frame.focus();}));
+document.getElementById('language')!.addEventListener('click',()=>chooser.showModal());
+frame.addEventListener('load',()=>{
+ applyLanguage();
+ frame.contentDocument?.querySelectorAll<HTMLDetailsElement>('details').forEach(detail=>{
+  const summary=detail.querySelector('summary')!;let timer:ReturnType<typeof setTimeout>|undefined;let preview=false;
+  summary.addEventListener('pointerenter',event=>{if(event.pointerType!=='mouse'||!matchMedia('(hover:hover)').matches||detail.open)return;timer=setTimeout(()=>{detail.open=true;preview=true;},250);});
+  detail.addEventListener('pointerleave',()=>{clearTimeout(timer);if(preview){detail.open=false;preview=false;}});
+  summary.addEventListener('click',event=>{clearTimeout(timer);if(preview){event.preventDefault();preview=false;}});
+ });
+});
 let password='';
 async function open(date:string,secret:string){
  const lesson=data.lessons.find((l:{date:string})=>l.date===date);
@@ -21,13 +36,16 @@ async function open(date:string,secret:string){
  const clear=await crypto.subtle.decrypt({name:'AES-GCM',iv:decode(lesson.iv)},key,decode(lesson.ciphertext));
  frame.srcdoc=new TextDecoder().decode(clear);password=secret;input.value='';gate.hidden=true;notebook.hidden=false;error.textContent='';
 }
-document.getElementById('unlock')!.addEventListener('submit',async event=>{event.preventDefault();const button=(event.currentTarget as HTMLFormElement).querySelector('button')!;button.disabled=true;error.textContent='Opening…';try{await open(data.selected,input.value);}catch{error.textContent='Incorrect password. Please try again.';input.focus();}finally{button.disabled=false;}});
+document.getElementById('unlock')!.addEventListener('submit',async event=>{event.preventDefault();const button=(event.currentTarget as HTMLFormElement).querySelector('button')!;button.disabled=true;error.textContent='Opening…';try{await open(data.selected,input.value);chooser.showModal();}catch{error.textContent='Incorrect password. Please try again.';input.focus();}finally{button.disabled=false;}});
 document.getElementById('lesson')!.addEventListener('change',async event=>{const date=(event.target as HTMLSelectElement).value;try{await open(date,password);history.pushState({},'',`/ivy/${date}/`);}catch{error.textContent='Could not open this class.';gate.hidden=false;notebook.hidden=true;}});
 document.getElementById('lock')!.addEventListener('click',()=>{password='';frame.srcdoc='';notebook.hidden=true;gate.hidden=false;input.focus();});
 window.addEventListener('popstate',()=>location.reload());
 </script>
 <style>
 :global(*){box-sizing:border-box}:global(body){margin:0;background:#f5f3ec;color:#234d3e;font:16px Arial,sans-serif}:global([hidden]){display:none!important}#gate{max-width:440px;margin:12vh auto;padding:32px}a{color:inherit}#gate>a{text-decoration:none;font-weight:bold}h1{font:100px Georgia,serif;letter-spacing:-5px;margin:36px 0}h1 span{color:#b67743}label{display:block;font-size:14px;margin-bottom:10px}input,button,select{font:inherit;border-radius:4px;padding:14px;border:1px solid #bbc8b9}input{width:100%;background:#fffef9}button{background:#234d3e;color:white;cursor:pointer}form button{width:100%;margin-top:16px}button:disabled{opacity:.65}#error{font-size:14px;min-height:20px}nav{min-height:68px;display:flex;align-items:center;gap:18px;padding:10px 24px;border-bottom:1px solid #ccd4c9}nav label{margin:0}nav select,nav button{padding:8px}nav button{margin-left:auto}iframe{display:block;border:0;width:100%;height:calc(100dvh - 68px);background:#f5f3ec}@media(max-width:500px){nav{gap:10px;padding:10px;font-size:13px}nav label{display:none}select{max-width:140px}}
+</style>
+<style>
+dialog{border:1px solid #cdb99b;border-top:4px solid #942d32;border-radius:8px;padding:28px;background:#fffdf8;color:#302723;max-width:calc(100vw - 32px)}dialog::backdrop{background:#211a16b8;backdrop-filter:blur(5px)}dialog h2{font:24px/1.5 Georgia,serif;margin:0 0 22px}dialog h2 span{font:18px Arial,sans-serif;color:#766451}dialog>div{display:flex;gap:12px}dialog button{min-width:125px;background:#942d32;color:white}nav #language{margin-left:auto;font-size:12px}nav #lock{margin-left:0}@media(max-width:500px){nav #latest{font-size:11px}nav #language{font-size:11px;padding:5px!important}nav #lock{padding:5px!important}nav{gap:6px!important;padding:7px 8px!important}nav select{max-width:115px;font-size:12px}}
 </style>
 <style>
 body nav{height:50px!important;min-height:50px!important;padding:7px 20px!important;border-bottom:3px solid #b98a3d!important}body nav button{background:#942d32!important;border-color:#942d32!important}body iframe{height:calc(100dvh - 50px)!important}
