@@ -408,7 +408,7 @@
           "kind": "meal",
           "name": "Soy milk & bao fillings",
           "time": "01:00",
-          "description": "Three sweet soy milks; fillings only from four vermicelli buns and four small steamed buns; shrimp-and-egg rice rolls with extra egg; one pork-and-egg cake; one salted duck egg. Both congees excluded. Around 1 a.m. on September 16, late on the night of September 15. Consumption of the remaining items is assumed.",
+          "description": "Three sweet soy milks; fillings only from four vermicelli buns and four small steamed buns; shrimp-and-egg rice rolls with extra egg; filling only from one pork-and-egg cake; one salted duck egg yolk only. Both congees excluded. Around 1 a.m. on September 16, late on the night of September 15. Consumption of the remaining items is assumed.",
           "items": [
             {
               "id": "three-soymilks",
@@ -541,16 +541,16 @@
             },
             {
               "id": "pork-egg-cake",
-              "name": "鲜肉鸡蛋汉堡 · Pork & egg cake",
+              "name": "鲜肉鸡蛋汉堡 · Filling only",
               "type": "meal",
               "emoji": "🍳",
-              "portion": "1 Chinese-style pork-and-egg cake",
+              "portion": "Filling from 1 pork-and-egg cake · outer cake discarded",
               "photo": "/food/photos/2026-09-16-soymilk-order.jpg",
               "nutrition": {
-                "calories": 280,
-                "protein": 15,
-                "carbs": 22,
-                "fat": 15,
+                "calories": 150,
+                "protein": 10,
+                "carbs": 1,
+                "fat": 12,
                 "fiber": null,
                 "sugar": null,
                 "saturatedFat": null,
@@ -558,55 +558,59 @@
                 "caffeine": null
               },
               "caloriesRange": [
-                200,
-                380
+                80,
+                220
               ],
               "confidence": "Low confidence",
               "assumptions": [
-                "Order screenshot, not a photograph of the portions eaten. Meal time confirmed as about 1 a.m. September 16 (night of September 15). Consumption of the remaining items is assumed.",
-                "Assumes one egg, approximately 30 g pork, a small flour batter portion and cooking oil.",
-                "Counted whole: this menu item is an egg cake, not a bao. Exact batter, meat and oil amounts are unknown."
+                "User confirmed only the stuffing was eaten. The outer batter/cake is excluded.",
+                "Working recipe allowance for approximately 50–60 g of pork/egg filling, including retained fat. The amount of egg within the stuffing and exact filling weight are unknown; a whole egg is not automatically counted. This is not a restaurant nutrition label."
               ],
               "sources": [],
-              "tip": "The batter and cooking oil are included in this estimate."
+              "tip": "A filling weight or photo would narrow this estimate; the outer cake is excluded."
             },
             {
               "id": "salted-duck-egg",
-              "name": "咸鸭蛋 · Salted duck egg",
+              "name": "咸鸭蛋黄 · Salted duck egg yolk",
               "type": "protein",
               "emoji": "🥚",
-              "portion": "1 egg · assumed 60 g edible portion",
+              "portion": "1 yolk only · assumed 17.3 g",
               "photo": "/food/photos/2026-09-16-soymilk-order.jpg",
               "nutrition": {
-                "calories": 130,
-                "protein": 9,
-                "carbs": 1,
-                "fat": 10,
-                "fiber": null,
+                "calories": 98,
+                "protein": 3.9,
+                "carbs": 0,
+                "fat": 9.2,
+                "fiber": 0,
                 "sugar": null,
                 "saturatedFat": null,
                 "sodium": null,
                 "caffeine": null
               },
               "caloriesRange": [
-                100,
-                160
+                80,
+                140
               ],
               "confidence": "Low confidence",
               "assumptions": [
-                "Order screenshot, not a photograph of the portions eaten. Meal time confirmed as about 1 a.m. September 16 (night of September 15). Consumption of the remaining items is assumed.",
-                "Assumes the whole yolk and white were eaten. Size and nutrition label unknown; rounded recipe allowance. Sodium left unknown rather than inferred from the image."
+                "User confirmed only the yolk was eaten; all egg white is excluded.",
+                "Assumes a 17.3 g yolk, using Malaysian Ministry of Health reference values per 100 g: 568 kcal, 22.8 g protein, 0 g carbohydrate and 53 g fat. Actual yolk size is unknown; sodium remains unknown for this product."
               ],
-              "sources": [],
-              "tip": "Taste before adding salty sauces."
+              "sources": [
+                {
+                  "title": "Malaysian Food Composition Database: salted duck egg yolk",
+                  "url": "https://myfcd.moh.gov.my/myfcd97/index.php/site/detail_product/109005/0/10/-1/0/0/"
+                }
+              ],
+              "tip": "Only the yolk is counted. Its size affects the calorie estimate."
             }
           ],
-          "calories": 1679,
-          "protein": 89.7,
-          "carbs": 137,
-          "fat": 85,
-          "caloriesLow": 1070,
-          "caloriesHigh": 2270,
+          "calories": 1517,
+          "protein": 79.6,
+          "carbs": 115,
+          "fat": 81.2,
+          "caloriesLow": 930,
+          "caloriesHigh": 2090,
           "timeApproximate": true
         }
       ],
@@ -616,7 +620,7 @@
       "photos": [
         {
           "src": "/food/photos/2026-09-16-soymilk-order.jpg",
-          "caption": "Order screenshot: three soy milks reported; bao wrappers and both congees not consumed. About 1 a.m. September 16 (night of September 15); other items assumed eaten."
+          "caption": "Order screenshot: three soy milks; bao and pork/egg cake fillings only; salted duck egg yolk only; both congees excluded. About 1 a.m. September 16 (night of September 15)."
         }
       ],
       "references": [
