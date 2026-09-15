@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "timeZone": "Asia/Shanghai",
+  "updatedAt": "2026-09-15",
+  "days": [
+    {
+      "date": "2026-09-15",
+      "complete": false,
+      "meals": [
+        {
+          "id": "2026-09-15-hamburger-meal",
+          "description": "Two hamburger patties, half serving of rice, egg, two servings of broccoli, seaweed soup with two fish/meat balls, and light sauce.",
+          "calories": 1080,
+          "caloriesLow": 925,
+          "caloriesHigh": 1250,
+          "protein": null,
+          "carbs": null,
+          "fat": null,
+          "note": "Revised ChatGPT estimate after half-rice and extra-broccoli correction. Portion weights are unknown; macros need a revised estimate."
+        }
+      ],
+      "exercise": [],
+      "weightKg": 115,
+      "notes": "No completed exercise reported. Discussing HYROX does not count as a workout."
+    }
+  ]
+}
