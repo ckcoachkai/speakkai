@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-14T18:41:00+08:00",
+  "updatedAt": "2026-09-15T18:01:00+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -669,6 +669,33 @@
             {
               "name": "Harry",
               "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-08&student=harry"
+            }
+          ]
+        },
+        {
+          "id": "tue-afternoon-2026-09-15",
+          "date": "2026-09-15",
+          "time": "15:30–17:30",
+          "classContent": [
+            "Students presented speeches using a brief current-event reference to introduce a personal experience. Individual coaching covered purposeful gestures, developing ideas into paragraphs, measured wording, note-card handling, clear structure, and realistic solutions.\n\nStudents began exploring AI superintelligence and regulation, developing their own opinions and practising how to explain their reasoning. We introduced superintelligence as a proposed AI with capabilities beyond human intelligence, and regulation as rules and oversight for its development and use.\n\nTheir speeches have four parts:\n\n◆ Explain the prompt: What does the claim mean?\n◆ Share an opinion: What do you think, and why?\n◆ Describe a possible danger: What could go wrong?\n◆ Propose an action: What could we do to address it?\n\nStudents practised three connecting phrases: “Our concern is…”, “This could happen because…”, and “This matters because…” These help them connect a concern to its cause and explain its importance to listeners. Particular attention went to proposing specific, realistic actions that address the danger described."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Alyssa",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-15&student=alyssa"
+            },
+            {
+              "name": "Ethan Liu",
+              "feedbackUrl": null
+            },
+            {
+              "name": "Ethan Jia",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-15&student=ethan-jia"
+            },
+            {
+              "name": "Harry",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-15&student=harry"
             }
           ]
         }
