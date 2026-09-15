@@ -1,0 +1,30 @@
+---
+const lessons=Object.values(import.meta.glob('../data/ivy/*.json',{eager:true,import:'default'})) as {date:string;salt:string;iv:string;ciphertext:string}[];
+lessons.sort((a,b)=>b.date.localeCompare(a.date));
+const selected=Astro.props.date ?? lessons[0]?.date;
+---
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="robots" content="noindex,nofollow"/><meta name="referrer" content="no-referrer"/><title>Ivy | SpeakKai</title></head>
+<body>
+<main id="gate"><a href="/">SpeakKai</a><h1>Ivy<span>.</span></h1><form id="unlock"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required/><button>Open class notebook</button><p id="error" role="status" aria-live="polite"></p></form></main>
+<div id="notebook" hidden><nav><a href="/ivy/">Latest class</a><label for="lesson">Class</label><select id="lesson">{lessons.map(l=><option value={l.date} selected={l.date===selected}>{l.date}</option>)}</select><button id="lock">Lock</button></nav><iframe id="content" title="Ivy class content" sandbox="allow-same-origin"></iframe></div>
+<script type="application/json" id="lessons" set:html={JSON.stringify({lessons,selected}).replaceAll('<','\\u003c')}/>
+<script>
+const data=JSON.parse(document.getElementById('lessons')!.textContent!);
+const gate=document.getElementById('gate')!,notebook=document.getElementById('notebook')!,input=document.getElementById('password') as HTMLInputElement,error=document.getElementById('error')!,frame=document.getElementById('content') as HTMLIFrameElement;
+const decode=(s:string)=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+let password='';
+async function open(date:string,secret:string){
+ const lesson=data.lessons.find((l:{date:string})=>l.date===date);
+ const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(secret),'PBKDF2',false,['deriveKey']);
+ const key=await crypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',iterations:600000,salt:decode(lesson.salt)},material,{name:'AES-GCM',length:256},false,['decrypt']);
+ const clear=await crypto.subtle.decrypt({name:'AES-GCM',iv:decode(lesson.iv)},key,decode(lesson.ciphertext));
+ frame.srcdoc=new TextDecoder().decode(clear);password=secret;input.value='';gate.hidden=true;notebook.hidden=false;error.textContent='';
+}
+document.getElementById('unlock')!.addEventListener('submit',async event=>{event.preventDefault();const button=(event.currentTarget as HTMLFormElement).querySelector('button')!;button.disabled=true;error.textContent='Opening…';try{await open(data.selected,input.value);}catch{error.textContent='Incorrect password. Please try again.';input.focus();}finally{button.disabled=false;}});
+document.getElementById('lesson')!.addEventListener('change',async event=>{const date=(event.target as HTMLSelectElement).value;try{await open(date,password);history.pushState({},'',`/ivy/${date}/`);}catch{error.textContent='Could not open this class.';gate.hidden=false;notebook.hidden=true;}});
+document.getElementById('lock')!.addEventListener('click',()=>{password='';frame.srcdoc='';notebook.hidden=true;gate.hidden=false;input.focus();});
+window.addEventListener('popstate',()=>location.reload());
+</script>
+<style>
+:global(*){box-sizing:border-box}:global(body){margin:0;background:#f5f3ec;color:#234d3e;font:16px Arial,sans-serif}:global([hidden]){display:none!important}#gate{max-width:440px;margin:12vh auto;padding:32px}a{color:inherit}#gate>a{text-decoration:none;font-weight:bold}h1{font:100px Georgia,serif;letter-spacing:-5px;margin:36px 0}h1 span{color:#b67743}label{display:block;font-size:14px;margin-bottom:10px}input,button,select{font:inherit;border-radius:4px;padding:14px;border:1px solid #bbc8b9}input{width:100%;background:#fffef9}button{background:#234d3e;color:white;cursor:pointer}form button{width:100%;margin-top:16px}button:disabled{opacity:.65}#error{font-size:14px;min-height:20px}nav{min-height:68px;display:flex;align-items:center;gap:18px;padding:10px 24px;border-bottom:1px solid #ccd4c9}nav label{margin:0}nav select,nav button{padding:8px}nav button{margin-left:auto}iframe{display:block;border:0;width:100%;height:calc(100dvh - 68px);background:#f5f3ec}@media(max-width:500px){nav{gap:10px;padding:10px;font-size:13px}nav label{display:none}select{max-width:140px}}
+</style>

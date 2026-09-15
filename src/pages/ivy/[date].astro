@@ -1,0 +1,5 @@
+---
+import IvyNotebook from '../../components/IvyNotebook.astro';
+export function getStaticPaths(){return Object.values(import.meta.glob('../../data/ivy/*.json',{eager:true,import:'default'})).map((l:any)=>({params:{date:l.date}}));}
+---
+<IvyNotebook date={Astro.params.date}/>
