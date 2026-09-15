@@ -12,7 +12,7 @@ header{display:flex;justify-content:space-between;align-items:center;border-bott
 .banner{border-radius:12px;background:#e8eddc;padding:15px 20px;line-height:1.6;margin-bottom:22px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:#fff;border:1px solid #dce3d7;border-radius:18px;padding:24px}.card h2{font-size:14px;font-weight:500;margin:0 0 18px;color:#5d7168}.number{font-size:36px;font-weight:650;letter-spacing:-.04em}.unit{font-size:16px;font-weight:400;letter-spacing:0}.card small{display:block;margin-top:10px;color:#5d7168;line-height:1.5}.calories{background:#183b30;color:#fff;border-color:#183b30}.calories h2,.calories small{color:#c9ddcd}
 .columns{display:grid;grid-template-columns:1.7fr 1fr;gap:22px;margin-top:28px}.panel{background:white;border:1px solid #dce3d7;border-radius:18px;padding:24px}.panel h2{font-size:22px;letter-spacing:-.02em;margin:0 0 22px}.meal{border-top:1px solid #e1e7dd;padding:18px 0}.meal:first-child{border-top:0;padding-top:0}.meal p{margin:8px 0}.meal strong{font-size:18px}.pill{display:inline-block;border-radius:20px;background:#f2eddb;padding:5px 10px;font-size:12px;margin-bottom:10px}.weight{margin-top:22px;border-top:1px solid #e1e7dd;padding-top:22px}.weight strong{font-size:32px}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:14px 10px;text-align:left;border-bottom:1px solid #e2e7de;white-space:nowrap}th{font-weight:500;color:#5d7168}section.history{margin-top:22px}.footnote{font-size:13px;color:#5d7168}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}footer{font-size:12px;color:#5d7168;line-height:1.7}#error{color:#922d24} [hidden]{display:none!important}
 @media(max-width:700px){header,main,footer{padding:20px}.hero{display:block;padding-top:20px}.date{margin-top:24px}.metrics{grid-template-columns:repeat(2,1fr)}.card{padding:20px}.number{font-size:30px}.columns{grid-template-columns:1fr}.tag{font-size:10px}}
-</style>
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}.gallery figure{margin:0}.gallery img{width:100%;height:200px;object-fit:cover;border-radius:12px;background:#f4f5ef}.gallery a{display:block}.gallery figcaption{font-size:13px;color:#5d7168;line-height:1.5;margin-top:8px}.tally{margin:18px 0 24px;padding:20px;background:#e8eddc;border-radius:12px}.tally p{margin:6px 0}.weight-progress{font-weight:600;color:#183b30}</style>
 </head>
 <body>
 <header><a class="brand" href="/">SpeakKai<span class="muted"> / food</span></a><span class="tag">A little more aware, every day</span></header>
@@ -29,9 +29,10 @@ header{display:flex;justify-content:space-between;align-items:center;border-bott
 </div>
 <div class="columns">
 <section class="panel"><h2>On the plate</h2><div id="meals"></div></section>
-<section class="panel"><h2>Movement & weight</h2><div id="exercise"></div><div class="weight"><p class="muted">Reported weight</p><strong id="weight">—</strong><p class="footnote">Exercise calories stay separate from food intake. No calorie target has been set.</p></div></section>
+<section class="panel"><h2>Movement & weight</h2><div id="exercise"></div><div class="weight"><p class="muted">Reported weight</p><strong id="weight">—</strong><p id="weight-note" class="footnote"></p><p id="weight-progress" class="weight-progress"></p><p class="footnote">Exercise calories stay separate from food intake. No calorie target has been set.</p></div></section>
 </div>
-<section class="panel history"><h2>The running log</h2><div class="table-wrap"><table><caption class="footnote">Logged values only; unknown values appear as —.</caption><thead><tr><th scope="col">Date</th><th scope="col">Calories</th><th scope="col">Protein</th><th scope="col">Carbs</th><th scope="col">Fat</th><th scope="col">Weight</th><th scope="col">Coverage</th></tr></thead><tbody id="history"></tbody></table></div><div class="actions"><button id="download" type="button">Download log JSON</button></div></section>
+<section class="panel history" id="photo-panel" hidden><h2>Photo diary</h2><p class="footnote">Tap a photo to view it in full. Photos show what was served; the food log records what was actually eaten.</p><div id="photos" class="gallery"></div></section>
+<section class="panel history"><h2>The running log</h2><div id="tally" class="tally"></div><div class="table-wrap"><table><caption class="footnote">Logged values only; unknown values appear as —.</caption><thead><tr><th scope="col">Date</th><th scope="col">Calories</th><th scope="col">Protein</th><th scope="col">Carbs</th><th scope="col">Fat</th><th scope="col">Weight</th><th scope="col">Coverage</th></tr></thead><tbody id="history"></tbody></table></div><div class="actions"><button id="download" type="button">Download log JSON</button></div></section>
 <p class="footnote">Keep logging meals, drinks, portions and completed workouts in ChatGPT. Corrections replace earlier estimates. Missing meals and unknown nutrients are never treated as zero.</p>
 </div>
 </main>
@@ -57,6 +58,17 @@ function render(day){
  if(!day.exercise.length)el("exercise").append(textNode("p","No completed exercise logged.","muted"));
  for(const activity of day.exercise)el("exercise").append(textNode("p",activity.type+" · "+fmt(activity.minutes)+" min"+(Number.isFinite(activity.calories)?" · "+fmt(activity.calories)+" kcal estimated":"")));
  el("weight").textContent=fmt(day.weightKg)+(Number.isFinite(day.weightKg)?" kg":"");
+ el("weight-note").textContent=day.weightNote||"";
+ const difference=Number.isFinite(day.weightKg)&&Number.isFinite(data.startingWeightKg)?day.weightKg-data.startingWeightKg:null;
+ el("weight-progress").textContent=difference===null?"":"Starting weight: "+fmt(data.startingWeightKg)+" kg · "+fmt(Math.abs(difference))+" kg "+(difference<0?"down":difference>0?"up":"change")+" since starting";
+ el("photos").replaceChildren();
+ for(const photo of day.photos||[]){
+ if(!/^\/food\/photos\/[a-zA-Z0-9._-]+$/.test(photo.src))continue;
+ const figure=document.createElement("figure"),link=document.createElement("a"),img=document.createElement("img");
+ link.href=photo.src;link.target="_blank";link.rel="noopener";img.src=photo.src;img.alt=photo.caption;img.loading="lazy";img.decoding="async";
+ link.append(img);figure.append(link,textNode("figcaption",photo.caption));el("photos").append(figure);
+ }
+ el("photo-panel").hidden=!el("photos").childElementCount;
 }
 (async()=>{
  try{
@@ -69,6 +81,9 @@ function render(day){
  const option=document.createElement("option");option.value=day.date;option.textContent=day.date;el("date").append(option);
  const row=document.createElement("tr");for(const value of [day.date,fmt(total(day,"calories")),fmt(total(day,"protein")),fmt(total(day,"carbs")),fmt(total(day,"fat")),fmt(day.weightKg),day.complete?"Complete":"Partial"])row.append(textNode("td",value));el("history").append(row);
  }
+ const meals=data.days.flatMap(day=>day.meals);
+ const knownSum=key=>{const values=meals.map(m=>m[key]).filter(Number.isFinite);return values.length?values.reduce((a,b)=>a+b,0):null;};
+ el("tally").append(textNode("strong","Across the running log"),textNode("p",fmt(knownSum("calories"))+" kcal logged · "+meals.length+" meal"+(meals.length===1?"":"s")+" across "+data.days.length+" day"+(data.days.length===1?"":"s")),textNode("p","Known macro subtotals: protein "+fmt(knownSum("protein"))+" g · carbs "+fmt(knownSum("carbs"))+" g · fat "+fmt(knownSum("fat"))+" g"),textNode("p","Only known entries are summed. Missing values and incomplete days mean these are logged subtotals, not total intake.","footnote"));
  el("date").addEventListener("change",()=>render(data.days.find(d=>d.date===el("date").value)));
  el("download").addEventListener("click",()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="speakkai-food-log.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
  el("updated").textContent="Last log update: "+data.updatedAt+" · All dates use "+data.timeZone+".";

@@ -20,8 +20,37 @@
         }
       ],
       "exercise": [],
-      "weightKg": 115,
-      "notes": "No completed exercise reported. Discussing HYROX does not count as a workout."
+      "weightKg": 111,
+      "notes": "No completed exercise reported. Discussing HYROX does not count as a workout.",
+      "weightNote": "Morning weigh-in. Starting weight was 115 kg; starting date not specified.",
+      "photos": [
+        {
+          "src": "/food/photos/2026-09-15-38800.jpg",
+          "caption": "Hamburger patty and broccoli"
+        },
+        {
+          "src": "/food/photos/2026-09-15-38801.jpg",
+          "caption": "Rice and egg before eating; only half the rice was eaten"
+        },
+        {
+          "src": "/food/photos/2026-09-15-38802.jpg",
+          "caption": "Seaweed soup with two fish or meat balls"
+        },
+        {
+          "src": "/food/photos/2026-09-15-38803.jpg",
+          "caption": "Sauce bottles served with the meal"
+        },
+        {
+          "src": "/food/photos/2026-09-15-38804.jpg",
+          "caption": "Dipping sauce portions"
+        },
+        {
+          "src": "/food/photos/2026-09-15-38805.jpg",
+          "caption": "Fruit and mint infused water; amount consumed not recorded"
+        }
+      ]
     }
-  ]
+  ],
+  "startingWeightKg": 115,
+  "startingWeightDate": null
 }
