@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-15T21:01:00+08:00",
+  "updatedAt": "2026-09-16T05:48:04.823304+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -854,10 +854,13 @@
             }
           ],
           "classContent": {
-            "en": "Students presented speeches using a brief current-event reference to introduce a personal experience. Individual coaching covered purposeful gestures, developing ideas into paragraphs, measured wording, note-card handling, clear structure, and realistic solutions.\n\nStudents began exploring AI superintelligence and regulation, developing their own opinions and practising how to explain their reasoning. We introduced superintelligence as a proposed AI with capabilities beyond human intelligence, and regulation as rules and oversight for its development and use.\n\nTheir speeches have four parts:\n\n◆ Explain the prompt: What does the claim mean?\n◆ Share an opinion: What do you think, and why?\n◆ Describe a possible danger: What could go wrong?\n◆ Propose an action: What could we do to address it?\n\nStudents practised three connecting phrases: “Our concern is…”, “This could happen because…”, and “This matters because…” These help them connect a concern to its cause and explain its importance to listeners. Particular attention went to proposing specific, realistic actions that address the danger described.",
-            "zh": "学生展示了用简短时事背景引出个人经历的演讲。个别指导包括有目的的手势、把想法展开为段落、审慎措辞、提示卡的使用、清楚的结构，以及现实可行的解决办法。\n\n学生开始探讨人工智能超级智能与监管，形成自己的观点，并练习解释推理过程。课堂将超级智能介绍为一种设想中能力超越人类智能的人工智能，将监管解释为针对其开发与使用的规则和监督。\n\n演讲分为四个部分：\n\n◆ 解释题目：这一说法是什么意思？\n◆ 分享观点：你怎么看，为什么？\n◆ 描述可能的危险：可能出现什么问题？\n◆ 提出行动：我们可以做什么来应对？\n\n学生练习了三个连接句：“Our concern is…”（我们担心的是……）、“This could happen because…”（这可能发生，因为……）和“This matters because…”（这很重要，因为……）。这些句式帮助他们把担忧与原因联系起来，并向听众解释其重要性。课堂特别强调提出具体、现实的行动，以应对前面描述的危险。"
+            "en": "Students presented prepared speeches that used a current event as a starting point for a personal experience. Coaching focused on measured wording about the reference event, a clear transition into the speaker’s own story, specific details and emotions, and an ending that returns to the main message. Students also received individual guidance on organization, vocal variety, gestures and audience connection.\n\nStudents worked in pairs to prepare a speech about AI superintelligence, its potential risks, and regulation. The discussion prompt presented a warning attributed to AI industry leaders and employees: that unregulated superintelligence could threaten humanity in the coming years. Students were asked to examine this claim and develop their own responses.\n\nEach pair needed to divide speaking responsibilities and address four objectives:\n\n◆ Explain the prompt: Clearly introduce the claim and the concern it raises.\n◆ Share a position: Explain what they think about the claim and support their opinion with reasons.\n◆ Develop a hypothetical scenario: Describe a possible danger posed by AI, explaining how it might arise and who could be affected. Distinguish imagined possibilities from established facts.\n◆ Propose solutions: Suggest practical ways to address the risk, including actions children can take and responsibilities adults should have.\n\nKey learning focus → Move beyond broad statements such as “adults should fix this.” Students were encouraged to consider what they themselves could realistically do, while explaining where action from adults is needed. The activity combined teamwork, clear explanations, reasoned opinions, and practical problem-solving.",
+            "zh": "学生展示了准备的演讲，用时事作为引入个人经历的起点。指导重点包括审慎描述参考事件、清楚过渡到自己的故事、补充具体细节与情感，以及在结尾回到主要信息。学生还接受了组织、声音变化、手势和听众联系方面的个别建议。\n\n学生两人一组，准备关于人工智能超级智能、潜在风险与监管的演讲。讨论题提出了一项归于人工智能行业领导者和员工的警告：未经监管的超级智能可能在未来几年威胁人类。学生需要审视这一说法并形成自己的回应；它是本次讨论的题目，而不是课堂已经证实的结论。\n\n每组需要分配发言任务，并完成四个目标：\n\n◆ 解释题目：清楚介绍这一说法及其引发的担忧。\n◆ 表达立场：说明自己如何看待这一说法，并用理由支持观点。\n◆ 发展假设情境：描述人工智能可能带来的一种危险，解释它如何发生、谁可能受影响，并区分想象中的可能性与已确认事实。\n◆ 提出解决办法：建议实际可行的应对方式，包括儿童可以采取的行动以及成人应承担的责任。\n\n核心学习重点 → 超越“成年人应该解决这个问题”之类的笼统说法。学生需要思考自己实际能做什么，同时解释哪些部分需要成人采取行动。本活动结合了合作分工、清楚解释、有理由的观点和实际问题解决。"
           },
-          "homework": null
+          "homework": {
+            "en": "◆ Write out the speech developed from the paired AI-superintelligence activity, with speaking responsibilities clearly divided.\n◆ Include the four parts practised in class: explain the prompt, share a reasoned position, describe a hypothetical risk scenario, and propose solutions. Include what children can do and where adults need to act.\n◆ Practise the speech aloud and prepare to present it in the next class.",
+            "zh": "◆ 把两人合作的人工智能超级智能主题演讲写出来，明确分配各自的发言任务。\n◆ 包含课堂练习的四个部分：解释题目、表达有理由的立场、描述假设的风险情境、提出解决办法。说明儿童可以做什么，以及哪些部分需要成人行动。\n◆ 大声练习演讲，准备在下一次课展示。"
+          }
         }
       ]
     },
