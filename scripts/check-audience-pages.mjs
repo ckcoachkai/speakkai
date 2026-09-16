@@ -14,7 +14,7 @@ for(const prefix of ['','/zh']){
     for(const id of ['courses','story','connect'])assert.ok(html.includes(`id="${id}"`));
     assert.ok((html.match(/data-course-focus=/g)||[]).length>=4,'Detailed course choices must be present');
     assert.ok(html.includes(prefix?'线上课程即将推出':'Online classes coming soon'));
-    assert.ok(html.includes('data-motion-scene'));
+    assert.ok(html.includes('portrait-scene'));
     if(slug==='adults')assert.doesNotMatch(html,/data-course-focus="(?:drama|debate)"|favorite toy|小学低年级/);
     if(slug==='kindergarten')assert.doesNotMatch(html,/data-course-focus="(?:professional|debate)"|CEO|master’s admissions/);
   }

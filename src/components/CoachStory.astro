@@ -1,0 +1,11 @@
+---
+import { homeCopy, type SiteLanguage } from '../data/homeCopy';
+const { language='en' }=Astro.props as {language?:SiteLanguage};
+const c=homeCopy[language];
+---
+<section class="cinema-proof" aria-label={c.experienceLabel}><div class="wrap">{c.experience.map((item,i)=><div data-reveal><span class="chapter-label">0{i+1}</span><strong>{item[0]}</strong><p>{item[1]}</p></div>)}</div></section>
+<section class="cinema-story wrap" aria-labelledby="cinema-story-title">
+  <figure data-reveal><img src="/images/test-business/kai-training-stage.webp" width="668" height="606" loading="lazy" alt={c.stageAlt}/><figcaption>{c.stageCaption}</figcaption></figure>
+  <div><p class="chapter-label">{c.storyLabel}</p><h2 id="cinema-story-title">{c.storyTitle[0]} <span>{c.storyTitle[1]}</span></h2>{c.story.map(p=><p>{p}</p>)}</div>
+</section>
+<section class="cinema-method wrap" aria-labelledby="cinema-method-title"><div><p class="chapter-label">{c.methodLabel}</p><h2 id="cinema-method-title">{c.methodTitle[0]}<br/><span>{c.methodTitle[1]}</span></h2><p>{c.methodIntro}</p></div><ol>{c.method.map((step,i)=><li data-reveal><span class="method-number">0{i+1}</span><div><p class="chapter-label">{step[0]}</p><h3>{step[1]}</h3><p>{step[2]}</p></div></li>)}</ol></section>

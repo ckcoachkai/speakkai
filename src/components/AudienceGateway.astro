@@ -3,6 +3,7 @@ import { audiencePages, audienceHref } from '../data/audiencePages';
 import { serviceCopy } from '../data/services';
 import type { SiteLanguage } from '../data/homeCopy';
 import VoiceStage from './VoiceStage.astro';
+import CoachStory from './CoachStory.astro';
 import '../styles/audience.css';
 const { language = 'en' } = Astro.props as {language?:SiteLanguage};
 const zh = language === 'zh-CN';
@@ -30,6 +31,7 @@ const c = serviceCopy[language];
     <p>{zh ? '从英语准备、海外教育咨询，到演讲、辩论与职场沟通。帮助不同阶段的学习者理清想法，用自己的方式表达。' : 'From English preparation and overseas education consulting to speech, debate and professional communication. Helping people at every stage think clearly and speak in their own voice.'}</p>
     <img src="/images/coach-kai-headshot-360.webp?v=20260913" alt={zh ? '沟通教练 Kai Liu' : 'Communication coach Kai Liu'} width="360" height="360" loading="lazy"/>
   </section>
+  <CoachStory language={language}/>
   <section class="audience-contact wrap" id="connect" aria-labelledby="gateway-contact-title"><div><p class="chapter-label">{zh ? '从一次交流开始' : 'START A CONVERSATION'}</p><h2 id="gateway-contact-title">{zh ? '说说你想实现什么。' : 'Tell me what you’re working towards.'}</h2><p>{zh ? '个性化一对一、按时间安排的私人小班，以及合作机构现有班课转介。课程以线下为主。' : 'One-to-one coaching, private groups by arrangement, and introductions to partner programmes for existing group classes. Primarily in person.'}</p><p class="online-label">{c.online}</p></div><div><a class="audience-button" href={zh?'/zh/contact/':'/contact/'}>{zh?'联系 Kai':'Contact Kai'} <span aria-hidden="true">↗</span></a><p class="wechat-label">WeChat: CKcoachkai</p><a class="quiet-link" href={zh?'/zh/schools/':'/schools/'}>{zh?'学校课程与工作坊':'School programmes & workshops'}</a></div></section>
 </div>
 <script>

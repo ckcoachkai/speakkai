@@ -1,12 +1,16 @@
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-document.querySelectorAll<HTMLElement>('[data-motion-scene]').forEach(scene => {
-  const replay = scene.querySelector<HTMLButtonElement>('[data-motion-replay]');
-  const play = () => { if(reduced.matches)return; scene.classList.remove('scene-playing'); requestAnimationFrame(()=>requestAnimationFrame(()=>scene.classList.add('scene-playing'))); };
-  if(replay){replay.hidden=false;replay.addEventListener('click',play);}
-  play();
-  reduced.addEventListener('change',()=>{if(reduced.matches)scene.classList.remove('scene-playing');});
-});
-if('IntersectionObserver' in window && !reduced.matches){
-  const observer = new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('reveal-arrived');observer.unobserve(entry.target);}}),{threshold:.08});
-  document.querySelectorAll('[data-reveal]').forEach(el=>observer.observe(el));
+// Finite reveals start only when visible. Static content is never hidden beforehand.
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+    const el = entry.target as HTMLElement;
+    if (entry.isIntersecting && !reduced.matches) {
+      el.classList.add('reveal-arrived');
+      el.style.animationPlayState = 'running';
+    } else if (!entry.isIntersecting) el.style.animationPlayState = 'paused';
+  }), { threshold: .08 });
+  document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el,i) => {
+    el.style.setProperty('--reveal-delay', `calc(${i%3} * var(--motion-stagger))`);
+    observer.observe(el);
+    el.addEventListener('animationend', () => observer.unobserve(el), {once:true});
+  });
 }

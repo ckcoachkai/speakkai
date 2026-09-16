@@ -4,6 +4,7 @@ import "@fontsource/manrope/latin-600.css";
 import "@fontsource/manrope/latin-700.css";
 import BrandLogo from "../components/BrandLogo.astro";
 import "../styles/flagship.css";
+import "../styles/cinematic.css";
 import { structuredData } from "../lib/structuredData.mjs";
 import { pageAlternates, languageChoices, localizedPath, destinationLabel } from "../lib/siteLanguage.mjs";
 interface Props {
@@ -48,7 +49,7 @@ const navigation = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0b1020" />
+    <meta name="theme-color" content="#151715" />
     <meta name="speakkai-version" content="30" />
     {noindex && <meta name="robots" content="noindex" />}
     {
@@ -137,6 +138,7 @@ const navigation = [
 </html>
 
 <script>
+  import '../scripts/audience-experience';
   const menu = document.querySelector<HTMLDetailsElement>(".mobile-navigation");
   const summary = menu?.querySelector("summary");
   menu?.addEventListener("keydown", (event) => {
