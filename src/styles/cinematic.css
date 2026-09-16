@@ -11,3 +11,14 @@ body.flagship{background:#ffffff}.flagship .site-header{background:#ffffff}.flag
 /* Second pass: readable language controls and complete mobile captions. */
 .flagship .site-language a{color:#dddddd}.flagship .site-language a:hover{color:#ffff00}.flagship .site-language a[aria-current=page]:hover{color:#141414}
 @media(max-width:720px){.gateway-statement .portrait-scene figcaption{position:static;display:block;padding:6px 0;line-height:1.5}.gateway-statement .portrait-scene figcaption strong{display:block;font-size:7px;letter-spacing:0}.flagship .gateway-statement h1{align-self:start;padding-top:24px}}
+/* Strong editorial hierarchy: Helvetica-style display and labels, regular body copy. */
+body.flagship{--display-font:"Helvetica Neue",Helvetica,Arial,"PingFang SC","Microsoft YaHei",sans-serif}
+body.flagship h1,body.flagship h2,body.flagship h3{font-family:var(--display-font);font-weight:800;letter-spacing:-.045em}
+body.flagship h1{font-weight:900;line-height:1.02}
+body.flagship .eyebrow,body.flagship .chapter-label,body.flagship label,body.flagship legend,body.flagship .course-tag,body.flagship .credential-pill{font-family:var(--display-font);font-weight:700;letter-spacing:.065em;text-transform:uppercase}
+body.flagship .eyebrow,body.flagship .chapter-label{font-size:12px}
+body.flagship label{font-size:13px;line-height:1.5}
+body.flagship label span{font-weight:400;letter-spacing:0;text-transform:none}
+body.flagship .audience-choice strong,body.flagship .cinema-proof strong{font-family:var(--display-font);font-weight:900}
+body.flagship .header-cta,body.flagship .button,body.flagship .audience-button,body.flagship .desktop-navigation a,body.flagship .course-filters a{font-family:var(--display-font);font-weight:700}
+body.flagship .header-cta,body.flagship .button,body.flagship .audience-button{text-transform:uppercase;letter-spacing:.045em}
