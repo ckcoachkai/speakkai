@@ -5,7 +5,7 @@ const nonNameCapitalizedWords = new Set([
 
 export function calendarDisplayEventKind(label: string) {
   if (/\bVIP\b|\b1\s*(?:-|v)\s*1\b|\b1\s*-?\s*on\s*-?\s*1\b|一对一/i.test(label)) return "vip";
-  if (/^Class booked(?: · (?:Hongqiao Hub|Huacao|Longbai|Gubei|Weining Road|G\d+(?:–\d+)*))*$/.test(label)) return "group";
+  if (/^Class booked(?: · (?:华漕|龙柏|古北|威宁路|Hongqiao Hub|Huacao|Longbai|Gubei|Weining Road|G\d+(?:–\d+)*))*$/.test(label)) return "group";
   if (/班课|年级|\bSTCC\b|\bgroup\b|\bLogan\s*班\b/i.test(label)) return "group";
   const words = label.match(/\b[A-Z][a-z]{1,}\b/g) ?? [];
   if (
@@ -22,7 +22,7 @@ export function calendarDisplayEventKind(label: string) {
 export function internalBookingLabel(label: string) {
   return label
     .replace(/\bSTCC\b(?!\s*[·（(]\s*威宁路)/gi, "STCC · 威宁路")
-    .replace(/\bSAS\b(?:\s*·\s*华漕)?(?!\s*·\s*虹桥天地)/gi, "SAS · 虹桥天地（虹桥枢纽）")
+    .replace(/\bSAS\b(?:\s*·\s*虹桥天地（虹桥枢纽）)?(?!\s*·\s*华漕)/gi, "SAS · 华漕")
     .replace(/井亭大厦/g, "龙柏")
     .replace(/\bGubei\b|古北1699/gi, "古北");
 }
@@ -30,12 +30,11 @@ export function internalBookingLabel(label: string) {
 // Areas are approximate travel labels, not administrative district boundaries.
 // Only allowlisted metadata reaches the public page; never reuse a raw class title.
 export function bookingArea(label: string) {
-  // Kai confirmed that the classes tagged SAS are taught at Hongqiao Tiandi.
-  if (/\bSAS\b|虹桥天地|Hongqiao Tiandi|Hongqiao Hub/i.test(label)) return "Hongqiao Hub";
-  if (/华漕|Huacao/i.test(label)) return "Huacao";
-  if (/井亭大厦|龙柏|Jingting|Longbai/i.test(label)) return "Longbai";
-  if (/古北\s*16[-–]?99|古北|Gubei/i.test(label)) return "Gubei";
-  if (/\bSTCC\b|威宁路|Weining Road/i.test(label)) return "Weining Road";
+  // Kai explicitly chose these Chinese area labels for the schedule.
+  if (/\bSAS\b|虹桥天地|Hongqiao Tiandi|Hongqiao Hub|华漕|Huacao/i.test(label)) return "华漕";
+  if (/井亭大厦|龙柏|Jingting|Longbai/i.test(label)) return "龙柏";
+  if (/古北\s*16[-–]?99|古北|Gubei/i.test(label)) return "古北";
+  if (/\bSTCC\b|威宁路|Weining Road/i.test(label)) return "威宁路";
   return "";
 }
 

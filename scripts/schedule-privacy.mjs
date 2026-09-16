@@ -1,5 +1,5 @@
 const PUBLIC_COLUMN_COUNT = 7;
-const PUBLIC_STATUSES = new Set(["Holiday", "Limited availability", "Online available", "Unavailable", "Free all day"]);
+const PUBLIC_STATUSES = new Set(["Holiday", "Limited availability", "Online available", "Unavailable", "Free all day", "Online free all day"]);
 export const PUBLIC_PRIVACY_MODE = "calendar-display-event-details";
 const PUBLIC_EVENT_LINE_PATTERN =
   /^(?:[01]\d|2[0-3]):[0-5]\d(?:–(?:[01]\d|2[0-3]):[0-5]\d)? · .+$/;
@@ -156,6 +156,9 @@ export function sanitizeCalendarCell(value) {
   if (!details) return day;
 
   const timedEntries = extractCalendarDisplayEvents(detailLines);
+  if (detailLines.some(line => /^Online free all day$/i.test(line))) {
+    return [day, 'Online free all day', ...timedEntries.map(({time,label}) => `${time} · ${label}`)].join('\n');
+  }
   const explicitlyFreeAllDay = detailLines.some((line) => /^Free all day$/i.test(line));
   if (explicitlyFreeAllDay && timedEntries.length === 0) return `${day}\nFree all day`;
   const notices = detailLines.filter((line) => PUBLIC_SCHEDULE_NOTICES.has(line));
@@ -273,6 +276,7 @@ export function assertCalendarDisplayPublicScheduleSheet(sheet) {
       const invalidStatusDetails =
         (!status && extra.length > 0) ||
         (status === "Free all day" && extra.length > 0) ||
+        (status === "Online free all day" && invalidLimitedDetails) ||
         (status === "Holiday" && invalidLimitedDetails) ||
         (status === "Unavailable" && invalidUnavailableDetails) ||
         (status === "Limited availability" && invalidLimitedDetails) ||

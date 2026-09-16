@@ -92,6 +92,10 @@ export function weeklyScheduleBlocks(
   lines: string[],
   monthTitle: string,
 ): WeeklyScheduleBlock[] {
+  if (lines.some(line => /^Online free all day$/i.test(line))) {
+    if (!lines.some(line => timeRange(line))) return [{kind:'free',timeText:'',title:'Online free all day'}];
+    return freeBlocks(lines.filter(line => !/^Holiday/i.test(line)), 0, 24 * 60, 'Online free');
+  }
   if (lines.some((line) => /^Free all day$/i.test(line)) && !lines.some((line) => timeRange(line))) {
     return [{ kind: "free", timeText: "", title: "Free all day" }];
   }
