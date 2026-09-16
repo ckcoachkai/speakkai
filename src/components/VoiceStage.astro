@@ -1,0 +1,13 @@
+---
+const { words = ['THINK','SPEAK','CONNECT'], chinese = false } = Astro.props;
+---
+<div class="voice-scene" data-motion-scene>
+  <div class="voice-art" aria-hidden="true">
+    <svg class="voice-orbit" viewBox="0 0 500 500" fill="none"><circle cx="250" cy="250" r="205"/><ellipse cx="250" cy="250" rx="230" ry="95" transform="rotate(-32 250 250)"/><path d="M45 335 Q150 40 370 95 T450 360"/></svg>
+    <div class="voice-grid"></div><span class="voice-dot"></span>
+    {words.map((word: string,i: number)=><div class={`voice-plane plane-${i}`}><span class="plane-number">0{i+1}</span><strong>{word}</strong><span class="plane-line"></span></div>)}
+    <div class="voice-wave">{Array.from({length:17},(_,i)=><i style={`--bar:${i};--height:${18+((i*17)%57)}px`}></i>)}</div>
+    <span class="voice-caption">{chinese ? '想法 → 声音 → 连接' : 'IDEA → VOICE → CONNECTION'}</span>
+  </div>
+  <button type="button" class="motion-replay" data-motion-replay hidden>{chinese ? '重播动画' : 'Replay motion'} <span aria-hidden="true">↻</span></button>
+</div>

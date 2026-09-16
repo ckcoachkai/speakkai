@@ -9,6 +9,7 @@ export const languagePairs = [
   ["/contact/", "/zh/contact/"],
   ["/watch/", "/zh/watch/"],
   ["/coaching/young-competition-speakers/", "/zh/coaching/young-competition-speakers/"],
+  ...['kindergarten','primary','upper-primary','middle-school','high-school','adults'].map(slug=>[`/for/${slug}/`,`/zh/for/${slug}/`]),
   ...practiceLanguagePairs,
 ];
 export function pageAlternates(path) {

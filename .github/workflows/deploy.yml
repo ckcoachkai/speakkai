@@ -65,6 +65,7 @@ jobs:
           node scripts/check-flagship-seo.mjs
           node scripts/check-course-languages.mjs
           node scripts/check-site-languages.mjs
+          node scripts/check-audience-pages.mjs
           node scripts/check-course-editorial.mjs
           node scripts/check-practice-content.mjs
           node scripts/check-flagship-budget.mjs

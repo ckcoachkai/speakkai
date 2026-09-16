@@ -1,5 +1,6 @@
 // Deliberately curated. Excludes experiments, schedule, itinerary, lab and redirects.
 export const publicRoutes = [
+  ...['kindergarten','primary','upper-primary','middle-school','high-school','adults'].flatMap(slug=>[`/for/${slug}/`,`/zh/for/${slug}/`]),
   "/",
   "/zh/",
   "/zh/coaching/",

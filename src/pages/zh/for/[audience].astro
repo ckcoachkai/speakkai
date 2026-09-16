@@ -1,0 +1,8 @@
+---
+import FlagshipLayout from '../../../layouts/FlagshipLayout.astro';
+import AudienceLanding from '../../../components/AudienceLanding.astro';
+import { audiencePages } from '../../../data/audiencePages';
+export function getStaticPaths(){return audiencePages.map(a=>({params:{audience:a.slug},props:{page:a}}));}
+const {page} = Astro.props;
+---
+<FlagshipLayout language="zh-CN" title={`${page['zh-CN'].name}表达与沟通辅导 | SpeakKai`} description={page['zh-CN'].lead} contactHref="#connect" current="audience"><AudienceLanding slug={page.slug} language="zh-CN"/></FlagshipLayout>

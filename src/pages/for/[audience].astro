@@ -1,0 +1,8 @@
+---
+import FlagshipLayout from '../../layouts/FlagshipLayout.astro';
+import AudienceLanding from '../../components/AudienceLanding.astro';
+import { audiencePages } from '../../data/audiencePages';
+export function getStaticPaths(){return audiencePages.map(a=>({params:{audience:a.slug},props:{page:a}}));}
+const {page} = Astro.props;
+---
+<FlagshipLayout title={`${page.en.name} Speaking & Communication Coaching | SpeakKai`} description={page.en.lead} contactHref="#connect" current="audience"><AudienceLanding slug={page.slug}/></FlagshipLayout>

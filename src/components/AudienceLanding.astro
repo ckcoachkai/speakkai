@@ -1,0 +1,57 @@
+---
+import { audiencePages } from '../data/audiencePages';
+import type { SiteLanguage } from '../data/homeCopy';
+import { serviceCopy } from '../data/services';
+import VoiceStage from './VoiceStage.astro';
+import '../styles/audience.css';
+const { slug, language = 'en' } = Astro.props as {slug:string;language?:SiteLanguage};
+const page = audiencePages.find(a=>a.slug===slug)![language];
+const zh = language === 'zh-CN'; const c = serviceCopy[language];
+const home = zh ? '/zh/' : '/';
+const contact = `${zh?'/zh':''}/contact/?audience=${slug==='adults'?'companies':'coaching'}`;
+const focuses = [...new Set(page.courses.map(c=>c.focus))];
+---
+<div class="audience-experience audience-landing" data-audience={slug}>
+  <nav class="audience-breadcrumb wrap" aria-label={zh?'学习阶段导航':'Learning stage navigation'}><a href={`${home}#work`}>← {zh?'重新选择学习阶段':'Change learning stage'}</a><span>{page.name}</span></nav>
+  <section class="audience-hero wrap" aria-labelledby="audience-title"><div><p class="chapter-label">{page.name} / {page.range}</p><h1 id="audience-title">{page.headline[0]}<br/><span>{page.headline[1]}</span></h1><p class="opening-lead">{page.lead}</p><div class="audience-actions"><a class="audience-button" href="#courses">{zh?'探索适合的课程':'Explore your courses'} <span aria-hidden="true">↘</span></a><a class="quiet-link" href="#connect">{zh?'与 Kai 讨论目标':'Discuss your goals'}</a></div></div><VoiceStage words={page.words} chinese={zh}/></section>
+  <section class="outcome-band" aria-label={zh?'练习方向':'What you will practise'}><div class="wrap">{page.outcomes.map((o,i)=><article data-reveal><span class="chapter-label">0{i+1}</span><h2>{o[0]}</h2><p>{o[1]}</p></article>)}</div></section>
+  <section class="audience-courses wrap" id="courses" aria-labelledby="courses-title"><div class="course-heading"><div><p class="chapter-label">{zh?'为你的阶段设计':'BUILT FOR YOUR STAGE'}</p><h2 id="courses-title">{zh?'选择你的表达方向。':'Choose your direction.'}</h2></div><p>{page.fit}</p></div>
+    <nav class="course-filters" aria-label={zh?'课程方向':'Course direction'}><a href="?focus=all#courses" data-course-filter="all" aria-current="true">{zh?'本阶段全部课程':'All courses for this group'}</a>{focuses.map(f=><a href={`?focus=${f}#courses`} data-course-filter={f}>{c.services.find(s=>s.id===f)!.title}</a>)}</nav>
+    <p class="filter-status" role="status" data-filter-status hidden data-prefix={zh?'当前方向：':'Showing: '}></p>
+    <div class="landing-course-grid">{page.courses.map((course,i)=><article class="landing-course" data-course-focus={course.focus} data-reveal><div class="course-top"><span class="chapter-label">0{i+1}</span><span class="course-tag">{course.tag}</span></div><h3>{course.title}</h3><p class="course-aim">{course.aim}</p><ul>{course.points.map(p=><li><span aria-hidden="true">↗</span>{p}</li>)}</ul><a class="quiet-link" href="#connect">{zh?'讨论这类辅导':'Discuss this coaching'} <span aria-hidden="true">↗</span></a></article>)}</div>
+    <noscript><p>{zh?'下方展示本阶段全部课程，可直接阅读或联系 Kai。':'All courses for this group are available below. Explore them or contact Kai directly.'}</p></noscript>
+  </section>
+  <section class="lesson-example" aria-labelledby="example-title"><div class="wrap"><p class="chapter-label">{zh?'练习示例 · 根据学员调整':'AN EXAMPLE OF THE PRACTICE · ADAPTED TO THE LEARNER'}</p><h2 id="example-title">{page.example.title}</h2><div class="lesson-steps">{page.example.steps.map((step,i)=><article data-reveal><span class="step-number">0{i+1}</span><h3>{step[0]}</h3><p>{step[1]}</p></article>)}</div></div></section>
+  <section class="audience-extras wrap" aria-labelledby="extra-title"><div><p class="chapter-label">{zh?'还可以探索':'MORE TO EXPLORE'}</p><h2 id="extra-title">{zh?'按需安排。':'Available by arrangement.'}</h2></div><ul>{page.extra.map(t=><li>{t}</li>)}</ul></section>
+  <section class="audience-coach wrap" id="story" aria-labelledby="coach-title"><img src="/images/coach-kai-headshot-360.webp?v=20260913" alt={zh?'沟通教练 Kai Liu':'Communication coach Kai Liu'} width="360" height="360" loading="lazy"/><div><p class="chapter-label">{zh?'与 Kai 一起练习':'WORK WITH KAI'}</p><h2 id="coach-title">{zh?'不只打磨演讲，更培养表达者。':'Build the speaker. Make the message yours.'}</h2><span class="credential-pill">{zh?'超过 17 年教育经验':'17+ years in education'}</span><p>{zh?'从英语准备、海外教育咨询，到演讲、辩论与职场沟通。课程根据英语能力、经验与目标调整。':'Experience across English preparation, overseas education consulting, speech, debate and professional communication. Coaching adapts to English proficiency, experience and goals.'}</p>{slug!=='adults'&&<p>{zh?'适合公立、双语及国际学校的不同背景。学生课程主要使用英语。':'For public, bilingual and international school backgrounds. Student coaching is primarily in English.'}</p>}</div></section>
+  <section class="audience-contact wrap" id="connect" aria-labelledby="contact-title"><div><p class="chapter-label">{zh?'下一步':'YOUR NEXT STEP'}</p><h2 id="contact-title">{zh?'我们从哪里开始？':'Where shall we start?'}</h2><p>{slug==='adults'?(zh?'说明你的岗位、听众与重要场合。个性化辅导或团队培训按具体需要安排。':'Share your role, audience and upcoming speaking moment. Individual coaching or team training is shaped around your needs.'):(zh?'说明学员年龄、英语水平、目标与重要日期。与 Kai 直接安排一对一辅导，或在时间允许时组建私人小班。':'Share the learner’s age, English level, goals and any deadline. Work directly with Kai one-to-one, or discuss forming a private group when time allows.')}</p><p>{zh?'希望加入现有班课？Kai 可协助对接合作机构。课程以线下为主，范围、费用与时间直接商定。':'Looking for an existing group class? Kai can connect you with partner programmes. Sessions are primarily in person; scope, fees and availability are agreed directly.'}</p><p class="online-label">{c.online}</p></div><div class="contact-action-stack"><a class="audience-button" href={contact}>{zh?'联系 Kai':'Contact Kai'} <span aria-hidden="true">↗</span></a><p class="wechat-label">WeChat: CKcoachkai</p><a class="quiet-link" href="/schedule/">{zh?'查看可安排时间（英文）':'View availability'}</a><a class="quiet-link" href={`${home}#work`}>{zh?'选择其他学习阶段':'Choose another learning stage'}</a></div></section>
+</div>
+<script>
+  import '../scripts/audience-experience';
+  import { focusPractice } from '../data/focusPractice';
+  const landing = document.querySelector('[data-audience]');
+  if (landing) {
+    const links = [...landing.querySelectorAll<HTMLAnchorElement>('[data-course-filter]')];
+    const valid = new Set(links.map(a=>a.dataset.courseFilter));
+    const exampleTitle = landing.querySelector<HTMLElement>('#example-title')!;
+    const steps = [...landing.querySelectorAll<HTMLElement>('.lesson-steps article')];
+    const initialExample = {title:exampleTitle.textContent!,steps:steps.map(el=>[el.querySelector('h3')!.textContent!,el.querySelector('p')!.textContent!])};
+    const apply = (requested: string | null) => {
+      const focus = requested && valid.has(requested) ? requested : 'all';
+      landing.querySelectorAll<HTMLElement>('[data-course-focus]').forEach(card=>{card.hidden=focus!=='all'&&card.dataset.courseFocus!==focus;});
+      links.forEach(a=>{a.setAttribute('aria-current',String(a.dataset.courseFilter===focus));});
+      const status = landing.querySelector<HTMLElement>('[data-filter-status]')!;
+      status.hidden=focus==='all'; status.textContent=status.dataset.prefix+links.find(a=>a.dataset.courseFilter===focus)!.textContent;
+      const examples = focusPractice[document.documentElement.lang === 'zh-CN' ? 'zh-CN' : 'en'];
+      const example = examples[focus as keyof typeof examples] || initialExample;
+      exampleTitle.textContent = example.title;
+      steps.forEach((el,i)=>{el.querySelector('h3')!.textContent=example.steps[i][0];el.querySelector('p')!.textContent=example.steps[i][1];});
+      const extras = landing.querySelector<HTMLElement>('.audience-extras'); if(extras)extras.hidden=focus!=='all';
+      document.querySelectorAll<HTMLAnchorElement>('.site-language a').forEach(a=>{const u=new URL(a.href);if(focus==='all')u.searchParams.delete('focus');else u.searchParams.set('focus',focus);a.href=u.pathname+u.search;});
+      document.querySelectorAll<HTMLAnchorElement>('.site-header a').forEach(a=>{const u=new URL(a.href);if(u.pathname!==location.pathname)return;if(focus==='all')u.searchParams.delete('focus');else u.searchParams.set('focus',focus);a.href=u.pathname+u.search+u.hash;});
+    };
+    links.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const url=new URL(a.href);history.pushState(null,'',url);apply(a.dataset.courseFilter!);}));
+    window.addEventListener('popstate',()=>apply(new URLSearchParams(location.search).get('focus')));
+    apply(new URLSearchParams(location.search).get('focus'));
+  }
+</script>

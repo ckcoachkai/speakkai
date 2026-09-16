@@ -35,8 +35,8 @@ const homeHref = chinese ? "/zh/" : "/";
 const contactTarget = chinese && contactHref === "/#connect" ? "/zh/#connect" : contactHref;
 const canonical = new URL(Astro.url.pathname, "https://speakkai.com").href;
 const navigation = [
-  { href: "/#work", label: chinese ? "课程与培训" : "Work with Kai" },
-  { href: "/#story", label: chinese ? "认识 Kai" : "Meet Kai" },
+  { href: current === 'audience' ? `${Astro.url.pathname}#courses` : "/#work", label: chinese ? "课程与培训" : "Work with Kai" },
+  { href: current === 'audience' ? `${Astro.url.pathname}#story` : "/#story", label: chinese ? "认识 Kai" : "Meet Kai" },
   { href: "/resources/", label: chinese ? "练习资源" : "Resources" },
   { href: "/schedule/", label: chinese ? "时间安排" : "Schedule" },
 ].map(item => ({ href: localizedPath(item.href,language), label: destinationLabel(item.label,item.href,language) }));

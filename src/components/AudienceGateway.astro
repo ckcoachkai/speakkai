@@ -1,0 +1,58 @@
+---
+import { audiencePages, audienceHref } from '../data/audiencePages';
+import { serviceCopy } from '../data/services';
+import type { SiteLanguage } from '../data/homeCopy';
+import VoiceStage from './VoiceStage.astro';
+import '../styles/audience.css';
+const { language = 'en' } = Astro.props as {language?:SiteLanguage};
+const zh = language === 'zh-CN';
+const c = serviceCopy[language];
+---
+<div class="audience-experience gateway" data-audience-gateway>
+  <section class="gateway-opening wrap" aria-labelledby="gateway-title">
+    <div class="gateway-statement"><p class="chapter-label">SPEAKKAI / {zh ? '选择你的起点' : 'YOUR NEXT CHAPTER'}</p>
+      <h1 id="gateway-title">{zh ? '你的声音。' : 'Your voice.'}<br/><span>{zh ? '你的舞台。' : 'Your stage.'}</span></h1>
+      <p class="opening-lead">{zh ? '从第一次分享，到让全场听懂。选择适合你的阶段，进入专属课程页面。' : 'From your first story to a room that listens. Choose your stage and step into coaching built around you.'}</p>
+      <VoiceStage chinese={zh} words={zh ? ['思考','表达','连接'] : ['THINK','SPEAK','CONNECT']}/>
+    </div>
+    <div class="gateway-panel" id="work" aria-labelledby="choose-title">
+      <div class="panel-heading"><span class="chapter-label">01 / {zh ? '从这里开始' : 'START HERE'}</span><h2 id="choose-title">{zh ? '谁来学习？' : 'Who’s speaking?'}</h2><p>{zh ? '点击一个阶段，查看专属课程。' : 'Choose a group to explore its own courses.'}</p></div>
+      <div class="gateway-focus" hidden data-focus-control><label for="gateway-interest">{zh ? '想练习什么？（可选）' : 'A particular focus? (Optional)'}</label><select id="gateway-interest"><option value="all">{zh ? '全部课程方向' : 'All course directions'}</option>{c.services.map(s=><option value={s.id}>{s.title}</option>)}</select></div>
+      <nav class="audience-choices" aria-label={zh ? '选择学习阶段' : 'Choose a learning stage'}>
+        {audiencePages.map((a,i)=><a class="audience-choice" href={audienceHref(a.slug,language)} data-audience-link data-focuses={[...new Set(a[language].courses.map(c=>c.focus))].join(' ')}><span class="choice-index">0{i+1}</span><span><strong>{a[language].name}</strong><small>{a[language].range}</small></span><span class="choice-arrow" aria-hidden="true">↗</span></a>)}
+      </nav>
+      <p class="gateway-status" role="status" data-gateway-status data-en="Choose a matching group below." data-zh="请选择下方适合的学习阶段。" hidden></p>
+      <a class="gateway-specific" href="#connect">{zh ? '尚未确定，或有具体需求？与 Kai 聊聊' : 'Not sure, or have a specific request? Talk to Kai'} <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+  <section class="gateway-coach wrap" id="story" aria-labelledby="gateway-coach-title" data-reveal>
+    <div><p class="chapter-label">{zh ? '你的教练' : 'YOUR COACH'}</p><h2 id="gateway-coach-title">Kai Liu<span class="red-dot">.</span></h2><span class="credential-pill">{zh ? '超过 17 年教育经验' : '17+ years in education'}</span></div>
+    <p>{zh ? '从英语准备、海外教育咨询，到演讲、辩论与职场沟通。帮助不同阶段的学习者理清想法，用自己的方式表达。' : 'From English preparation and overseas education consulting to speech, debate and professional communication. Helping people at every stage think clearly and speak in their own voice.'}</p>
+    <img src="/images/coach-kai-headshot-360.webp?v=20260913" alt={zh ? '沟通教练 Kai Liu' : 'Communication coach Kai Liu'} width="360" height="360" loading="lazy"/>
+  </section>
+  <section class="audience-contact wrap" id="connect" aria-labelledby="gateway-contact-title"><div><p class="chapter-label">{zh ? '从一次交流开始' : 'START A CONVERSATION'}</p><h2 id="gateway-contact-title">{zh ? '说说你想实现什么。' : 'Tell me what you’re working towards.'}</h2><p>{zh ? '个性化一对一、按时间安排的私人小班，以及合作机构现有班课转介。课程以线下为主。' : 'One-to-one coaching, private groups by arrangement, and introductions to partner programmes for existing group classes. Primarily in person.'}</p><p class="online-label">{c.online}</p></div><div><a class="audience-button" href={zh?'/zh/contact/':'/contact/'}>{zh?'联系 Kai':'Contact Kai'} <span aria-hidden="true">↗</span></a><p class="wechat-label">WeChat: CKcoachkai</p><a class="quiet-link" href={zh?'/zh/schools/':'/schools/'}>{zh?'学校课程与工作坊':'School programmes & workshops'}</a></div></section>
+</div>
+<script>
+  import '../scripts/audience-experience';
+  const select = document.querySelector<HTMLSelectElement>('#gateway-interest');
+  const gateway = document.querySelector('[data-audience-gateway]');
+  if (select && gateway) {
+    gateway.querySelector<HTMLElement>('[data-focus-control]')!.hidden = false;
+    const apply = () => {
+      const focus = select.value;
+      gateway.querySelectorAll<HTMLAnchorElement>('[data-audience-link]').forEach(a => {
+        a.hidden = focus !== 'all' && !a.dataset.focuses?.split(' ').includes(focus);
+        const url = new URL(a.href);
+        if (focus === 'all') url.searchParams.delete('focus'); else url.searchParams.set('focus',focus);
+        a.href = url.pathname + url.search;
+      });
+      const status = gateway.querySelector<HTMLElement>('[data-gateway-status]')!;
+      status.hidden = focus === 'all';
+      status.textContent = document.documentElement.lang === 'zh-CN' ? status.dataset.zh! : status.dataset.en!;
+      document.querySelectorAll<HTMLAnchorElement>('.site-language a').forEach(a=>{ const u = new URL(a.href); if(focus === 'all') u.searchParams.delete('focus'); else u.searchParams.set('focus',focus); a.href=u.pathname+u.search; });
+    };
+    const focus = new URLSearchParams(location.search).get('focus');
+    if (focus && [...select.options].some(o=>o.value===focus)) select.value = focus;
+    select.addEventListener('change',apply); apply();
+  }
+</script>
