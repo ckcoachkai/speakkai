@@ -1,4 +1,5 @@
 import initialCurricula from '../../public/data/class-curricula.json';
+import {feedbackLabelParts} from './feedback-formatting.mjs';
 import {validateCurricula} from './class-curricula.mjs';
 import {curriculumPanel,curriculumAlignment} from './curriculum-panel';
 let curricula=validateCurricula(initialCurricula);
@@ -23,6 +24,15 @@ let selectedClass='all', selectedWeek='0', selectedDate='', busy=false, manualRe
 let lastRenderedDate='', lastPayload='', lastCopyButton:HTMLButtonElement|null=null;
 const words={en:{classContent:'Class content',homework:'Homework',title:'Student feedback',class:'Class',all:'All classes',week:'Dates',latest:'This week',older:'← Earlier',newer:'Later →',refresh:'Refresh',copy:'Copy',missing:'No individual feedback recorded for this class.',cancelled:'Class cancelled.',empty:'No feedback recorded for this class in this date range.',copied:'Copied',failed:'Could not check for updates. The last loaded feedback is still shown.',updated:'Showing the latest published feedback.',fallbackTitle:'Copy feedback',fallbackHelp:'Clipboard access was unavailable. The text is selected below; press Ctrl+C or use your device’s copy command.',done:'Done'},zh:{classContent:'课堂内容',homework:'课后作业',title:'学生课堂反馈',class:'班级',all:'全部班级',week:'日期范围',latest:'本周',older:'← 更早',newer:'更近 →',refresh:'刷新',copy:'复制',missing:'本次课堂暂无该学生的个人反馈记录。',cancelled:'本次课程已取消。',empty:'该班级在此日期范围内暂无反馈记录。',copied:'已复制',failed:'暂时无法检查更新，仍显示上次载入的反馈。',updated:'当前显示最新发布的反馈。',fallbackTitle:'复制反馈',fallbackHelp:'暂时无法使用剪贴板。下方文字已选中，请按 Ctrl+C 或使用设备的复制功能。',done:'完成'}};
 function el<K extends keyof HTMLElementTagNameMap>(tag:K,text='',className=''):HTMLElementTagNameMap[K]{const n=document.createElement(tag);n.textContent=text;if(className)n.className=className;return n;}
+function emphasizeFeedbackLabels(root:HTMLElement){
+  root.querySelectorAll<HTMLElement>('.feedback-text').forEach(body=>{
+    const parts=feedbackLabelParts(body.textContent||'');
+    body.replaceChildren(...parts.map((part:{text:string;label:boolean})=>{
+      if(!part.label)return document.createTextNode(part.text);
+      const strong=el('strong');strong.append(el('em',part.text));return strong;
+    }));
+  });
+}
 function applyLink(){const params=new URLSearchParams(location.search),id=params.get('class'),date=params.get('date');selectedClass=id&&[...data.classes,...curricula.classes].some(g=>g.id===id)?id:'all';selectedDate='';selectedWeek=params.get('week')||'0';if(date&&date<=shanghaiDate()){const window=weekWindows(data).find(w=>date>=w.start&&date<=w.end);if(window){selectedWeek=window.id;selectedDate=date;}}}
 function syncLink(){const params=new URLSearchParams();if(selectedClass!=='all')params.set('class',selectedClass);if(selectedDate)params.set('date',selectedDate);else if(selectedWeek!=='0')params.set('week',selectedWeek);history.replaceState(null,'',location.pathname+(params.size?'?'+params:''));}
 function windowChoices(){return weekWindows(data);}
@@ -103,7 +113,7 @@ function render(){
     section.append(grid);fragment.append(section);
   }
   if(!entries.length)fragment.append(el('p',text.empty,'fb-empty'));
-  content.replaceChildren(fragment);
+  content.replaceChildren(fragment);emphasizeFeedbackLabels(content);
 }
 async function copyStudent(button:HTMLButtonElement){
   const session=data.classes.flatMap(group=>group.sessions).find(item=>item.id===button.dataset.session);

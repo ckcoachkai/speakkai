@@ -82,6 +82,8 @@ main button:disabled { opacity: .45; cursor: default; }
 .student-heading button { font-size: 13px; min-width: 65px; flex-shrink: 0; }
 .feedback-text { font-size: 15px; line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; }
 .feedback-text:lang(zh) { line-height: 2; }
+.feedback-text strong { font-weight: 800; }
+.feedback-text em, .student-heading h3 { font-style: italic; }
 .class-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 24px; align-items: start; }
 .class-section { background: #fff; border: var(--fb-line); border-top: 7px solid var(--fb-blue); padding: 24px; min-width: 0; }
 .class-section[data-section=homework] { border-top-color: var(--fb-red); }

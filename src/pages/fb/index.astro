@@ -1,5 +1,6 @@
 ---
 import '../../styles/feedback.css';
+import {feedbackLabelParts} from '../../lib/feedback-formatting.mjs';
 import SpatialSiteHeader from '../../components/SpatialSiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import data from '../../../public/data/feedback.json';
@@ -33,7 +34,7 @@ const currentDays=Array.from({length:7},(_,index)=>addDays(current.start,index))
   })}</div></div>
   <noscript><p>Without JavaScript, all past recorded details are available below. Status indicates report completeness, not student performance.</p>{initial.classes.map((group:FeedbackClass)=>{
     const sessions:FeedbackSession[]=group.sessions.filter(session=>shanghaiDate() >= session.date);
-    return sessions.map(session=><section class="fb-session"><header><h2>{group.label.en} · {formatDate(session.date)} · {session.time}</h2></header><div class="class-summary">{(['classContent','homework'] as const).map(kind=><section class="class-section" data-section={kind}><div class="student-heading"><h3>{kind==='classContent'?'Class content':'Homework'}</h3><button type="button" data-copy-section={kind} data-session={session.id}>Copy</button></div><p class="feedback-text">{session[kind]?.en||'N/A'}</p></section>)}</div>{session.status==='cancelled'?<p>Class cancelled.</p>:<div class="feedback-grid">{session.students.map(student=><article id={`student-${student.id}`}><div class="student-heading"><h3>{student.name}</h3><button type="button" data-copy={student.id} data-session={session.id} disabled={!student.en}>Copy</button></div><p class="feedback-text">{student.en||'No individual feedback recorded for this class.'}</p></article>)}</div>}</section>);
+    return sessions.map(session=><section class="fb-session"><header><h2>{group.label.en} · {formatDate(session.date)} · {session.time}</h2></header><div class="class-summary">{(['classContent','homework'] as const).map(kind=><section class="class-section" data-section={kind}><div class="student-heading"><h3>{kind==='classContent'?'Class content':'Homework'}</h3><button type="button" data-copy-section={kind} data-session={session.id}>Copy</button></div><p class="feedback-text">{feedbackLabelParts(session[kind]?.en||'N/A').map(part=>part.label?<strong><em>{part.text}</em></strong>:part.text)}</p></section>)}</div>{session.status==='cancelled'?<p>Class cancelled.</p>:<div class="feedback-grid">{session.students.map(student=><article id={`student-${student.id}`}><div class="student-heading"><h3>{student.name}</h3><button type="button" data-copy={student.id} data-session={session.id} disabled={!student.en}>Copy</button></div><p class="feedback-text">{feedbackLabelParts(student.en||'No individual feedback recorded for this class.').map(part=>part.label?<strong><em>{part.text}</em></strong>:part.text)}</p></article>)}</div>}</section>);
   })}</noscript>
   <dialog id="fb-copy-dialog"><h2 id="fallback-heading">Copy feedback</h2><p id="fallback-help">Clipboard access was unavailable. Select and copy the text below.</p><textarea readonly aria-label="Feedback to copy"></textarea><button type="button" id="fb-close-copy">Done</button></dialog>
 </main><SiteFooter/>

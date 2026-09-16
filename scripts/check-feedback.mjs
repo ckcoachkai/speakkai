@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {validateFeedback,weekWindows,sessionsInWindow,newestClass,feedbackText,classSectionText,shanghaiDate,sessionCompleteness} from '../src/lib/feedback.mjs';
 import {isSafeFeedbackUrl,validateHomework} from '../src/lib/homework.mjs';
+import {feedbackLabelParts,feedbackCopyContent,unicodeFeedbackLabel} from '../src/lib/feedback-formatting.mjs';
 const data=JSON.parse(fs.readFileSync(new URL('../public/data/feedback.json',import.meta.url)));
 test('published feedback contains matched bilingual pairs and only public fields',()=>{
   assert.equal(validateFeedback(data),data);
@@ -78,13 +79,13 @@ test('class sections preserve their own dated lesson and assignment, including N
     if(session.status==='held')assert.equal(session.classContent?.en||'',original?.classContent.join('\n')||'');
     for(const language of ['en','zh'])for(const kind of ['classContent','homework']){
       const copied=classSectionText(session,kind,language);
-      assert.ok(copied.endsWith(session[kind]?.[language]||'N/A'));
+      assert.ok(copied.endsWith(feedbackCopyContent(session[kind]?.[language]||'N/A')));
       if(session[kind])assert.match(session[kind].zh,/[\u4e00-\u9fff]/);
     }
   }
   const sunday=data.classes.find(g=>g.id==='sun-1130').sessions[0];
   assert.match(sunday.homework.en,/one to two minutes/);
-  assert.match(classSectionText({...sunday,homework:null},'homework'),/Homework\n\nN\/A$/);
+  assert.match(classSectionText({...sunday,homework:null},'homework').normalize('NFKC'),/Homework\n\nN\/A$/);
   const saturday=data.classes.find(g=>g.id==='sat-original-oratory').sessions;
   assert.match(saturday.find(s=>s.date==='2026-09-05').homework.en,/200–400/);
   assert.match(saturday.find(s=>s.date==='2026-09-12').homework.zh,/300–500/);
@@ -131,4 +132,18 @@ test('Kiran spelling is corrected while previously shared student links still re
   assert.equal(student.name,'Kiran');
   assert.match(student.en,/Kiran/);assert.match(student.zh,/Kiran/);
   assert.doesNotMatch(JSON.stringify(data),/Kieran/);
+});
+
+test('feedback labels retain bold italic Unicode when copied as plain text',()=>{
+  const source='✓ Content and energy: Full observation.\n\n➜ Practice: Keep every detail.\n\nNormal prose: https://example.com';
+  assert.equal(feedbackCopyContent('➜ Practice: Keep every detail.'),'➜ 𝑷𝒓𝒂𝒄𝒕𝒊𝒄𝒆: Keep every detail.');
+  assert.equal(feedbackCopyContent(source).normalize('NFKC'),source);
+  assert.equal(feedbackLabelParts(source).map(p=>p.text).join(''),source);
+  assert.equal(feedbackCopyContent('https://example.com\n15:30–17:30\nA full sentence. More: details.'),'https://example.com\n15:30–17:30\nA full sentence. More: details.');
+  assert.equal(feedbackCopyContent('➜ 练习建议：完整保留。'),'➜ 【练习建议】：完整保留。');
+  assert.equal(unicodeFeedbackLabel('Homework'),'𝑯𝒐𝒎𝒆𝒘𝒐𝒓𝒌');
+  assert.equal(feedbackCopyContent(feedbackCopyContent(source)),feedbackCopyContent(source));
+  const session={date:'2026-09-15',time:'15:30–17:30',homework:{en:'➜ Practice: Full task.',zh:'➜ 练习建议：完整作业。'}};
+  assert.equal(feedbackText(session,{name:'Kiran',en:source}).split('\n')[1],'Kiran');
+  assert.ok(classSectionText(session,'homework').includes('𝑯𝒐𝒎𝒆𝒘𝒐𝒓𝒌\n\n➜ 𝑷𝒓𝒂𝒄𝒕𝒊𝒄𝒆: Full task.'));
 });

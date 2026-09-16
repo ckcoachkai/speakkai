@@ -1,4 +1,5 @@
 import { shanghaiDate } from './homework.mjs';
+import {feedbackCopyContent, unicodeFeedbackLabel} from './feedback-formatting.mjs';
 export { shanghaiDate };
 const isText = value => typeof value === 'string' && value.trim().length > 0;
 const exact = (value, keys) => value && typeof value === 'object' && !Array.isArray(value) && Object.keys(value).every(key => keys.includes(key));
@@ -57,13 +58,13 @@ export function formatDate(date,language='en') { return new Date(date+'T12:00:00
 export function feedbackText(session,student,language='en') {
   const content=student[language];
   if (!content) return '';
-  return `${formatDate(session.date,language)} · ${session.time}\n${student.name}\n\n${content}`;
+  return `${formatDate(session.date,language)} · ${session.time}\n${student.name}\n\n${feedbackCopyContent(content)}`;
 }
 
 export function classSectionText(session,kind,language='en') {
   if (!['classContent','homework'].includes(kind)) return '';
   const title = language==='zh' ? (kind==='classContent' ? '课堂内容' : '课后作业') : (kind==='classContent' ? 'Class content' : 'Homework');
-  return `${formatDate(session.date,language)} · ${session.time}\n${title}\n\n${session[kind]?.[language] || 'N/A'}`;
+  return `${formatDate(session.date,language)} · ${session.time}\n${unicodeFeedbackLabel(title)}\n\n${feedbackCopyContent(session[kind]?.[language] || 'N/A')}`;
 }
 
 // Completeness describes the published report, never a student's performance.
