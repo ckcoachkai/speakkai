@@ -22,3 +22,6 @@ body.flagship label span{font-weight:400;letter-spacing:0;text-transform:none}
 body.flagship .audience-choice strong,body.flagship .cinema-proof strong{font-family:var(--display-font);font-weight:900}
 body.flagship .header-cta,body.flagship .button,body.flagship .audience-button,body.flagship .desktop-navigation a,body.flagship .course-filters a{font-family:var(--display-font);font-weight:700}
 body.flagship .header-cta,body.flagship .button,body.flagship .audience-button{text-transform:uppercase;letter-spacing:.045em}
+/* Override page-local heading rules so every marketing page shares the hierarchy. */
+body.flagship h1,body.flagship h2,body.flagship h3{font-family:var(--display-font)!important;font-weight:800!important}
+body.flagship h1{font-weight:900!important}
