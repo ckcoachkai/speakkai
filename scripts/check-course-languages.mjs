@@ -12,7 +12,7 @@ for (const [index, html] of pages.entries()) {
   for (const [code, target] of [["en", english], ["zh-CN", chinese], ["x-default", english]]) {
     assert.ok(html.includes(`<link rel="alternate" hreflang="${code}" href="${origin}${target}"`));
   }
-  assert.match(html, /CKcoachkai/);
+  assert.match(html, /CK Coach Kai/);
   assert.match(html, /id="course-contact"/);
   assert.match(html, /href="\/images\/coach-kai-wechat-qr.png"/);
   const facts = html.match(/<dl class="course-facts"[^>]*>(.*?)<\/dl>/s)?.[1];
