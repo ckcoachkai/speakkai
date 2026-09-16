@@ -10,7 +10,7 @@ import {
   equipCreatureItem, unequipCreatureItem, attuneCreatureSpell, assignCreaturePotion,
   expeditionPreview, configureExpedition, expeditionDoctrine, configureExpeditionDoctrine, moveExpeditionCreature, dungeonPath, trapSynergies, upgradeTrap, expandDungeonLayout, defenseAnalytics,
   inventoryView, itemComparison, lootCodexProgress, toggleItemFavorite, heroXpToNext, progressionBand,
-  exportSaveData, importSaveData, simulateCampaignDays, keeperTalentBudget, keeperTalentBonuses, keeperBranchProgress, learnKeeperTalent, respecKeeperTalents, currentWorldCondition, claimAtlasBounty, dungeonRoomBonuses, setDungeonTheme, buildDungeonRoom, chronicleProgress, claimChronicleReward, releaseReadiness, runReleaseAudit, campaignCompletion, claimLivingHeart
+  exportSaveData, importSaveData, keeperTalentBudget, keeperTalentBonuses, keeperBranchProgress, learnKeeperTalent, respecKeeperTalents, currentWorldCondition, claimAtlasBounty, dungeonRoomBonuses, setDungeonTheme, buildDungeonRoom, chronicleProgress, claimChronicleReward, campaignCompletion, claimLivingHeart
 } from "./game-core.mjs";
 import { mountDungeon3D, mountRaid3D } from "./scene3d.mjs";
 import { createSoundController } from "./sound.mjs";
@@ -21,8 +21,6 @@ let recoveredAtLoad = false;
 let state = loadState();
 let view = "keep";
 let settingsOpen = false;
-let forecast = null;
-let releaseAudit = null;
 let toastTimer = null;
 let destroy3D = null;
 let combatFx = null;
@@ -113,7 +111,7 @@ function renderSettingsPanel() {
       <label class="setting-row"><span><strong>Reduced motion</strong><small>Stops idle drift, lunges, and decorative animation.</small></span><button data-action="toggle-reduced-motion" aria-pressed="${state.settings.reducedMotion}">${state.settings.reducedMotion?"Enabled":"Disabled"}</button></label>
       <label class="setting-row"><span><strong>High contrast</strong><small>Brightens text, borders, and focus indicators.</small></span><button data-action="toggle-contrast" aria-pressed="${state.settings.highContrast}">${state.settings.highContrast?"Enabled":"Disabled"}</button></label>
       <label class="setting-select"><span><strong>Visual style</strong><small>Choose the clean tactical board or the fixed-camera isometric world.</small></span><select id="presentation-mode" aria-label="Visual style"><option value="2d" ${state.settings.presentationMode==="2d"?"selected":""}>Polished 2D</option><option value="3d" ${state.settings.presentationMode==="3d"?"selected":""}>Isometric world</option></select></label>
-      <label class="setting-select"><span><strong>Text size</strong><small>Large is now the default for comfortable reading.</small></span><select id="text-size" aria-label="Text size"><option value="comfortable" ${state.settings.textSize==="comfortable"?"selected":""}>Comfortable</option><option value="large" ${state.settings.textSize==="large"?"selected":""}>Large</option></select></label>
+      <label class="setting-select"><span><strong>Text size</strong><small></small></span><select id="text-size" aria-label="Text size"><option value="comfortable" ${state.settings.textSize==="comfortable"?"selected":""}>Comfortable</option><option value="large" ${state.settings.textSize==="large"?"selected":""}>Large</option></select></label>
       <label class="setting-select"><span><strong>3D quality</strong><small>Controls resolution, shadows, and particle count.</small></span><select id="scene-quality" aria-label="3D quality"><option value="low" ${state.settings.sceneQuality==="low"?"selected":""}>Low</option><option value="balanced" ${state.settings.sceneQuality==="balanced"?"selected":""}>Balanced</option><option value="high" ${state.settings.sceneQuality==="high"?"selected":""}>High</option></select></label>
       <label class="setting-select"><span><strong>Auto-battle pace</strong><small>Changes only the presentation delay between decisions.</small></span><select id="battle-pace" aria-label="Auto-battle pace"><option value="fast" ${state.settings.battlePace==="fast"?"selected":""}>Fast</option><option value="standard" ${state.settings.battlePace==="standard"?"selected":""}>Standard</option><option value="cinematic" ${state.settings.battlePace==="cinematic"?"selected":""}>Cinematic</option></select></label>
     </div>
@@ -164,8 +162,8 @@ function renderKeep() {
     <div class="dashboard-grid keep-layout">
       <section class="panel dungeon-panel">
         <div class="panel-head"><div><span class="eyebrow">EDITABLE DEFENSE · ${layout.path.length} CHAMBERS</span><h2>${layout.name}</h2></div><div class="threat"><span>THREAT</span><strong>${threat}</strong></div></div>
-        ${state.settings.presentationMode==="3d"?`<div class="dungeon-viewport"><div id="dungeon-3d"></div><span class="view-hint">FIXED ISOMETRIC VIEW · SCROLL TO ZOOM · CLICK A ROUTE TILE</span></div><details class="blueprint"><summary>Open tactical blueprint</summary><div class="dungeon-grid" aria-label="Dungeon construction grid">${state.dungeon.cells.map((id, index) => dungeonCell(id, index)).join("")}</div></details>`:renderDungeonBoard2D(layout)}
-        <div class="legend"><span><i class="entry-dot"></i>Entrance</span><span><i class="heart-dot"></i>Dungeon heart</span><span>Click a path tile to install the selected defense</span></div>
+        ${state.settings.presentationMode==="3d"?`<div class="dungeon-viewport"><div id="dungeon-3d"></div></div><details class="blueprint"><summary>Open tactical blueprint</summary><div class="dungeon-grid" aria-label="Dungeon construction grid">${state.dungeon.cells.map((id, index) => dungeonCell(id, index)).join("")}</div></details>`:renderDungeonBoard2D(layout)}
+        <div class="legend"><span><i class="entry-dot"></i>Entrance</span><span><i class="heart-dot"></i>Dungeon heart</span></div>
       </section>
       <aside class="panel build-panel">
         <div class="panel-head"><div><span class="eyebrow">BUILD PALETTE</span><h2>${piece.name}</h2></div><strong class="cost">${piece.cost}g</strong></div>
@@ -239,7 +237,7 @@ function dungeonCell(id, index) {
 }
 
 function renderDungeonBoard2D(layout) {
-  return `<div class="dungeon-board-2d"><header><span><b>TACTICAL HEARTWAY</b><small>Click any lit chamber to install the selected defense.</small></span><em>${layout.path.length} CHAMBERS</em></header><div class="dungeon-board-frame"><div class="board-runes" aria-hidden="true">✦　◇　✦</div><div class="dungeon-grid" aria-label="Dungeon construction grid">${state.dungeon.cells.map((id,index)=>dungeonCell(id,index)).join("")}</div></div><footer><span>IN <i></i> entry</span><span>♥ <i></i> dungeon heart</span><strong>2D BOARD · RECOMMENDED</strong></footer></div>`;
+  return `<div class="dungeon-board-2d"><header><span><b>TACTICAL HEARTWAY</b><small>Click any lit chamber to install the selected defense.</small></span><em>${layout.path.length} CHAMBERS</em></header><div class="dungeon-board-frame"><div class="board-runes" aria-hidden="true">✦　◇　✦</div><div class="dungeon-grid" aria-label="Dungeon construction grid">${state.dungeon.cells.map((id,index)=>dungeonCell(id,index)).join("")}</div></div><footer><span>IN <i></i> entry</span><span>♥ <i></i> dungeon heart</span></footer></div>`;
 }
 
 function renderRaid() {
@@ -473,20 +471,10 @@ function renderLivingHeart() {
 
 function renderReports() {
   const wins=state.dungeon.victories, losses=state.dungeon.defeats, analytics=defenseAnalytics(state);
-  return `${renderReleaseCandidate()}${renderContracts()}<section class="panel report-summary"><div><span class="eyebrow">DEFENSIVE RECORD</span><h2>${wins} victories · ${losses} breaches</h2><p class="muted">The latest twelve challengers reveal which half of the dungeon is carrying the defense.</p></div><div class="summary-number"><span>Success rate</span><strong>${analytics.winRate}%</strong></div></section>
+  return `${renderContracts()}<section class="panel report-summary"><div><span class="eyebrow">DEFENSIVE RECORD</span><h2>${wins} victories · ${losses} breaches</h2><p class="muted">The latest twelve challengers reveal which half of the dungeon is carrying the defense.</p></div><div class="summary-number"><span>Success rate</span><strong>${analytics.winRate}%</strong></div></section>
     <section class="defense-analytics"><article><span>RECORDED RUNS</span><strong>${analytics.total}</strong></article><article><span>AVG GUARDIANS SLAIN</span><strong>${analytics.averageKills}</strong></article><article><span>TRAP DAMAGE</span><strong>${analytics.trapDamage}</strong></article><article><span>GUARDIAN DAMAGE</span><strong>${analytics.guardianDamage}</strong></article><article><span>GOLD EARNED</span><strong>${analytics.goldEarned}</strong></article></section>
-    ${renderStabilityForecast()}
     <div class="report-list">${state.reports.length?state.reports.map(r=>`<article class="panel report ${r.defended?"win":"loss"}"><div class="report-mark">${r.defended?"W":"L"}</div><div><span class="eyebrow">DAY ${r.day} · LEVEL ${r.heroLevel} CHALLENGER${r.waveIndex?` · WAVE ${r.waveIndex}/${r.waveSize}`:""}</span><h3>${escapeHtml(r.heroName)}</h3><p>${r.defended?`Fell after defeating ${r.kills} monsters. Your dungeon earned ${r.reward} gold.`:`Survived with ${r.remainingHp} health and claimed the ${r.lost} gold hoard.`}</p><small>${r.events.map(escapeHtml).join(" · ")}</small><div class="damage-ledger"><span>Traps <b>${r.trapDamage||0}</b></span><span>Guardians <b>${r.guardianDamage||0}</b></span><span>Combos <b>${r.synergyCount||0}</b></span></div></div><strong>Threat ${r.threat}</strong></article>`).join(""):`<section class="panel empty-state">No challengers have entered yet. Build your route, fund a Boss Hoard, and open the gates.</section>`}</div>
     <section class="panel journal"><span class="eyebrow">KEEPER JOURNAL</span>${state.journal.slice(0,8).map(x=>`<p>${escapeHtml(x)}</p>`).join("")}</section>`;
-}
-
-function renderReleaseCandidate() {
-  const readiness = releaseReadiness(state), audit = releaseAudit;
-  return `<section class="panel release-candidate"><div class="release-heading"><div><span class="eyebrow">V1.9 RELEASE CANDIDATE</span><h2>${audit ? (audit.ok ? "The complete release audit passed." : "The audit found a blocker.") : `${readiness.passed}/${readiness.total} product gates are ready.`}</h2><p>Checks the one-Keeper rule, complete content matrix, persistent construction, automatic expedition logic, accessibility controls, portable save round-trip, and a 365-day simulated campaign.</p></div><button class="primary" data-action="run-release-audit">${audit?"Run again":"Run full audit"}</button></div><div class="release-gates">${readiness.gates.map((gate)=>`<article class="${gate.passed?"passed":"failed"}"><i>${gate.passed?"✓":"!"}</i><div><strong>${escapeHtml(gate.name)}</strong><small>${escapeHtml(gate.description)}</small></div></article>`).join("")}</div>${audit?`<div class="release-result"><span><b>${audit.roundTrip?"PASS":"FAIL"}</b> Save round-trip</span><span><b>${audit.soak.ok?"PASS":"FAIL"}</b> ${audit.soak.elapsedDays}-day soak</span><span><b>${audit.soak.runs}</b> expeditions</span><span><b>${audit.soak.steps.toLocaleString()}</b> automatic decisions</span><span><b>${audit.soak.stalledRuns}</b> stalls</span></div>`:""}</section>`;
-}
-
-function renderStabilityForecast() {
-  return `<section class="panel stability-panel"><div><span class="eyebrow">30-DAY SHADOW SIMULATION</span><h2>${forecast ? (forecast.ok ? "Campaign state remained stable." : "A stability issue was detected.") : "Test the future without changing the present."}</h2><p class="muted">Runs a deterministic copy of this profile through thirty automatic expeditions. Your live gold, loot, days, and roster are never changed.</p></div>${forecast?`<div class="forecast-metrics"><span><b>${forecast.victories}</b> wins</span><span><b>${forecast.defeats}</b> losses</span><span><b>${forecast.goldDelta>=0?"+":""}${forecast.goldDelta}</b> gold</span><span><b>+${forecast.lootDelta}</b> loot</span><span><b>${forecast.steps}</b> decisions</span></div>`:""}<button data-action="run-forecast">${forecast?"Run again":"Run stability forecast"}</button></section>`;
 }
 
 function renderContracts(){
@@ -557,7 +545,7 @@ async function handleSaveImport(input) {
   const result=importSaveData(await file.text());
   if(!result.ok){toast(result.message,"bad");input.value="";return;}
   const current=localStorage.getItem(SAVE_KEY); if(current)localStorage.setItem(BACKUP_KEY,current);
-  state=result.state; state.onboarding.complete=true; settingsOpen=false; forecast=null; view="keep"; render(); toast(result.message,"good");
+  state=result.state; state.onboarding.complete=true; settingsOpen=false; view="keep"; render(); toast(result.message,"good");
 }
 
 function downloadProfile() {
@@ -579,14 +567,11 @@ function handleAction(action,b) {
   else if(action==="toggle-contrast") { state.settings.highContrast=!state.settings.highContrast; toast(state.settings.highContrast?"High contrast enabled.":"High contrast disabled.","good"); }
   else if(action==="export-save") { downloadProfile(); return; }
   else if(action==="import-save") { el("save-import")?.click(); return; }
-  else if(action==="restore-backup") { const raw=localStorage.getItem(BACKUP_KEY), restored=raw?importSaveData(raw):{ok:false,message:"No local backup is available."}; if(!restored.ok)toast(restored.message,"bad");else if(confirm(`Restore the backup from Keeper day ${restored.state.day}? Your current profile will become the new backup.`)){const current=localStorage.getItem(SAVE_KEY);state=restored.state;if(current)localStorage.setItem(BACKUP_KEY,current);settingsOpen=false;forecast=null;view="keep";toast("Local backup restored.","good");} }
+  else if(action==="restore-backup") { const raw=localStorage.getItem(BACKUP_KEY), restored=raw?importSaveData(raw):{ok:false,message:"No local backup is available."}; if(!restored.ok)toast(restored.message,"bad");else if(confirm(`Restore the backup from Keeper day ${restored.state.day}? Your current profile will become the new backup.`)){const current=localStorage.getItem(SAVE_KEY);state=restored.state;if(current)localStorage.setItem(BACKUP_KEY,current);settingsOpen=false;view="keep";toast("Local backup restored.","good");} }
   else if(action==="restart-tutorial") { state.onboarding={complete:false,step:0};settingsOpen=false; }
   else if(action==="skip-onboarding") { state.onboarding.complete=true;state.onboarding.step=3;toast("Guide dismissed. You can replay it from Settings.","good"); }
   else if(action==="onboarding-back") { state.onboarding.step=Math.max(0,state.onboarding.step-1); }
-  else if(action==="onboarding-next") { if(state.onboarding.step<3)state.onboarding.step+=1;else{state.onboarding.complete=true;view="keep";toast("The Heartway is yours.","good");} }
-  else if(action==="run-forecast") { forecast=simulateCampaignDays(state,30,state.seed+state.day*1901);toast(forecast.ok?"Thirty simulated days completed without state errors.":"The forecast detected a stability issue.",forecast.ok?"good":"bad"); }
-  else if(action==="run-release-audit") { releaseAudit=runReleaseAudit(state,365,state.seed+state.day*2027);toast(releaseAudit.ok?"The full release-candidate audit passed.":"The release audit found a blocking issue.",releaseAudit.ok?"good":"bad"); }
-  else if(action==="learn-mastery") { result=learnKeeperTalent(state,b.dataset.talent); toast(result.message,result.ok?"good":"bad"); }
+  else if(action==="onboarding-next") { if(state.onboarding.step<3)state.onboarding.step+=1;else{state.onboarding.complete=true;view="keep";toast("The Heartway is yours.","good");} }  else if(action==="learn-mastery") { result=learnKeeperTalent(state,b.dataset.talent); toast(result.message,result.ok?"good":"bad"); }
   else if(action==="respec-mastery") { const spent=keeperTalentBudget(state).spent,cost=90+spent*55;if(confirm(`Rekindle all ${spent} assigned mastery ranks for ${cost} gold?`)){result=respecKeeperTalents(state);toast(result.message,result.ok?"good":"bad");} }
   else if(action==="upgrade-dungeon") { result=upgradeDungeon(state); toast(result.message,result.ok?"good":"bad"); }
   else if(action==="simulate-wave") { result=simulateDefenseWave(state); if(result.ok){view="reports";toast(result.defendedAll?"The dungeon survived the full wave.":`The wave ended after ${result.reports.length} challenger${result.reports.length===1?"":"s"}.`,result.defendedAll?"good":"bad");}else toast(result.message,"bad"); }
@@ -631,7 +616,7 @@ function handleAction(action,b) {
   else if(action==="dismantle") { const d=dismantleItem(state,b.dataset.id); if(d?.ok===false) toast(d.message,"bad"); else if(d){state.selectedInventoryId=state.inventory[0]?.id;toast(`Recovered ${d.amount} ${QUALITIES[d.tier].toLowerCase()} ${d.family}${d.essence?` and ${d.essence} essence`:""}.`,"good");} }
   else if(action==="tinker") { result=tinkerItem(state,b.dataset.id,b.dataset.tinker); toast(result.message,result.ok?(result.failed?"warn":"good"):"bad"); }
   else if(action==="rename") { const item=state.inventory.find(i=>i.id===state.selectedInventoryId); if(item){item.customName=el("custom-name").value.trim();toast(item.customName?`The item is now known as ${item.customName}.`:"The personal inscription was removed.","good");} }
-  else if(action==="reset") { if(confirm("Erase this Keeperfall save and its local backup, then begin again?")){localStorage.removeItem(SAVE_KEY);localStorage.removeItem(BACKUP_KEY);state=createInitialState();settingsOpen=false;forecast=null;view="keep";} }
+  else if(action==="reset") { if(confirm("Erase this Keeperfall save and its local backup, then begin again?")){localStorage.removeItem(SAVE_KEY);localStorage.removeItem(BACKUP_KEY);state=createInitialState();settingsOpen=false;view="keep";} }
   render();
 }
 

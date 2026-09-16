@@ -36,11 +36,24 @@ table{width:100%;border-collapse:collapse}th,td{padding:12px 10px;border-bottom:
 .modal-backdrop{position:fixed;inset:0;background:rgba(16,22,38,.62);display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal-backdrop.show{display:flex}.modal{max-width:560px;width:100%;background:#fff;border-radius:26px;padding:26px;box-shadow:var(--shadow);text-align:center}.modal h2{font-size:2rem;margin-bottom:8px}.result-big{font-size:4.6rem;font-weight:950;color:var(--accent);line-height:1}
 .result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}.result-grid div{background:#f2f5f9;border-radius:15px;padding:13px}.result-grid b{display:block;font-size:1.45rem}.note{font-size:.78rem;color:var(--muted);line-height:1.45;margin-top:10px}.switch-line{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.83rem;font-weight:750;margin-top:10px}.switch-line input{width:auto}
 @media(max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}.sidebar,.game{min-width:0}.sidebar{position:static}.game{min-height:620px}.actions{grid-template-columns:1fr}.card{min-height:280px}.scoreboard{overflow-x:auto}.scoreboard table{min-width:720px}}@media(max-width:520px){.app{padding:12px}.panel{border-radius:17px}.sidebar,.game{padding:15px}.row{grid-template-columns:1fr}.timer{font-size:3.1rem}.stat{min-width:78px}}
+
+body{background:#f5f7fb}*{letter-spacing:0!important}
+.brand h1{font-size:26px}.panel{border-radius:8px;box-shadow:none}
+.grid{grid-template-columns:300px minmax(0,1fr)}.grid>main{min-width:0}
+.game{min-height:560px}.card{min-height:240px;border:0;border-radius:0;background:#f4f7fa;padding:24px}
+.card:before,.card:after{display:none}.word{font-size:48px;overflow-wrap:anywhere}.word.small{font-size:34px}
+.timer{font-size:48px}.actions{grid-template-columns:repeat(3,minmax(0,1fr))}.action{border-radius:6px;font-size:16px;min-height:48px;padding:12px 8px}
+.stat,.player-chip,.result-grid div{border-radius:6px}.player-chip{overflow-wrap:anywhere;max-width:100%}
+.modal{border-radius:8px;max-height:calc(100dvh - 32px);overflow:auto}.result-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.result-grid span{font-size:12px}.sidebar button:disabled,.sidebar input:disabled,.sidebar select:disabled{opacity:.55;cursor:default}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.game{min-height:0}.card{min-height:200px}.word{font-size:32px}.word.small{font-size:26px}.sidebar{padding:16px}.roster{max-height:140px}.section{margin-bottom:12px;padding-bottom:12px}}
+@media(max-width:520px){.brand h1{font-size:22px}.badge{display:none}.game{padding:12px}.stat{min-width:0;flex:1;padding:8px}.stats{width:100%}.action{font-size:13px}.row{grid-template-columns:repeat(2,minmax(0,1fr))}.timer{font-size:40px}}
+@media(max-width:400px){.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.stat span{font-size:11px}.row>div{min-width:0}}
 </style>
 </head>
 <body>
 <div class="app">
-<header><div class="brand"><h1>🎭 Class Charades Arena</h1><p>Choose an actor, run the timer, and track every student’s score.</p></div><div class="badge">600 PROMPTS</div></header>
+<header><div class="brand"><h1>🎭 Class Charades Arena</h1></div><div class="badge">600 PROMPTS</div></header>
 <div class="grid">
 <aside class="panel sidebar">
   <div class="section"><h3>1. Student roster</h3><div class="row" style="margin-bottom:10px"><button class="secondary" id="addStudent">＋ Add student</button><button class="ghost" id="randomPlayer">🎲 Random player</button></div><div class="roster" id="roster"></div></div>
@@ -54,7 +67,6 @@ table{width:100%;border-collapse:collapse}th,td{padding:12px 10px;border-bottom:
     <label class="switch-line"><input type="checkbox" id="shuffleToggle" checked> Shuffle without repeating until all 200 are used</label>
   </div>
   <button class="primary full" id="startRound">▶ Start round</button>
-  <p class="note">Keyboard: <b>C</b> correct · <b>X</b> incorrect · <b>S</b> skip · <b>U</b> undo · <b>Space</b> pause</p>
 </aside>
 <main>
 <section class="panel game">
@@ -64,7 +76,7 @@ table{width:100%;border-collapse:collapse}th,td{padding:12px 10px;border-bottom:
   <div class="actions"><button class="action correct" id="correctBtn">✓ Correct</button><button class="action wrong" id="wrongBtn">✕ Incorrect</button><button class="action skip" id="skipBtn">↪ Skip / Next</button></div>
   <div class="controls"><button class="ghost" id="pauseBtn">⏸ Pause</button><button class="ghost" id="undoBtn">↶ Undo last mark</button><button class="ghost" id="newWordBtn">⚡ Next — unanswered</button><button class="ghost" id="endBtn">■ End round</button><button class="ghost" id="fullscreenBtn">⛶ Fullscreen</button></div>
 </section>
-<section class="panel scoreboard"><div class="score-head"><div><h2 style="margin-bottom:4px">🏆 Scoreboard</h2><div class="note" style="margin:0">Score equals correct answers only. Use − / + to fix accidental marks.</div></div><button class="ghost" id="resetScores">Reset scores</button></div><div id="scoreTable"></div></section>
+<section class="panel scoreboard"><div class="score-head"><div><h2 style="margin-bottom:4px">🏆 Scoreboard</h2></div><button class="ghost" id="resetScores">Reset scores</button></div><div id="scoreTable"></div></section>
 </main>
 </div>
 </div>
@@ -91,7 +103,11 @@ function normalizeStudent(s,i=0){
   wrong:Number(s.wrong)||0,skipped:Number(s.skipped)||0,expired:Number(s.expired)||0
  }
 }
-function save(){localStorage.setItem("charadesArenaData",JSON.stringify({students:state.students}))}
+function save(){try{localStorage.setItem("charadesArenaData",JSON.stringify({students:state.students}))}catch{}}
+function lockRoundSettings(locked){
+ for(const id of ["playerSelect","randomPlayer","addStudent","difficulty","roundMinutes","cardSeconds","shuffleToggle"])$(id).disabled=locked;
+ document.querySelectorAll("#roster input, #roster button").forEach(el=>el.disabled=locked);
+}
 function load(){
  try{
   const data=JSON.parse(localStorage.getItem("charadesArenaData"));
@@ -100,6 +116,7 @@ function load(){
 }
 function escapeHtml(str){return String(str).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 function addStudent(){
+ if(state.running)return;
  state.students.push(normalizeStudent({name:`Student ${state.students.length+1}`},state.students.length));
  renderAll();save()
 }
@@ -188,6 +205,7 @@ function resolveCurrent(type,showAnother=true){
  if(showAnother&&state.remaining>0)showNextWord()
 }
 function abandonRound(){
+ lockRoundSettings(false);
  clearInterval(state.interval);state.running=false;state.paused=false;state.currentPromptOpen=false;
  $("word").style.filter="none";$("word").textContent="Round abandoned — no score was saved.";$("word").className="word placeholder";
  $("pauseBtn").textContent="⏸ Pause"
@@ -203,12 +221,16 @@ function startRound(){
  state.cardInterval=Number($("cardSeconds").value);state.cardRemaining=Math.min(state.cardInterval,state.remaining);
  state.round={correct:0,wrong:0,skipped:0,expired:0,seen:0,history:[]};
  state.running=true;state.paused=false;state.currentPromptOpen=false;makeQueue();showNextWord();
+ lockRoundSettings(true);
+ document.querySelector(".game").scrollIntoView({block:"start"});
  $("pauseBtn").textContent="⏸ Pause";updateActivePlayer();updateRoundStats();updateTimerUI();
- clearInterval(state.interval);state.interval=setInterval(tick,1000)
+ tickAt=performance.now();clearInterval(state.interval);state.interval=setInterval(tick,250)
 }
+let tickAt=0;
 function tick(){
  if(!state.running||state.paused)return;
- state.remaining--;state.cardRemaining--;
+ const now=performance.now(),elapsed=Math.floor((now-tickAt)/1000);if(elapsed<1)return;tickAt+=elapsed*1000;
+ state.remaining-=elapsed;state.cardRemaining-=elapsed;
  if(state.remaining<=0){
   state.remaining=0;
   if(state.currentPromptOpen)resolveCurrent("expired",false);
@@ -226,12 +248,13 @@ function undoLastMark(){
  updateRoundStats()
 }
 function togglePause(){
- if(!state.running)return;state.paused=!state.paused;
+ if(!state.running)return;state.paused=!state.paused;tickAt=performance.now();
  $("pauseBtn").textContent=state.paused?"▶ Resume":"⏸ Pause";
  $("word").style.filter=state.paused?"blur(16px)":"none"
 }
 function endRound(show=true){
  if(!state.running)return;
+ lockRoundSettings(false);
  clearInterval(state.interval);state.running=false;state.paused=false;$("word").style.filter="none";
  const p=state.students.find(s=>s.id===state.currentPlayerId);
  if(p){
@@ -250,11 +273,12 @@ function endRound(show=true){
 }
 $("addStudent").onclick=addStudent;
 $("randomPlayer").onclick=()=>{
+ if(state.running)return;
  if(!state.students.length)return;
  const s=state.students[Math.floor(Math.random()*state.students.length)];
  $("playerSelect").value=s.id;state.currentPlayerId=s.id;updateActivePlayer()
 };
-$("playerSelect").onchange=e=>{state.currentPlayerId=e.target.value;updateActivePlayer()};
+$("playerSelect").onchange=e=>{if(state.running){e.target.value=state.currentPlayerId;return;}state.currentPlayerId=e.target.value;updateActivePlayer()};
 $("roundMinutes").onchange=()=>{if(!state.running){state.total=Number($("roundMinutes").value)*60;state.remaining=state.total;updateTimerUI()}};
 $("cardSeconds").onchange=()=>{if(!state.running){state.cardInterval=Number($("cardSeconds").value);state.cardRemaining=state.cardInterval;updateTimerUI()}};
 $("startRound").onclick=startRound;

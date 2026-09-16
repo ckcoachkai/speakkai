@@ -51,6 +51,7 @@ jobs:
         run: node --test scripts/check-dnd.mjs
       - name: Verify forest game route and media
         run: |
+          node scripts/check-resource-games.mjs
           node scripts/check-forest.mjs
           node --test scripts/check-forest-motion.mjs
       - name: Verify public homework and Shanghai date handling

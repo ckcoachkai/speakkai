@@ -358,7 +358,7 @@ export function mountDungeon3D(container, state, onCellClick) {
   function up(e){const hit=pick(e);if(hit&&pathSet.has(hit.userData.cellIndex))onCellClick?.(hit.userData.cellIndex)}
   function wheel(e){e.preventDefault();cameraZoom=Math.max(.72,Math.min(1.45,cameraZoom-e.deltaY*.00075));camera.zoom=cameraZoom;camera.updateProjectionMatrix()}
   function resize(){
-    const w=container.clientWidth||600,h=container.clientHeight||480,aspect=w/h,viewHeight=9.2;
+    const w=container.clientWidth||600,h=container.clientHeight||480,aspect=w/h,viewHeight=Math.max(9.2,10.4/aspect);
     renderer.setSize(w,h,false);camera.left=-viewHeight*aspect/2;camera.right=viewHeight*aspect/2;camera.top=viewHeight/2;camera.bottom=-viewHeight/2;camera.zoom=cameraZoom;camera.updateProjectionMatrix();
   }
   renderer.domElement.addEventListener("pointermove",move);renderer.domElement.addEventListener("pointerup",up);renderer.domElement.addEventListener("wheel",wheel,{passive:false});
@@ -436,7 +436,7 @@ export function mountRaid3D(container,state,fx=null){
   }
   const actionLight=new THREE.PointLight(burstColor,fx?18:0,5,2);actionLight.position.set(1.5,1.4,.2);scene.add(actionLight);
   const started=performance.now(),enemyBase=new THREE.Vector3(2.05,.05,-.15);
-  function resize(){const w=container.clientWidth||700,h=container.clientHeight||310,aspect=w/h,viewHeight=6.4;renderer.setSize(w,h,false);camera.left=-viewHeight*aspect/2;camera.right=viewHeight*aspect/2;camera.top=viewHeight/2;camera.bottom=-viewHeight/2;camera.updateProjectionMatrix()}const observer=new ResizeObserver(resize);observer.observe(container);resize();
+  function resize(){const w=container.clientWidth||700,h=container.clientHeight||310,aspect=w/h,viewHeight=Math.max(6.4,11.5/aspect);renderer.setSize(w,h,false);camera.left=-viewHeight*aspect/2;camera.right=viewHeight*aspect/2;camera.top=viewHeight/2;camera.bottom=-viewHeight/2;camera.updateProjectionMatrix()}const observer=new ResizeObserver(resize);observer.observe(container);resize();
   function animate(t){
     if(disposed)return;frame=requestAnimationFrame(animate);const elapsed=t-started;
     camera.position.copy(cameraBase);

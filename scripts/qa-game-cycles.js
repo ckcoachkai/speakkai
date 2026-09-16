@@ -1,0 +1,50 @@
+async page => {
+  const errors=[], checks=[];
+  page.on('pageerror', e=>errors.push(e.message));
+  const ensure=(ok,message)=>{if(!ok)throw Error(message);checks.push(message);};
+  const base='http://127.0.0.1:4325';
+  await page.goto(base+'/games/mouse-house/index.html');
+  await page.locator('#names').fill('Alex\nSam');
+  await page.locator('#start').click();
+  await page.locator('#pause').click();
+  const timer=await page.locator('#timer').innerText();
+  await page.waitForTimeout(1100);
+  ensure(await page.locator('#timer').innerText()===timer,'Mouse House pause freezes the chase');
+  await page.locator('#pause').click();
+  await page.locator('#result').waitFor({state:'visible',timeout:120000});
+  ensure(await page.locator('#chosen-count').innerText()==='1','Mouse House records one chosen student');
+  const winner=await page.locator('#winner-name').innerText();
+  await page.locator('#next').click();
+  ensure(await page.locator('#mice-list .mouse-row').count()===1,'Next chase excludes the chosen student');
+  ensure(!(await page.locator('#mice-list').innerText()).includes(winner),'Chosen name is excluded');
+  await page.locator('#edit').click();
+  await page.locator('#confirm-edit').click();
+  ensure(await page.locator('#chosen-count').innerText()==='0','Editing the crew clears the round history');
+
+  await page.goto(base+'/tools/marble-name-picker/');
+  const marble=page.frameLocator('iframe');
+  await marble.locator('#student-names').fill('Alex\nSam');
+  await marble.getByRole('button',{name:'Apply names & start fresh'}).click();
+  await marble.locator('#round-count').selectOption('1');
+  await marble.locator('.board-column .start-button').click();
+  ensure(await marble.locator('#student-names').isDisabled(),'Marble roster locks through the complete round');
+  await marble.locator('#winner-title').waitFor({state:'visible',timeout:90000});
+  ensure(await marble.locator('.selection-order>div').count()===1,'Marble cycle records exactly one selection');
+  await marble.getByRole('button',{name:'Select final student',exact:true}).click();
+  await marble.getByRole('button',{name:'View final results',exact:true}).click();
+  ensure(await marble.locator('.selection-order>div').count()===2,'Marble tournament selects both students once');
+  await marble.getByRole('button',{name:'Reset tournament',exact:true}).click();
+  ensure(await marble.locator('.selection-order>div').count()===0,'Marble reset clears selection order');
+
+  await page.goto(base+'/forest/');
+  await page.waitForFunction(()=>!document.querySelector('#start').disabled);
+  await page.locator('#start').click();
+  await page.locator('#pause').click();
+  ensure((await page.locator('#pause').innerText()).includes('Resume'),'Forest supports pausing');
+  await page.locator('#pause').click();
+  await page.locator('#result').waitFor({state:'visible',timeout:90000});
+  ensure(await page.locator('#history li').count()===1,'Forest completes a race and records the winner');
+  await page.locator('#reset').click();
+  ensure(await page.locator('#history li').count()===0,'Forest reset clears the chosen history');
+  return {checks,errors};
+}

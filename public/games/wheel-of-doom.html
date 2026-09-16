@@ -111,7 +111,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .wheel-subtitle { color:var(--muted); font-size:12px; margin-top:4px; }
 .shortcut-pill { display:flex; align-items:center; gap:7px; flex:0 0 auto; color:var(--muted); font-size:11px; font-weight:700; border:1px solid var(--line); background:var(--panel-soft); border-radius:999px; padding:7px 10px; box-shadow:var(--shadow-soft); }
 .shortcut-pill kbd { display:inline-grid; place-items:center; min-width:24px; height:21px; padding:0 5px; border:1px solid var(--line-strong); border-bottom-width:2px; border-radius:5px; background:var(--panel-solid); color:var(--text); font-size:10px; }
-.wheel-stage { width:min(82vh,76vw,860px); height:min(82vh,76vw,860px); max-width:calc(100% - 24px); max-height:calc(100% - 150px); position:relative; display:grid; place-items:center; margin-top:30px; }
+.wheel-stage { width:min(65vh,65vw,680px); aspect-ratio:1; height:auto; max-width:calc(100% - 48px); max-height:none; position:relative; display:grid; place-items:center; margin:64px 0 70px; flex-shrink:0; }
 .wheel-stage::before { content:""; position:absolute; inset:3.2%; border-radius:50%; background:transparent; box-shadow:none; }
 .wheel-stage.empty-wheel-stage::before { background:#e5e7eb; box-shadow:0 24px 54px rgba(71,85,105,.2),0 0 0 1px #cbd5e1,0 0 0 11px rgba(226,232,240,.9); }
 .empty-wheel-stage .pointer { background:#cbd5e1; filter:drop-shadow(-4px 5px 4px rgba(71,85,105,.2)); }
@@ -261,6 +261,10 @@ input[type="range"] { accent-color:var(--accent); }
 @media (max-width:650px) {
   .status-chip { left:50%; bottom:72px; transform:translateX(-50%); white-space:nowrap; }
 }
+
+*{letter-spacing:0!important}.wheel-card,.side-panel{border-radius:8px;box-shadow:none}.wheel-title{font-size:26px}.panel-title{font-size:20px}
+.wheel-header{padding-top:12px;padding-bottom:12px}.shortcut-pill{display:none}.wheel-spin-cta{min-height:44px}.entries-editor{border-radius:6px}
+@media(max-width:600px){.wheel-title{font-size:22px}.main{gap:16px}.wheel-header{padding:8px 12px}}
 </style>
 </head>
 <body>
@@ -584,6 +588,17 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
     );
   }
 
+  function wheelSegments(entries) {
+    var total = entries.reduce(function(sum, entry){ return sum + entry.weight; }, 0);
+    var cursor = entries.length ? -180 * entries[0].weight / total : 0;
+    return entries.map(function(entry, i) {
+      var span = 360 * entry.weight / total;
+      var start = cursor;
+      cursor += span;
+      return {entry:entry, i:i, start:start, end:cursor, center:start + span / 2, span:span};
+    });
+  }
+
   function Wheel(props) {
     var entries = props.entries;
     if (!entries.length) {
@@ -597,16 +612,7 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
         h('div', { className:'pointer' })
       );
     }
-    var total = entries.reduce(function(s,e){return s + e.weight;}, 0);
-    var cursor = 0;
-    var segments = entries.map(function(entry, i) {
-      var span = 360 * entry.weight / total;
-      var start = cursor - span / 2;
-      var end = cursor + span / 2;
-      var center = cursor;
-      cursor += span;
-      return { entry:entry, i:i, start:start, end:end, center:center, span:span };
-    });
+    var segments = wheelSegments(entries);
     return h('div', { className:'wheel-stage' },
       h('svg', { className:'wheel-svg', viewBox:'0 0 600 600', role:'img', 'aria-label':'Wheel of DOOM random name picker' },
         h('defs', null,
@@ -764,9 +770,6 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
     this.spinTimer = null;
     this.tickTimer = null;
     this.toastTimer = null;
-    this.idleFrame = null;
-    this.idleLast = 0;
-    this.idleAccumulator = 0;
     this.speakerImageInput = null;
     this.backgroundImageInput = null;
     this.keyHandler = this.onKey.bind(this);
@@ -788,7 +791,6 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
       } catch (_) {}
     }
     window.addEventListener('keydown', this.keyHandler);
-    this.startIdleRotation();
   };
   App.prototype.componentDidUpdate = function(prevProps, prevState) {
     if (prevState.text !== this.state.text) saveJSON('spinselect.entries', this.state.text);
@@ -800,26 +802,7 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
   };
   App.prototype.componentWillUnmount = function() {
     clearTimeout(this.spinTimer); clearTimeout(this.tickTimer); clearTimeout(this.toastTimer);
-    if (this.idleFrame) cancelAnimationFrame(this.idleFrame);
     window.removeEventListener('keydown', this.keyHandler);
-  };
-  App.prototype.startIdleRotation = function() {
-    var self=this;
-    function step(now) {
-      if (!self.idleLast) self.idleLast=now;
-      var delta=Math.min(80, now-self.idleLast);
-      self.idleLast=now;
-      if (!self.state.spinning && self.entries().length) {
-        self.idleAccumulator += delta;
-        if (self.idleAccumulator >= 32) {
-          var elapsed=self.idleAccumulator;
-          self.idleAccumulator=0;
-          self.setState(function(st){ return st.spinning ? null : {rotation: st.rotation + elapsed * 0.0024}; });
-        }
-      }
-      self.idleFrame=requestAnimationFrame(step);
-    }
-    this.idleFrame=requestAnimationFrame(step);
   };
   App.prototype.processImage = function(file, kind, onReady) {
     var self=this;
@@ -880,7 +863,7 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
     this.setState({toast:msg});
     this.toastTimer = setTimeout(function(){self.setState({toast:''});}, 1800);
   };
-  App.prototype.setSettings = function(settings) { this.setState({settings:settings}); };
+  App.prototype.setSettings = function(settings) { if(this.state.spinning)return; this.setState({settings:settings}); };
   App.prototype.pickWeighted = function(entries) {
     var total = entries.reduce(function(s,e){return s+e.weight;},0);
     var r = secureRandom()*total;
@@ -888,14 +871,12 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
     return entries.length-1;
   };
   App.prototype.segmentCenters = function(entries) {
-    var total = entries.reduce(function(s,e){return s+e.weight;},0);
-    var cursor=0;
-    return entries.map(function(e){ var span=360*e.weight/total; var center=cursor; cursor+=span; return center; });
+    return wheelSegments(entries).map(function(segment){ return segment.center; });
   };
   App.prototype.spin = function() {
     var self = this;
     var entries = this.entries();
-    if (this.state.spinning || !entries.length) return;
+    if (this.state.spinning || this.state.winner || this.state.settingsOpen || this.state.savedOpen || !entries.length) return;
     var settings = this.state.settings;
     var index = settings.weighted ? this.pickWeighted(entries) : secureIndex(entries.length);
     var centers = this.segmentCenters(entries);
@@ -954,18 +935,19 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
     this.notify('Saved locally');
   };
   App.prototype.openSaved = function(item) {
+    if (this.state.spinning) return;
     this.setState({text:item.text,settings:Object.assign({},DEFAULT_SETTINGS,item.settings),history:item.history||[],sliceImages:item.sliceImages||{},backgroundImage:item.backgroundImage||'',imageSpeaker:'',rotation:secureRandom()*360,savedOpen:false});
     this.notify('Wheel opened');
   };
   App.prototype.deleteSaved = function(id) { this.setState({saved:this.state.saved.filter(function(x){return x.id!==id;})}); };
-  App.prototype.shuffle = function() {
+  App.prototype.shuffle = function() { if(this.state.spinning)return;
     var lines=this.state.text.split(/\r?\n/).filter(function(v){return v.trim();});
     for(var i=lines.length-1;i>0;i--){var j=secureIndex(i+1), tmp=lines[i]; lines[i]=lines[j]; lines[j]=tmp;}
     this.setState({text:lines.join('\n')});
   };
-  App.prototype.sort = function() { this.setState({text:this.state.text.split(/\r?\n/).filter(function(v){return v.trim();}).sort(function(a,b){return a.localeCompare(b);}).join('\n')}); };
-  App.prototype.clear = function() { this.setState({text:''}); };
-  App.prototype.duplicate = function() { this.setState({text:this.state.text+'\n'+this.state.text}); };
+  App.prototype.sort = function() { if(this.state.spinning)return; this.setState({text:this.state.text.split(/\r?\n/).filter(function(v){return v.trim();}).sort(function(a,b){return a.localeCompare(b);}).join('\n')}); };
+  App.prototype.clear = function() { if(this.state.spinning)return; this.setState({text:''}); };
+  App.prototype.duplicate = function() { if(this.state.spinning)return; this.setState({text:this.state.text+'\n'+this.state.text}); };
   App.prototype.share = function() {
     var self=this;
     var payload=btoa(unescape(encodeURIComponent(JSON.stringify({t:this.state.text,s:this.state.settings}))));
@@ -981,7 +963,7 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
   App.prototype.onKey = function(e) {
     var tag=document.activeElement && document.activeElement.tagName || '';
     if ((e.code==='Space' || (e.ctrlKey && e.key==='Enter')) && !/TEXTAREA|INPUT|SELECT/.test(tag)) { e.preventDefault(); this.spin(); }
-    if(e.key==='Escape') this.setState({winner:null,settingsOpen:false,savedOpen:false,confetti:false});
+    if(e.key==='Escape') { if(this.state.winner)this.closeWinner(); this.setState({settingsOpen:false,savedOpen:false}); }
   };
 
   App.prototype.render = function() {
@@ -1010,10 +992,10 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
         ),
         h('nav', { className:'toolbar', 'aria-label':'Wheel controls' },
           h(IconButton,{icon:'＋',label:'New',title:'New wheel',onClick:function(){self.newWheel();},disabled:st.spinning}),
-          h(IconButton,{icon:'▣',label:'Open',title:'Open saved wheel',onClick:function(){self.setState({savedOpen:true});}}),
+          h(IconButton,{icon:'▣',label:'Open',title:'Open saved wheel',disabled:st.spinning,onClick:function(){self.setState({savedOpen:true});}}),
           h(IconButton,{icon:'●',label:'Save',title:'Save locally',onClick:function(){self.saveWheel();}}),
           h(IconButton,{icon:'↗',label:'Share',title:'Copy share link',onClick:function(){self.share();}}),
-          h(IconButton,{icon:'⚙',label:'Customize',title:'Customize',onClick:function(){self.setState({settingsOpen:true});}}),
+          h(IconButton,{icon:'⚙',label:'Customize',title:'Customize',disabled:st.spinning,onClick:function(){self.setState({settingsOpen:true});}}),
           h(IconButton,{icon:'⛶',title:'Fullscreen',onClick:function(){self.fullscreen();}})
         )
       ),
@@ -1021,16 +1003,16 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
         h('section', { className:'wheel-card' },
           h('div',{className:'wheel-header'},
             h('div',{className:'wheel-heading'},
-              h('div',{className:'wheel-eyebrow'},'Live Selection'),
+
               h('div', { className:'wheel-title' }, settings.title || 'Wheel of DOOM'),
-              h('div', { className:'wheel-subtitle' }, 'Every spin is random. Every result is final—until you spin again.')
+              null
             ),
             h('div',{className:'shortcut-pill'},h('kbd',null,'Space'),h('span',null,'to spin'))
           ),
           h(Wheel,{entries:entries,colors:colors,rotation:st.rotation,duration:durationMs,spinning:st.spinning,sliceImages:st.sliceImages,onSpin:function(){self.spin();}}),
           h('button',{className:'wheel-spin-cta',onClick:function(){self.spin();},disabled:st.spinning||!entries.length},
             h('span',{className:'wheel-spin-cta-main'},st.spinning?'FATE IN MOTION':'SPIN'),
-            h('span',{className:'wheel-spin-cta-sub'},st.spinning?'The wheel is deciding…':'Meet your fate')
+            null
           ),
           h('div',{className:'status-chip'},
             h('span',{className:'status-dot '+(st.spinning?'spinning':'')}),
@@ -1039,7 +1021,7 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
         ),
         h('aside', { className:'side-panel' },
           h('div',{className:'panel-top'},
-            h('div',{className:'panel-kicker'},'Control Room'),
+
             h('div',{className:'panel-title'},'Manage the draw')
           ),
           h('div',{className:'tabs'},
@@ -1049,13 +1031,13 @@ return sg}"object"===typeof exports&&"undefined"!==typeof module?module.exports=
           ),
           st.tab==='entries' ? h('div',{className:'panel-body'},
             h('div',{className:'input-header'},h('div',{className:'input-label'},'Contestant names'),h('span',{className:'count-badge'},entries.length+' READY')),
-            h('textarea',{className:'entries-editor',value:st.text,onChange:function(e){self.setState({text:e.target.value});},spellCheck:false,placeholder:'One contestant per line\nAlice\nBob\nCharlie'}),
+            h('textarea',{className:'entries-editor',disabled:st.spinning,value:st.text,onChange:function(e){self.setState({text:e.target.value});},spellCheck:false,placeholder:'One contestant per line\nAlice\nBob\nCharlie'}),
             h('div',{className:'editor-hint'},settings.weighted?'Weighted mode: use Name | 3':'One contestant per line. Duplicates are allowed.'),
             h('div',{className:'button-grid'},
-              h('button',{className:'action-button',onClick:function(){self.shuffle();}},'Shuffle'),
-              h('button',{className:'action-button',onClick:function(){self.sort();}},'Sort'),
-              h('button',{className:'action-button',onClick:function(){self.duplicate();}},'Duplicate'),
-              h('button',{className:'action-button',onClick:function(){self.clear();}},'Clear')
+              h('button',{className:'action-button',disabled:st.spinning,onClick:function(){self.shuffle();}},'Shuffle'),
+              h('button',{className:'action-button',disabled:st.spinning,onClick:function(){self.sort();}},'Sort'),
+              h('button',{className:'action-button',disabled:st.spinning,onClick:function(){self.duplicate();}},'Duplicate'),
+              h('button',{className:'action-button',disabled:st.spinning,onClick:function(){self.clear();}},'Clear')
             ),
             h('button',{className:'spin-button',onClick:function(){self.spin();},disabled:st.spinning||!entries.length},st.spinning?'Fate is deciding…':'Spin the Wheel of DOOM'),
             h('div',{className:'panel-footnote'},'Secure random selection • Your list stays on this device')

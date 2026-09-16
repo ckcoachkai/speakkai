@@ -50,7 +50,7 @@
     }
     arrive(m){
       const i=this.cheese.findIndex(c=>c.node===m.node);
-      if(i>=0){this.cheese.splice(i,1);m.cheeses++;m.speed*=2;this.events.push({kind:'cheese',id:m.id,node:m.node,text:'×'+(2**m.cheeses)});}
+      if(i>=0){this.cheese.splice(i,1);m.cheeses++;m.speed=Math.min(6.4,m.speed*2);this.events.push({kind:'cheese',id:m.id,node:m.node,text:'×'+(m.speed/1.6)});}
       if(m.node===this.maze.exit)this.choose(m,'escaped');
     }
     move(a,budget,isCat=false){
