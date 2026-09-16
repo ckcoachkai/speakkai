@@ -55,7 +55,7 @@ export const flagshipOffers: Offer[] = [
       {
         title: "One point the audience can follow",
         detail:
-          "Practise choosing a central idea, arranging supporting details and finishing with purpose.",
+          "Practice choosing a central idea, arranging supporting details and finishing with purpose.",
       },
       {
         title: "Delivery that serves the message",
@@ -131,7 +131,7 @@ export const flagshipOffers: Offer[] = [
       {
         title: "A sequence of lessons",
         schoolDirection: "sequence",
-        prepare: "Bring your curriculum focus, starting level, timetable and the speaking task you want to work towards.",
+        prepare: "Bring your curriculum focus, starting level, timetable and the speaking task you want to work toward.",
         detail:
           "Develop speaking progressively across a short or longer curriculum. Agree learning aims, lesson length, group size and the final speaking task together.",
       },
@@ -243,7 +243,7 @@ export const flagshipOffers: Offer[] = [
       {
         title: "A practical next rehearsal",
         detail:
-          "Leave the discussion with clear priorities to practise. Agree any materials, feedback or follow-up as part of the scope.",
+          "Leave the discussion with clear priorities to practice. Agree any materials, feedback or follow-up as part of the scope.",
       },
     ],
     example: {

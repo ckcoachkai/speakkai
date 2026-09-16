@@ -34,7 +34,7 @@ const steps=chinese ? [
     <p>{tr("Make a point, rehearse an opening or build a story. Choose one to try. Every exercise also works through its written prompts.","说清一个重点，练习一句开场，或讲一个小故事。选一个试试。每个练习都可以跟着文字提示完成。")}</p>
   </section>
   <nav class="wrap practice-choices" aria-labelledby="practice-choices-title">
-    <h2 id="practice-choices-title" tabindex="-1">{tr("What would you like to practise?","你想先练习什么？")}</h2>
+    <h2 id="practice-choices-title" tabindex="-1">{tr("What would you like to practice?","你想先练习什么？")}</h2>
     <ul>{choices.map(([id,title,detail],index)=><li><a href={`#${id}`}><span class="eyebrow">0{index+1}</span><strong>{title} <span aria-hidden="true">↓</span></strong><span>{detail}</span></a></li>)}</ul>
     <p class="print-guidance">{tr("Prefer paper? Use your browser’s Print command. The print layout includes all prompts and examples, even when a section is closed.","想用纸笔练习？使用浏览器的“打印”功能。打印版会包含全部提示与示例，即使相应内容尚未展开。")}</p>
   </nav>

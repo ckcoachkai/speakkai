@@ -13,8 +13,8 @@ export const practiceLabels = {
     progressIntro: (n: number) => `${n} steps · go at your own pace`,
     progress: (n: number, total: number, minutes: number) => `Step ${n} of ${total} · about ${minutes} min`,
     finished: "Practice finished", nextTime: "Choose one thing for next time.",
-    complete: "Tell your listener one thing that felt clearer and one thing you want to practise again. There is no score to chase.",
-    start: "Start guided practice", again: "Practise again", last: "Back to last step", intro: "Back to introduction", previous: "Previous step", finish: "Finish practice", next: "Next step", fullSheet: "Read the full sheet",
+    complete: "Tell your listener one thing that felt clearer and one thing you want to practice again. There is no score to chase.",
+    start: "Start guided practice", again: "Practice again", last: "Back to last step", intro: "Back to introduction", previous: "Previous step", finish: "Finish practice", next: "Next step", fullSheet: "Read the full sheet",
     privacy: "No recording or saved progress. Start again whenever you like.",
   },
   "zh-CN": {
