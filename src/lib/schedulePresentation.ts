@@ -22,7 +22,7 @@ export function calendarDisplayEventKind(label: string) {
 export function internalBookingLabel(label: string) {
   return label
     .replace(/\bSTCC\b(?!\s*[·（(]\s*威宁路)/gi, "STCC · 威宁路")
-    .replace(/\bSAS\b(?!\s*[·（(]\s*华漕)/gi, "SAS · 华漕")
+    .replace(/\bSAS\b(?:\s*·\s*华漕)?(?!\s*·\s*虹桥天地)/gi, "SAS · 虹桥天地（虹桥枢纽）")
     .replace(/井亭大厦/g, "龙柏")
     .replace(/\bGubei\b|古北1699/gi, "古北");
 }
@@ -30,8 +30,9 @@ export function internalBookingLabel(label: string) {
 // Areas are approximate travel labels, not administrative district boundaries.
 // Only allowlisted metadata reaches the public page; never reuse a raw class title.
 export function bookingArea(label: string) {
-  if (/虹桥天地|Hongqiao Tiandi|Hongqiao Hub/i.test(label)) return "Hongqiao Hub";
-  if (/\bSAS\b|华漕|Huacao/i.test(label)) return "Huacao";
+  // Kai confirmed that the classes tagged SAS are taught at Hongqiao Tiandi.
+  if (/\bSAS\b|虹桥天地|Hongqiao Tiandi|Hongqiao Hub/i.test(label)) return "Hongqiao Hub";
+  if (/华漕|Huacao/i.test(label)) return "Huacao";
   if (/井亭大厦|龙柏|Jingting|Longbai/i.test(label)) return "Longbai";
   if (/古北\s*16[-–]?99|古北|Gubei/i.test(label)) return "Gubei";
   if (/\bSTCC\b|威宁路|Weining Road/i.test(label)) return "Weining Road";
