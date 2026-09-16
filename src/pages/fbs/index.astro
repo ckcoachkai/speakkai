@@ -7,8 +7,9 @@ import SiteFooter from '../../components/SiteFooter.astro';
 <script>
 import {validateFeedback,formatDate,shanghaiDate} from '../../lib/feedback.mjs';
 import {progressProfiles,snapshot,evidenceSignature} from '../../lib/feedback-progress.mjs';
+import {renderSkillJourney} from '../../lib/feedback-skills-client';
 if(location.pathname==='/FBS/')history.replaceState(null,'','/fbs/'+location.search+location.hash);
-let data:any,notes:any={},language:'en'|'zh'='en';
+let data:any,notes:any={},skills:any={},language:'en'|'zh'='en';
 const params=new URLSearchParams(location.search);let selectedClass=params.get('class')||'all',selectedStudent=params.get('student')||'all';
 const classPicker=document.querySelector<HTMLSelectElement>('#class-select')!,studentPicker=document.querySelector<HTMLSelectElement>('#student-select')!;
 const node=(tag:string,text='',className='')=>{const n=document.createElement(tag);n.textContent=text;n.className=className;return n;};
@@ -32,6 +33,8 @@ function render(){
   const ready=review&&review.signature===evidenceSignature(p.records);
   const message=ready?review[language]:valid.length===0?(zh?'暂无可供比较的个人评价记录。':'No individual evaluations are available to compare.'):valid.length<2?(zh?'只有一次有效记录，尚不能判断跨课变化。可查看下面的课堂表现与练习方向。':'Only one recorded evaluation is available. A cross-class change cannot yet be established; see the observation and practice direction below.'):(zh?'已有多次记录。比较结论等待复核，不能把不同任务的表现直接当作进步或退步。':'Several records are available. A reviewed comparison is pending; differences between tasks alone do not establish improvement or regression.');
   card.append(node('p',message,'comparison'));
+  card.append(renderSkillJourney(p,skills,language));
+  if(chosen)card.classList.add('selected-profile');
   const details=node('details'),summary=node('summary',zh?`${p.records.length} 次记录 · 查看历次反馈`:`${p.records.length} records · View timeline`);details.append(summary);if(chosen)details.setAttribute('open','');
   for(const record of [...p.records].reverse()){
    const entry=node('section','','record');entry.append(node('h3',`${formatDate(record.date,language)} · ${record.time}`));
@@ -51,9 +54,29 @@ function historyReplace(url:URL){window.history.replaceState(null,'',url);}
 classPicker.addEventListener('change',()=>{selectedClass=classPicker.value;selectedStudent='all';render();});
 studentPicker.addEventListener('change',()=>{const parts=studentPicker.value.split('/');if(parts.length===2){selectedClass=parts[0];selectedStudent=parts[1];}else selectedStudent='all';render();});
 document.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach(b=>b.addEventListener('click',()=>{language=b.dataset.lang==='zh'?'zh':'en';render();}));
-async function load(){try{data=validateFeedback(await(await fetch('/data/feedback.json',{cache:'no-store'})).json());const response=await fetch('/data/feedback-progress.json',{cache:'no-store'});if(response.ok)notes=await response.json();render();}catch{document.querySelector('#status')!.textContent='Could not load progress. Please refresh or open full class feedback.';}}
+async function load(){try{data=validateFeedback(await(await fetch('/data/feedback.json',{cache:'no-store'})).json());const response=await fetch('/data/feedback-progress.json',{cache:'no-store'});if(response.ok)notes=await response.json();try{const response=await fetch('/data/feedback-skills.json',{cache:'no-store'});if(response.ok)skills=await response.json();}catch{skills={};}render();}catch{document.querySelector('#status')!.textContent='Could not load progress. Please refresh or open full class feedback.';}}
 load();
 </script>
 <style>
-:global(body){margin:0;background:#f3f6f9;color:#172b43;font-family:system-ui,sans-serif}main{max-width:1380px;margin:auto;padding:28px 24px 64px}header{display:flex;justify-content:space-between;align-items:center;gap:20px}h1{font-size:32px;margin:0 0 18px}.eyebrow{color:#397789;font-weight:700}nav{display:flex;gap:20px;flex-wrap:wrap;margin:0 0 25px}a{color:#155d7c}.filters{display:flex;gap:18px;flex-wrap:wrap;margin:24px 0}.filters label{display:grid;gap:8px;flex:1;min-width:240px}button,select{font:inherit;min-height:44px;border:1px solid #becdda;border-radius:8px;padding:10px;background:white;color:#173b51}button[aria-pressed=true]{background:#173b51;color:white}.languages{display:flex;gap:5px}#profiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px;align-items:start}.course{margin-top:40px}:global(#profiles article){background:white;border:1px solid #d7e2ea;border-top:4px solid #287b8d;border-radius:14px;padding:22px}:global(#profiles h2){margin:0;font-size:22px}:global(.meta){color:#52687b;font-size:14px}:global(.comparison){line-height:1.8;white-space:pre-wrap}:global(details){border-top:1px solid #d7e2ea;padding:16px 0}:global(summary){cursor:pointer;font-weight:650;line-height:1.7}:global(.record){border-left:3px solid #bdd2df;margin:18px 0;padding:0 0 4px 15px}:global(.record h3){font-size:15px}:global(.record p){line-height:1.8;white-space:pre-wrap}:global(.record a){font-size:14px}:global(#course-history){background:white;border-radius:14px;padding:0 22px}#intro,#course-note{color:#52687b;line-height:1.7}@media(max-width:600px){main{padding:22px 16px}h1{font-size:26px}}:global(button:focus-visible),:global(select:focus-visible),:global(a:focus-visible){outline:3px solid #2686aa;outline-offset:3px}
+:global(body){margin:0;background:#f3f6f9;color:#172b43;font-family:system-ui,sans-serif}main{max-width:1380px;margin:auto;padding:28px 24px 64px}header{display:flex;justify-content:space-between;align-items:center;gap:20px}h1{font-size:32px;margin:0 0 18px}.eyebrow{color:#397789;font-weight:700}nav{display:flex;gap:20px;flex-wrap:wrap;margin:0 0 25px}a{color:#155d7c}.filters{display:flex;gap:18px;flex-wrap:wrap;margin:24px 0}.filters label{display:grid;gap:8px;flex:1;min-width:240px}button,select{font:inherit;min-height:44px;border:1px solid #becdda;border-radius:8px;padding:10px;background:white;color:#173b51}button[aria-pressed=true]{background:#173b51;color:white}.languages{display:flex;gap:5px}#profiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:18px;align-items:start}.course{margin-top:40px}:global(#profiles article){background:white;border:1px solid #d7e2ea;border-top:4px solid #287b8d;border-radius:14px;padding:22px}:global(#profiles h2){margin:0;font-size:22px}:global(.meta){color:#52687b;font-size:14px}:global(.comparison){line-height:1.8;white-space:pre-wrap}:global(details){border-top:1px solid #d7e2ea;padding:16px 0}:global(summary){cursor:pointer;font-weight:650;line-height:1.7}:global(.record){border-left:3px solid #bdd2df;margin:18px 0;padding:0 0 4px 15px}:global(.record h3){font-size:15px}:global(.record p){line-height:1.8;white-space:pre-wrap}:global(.record a){font-size:14px}:global(#course-history){background:white;border-radius:14px;padding:0 22px}#intro,#course-note{color:#52687b;line-height:1.7}@media(max-width:600px){main{padding:22px 16px}h1{font-size:26px}}:global(button:focus-visible),:global(select:focus-visible),:global(a:focus-visible){outline:3px solid #2686aa;outline-offset:3px}
+
+:global(.selected-profile){grid-column:1/-1}
+:global(.skill-journey){border-top:1px solid #d7e2ea;margin:20px 0;padding-top:18px;min-width:0}
+:global(.skill-journey h3){font-size:18px;margin:0 0 8px}
+:global(.skill-guide){font-size:13px;line-height:1.65;color:#52687b;margin:8px 0 14px}
+:global(.skill-lane){display:grid;grid-template-columns:minmax(110px,1fr) minmax(0,2fr);gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid #edf1f5}
+:global(.skill-label){font-size:14px;line-height:1.5}
+:global(.skill-label small){display:block;font-size:11px;font-weight:400;color:#667486;margin-top:5px}
+:global(.skill-track){display:flex;align-items:center;gap:12px;position:relative;flex-wrap:wrap}
+:global(.skill-track)::before{content:'';position:absolute;left:8px;right:8px;top:14px;border-top:2px solid #b6d2d8}
+:global(.skill-point){position:relative;display:flex;flex-direction:column;align-items:center;gap:7px;border:0;background:transparent;padding:4px 6px;cursor:pointer;font:inherit;font-size:12px;color:#155d7c;min-height:48px;border-radius:8px}
+:global(.skill-dot){display:block;width:16px;height:16px;background:#25788a;border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #25788a}
+:global(.skill-point:hover),:global(.skill-point[aria-expanded=true]){background:#e6f3f5}
+:global(.skill-point[aria-expanded=true] .skill-dot){background:#164453;box-shadow:0 0 0 2px #164453}
+:global(.skill-point:focus-visible){outline:3px solid #2686aa;outline-offset:2px}
+:global(.skill-evidence){margin-top:16px;padding:18px;background:#f0f7f8;border-left:3px solid #25788a;border-radius:0 10px 10px 0}
+:global(.skill-evidence h4){margin:0;font-size:15px}
+:global(.skill-quote){white-space:pre-wrap;line-height:1.8;font-size:15px}
+:global(.skill-state),:global(.skill-empty){font-size:13px;padding:10px 12px;background:#f4f5f7;border-radius:8px;line-height:1.65;color:#52687b}
+@media(max-width:450px){:global(.skill-lane){grid-template-columns:1fr;gap:8px}:global(.skill-track){padding-left:3px}:global(.skill-label small){display:inline;margin-left:6px}}
 </style>
