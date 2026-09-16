@@ -1,0 +1,10 @@
+---
+const { label = 'Kai’s WeChat QR code', loading = 'lazy' } = Astro.props;
+---
+<span class="wechat-qr-frame"><span class="wechat-qr-crop"><img src="/images/coach-kai-wechat-qr.png" width="938" height="1340" alt={label} loading={loading}/></span></span>
+<style>
+  .wechat-qr-frame{display:block;width:100%;padding:10px;background:#fff;border:1px solid #d4d8cc;border-radius:14px;box-shadow:0 8px 24px #171b1510}
+  .wechat-qr-crop{display:block;position:relative;width:100%;aspect-ratio:1;overflow:hidden;background:#fff}
+  /* Original modules remain untouched. Crop includes a 60px scanning quiet zone. */
+  .wechat-qr-crop img{position:absolute!important;width:140.84084084%!important;max-width:none!important;height:auto!important;max-height:none!important;left:-20.42042042%;top:-56.75675676%;margin:0!important;border:0!important;border-radius:0!important;padding:0!important}
+</style>

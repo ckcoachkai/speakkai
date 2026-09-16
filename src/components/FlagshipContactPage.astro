@@ -1,4 +1,5 @@
 ---
+import WechatQR from "./WechatQR.astro";
 import FlagshipLayout from "../layouts/FlagshipLayout.astro";
 import { schoolDirections, schoolDirectionsChinese } from "../lib/inquiry.mjs";
 interface Props { language?: "en" | "zh-CN"; }
@@ -146,12 +147,7 @@ const formCopy = {
         class="contact-qr-full"
         href="/images/coach-kai-wechat-qr.png"
         aria-label={tr("Open full-size WeChat QR code", "打开完整微信二维码")}
-        ><img
-          src="/images/coach-kai-wechat-qr.png"
-          width="938"
-          height="1340"
-          alt={tr("Kai’s complete WeChat contact QR card", "Kai 的完整微信联系卡及二维码")}
-        /></a
+        ><WechatQR /></a
       >
       <p class="field-note">
         {tr("Scan with WeChat, or open and save the QR image to use from your phone. You can also search the handle above.", "用微信扫一扫，或打开并保存二维码图片，在手机上使用。也可以搜索上方微信号。")}
