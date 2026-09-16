@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
+import { publicScheduleCell } from "../src/lib/schedulePresentation.ts";
 import {
   assertCalendarDisplayPublicSchedule,
   PUBLIC_PRIVACY_MODE,
@@ -317,7 +318,10 @@ async function main() {
   const sheets = await Promise.all(feeds.map(fetchPublishedSheet));
   const publicMonth = process.env.GOOGLE_PUBLIC_SCHEDULE_MONTH?.trim() || "2026-09";
   const publicMonthKey = parseStartMonth(publicMonth);
-  const publicSheets = sheets.filter((sheet) => toMonthKey(sheet.title) === publicMonthKey);
+  const publicSheets = sheets.filter((sheet) => toMonthKey(sheet.title) === publicMonthKey)
+    .map(sheet => ({...sheet, rows: sheet.rows.map(row => ({...row,
+      cells: row.cells.map(cell => ({...cell, value: publicScheduleCell(cell.value)})),
+    }))}));
 
   if (publicSheets.length !== 1) {
     throw new Error(`The public schedule month ${publicMonth} was not found exactly once.`);

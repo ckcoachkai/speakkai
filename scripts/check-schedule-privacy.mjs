@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 import { resolve } from "node:path";
+import {publicScheduleCell} from '../src/lib/schedulePresentation.ts';
 import {
   assertCalendarDisplayPublicSchedule,
   classifyCalendarDisplayEvent,
@@ -13,6 +14,9 @@ const publicSchedule = JSON.parse(await readFile(publicSchedulePath, "utf8"));
 const internalSchedule = JSON.parse(await readFile(internalSchedulePath, "utf8"));
 
 assertCalendarDisplayPublicSchedule(publicSchedule);
+for(const sheet of publicSchedule.sheets)for(const row of sheet.rows)for(const cell of row.cells) {
+  assert.equal(cell.value, publicScheduleCell(cell.value), 'Public schedule contains a raw/private booking label');
+}
 assertCalendarDisplayPublicSchedule(internalSchedule);
 assert.deepEqual(publicSchedule.sheets.map((sheet) => sheet.title), ["September 2026"]);
 for (const title of ["July 2026", "August 2026", "September 2026"]) {

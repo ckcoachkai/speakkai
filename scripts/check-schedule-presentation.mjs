@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { calendarDisplayEventKind, publicBookingPresentation, scheduleStartMinutes } from '../src/lib/schedulePresentation.ts';
+import { calendarDisplayEventKind, publicBookingPresentation, scheduleStartMinutes, bookingGrade, publicScheduleCell } from '../src/lib/schedulePresentation.ts';
 import { weeklyScheduleBlocks } from '../src/lib/weeklySchedule.ts';
 import { sanitizeCalendarCell } from './schedule-privacy.mjs';
 
@@ -28,14 +28,37 @@ test('rescheduled Sunday classes retain the notice and override holiday unavaila
 });
 
 test('Sunday STCC lessons are regular classes; individual lessons stay VIP', () => {
-  assert.deepEqual(publicBookingPresentation('STCC'), { kind: 'group', title: 'Class booked' });
+  assert.deepEqual(publicBookingPresentation('STCC'), { kind: 'group', title: 'Class booked · Weining Road' });
   for (const label of ['Yilan Online 1-1', 'Kunshan 1-on-1 class', 'JAC VIP', '龙柏 - Victoria']) {
     assert.deepEqual(publicBookingPresentation(label), { kind: 'vip', title: 'VIP 1-to-1 booked' });
   }
   assert.equal(calendarDisplayEventKind('井亭大厦 - 二年级 Logan 班'), 'group');
   assert.deepEqual(publicBookingPresentation('Booked'), { kind: 'reserved', title: 'Time booked' });
-  assert.deepEqual(publicBookingPresentation('SAS Class'), { kind: 'group', title: 'Class booked' });
-  assert.deepEqual(publicBookingPresentation('SHNo.1分享(TMC)'), { kind: 'tmc', title: 'SHNo.1分享(TMC)' });
+  assert.deepEqual(publicBookingPresentation('SAS Class'), { kind: 'group', title: 'Class booked · Huacao' });
+  assert.deepEqual(publicBookingPresentation('SHNo.1分享(TMC)'), { kind: 'tmc', title: 'TMC booked' });
+});
+
+test('public group labels expose only allowlisted areas and recorded grades', () => {
+  for (const [raw, title] of [
+    ['SAS - 五年级', 'Class booked · Huacao · G5'],
+    ['井亭大厦 - 二年级 Logan 班', 'Class booked · Longbai · G2'],
+    ['井亭大厦 - 二三年级', 'Class booked · Longbai · G2–3'],
+    ['古北1699 - 八九年级', 'Class booked · Gubei · G8–9'],
+    ['虹桥天地 三年级', 'Class booked · Hongqiao Hub · G3'],
+    ['STCC', 'Class booked · Weining Road'],
+    ['Unknown student 班课', 'Class booked'],
+  ]) {
+    assert.deepEqual(publicBookingPresentation(raw), {kind:'group', title});
+    assert.deepEqual(publicBookingPresentation(title), {kind:'group', title});
+  }
+  assert.equal(bookingGrade('十一年级'),'G11');
+  assert.equal(bookingGrade('G12'),'G12');
+  assert.equal(bookingGrade('古北1699'),'');
+  const safe=publicScheduleCell('26\nHoliday\n19:00–20:00 · Claire Online 1-1\n20:00–21:00 · 井亭大厦 二年级 Logan 班');
+  assert.doesNotMatch(safe,/Claire|Logan|井亭大厦/);
+  assert.match(safe,/19:00–20:00 · VIP 1-to-1 booked/);
+  assert.match(safe,/20:00–21:00 · Class booked · Longbai · G2/);
+  assert.equal(publicScheduleCell(safe),safe);
 });
 
 test('Sunday availability fits chronologically around the four lessons', () => {
