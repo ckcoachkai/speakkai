@@ -1,0 +1,112 @@
+---
+import { serviceCopy } from '../data/services';
+import type { SiteLanguage } from '../data/homeCopy';
+const { language = 'en' } = Astro.props as { language?: SiteLanguage };
+const c = serviceCopy[language];
+const zh = language === 'zh-CN';
+---
+<section class="section wrap service-catalogue" id="work" aria-labelledby="work-title">
+  <div class="section-heading">
+    <p class="eyebrow">{c.eyebrow}</p><h2 id="work-title">{c.title}</h2><p>{c.intro}</p>
+    <button type="button" class="text-link guide-open" hidden>{c.reopen} <span aria-hidden="true">↗</span></button>
+  </div>
+  <p id="service-selection" class="selection-note" role="status" hidden data-label={c.selection}></p>
+  <div class="service-grid">
+    {c.services.map((s, i) => <article class="service-card" id={`service-${s.id}`} tabindex="-1">
+      <span class="index">0{i + 1}</span><h3>{s.title}</h3><p>{s.description}</p>
+      <details><summary>{c.explore}</summary><ul>{s.examples.map(text => <li>{text}</li>)}</ul></details>
+      <a class="text-link" href="#connect">{c.discuss}<span aria-hidden="true">↗</span></a>
+    </article>)}
+  </div>
+  <div class="age-heading"><h3>{c.ageTitle}</h3><p>{c.ageNote}</p></div>
+  <div class="age-grid">{c.audiences.map(a => <details id={`audience-${a.id}`}><summary>{a.title}</summary><p>{a.description}</p></details>)}</div>
+  <details class="additional-services"><summary>{c.additionalTitle}</summary><ul>{c.additional.map(text => <li>{text}</li>)}</ul></details>
+  <div class="service-arrangements"><div><h3>{c.arrangementsTitle}</h3><p>{c.arrangements}</p><a class="text-link" href={zh ? '/zh/schools/' : '/schools/'}>{c.schools}<span aria-hidden="true">↗</span></a></div><p class="online-soon">{c.online}</p></div>
+</section>
+<dialog id="service-guide" aria-labelledby="guide-title" aria-describedby="guide-intro">
+  <form id="service-guide-form">
+    <p class="eyebrow">SpeakKai</p><h2 id="guide-title">{c.guideTitle}</h2><p id="guide-intro">{c.guideIntro}</p>
+    <nav class="guide-languages" aria-label={c.languageLabel}><span>{c.languageLabel}</span><a href="/?guide=1" lang="en" aria-current={!zh ? 'page' : undefined}>English</a><a href="/zh/?guide=1" lang="zh-CN" aria-current={zh ? 'page' : undefined}>中文</a></nav>
+    <label for="guide-audience">{c.audienceLabel}</label><select id="guide-audience" name="audience"><option value="">{c.anyAge}</option>{c.audiences.map(a => <option value={a.id}>{a.title}</option>)}</select>
+    <label for="guide-interest">{c.interestLabel}</label><select id="guide-interest" name="interest"><option value="">{c.anyInterest}</option>{c.services.map(s => <option value={s.id}>{s.title}</option>)}</select>
+    <button class="button" type="submit">{c.show}<span aria-hidden="true">↗</span></button>
+    <div class="guide-exits"><button type="button" id="guide-skip">{c.skip}</button><a href="#connect" id="guide-specific">{c.specific}</a></div>
+  </form>
+</dialog>
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#service-guide');
+  const form = document.querySelector<HTMLFormElement>('#service-guide-form');
+  const audience = document.querySelector<HTMLSelectElement>('#guide-audience');
+  const interest = document.querySelector<HTMLSelectElement>('#guide-interest');
+  const opener = document.querySelector<HTMLButtonElement>('.guide-open');
+  if (dialog && form && audience && interest && opener && typeof dialog.showModal === 'function') {
+    const read = (key: string) => { try { return sessionStorage.getItem(key); } catch { return null; } };
+    const save = (key: string, value: string) => { try { sessionStorage.setItem(key, value); } catch { /* Optional preferences; browsing works without storage. */ } };
+    const restore = (select: HTMLSelectElement, key: string) => {
+      const value = read(key);
+      if (value && [...select.options].some(option => option.value === value)) select.value = value;
+      select.addEventListener('change', () => save(key, select.value));
+    };
+    restore(audience, 'sk-service-audience'); restore(interest, 'sk-service-interest');
+    const open = () => { if (!dialog.open) { dialog.showModal(); document.documentElement.classList.add('service-guide-open'); } };
+    let destination: HTMLElement | null = null;
+    const close = () => dialog.close();
+    dialog.addEventListener('close', () => {
+      document.documentElement.classList.remove('service-guide-open');
+      save('sk-service-seen', '1');
+      const url = new URL(location.href);
+      if (url.searchParams.has('guide')) { url.searchParams.delete('guide'); history.replaceState(null, '', url); }
+      if (destination) {
+        destination.setAttribute('tabindex', '-1');
+        destination.focus({ preventScroll: true });
+        destination.scrollIntoView({ block: 'start' });
+        destination = null;
+      } else opener.focus({ preventScroll: true });
+    });
+    opener.hidden = false;
+    opener.addEventListener('click', open);
+    document.querySelector('#guide-skip')?.addEventListener('click', close);
+    document.querySelector('#guide-specific')?.addEventListener('click', () => {
+      destination = document.querySelector<HTMLElement>('#connect-title');
+      close();
+    });
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      document.querySelectorAll('.service-recommended').forEach(el => el.classList.remove('service-recommended'));
+      const age = audience.value ? document.getElementById(`audience-${audience.value}`) : null;
+      const service = interest.value ? document.getElementById(`service-${interest.value}`) : null;
+      if (age instanceof HTMLDetailsElement) { age.open = true; age.classList.add('service-recommended'); }
+      if (service) { service.classList.add('service-recommended'); const details = service.querySelector('details'); if (details) details.open = true; }
+      const note = document.querySelector<HTMLElement>('#service-selection');
+      if (note) {
+        note.textContent = `${note.dataset.label}: ${audience.selectedOptions[0].text} · ${interest.selectedOptions[0].text}`;
+        note.hidden = false;
+      }
+      destination = service || age || document.getElementById('work');
+      close();
+    });
+    const requested = new URLSearchParams(location.search).get('guide') === '1';
+    if (requested || (!location.hash && !read('sk-service-seen'))) open();
+  }
+</script>
+<style>
+  [hidden]{display:none!important}
+  .service-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .service-card{padding:28px;border:1px solid var(--line);border-radius:16px;display:flex;flex-direction:column;align-items:flex-start;scroll-margin-top:110px}
+  .service-card:last-child{grid-column:1/-1;background:#f0f4ff}
+  .service-card h3{font-size:26px;line-height:1.2;letter-spacing:-.035em;margin:16px 0 12px}
+  .service-card p,.age-heading p,.age-grid p,.service-arrangements p{color:var(--muted);line-height:1.7}
+  .service-card details{margin:20px 0;width:100%}.service-card>.text-link{margin-top:auto}
+  summary{cursor:pointer;font-weight:700;line-height:1.5;padding:8px 0}ul{padding-left:20px;margin-top:12px}li{margin:8px 0;line-height:1.65;color:var(--muted)}
+  .age-heading{margin:48px 0 20px}.age-heading h3,.service-arrangements h3{font-size:26px;margin-bottom:12px}
+  .age-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.age-grid details{border:1px solid var(--line);padding:16px;border-radius:12px;scroll-margin-top:110px}.age-grid p{margin-top:12px}
+  .additional-services{margin:24px 0;padding:18px 0;border-block:1px solid var(--line)}
+  .service-arrangements{display:grid;grid-template-columns:2fr 1fr;gap:28px;align-items:start}.service-arrangements .text-link{margin-top:18px}.online-soon{border-left:3px solid var(--blue);padding:12px 18px;font-weight:700}
+  .guide-open{margin-top:20px;border:0;background:none;cursor:pointer}.selection-note{margin-bottom:20px;padding:14px;background:#f0f4ff}.service-recommended{outline:3px solid var(--blue);outline-offset:2px}
+  dialog{width:min(540px,calc(100% - 32px));max-height:calc(100dvh - 32px);padding:30px;border:1px solid var(--line);border-radius:20px;background:var(--paper,#fff);color:var(--ink);margin:auto;overflow-y:auto;box-shadow:0 24px 80px #0003}
+  dialog::backdrop{background:#0b102099}dialog h2{font-size:30px;line-height:1.15;letter-spacing:-.04em;margin:12px 0}dialog p{line-height:1.6}dialog label{display:block;font-weight:700;margin:18px 0 8px}dialog select{width:100%;padding:12px;border:1px solid #8b93a1;border-radius:8px;font:inherit;background:#fff;color:#182033}dialog .button{margin-top:22px;width:100%;cursor:pointer}
+  .guide-languages{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:20px}.guide-languages span{width:100%;font-weight:700}.guide-languages a{padding:6px 12px;border:1px solid var(--line);border-radius:6px}.guide-languages [aria-current=page]{background:#e7eeff;border-color:var(--blue)}
+  .guide-exits{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:20px;font-size:14px}.guide-exits button{border:0;background:none;font:inherit;cursor:pointer;padding:0;text-decoration:underline}.guide-exits a{text-decoration:underline}
+  :global(html.service-guide-open){overflow:hidden}
+  @media(max-width:720px){.service-grid,.age-grid,.service-arrangements{grid-template-columns:1fr}.service-card{padding:22px}.service-card h3{font-size:24px}dialog{padding:22px}.guide-exits{gap:20px}}
+</style>

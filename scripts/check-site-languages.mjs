@@ -22,7 +22,7 @@ const fallback = await readFile('dist/404.html','utf8');
 assert.ok(fallback.includes('中文首页'));
 assert.doesNotMatch(fallback,/<link rel="alternate" hreflang="zh-CN"/);
 const zhHome = await readFile('dist/zh/index.html','utf8');
-for(const text of ['让你的表达，','找到自己的声音。','让表达融入校园。','让想法打动听众。','项目范围、费用和可安排时间','CKcoachkai','Young Competition Speakers']) assert.ok(zhHome.includes(text),text);
+for(const text of ['让你的表达，','公众演讲与故事表达','辩论与思辨','戏剧与表现力','竞赛与面试准备','职场与管理者沟通','线上课程即将推出','项目范围、费用和可安排时间','CKcoachkai','Young Competition Speakers']) assert.ok(zhHome.includes(text),text);
 assert.ok(!zhHome.includes('<astro-island'),'Chinese homepage gained hydration');
 console.log(`Site languages PASS: ${languagePairs.length} reciprocal pairs, explicit fallback, Chinese homepage and static navigation.`);
 

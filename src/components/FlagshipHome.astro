@@ -1,6 +1,6 @@
 ---
+import ServiceCatalogue from "./ServiceCatalogue.astro";
 import FlagshipCurrentProgram from "./FlagshipCurrentProgram.astro";
-import FlagshipChineseCourseEntry from "./FlagshipChineseCourseEntry.astro";
 import FlagshipMethodExamples from "./FlagshipMethodExamples.astro";
 import { homeCopy, type SiteLanguage } from "../data/homeCopy";
 import { localizedPath, destinationLabel } from "../lib/siteLanguage.mjs";
@@ -17,7 +17,7 @@ const label = (text: string, path: string) => destinationLabel(text, path, langu
     <h1 id="hero-title">{copy.headline[0]}<br /><em>{copy.headline[1]}</em></h1>
     <p class="hero-lead">{copy.lead}</p>
     <div class="actions"><a class="button" href="#work">{copy.start}<span aria-hidden="true">↗</span></a><a class="text-link" href="#story">{copy.meet}<span aria-hidden="true">↓</span></a></div>
-    {!chinese && <FlagshipChineseCourseEntry />}
+    {!chinese && <a class="text-link" href="/zh/#work" lang="zh-CN">查看全部课程与辅导 <span aria-hidden="true">↗</span></a>}
     <nav class="audience-shortcuts" aria-label={copy.audienceLabel}>
       {copy.offers.map((offer,index)=><a href={link(offer.href)}>{label(copy.shortcuts[index],offer.href)} <span aria-hidden="true">↗</span></a>)}
     </nav>
@@ -31,10 +31,7 @@ const label = (text: string, path: string) => destinationLabel(text, path, langu
 <section class="experience-bar" aria-label={copy.experienceLabel}>
   <div class="wrap">{copy.experience.map(item=><p><strong>{item[0]}</strong><span>{item[1]}</span></p>)}<a href="#story">{copy.experienceLink}<span aria-hidden="true">↗</span></a></div>
 </section>
-<section class="section wrap" id="work" aria-labelledby="work-title">
-  <div class="section-heading"><p class="eyebrow">{copy.workLabel}</p><h2 id="work-title">{copy.workTitle[0]}<br /><span class="muted">{copy.workTitle[1]}</span></h2></div>
-  <div class="offer-grid">{copy.offers.map((offer,index)=><article class="offer"><div class="offer-top"><span class="index">0{index+1}</span><span>{offer.audience}</span></div><h3>{offer.title}</h3><p>{offer.copy}</p><p class="offer-detail">{offer.detail}</p><a class="text-link" href={link(offer.href)}>{label(offer.action,offer.href)}<span aria-hidden="true">↗</span></a></article>)}</div>
-</section>
+<ServiceCatalogue language={language} />
 <FlagshipCurrentProgram language={language} />
 <section class="story-section" id="story" aria-labelledby="story-title">
   <div class="wrap story-grid">
