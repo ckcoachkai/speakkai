@@ -2,8 +2,7 @@
 import "@fontsource/manrope/latin-400.css";
 import "@fontsource/manrope/latin-600.css";
 import "@fontsource/manrope/latin-700.css";
-import { Image } from "astro:assets";
-import logo from "../assets/brand/speakkai-logo.png";
+import BrandLogo from "../components/BrandLogo.astro";
 import "../styles/flagship.css";
 import { structuredData } from "../lib/structuredData.mjs";
 import { pageAlternates, languageChoices, localizedPath, destinationLabel } from "../lib/siteLanguage.mjs";
@@ -100,19 +99,7 @@ const navigation = [
     </div>
     <header class="site-header">
       <a class="brand" href={homeHref} aria-label={chinese ? "SpeakKai 首页" : "SpeakKai home"}
-        ><span class="brand-image" aria-hidden="true"
-          ><Image
-            src={logo}
-            width={480}
-            height={480}
-            widths={[160, 320, 480]}
-            sizes="(max-width: 760px) 126px, 158px"
-            format="webp"
-            quality={90}
-            loading="eager"
-            alt=""
-          /></span
-        ><span lang="zh-CN">说开</span></a
+        ><BrandLogo /><span lang="zh-CN">说开</span></a
       >
       <nav class="desktop-navigation" aria-label={chinese ? "主导航" : "Main navigation"}>
         {navigation.map(({ href, label }) => <a href={href}>{label}</a>)}
@@ -131,7 +118,7 @@ const navigation = [
     <footer class="site-footer">
       <div>
         <a href={homeHref} class="footer-brand"
-          >SpeakKai<span lang="zh-CN">说开</span></a
+           aria-label="SpeakKai home"><BrandLogo inverse /><span lang="zh-CN">说开</span></a
         ><p>{chinese ? "清楚地思考。有目的地练习。真诚地连接。" : "Clear thinking. Purposeful practice. Human connection."}</p>
       </div><nav aria-label={chinese ? "页脚导航" : "Footer navigation"}>
         <a href={localizedPath("/#work",language)}>{chinese ? "辅导与培训" : "Coaching & training"}</a><a href="/schedule/">{chinese ? "时间安排（英文）" : "Schedule"}</a

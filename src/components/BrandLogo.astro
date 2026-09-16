@@ -1,0 +1,17 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/brand/speakkai-logo-081.png";
+interface Props { inverse?: boolean; compact?: boolean; }
+const { inverse = false, compact = false } = Astro.props;
+---
+<span class:list={["brand-081", { inverse, compact }]} data-brand="081">
+  <Image src={logo} width={480} widths={[240,480]} sizes={compact ? "160px" : "(max-width: 760px) 190px, 260px"} format="webp" quality={90} alt="SpeakKai" loading="eager" />
+</span>
+<style>
+  .brand-081 { display:inline-block;position:relative;width:240px;height:62px;overflow:hidden;vertical-align:middle;flex-shrink:0; }
+  .brand-081 img { display:block;position:absolute;width:260px;max-width:none;height:auto;left:-12px;top:-14px; }
+  .brand-081.inverse img { filter:brightness(0) invert(1); }
+  .brand-081.compact { width:145px;height:38px; }
+  .brand-081.compact img { width:160px;left:-8px;top:-9px; }
+  @media(max-width:760px) { .brand-081:not(.compact) {width:175px;height:46px;} .brand-081:not(.compact) img {width:190px;left:-9px;top:-10px;} }
+</style>

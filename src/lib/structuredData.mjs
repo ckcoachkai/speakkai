@@ -14,7 +14,7 @@ export function structuredData({
     name: "SpeakKai",
     alternateName: "说开",
     url: `${origin}/`,
-    logo: `${origin}/images/speakkai-logo-header-source.png`,
+    logo: `${origin}/images/speakkai-logo-081.png`,
   };
   const person = {
     "@type": "Person",

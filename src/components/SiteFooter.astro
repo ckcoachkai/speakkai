@@ -1,14 +1,18 @@
+---
+import BrandLogo from "./BrandLogo.astro";
+---
 <footer class="site-footer">
-  &copy; SpeakKai.com 2026
+  <a href="/" aria-label="SpeakKai home"><BrandLogo inverse compact /></a><span>&copy; 2026</span>
 </footer>
 
 <style>
   .site-footer {
     display: flex;
     width: 100%;
-    height: 26px;
-    flex: 0 0 26px;
+    height: 48px;
+    flex: 0 0 48px;
     align-items: center;
+    gap: 12px;
     justify-content: center;
     padding: 4px 16px;
     border-top: 1px solid #365785;

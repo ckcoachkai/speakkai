@@ -1,4 +1,5 @@
 ---
+import BrandLogo from "./BrandLogo.astro";
 import scheduleData from "../../public/data/schedule.json";
 
 const homePanels = [
@@ -96,7 +97,7 @@ const publicCellLines = (value: string) => {
 <div class="business-test" data-business-test>
   <header class="test-header">
     <a class="test-brand" href="#home" data-view-link="home" aria-label="SpeakKai 说开 test homepage">
-      <span class="test-brand-crop" aria-hidden="true"><img src="/images/speakkai-logo-header-source.png" alt="" width="1254" height="1254" /></span>
+      <BrandLogo compact />
       <span lang="zh-CN">说开</span>
     </a>
     <nav class="test-main-nav" aria-label="Test website navigation">

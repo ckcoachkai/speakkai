@@ -1,4 +1,5 @@
 ---
+import BrandLogo from "./BrandLogo.astro";
 import SiteNavigation from "./SiteNavigation.astro";
 
 interface Props {
@@ -12,9 +13,7 @@ const { current, compact = false } = Astro.props;
 <header class="spatial-site-header">
   <div class="spatial-brand-block">
     <a class="spatial-brand" href="/" aria-label="SpeakKai 说开 home">
-      <span class="spatial-brand-image" aria-hidden="true">
-        <img src="/images/speakkai-logo-header-source.png" alt="" width="1254" height="1254" />
-      </span>
+      <BrandLogo compact />
       <span class="spatial-brand-chinese" lang="zh-CN">说开</span>
     </a>
     <slot name="context" />
