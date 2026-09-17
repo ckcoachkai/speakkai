@@ -1,6 +1,7 @@
+import {getAttackTarget,targetWorldPoint} from './attack-targets.js';
 import {REACTIONS,reaction,stepSkeleton,drawSkeleton} from './combat.js';
 import {createHeadHinge,stepHeadHinge,createCape,stepCape,createFur,stepFur} from './physics.js';
-import {prepareWolf,drawWolf,createWolfMagic,punchAt,ENCOUNTER_DURATION,WOLF_SCALE,capeState} from './storybook.js';
+import {CRUNCH_BEATS,prepareWolf,drawWolf,createWolfMagic,punchAt,ENCOUNTER_DURATION,WOLF_SCALE,capeState} from './storybook.js';
 import HOSTS from './hosts.json';
 import {drawWinner,raceBase} from './selection.js';
 import {prepareBossRig,drawBoss} from './boss-rigs.js';
@@ -106,10 +107,10 @@ function frame(now){
  magic.update(time,gentle,!!encounter);
  const encounterAge=encounter?time-encounter.start:-1,hit=punchAt(encounterAge);
  stepHeadHinge(headHinge,paused?0:dt,encounterAge,gentle);stepFur(chargedFur,paused?0:dt,time,gentle);
- const recoil=reaction(headHinge.angle,reactionIndex,gentle);pose.recoil=recoil.head;pose.sway+=recoil.sway;pose.jump-=recoil.drop;
+ const beat=encounter?Math.max(0,CRUNCH_BEATS.findLastIndex(b=>encounterAge>=b-.10)):0;const attackTarget=getAttackTarget(currentHost(),beat);const recoil=reaction(headHinge.angle,reactionIndex,gentle);if(encounter){if(attackTarget.zone==='arm'){pose.angles[0]+=hit*1.8;pose.angles[1]-=hit*1.5;recoil.head*=.15;}if(attackTarget.zone==='stomach'){recoil.head*=.15;recoil.sway+=hit*.15;recoil.drop+=hit*90;}}pose.recoil=recoil.head;pose.sway+=recoil.sway;pose.jump-=recoil.drop;
  magic.back(ctx,WOLF,time,gentle);
  const target=hostId==='dog'?drawWolf(ctx,wolfParts,dogParts,WOLF,pose,open,time,gentle,hit,magic,{angle:recoil.head},chargedFur):drawBoss(ctx,art['host-'+hostId],currentHost(),bossMeshes[hostId],WOLF,pose,open,time,gentle,hit,magic);
- MOUTH.x=target.x;MOUTH.y=target.y;
+ MOUTH.x=target.x;MOUTH.y=target.y;const strike=targetWorldPoint(attackTarget,WOLF);if(encounter){const from=beat?targetWorldPoint(getAttackTarget(currentHost(),beat-1),WOLF):target;const blend=Math.min(1,Math.max(0,(encounterAge-CRUNCH_BEATS[beat]+.10)/.10));const ease=blend*blend*(3-2*blend);MOUTH.x=lerp(from.x,strike.x,ease);MOUTH.y=lerp(from.y,strike.y,ease);}
  for(const b of bananas){const s=students[b.i];if(b.eaten||!s.visible)continue;drawBanana(ctx,lerp(s.start,WORLD.finishX,b.p),s.ground+13,time);}
  const finish=[],count=students.filter(s=>s.visible).length;
  const sorted=[...students].sort((a,b)=>a.ground-b.ground);
@@ -121,7 +122,7 @@ function frame(now){
    for(const b of bananas){if(b.i===s.i&&!b.eaten&&s.progress>=b.p){b.eaten=true;if(!s.boost)soundEffects.pickup(s.start+s.distance,W);s.boost=true;}}
    if(s.progress>=1)finish.push(s);
   }
-  const r=runnerPose(s,MOUTH,gentle);const skHit=stepSkeleton(s,paused?0:dt,time,r,running);const attack=encounter?.i===s.i?hit:skHit;drawSkeleton(ctx,s.skeleton,s.ground,time,gentle);if(encounter?.i===s.i&&!gentle){r.x-=135*(1-attack);r.lean+=.22*(1-attack);}s.renderX=r.x;s.renderY=r.y;
+  const r=runnerPose(s,MOUTH,gentle);const oldHits=s.skeleton?.hits||0;const skHit=stepSkeleton(s,paused?0:dt,time,r,running);if((s.skeleton?.hits||0)>oldHits)soundEffects.skeletonHit(r.x,W);const attack=encounter?.i===s.i?hit:skHit;drawSkeleton(ctx,s.skeleton,s.ground,time,gentle);if(encounter?.i===s.i&&!gentle){r.x-=135*(1-attack);r.lean+=.22*(1-attack);}s.renderX=r.x;s.renderY=r.y;
   stepCape(s.cape,paused?0:dt,{x:r.x,y:r.y,h:r.h},running&&s.distance>0,gentle,time);
   ctx.save();ctx.globalAlpha=1;
   ctx.fillStyle='#07161666';ctx.beginPath();ctx.ellipse(r.x,r.ground+3,40*(1-r.leap*.74)/(1+r.bob/170),8,0,0,Math.PI*2);ctx.fill();
@@ -141,7 +142,7 @@ function frame(now){
  ctx.fillStyle='#e9e99b';for(let i=0;i<24;i++){const x=(i*139+Math.sin(time*.5+i)*22)%W,y=350+(i*53)%660+Math.sin(time+i)*13;ctx.globalAlpha=.25+.25*Math.sin(time+i);ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;
 }
 roster();history();setup();requestAnimationFrame(frame);
-window.forestApp={getState:()=>({ready,running,paused,hostId,reaction:REACTIONS[reactionIndex],runSpeed:Number($('#run-speed').value),skeletonHits:students.reduce((n,s)=>n+(s.skeleton?.hits||0),0),headHinge:{...headHinge},capeModel:'3d-constraint-cloth',bossAreaMultiplier:WOLF_SCALE**2,bossRig:hostId==='dog'?'layered':'skinned',sceneTime:time,encounter:encounter?{...encounter,age:time-encounter.start,punch:punchAt(time-encounter.start)}:null,magic:{...magic.stats},wolfAreaMultiplier:WOLF_SCALE**2,cameraScale:WORLD.cameraScale,worldWidth:W,effectsOn,sfx:{...soundEffects.stats},ketchupParticles:ketchup.count,names:[...names],chosen:[...chosen],activeAction,looks,bananasVisible:bananas.filter(b=>!b.eaten&&students[b.i]?.visible).length,musicOn,voiceOn,audioState:audio?.state,samples:Object.keys(samples),students:students.map(({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY,capeState,visible})=>({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY,capeState,visible}))})};
+window.forestApp={getState:()=>({ready,running,paused,hostId,attackZone:encounter?getAttackTarget(currentHost(),Math.max(0,CRUNCH_BEATS.findLastIndex(b=>time-encounter.start>=b-.10))).zone:null,reaction:REACTIONS[reactionIndex],runSpeed:Number($('#run-speed').value),skeletonHits:students.reduce((n,s)=>n+(s.skeleton?.hits||0),0),headHinge:{...headHinge},capeModel:'3d-constraint-cloth',bossAreaMultiplier:WOLF_SCALE**2,bossRig:hostId==='dog'?'layered':'skinned',sceneTime:time,encounter:encounter?{...encounter,age:time-encounter.start,punch:punchAt(time-encounter.start)}:null,magic:{...magic.stats},wolfAreaMultiplier:WOLF_SCALE**2,cameraScale:WORLD.cameraScale,worldWidth:W,effectsOn,sfx:{...soundEffects.stats},ketchupParticles:ketchup.count,names:[...names],chosen:[...chosen],activeAction,looks,bananasVisible:bananas.filter(b=>!b.eaten&&students[b.i]?.visible).length,musicOn,voiceOn,audioState:audio?.state,samples:Object.keys(samples),students:students.map(({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY,capeState,visible})=>({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY,capeState,visible}))})};
 
 
 $('#pause').onclick=()=>{if(!running&&(!encounter||encounter.shown))return;paused=!paused;if(paused)soundEffects.stop();else if(encounter&&!encounter.shown)soundEffects.bite(MOUTH.x,W,time-encounter.start);$('#pause').textContent=paused?'Resume':'Pause';$('#status').textContent=paused?'Race paused.':names.length-chosen.length+' students in the race';};

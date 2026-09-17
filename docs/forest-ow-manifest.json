@@ -1,0 +1,31 @@
+{
+  "provider": "ElevenLabs",
+  "model": "eleven_text_to_sound_v2",
+  "purpose": "Generic cartoon monster reaction variants; no real-person imitation.",
+  "effects": [
+    {
+      "id": "monster-ow-low",
+      "file": "monster-ow-low.mp3",
+      "prompt": "A short deep generic cartoon monster reaction vocalization: one rounded, surprised nonverbal 'ow' after a slapstick hit, friendly game sound effect, no real person imitation, no words, no music, no gore.",
+      "seconds": 0.8,
+      "bytes": 10388,
+      "sha256": "8c8475e3d800494df51b5e1101c81153da57c098b85e1cd6872fd2db8acbc835"
+    },
+    {
+      "id": "monster-ow-mid",
+      "file": "monster-ow-mid.mp3",
+      "prompt": "A short dramatic generic cartoon monster reaction vocalization: one raspy comic 'ow!' after a strong but playful hit, expressive and clean, no real person imitation, no words, no music, no gore.",
+      "seconds": 0.8,
+      "bytes": 10388,
+      "sha256": "a0c559d76dab1a3451e1f408de700e701747830a8e6ea45285341116c76a3411"
+    },
+    {
+      "id": "monster-ow-high",
+      "file": "monster-ow-high.mp3",
+      "prompt": "A short high energetic generic cartoon monster reaction vocalization: one surprised squeaky comic 'ow!' after a slapstick hit, family-friendly game sound effect, no real person imitation, no words, no music, no gore.",
+      "seconds": 0.8,
+      "bytes": 10388,
+      "sha256": "4e31f4e2b03d388dd5a87ad952b232834b30e0f7cf1afc5d1c4be87915173f32"
+    }
+  ]
+}

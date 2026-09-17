@@ -16,7 +16,7 @@ export function drawSkeleton(ctx,b,y,time,gentle){
  ctx.save();ctx.translate(b.x+(age?age*650:0),y-(age?Math.sin(age/1.1*Math.PI)*220:Math.abs(Math.sin(time*10))*15));
  ctx.rotate(age*(gentle?1:7));ctx.globalAlpha=age?1-age/1.1:1;ctx.strokeStyle='#e9e1cb';ctx.fillStyle='#e9e1cb';ctx.lineWidth=9;ctx.lineCap='round';
  ctx.beginPath();ctx.ellipse(0,-138,26,30,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#263239';for(const x of [-10,10]){ctx.beginPath();ctx.arc(x,-141,6,0,Math.PI*2);ctx.fill();}
- const line=(x,y,u,v)=>{ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(u,v);ctx.stroke();};line(0,-109,0,-55);
+ const line=(x,y,u,v)=>{const scatter=age*(gentle?20:100),dx=Math.sin(y*.21+x)*scatter,dy=Math.cos(y*.17+u)*scatter;ctx.save();ctx.translate(dx,dy);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(u,v);ctx.stroke();ctx.restore();};line(0,-109,0,-55);
  for(let i=0;i<3;i++)line(-19,-98+i*13,19,-98+i*13);
  for(const side of [-1,1]){const swing=Math.sin(time*11+side)*20;line(0,-92,side*30,-73+swing);line(side*30,-73+swing,side*45,-95+swing);line(0,-55,side*20,-30+swing*.5);line(side*20,-30+swing*.5,side*32+swing,0);}
  ctx.restore();

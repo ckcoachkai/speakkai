@@ -1,8 +1,8 @@
-const EFFECTS = ['step-leaves', 'step-dirt', 'chomp', 'crack', 'splat', 'banana-pop'];
+const EFFECTS = ['step-leaves', 'step-dirt', 'chomp', 'crack', 'splat', 'banana-pop', 'monster-ow-low', 'monster-ow-mid', 'monster-ow-high'];
 export function createForestEffects() {
-  let audio, gain, loading, enabled = true, lastStep = -1, lastPop = -1;
+  let audio, gain, loading, enabled = true, lastStep = -1, lastPop = -1, lastSkeletonHit = -1;
   const buffers = {}, active = new Set();
-  const stats = { ready: false, footsteps: 0, chomps: 0, pickups: 0 };
+  const stats = { ready: false, footsteps: 0, chomps: 0, pickups: 0, skeletonHits: 0, ows: 0 };
   async function load(context, destination) {
     if (loading) return loading;
     audio = context;
@@ -36,7 +36,7 @@ export function createForestEffects() {
     const pan = x / width * 2 - 1;
     // Five irregular chews make a longer cartoon crunch, with twice the old gain.
     [0, 0.37, 0.79, 1.16, 1.61].forEach((delay, i) => {
-      if(delay >= fromAge) play(i % 2 === 0 ? 'crack' : 'chomp', 1.65, pan, delay - fromAge, 0.84 + Math.random() * 0.16);
+      if(delay >= fromAge){play(i % 2 === 0 ? 'crack' : 'chomp', 1.1, pan, delay - fromAge, 0.84 + Math.random() * 0.16);play(['monster-ow-low','monster-ow-mid','monster-ow-high'][i%3],.8,pan,delay-fromAge+.04);stats.ows++;}
     });
 
   }
@@ -45,9 +45,16 @@ export function createForestEffects() {
     lastPop = audio.currentTime; stats.pickups++;
     play('banana-pop', 0.24, x / width * 2 - 1, 0, 0.94 + Math.random() * 0.12);
   }
+  function skeletonHit(x, width) {
+    if (!audio || !enabled || !stats.ready || audio.state !== 'running' || audio.currentTime - lastSkeletonHit < 0.075) return;
+    lastSkeletonHit = audio.currentTime; stats.skeletonHits++;
+    // The existing ElevenLabs crack sample gives the small enemies a short,
+    // dry cracker-like hit without adding another download or a global effect.
+    play('crack', 0.72, x / width * 2 - 1, 0, 1.08 + Math.random() * 0.16);
+  }
   function stop() { for (const source of active) { try { source.stop(); } catch {} } active.clear(); }
   function setEnabled(value) { enabled = value; if (gain) gain.gain.setTargetAtTime(value ? 0.85 : 0, audio.currentTime, 0.025); if (!value) stop(); }
-  return { load, footstep, bite, pickup, stop, setEnabled, stats };
+  return { load, footstep, bite, pickup, skeletonHit, stop, setEnabled, stats };
 }
 
 export function createKetchupParticles() {

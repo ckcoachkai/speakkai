@@ -53,7 +53,7 @@ jobs:
         run: |
           node scripts/check-resource-games.mjs
           node scripts/check-forest.mjs
-          node --test scripts/check-forest-motion.mjs
+          node --test scripts/check-forest-motion.mjs scripts/check-forest-physics.mjs scripts/check-forest-combat.mjs scripts/check-forest-targets.mjs
       - name: Verify public homework and Shanghai date handling
         run: node --test scripts/check-homework.mjs scripts/check-feedback.mjs scripts/check-feedback-progress.mjs scripts/check-feedback-skills.mjs scripts/check-class-curricula.mjs
       - name: Verify speech detector and worker lifecycle
