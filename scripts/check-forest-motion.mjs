@@ -5,6 +5,26 @@ import {createHash} from 'node:crypto';
 import {WORLD,STRIDE,advanceRunner,runnerPose} from '../src/scripts/forest/motion.js';
 import {drawWinner,raceBase} from '../src/scripts/forest/selection.js';
 import {CRUNCH_BEATS,ENCOUNTER_DURATION,WOLF_SCALE,punchAt,capeState,createWolfMagic} from '../src/scripts/forest/storybook.js';
+import {BOSS_RIGS,createBossDeformer} from '../src/scripts/forest/boss-rigs.js';
+
+test('every non-wolf boss has a complete rig and head-only punch recoil',async()=>{
+ const cast=JSON.parse(await readFile('src/scripts/forest/hosts.json','utf8')).filter(h=>h.id!=='dog');
+ assert.deepEqual(Object.keys(BOSS_RIGS).sort(),cast.map(h=>h.id).sort());
+ const pose={jump:0,sway:0,angles:[0,0,0,0,0,0]};
+ for(const host of cast){
+  const rig=BOSS_RIGS[host.id];assert.equal(rig.arms.length,2);assert.equal(rig.legs.length,2);
+  const rest=createBossDeformer(host.id,pose,2,false,0),hit=createBossDeformer(host.id,pose,2,false,1);
+  const a=rest(...host.mouth),b=hit(...host.mouth);assert.ok(b.x-a.x>.035,`${host.id} head must recoil away from the fist`);
+  assert.deepEqual(rest(.5,.9),hit(.5,.9),`${host.id} feet should not follow head recoil`);
+  const gentleRest=createBossDeformer(host.id,pose,2,true,0)(...host.mouth),gentleHit=createBossDeformer(host.id,pose,2,true,1)(...host.mouth);
+  assert.ok(gentleHit.x-gentleRest.x<b.x-a.x,`${host.id} gentle recoil`);
+  const later=createBossDeformer(host.id,pose,3.1,false,0);
+  for(const chain of [...rig.arms,...rig.legs]){
+   const p=rest(...chain[2]),q=later(...chain[2]);assert.ok(Math.hypot(q.x-p.x,q.y-p.y)>.0001,`${host.id} distal joints move`);
+  }
+  for(let y=0;y<=1;y+=.1)for(let x=0;x<=1;x+=.1){const p=hit(x,y);assert.ok(Number.isFinite(p.x)&&Number.isFinite(p.y));}
+ }
+});
 
 test('punches peak on all five crunches and end before the result overlay',()=>{
  assert.equal(CRUNCH_BEATS.length,5);

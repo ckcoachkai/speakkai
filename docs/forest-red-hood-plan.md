@@ -15,3 +15,9 @@ Use the existing high-resolution painted wolf as texture for a hierarchical Canv
 
 ## Scope boundaries
 Ten times refers to image area, not ten times its height (which would dwarf the entire viewport). The wolf uses a 2D joint rig and procedural fur/cloth. Existing recorded character dialogue is retained.
+
+## Extension to the complete boss roster
+
+The follow-up request applies the same treatment to all nine other hosts: cat, rabbit, monkey, parrot, sock, Queen Elizabeth II, Elton John, Trump, and koala. Each uses its existing painted artwork with character-specific shoulder/elbow/wrist, hip/knee/ankle and neck landmarks. A continuous deforming image mesh avoids gaps between separately cut body pieces. Tail, ear, hat, tie, coat, hair and feather motion varies by character. All ten bosses share enlarged framing, eye-anchored lasers, rear webs, full-sized Red Hood runners, five crunch punches and independent head recoil.
+
+Validate every boss through a complete selection encounter, check effect placement visually, and verify pause freezes the rendered canvas. Keep the existing public-figure parody disclosure and voice assets.

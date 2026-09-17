@@ -121,12 +121,12 @@ export function createWolfMagic() {
         for(let ring=1;ring<=4;ring++){ctx.beginPath();for(let n=0;n<=8;n++){const a=n*TAU/8,rr=r*ring/4;if(!n)ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr);else{const mid=a-TAU/16;ctx.quadraticCurveTo(Math.cos(mid)*rr*.73,Math.sin(mid)*rr*.73,Math.cos(a)*rr,Math.sin(a)*rr);}}ctx.stroke();}ctx.restore();
       }ctx.restore();
     },
-    eyes(ctx,t){
-      for(const [x,y,r] of [[283,226,9],[183,211,5]]){ctx.save();ctx.shadowColor='#ff3217';ctx.shadowBlur=16;oval(ctx,x,y,r*1.7,r,'#ff3d1c');oval(ctx,x,y,r*.4,r*.65,'#fff6cf');ctx.restore();}
+    eyes(ctx,t,anchors=[[283,226,9],[183,211,5]]){
+      for(const [x,y,r] of anchors){ctx.save();ctx.shadowColor='#ff3217';ctx.shadowBlur=16;oval(ctx,x,y,r*1.7,r,'#ff3d1c');oval(ctx,x,y,r*.4,r*.65,'#fff6cf');ctx.restore();}
       if(t>=laserUntil)return;
       const a=clamp((t-laserStart)/.12)*clamp((laserUntil-t)/.16);
       ctx.save();ctx.globalAlpha=a;ctx.lineCap='round';ctx.shadowColor='#ff190d';ctx.shadowBlur=25;
-      for(const [x,y] of [[283,226],[183,211]]){const endX=-1100,endY=y-90-Math.sin((t-laserStart)*4)*200;ctx.strokeStyle='#f5262d';ctx.lineWidth=16;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(endX,endY);ctx.stroke();ctx.strokeStyle='#fff6bc';ctx.lineWidth=3;ctx.stroke();}ctx.restore();
+      for(const [x,y] of anchors){const endX=-1100,endY=y-90-Math.sin((t-laserStart)*4)*200;ctx.strokeStyle='#f5262d';ctx.lineWidth=16;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(endX,endY);ctx.stroke();ctx.strokeStyle='#fff6bc';ctx.lineWidth=3;ctx.stroke();}ctx.restore();
     }
   };
 }
