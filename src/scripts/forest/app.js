@@ -1,3 +1,4 @@
+import {drawPaperImpact} from './paper-impact.js';
 import {getAttackTarget,targetWorldPoint} from './attack-targets.js';
 import {REACTIONS,reaction,stepSkeleton,drawSkeleton} from './combat.js';
 import {createHeadHinge,stepHeadHinge,createCape,stepCape,createFur,stepFur} from './physics.js';
@@ -109,7 +110,7 @@ function frame(now){
  stepHeadHinge(headHinge,paused?0:dt,encounterAge,gentle);stepFur(chargedFur,paused?0:dt,time,gentle);
  const beat=encounter?Math.max(0,CRUNCH_BEATS.findLastIndex(b=>encounterAge>=b-.10)):0;const attackTarget=getAttackTarget(currentHost(),beat);const recoil=reaction(headHinge.angle,reactionIndex,gentle);if(encounter){if(attackTarget.zone==='arm'){pose.angles[0]+=hit*1.8;pose.angles[1]-=hit*1.5;recoil.head*=.15;}if(attackTarget.zone==='stomach'){recoil.head*=.15;recoil.sway+=hit*.15;recoil.drop+=hit*90;}}pose.recoil=recoil.head;pose.sway+=recoil.sway;pose.jump-=recoil.drop;
  magic.back(ctx,WOLF,time,gentle);
- const target=hostId==='dog'?drawWolf(ctx,wolfParts,dogParts,WOLF,pose,open,time,gentle,hit,magic,{angle:recoil.head},chargedFur):drawBoss(ctx,art['host-'+hostId],currentHost(),bossMeshes[hostId],WOLF,pose,open,time,gentle,hit,magic);
+ const impactPoint=targetWorldPoint(attackTarget,WOLF);const target=drawPaperImpact(ctx,layer=>hostId==='dog'?drawWolf(layer,wolfParts,dogParts,WOLF,pose,open,time,gentle,hit,magic,{angle:recoil.head},chargedFur):drawBoss(layer,art['host-'+hostId],currentHost(),bossMeshes[hostId],WOLF,pose,open,time,gentle,hit,magic),impactPoint,WOLF.w*attackTarget.radius,encounter?hit:0,gentle);
  MOUTH.x=target.x;MOUTH.y=target.y;const strike=targetWorldPoint(attackTarget,WOLF);if(encounter){const from=beat?targetWorldPoint(getAttackTarget(currentHost(),beat-1),WOLF):target;const blend=Math.min(1,Math.max(0,(encounterAge-CRUNCH_BEATS[beat]+.10)/.10));const ease=blend*blend*(3-2*blend);MOUTH.x=lerp(from.x,strike.x,ease);MOUTH.y=lerp(from.y,strike.y,ease);}
  for(const b of bananas){const s=students[b.i];if(b.eaten||!s.visible)continue;drawBanana(ctx,lerp(s.start,WORLD.finishX,b.p),s.ground+13,time);}
  const finish=[],count=students.filter(s=>s.visible).length;
