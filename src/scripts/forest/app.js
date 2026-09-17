@@ -118,7 +118,7 @@ function frame(now){
    for(const b of bananas){if(b.i===s.i&&!b.eaten&&s.progress>=b.p){b.eaten=true;if(!s.boost)soundEffects.pickup(s.start+s.distance,W);s.boost=true;}}
    if(s.progress>=1)finish.push(s);
   }
-  const r=runnerPose(s,MOUTH,gentle);s.renderX=r.x;s.renderY=r.y;
+  const r=runnerPose(s,MOUTH,gentle);const attack=encounter?.i===s.i?hit:0;if(encounter?.i===s.i&&!gentle){r.x-=135*(1-attack);r.lean+=.22*(1-attack);}s.renderX=r.x;s.renderY=r.y;
   stepCape(s.cape,paused?0:dt,{x:r.x,y:r.y,h:r.h},running&&s.distance>0,gentle,time);
   ctx.save();ctx.globalAlpha=1;
   ctx.fillStyle='#07161666';ctx.beginPath();ctx.ellipse(r.x,r.ground+3,40*(1-r.leap*.74)/(1+r.bob/170),8,0,0,Math.PI*2);ctx.fill();
@@ -127,7 +127,7 @@ function frame(now){
   const look=looks[s.i]||{color:null,mood:'auto'},model=modelIndex(s.i),key=model+':'+look.color;
   let body=dressed.get(key);if(!body){body=dress(art[artNames[model]],model,look.color);dressed.set(key,body);}
   const expression=look.mood==='auto'?s.emotion:Number(look.mood);s.currentExpression=MOODS[expression];
-  drawTintedStudent(ctx,body,faces[artNames[model]][expression],r.w,r.h,s.phase,s.distance>0,s.boost,gentle,0,{cape:s.cape,leap:r.leap,clock:time,seed:s.i,punch:encounter?.i===s.i?hit:0});
+  drawTintedStudent(ctx,body,faces[artNames[model]][expression],r.w,r.h,s.phase,s.distance>0,s.boost,gentle,0,{cape:s.cape,leap:r.leap,clock:time,seed:s.i,punch:attack,charging:r.leap>.02||attack>0});
   s.capeState=capeState(s.phase,s.distance>0,r.leap);
   ctx.restore();if(r.leap<.35||encounter?.i===s.i)label((names[s.i]||'Student '+(s.i+1))+(s.boost?' 🍌 2×':''),r.x,r.y-r.h-8,s.boost);
  }

@@ -38,12 +38,12 @@ test('capes cover idle, running, rising, apex and falling states',()=>{
  assert.deepEqual([...states].sort(),[0,1,2,3,4]);
  assert.equal(capeState(0,true,.2),2);assert.equal(capeState(0,true,.5),3);assert.equal(capeState(0,true,.9),4);
 });
-test('gentle motion and punch encounters suppress laser bursts',()=>{
+test('eye lasers stay removed in all motion modes',()=>{
  for(const [gentle,encounter] of [[true,false],[false,true]]){
   const magic=createWolfMagic();for(let t=0;t<60;t++)magic.update(t,gentle,encounter);
   assert.equal(magic.stats.lasers,0);assert.ok(magic.stats.webs>0);
  }
- const magic=createWolfMagic();magic.update(4,false,false);assert.equal(magic.stats.lasers,1);
+ const magic=createWolfMagic();magic.update(4,false,false);assert.equal(magic.stats.lasers,0);
 });
 
 test('draw covers every eligible student equally and rejects biased random tail',()=>{

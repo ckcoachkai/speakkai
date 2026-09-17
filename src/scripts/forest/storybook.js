@@ -145,7 +145,7 @@ export function createWolfMagic() {
     stats,
     reset(t=0){webs.length=0;nextLaser=t+3;nextWeb=t+1.4;laserUntil=0;},
     update(t,gentle,encounter){
-      if(t>=nextLaser){nextLaser=t+5+Math.random()*5;if(!gentle&&!encounter){laserStart=t;laserUntil=t+.7;stats.lasers++;}}
+      // Eye beams removed; glowing eyes and rear webs remain.
       if(t>=nextWeb){nextWeb=t+2.5+Math.random()*4;webs.push({born:t,seed:Math.random()*TAU});stats.webs++;}
       while(webs.length&&t-webs[0].born>3.2)webs.shift();
       if(gentle||encounter)laserUntil=0;
@@ -181,7 +181,7 @@ export function drawWolf(ctx, parts, arms, box, pose, open, t, gentle, hit, magi
   ctx.drawImage(parts.neck,205,445);
   fur(ctx,t,gentle);if(chargedFur)drawChargedFur(ctx,chargedFur,false);
   // The original painted arm textures rotate at shoulder, elbow and wrist.
-  for(let n=1;n>=0;n--){ctx.save();ctx.translate(n?552:294,n?716:720);ctx.rotate(pose.angles[n*3]*.5+Math.sin(t*1.8+n)*.06);ctx.drawImage(arms.upper,-62,-30,124,268);ctx.translate(0,222);ctx.rotate(pose.angles[n*3+1]*.65);ctx.drawImage(arms.lower,-53,-32,106,273);ctx.translate(0,223);ctx.rotate(pose.angles[n*3+2]+Math.sin(t*2+n)*.05);ctx.drawImage(arms.paw,-65,-20,144,103);ctx.restore();}
+  for(let n=1;n>=0;n--){ctx.save();ctx.translate(n?552:294,n?716:720);ctx.rotate(pose.angles[n*3]*.5+Math.sin(t*1.8+n)*.06);ctx.drawImage(arms.upper,-86,-36,172,226);ctx.translate(0,180);ctx.rotate(pose.angles[n*3+1]*.65);ctx.drawImage(arms.lower,-74,-32,148,224);ctx.translate(0,177);ctx.rotate(pose.angles[n*3+2]+Math.sin(t*2+n)*.05);ctx.drawImage(arms.paw,-85,-25,178,125);ctx.restore();}
   // Head recoil pivots at the neck; ears, jaw and the attached eyes follow it.
   ctx.save();ctx.translate(365,500);ctx.rotate(Math.sin(t*1.6)*.035+(hinge?.angle||0));ctx.translate(-365,-500);
   for(let n=0;n<2;n++)limb(parts.ears[n],n?408:252,184,Math.sin(t*2.6+n*1.7)*(gentle?.018:.06));
