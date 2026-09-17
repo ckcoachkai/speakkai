@@ -16,7 +16,7 @@ for(const host of cast){
 }
 const source=await readFile('src/scripts/forest/app.js','utf8');
 assert.ok(!source.includes("'/art/"),'Root-only media URL');
-assert.ok(!source.includes('start:-'),'Students must start on-screen');
+assert.ok(!/[{,]\s*start\s*:\s*-\d/.test(source),'Students must start on-screen');
 assert.ok(!source.includes('HOSTS.flatMap'),'Do not preload every voice');
 assert.ok(total<4_000_000,'Voice asset budget');
 const voices=JSON.parse(await readFile('docs/forest-voice-manifest.json','utf8'));

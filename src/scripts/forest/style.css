@@ -20,3 +20,6 @@ aside{background:#edf3ee;border-radius:8px;padding:16px}aside h2{font-size:20px}
 .character-options .dog-controls button{width:auto}.host-picker{flex-wrap:wrap}.host-picker small{font-size:10px;line-height:1.5}
 #voice-status{font-size:11px}.result-card{border-radius:8px;max-height:100%;overflow:auto}.result-card h2,#history li{overflow-wrap:anywhere}
 @media(max-width:600px){header{padding:12px}.brand h1{font-size:19px}.tools{gap:6px}.tools button{min-height:36px}main{padding:12px}.transport button{flex:1;padding:10px 6px}.transport span{width:100%}#scene{aspect-ratio:16/9}.result-card h2{font-size:22px}}
+
+/* Leave the towering wolf face unobstructed. */
+#dog-speech{top:5%;left:3%;right:auto;max-width:43%}

@@ -31,14 +31,14 @@ export function createForestEffects() {
     lastStep = audio.currentTime; stats.footsteps++;
     play(Math.random() < 0.5 ? 'step-leaves' : 'step-dirt', 0.36 / Math.sqrt(Math.max(1, count)), x / width * 2 - 1, 0, 0.9 + Math.random() * 0.2);
   }
-  function bite(x, width) {
+  function bite(x, width, fromAge = 0) {
     stats.chomps++;
     const pan = x / width * 2 - 1;
     // Five irregular chews make a longer cartoon crunch, with twice the old gain.
     [0, 0.37, 0.79, 1.16, 1.61].forEach((delay, i) => {
-      play(i % 2 === 0 ? 'crack' : 'chomp', 1.65, pan, delay, 0.84 + Math.random() * 0.16);
+      if(delay >= fromAge) play(i % 2 === 0 ? 'crack' : 'chomp', 1.65, pan, delay - fromAge, 0.84 + Math.random() * 0.16);
     });
-    play('splat', 0.46, x / width * 2 - 1, 0.08, 0.94 + Math.random() * 0.12);
+
   }
   function pickup(x, width) {
     if (!audio || audio.currentTime - lastPop < 0.15) return;

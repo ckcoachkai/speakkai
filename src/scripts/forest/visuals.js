@@ -1,3 +1,4 @@
+import {drawCape,drawHood} from './storybook.js';
 // Native Canvas sprite compositor and hierarchical 2D dog rig.
 export const COLORS=[['Original',null],['Red','#d74740'],['Orange','#ed9235'],['Yellow','#efd04e'],['Lime','#a5cb47'],['Green','#3d9c69'],['Teal','#36b6af'],['Blue','#4a83d1'],['Navy','#304777'],['Purple','#9359c4'],['Pink','#e78daf'],['White','#e4e7dd'],['Charcoal','#50565b']];
 export const MOODS=['Happy','Sad','Shocked'];
@@ -5,7 +6,8 @@ function surface(w,h){const c=document.createElement('canvas');c.width=w;c.heigh
 export function expressionCells(image){const out=[];for(let k=0;k<3;k++){const size=image.width/3,c=surface(360,360),x=c.getContext('2d');x.drawImage(image,k*size,0,size,image.height,0,0,360,360);const d=x.getImageData(0,0,360,360),a=d.data,seen=new Uint8Array(360*360),q=[];const push=i=>{if(i<0||i>=seen.length||seen[i])return;seen[i]=1;const p=i*4,r=a[p],g=a[p+1],b=a[p+2];if(Math.min(r,g,b)>118&&Math.max(r,g,b)-Math.min(r,g,b)<42){a[p+3]=0;q.push(i);}};for(let n=0;n<360;n++){push(n);push(359*360+n);push(n*360);push(n*360+359);}for(let j=0;j<q.length;j++){const i=q[j];if(i%360)push(i-1);if(i%360<359)push(i+1);push(i-360);push(i+360);}x.putImageData(d,0,0);out.push(c);}return out;}
 export function dress(image,index,color){if(!color)return image;const c=surface(image.width,image.height),x=c.getContext('2d');x.drawImage(image,0,0);const d=x.getImageData(0,0,c.width,c.height),a=d.data;const target=[1,3,5].map(i=>parseInt(color.slice(i,i+2),16));for(let y=Math.floor(c.height*.19);y<c.height*.515;y++){for(let px=Math.floor(c.width*.17);px<c.width*.83;px++){const n=(y*c.width+px)*4,r=a[n],g=a[n+1],b=a[n+2];if(a[n+3]<100)continue;const skin=r>g*1.12&&g>b*1.08&&r>90;let cloth=false;if(index===0)cloth=Math.max(r,g,b)-Math.min(r,g,b)<55;else if(index===1)cloth=g>r*1.1&&g>b*.95;else if(index===2)cloth=!skin&&r>b*.94&&(r>g*1.08||Math.max(r,g,b)-Math.min(r,g,b)<25);else if(index===3)cloth=b>g*1.09&&b>r*.94;else cloth=Math.max(r,g,b)-Math.min(r,g,b)<27&&r>90;if(!cloth)continue;const lum=(r*.25+g*.6+b*.15)/255,shade=.33+lum*.75;for(let z=0;z<3;z++)a[n+z]=Math.min(255,target[z]*shade);}}x.putImageData(d,0,0);return c;}
 // Limbs use nested shoulder/elbow/wrist and hip/knee/ankle transforms.
-export function drawStudent(ctx,body,face,w,h,t=0,running=false,boost=false,gentle=false){
+export function drawStudent(ctx,body,face,w,h,t=0,running=false,boost=false,gentle=false,story={}){
+ drawCape(ctx,w,h,t,running,gentle,story.leap||0,story.clock||0,story.seed||0);
  const phase=t, strength=running?(gentle?.45:1):0;
  function segment(length,width,color,texture=false){ctx.save();ctx.beginPath();ctx.roundRect(-width/2,-width*.3,width,length+width*.6,width/2);ctx.clip();ctx.fillStyle=color;ctx.fillRect(-width/2,-width*.3,width,length+width*.6);if(texture)ctx.drawImage(body,body.width*.43,body.height*.26,body.width*.13,body.height*.19,-width/2,-width*.3,width,length+width*.6);ctx.restore();}
  function leg(side){
@@ -17,17 +19,17 @@ export function drawStudent(ctx,body,face,w,h,t=0,running=false,boost=false,gent
   const knee=Math.PI-Math.acos(Math.max(-1,Math.min(1,(upper*upper+lower*lower-distance*distance)/(2*upper*lower))));
   ctx.save();ctx.translate(side*w*.065,-h*.45);ctx.rotate(hip);segment(upper,w*.15,'#34516b');ctx.translate(0,upper);ctx.rotate(knee);segment(lower,w*.12,'#294258');ctx.translate(0,lower);ctx.rotate(-hip-knee);ctx.fillStyle='#e8e9e2';ctx.beginPath();ctx.roundRect(-w*.06,-h*.02,w*.22,h*.045,h*.02);ctx.fill();ctx.restore();
  }
- function arm(side){ctx.save();ctx.translate(side*w*.11,-h*.73);ctx.rotate((Math.sin(phase+(side<0?0:Math.PI))*.95+side*.22)*strength);segment(h*.14,w*.095,'#718096',true);ctx.translate(0,h*.14);ctx.rotate((-.85+Math.sin(phase+(side<0?0:Math.PI))*.35)*strength);segment(h*.13,w*.075,'#d6a37f');ctx.translate(0,h*.13);ctx.rotate(Math.sin(phase+side)*.3*strength);ctx.fillStyle='#e4b18d';ctx.beginPath();ctx.ellipse(0,h*.018,w*.047,h*.034,0,0,Math.PI*2);ctx.fill();ctx.restore();}
+ function arm(side){ctx.save();ctx.translate(side*w*.11,-h*.73);const punch=side===1?(story.punch||0):0;ctx.rotate((Math.sin(phase+(side<0?0:Math.PI))*.95+side*.22)*strength*(1-punch)-Math.PI*.5*punch);segment(h*.14,w*.095,'#718096',true);ctx.translate(0,h*.14);ctx.rotate((-.85+Math.sin(phase+(side<0?0:Math.PI))*.35)*strength*(side===1?1-(story.punch||0):1));segment(h*.13,w*.075,'#d6a37f');ctx.translate(0,h*.13);ctx.rotate(Math.sin(phase+side)*.3*strength);ctx.fillStyle='#e4b18d';ctx.beginPath();ctx.ellipse(0,h*.018,w*.047,h*.034,0,0,Math.PI*2);ctx.fill();ctx.restore();}
  leg(-1);arm(-1);leg(1);
  ctx.save();ctx.beginPath();ctx.moveTo(-w*.13,-h*.8);ctx.lineTo(w*.13,-h*.8);ctx.lineTo(w*.16,-h*.48);ctx.lineTo(-w*.16,-h*.48);ctx.closePath();ctx.clip();ctx.drawImage(body,body.width*.37,body.height*.20,body.width*.27,body.height*.31,-w*.16,-h*.8,w*.32,h*.32);ctx.restore();arm(1);
- const size=h*.245;ctx.drawImage(face,-size*.48,-h*.995,size,size);
+ const size=h*.245;ctx.save();ctx.beginPath();ctx.ellipse(0,-h*.88,h*.115,h*.123,0,0,Math.PI*2);ctx.clip();ctx.drawImage(face,-size*.48,-h*.995,size,size);ctx.restore();drawHood(ctx,h,story.clock||0);
 }
 let runnerSurface;
-export function drawTintedStudent(ctx,body,face,w,h,phase,moving,boost,gentle,redness){
- if(redness<.005){drawStudent(ctx,body,face,w,h,phase,moving,boost,gentle);return;}
+export function drawTintedStudent(ctx,body,face,w,h,phase,moving,boost,gentle,redness,story={}){
+ if(redness<.005){drawStudent(ctx,body,face,w,h,phase,moving,boost,gentle,story);return;}
  runnerSurface ||= surface(512,512);
  const x=runnerSurface.getContext('2d');x.clearRect(0,0,512,512);x.save();x.translate(256,450);
- drawStudent(x,body,face,w,h,phase,moving,boost,gentle);x.restore();x.save();x.globalCompositeOperation='source-atop';x.fillStyle=`rgba(239,57,36,${redness})`;x.fillRect(0,0,512,512);x.restore();
+ drawStudent(x,body,face,w,h,phase,moving,boost,gentle,story);x.restore();x.save();x.globalCompositeOperation='source-atop';x.fillStyle=`rgba(239,57,36,${redness})`;x.fillRect(0,0,512,512);x.restore();
  ctx.drawImage(runnerSurface,-256,-450);
 }
 function flamingEyes(ctx,w,h,t){for(const [px,py,size] of [[-.223,-.853,1],[-.329,-.861,.48]]){ctx.save();ctx.translate(w*px,h*py);ctx.globalCompositeOperation='screen';ctx.shadowColor='#ff1000';ctx.shadowBlur=25;for(let k=0;k<5;k++){const flicker=Math.sin(t*13+k*2.1),x=(k-2)*5*size;ctx.fillStyle=k%2?'#ff7a16':'#ff2010';ctx.beginPath();ctx.moveTo(x-7*size,3);ctx.quadraticCurveTo(x-12*size,-13*size,x+flicker*9*size,-(24+12*Math.sin(t*9+k))*size);ctx.quadraticCurveTo(x+13*size,-10*size,x+7*size,3);ctx.fill();}ctx.fillStyle='#ff1607';ctx.beginPath();ctx.ellipse(0,0,12*size,6*size,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff0a1';ctx.beginPath();ctx.ellipse(0,0,4*size,5*size,0,0,Math.PI*2);ctx.fill();ctx.restore();}}

@@ -1,3 +1,4 @@
+import {prepareWolf,drawWolf,createWolfMagic,punchAt,ENCOUNTER_DURATION,WOLF_SCALE,capeState} from './storybook.js';
 import HOSTS from './hosts.json';
 import {drawWinner,raceBase} from './selection.js';
 import {drawHost} from './hosts.js';
@@ -21,8 +22,9 @@ function backupRoster(){rosterBackup={names:[...names],looks:looks.map(v=>({...v
 const dressed=new Map(),faces={};let dogParts,action='auto',actionStart=0,manual=[0,0,0,0,0,0],activeAction='rest';
 const chosen=[],students=[],bananas=[],art={};let paused=false,gentle=false;
 let runAge=0,running=false,ready=false,time=0,last=performance.now(),musicOn=true,voiceOn=true,effectsOn=true,selectionTimer,biteUntil=0;
-const soundEffects=createForestEffects(),ketchup=createKetchupParticles();
-const W=WORLD.width,H=WORLD.height,DOG={x:2660,y:835,w:420,h:630},MOUTH={x:2744,y:1035};
+const soundEffects=createForestEffects(),ketchup=createKetchupParticles(),magic=createWolfMagic();
+let wolfParts,encounter=null,mouthOpen=true;
+const W=WORLD.width,H=WORLD.height,DOG={x:W-540,y:H-965,w:420,h:630},WOLF={x:W-1380,y:70,w:420*WOLF_SCALE,h:630*WOLF_SCALE},MOUTH={x:W-460,y:H-765};
 function random(){const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]/4294967296;}
 const lerp=(a,b,t)=>a+(b-a)*t;
 function storeNames(){try{localStorage.setItem('forest-names',JSON.stringify(names));localStorage.setItem('forest-looks',JSON.stringify(looks));}catch{}}
@@ -41,10 +43,21 @@ $('#add-player').onclick=()=>resizeRoster(names.length+1);$('#six-players').oncl
 for(const button of document.querySelectorAll('[data-action]'))button.onclick=()=>{action=button.dataset.action;actionStart=time;document.querySelectorAll('[data-action]').forEach(b=>b.setAttribute('aria-pressed',b===button));};
 ['Left shoulder','Left elbow','Left wrist','Right shoulder','Right elbow','Right wrist'].forEach((name,i)=>{const l=document.createElement('label');l.textContent=name;const input=document.createElement('input');input.type='range';input.min=-180;input.max=180;input.value=0;input.setAttribute('aria-label',name);input.oninput=()=>{manual[i]=Number(input.value)*Math.PI/180;action='manual';document.querySelectorAll('[data-action]').forEach(b=>b.setAttribute('aria-pressed','false'));};l.append(input);$('#joint-sliders').append(l);});
 function history(){$('#round-count').textContent=chosen.length+' / '+names.length+' chosen';$('#history').replaceChildren(...chosen.map(i=>{const li=document.createElement('li');li.textContent=names[i];return li;}));$('#empty').hidden=chosen.length>0;}
-function setup(){const winner=drawWinner(names.map((_,i)=>i).filter(i=>!chosen.includes(i)));const slots=names.map((_,i)=>i);for(let j=slots.length-1;j>0;j--){const k=Math.floor(random()*(j+1));[slots[j],slots[k]]=[slots[k],slots[j]];}clearTimeout(selectionTimer);biteUntil=0;ketchup.clear();soundEffects.stop();students.length=0;bananas.length=0;names.forEach((_,i)=>{const s={i,progress:0,distance:0,speed:0,phase:0,start:160+(slots[i]%4)*145,ground:1280+(i%5)*64,base:raceBase(160+(slots[i]%4)*145,WORLD.finishX,i===winner,random()),boost:false,nextSplash:0,emotion:Math.floor(random()*3),nextEmotion:time+2+random()*3,visible:!chosen.includes(i)};students.push(s);if(s.visible)for(let j=0;j<3;j++)bananas.push({i,p:.27+j*.26,eaten:false});});}
+function setup(){const winner=drawWinner(names.map((_,i)=>i).filter(i=>!chosen.includes(i)));const slots=names.map((_,i)=>i);for(let j=slots.length-1;j>0;j--){const k=Math.floor(random()*(j+1));[slots[j],slots[k]]=[slots[k],slots[j]];}clearTimeout(selectionTimer);encounter=null;magic.reset(time);biteUntil=0;ketchup.clear();soundEffects.stop();students.length=0;bananas.length=0;names.forEach((_,i)=>{const s={i,progress:0,distance:0,speed:0,phase:0,start:160+(slots[i]%4)*145,ground:H-520+(i%5)*64,base:raceBase(160+(slots[i]%4)*145,WORLD.finishX,i===winner,random()),boost:false,nextSplash:0,emotion:Math.floor(random()*3),nextEmotion:time+2+random()*3,visible:!chosen.includes(i)};students.push(s);if(s.visible)for(let j=0;j<3;j++)bananas.push({i,p:.27+j*.26,eaten:false});});}
 function start(){if(!ready||running)return;names=names.map((n,i)=>n.trim()||'Student '+(i+1));storeNames();unlock();if(chosen.length===names.length)chosen.length=0;setup();runAge=0;paused=false;running=true;$('#pause').disabled=false;$('#pause').textContent='Pause';$('#result').hidden=true;$('#start').disabled=true;$('#start').textContent='Running…';$('#status').textContent=`${names.length-chosen.length} students running toward ${currentHost().name}`;roster();history();}
 function reset(){running=false;paused=false;$('#pause').disabled=true;$('#pause').textContent='Pause';chosen.length=0;setup();$('#result').hidden=true;$('#start').disabled=!ready;$('#start').textContent='Start the run →';$('#status').textContent='Everyone is ready for a new round.';$('#announcement').textContent='Class reset';roster();history();}
-function select(s){running=false;$('#pause').disabled=true;s.visible=false;chosen.push(s.i);soundEffects.stop();biteUntil=time+.55;soundEffects.bite(MOUTH.x,W);ketchup.splash(MOUTH.x,MOUTH.y,gentle?7:28,true);const remain=names.length-chosen.length;$('#winner').textContent=names[s.i];$('#result-sub').textContent=remain?`${remain} ${remain===1?'student is':'students are'} still waiting.`:'Everyone has had a turn!';$('#next').textContent=remain?'Next student →':'Start a new round ↺';$('#status').textContent=`${names[s.i]} has been chosen`;$('#announcement').textContent=names[s.i]+', you have been chosen!';roster();history();selectionTimer=setTimeout(()=>{$('#result').hidden=false;$('#start').disabled=false;$('#start').textContent=remain?'Next student →':'New round →';$('#next').focus({preventScroll:true});},550);}
+function select(s){
+ running=false;s.progress=1;chosen.push(s.i);soundEffects.stop();encounter={i:s.i,start:time,shown:false};
+ soundEffects.bite(MOUTH.x,W);
+ const remain=names.length-chosen.length;
+ $('#winner').textContent=names[s.i];$('#result-sub').textContent=remain?`${remain} ${remain===1?'student is':'students are'} still waiting.`:'Everyone has had a turn!';
+ $('#next').textContent=remain?'Next student →':'Start a new round ↺';$('#status').textContent=`${names[s.i]} takes on ${currentHost().name}!`;
+ $('#announcement').textContent=names[s.i]+', you have been chosen!';roster();history();
+}
+function revealResult(){
+ encounter.shown=true;$('#pause').disabled=true;$('#result').hidden=false;$('#start').disabled=false;
+ $('#start').textContent=chosen.length<names.length?'Next student →':'New round →';$('#next').focus({preventScroll:true});
+}
 $('#start').onclick=start;$('#next').onclick=start;$('#reset').onclick=reset;$('#apply-names').onclick=()=>{const n=$('#bulk').value.split(/\r?\n/).map(v=>v.trim().slice(0,30)).filter(Boolean);if(!n.length){$('#status').textContent='Write at least one name first.';return;}if(n.length>30){$('#status').textContent='Please use up to 30 names.';return;}backupRoster();names=n;looks=names.map((_,i)=>looks[i]||{color:COLORS[1+i%(COLORS.length-1)][1],mood:'auto'});storeNames();reset();$('#status').textContent=`Saved ${names.length} student names.`;};
 // Original 96 BPM minor-key dance score, synthesized locally; no remote audio.
 let phraseIndex=0,phraseStarted=0,phraseEnds=0,nextPhraseAt=0;
@@ -67,26 +80,29 @@ $('#hear-dog').onclick=async()=>{voiceOn=true;$('#voice').textContent='Character
 let alarmEnd=0;async function alarm(){if(performance.now()<alarmEnd)return;alarmEnd=performance.now()+1000;$('#red-alert').classList.add('active');setTimeout(()=>$('#red-alert').classList.remove('active'),1000);await unlock();if(!audio)return;const now=audio.currentTime;const g=audio.createGain();g.gain.setValueAtTime(.30,now);g.gain.setValueAtTime(.30,now+.93);g.gain.linearRampToValueAtTime(0,now+1);g.connect(master);const o=audio.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(480,now);for(let i=1;i<=8;i++)o.frequency.linearRampToValueAtTime(i%2?950:480,now+i*.12);o.connect(g);o.start(now);o.stop(now+1);}
 window.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='x'&&!e.repeat&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){e.preventDefault();alarm();}});$('#alarm').onclick=alarm;$('#fullscreen').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
 function image(src){return new Promise((res,rej)=>{const im=new Image();im.onload=()=>res(im);im.onerror=rej;im.src=src;});}
-Promise.all([...HOSTS.filter(h=>h.id!=='dog').map(h=>'host-'+h.id),...artNames,'chinese-faces','dog','dog-closed','dog-base-v3','forest'].map(async name=>{const source=await image('/forest/art/'+name+'.webp');if(name.startsWith('host-')){const c=document.createElement('canvas');c.width=512;c.height=768;c.getContext('2d').drawImage(source,0,0,512,768);art[name]=c;}else art[name]=source;})).then(()=>{const masked=document.createElement('canvas');masked.width=art.dog.width;masked.height=art.dog.height;const m=masked.getContext('2d');m.drawImage(art['dog-closed'],0,0,masked.width,masked.height);m.globalCompositeOperation='destination-in';m.drawImage(art.dog,0,0);art['dog-closed']=masked;artNames.forEach((n,row)=>{faces[n]=[0,1,2].map(col=>{const c=document.createElement('canvas');c.width=c.height=360;const a=art['chinese-faces'];c.getContext('2d').drawImage(a,col*a.width/3,row*a.height/5,a.width/3,a.height/5,0,0,360,360);return c;});});roster();dogParts=prepareDog(art);ready=true;$('#loading').remove();$('#start').disabled=false;}).catch(()=>$('#loading').textContent='Artwork could not load. Please refresh.');
+Promise.all([...HOSTS.filter(h=>h.id!=='dog').map(h=>'host-'+h.id),...artNames,'chinese-faces','dog','dog-closed','dog-base-v3','forest'].map(async name=>{const source=await image('/forest/art/'+name+'.webp');if(name.startsWith('host-')){const c=document.createElement('canvas');c.width=512;c.height=768;c.getContext('2d').drawImage(source,0,0,512,768);art[name]=c;}else art[name]=source;})).then(()=>{const masked=document.createElement('canvas');masked.width=art.dog.width;masked.height=art.dog.height;const m=masked.getContext('2d');m.drawImage(art['dog-closed'],0,0,masked.width,masked.height);m.globalCompositeOperation='destination-in';m.drawImage(art.dog,0,0);art['dog-closed']=masked;artNames.forEach((n,row)=>{faces[n]=[0,1,2].map(col=>{const c=document.createElement('canvas');c.width=c.height=360;const a=art['chinese-faces'];c.getContext('2d').drawImage(a,col*a.width/3,row*a.height/5,a.width/3,a.height/5,0,0,360,360);return c;});});roster();dogParts=prepareDog(art);wolfParts=prepareWolf(art);ready=true;$('#loading').remove();$('#start').disabled=false;}).catch(()=>$('#loading').textContent='Artwork could not load. Please refresh.');
 new ResizeObserver(()=>{canvas.width=1600;canvas.height=900;}).observe(canvas);
 function label(text,x,y,boost){ctx.font='bold 23px Arial';const w=ctx.measureText(text).width+28;ctx.fillStyle=boost?'#f4db69':'#f1efd9';ctx.beginPath();ctx.roundRect(x-w/2,y-30,w,40,9);ctx.fill();ctx.fillStyle='#263c2e';ctx.textAlign='center';ctx.fillText(text,x,y-2);}
 function frame(now){
- requestAnimationFrame(frame);const dt=Math.min((now-last)/1000,.05);last=now;time+=dt;if(!ready)return;
+ requestAnimationFrame(frame);const dt=Math.min((now-last)/1000,.05);last=now;if(!paused)time+=dt;if(!ready)return;
  if(running&&!paused)runAge+=dt;
  ctx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0);ctx.clearRect(0,0,W,H);
  ctx.drawImage(art.forest,0,0,W,H);ctx.fillStyle='#0c19221b';ctx.fillRect(0,0,W,H);
  // Trail markings and fixed stones make forward travel visible at a glance.
  ctx.fillStyle='#d6c79716';ctx.beginPath();ctx.ellipse(W*.49,H*.79,W*.46,H*.16,0,0,Math.PI*2);ctx.fill();
- for(let j=0;j<24;j++){const x=90+j*128,y=1310+(j%4)*62;ctx.fillStyle=j%2?'#49634d':'#9b9c70';ctx.beginPath();ctx.ellipse(x,y,9+j%3*3,4,0,0,Math.PI*2);ctx.fill();}
+ for(let j=0;j<24;j++){const x=90+j*128,y=H-490+(j%4)*62;ctx.fillStyle=j%2?'#49634d':'#9b9c70';ctx.beginPath();ctx.ellipse(x,y,9+j%3*3,4,0,0,Math.PI*2);ctx.fill();}
  const clock=audioStarted&&audio?.state==='running'?audio.currentTime:time;
  const current=audioStarted?phraseIndex:Math.floor(time/7)%DOG_PHRASES.length;
- const speaking=audioStarted?clock<phraseEnds:true;const open=time<biteUntil?Math.sin((biteUntil-time)*30)>0:speaking&&Math.sin(clock*19)>.05;
+ const speaking=audioStarted?clock<phraseEnds:true;const open=paused?mouthOpen:(mouthOpen=time<biteUntil?Math.sin((biteUntil-time)*30)>0:speaking&&Math.sin(time*19)>.05);
  $('#dog-speech').textContent=audioStarted?DOG_PHRASES[current]:'Press Hear character to hear me talk!';
  activeAction=action==='auto'?['wave','dance','jump','stretch'][Math.floor(time/5)%4]:action;
  const pose=activeAction==='manual'?{jump:0,sway:0,angles:manual}:dogPose(activeAction,time-actionStart);
+ if(encounter){pose.jump=0;pose.sway=0;}
  if(gentle){pose.jump*=.15;pose.sway*=.3;pose.angles=pose.angles.map(a=>a*.3);}
  const mx=-126,my=-430;MOUTH.x=DOG.x+DOG.w*.5+mx*Math.cos(pose.sway)-my*Math.sin(pose.sway);MOUTH.y=DOG.y+DOG.h-pose.jump+mx*Math.sin(pose.sway)+my*Math.cos(pose.sway);
- if(hostId==='dog')drawDog(ctx,art,dogParts,DOG,pose,open,time);else{const target=drawHost(ctx,art['host-'+hostId],currentHost(),DOG,pose,open,time);MOUTH.x=target.x;MOUTH.y=target.y;}
+ magic.update(time,gentle,!!encounter);
+ const encounterAge=encounter?time-encounter.start:-1,hit=punchAt(encounterAge);
+ if(hostId==='dog'){magic.back(ctx,WOLF,time,gentle);const target=drawWolf(ctx,wolfParts,dogParts,WOLF,pose,open,time,gentle,hit,magic);MOUTH.x=target.x;MOUTH.y=target.y;}else{const target=drawHost(ctx,art['host-'+hostId],currentHost(),DOG,{...pose,sway:pose.sway+hit*.12},open,time);MOUTH.x=target.x;MOUTH.y=target.y;}
  for(const b of bananas){const s=students[b.i];if(b.eaten||!s.visible)continue;drawBanana(ctx,lerp(s.start,WORLD.finishX,b.p),s.ground+13,time);}
  const finish=[],count=students.filter(s=>s.visible).length;
  const sorted=[...students].sort((a,b)=>a.ground-b.ground);
@@ -99,28 +115,29 @@ function frame(now){
    if(s.progress>=1)finish.push(s);
   }
   const r=runnerPose(s,MOUTH,gentle);s.renderX=r.x;s.renderY=r.y;
-  if(running&&!paused&&r.p>.24&&time>s.nextSplash){ketchup.splash(r.x-r.w*.10,r.y-r.h*.48,gentle?1:2);s.nextSplash=time+.22+random()*.24;}
-  ctx.save();ctx.globalAlpha=1-Math.max(0,(r.leap-.65)/.35);
+  ctx.save();ctx.globalAlpha=1;
   ctx.fillStyle='#07161666';ctx.beginPath();ctx.ellipse(r.x,r.ground+3,40*(1-r.leap*.74)/(1+r.bob/170),8,0,0,Math.PI*2);ctx.fill();
   ctx.translate(r.x,r.y);ctx.rotate(r.lean);
   if(time>s.nextEmotion){s.emotion=(s.emotion+1+Math.floor(random()*2))%3;s.nextEmotion=time+2+random()*3;}
   const look=looks[s.i]||{color:null,mood:'auto'},model=modelIndex(s.i),key=model+':'+look.color;
   let body=dressed.get(key);if(!body){body=dress(art[artNames[model]],model,look.color);dressed.set(key,body);}
   const expression=look.mood==='auto'?s.emotion:Number(look.mood);s.currentExpression=MOODS[expression];
-  drawTintedStudent(ctx,body,faces[artNames[model]][expression],r.w,r.h,s.phase,s.distance>0,s.boost,gentle,r.redness);
-  ctx.restore();if(r.leap<.35)label((names[s.i]||'Student '+(s.i+1))+(s.boost?' 🍌 2×':''),r.x,r.y-r.h-8,s.boost);
+  drawTintedStudent(ctx,body,faces[artNames[model]][expression],r.w,r.h,s.phase,s.distance>0,s.boost,gentle,0,{leap:r.leap,clock:time,seed:s.i,punch:encounter?.i===s.i?hit:0});
+  s.capeState=capeState(s.phase,s.distance>0,r.leap);
+  ctx.restore();if(r.leap<.35||encounter?.i===s.i)label((names[s.i]||'Student '+(s.i+1))+(s.boost?' 🍌 2×':''),r.x,r.y-r.h-8,s.boost);
  }
  if(running&&!paused)$('#status').textContent=count+' students running toward '+currentHost().name+' \u00b7 '+Math.floor(Math.min(1,Math.max(...students.filter(s=>s.visible).map(s=>s.progress)))*100)+'%';
  if(running&&finish.length)select(finish.sort((a,b)=>b.progress-a.progress)[0]);
+ if(encounter&&!encounter.shown&&time-encounter.start>=ENCOUNTER_DURATION)revealResult();
  ketchup.draw(ctx,paused?0:dt);
  ctx.fillStyle='#e9e99b';for(let i=0;i<24;i++){const x=(i*139+Math.sin(time*.5+i)*22)%W,y=350+(i*53)%660+Math.sin(time+i)*13;ctx.globalAlpha=.25+.25*Math.sin(time+i);ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;
 }
 roster();history();setup();requestAnimationFrame(frame);
-window.forestApp={getState:()=>({ready,running,paused,cameraScale:WORLD.cameraScale,worldWidth:W,effectsOn,sfx:{...soundEffects.stats},ketchupParticles:ketchup.count,names:[...names],chosen:[...chosen],activeAction,looks,bananasVisible:bananas.filter(b=>!b.eaten&&students[b.i]?.visible).length,musicOn,voiceOn,audioState:audio?.state,samples:Object.keys(samples),students:students.map(({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY})=>({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY}))})};
+window.forestApp={getState:()=>({ready,running,paused,sceneTime:time,encounter:encounter?{...encounter,age:time-encounter.start,punch:punchAt(time-encounter.start)}:null,magic:{...magic.stats},wolfAreaMultiplier:WOLF_SCALE**2,cameraScale:WORLD.cameraScale,worldWidth:W,effectsOn,sfx:{...soundEffects.stats},ketchupParticles:ketchup.count,names:[...names],chosen:[...chosen],activeAction,looks,bananasVisible:bananas.filter(b=>!b.eaten&&students[b.i]?.visible).length,musicOn,voiceOn,audioState:audio?.state,samples:Object.keys(samples),students:students.map(({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY,capeState,visible})=>({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY,capeState,visible}))})};
 
 
-$('#pause').onclick=()=>{if(!running)return;paused=!paused;if(paused)soundEffects.stop();$('#pause').textContent=paused?'Resume':'Pause';$('#status').textContent=paused?'Race paused.':names.length-chosen.length+' students in the race';};
+$('#pause').onclick=()=>{if(!running&&(!encounter||encounter.shown))return;paused=!paused;if(paused)soundEffects.stop();else if(encounter&&!encounter.shown)soundEffects.bite(MOUTH.x,W,time-encounter.start);$('#pause').textContent=paused?'Resume':'Pause';$('#status').textContent=paused?'Race paused.':names.length-chosen.length+' students in the race';};
 $('#motion').onchange=()=>{gentle=$('#motion').value==='gentle';};
 if(matchMedia('(prefers-reduced-motion: reduce)').matches){gentle=true;$('#motion').value='gentle';}
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&running&&!paused)$('#pause').click();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&(running||(encounter&&!encounter.shown))&&!paused)$('#pause').click();});
 $('#result').addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();$('#next').focus();}if(e.key==='Escape'){$('#result').hidden=true;$('#start').focus();}});
