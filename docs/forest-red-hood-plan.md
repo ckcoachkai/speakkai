@@ -14,7 +14,12 @@ Use the existing high-resolution painted wolf as texture for a hierarchical Canv
 6. Verify a full round, subsequent round, reset, pause/resume, gentle motion, other hosts, desktop/mobile layout, browser errors and build checks. Prepare a local preview before publication.
 
 ## Scope boundaries
-Ten times refers to image area, not ten times its height (which would dwarf the entire viewport). The wolf uses a 2D joint rig and procedural fur/cloth. Existing recorded character dialogue is retained.
+Ten times refers to image area, not ten times its height (which would dwarf the entire viewport). Characters retain painted 2D artwork. Existing recorded character dialogue is retained.
+
+## Physical animation refinement
+The wolf now receives five angular impulses at the crunch beats. A damped spring hinge folds its head backward to a 180-degree stop, then restores it upright; gentle mode limits recoil to 0.18 radians. The body remains planted. Ninety-six damped fur springs bias tufts upward for the charged cartoon look.
+
+Each child's cape uses 80 particles in three dimensions, with a pinned neckline, structural/shear/bending constraints, gravity, wind and jump acceleration. Smooth curved panels and depth shading soften the silhouette. This is simplified real-time physics, not a fully 3D character or self-colliding cloth simulation. Other bosses retain their individual head recoil, with the shared physical capes.
 
 ## Extension to the complete boss roster
 

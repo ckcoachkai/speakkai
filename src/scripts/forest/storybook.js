@@ -23,7 +23,8 @@ export function capeState(phase, moving, leap = 0) {
 
 // Each ribbon shares its edge with the next. Five motion fields are blended
 // continuously, so changing jump state never snaps the fabric into a new pose.
-export function drawCape(ctx, w, h, phase, moving, gentle, leap = 0, clock = 0, seed = 0) {
+export function drawCape(ctx, w, h, phase, moving, gentle, leap = 0, clock = 0, seed = 0, cloth = null) {
+  if(cloth){drawPhysicalCape(ctx,cloth,h);return;}
   const motion = gentle ? .25 : 1;
   const lift = moving ? Math.max((1 - Math.cos(phase * 2)) * .5 * (1-leap), Math.sin(leap*Math.PI)) : 0;
   const rising = moving ? (leap > .02 ? Math.cos(leap*Math.PI) : Math.sin(phase * 2)) : 0;
@@ -52,6 +53,38 @@ export function drawCape(ctx, w, h, phase, moving, gentle, leap = 0, clock = 0, 
   ctx.strokeStyle = '#f06a64'; ctx.lineWidth = h * .007; ctx.stroke(); ctx.restore();
 }
 
+function smoothCurve(ctx,points,move=false){
+  if(move)ctx.moveTo(points[0].x,points[0].y);else ctx.lineTo(points[0].x,points[0].y);
+  for(let i=0;i<points.length-1;i++){
+    const a=points[Math.max(0,i-1)],b=points[i],c=points[i+1],d=points[Math.min(points.length-1,i+2)];
+    ctx.bezierCurveTo(b.x+(c.x-a.x)/6,b.y+(c.y-a.y)/6,c.x-(d.x-b.x)/6,c.y-(d.y-b.y)/6,c.x,c.y);
+  }
+}
+export function drawPhysicalCape(ctx,cloth,h){
+  const {cols,rows,points}=cloth;
+  const point=(i,j)=>{const p=points[j*(cols+1)+i];return {x:(p.x+p.z*.30)*h,y:(p.y-.79-p.z*.15)*h};};
+  const column=i=>Array.from({length:rows+1},(_,j)=>point(i,j));
+  const light=i=>{
+    const j=Math.floor(rows*.55),left=points[j*(cols+1)+Math.max(0,i-1)],right=points[j*(cols+1)+Math.min(cols,i+1)];
+    const slope=(right.z-left.z)/(Math.hypot(right.x-left.x,right.y-left.y)+.01);
+    return Math.max(23,Math.min(47,31+9*Math.sin(i/cols*Math.PI)+slope*8));
+  };
+  ctx.save();
+  for(let i=0;i<cols;i++){
+    const left=column(i),right=column(i+1);
+    ctx.beginPath();smoothCurve(ctx,left,true);smoothCurve(ctx,right.reverse());ctx.closePath();
+    const a=point(i,Math.floor(rows/2)),b=point(i+1,Math.floor(rows/2));
+    const gradient=ctx.createLinearGradient(a.x,a.y,b.x,b.y);
+    gradient.addColorStop(0,`hsl(350 76% ${light(i)}%)`);gradient.addColorStop(1,`hsl(350 76% ${light(i+1)}%)`);
+    ctx.fillStyle=gradient;ctx.fill();ctx.strokeStyle=gradient;ctx.lineWidth=.6;ctx.stroke();
+  }
+  // A continuous curved hem and soft central highlight replace hard ribbon seams.
+  ctx.beginPath();smoothCurve(ctx,Array.from({length:cols+1},(_,i)=>point(i,rows)),true);
+  ctx.strokeStyle='#e96b70';ctx.lineWidth=h*.004;ctx.stroke();
+  ctx.beginPath();smoothCurve(ctx,column(0),true);ctx.strokeStyle='#5c1029';ctx.lineWidth=h*.003;ctx.stroke();
+  ctx.restore();
+}
+
 export function drawHood(ctx, h, clock = 0) {
   ctx.save();
   const sway = Math.sin(clock * 2) * h * .003;
@@ -70,16 +103,20 @@ export function drawHood(ctx, h, clock = 0) {
   ctx.restore();
 }
 
-function patch(image, points) {
+function patch(image, points, rounded=false) {
   const c = document.createElement('canvas'); c.width = 1024; c.height = 1536;
-  const x = c.getContext('2d'); x.beginPath(); points.forEach(([a,b], i) => i ? x.lineTo(a,b) : x.moveTo(a,b)); x.closePath(); x.clip(); x.drawImage(image, 0, 0, 1024, 1536); return c;
+  const x = c.getContext('2d'); x.beginPath();
+  if(rounded){const last=points.at(-1),first=points[0];x.moveTo((last[0]+first[0])/2,(last[1]+first[1])/2);points.forEach(([a,b],i)=>{const n=points[(i+1)%points.length];x.quadraticCurveTo(a,b,(a+n[0])/2,(b+n[1])/2);});}
+  else points.forEach(([a,b], i) => i ? x.lineTo(a,b) : x.moveTo(a,b));
+  x.closePath(); x.clip(); x.drawImage(image, 0, 0, 1024, 1536); return c;
 }
 export function prepareWolf(art) {
   const image = art['dog-base-v3'];
-  return {
-    torso: patch(image, [[130,470],[470,370],[660,615],[824,1040],[809,1310],[675,1390],[285,1370],[122,980],[100,650]]),
-    head: patch(image, [[55,209],[160,158],[327,123],[500,163],[565,420],[481,586],[222,634],[91,496],[70,319]]),
-    closed: patch(art['dog-closed'], [[55,209],[160,158],[327,123],[500,163],[565,420],[481,586],[222,634],[91,496],[70,319]]),
+  const neck=document.createElement('canvas');neck.width=320;neck.height=220;const n=neck.getContext('2d');n.beginPath();n.ellipse(160,110,160,110,0,0,Math.PI*2);n.clip();n.drawImage(image,240,640,300,280,0,0,320,220);
+  return {neck,
+    torso: patch(image, [[160,600],[475,515],[660,615],[824,1040],[809,1310],[675,1390],[285,1370],[122,980],[100,650]]),
+    head: patch(image, [[55,209],[160,158],[327,123],[500,163],[565,420],[481,586],[222,634],[91,496],[70,319]],true),
+    closed: patch(art['dog-closed'], [[55,209],[160,158],[327,123],[500,163],[565,420],[481,586],[222,634],[91,496],[70,319]],true),
     ears: [patch(image, [[155,201],[217,0],[290,0],[335,184]]), patch(image, [[314,186],[407,0],[491,0],[518,244]])],
     jaw: patch(image, [[105,409],[212,468],[299,379],[291,531],[210,574],[135,529]]),
     tail: patch(image, [[705,1115],[991,1185],[1024,1370],[992,1536],[644,1536],[568,1452],[605,1305]]),
@@ -131,7 +168,7 @@ export function createWolfMagic() {
   };
 }
 
-export function drawWolf(ctx, parts, arms, box, pose, open, t, gentle, hit, magic) {
+export function drawWolf(ctx, parts, arms, box, pose, open, t, gentle, hit, magic, hinge, chargedFur) {
   const sx=box.w/1024, sy=box.h/1536;
   ctx.save();ctx.translate(box.x+box.w*.5,box.y+box.h-pose.jump);ctx.scale(sx,sy);ctx.rotate(pose.sway*.3);ctx.translate(-512,-1536);
   const breath=Math.sin(t*1.7)*(gentle?1:4), hip=Math.sin(t*1.4)*.025;
@@ -141,17 +178,38 @@ export function drawWolf(ctx, parts, arms, box, pose, open, t, gentle, hit, magi
   ctx.save();ctx.translate(370,1090);ctx.rotate(-hip);ctx.scale(.78,.97);ctx.drawImage(parts.thigh,-690,-1070);ctx.translate(0,150);ctx.rotate(hip*1.8);ctx.drawImage(parts.shin,-690,-1220);ctx.translate(0,145);ctx.rotate(-Math.sin(t*2)*.035);ctx.drawImage(parts.paw,-690,-1365);ctx.restore();
   ctx.save();ctx.translate(0,breath);
   for(let row=370;row<1390;row+=12){const bend=Math.sin(t*1.4+(row-370)/400)*(gentle?1:5);ctx.drawImage(parts.torso,0,row,1024,12,bend,row,1024,12.5);}
-  fur(ctx,t,gentle);
+  ctx.drawImage(parts.neck,205,445);
+  fur(ctx,t,gentle);if(chargedFur)drawChargedFur(ctx,chargedFur,false);
   // The original painted arm textures rotate at shoulder, elbow and wrist.
   for(let n=1;n>=0;n--){ctx.save();ctx.translate(n?552:294,n?716:720);ctx.rotate(pose.angles[n*3]*.5+Math.sin(t*1.8+n)*.06);ctx.drawImage(arms.upper,-62,-30,124,268);ctx.translate(0,222);ctx.rotate(pose.angles[n*3+1]*.65);ctx.drawImage(arms.lower,-53,-32,106,273);ctx.translate(0,223);ctx.rotate(pose.angles[n*3+2]+Math.sin(t*2+n)*.05);ctx.drawImage(arms.paw,-65,-20,144,103);ctx.restore();}
   // Head recoil pivots at the neck; ears, jaw and the attached eyes follow it.
-  ctx.save();ctx.translate(365+hit*(gentle?12:65),500);ctx.rotate(Math.sin(t*1.6)*.035+hit*(gentle?.035:.19));ctx.translate(-365,-500);
+  ctx.save();ctx.translate(365,500);ctx.rotate(Math.sin(t*1.6)*.035+(hinge?.angle||0));ctx.translate(-365,-500);
   for(let n=0;n<2;n++)limb(parts.ears[n],n?408:252,184,Math.sin(t*2.6+n*1.7)*(gentle?.018:.06));
   ctx.drawImage(open?parts.head:parts.closed,0,0);
   if(open)limb(parts.jaw,277,402,Math.sin(t*8)*.025);
+  if(chargedFur)drawChargedFur(ctx,chargedFur,true);
   magic.eyes(ctx,t);
+  ctx.restore();
   if(hit>.2){ctx.save();ctx.globalAlpha=hit;ctx.strokeStyle='#ffe6a3';ctx.lineWidth=5;for(let i=0;i<7;i++){const a=i*TAU/7;ctx.beginPath();ctx.moveTo(90+Math.cos(a)*36,305+Math.sin(a)*36);ctx.lineTo(90+Math.cos(a)*75,305+Math.sin(a)*75);ctx.stroke();}ctx.restore();}
-  ctx.restore();ctx.restore();ctx.restore();
+  ctx.restore();ctx.restore();
   // Stable contact mark at the muzzle; the head moves away from the child's fist.
   return {x:box.x+box.w*.10,y:box.y+box.h*.21-pose.jump};
+}
+
+function drawChargedFur(ctx,strands,head){
+  for(let i=head?64:0;i<(head?strands.length:64);i++){
+    const f=strands[i],side=i%2?1:-1,row=Math.floor(i/2);
+    const x=(head?480+Math.sin(i*1.7)*14:side>0?550+row*6.9:147+row*2.2)+Math.sin(i*2.4)*9;
+    const y=(head?190+(i-64)*10:490+row*23)+Math.cos(i*2)*7;
+    const length=(head?23:30)+(i*13%24),width=2.5+i%3*1.3;
+    const angle=(head?f.angle*.45-.50:f.angle)+Math.sin(i*1.7)*.15,dx=Math.cos(angle)*length,dy=Math.sin(angle)*length;
+    const nx=-Math.sin(angle)*width,ny=Math.cos(angle)*width;
+    const gradient=ctx.createLinearGradient(x,y,x+dx,y+dy);
+    gradient.addColorStop(0,side>0?'#5b5c60':'#77634e');gradient.addColorStop(.62,side>0?'#828388':'#a58f73');gradient.addColorStop(1,side>0?'#aaa9a3':'#c5b297');
+    ctx.fillStyle=gradient;ctx.beginPath();ctx.moveTo(x-nx,y-ny);
+    ctx.quadraticCurveTo(x+dx*.6-nx*.9,y+dy*.6-ny*.9,x+dx,y+dy);
+    ctx.quadraticCurveTo(x+dx*.65+nx*.6,y+dy*.65+ny*.6,x+nx,y+ny);ctx.closePath();ctx.fill();
+    ctx.strokeStyle=side>0?'#b4b5b688':'#d2c3a888';ctx.lineWidth=.9;
+    for(let j=-1;j<=1;j++){ctx.beginPath();ctx.moveTo(x+j*nx*.3,y+j*ny*.3);ctx.quadraticCurveTo(x+dx*.6+j*nx*.25,y+dy*.6+j*ny*.25,x+dx+j*2,y+dy-j*2);ctx.stroke();}
+  }
 }
