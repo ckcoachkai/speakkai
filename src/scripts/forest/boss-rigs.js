@@ -24,7 +24,7 @@ function chainPoint(p,chain,rotations,k) {let q=p;for(let i=k;i>=0;i--)q=turn(q,
 export function createBossDeformer(id,pose,t,gentle=false,hit=0,open=false) {
   const rig=BOSS_RIGS[id];if(!rig)throw new Error(`Missing boss rig: ${id}`);
   const motion=gentle?.25:1;
-  const headRotation=rotation(Math.sin(t*1.65)*.035*motion+hit*.17*motion);
+  const headRotation=rotation(Math.sin(t*1.65)*.035*motion+(pose.recoil??hit*.17)*motion);
   const chains=[...rig.arms,...rig.legs].map((points,i)=>{
     const arm=i<2,side=i%2,phase=t*(arm?2.2:1.6)+side*Math.PI;
     const angle=arm?[

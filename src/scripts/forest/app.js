@@ -1,3 +1,4 @@
+import {REACTIONS,reaction,stepSkeleton,drawSkeleton} from './combat.js';
 import {createHeadHinge,stepHeadHinge,createCape,stepCape,createFur,stepFur} from './physics.js';
 import {prepareWolf,drawWolf,createWolfMagic,punchAt,ENCOUNTER_DURATION,WOLF_SCALE,capeState} from './storybook.js';
 import HOSTS from './hosts.json';
@@ -44,7 +45,8 @@ $('#add-player').onclick=()=>resizeRoster(names.length+1);$('#six-players').oncl
 for(const button of document.querySelectorAll('[data-action]'))button.onclick=()=>{action=button.dataset.action;actionStart=time;document.querySelectorAll('[data-action]').forEach(b=>b.setAttribute('aria-pressed',b===button));};
 ['Left shoulder','Left elbow','Left wrist','Right shoulder','Right elbow','Right wrist'].forEach((name,i)=>{const l=document.createElement('label');l.textContent=name;const input=document.createElement('input');input.type='range';input.min=-180;input.max=180;input.value=0;input.setAttribute('aria-label',name);input.oninput=()=>{manual[i]=Number(input.value)*Math.PI/180;action='manual';document.querySelectorAll('[data-action]').forEach(b=>b.setAttribute('aria-pressed','false'));};l.append(input);$('#joint-sliders').append(l);});
 function history(){$('#round-count').textContent=chosen.length+' / '+names.length+' chosen';$('#history').replaceChildren(...chosen.map(i=>{const li=document.createElement('li');li.textContent=names[i];return li;}));$('#empty').hidden=chosen.length>0;}
-function setup(){const winner=drawWinner(names.map((_,i)=>i).filter(i=>!chosen.includes(i)));const slots=names.map((_,i)=>i);for(let j=slots.length-1;j>0;j--){const k=Math.floor(random()*(j+1));[slots[j],slots[k]]=[slots[k],slots[j]];}clearTimeout(selectionTimer);encounter=null;headHinge=createHeadHinge();magic.reset(time);biteUntil=0;ketchup.clear();soundEffects.stop();students.length=0;bananas.length=0;names.forEach((_,i)=>{const s={i,cape:createCape(i),progress:0,distance:0,speed:0,phase:0,start:160+(slots[i]%4)*145,ground:H-520+(i%5)*64,base:raceBase(160+(slots[i]%4)*145,WORLD.finishX,i===winner,random()),boost:false,nextSplash:0,emotion:Math.floor(random()*3),nextEmotion:time+2+random()*3,visible:!chosen.includes(i)};students.push(s);if(s.visible)for(let j=0;j<3;j++)bananas.push({i,p:.27+j*.26,eaten:false});});}
+let reactionIndex=-1;
+function setup(){reactionIndex=(reactionIndex+1)%REACTIONS.length;const winner=drawWinner(names.map((_,i)=>i).filter(i=>!chosen.includes(i)));const slots=names.map((_,i)=>i);for(let j=slots.length-1;j>0;j--){const k=Math.floor(random()*(j+1));[slots[j],slots[k]]=[slots[k],slots[j]];}clearTimeout(selectionTimer);encounter=null;headHinge=createHeadHinge();magic.reset(time);biteUntil=0;ketchup.clear();soundEffects.stop();students.length=0;bananas.length=0;names.forEach((_,i)=>{const s={i,cape:createCape(i),progress:0,distance:0,speed:0,phase:0,start:160+(slots[i]%4)*145,ground:H-520+(i%5)*64,base:raceBase(160+(slots[i]%4)*145,WORLD.finishX,i===winner,random()),boost:false,nextSplash:0,emotion:Math.floor(random()*3),nextEmotion:time+2+random()*3,visible:!chosen.includes(i)};students.push(s);if(s.visible)for(let j=0;j<3;j++)bananas.push({i,p:.27+j*.26,eaten:false});});}
 function start(){if(!ready||running)return;names=names.map((n,i)=>n.trim()||'Student '+(i+1));storeNames();unlock();if(chosen.length===names.length)chosen.length=0;setup();runAge=0;paused=false;running=true;$('#pause').disabled=false;$('#pause').textContent='Pause';$('#result').hidden=true;$('#start').disabled=true;$('#start').textContent='Running…';$('#status').textContent=`${names.length-chosen.length} students running toward ${currentHost().name}`;roster();history();}
 function reset(){running=false;paused=false;$('#pause').disabled=true;$('#pause').textContent='Pause';chosen.length=0;setup();$('#result').hidden=true;$('#start').disabled=!ready;$('#start').textContent='Start the run →';$('#status').textContent='Everyone is ready for a new round.';$('#announcement').textContent='Class reset';roster();history();}
 function select(s){
@@ -86,7 +88,7 @@ new ResizeObserver(()=>{canvas.width=1600;canvas.height=900;}).observe(canvas);
 function label(text,x,y,boost){ctx.font='bold 23px Arial';const w=ctx.measureText(text).width+28;ctx.fillStyle=boost?'#f4db69':'#f1efd9';ctx.beginPath();ctx.roundRect(x-w/2,y-30,w,40,9);ctx.fill();ctx.fillStyle='#263c2e';ctx.textAlign='center';ctx.fillText(text,x,y-2);}
 function frame(now){
  requestAnimationFrame(frame);const dt=Math.min((now-last)/1000,.05);last=now;if(!paused)time+=dt;if(!ready)return;
- if(running&&!paused)runAge+=dt;
+ if(running&&!paused)runAge+=dt*Number($('#run-speed').value);
  ctx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0);ctx.clearRect(0,0,W,H);
  ctx.drawImage(art.forest,0,0,W,H);ctx.fillStyle='#0c19221b';ctx.fillRect(0,0,W,H);
  // Trail markings and fixed stones make forward travel visible at a glance.
@@ -104,8 +106,9 @@ function frame(now){
  magic.update(time,gentle,!!encounter);
  const encounterAge=encounter?time-encounter.start:-1,hit=punchAt(encounterAge);
  stepHeadHinge(headHinge,paused?0:dt,encounterAge,gentle);stepFur(chargedFur,paused?0:dt,time,gentle);
+ const recoil=reaction(headHinge.angle,reactionIndex,gentle);pose.recoil=recoil.head;pose.sway+=recoil.sway;pose.jump-=recoil.drop;
  magic.back(ctx,WOLF,time,gentle);
- const target=hostId==='dog'?drawWolf(ctx,wolfParts,dogParts,WOLF,pose,open,time,gentle,hit,magic,headHinge,chargedFur):drawBoss(ctx,art['host-'+hostId],currentHost(),bossMeshes[hostId],WOLF,pose,open,time,gentle,hit,magic);
+ const target=hostId==='dog'?drawWolf(ctx,wolfParts,dogParts,WOLF,pose,open,time,gentle,hit,magic,{angle:recoil.head},chargedFur):drawBoss(ctx,art['host-'+hostId],currentHost(),bossMeshes[hostId],WOLF,pose,open,time,gentle,hit,magic);
  MOUTH.x=target.x;MOUTH.y=target.y;
  for(const b of bananas){const s=students[b.i];if(b.eaten||!s.visible)continue;drawBanana(ctx,lerp(s.start,WORLD.finishX,b.p),s.ground+13,time);}
  const finish=[],count=students.filter(s=>s.visible).length;
@@ -113,12 +116,12 @@ function frame(now){
  for(const s of sorted){
   if(!s.visible)continue;
   if(running&&!paused){
-   const contact=advanceRunner(s,dt,runAge);
+   const contact=advanceRunner(s,dt*Number($('#run-speed').value),runAge);
    if(contact)soundEffects.footstep(s.start+s.distance,W,count);
    for(const b of bananas){if(b.i===s.i&&!b.eaten&&s.progress>=b.p){b.eaten=true;if(!s.boost)soundEffects.pickup(s.start+s.distance,W);s.boost=true;}}
    if(s.progress>=1)finish.push(s);
   }
-  const r=runnerPose(s,MOUTH,gentle);const attack=encounter?.i===s.i?hit:0;if(encounter?.i===s.i&&!gentle){r.x-=135*(1-attack);r.lean+=.22*(1-attack);}s.renderX=r.x;s.renderY=r.y;
+  const r=runnerPose(s,MOUTH,gentle);const skHit=stepSkeleton(s,paused?0:dt,time,r,running);const attack=encounter?.i===s.i?hit:skHit;drawSkeleton(ctx,s.skeleton,s.ground,time,gentle);if(encounter?.i===s.i&&!gentle){r.x-=135*(1-attack);r.lean+=.22*(1-attack);}s.renderX=r.x;s.renderY=r.y;
   stepCape(s.cape,paused?0:dt,{x:r.x,y:r.y,h:r.h},running&&s.distance>0,gentle,time);
   ctx.save();ctx.globalAlpha=1;
   ctx.fillStyle='#07161666';ctx.beginPath();ctx.ellipse(r.x,r.ground+3,40*(1-r.leap*.74)/(1+r.bob/170),8,0,0,Math.PI*2);ctx.fill();
@@ -127,7 +130,7 @@ function frame(now){
   const look=looks[s.i]||{color:null,mood:'auto'},model=modelIndex(s.i),key=model+':'+look.color;
   let body=dressed.get(key);if(!body){body=dress(art[artNames[model]],model,look.color);dressed.set(key,body);}
   const expression=look.mood==='auto'?s.emotion:Number(look.mood);s.currentExpression=MOODS[expression];
-  drawTintedStudent(ctx,body,faces[artNames[model]][expression],r.w,r.h,s.phase,s.distance>0,s.boost,gentle,0,{cape:s.cape,leap:r.leap,clock:time,seed:s.i,punch:attack,charging:r.leap>.02||attack>0});
+  drawTintedStudent(ctx,body,faces[artNames[model]][expression],r.w,r.h,s.phase,s.distance>0,s.boost,gentle,0,{cape:s.cape,leap:r.leap,clock:time,seed:s.i,punch:attack,charging:s.distance>0&&(running||!!encounter)});
   s.capeState=capeState(s.phase,s.distance>0,r.leap);
   ctx.restore();if(r.leap<.35||encounter?.i===s.i)label((names[s.i]||'Student '+(s.i+1))+(s.boost?' 🍌 2×':''),r.x,r.y-r.h-8,s.boost);
  }
@@ -138,7 +141,7 @@ function frame(now){
  ctx.fillStyle='#e9e99b';for(let i=0;i<24;i++){const x=(i*139+Math.sin(time*.5+i)*22)%W,y=350+(i*53)%660+Math.sin(time+i)*13;ctx.globalAlpha=.25+.25*Math.sin(time+i);ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1;
 }
 roster();history();setup();requestAnimationFrame(frame);
-window.forestApp={getState:()=>({ready,running,paused,hostId,headHinge:{...headHinge},capeModel:'3d-constraint-cloth',bossAreaMultiplier:WOLF_SCALE**2,bossRig:hostId==='dog'?'layered':'skinned',sceneTime:time,encounter:encounter?{...encounter,age:time-encounter.start,punch:punchAt(time-encounter.start)}:null,magic:{...magic.stats},wolfAreaMultiplier:WOLF_SCALE**2,cameraScale:WORLD.cameraScale,worldWidth:W,effectsOn,sfx:{...soundEffects.stats},ketchupParticles:ketchup.count,names:[...names],chosen:[...chosen],activeAction,looks,bananasVisible:bananas.filter(b=>!b.eaten&&students[b.i]?.visible).length,musicOn,voiceOn,audioState:audio?.state,samples:Object.keys(samples),students:students.map(({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY,capeState,visible})=>({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY,capeState,visible}))})};
+window.forestApp={getState:()=>({ready,running,paused,hostId,reaction:REACTIONS[reactionIndex],runSpeed:Number($('#run-speed').value),skeletonHits:students.reduce((n,s)=>n+(s.skeleton?.hits||0),0),headHinge:{...headHinge},capeModel:'3d-constraint-cloth',bossAreaMultiplier:WOLF_SCALE**2,bossRig:hostId==='dog'?'layered':'skinned',sceneTime:time,encounter:encounter?{...encounter,age:time-encounter.start,punch:punchAt(time-encounter.start)}:null,magic:{...magic.stats},wolfAreaMultiplier:WOLF_SCALE**2,cameraScale:WORLD.cameraScale,worldWidth:W,effectsOn,sfx:{...soundEffects.stats},ketchupParticles:ketchup.count,names:[...names],chosen:[...chosen],activeAction,looks,bananasVisible:bananas.filter(b=>!b.eaten&&students[b.i]?.visible).length,musicOn,voiceOn,audioState:audio?.state,samples:Object.keys(samples),students:students.map(({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY,capeState,visible})=>({i,progress,boost,currentExpression,distance,speed,phase,renderX,renderY,capeState,visible}))})};
 
 
 $('#pause').onclick=()=>{if(!running&&(!encounter||encounter.shown))return;paused=!paused;if(paused)soundEffects.stop();else if(encounter&&!encounter.shown)soundEffects.bite(MOUTH.x,W,time-encounter.start);$('#pause').textContent=paused?'Resume':'Pause';$('#status').textContent=paused?'Race paused.':names.length-chosen.length+' students in the race';};
