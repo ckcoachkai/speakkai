@@ -59,7 +59,7 @@ export function publicBookingPresentation(label: string) {
   // Private sessions remain anonymous, including their area and grade.
   if (originalKind === "vip") return { kind: "vip", title: "VIP 1-to-1 booked" };
   if (originalKind === "group" || originalKind === "sas") {
-    const details = [bookingArea(label), bookingGrade(label)].filter(Boolean);
+    const details = [bookingArea(label)].filter(Boolean);
     return { kind: "group", title: ['Class booked', ...details].join(' · ') };
   }
   return { kind: "reserved", title: "Time booked" };

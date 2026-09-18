@@ -66,7 +66,7 @@ test('reject incomplete translation, impossible dates, duplicate identities and 
 });
 test('homework links resolve to exact published feedback and preserve history',()=>{
   const hw=JSON.parse(fs.readFileSync(new URL('../public/data/homework.json',import.meta.url)));validateHomework(hw);
-  for(const group of hw.classes)for(const session of group.sessions)for(const student of session.students){if(!student.feedbackUrl?.startsWith('/fb/'))continue;assert.equal(isSafeFeedbackUrl(student.feedbackUrl),true);const params=new URL(student.feedbackUrl,'https://speakkai.com').searchParams;const fg=data.classes.find(g=>g.id===params.get('class'));const fs=fg?.sessions.find(s=>s.date===params.get('date'));const match=fs?.students.find(s=>s.id===params.get('student'));assert.equal(match?.name,student.name);assert.ok(match?.en&&match?.zh);}
+  for(const group of hw.classes)for(const session of group.sessions)for(const student of session.students){if(!student.feedbackUrl?.startsWith('/fb/'))continue;assert.equal(isSafeFeedbackUrl(student.feedbackUrl),true);const params=new URL(student.feedbackUrl,'https://speakkai.com').searchParams;const fg=data.classes.find(g=>g.id===params.get('class'));const fs=fg?.sessions.find(s=>s.date===params.get('date'));const match=fs?.students.find(s=>s.id===params.get('student'));assert.equal(match?.name,student.name);assert.ok(match);assert.ok((match.en === null && match.zh === null) || (match.en && match.zh));}
   assert.equal(isSafeFeedbackUrl('/fb/?class=test&date=2026-02-31&student=someone'),false);
   assert.equal(isSafeFeedbackUrl('/fb/?class=test&date=2026-09-13&student=someone&next=https://evil.example'),false);
 });

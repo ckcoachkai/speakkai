@@ -38,13 +38,13 @@ test('Sunday STCC lessons are regular classes; individual lessons stay VIP', () 
   assert.deepEqual(publicBookingPresentation('SHNo.1分享(TMC)'), { kind: 'tmc', title: 'TMC booked' });
 });
 
-test('public group labels expose only allowlisted areas and recorded grades', () => {
+test('public group labels expose only allowlisted areas without grade levels', () => {
   for (const [raw, title] of [
-    ['SAS - 五年级', 'Class booked · 华漕 · G5'],
-    ['井亭大厦 - 二年级 Logan 班', 'Class booked · 龙柏 · G2'],
-    ['井亭大厦 - 二三年级', 'Class booked · 龙柏 · G2–3'],
-    ['古北1699 - 八九年级', 'Class booked · 古北 · G8–9'],
-    ['虹桥天地 三年级', 'Class booked · 华漕 · G3'],
+    ['SAS - 五年级', 'Class booked · 华漕'],
+    ['井亭大厦 - 二年级 Logan 班', 'Class booked · 龙柏'],
+    ['井亭大厦 - 二三年级', 'Class booked · 龙柏'],
+    ['古北1699 - 八九年级', 'Class booked · 古北'],
+    ['虹桥天地 三年级', 'Class booked · 华漕'],
     ['STCC', 'Class booked · 威宁路'],
     ['Unknown student 班课', 'Class booked'],
   ]) {
@@ -57,7 +57,9 @@ test('public group labels expose only allowlisted areas and recorded grades', ()
   const safe=publicScheduleCell('26\nHoliday\n19:00–20:00 · Claire Online 1-1\n20:00–21:00 · 井亭大厦 二年级 Logan 班');
   assert.doesNotMatch(safe,/Claire|Logan|井亭大厦/);
   assert.match(safe,/19:00–20:00 · VIP 1-to-1 booked/);
-  assert.match(safe,/20:00–21:00 · Class booked · 龙柏 · G2/);
+  assert.match(safe,/20:00–21:00 · Class booked · 龙柏/);
+  assert.doesNotMatch(safe, /年级|\bG\d|\bGrades?\s*\d/i);
+  assert.equal(publicScheduleCell('18\n15:40–17:40 · Class booked · 龙柏 · G2–3'), '18\n15:40–17:40 · Class booked · 龙柏');
   assert.equal(publicScheduleCell(safe),safe);
   const internal=internalBookingLabel('SAS - 五年级');
   assert.equal(internal,'SAS · 华漕 - 五年级');

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-16T05:48:04.823304+00:00",
+  "updatedAt": "2026-09-18T09:55:21.226402+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -253,6 +253,44 @@
             ],
             "prepareFor": "Deliver your memorized self-introduction in the next class."
           }
+        },
+        {
+          "id": "2026-09-17-thu-afternoon",
+          "date": "2026-09-17",
+          "time": "15:30–17:30",
+          "classContent": [
+            "We began with voice and body warm-ups, followed by articulation practice. Students then reviewed and presented their self-introductions, with Jarvis speaking first. Feedback focused on controlling distracting hand movements, remembering prepared material, and connecting ideas logically so the audience could follow.\n\nWe then explored food waste in school cafeterias: the current problem, possible solutions, what some other schools are doing, and what students could choose to do themselves to reduce waste.\n\nStudents used a small amount of supplied evidence and information to develop their own opinions. They practised organizing and explaining their points with transitions such as “First,” “Second,” and “Finally.” The lesson included writing and presenting their topic-based speeches, with feedback on logic, detail, pronunciation, pauses, and delivery.\n\nCompleting homework at home is only part of the task. Students also need to prepare so they can present it in class, remembering what they intend to say or at least knowing their main ideas and their order. Written preparation helps students develop structure, logic, and specific details. Speaking practice helps them become comfortable communicating those ideas aloud. The aim is familiarity with the content, rather than reproducing every sentence perfectly. Students can use their own words: there is no single correct wording when sharing their own ideas."
+          ],
+          "homework": {
+            "title": "Food-waste speech",
+            "steps": [
+              "Write out the food-waste speech and practise it aloud at home, ready to present next class. Organize the information and personal opinions clearly, use transitions, and explain the proposed actions for reducing waste.",
+              "Jarvis and Owen particularly need to complete the written work: the teacher felt they had not written their speeches during the activity. Elsa and Pinkie did not complete the previous homework, so completing this assignment was specifically emphasized. Their later writing and presentation efforts in class remain part of their positive progress."
+            ],
+            "prepareFor": "Present your food-waste speech next class."
+          },
+          "students": [
+            {
+              "name": "Pinkie",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-09-17&student=pinkie"
+            },
+            {
+              "name": "Owen",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-09-17&student=owen"
+            },
+            {
+              "name": "Jarvis",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-09-17&student=jarvis"
+            },
+            {
+              "name": "Remi",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-09-17&student=remy"
+            },
+            {
+              "name": "Elsa",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-09-17&student=elsa"
+            }
+          ]
         }
       ]
     },
@@ -345,6 +383,44 @@
             ],
             "prepareFor": "Be ready to present at the next class."
           }
+        },
+        {
+          "id": "2026-09-18-fri-afternoon",
+          "date": "2026-09-18",
+          "time": "15:40–17:40",
+          "classContent": [
+            "We began by reviewing the homework speeches about occupations. Students practised presenting with a voice loud enough for the audience to hear clearly.\n\nWe then introduced structures for answering impromptu questions, helping students organize an answer, explain their reasoning, and support their ideas with an example. The frameworks described were:\n\n◆ PREP: Point, Reason, Example, Point.  \n◆ OREO: Opinion, Reason, Example, Opinion.  \n◆ Answer, Reason, Example, Message.  \n◆ CREI: Claim, Reasoning, Example, Impact.  \n◆ Connect, Answer, Reasoning, Example.\n\nStudents worked through four examples. They wrote out the first two answers to become comfortable with the structure and logic. They then practised answering without preparation, trying to follow PREP while speaking."
+          ],
+          "homework": {
+            "title": "Impromptu structures and dialogue practice",
+            "steps": [
+              "Complete the last two written examples, using the structures introduced in class to organize the answers.",
+              "If possible, also practise the short dialogue between the bank robber and the security guard."
+            ],
+            "prepareFor": "Complete the final two written examples; practise the dialogue if possible."
+          },
+          "students": [
+            {
+              "name": "Wendy",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-18&student=wendy"
+            },
+            {
+              "name": "Mikaela",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-18&student=mikaela"
+            },
+            {
+              "name": "Evan",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-18&student=evan"
+            },
+            {
+              "name": "Ray",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-18&student=ray"
+            },
+            {
+              "name": "Everleigh",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-18&student=everleigh"
+            }
+          ]
         }
       ]
     },
