@@ -72,7 +72,7 @@ export function createBossDeformer(id,pose,t,gentle=false,hit=0,open=false) {
     // Small jaw deformation follows speech without painting a second mouth.
     const jaw=Math.exp(-Math.pow((u-rig.neck[0])/.10,2)-Math.pow((v-(rig.neck[1]-.055))/.045,2));
     y+=(open?.004:-.003)*jaw*motion;
-    if(pose.dance){const d=pose.dance;const shoulders=Math.exp(-Math.pow((v-.33)/.12,2));y+=d.shoulder*(u<.5?1:-1)*shoulders;x+=d.hip*Math.exp(-Math.pow((v-.58)/.2,2));}
+    if(pose.dance){const d=pose.dance;const shoulders=Math.exp(-Math.pow((v-(rig.neck[1]+.06))/.12,2));y+=d.shoulder*(u<.5?1:-1)*shoulders;x+=d.hip*Math.exp(-Math.pow((v-rig.legs[0][0][1])/.2,2));}
     return {x,y};
   };
 }

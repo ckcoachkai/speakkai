@@ -171,17 +171,17 @@ export function createWolfMagic() {
 export function drawWolf(ctx, parts, arms, box, pose, open, t, gentle, hit, magic, hinge, chargedFur) {
   const sx=box.w/1024, sy=box.h/1536;
   ctx.save();ctx.translate(box.x+box.w*.5,box.y+box.h-pose.jump);ctx.scale(sx,sy);ctx.rotate(pose.sway*.3);ctx.translate(-512,-1536);
-  const breath=Math.sin(t*1.7)*(gentle?1:4), hip=Math.sin(t*1.4)*.025;
+  const breath=Math.sin(t*1.7)*(gentle?1:4), hip=Math.sin(t*1.4)*.025+(pose.dance?.hip||0)*3;
   const limb=(part,x,y,angle)=>{ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.drawImage(part,-x,-y);ctx.restore();};
   limb(parts.tail,746,1220,Math.sin(t*2)* (gentle?.025:.13));
   ctx.save();ctx.translate(690,1070);ctx.rotate(hip);ctx.drawImage(parts.thigh,-690,-1070);ctx.translate(0,150);ctx.rotate(-hip*1.8);ctx.drawImage(parts.shin,-690,-1220);ctx.translate(0,145);ctx.rotate(Math.sin(t*2)*.035);ctx.drawImage(parts.paw,-690,-1365);ctx.restore();
   ctx.save();ctx.translate(370,1090);ctx.rotate(-hip);ctx.scale(.78,.97);ctx.drawImage(parts.thigh,-690,-1070);ctx.translate(0,150);ctx.rotate(hip*1.8);ctx.drawImage(parts.shin,-690,-1220);ctx.translate(0,145);ctx.rotate(-Math.sin(t*2)*.035);ctx.drawImage(parts.paw,-690,-1365);ctx.restore();
-  ctx.save();ctx.translate(0,breath);
+  ctx.save();ctx.translate((pose.dance?.hip||0)*1024,breath);
   for(let row=370;row<1390;row+=12){const bend=Math.sin(t*1.4+(row-370)/400)*(gentle?1:5);ctx.drawImage(parts.torso,0,row,1024,12,bend,row,1024,12.5);}
   ctx.drawImage(parts.neck,205,445);
   fur(ctx,t,gentle);if(chargedFur)drawChargedFur(ctx,chargedFur,false);
   // The original painted arm textures rotate at shoulder, elbow and wrist.
-  for(let n=1;n>=0;n--){ctx.save();ctx.translate(n?552:294,n?716:720);ctx.rotate(pose.angles[n*3]*.5+Math.sin(t*1.8+n)*.06);ctx.drawImage(arms.upper,-86,-36,172,226);ctx.translate(0,180);ctx.rotate(pose.angles[n*3+1]*.65);ctx.drawImage(arms.lower,-74,-32,148,224);ctx.translate(0,177);ctx.rotate(pose.angles[n*3+2]+Math.sin(t*2+n)*.05);ctx.drawImage(arms.paw,-85,-25,178,125);ctx.restore();}
+  for(let n=1;n>=0;n--){ctx.save();ctx.translate(n?552:294,(n?716:720)+(pose.dance?.shoulder||0)*1536*(n?1:-1));ctx.rotate(pose.angles[n*3]*.5+Math.sin(t*1.8+n)*.06);ctx.drawImage(arms.upper,-86,-36,172,226);ctx.translate(0,180);ctx.rotate(pose.angles[n*3+1]*.65);ctx.drawImage(arms.lower,-74,-32,148,224);ctx.translate(0,177);ctx.rotate(pose.angles[n*3+2]+Math.sin(t*2+n)*.05);ctx.drawImage(arms.paw,-85,-25,178,125);ctx.restore();}
   // Head recoil pivots at the neck; ears, jaw and the attached eyes follow it.
   ctx.save();ctx.translate(365,500);ctx.rotate(Math.sin(t*1.6)*.035+(hinge?.angle||0));ctx.translate(-365,-500);
   for(let n=0;n<2;n++)limb(parts.ears[n],n?408:252,184,Math.sin(t*2.6+n*1.7)*(gentle?.018:.06));
