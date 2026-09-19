@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-18T09:55:21.226402+00:00",
+  "updatedAt": "2026-09-19T09:30:29.118374+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -83,6 +83,39 @@
             ],
             "prepareFor": "Be ready to deliver the speech at the next class."
           }
+        },
+        {
+          "id": "2026-09-19-sat-original-oratory",
+          "date": "2026-09-19",
+          "time": "13:00–15:00",
+          "classContent": [
+            "1. Warm-up: Reliance on AI in important decisions  \nStudents responded to:\n\n“What’s your opinion on relying on AI, especially for things that matter?”\n\nThe teacher supplied discussion material about economic dependence on AI growth, expectations for employees and government officials to use AI to improve efficiency, and the potential consequences of using inaccurate AI analysis in sensitive international decisions.\n\n2. Response structure  \nStudents organized their answers using:\n\nOpinion → Reason → Supporting evidence, example, or hypothetical situation → Impact\n\nThe focus was on stating a clear position, explaining why, developing specific support, and showing why the issue matters. Hypothetical examples should be clearly identified as imagined situations.\n\n3. Homework presentations and delivery practice  \nStudents presented their prepared speeches, with feedback on vocal strength, pacing, purposeful pauses, emotional expression, specific language, and audience connection. They also practised making the main message simpler and more memorable through emphasis and repetition. Winston’s presentation included an additional Q&A.\n\n➜ Additional class content — Original Oratory brainstorming:  \nStudents brainstormed ideas for their Original Oratory speeches: 10 minutes for Jennifer and 5 minutes for everyone else. We discussed choosing topics with a personal connection and a meaningful societal impact, while making sure each topic is distinctive and researchable.\n\nFor the personal connection, students worked on establishing why they care and showing relevant experience or credibility. We also explored pathos—emotional appeal: using emotional language together with a story to help the audience connect with the speaker’s feelings."
+          ],
+          "homework": {
+            "title": "Develop ten Original Oratory topics",
+            "steps": [
+              "Develop the 10 topics with a little more descriptive detail, then prepare to share them with the teacher. For each topic, consider:\n\n➜ Personal connection: Why do you care? What experience or perspective connects you to it?\n➜ Societal impact: Who does it affect, and why does it matter?\n➜ Uniqueness: What specific angle makes your approach distinctive?\n➜ Researchability: Can you find credible information to support and develop it?\n\nWhen explaining the personal connection, use specific details and, where relevant, a short story to help the audience understand both your experience and your emotions."
+            ],
+            "prepareFor": "Prepare to share your developed topics with the teacher."
+          },
+          "students": [
+            {
+              "name": "Kenny",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-19&student=kenny"
+            },
+            {
+              "name": "Jennifer",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-19&student=jennifer"
+            },
+            {
+              "name": "Kailyn",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-19&student=kailyn"
+            },
+            {
+              "name": "Winston",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-19&student=winston"
+            }
+          ]
         }
       ]
     },
@@ -132,6 +165,39 @@
             "This class was cancelled."
           ],
           "homework": null
+        },
+        {
+          "id": "2026-09-19-sat-foundations",
+          "date": "2026-09-19",
+          "time": "15:00–16:30",
+          "classContent": [
+            "Students reviewed self-introductions, answered warm-up impromptu questions, and received initial feedback. They then worked on foundational speaking skills from the PowerPoint.\n\n➜ Specific details: Replace vague words such as “things” and “stuff” with precise descriptions.\n➜ The bigger idea: Take a step back and consider the broader point behind the answer.\n➜ Define the message: Make the takeaway clear—the message gives the speech value.\n➜ Filtering: Select the ideas and details that best support the message.\n\n➜ Speaking structures shown:\n→ Answer → Reason → Example → Message\n→ CARE: Connect → Answer → Reason → Example\n→ PREP: Point → Reason → Example → Point\n→ OREO: Opinion → Reason → Example → Opinion\n\nEveryone was asked to write down three things they would like to do with an extra free hour each day, numbered 1, 2, and 3, on paper or in a notebook. This exercise helps students generate ideas before organizing a spoken response.\n\nArticulation and emotional-transference drills were planned for the final section; completion has not yet been confirmed."
+          ],
+          "homework": {
+            "title": "Two impromptu questions",
+            "steps": [
+              "Prepare answers to both questions using Answer → Reason → Example → Message:\n\n1. Do you want to be Spider-Man or Spider-Woman?\n2. What would you do if you never ran out of money?\n\nGive a direct answer, explain why, add a specific example, and finish with a clear takeaway for the audience."
+            ],
+            "prepareFor": "Prepare answers using Answer → Reason → Example → Message."
+          },
+          "students": [
+            {
+              "name": "Patrick",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-09-19&student=patrick"
+            },
+            {
+              "name": "Ivy",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-09-19&student=ivy"
+            },
+            {
+              "name": "Kyle",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-09-19&student=kyle"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-09-19&student=william"
+            }
+          ]
         }
       ]
     },
