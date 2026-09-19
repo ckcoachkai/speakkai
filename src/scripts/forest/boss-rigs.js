@@ -24,7 +24,9 @@ function chainPoint(p,chain,rotations,k) {let q=p;for(let i=k;i>=0;i--)q=turn(q,
 export function createBossDeformer(id,pose,t,gentle=false,hit=0,open=false) {
   const rig=BOSS_RIGS[id];if(!rig)throw new Error(`Missing boss rig: ${id}`);
   const motion=gentle?.25:1;
-  const headRotation=rotation(Math.sin(t*1.65)*.035*motion+(pose.recoil??hit*.17)*motion);
+  // Alternating tilt and lateral glide, blended at the neck to keep it attached.
+  const headSway=id==='trump'?Math.sin(t*3.6):0;
+  const headRotation=rotation((id==='trump'?headSway*.13:Math.sin(t*1.65)*.035)*motion+(pose.recoil??hit*.17)*motion);
   const chains=[...rig.arms,...rig.legs].map((points,i)=>{
     const arm=i<2,side=i%2,phase=t*(arm?2.2:1.6)+side*Math.PI;
     const angle=arm?[
@@ -62,6 +64,7 @@ export function createBossDeformer(id,pose,t,gentle=false,hit=0,open=false) {
     }
     const head=smooth((rig.neck[1]+.035-v)/.085);
     const hp=turn([x,y],rig.neck,headRotation);x+=(hp[0]-x+hit*.065*motion)*head;y+=(hp[1]-y)*head;
+    x+=headSway*.018*motion*head;
     const hair=smooth((rig.hair-v)/.08);
     x+=Math.sin(t*(rig.flame?7:3.2)+v*28+u*6)*.012*hair*motion;
     y+=Math.sin(t*3.1+u*15)*.005*hair*motion;
