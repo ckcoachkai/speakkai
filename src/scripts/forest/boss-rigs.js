@@ -10,7 +10,7 @@ export const BOSS_RIGS = {
   sock: {neck:[.51,.40],arms:arms([[.46,.45],[.30,.48],[.14,.41]],[[.64,.47],[.76,.54],[.89,.52]]),legs:legs([[.45,.69],[.40,.82],[.33,.93]],[[.56,.69],[.63,.83],[.72,.94]]),fur:'fabric',hair:0,features:[{from:[.57,.17],to:[.62,.04],radius:.20,angle:.06}],stretch:true},
   queen: {neck:[.50,.29],arms:arms([[.34,.33],[.26,.41],[.16,.43]],[[.64,.34],[.73,.43],[.86,.47]]),legs:legs([[.42,.77],[.39,.85],[.32,.95]],[[.57,.77],[.53,.87],[.57,.95]]),fur:'cloth',hair:0,features:[{from:[.52,.16],to:[.51,.06],radius:.23,angle:.045}],hem:.74},
   elton: {neck:[.49,.27],arms:arms([[.34,.30],[.24,.36],[.11,.37]],[[.66,.30],[.76,.39],[.90,.41]]),legs:legs([[.45,.59],[.39,.76],[.35,.90]],[[.59,.59],[.70,.77],[.77,.93]]),fur:'hair',hair:.085,features:[],hem:.58,sparkles:true},
-  trump: {neck:[.49,.32],arms:arms([[.34,.35],[.25,.43],[.13,.43]],[[.66,.36],[.74,.45],[.90,.47]]),legs:legs([[.46,.64],[.37,.80],[.30,.94]],[[.59,.64],[.66,.80],[.75,.94]]),fur:'hair',hair:.19,features:[{from:[.53,.35],to:[.58,.59],radius:.045,angle:.07}],hem:.64,flame:true},
+  trump: {neck:[.49,.32],arms:arms([[.34,.35],[.25,.43],[.13,.43]],[[.66,.36],[.74,.45],[.90,.47]]),legs:legs([[.46,.64],[.37,.80],[.30,.94]],[[.59,.64],[.66,.80],[.75,.94]]),fur:'hair',hair:.19,features:[{from:[.53,.35],to:[.58,.59],radius:.045,angle:.07}],hem:.64,flame:false},
   koala: {neck:[.48,.44],arms:arms([[.35,.47],[.25,.49],[.14,.44]],[[.64,.51],[.76,.56],[.88,.57]]),legs:legs([[.41,.73],[.36,.83],[.29,.92]],[[.57,.73],[.61,.82],[.68,.90]]),fur:'fur',hair:.18,features:[{from:[.31,.21],to:[.25,.12],radius:.12,angle:.07},{from:[.71,.27],to:[.81,.20],radius:.15,angle:.085}]},
 };
 const sideDistance = (points,u) => points[2][0]<points[0][0]?points[0][0]-u:u-points[0][0];
@@ -133,7 +133,7 @@ export function drawBoss(ctx,img,host,mesh,box,pose,open,t,gentle,hit,magic) {
   }
   const eyes=host.eyes.map(([u,v])=>{const p=deform(u,v);return [p.x,p.y,.008];});
   // Magic shares the same deformed eye anchors, so beams never slide off faces.
-  ctx.save();ctx.scale(1/1024,1/1536);magic.eyes(ctx,t,eyes.map(([x,y,r])=>[x*1024,y*1536,r*1024]));ctx.restore();
+  if(host.id!=='trump'){ctx.save();ctx.scale(1/1024,1/1536);magic.eyes(ctx,t,eyes.map(([x,y,r])=>[x*1024,y*1536,r*1024]));ctx.restore();}
   if(BOSS_RIGS[host.id].sparkles)for(let i=0;i<12;i++){const p=deform(.34+(i%4)*.08,.30+Math.floor(i/4)*.1),size=(.001+Math.max(0,Math.sin(t*2+i))*.003);ctx.fillStyle='#fff4a7';ctx.fillRect(p.x-size,p.y-size*.3,size*2,size*.6);ctx.fillRect(p.x-size*.3,p.y-size,size*.6,size*2);}
   const contact=[host.mouth[0]-.055,host.mouth[1]];
   const resting=createBossDeformer(host.id,pose,t,gentle,0,open)(...contact);
