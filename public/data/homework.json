@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-19T09:30:29.118374+00:00",
+  "updatedAt": "2026-09-20T12:19:30.209345+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -274,6 +274,43 @@
             ],
             "prepareFor": "Present your dream-robot speech in the next class."
           }
+        },
+        {
+          "id": "2026-09-19-sat-introductory",
+          "date": "2026-09-19",
+          "time": "16:30–18:30",
+          "classContent": [
+            "We began by reviewing the homework speeches. Students practised presenting with a voice loud enough for the audience to hear clearly.\n\nWe then introduced structures for answering impromptu questions, helping students organize an answer, explain their reasoning, and support their ideas with an example. The frameworks described were:\n\n◆ PREP: Point, Reason, Example, Point.  \n◆ OREO: Opinion, Reason, Example, Opinion.  \n◆ Answer, Reason, Example, Message.  \n◆ CREI: Claim, Reasoning, Example, Impact.  \n◆ Connect, Answer, Reasoning, Example.\n\nStudents worked through four examples. They wrote out the first two answers to become comfortable with the structure and logic. They then practised answering without preparation, trying to follow PREP while speaking."
+          ],
+          "homework": {
+            "title": "Impromptu speaking practice",
+            "steps": [
+              "Complete the last two written examples, using the structures introduced in class to organize the answers.\n\nIf possible, also practise the short dialogue between the bank robber and the security guard."
+            ],
+            "prepareFor": "Complete the last two written examples; optionally practise the dialogue."
+          },
+          "students": [
+            {
+              "name": "Stacey",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-19&student=stacey"
+            },
+            {
+              "name": "Naru",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-19&student=naru"
+            },
+            {
+              "name": "Emily",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-19&student=emily"
+            },
+            {
+              "name": "Liam",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-19&student=liam"
+            },
+            {
+              "name": "Ethan C.",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-19&student=ethan-c"
+            }
+          ]
         }
       ]
     },
@@ -536,6 +573,35 @@
             ],
             "prepareFor": "Deliver your self-introduction in the next class, memorized if possible."
           }
+        },
+        {
+          "id": "2026-09-18-fri-later",
+          "date": "2026-09-18",
+          "time": "18:00–20:00",
+          "classContent": [
+            "We began by reviewing the homework speeches. Students practised presenting with a voice loud enough for the audience to hear clearly.\n\nWe then introduced structures for answering impromptu questions, helping students organize an answer, explain their reasoning, and support their ideas with an example. The frameworks described were:\n\n◆ PREP: Point, Reason, Example, Point.  \n◆ OREO: Opinion, Reason, Example, Opinion.  \n◆ Answer, Reason, Example, Message.  \n◆ CREI: Claim, Reasoning, Example, Impact.  \n◆ Connect, Answer, Reasoning, Example.\n\nStudents worked through four examples. They wrote out the first two answers to become comfortable with the structure and logic. They then practised answering without preparation, trying to follow PREP while speaking."
+          ],
+          "homework": {
+            "title": "Impromptu speaking practice",
+            "steps": [
+              "Complete the last two written examples, using the structures introduced in class to organize the answers.\n\nIf possible, also practise the short dialogue between the bank robber and the security guard."
+            ],
+            "prepareFor": "Complete the last two written examples; optionally practise the dialogue."
+          },
+          "students": [
+            {
+              "name": "Zoey",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-09-18&student=zoey"
+            },
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-09-18&student=arthur"
+            },
+            {
+              "name": "Merlin",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-09-18&student=merlin"
+            }
+          ]
         }
       ]
     },

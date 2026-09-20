@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-19T09:30:29.115621+00:00",
+  "updatedAt": "2026-09-20T12:19:30.206685+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -335,8 +335,14 @@
           "date": "2026-09-19",
           "time": "16:30–18:30",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "We began by reviewing the homework speeches. Students practised presenting with a voice loud enough for the audience to hear clearly.\n\nWe then introduced structures for answering impromptu questions, helping students organize an answer, explain their reasoning, and support their ideas with an example. The frameworks described were:\n\n◆ PREP: Point, Reason, Example, Point.  \n◆ OREO: Opinion, Reason, Example, Opinion.  \n◆ Answer, Reason, Example, Message.  \n◆ CREI: Claim, Reasoning, Example, Impact.  \n◆ Connect, Answer, Reasoning, Example.\n\nStudents worked through four examples. They wrote out the first two answers to become comfortable with the structure and logic. They then practised answering without preparation, trying to follow PREP while speaking.",
+            "zh": "我们先复习了作业演讲。学生练习使用足够响亮的声音，让听众清楚听见。\n\n接着，我们介绍了回答即兴问题的结构，帮助学生组织答案、解释理由，并用例子支持想法。课堂描述的框架包括：\n\n◆ PREP：观点、理由、例子、重申观点。\n◆ OREO：意见、理由、例子、重申意见。\n◆ 回答、理由、例子、信息。\n◆ CREI：主张、推理、例子、影响。\n◆ 连接、回答、推理、例子。\n\n学生完成了四个例子的练习。前两个先写出答案，以熟悉结构与逻辑；随后练习不做准备直接回答，尝试在讲话时使用 PREP。"
+          },
+          "homework": {
+            "en": "Complete the last two written examples, using the structures introduced in class to organize the answers.\n\nIf possible, also practise the short dialogue between the bank robber and the security guard.",
+            "zh": "完成最后两个书面例子，运用课堂介绍的结构组织答案。\n\n如果可以，也请练习银行劫匪与保安之间的简短对话。"
+          },
           "students": [
             {
               "id": "stacey",
@@ -754,8 +760,14 @@
           "date": "2026-09-18",
           "time": "18:00–20:00",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "We began by reviewing the homework speeches. Students practised presenting with a voice loud enough for the audience to hear clearly.\n\nWe then introduced structures for answering impromptu questions, helping students organize an answer, explain their reasoning, and support their ideas with an example. The frameworks described were:\n\n◆ PREP: Point, Reason, Example, Point.  \n◆ OREO: Opinion, Reason, Example, Opinion.  \n◆ Answer, Reason, Example, Message.  \n◆ CREI: Claim, Reasoning, Example, Impact.  \n◆ Connect, Answer, Reasoning, Example.\n\nStudents worked through four examples. They wrote out the first two answers to become comfortable with the structure and logic. They then practised answering without preparation, trying to follow PREP while speaking.",
+            "zh": "我们先复习了作业演讲。学生练习使用足够响亮的声音，让听众清楚听见。\n\n接着，我们介绍了回答即兴问题的结构，帮助学生组织答案、解释理由，并用例子支持想法。课堂描述的框架包括：\n\n◆ PREP：观点、理由、例子、重申观点。\n◆ OREO：意见、理由、例子、重申意见。\n◆ 回答、理由、例子、信息。\n◆ CREI：主张、推理、例子、影响。\n◆ 连接、回答、推理、例子。\n\n学生完成了四个例子的练习。前两个先写出答案，以熟悉结构与逻辑；随后练习不做准备直接回答，尝试在讲话时使用 PREP。"
+          },
+          "homework": {
+            "en": "Complete the last two written examples, using the structures introduced in class to organize the answers.\n\nIf possible, also practise the short dialogue between the bank robber and the security guard.",
+            "zh": "完成最后两个书面例子，运用课堂介绍的结构组织答案。\n\n如果可以，也请练习银行劫匪与保安之间的简短对话。"
+          },
           "students": [
             {
               "id": "zoey",
