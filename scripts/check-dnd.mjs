@@ -13,11 +13,11 @@ const cloud=await import(asUrl(transpile('../src/lib/dnd/cloud.ts').replace("'./
 
 test('published level 2 Bob data and 2014 Paladin calculations',()=>{
   const c=model.validateCharacter(model.seed);
-  assert.equal(c.level,2);assert.equal(c.hp,13);assert.equal(c.maxHp,20);assert.equal(c.ac,16);assert.equal(c.hitDice,2);assert.equal(model.modifier(c.scores.STR),3);
+  assert.equal(c.level,2);assert.equal(c.hp,20);assert.equal(c.maxHp,20);assert.equal(c.ac,16);assert.equal(c.hitDice,2);assert.equal(model.modifier(c.scores.STR),3);
   assert.equal(model.skillBonus(c,'Athletics'),5);assert.equal(model.skillBonus(c,'History'),1);
-  assert.equal(model.preparedLimit(c),2);assert.equal(c.spells.filter(s=>s.prepared).length,3);assert.equal(c.resources.find(r=>r.id==='hands').max,10);assert.deepEqual(model.slots(1),[0,0,0,0,0]);
-  c.level=2;assert.equal(model.preparedLimit(c),2);assert.deepEqual(model.slots(2),[2,0,0,0,0]);
-  assert.equal(c.scores.CHA,12);assert.equal(model.modifier(c.scores.CHA),1);assert.equal(8+model.proficiency(c.level)+model.modifier(c.scores.CHA),11);assert.equal(model.skillBonus(c,'Persuasion'),3);
+  assert.equal(model.preparedLimit(c),3);assert.equal(c.spells.filter(s=>s.prepared).length,3);assert.equal(c.resources.find(r=>r.id==='hands').max,10);assert.deepEqual(model.slots(1),[0,0,0,0,0]);
+  c.level=2;assert.equal(model.preparedLimit(c),3);assert.deepEqual(model.slots(2),[2,0,0,0,0]);
+  assert.equal(c.scores.CHA,14);assert.equal(model.modifier(c.scores.CHA),2);assert.equal(8+model.proficiency(c.level)+model.modifier(c.scores.CHA),12);assert.equal(model.skillBonus(c,'Persuasion'),4);
   assert.equal(model.proficiency(5),3);assert.equal(model.breathDice(6),3);
   assert.deepEqual(model.slots(20),[4,3,3,3,2]);
 });
@@ -65,6 +65,6 @@ test('published JSON matches the app and Excel download exists',()=>{
   const published=JSON.parse(fs.readFileSync(new URL('../public/dnd/character.json',import.meta.url),'utf8'));
   assert.deepEqual(published,model.seed);
   assert.deepEqual(published.spells.map(s=>s.name),['Cure Wounds','Heroism','Thunderous Smite']);
-  assert.equal(8+model.proficiency(published.level)+model.modifier(published.scores.CHA),11);
+  assert.equal(8+model.proficiency(published.level)+model.modifier(published.scores.CHA),12);
   assert.ok(fs.statSync(new URL('../public/dnd/Bob_the_Paladin.xlsx',import.meta.url)).size>10000);
 });
