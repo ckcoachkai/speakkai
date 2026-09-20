@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-20T12:19:30.206685+00:00",
+  "updatedAt": "2026-09-20T12:33:57.228540+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -543,14 +543,16 @@
             {
               "id": "richard",
               "name": "Richard",
-              "en": null,
-              "zh": null
+              "en": "Absent from this class, as confirmed by the teacher.",
+              "zh": "老师确认本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "molly",
               "name": "Molly",
-              "en": null,
-              "zh": null
+              "en": "Absent from this class, as confirmed by the teacher.",
+              "zh": "老师确认本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "luna",
