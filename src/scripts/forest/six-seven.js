@@ -1,9 +1,12 @@
-export const SIX_SEVEN_DURATION = 4;
-export const SIX_SEVEN_STYLES = 9;
+import {DANCE_DURATION} from './dance.js';
+export const SIX_SEVEN_DURATION = DANCE_DURATION;
+// Neon, pink, blue, purple and gold; omit the monochrome and muted pairs.
+export const SIX_SEVEN_COLUMNS = [7,6,8,5,2];
+export const SIX_SEVEN_STYLES = SIX_SEVEN_COLUMNS.length;
 
 // Crop only the numerals from the supplied sheet, excluding captions and labels.
 export function prepareSixSeven(sheet) {
-  return Array.from({length:9}, (_, style) => [0,1].map(row => {
+  return SIX_SEVEN_COLUMNS.map(style => [0,1].map(row => {
     const c=document.createElement('canvas');c.width=142;c.height=194;
     const x=c.getContext('2d');
     const sx=20+style*170,sy=row?648:136;
@@ -24,7 +27,7 @@ export function prepareSixSeven(sheet) {
 
 export function sixSevenPose(age,gentle=false) {
   const beat=age*Math.PI*2*1.05,amount=gentle?.2:1;
-  const pop=Math.min(1,Math.max(0,age)*5,Math.max(0,SIX_SEVEN_DURATION-age)*5);
+  const pop=Math.min(1,Math.max(0,age+.08)*5,Math.max(0,SIX_SEVEN_DURATION-age)*5);
   return {pop,angles:[-1.8+Math.sin(beat)*.55*amount,-.7,.1,1.8+Math.sin(beat)*.55*amount,.7,-.1]};
 }
 
