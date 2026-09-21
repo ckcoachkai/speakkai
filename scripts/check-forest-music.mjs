@@ -13,3 +13,8 @@ music.update('adventure',true);assert.equal(sources[2].stopped,true);assert.equa
 music.update('adventure',true);assert.equal(sources.length,4);
 assert.equal(sources.filter(s=>!s.stopped).length,1);
 console.log('Music PASS: exclusive switching, pause/mute resume, next-round restart, no overlapping sources.');
+
+music.update('chocolate-cake',true);assert.equal(sources[3].stopped,true);assert.equal(sources[4].offset,0);assert.equal(sources[4].loop,true);
+for(let i=0;i<100;i++)music.update('chocolate-cake',true);assert.equal(sources.length,5);
+music.update('adventure',true);assert.equal(sources[4].stopped,true);assert.equal(sources[5].offset,0);
+console.log('Chocolate Cake PASS: replaces previous track, loops through results, stops on reset.');

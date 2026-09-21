@@ -5,7 +5,7 @@ export function createMusicPlayer(){
   return {
     async load(audio,destination){
       context=audio;gain=destination;
-      if(!loading)loading=Promise.all(['adventure','victory'].map(async name=>{
+      if(!loading)loading=Promise.all(['adventure','victory','chocolate-cake'].map(async name=>{
         const r=await fetch(`/forest/music/${name}.mp3`);if(!r.ok)throw new Error('Music download failed');
         buffers[name]=await context.decodeAudioData(await r.arrayBuffer());
       })).catch(error=>{loading=null;throw error;});

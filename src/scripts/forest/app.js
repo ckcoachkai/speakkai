@@ -85,7 +85,7 @@ new ResizeObserver(()=>{canvas.width=1600;canvas.height=900;}).observe(canvas);
 function label(text,x,y,boost){ctx.font='bold 23px Arial';const w=ctx.measureText(text).width+28;ctx.fillStyle=boost?'#f4db69':'#f1efd9';ctx.beginPath();ctx.roundRect(x-w/2,y-30,w,40,9);ctx.fill();ctx.fillStyle='#263c2e';ctx.textAlign='center';ctx.fillText(text,x,y-2);}
 function frame(now){
  requestAnimationFrame(frame);const dt=Math.min((now-last)/1000,.05);last=now;if(!paused)time+=dt;if(!ready)return;
- musicPlayer.update(encounter&&time-encounter.start>=CRUNCH_BEATS[0]?'victory':'adventure',audioStarted&&musicOn&&!paused&&!document.hidden);
+ musicPlayer.update(encounter?(time-encounter.start>=CRUNCH_BEATS.at(-1)+.10?'chocolate-cake':'victory'):'adventure',audioStarted&&musicOn&&!paused&&!document.hidden);
  if(running&&!paused)runAge+=dt*Number($('#run-speed').value);
  ctx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0);ctx.clearRect(0,0,W,H);
  ctx.drawImage(art.forest,0,0,W,H);ctx.fillStyle='#0c19221b';ctx.fillRect(0,0,W,H);
