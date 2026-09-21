@@ -1,3 +1,4 @@
+import {drawHeldNumber} from './six-seven.js';
 // Normalized landmarks traced against each existing painted character.
 // Continuous skinning keeps the artwork connected across all joints.
 const arms = (a,b) => [a,b];
@@ -134,6 +135,7 @@ export function drawBoss(ctx,img,host,mesh,box,pose,open,t,gentle,hit,magic) {
     ctx.strokeStyle=f.color;ctx.lineWidth=.0008;ctx.beginPath();ctx.moveTo(root.x,root.y);
     ctx.quadraticCurveTo(root.x+f.side*.003+wind*.005,root.y+.003,root.x+f.side*f.length/1024+wind*.008,root.y+.009);ctx.stroke();
   }
+  if(pose.sixSeven)BOSS_RIGS[host.id].arms.forEach((arm,i)=>{const p=deform(...arm[2]);drawHeldNumber(ctx,pose.sixSeven.sprites[i],p.x,p.y,.13,.14,pose.sixSeven.pop);});
   const eyes=host.eyes.map(([u,v])=>{const p=deform(u,v);return [p.x,p.y,.008];});
   // Magic shares the same deformed eye anchors, so beams never slide off faces.
   if(host.id!=='trump'){ctx.save();ctx.scale(1/1024,1/1536);magic.eyes(ctx,t,eyes.map(([x,y,r])=>[x*1024,y*1536,r*1024]));ctx.restore();}

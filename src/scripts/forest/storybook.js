@@ -1,3 +1,4 @@
+import {drawHeldNumber} from './six-seven.js';
 // Interactive cloth and painted creature rig; all animation uses the scene clock.
 export const CRUNCH_BEATS = [0, .37, .79, 1.16, 1.61];
 export const ENCOUNTER_DURATION = 2.55;
@@ -181,7 +182,7 @@ export function drawWolf(ctx, parts, arms, box, pose, open, t, gentle, hit, magi
   ctx.drawImage(parts.neck,205,445);
   fur(ctx,t,gentle);if(chargedFur)drawChargedFur(ctx,chargedFur,false);
   // The original painted arm textures rotate at shoulder, elbow and wrist.
-  for(let n=1;n>=0;n--){ctx.save();ctx.translate(n?552:294,(n?716:720)+(pose.dance?.shoulder||0)*1536*(n?1:-1));ctx.rotate(pose.angles[n*3]*.5+Math.sin(t*1.8+n)*.06);ctx.drawImage(arms.upper,-86,-36,172,226);ctx.translate(0,180);ctx.rotate(pose.angles[n*3+1]*.65);ctx.drawImage(arms.lower,-74,-32,148,224);ctx.translate(0,177);ctx.rotate(pose.angles[n*3+2]+Math.sin(t*2+n)*.05);ctx.drawImage(arms.paw,-85,-25,178,125);ctx.restore();}
+  for(let n=1;n>=0;n--){ctx.save();ctx.translate(n?552:294,(n?716:720)+(pose.dance?.shoulder||0)*1536*(n?1:-1));ctx.rotate(pose.angles[n*3]*.5+Math.sin(t*1.8+n)*.06);ctx.drawImage(arms.upper,-86,-36,172,226);ctx.translate(0,180);ctx.rotate(pose.angles[n*3+1]*.65);ctx.drawImage(arms.lower,-74,-32,148,224);ctx.translate(0,177);ctx.rotate(pose.angles[n*3+2]+Math.sin(t*2+n)*.05);ctx.drawImage(arms.paw,-85,-25,178,125);if(pose.sixSeven)drawHeldNumber(ctx,pose.sixSeven.sprites[n],0,0,140,210,pose.sixSeven.pop);ctx.restore();}
   // Head recoil pivots at the neck; ears, jaw and the attached eyes follow it.
   ctx.save();ctx.translate(365,500);ctx.rotate(Math.sin(t*1.6)*.035+(hinge?.angle||0));ctx.translate(-365,-500);
   for(let n=0;n<2;n++)limb(parts.ears[n],n?408:252,184,Math.sin(t*2.6+n*1.7)*(gentle?.018:.06));
