@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-21T07:12:55.713497+00:00",
+  "updatedAt": "2026-09-21T11:09:31.095745+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -837,6 +837,50 @@
             {
               "name": "Royce",
               "feedbackUrl": null
+            }
+          ]
+        },
+        {
+          "id": "mon-afternoon-2026-09-21",
+          "date": "2026-09-21",
+          "time": "15:30–17:30",
+          "classContent": [
+            "We reviewed students’ proposed speech topics. Many were still too broad or common, lacked a distinctive angle, or reused a previous competition speech topic. Even some more unusual suggestions needed further refinement to stand out.\n\nWe focused on four criteria: societal impact, originality, personal connection, and researchability. We still have time to explore and strengthen students’ choices before settling on a topic."
+          ],
+          "homework": {
+            "title": "Topic shortlist — once provided",
+            "steps": [
+              "Kai will prepare approximately 100 possible topics, preselected for societal impact and originality.",
+              "Once the shortlist is provided, review it and identify topics you personally connect with.",
+              "Consider: Why does this topic matter to me? What personal experience or perspective could I bring? Can I find credible research and specific examples to develop it?"
+            ],
+            "prepareFor": "Further topic selection and development.",
+            "note": "If possible, attend the first offline competition as optional practice to gain experience and get a feel for presenting your chosen topic."
+          },
+          "students": [
+            {
+              "name": "Kiran",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-21&student=kieran"
+            },
+            {
+              "name": "Royce",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-21&student=royce"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-21&student=william"
+            },
+            {
+              "name": "Ariel",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-21&student=ariel"
+            },
+            {
+              "name": "Cynthia",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-21&student=cynthia"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-21&student=sean"
             }
           ]
         }
