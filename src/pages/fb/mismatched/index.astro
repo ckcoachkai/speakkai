@@ -1,0 +1,15 @@
+---
+import vault from '../../../data/mismatched.json';
+---
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="robots" content="noindex,nofollow"/><meta name="referrer" content="no-referrer"/><title>Mismatched feedback | SpeakKai</title></head><body>
+<nav><a href="/fb/">← Class feedback</a><button id="lock" hidden>Lock</button></nav>
+<main id="gate"><h1>Mismatched feedback</h1><p>Private name and feedback review.</p><form id="unlock"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required/><button id="open">Unlock review</button><p id="status" role="status"></p></form></main>
+<iframe id="review" title="Private feedback review" sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox" hidden></iframe>
+<script type="application/json" id="vault" set:html={JSON.stringify(vault).replaceAll('<','\u003c')} />
+<script>
+const form=document.querySelector<HTMLFormElement>('#unlock')!,input=document.querySelector<HTMLInputElement>('#password')!,status=document.querySelector<HTMLElement>('#status')!,frame=document.querySelector<HTMLIFrameElement>('#review')!,gate=document.querySelector<HTMLElement>('#gate')!,lock=document.querySelector<HTMLButtonElement>('#lock')!,button=document.querySelector<HTMLButtonElement>('#open')!;
+const decode=(s:string)=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+form.addEventListener('submit',async e=>{e.preventDefault();button.disabled=true;status.textContent='Unlocking…';try{const v=JSON.parse(document.querySelector('#vault')!.textContent!);const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(input.value),'PBKDF2',false,['deriveKey']);const key=await crypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',iterations:600000,salt:decode(v.salt)},material,{name:'AES-GCM',length:256},false,['decrypt']);const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:decode(v.iv)},key,decode(v.ciphertext));frame.srcdoc=new TextDecoder().decode(plain);frame.hidden=false;gate.hidden=true;lock.hidden=false;input.value='';status.textContent='';}catch{status.textContent='Unable to unlock. Check the password and try again.';}finally{button.disabled=false;}});
+lock.onclick=()=>{frame.srcdoc='';frame.hidden=true;gate.hidden=false;lock.hidden=true;input.value='';input.focus();};
+</script>
+<style is:global>body{margin:0;background:#f3f5f8;color:#172638;font:16px/1.5 system-ui}nav{padding:15px 24px;display:flex;justify-content:space-between;background:#17334d}nav a{color:white}main{max-width:420px;margin:10vh auto;padding:24px}label{display:block}input,button{font:inherit;padding:12px;border:1px solid #aabac9;border-radius:5px}input{width:100%;box-sizing:border-box;margin:8px 0 16px}button{cursor:pointer;background:#17334d;color:white}nav button{border-color:white}iframe{width:100%;height:calc(100dvh - 80px);border:0} [hidden]{display:none!important}</style></body></html>
