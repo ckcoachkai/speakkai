@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {createMusicPlayer} from '../src/scripts/forest/music.js';
+const sources=[];
+globalThis.fetch=async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(8)});
+const audio={currentTime:0,state:'running',decodeAudioData:async()=>({duration:60}),createBufferSource(){const s={connect(){},disconnect(){},start(_,offset){this.offset=offset;},stop(){this.stopped=true;}};sources.push(s);return s;}};
+const music=createMusicPlayer();await music.load(audio,{});
+music.update('adventure',true);assert.equal(sources.length,1);
+audio.currentTime=5;music.update('victory',true);
+assert.equal(sources[0].stopped,true);assert.equal(sources[1].offset,0);
+audio.currentTime=8;music.update('victory',false);assert.equal(sources[1].stopped,true);
+audio.currentTime=15;music.update('victory',true);assert.equal(sources[2].offset,3);
+music.update('adventure',true);assert.equal(sources[2].stopped,true);assert.equal(sources[3].offset,0);
+music.update('adventure',true);assert.equal(sources.length,4);
+assert.equal(sources.filter(s=>!s.stopped).length,1);
+console.log('Music PASS: exclusive switching, pause/mute resume, next-round restart, no overlapping sources.');
