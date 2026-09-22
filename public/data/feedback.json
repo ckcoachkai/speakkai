@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-22T16:31:09.258941+00:00",
+  "updatedAt": "2026-09-22T16:51:11.606974+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -543,28 +543,32 @@
           "date": "2026-09-17",
           "time": "18:15–20:15",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "The lesson focused on preparing Richard, Luna, and Molly for their Tuesday speeches. Richard and Luna were preparing to compete, while Molly was trying to take part. The students had not completed their previous homework, and this session focused on their competition preparation.\n\nRichard and Luna brought their speeches, which I helped edit and adjust. I helped Molly create a speech based on what she would like to do. All three received help with their content as well as their presentation, with the aim of improving as much as possible before Tuesday.\n\nWe practised pronunciation, articulation, and enunciation to make the words clearer. Each student also worked on hand gestures and body language alongside their speech. Attention and focus exercises included practising how to manage distractions and stay focused while presenting. The lesson brought these speaking skills together in a short preparation period: developing the content, expressing it clearly, and supporting it with gestures and physical presentation.\n\nAt the time, the instruction was to prepare according to the school’s requirements. I did not yet know that the event was UCDP. The later clarification was a speech of 60–90 seconds; this was not a duration already known during the lesson.",
+            "zh": "本次课重点是帮助 Richard、Luna 和 Molly 准备周二的演讲。Richard 和 Luna 正在准备参赛，Molly 也在尝试参加。学生尚未完成之前的作业，这次课主要转向比赛准备。\n\nRichard 和 Luna 带来了自己的演讲稿，我帮助他们编辑和调整。Molly 则在我的帮助下，根据她想做的事情创作了一篇演讲稿。三位学生都接受了内容和表达方式两方面的指导，目标是在周二之前尽可能提高。\n\n我们练习了发音、吐字和清晰咬字，让词句表达得更清楚。每位学生也结合自己的演讲练习了手势和肢体语言。注意力和专注练习包括应对干扰，以及在展示过程中保持专注。在较短的准备时间内，我们结合了多项演讲技能：发展内容、清楚表达，并用手势和身体表现支持演讲。\n\n当时的要求是按照学校的要求做好准备，老师还不知道最终是 UCDP 活动。后来才明确演讲时长为60–90秒；这不是课堂当时已经知道的时长要求。"
+          },
+          "homework": {
+            "en": "Practise the edited or newly created speech according to the school’s requirements, ready for Tuesday’s presentation. Rehearse it several times rather than only having the written speech ready.\n\nInclude the pronunciation, articulation, and enunciation practised in class. Rehearse the hand gestures and body language for the speech, and practise maintaining attention and focus when there are distractions. Repeated practice and preparation could help make the Tuesday presentation stronger.\n\nLater clarification: the event was UCDP, with a speech lasting 60–90 seconds. These details became known after the lesson.\n\nThe teacher also extended the rehearsal instruction to a student who was not there.",
+            "zh": "按照学校的要求，练习修改后或新创作的演讲，为周二的展示做好准备。需要多排练几次，而不只是准备好书面稿件。\n\n练习课堂指导过的发音、吐字和清晰咬字，同时排练与演讲配合的手势和肢体语言，并练习在有干扰时保持注意力和专注。反复练习和充分准备，有助于提升周二的展示效果。\n\n后续说明：活动为 UCDP，演讲时长为60–90秒。这些信息是在本次课之后才明确的。\n\n老师也将排练要求布置给了一位未到场的学生。"
+          },
           "students": [
             {
               "id": "richard",
               "name": "Richard",
-              "en": "Absent from this class, as confirmed by the teacher.",
-              "zh": "老师确认本次课缺席。",
-              "attendance": "absent"
+              "en": "✓ 𝑺𝒑𝒆𝒆𝒄𝒉 𝒑𝒓𝒆𝒑𝒂𝒓𝒂𝒕𝒊𝒐𝒏:\nRichard attended and brought his speech for the competition. He had not completed the previous homework; the lesson instead focused on preparing this speech for Tuesday. I helped him edit and adjust its content.\n\n➜ 𝑫𝒆𝒍𝒊𝒗𝒆𝒓𝒚 𝒑𝒓𝒂𝒄𝒕𝒊𝒄𝒆:\nHe practised pronunciation, articulation, and enunciation, together with hand gestures and body language for his speech. The class also worked on attention, focus, and managing distractions while presenting. These were areas practised, rather than a claim that every skill was already mastered.\n\n➜ 𝑯𝒐𝒎𝒆 𝒓𝒆𝒉𝒆𝒂𝒓𝒔𝒂𝒍:\nPractise the adjusted speech several times according to the school’s requirements, bringing the clear pronunciation, gestures, and focus together for Tuesday. The event was later identified as UCDP, with a 60–90-second speech; those details were not yet known during this lesson.",
+              "zh": "✓【演讲准备】：\nRichard 参加了本次课，并带来了比赛演讲稿。他尚未完成之前的作业，本次课转而重点准备周二要展示的演讲。我帮助他编辑和调整了内容。\n\n➜【表达练习】：\n他结合自己的演讲练习了发音、吐字、清晰咬字，以及手势和肢体语言。课堂也练习了展示时的注意力、专注和应对干扰。这些是本次练习的内容，并不代表已经熟练掌握每项技能。\n\n➜【在家排练】：\n按照学校的要求，多练习几次调整后的演讲，将清楚发音、手势和专注结合起来，为周二做好准备。后来才确认活动为 UCDP，演讲时长为60–90秒；课堂当时尚不知道这些细节。"
             },
             {
               "id": "molly",
               "name": "Molly",
-              "en": "Absent from this class, as confirmed by the teacher.",
-              "zh": "老师确认本次课缺席。",
-              "attendance": "absent"
+              "en": "✓ 𝑺𝒑𝒆𝒆𝒄𝒉 𝒅𝒆𝒗𝒆𝒍𝒐𝒑𝒎𝒆𝒏𝒕:\nMolly attended and was trying to take part in the competition. She had not completed the previous homework. During this lesson, I helped her create a speech based on what she would like to do, giving her content to develop and rehearse for Tuesday.\n\n➜ 𝑫𝒆𝒍𝒊𝒗𝒆𝒓𝒚 𝒑𝒓𝒂𝒄𝒕𝒊𝒄𝒆:\nShe practised pronunciation, articulation, and enunciation, as well as hand gestures and body language for her speech. Attention and focus exercises also addressed managing distractions while presenting. The preparation combined help with what to say and practice in how to present it.\n\n➜ 𝑯𝒐𝒎𝒆 𝒓𝒆𝒉𝒆𝒂𝒓𝒔𝒂𝒍:\nPractise the speech several times according to the school’s requirements, using the vocal and physical delivery skills rehearsed in class. Repeated preparation could help her present more effectively on Tuesday. The event was later identified as UCDP, with a 60–90-second speech; this duration was not known during the lesson.",
+              "zh": "✓【演讲内容发展】：\nMolly 参加了本次课，并在尝试参加比赛。她尚未完成之前的作业。课堂中，我根据她想做的事情，帮助她创作了一篇演讲稿，供她继续发展和排练，为周二做准备。\n\n➜【表达练习】：\n她练习了发音、吐字和清晰咬字，也结合自己的演讲练习了手势和肢体语言。注意力与专注练习还包括展示时如何应对干扰。准备过程既帮助她明确说什么，也练习如何把内容表达出来。\n\n➜【在家排练】：\n按照学校的要求，多练习几次演讲，运用课堂排练过的声音和肢体表达技能。反复准备可以帮助她在周二更好地展示。后来才确认活动为 UCDP，演讲时长为60–90秒；课堂当时尚不知道这一时长。"
             },
             {
               "id": "luna",
               "name": "Luna",
-              "en": "➜ 𝑺𝒑𝒆𝒆𝒄𝒉 𝒍𝒆𝒏𝒈𝒕𝒉:\nLuna’s prepared school speech appeared quite long. However, the required duration and presentation format are not yet known, so we cannot determine whether it needs shortening.\n\n➜ 𝑪𝒐𝒎𝒑𝒆𝒕𝒊𝒕𝒊𝒐𝒏 𝒓𝒆𝒒𝒖𝒊𝒓𝒆𝒎𝒆𝒏𝒕𝒔:\nYou had not received details about the school speech or competition. When asked, Luna was unable to provide those details herself.\n\n➜ 𝑭𝒐𝒍𝒍𝒐𝒘-𝒖𝒑:\nObtain the school’s instructions, particularly the time limit, topic, and whether students may use a script or must present from memory. These details will help guide any changes to her speech and rehearsal.",
-              "zh": "➜【演讲长度】：\nLuna 准备的学校演讲看起来较长。不过，目前还不知道要求的时长和展示形式，因此不能判断是否需要缩短。\n\n➜【比赛要求】：\n老师尚未收到学校演讲或比赛的详细要求。询问时，Luna 自己也无法提供这些信息。\n\n➜【后续确认】：\n需要取得学校的说明，特别是时间限制、主题，以及是否可以看稿或需要脱稿。这些信息将帮助确定如何修改演讲和安排练习。"
+              "en": "➜ 𝑺𝒑𝒆𝒆𝒄𝒉 𝒍𝒆𝒏𝒈𝒕𝒉:\nLuna’s prepared school speech appeared quite long. However, the required duration and presentation format are not yet known, so we cannot determine whether it needs shortening.\n\n➜ 𝑪𝒐𝒎𝒑𝒆𝒕𝒊𝒕𝒊𝒐𝒏 𝒓𝒆𝒒𝒖𝒊𝒓𝒆𝒎𝒆𝒏𝒕𝒔:\nYou had not received details about the school speech or competition. When asked, Luna was unable to provide those details herself.\n\n➜ 𝑭𝒐𝒍𝒍𝒐𝒘-𝒖𝒑:\nObtain the school’s instructions, particularly the time limit, topic, and whether students may use a script or must present from memory. These details will help guide any changes to her speech and rehearsal.\n\n✓ 𝑨𝒅𝒅𝒊𝒕𝒊𝒐𝒏𝒂𝒍 𝒍𝒆𝒔𝒔𝒐𝒏 𝒅𝒆𝒕𝒂𝒊𝒍𝒔:\nLuna brought her competition speech, and I helped edit and adjust it for Tuesday. She had not completed the previous homework; the session focused on competition preparation. She practised pronunciation, articulation, and enunciation, along with hand gestures and body language. Attention and focus exercises included managing distractions while presenting.\n\n➜ 𝑹𝒆𝒉𝒆𝒂𝒓𝒔𝒂𝒍 𝒂𝒏𝒅 𝒍𝒂𝒕𝒆𝒓 𝒄𝒍𝒂𝒓𝒊𝒇𝒊𝒄𝒂𝒕𝒊𝒐𝒏:\nHer homework was to practise the adjusted speech several times according to the school’s requirements, combining the vocal work, gestures, and focus for Tuesday. The event was later identified as UCDP, with a 60–90-second speech. This later information clarifies the duration that was still unknown when the original feedback was given; the other school requirements still need to be followed.",
+              "zh": "➜【演讲长度】：\nLuna 准备的学校演讲看起来较长。不过，目前还不知道要求的时长和展示形式，因此不能判断是否需要缩短。\n\n➜【比赛要求】：\n老师尚未收到学校演讲或比赛的详细要求。询问时，Luna 自己也无法提供这些信息。\n\n➜【后续确认】：\n需要取得学校的说明，特别是时间限制、主题，以及是否可以看稿或需要脱稿。这些信息将帮助确定如何修改演讲和安排练习。\n\n✓【补充课堂记录】：\nLuna 带来了比赛演讲稿，我帮助她编辑和调整，为周二做准备。她尚未完成之前的作业，本次课主要准备比赛。她练习了发音、吐字和清晰咬字，以及手势和肢体语言。注意力与专注练习包括展示时应对干扰。\n\n➜【排练与后续说明】：\n作业是按照学校的要求，多练习几次调整后的演讲，将声音练习、手势和专注结合起来，为周二做好准备。后来才确认活动为 UCDP，演讲时长为60–90秒。这一后续信息补充了最初反馈中尚不明确的时长要求；学校的其他要求仍需遵守。"
             },
             {
               "id": "juliana",

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-22T12:03:57.192198+00:00",
+  "updatedAt": "2026-09-22T16:51:11.606974+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -440,6 +440,49 @@
             ],
             "prepareFor": "Present your self-introduction at the next class."
           }
+        },
+        {
+          "id": "2026-09-17-thu-later",
+          "date": "2026-09-17",
+          "time": "18:15–20:15",
+          "classContent": [
+            "The lesson focused on preparing Richard, Luna, and Molly for their Tuesday speeches. Richard and Luna were preparing to compete, while Molly was trying to take part. The students had not completed their previous homework, and this session focused on their competition preparation.\n\nRichard and Luna brought their speeches, which I helped edit and adjust. I helped Molly create a speech based on what she would like to do. All three received help with their content as well as their presentation, with the aim of improving as much as possible before Tuesday.\n\nWe practised pronunciation, articulation, and enunciation to make the words clearer. Each student also worked on hand gestures and body language alongside their speech. Attention and focus exercises included practising how to manage distractions and stay focused while presenting. The lesson brought these speaking skills together in a short preparation period: developing the content, expressing it clearly, and supporting it with gestures and physical presentation.\n\nAt the time, the instruction was to prepare according to the school’s requirements. I did not yet know that the event was UCDP. The later clarification was a speech of 60–90 seconds; this was not a duration already known during the lesson."
+          ],
+          "homework": {
+            "title": "Practise the competition speech for Tuesday",
+            "steps": [
+              "Practise the edited or newly created speech according to the school’s requirements, ready for Tuesday’s presentation. Rehearse it several times rather than only having the written speech ready.",
+              "Include the pronunciation, articulation, and enunciation practised in class. Rehearse the hand gestures and body language for the speech, and practise maintaining attention and focus when there are distractions. Repeated practice and preparation could help make the Tuesday presentation stronger."
+            ],
+            "prepareFor": "Tuesday’s presentation, following the school’s requirements.",
+            "note": "Later clarification: the event was UCDP, with a speech lasting 60–90 seconds. These details became known after the lesson.\n\nThe teacher also extended the rehearsal instruction to a student who was not there."
+          },
+          "students": [
+            {
+              "name": "Richard",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-17&student=richard"
+            },
+            {
+              "name": "Molly",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-17&student=molly"
+            },
+            {
+              "name": "Luna",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-17&student=luna"
+            },
+            {
+              "name": "Juliana",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-17&student=juliana"
+            },
+            {
+              "name": "Angela",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-17&student=angela"
+            },
+            {
+              "name": "Kiana",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-17&student=kiana"
+            }
+          ]
         }
       ]
     },
