@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-21T11:09:31.095745+00:00",
+  "updatedAt": "2026-09-22T12:03:57.192198+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -845,17 +845,14 @@
           "date": "2026-09-21",
           "time": "15:30–17:30",
           "classContent": [
-            "We reviewed students’ proposed speech topics. Many were still too broad or common, lacked a distinctive angle, or reused a previous competition speech topic. Even some more unusual suggestions needed further refinement to stand out.\n\nWe focused on four criteria: societal impact, originality, personal connection, and researchability. We still have time to explore and strengthen students’ choices before settling on a topic."
+            "We reviewed students’ proposed speech topics. Many were still too broad or common, lacked a distinctive angle, or reused a previous competition speech topic. Even some more unusual suggestions needed further refinement to stand out.\n\nWe focused on four criteria: societal impact, originality, personal connection, and researchability. We still have time to explore and strengthen students’ choices before settling on a topic.\n\nWe began by reviewing the previous homework and students’ presentations. We reinforced that homework is not simply a writing task: its purpose is to prepare students to present their ideas in class.\n\nWe watched a video described in the discussion as showing a police officer harassing FBI agents, followed by an agent identifying himself. This led into a discussion about personal experience and credibility: having direct experience of an issue can give a speaker a meaningful perspective and help explain why they care about it. For example, someone who has experienced racism or discrimination may draw on that experience when discussing the topic. Personal experience can support the speech alongside research and evidence.\n\nStudents used four filters to evaluate possible topics:\n\n◆ Societal impact: Why does this issue matter to other people?\n◆ Personal experience or connection: What experience, interest, or perspective connects the speaker to it?\n◆ Uniqueness: What makes the topic or the speaker’s angle distinctive?\n◆ Researchability: Can the student find information and evidence to develop it?\n\nWe looked at approximately 100 potential topics. Students worked on writing down three to ten possible choices, and Kai helped them select their strongest topic. They then briefly introduced their chosen topic and discussed how they could develop its direction and central message."
           ],
           "homework": {
-            "title": "Topic shortlist — once provided",
+            "title": "Research and develop the chosen topic",
             "steps": [
-              "Kai will prepare approximately 100 possible topics, preselected for societal impact and originality.",
-              "Once the shortlist is provided, review it and identify topics you personally connect with.",
-              "Consider: Why does this topic matter to me? What personal experience or perspective could I bring? Can I find credible research and specific examples to develop it?"
+              "Research the topic selected in class and write out its central idea: what do you want the audience to understand, think about, or take away?\n\nAim for approximately 100–200 words, or write as much as you can meaningfully develop at this stage. Expand on what you want to discuss, using the four filters to guide your thinking and adding relevant information from your research.\n\nBring the work to the next class and be ready to present it. Have it available so the teacher can see it. The goal is not merely to write something at home, but to arrive prepared to share and explain the developing speech.\n\nOptional competition practice: If possible, students are encouraged to attend the first offline competition as a practice opportunity—to gain experience and get a feel for presenting their chosen topic."
             ],
-            "prepareFor": "Further topic selection and development.",
-            "note": "If possible, attend the first offline competition as optional practice to gain experience and get a feel for presenting your chosen topic."
+            "prepareFor": "Bring the work and prepare to present the developing speech."
           },
           "students": [
             {
@@ -962,6 +959,43 @@
               "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-15&student=harry"
             }
           ]
+        },
+        {
+          "id": "tue-afternoon-2026-09-22",
+          "date": "2026-09-22",
+          "time": "15:30–17:30",
+          "classContent": [
+            "We began by reviewing the previous homework and students’ presentations. We reinforced that homework is not simply a writing task: its purpose is to prepare students to present their ideas in class.\n\nWe watched a video described in the discussion as showing a police officer harassing FBI agents, followed by an agent identifying himself. This led into a discussion about personal experience and credibility: having direct experience of an issue can give a speaker a meaningful perspective and help explain why they care about it. For example, someone who has experienced racism or discrimination may draw on that experience when discussing the topic. Personal experience can support the speech alongside research and evidence.\n\nStudents used four filters to evaluate possible topics:\n\n◆ Societal impact: Why does this issue matter to other people?\n◆ Personal experience or connection: What experience, interest, or perspective connects the speaker to it?\n◆ Uniqueness: What makes the topic or the speaker’s angle distinctive?\n◆ Researchability: Can the student find information and evidence to develop it?\n\nWe looked at approximately 100 potential topics. Students worked on writing down three to ten possible choices, and Kai helped them select their strongest topic. They then briefly introduced their chosen topic and discussed how they could develop its direction and central message."
+          ],
+          "homework": {
+            "title": "Develop the chosen speech topic",
+            "steps": [
+              "Research the topic selected in class and write out its central idea: what do you want the audience to understand, think about, or take away?\n\nAim for approximately 100–200 words, or write as much as you can meaningfully develop at this stage. Expand on what you want to discuss, using the four filters to guide your thinking and adding relevant information from your research.\n\nBring the work to the next class and be ready to present it. Have it available so the teacher can see it. The goal is not merely to write something at home, but to arrive prepared to share and explain the developing speech."
+            ],
+            "prepareFor": "Bring the work for review and be ready to share the developing speech."
+          },
+          "students": [
+            {
+              "name": "Alyssa",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-22&student=alyssa"
+            },
+            {
+              "name": "Ethan Liu",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-22&student=ethan-liu"
+            },
+            {
+              "name": "Ethan Jia",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-22&student=ethan-jia"
+            },
+            {
+              "name": "Harry",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-22&student=harry"
+            },
+            {
+              "name": "Patrick",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-09-22&student=patrick"
+            }
+          ]
         }
       ]
     },
@@ -1033,6 +1067,39 @@
             {
               "name": "Sean",
               "feedbackUrl": "/fb/?class=tue-later&date=2026-09-15&student=sean"
+            }
+          ]
+        },
+        {
+          "id": "tue-later-2026-09-22",
+          "date": "2026-09-22",
+          "time": "17:40–19:40",
+          "classContent": [
+            "We began by reviewing the previous homework: responding to a hypothetical claim that, in a couple of decades, only 10% of Earth would remain habitable. Students needed to explain whether they thought this could happen, give their reasons, and describe what that future might look like from their perspective. The statement was a discussion prompt to evaluate, rather than an established prediction.\n\nStudents presented their responses and received feedback on preparation, organization, supporting details, speaking length, voice projection, confidence, and audience connection.\n\nWe then reviewed four characteristics of a strong speech topic:\n\n◆ Societal impact: Why does the issue matter beyond the individual speaker?\n◆ Personal connection: What experience, interest, or perspective connects the speaker to it?\n◆ Researchability: Can the student find credible information and evidence to develop the speech?\n◆ Uniqueness: What makes the topic or the speaker’s approach distinctive?\n\nUsing the FBI and police-officer example discussed in class, along with references to people in roles such as judges, we explored how personal experience can give a speaker credibility and a meaningful connection to an issue. Students considered how their own experiences could help explain why they care about a topic.\n\nEach student proposed topics. We discussed their possibilities, narrowed or redirected ideas where needed, and began turning broad subjects into workable directions for a final speech."
+          ],
+          "homework": {
+            "title": "Develop the chosen speech topic",
+            "steps": [
+              "Do some research on the topic you intend to pursue. Write an outline or core explanation, together with the central message, totaling at least approximately 200 words.\n\nThe work should begin to explain:\n\n◆ What you want to discuss.\n◆ Why it matters and how you connect to it.\n◆ What information or examples you could use.\n◆ What you want the audience to understand or take away.\n\nThis is development work for the final speech; it does not need to be a finished script yet. Bring the work so it can be reviewed and developed further.\n\nClass materials: Bring a notebook and a pen or pencil. The previously established rule is that student electronic devices are not used in this class."
+            ],
+            "prepareFor": "Bring the work for review and be ready to share the developing speech."
+          },
+          "students": [
+            {
+              "name": "Lyon",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-09-22&student=lyon"
+            },
+            {
+              "name": "Nelson",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-09-22&student=nelson"
+            },
+            {
+              "name": "Jayden",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-09-22&student=jayden"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-09-22&student=sean"
             }
           ]
         }
