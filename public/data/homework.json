@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-22T16:51:11.606974+00:00",
+  "updatedAt": "2026-09-24T12:24:30.365348+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -481,6 +481,41 @@
             {
               "name": "Kiana",
               "feedbackUrl": "/fb/?class=thu-later&date=2026-09-17&student=kiana"
+            }
+          ]
+        },
+        {
+          "id": "2026-09-24-thu-later",
+          "date": "2026-09-24",
+          "time": "18:15–20:15",
+          "classContent": [
+            "Students presented self-introductions or prepared speeches and received feedback on detail, preparation, voice projection, audience contact, vocal variation, and pauses. Repeated speaking attempts gave opportunities to practise the feedback. The group seemed a little shy; the teacher asked how many students already knew one another.\n\nWe practised pausing together using Molly’s ice-skating speech: “Hello, everyone”—pause—“My name is Molly”—pause—“I love ice skating.” Claps marked sentence endings and natural breaks so students could hear and feel where to stop, rather than speaking continuously. Students could then replace the claps with silent pauses.\n\nThe practice passage described moving across the ice and feeling the cold air, and how skating can be fun but also hard. It referred to an ice-skating event in Shenzhen in September and skaters showing their moves. It then developed the message that learning one push, turn, or step at a time—and getting up after falling—helps small efforts lead to bigger achievements: “Every small try helps me get better. Small steps today can help me do big things tomorrow.” These were elements of the practice speech. The teacher also recalled advice from a public-speaking champion about deliberately counting pauses in a speech.\n\nStudents then began writing down speaking frameworks:\n\n◆ PREP: introduced through Point, Reason, and Example as the simplest starting structure.\n◆ OREO: Opinion, Reason, Example, Opinion.\n◆ CARE: Connect, Answer, Reason, Example. “Connect” means first reaching out to the audience; the teacher modelled this by asking, “How many of you are hungry?” before moving into the answer.\n◆ ARM: introduced with emphasis on ending with a message—what the speaker wants to tell the audience.\n◆ CREI: introduced as a related debate framework, with similarities to the other structures.\n\nStudents who needed more writing support were asked to copy the first framework; stronger writers could copy more. Practice with these structures was planned after the break; its completion has not yet been reported."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Ary",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-24&student=ary"
+            },
+            {
+              "name": "Molly",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-24&student=molly"
+            },
+            {
+              "name": "Whistler",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-24&student=whistler"
+            },
+            {
+              "name": "Richard",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-24&student=richard"
+            },
+            {
+              "name": "Evelyn",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-24&student=evelyn"
+            },
+            {
+              "name": "Candy",
+              "feedbackUrl": "/fb/?class=thu-later&date=2026-09-24&student=candy"
             }
           ]
         }

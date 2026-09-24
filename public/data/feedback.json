@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-22T16:51:11.606974+00:00",
+  "updatedAt": "2026-09-24T12:24:30.362191+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -590,6 +590,56 @@
               "en": "Absent from this class, as confirmed by the teacher.",
               "zh": "老师确认本次课缺席。",
               "attendance": "absent"
+            }
+          ]
+        },
+        {
+          "id": "2026-09-24-thu-later",
+          "date": "2026-09-24",
+          "time": "18:15–20:15",
+          "status": "held",
+          "classContent": {
+            "en": "Students presented self-introductions or prepared speeches and received feedback on detail, preparation, voice projection, audience contact, vocal variation, and pauses. Repeated speaking attempts gave opportunities to practise the feedback. The group seemed a little shy; the teacher asked how many students already knew one another.\n\nWe practised pausing together using Molly’s ice-skating speech: “Hello, everyone”—pause—“My name is Molly”—pause—“I love ice skating.” Claps marked sentence endings and natural breaks so students could hear and feel where to stop, rather than speaking continuously. Students could then replace the claps with silent pauses.\n\nThe practice passage described moving across the ice and feeling the cold air, and how skating can be fun but also hard. It referred to an ice-skating event in Shenzhen in September and skaters showing their moves. It then developed the message that learning one push, turn, or step at a time—and getting up after falling—helps small efforts lead to bigger achievements: “Every small try helps me get better. Small steps today can help me do big things tomorrow.” These were elements of the practice speech. The teacher also recalled advice from a public-speaking champion about deliberately counting pauses in a speech.\n\nStudents then began writing down speaking frameworks:\n\n◆ PREP: introduced through Point, Reason, and Example as the simplest starting structure.\n◆ OREO: Opinion, Reason, Example, Opinion.\n◆ CARE: Connect, Answer, Reason, Example. “Connect” means first reaching out to the audience; the teacher modelled this by asking, “How many of you are hungry?” before moving into the answer.\n◆ ARM: introduced with emphasis on ending with a message—what the speaker wants to tell the audience.\n◆ CREI: introduced as a related debate framework, with similarities to the other structures.\n\nStudents who needed more writing support were asked to copy the first framework; stronger writers could copy more. Practice with these structures was planned after the break; its completion has not yet been reported.",
+            "zh": "学生展示了自我介绍或准备好的演讲，并接受了有关内容细节、准备情况、声音投射、听众交流、声音变化和停顿的反馈。重复发言让学生有机会按照反馈进行练习。全班显得有些害羞，老师询问了哪些学生原本已经认识彼此。\n\n全班用 Molly 的滑冰演讲一起练习停顿：“Hello, everyone”—停顿—“My name is Molly”—停顿—“I love ice skating”。用拍手标记句末和自然的意思间隔，让学生听到并感受到该在哪里停下来，而不是一直连续说话。之后可以用安静的停顿代替拍手。\n\n练习段落描述了在冰上滑行、感受冷空气，以及滑冰既有趣也可能困难。稿件提到了九月深圳的一场滑冰活动，以及滑冰者展示动作的情景。随后发展了一个核心信息：一次学会一个蹬冰动作、一个转弯或一步，摔倒后再站起来，小小的努力能帮助自己获得更大的进步：“Every small try helps me get better. Small steps today can help me do big things tomorrow.”这些都是练习稿件中的内容。老师也回忆了一位公众演讲冠军的建议：有意识地计算演讲中的停顿。\n\n学生随后开始把演讲框架记在笔记本上：\n\n◆ PREP：通过观点、理由和例子介绍这一最简单的起步结构。\n◆ OREO：意见、理由、例子、重申意见。\n◆ CARE：连接听众、回答、理由、例子。“连接”是先与听众建立交流；老师用“How many of you are hungry?”作示范，再进入回答。\n◆ ARM：强调结尾要有一个信息，即演讲者希望告诉听众什么。\n◆ CREI：作为相关的辩论框架介绍，指出它与其他结构有相似之处。\n\n需要更多书写支持的学生先抄写第一个框架，书写能力较强的学生可以多写几个。计划在休息后练习这些结构；目前尚未记录是否完成。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "ary",
+              "name": "Ary",
+              "en": "Ary gave a very short introduction. He shared that he likes playing soccer by himself and has played for one year. He offered few additional details.\n\n➜ Next step: Expand with where he plays, what he enjoys about soccer, and one skill he has learned during that year.",
+              "zh": "Ary 做了一个很简短的自我介绍。他说自己喜欢独自踢足球，已经踢了一年，但没有提供太多其他细节。\n\n➜【下一步】：可以补充在哪里踢球、为什么喜欢足球，以及这一年学会的一项技能。"
+            },
+            {
+              "id": "molly",
+              "name": "Molly",
+              "en": "✓ Molly read her speech without any pronunciation difficulties.\n\n➜ She had not practised at home. For next time, she needs to complete the rehearsal homework so she arrives prepared to present her speech.",
+              "zh": "✓ Molly 能够读出演讲稿，没有出现发音困难。\n\n➜ 她没有在家练习。下次需要完成排练作业，做好准备后在课堂上展示演讲。"
+            },
+            {
+              "id": "whistler",
+              "name": "Whistler",
+              "en": "✓ Whistler’s vocabulary appeared adequate for what he wanted to express.\n\n➜ His voice was a little soft, although the fans may have made him harder to hear. He should practise speaking louder so everyone can hear clearly.\n\n➜ He appeared hesitant about what to say while standing before the class. This may reflect shyness or unfamiliarity with speaking on stage, rather than a vocabulary difficulty.\n\n➜ Suggested practice: Prepare two or three simple points, then practise sharing them in a clearly audible voice with one listener before addressing the group.",
+              "zh": "✓ Whistler 表现出的词汇量似乎足以支持他想表达的内容。\n\n➜ 他的声音偏轻，不过风扇声也可能影响了听众听清。他需要练习提高音量，让大家都能听清楚。\n\n➜ 站在全班面前时，他对接下来要说什么显得有些犹豫。这可能与害羞或不熟悉上台讲话有关，而不一定是词汇方面的困难。\n\n➜【建议练习】：先准备两三个简单要点，用清楚可闻的声音讲给一位听众听，再练习面对全班表达。"
+            },
+            {
+              "id": "richard",
+              "name": "Richard",
+              "en": "✓ Richard remembered the words of his competition speech and included a few presentation elements.\n\n➜ His eyes moved around rather than maintaining steady contact with the audience. His voice sounded mechanical, with limited vocal variation and deliberate pauses. Memorizing the words is a useful start; the delivery also needs rehearsal.\n\n➜ Suggested practice: Mark pauses and important words in the script. Practise varying volume, pace, and expression, while looking toward the audience through each complete idea.",
+              "zh": "✓ Richard 记住了比赛演讲的词句，也加入了少量展示动作。\n\n➜ 他的目光四处移动，没有持续与听众保持稳定的目光交流。声音听起来较机械，声音变化和有意识的停顿都比较有限。记住词句是一个有用的起点，表达方式也需要排练。\n\n➜【建议练习】：在稿件中标出停顿和重点词语，练习改变音量、速度和语气，并在表达每个完整意思时看向听众。"
+            },
+            {
+              "id": "evelyn",
+              "name": "Evelyn",
+              "en": "✓ Evelyn forgot some words and lost her place in the middle, but later got back on track and continued.\n\n➜ Her main priority is volume: her voice was very soft, making it difficult for the audience to hear her.\n\n➜ Suggested practice: Rehearse a short section while speaking clearly to someone across the room. If she forgets a word, pause, recall the next main idea, and continue.\n\n➜ Second and third attempts:\n✓ Evelyn became distracted during the repeated attempts, but without distractions she spoke more loudly. This adds progress to her earlier attempt, when she forgot some words, recovered, and continued.\n\n➜ Her next priority is pausing and slowing down. She spoke continuously, leaving little space between ideas. When asked, she said she did not have a competition time limit.\n\n➜ Practice used in class: Clap at sentence endings and natural breaks, then repeat the passage with silent pauses replacing the claps.",
+              "zh": "✓ Evelyn 在中间忘记了一些词，一度失去思路，但后来找回了内容并继续完成表达。\n\n➜ 她最需要加强的是音量：声音很轻，让听众难以听清。\n\n➜【建议练习】：面对房间另一端的人，清楚地排练一个短段落。如果忘记词语，可以停一下，回想下一个要点，再继续。\n\n➜【第二次和第三次尝试】：\n✓ Evelyn 在重复尝试时受到干扰，但在没有干扰的情况下，她能够用更响亮的声音讲话。这是对前一次忘词后重新接上并继续表达的进一步进展。\n\n➜ 下一步重点是停顿和放慢速度。她连续说下去，想法之间缺少停顿。询问时，她表示自己的比赛没有时间限制。\n\n➜【课堂使用的练习】：在句末和自然的意思间隔处拍手，再重复这一段，用安静的停顿代替拍手。"
+            },
+            {
+              "id": "candy",
+              "name": "Candy",
+              "attendance": "absent",
+              "en": "Absent, as last explicitly confirmed by the teacher.",
+              "zh": "根据老师最近一次明确的出勤确认，本次缺席。"
             }
           ]
         }
