@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-27T06:37:02Z",
+  "updatedAt": "2026-09-27T20:27:22Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -818,8 +818,18 @@
           "id": "2026-09-27-sun-1330",
           "date": "2026-09-27",
           "time": "13:30–15:00",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "Students practised short debate exchanges and explored the stakeholders affected by the motion “Students should grade teachers.” We examined different types of evidence and how comparisons and case studies can support an argument.\n\nExamples discussed included alleged abuses of authority involving police officers and teachers organizing fights. We also discussed reports from South Korea concerning teacher suicides amid pressure from parental complaints and allegations of mistreatment of students. This provided a case for considering teacher welfare, student protection and accountability; the relationship between complaints and individual deaths should not be presented as a simple, established cause."
+          ],
+          "homework": {
+            "title": "Students should grade teachers: stakeholder analysis and prepared speech",
+            "steps": [
+              "Identify the different stakeholders affected by the policy.",
+              "Explain how each group is affected and use these connections to strengthen your arguments.",
+              "Prepare and rehearse a speech to deliver in class."
+            ],
+            "prepareFor": "If possible, prepare for a full debate next lesson."
+          },
           "students": [
             {
               "name": "Arthur",
@@ -884,6 +894,31 @@
             {
               "name": "Celia",
               "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-13&student=celia"
+            }
+          ]
+        },
+        {
+          "id": "2026-09-27-sun-1500",
+          "date": "2026-09-27",
+          "time": "15:00–16:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Max",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-27&student=max"
+            },
+            {
+              "name": "Leo",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-27&student=leo"
+            },
+            {
+              "name": "Celia",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-27&student=celia"
+            },
+            {
+              "name": "Eva",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-09-27&student=eva"
             }
           ]
         }

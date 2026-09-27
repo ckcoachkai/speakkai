@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-27T06:37:02Z",
+  "updatedAt": "2026-09-27T20:27:22Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1038,8 +1038,14 @@
               "zh": "Marshall 发言大约三分钟，包括一些自我介绍，以及关于“学生是否应该评价老师”的想法。他表现得自信，声音足够响亮，也似乎提前准备了一些相关想法。\n\n主要困难在于清楚传达自己的意思。他使用了“evidence”等词汇，但在说出和运用这些词时，并不总是显得熟悉自然。他似乎具备表达想法所需的一些词汇，而口头表达显示，他可能需要更多练习，才能更自在地使用它们。\n\n一个有帮助的下一步是大声练习简短、清楚的句子，先确保能用熟悉的词解释每个论点，再加入更复杂的词汇。这样可以在保留自信和音量优势的同时，让听众理解他的推理。"
             }
           ],
-          "classContent": null,
-          "homework": null
+          "classContent": {
+            "en": "Students practised short debate exchanges and explored the stakeholders affected by the motion “Students should grade teachers.” We examined different types of evidence and how comparisons and case studies can support an argument.\n\nExamples discussed included alleged abuses of authority involving police officers and teachers organizing fights. We also discussed reports from South Korea concerning teacher suicides amid pressure from parental complaints and allegations of mistreatment of students. This provided a case for considering teacher welfare, student protection and accountability; the relationship between complaints and individual deaths should not be presented as a simple, established cause.",
+            "zh": "学生练习了简短的辩论交锋，并探讨“学生应该评价老师”这一辩题涉及的利益相关者。我们考察了不同类型的证据，以及如何利用比较和案例研究支持论点。\n\n讨论的例子包括涉及警察及教师组织打斗的涉嫌滥用权力事件。我们还讨论了韩国有关教师在家长投诉及涉嫌不当对待学生的压力背景下自杀的报道。这些案例帮助我们思考教师福祉、学生保护和问责；不应把投诉与个别死亡之间的关系表述为简单、已经确立的因果关系。"
+          },
+          "homework": {
+            "en": "Develop the stakeholder analysis further: identify the different groups affected, explain how the proposed policy affects each group, and use those connections to strengthen the arguments. Prepare and rehearse a speech to deliver in class. Students should also prepare for a full debate next lesson, if possible.",
+            "zh": "进一步展开利益相关者分析：找出受到影响的不同群体，解释提议的政策如何影响各个群体，并用这些联系加强论证。准备并排练一篇在课堂上展示的演讲。如条件允许，也请为下一节课进行一场完整辩论作准备。"
+          }
         }
       ]
     },
@@ -1099,6 +1105,40 @@
               "name": "Celia",
               "en": "✓ Celia stood out positively in the competition-topic round. Following the discussion and examples, she was among the students whose contributions particularly impressed the teacher.\n\n→ The next step is to make this approach repeatable: choose a clear argument, support it with a concrete example, and explain why that example matters to her side. This will help her continue developing her own reasoning as the class moves toward more detailed competition preparation.\n\n➜ Why this matters and how to practise: For rehearsal, she can select one point from the social-media discussion and say “Our argument is… One example is… This matters because…”. The final link explains the significance of the example instead of leaving the audience to work it out. Repeating this with a different point can help her practise a reusable way to develop arguments; it is a suggested next step, not an additional observation of today’s performance.",
               "zh": "✓ Celia 在比赛题目的练习中表现突出。经过讨论和例子说明后，她的参与和表现给老师留下了特别好的印象。\n\n→ 下一步是让这种表现变得稳定可重复：选择一个清晰的论点，用具体例子支持它，并解释这个例子为什么对自己一方重要。随着课程逐步进入更详细的比赛准备，这将帮助她继续发展自己的推理能力。\n\n➜ 意义与练习方法：排练时，她可以从社交媒体讨论中选择一个要点，说“Our argument is… One example is… This matters because…”。最后的联系解释例子的重要性，而不是让听众自己推断。再换一个要点重复练习，可以帮助她形成可重复使用的论证方法；这是下一步建议，不是对今天表现的新观察。"
+            }
+          ]
+        },
+        {
+          "id": "2026-09-27-sun-1500",
+          "date": "2026-09-27",
+          "time": "15:00–16:30",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "max",
+              "name": "Max",
+              "en": "Max gave a speech with good logic and a clear structure. His movements were more controlled than before, with fewer large, distracting actions, which helped keep the focus on his message.\n\nHis energy and volume were lower this time. The next step is to combine that improved physical control with a stronger voice and more audience engagement.\n\nHe could use phrases such as “Have you ever…?” or “Imagine if…” to bring listeners into his argument, then pause briefly before explaining his point. This would help him capture attention while preserving the clear organization and controlled movement he demonstrated today.",
+              "zh": "Max 的演讲逻辑良好、结构清楚。与之前相比，他的动作更加有控制，幅度大、容易分散注意力的动作减少了，有助于让听众关注信息本身。\n\n这次他的表现能量和音量有所降低。下一步是把改善后的身体控制与更有力的声音、更积极的听众互动结合起来。\n\n他可以使用“Have you ever…?”或“Imagine if…”这样的表达，把听众带入论证，再稍作停顿后解释要点。这样可以在保留清晰结构和受控动作的同时吸引注意力。"
+            },
+            {
+              "id": "leo",
+              "name": "Leo",
+              "en": "Leo completed his homework and did a good job presenting, although his prepared topic differed from the expected one. Today’s feedback focused on his delivery rather than assessing the content.\n\nHis voice was a little soft. He may have felt unsettled by the topic difference, but the reminder was to maintain a clear, confident voice regardless. He can strengthen his presentation through greater volume, vocal variety and purposeful hand gestures, while holding his paper steadily so it supports rather than interrupts his delivery.\n\nThe key takeaway is that even when the topic differs from what was expected, Leo can still present confidently and help the audience understand what he wants to share. For practice, he could rehearse holding his notes comfortably, looking up between points and emphasizing important words.",
+              "zh": "Leo 完成了作业，并进行了不错的展示，虽然准备的题目与预期不同。今天的反馈侧重表达方式，而不是评估内容。\n\n他的声音稍轻。题目不同可能让他有些不安，但课堂提醒是，无论如何，都要保持清楚、自信的声音。他可以通过提高音量、增加声音变化和有目的的手势来加强展示，同时稳稳地拿好稿纸，使其辅助而不是打断表达。\n\n核心收获是，即使题目与预期不同，Leo 仍然可以自信地展示，帮助听众理解他想分享的内容。练习时可以尝试舒适地拿着笔记，在要点之间抬头，并强调重要词语。"
+            },
+            {
+              "id": "celia",
+              "name": "Celia",
+              "en": "Celia came with thoroughly prepared content that matched the topic. She remembered the homework instructions discussed in class and had memorized her speech before the lesson, showing strong recall and careful preparation.\n\nHer presentation had a clear structure, good logic and well-organized content. Her timing was also good, allowing her to deliver the prepared material within the expected speaking time.\n\nShe brought preparation and delivery together effectively: she remembered what was required, organized her ideas and arrived ready to present them.",
+              "zh": "Celia 为题目准备了充分的内容。她记得课堂上讨论的作业要求，并在课前背熟了演讲，体现出良好的记忆力和认真准备。\n\n她的展示结构清楚、逻辑良好、内容组织有序。时间控制也很好，能够在预期发言时间内完成准备的内容。\n\n她有效地把准备与表达结合起来：记住要求、组织想法，并做好了展示的准备。"
+            },
+            {
+              "id": "eva",
+              "name": "Eva",
+              "en": "Eva gave a well-organized presentation and began with plenty of energy. The background music briefly affected her delivery, but she settled into the speech and continued with focus.\n\nHer ideas showed good logic and a clear structure, and she went beyond the surface to explore the content in more depth. This helped give her presentation substance as well as energy. Overall, a strong effort with a good recovery from the initial distraction.",
+              "zh": "Eva 的展示组织良好，开头充满能量。背景音乐短暂影响了她的表达，但她随后进入状态，继续专注地完成演讲。\n\n她的想法逻辑清楚、结构良好，并且没有停留在表面，而是更加深入地探索内容。这让展示不仅有能量，也有实质内容。整体表现出色，也很好地从最初的干扰中恢复过来。"
             }
           ]
         }
