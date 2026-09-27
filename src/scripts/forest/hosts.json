@@ -478,5 +478,365 @@
       "Next stop: the fish market.",
       "Six, seven, pedal to heaven!"
     ]
+  },
+  {
+    "id": "golden-cow",
+    "name": "Golden Cow",
+    "eyes": [
+      [
+        0.426,
+        0.215
+      ],
+      [
+        0.55,
+        0.215
+      ]
+    ],
+    "mouth": [
+      0.5,
+      0.3
+    ],
+    "phrases": [
+      "I brought the moo-ves.",
+      "My knees have entered party mode.",
+      "That was a very enthusiastic high five.",
+      "I practiced this in front of a tree.",
+      "Who put a trampoline in my shoes?",
+      "My shoulders are doing their homework.",
+      "I meant to do that. Probably.",
+      "Let us settle this with a dance battle.",
+      "The forest has excellent acoustics.",
+      "My left foot would like a recount.",
+      "Someone turn up the chocolate cake.",
+      "I have been training all snack time.",
+      "Six! Seven! Now where was I?",
+      "These moves are locally grown.",
+      "My secret power is being dramatic.",
+      "That tickled my confidence.",
+      "The next round comes with extra wiggles.",
+      "Please give my elbows some space.",
+      "I saved my best move for recess.",
+      "Everybody gets a victory dance."
+    ]
+  },
+  {
+    "id": "sunset-cows",
+    "name": "Sunset Cow Duo",
+    "eyes": [
+      [
+        0.426,
+        0.215
+      ],
+      [
+        0.55,
+        0.215
+      ]
+    ],
+    "mouth": [
+      0.5,
+      0.3
+    ],
+    "phrases": [
+      "We ordered a double moo.",
+      "My knees have entered party mode.",
+      "That was a very enthusiastic high five.",
+      "I practiced this in front of a tree.",
+      "Who put a trampoline in my shoes?",
+      "My shoulders are doing their homework.",
+      "I meant to do that. Probably.",
+      "Let us settle this with a dance battle.",
+      "The forest has excellent acoustics.",
+      "My left foot would like a recount.",
+      "Someone turn up the chocolate cake.",
+      "I have been training all snack time.",
+      "Six! Seven! Now where was I?",
+      "These moves are locally grown.",
+      "My secret power is being dramatic.",
+      "That tickled my confidence.",
+      "The next round comes with extra wiggles.",
+      "Please give my elbows some space.",
+      "I saved my best move for recess.",
+      "Everybody gets a victory dance."
+    ]
+  },
+  {
+    "id": "round-pikachu",
+    "name": "Round Pikachu",
+    "eyes": [
+      [
+        0.404,
+        0.328
+      ],
+      [
+        0.58,
+        0.328
+      ]
+    ],
+    "mouth": [
+      0.5,
+      0.43
+    ],
+    "phrases": [
+      "My cheeks run on rechargeable giggles.",
+      "My knees have entered party mode.",
+      "That was a very enthusiastic high five.",
+      "I practiced this in front of a tree.",
+      "Who put a trampoline in my shoes?",
+      "My shoulders are doing their homework.",
+      "I meant to do that. Probably.",
+      "Let us settle this with a dance battle.",
+      "The forest has excellent acoustics.",
+      "My left foot would like a recount.",
+      "Someone turn up the chocolate cake.",
+      "I have been training all snack time.",
+      "Six! Seven! Now where was I?",
+      "These moves are locally grown.",
+      "My secret power is being dramatic.",
+      "That tickled my confidence.",
+      "The next round comes with extra wiggles.",
+      "Please give my elbows some space.",
+      "I saved my best move for recess.",
+      "Everybody gets a victory dance."
+    ]
+  },
+  {
+    "id": "ultraman",
+    "name": "Ultraman",
+    "eyes": [
+      [
+        0.426,
+        0.215
+      ],
+      [
+        0.55,
+        0.215
+      ]
+    ],
+    "mouth": [
+      0.5,
+      0.3
+    ],
+    "phrases": [
+      "The timer says it is dance time.",
+      "My knees have entered party mode.",
+      "That was a very enthusiastic high five.",
+      "I practiced this in front of a tree.",
+      "Who put a trampoline in my shoes?",
+      "My shoulders are doing their homework.",
+      "I meant to do that. Probably.",
+      "Let us settle this with a dance battle.",
+      "The forest has excellent acoustics.",
+      "My left foot would like a recount.",
+      "Someone turn up the chocolate cake.",
+      "I have been training all snack time.",
+      "Six! Seven! Now where was I?",
+      "These moves are locally grown.",
+      "My secret power is being dramatic.",
+      "That tickled my confidence.",
+      "The next round comes with extra wiggles.",
+      "Please give my elbows some space.",
+      "I saved my best move for recess.",
+      "Everybody gets a victory dance."
+    ]
+  },
+  {
+    "id": "gundam",
+    "name": "Gundam",
+    "eyes": [
+      [
+        0.426,
+        0.215
+      ],
+      [
+        0.55,
+        0.215
+      ]
+    ],
+    "mouth": [
+      0.5,
+      0.3
+    ],
+    "phrases": [
+      "All systems set to disco.",
+      "My knees have entered party mode.",
+      "That was a very enthusiastic high five.",
+      "I practiced this in front of a tree.",
+      "Who put a trampoline in my shoes?",
+      "My shoulders are doing their homework.",
+      "I meant to do that. Probably.",
+      "Let us settle this with a dance battle.",
+      "The forest has excellent acoustics.",
+      "My left foot would like a recount.",
+      "Someone turn up the chocolate cake.",
+      "I have been training all snack time.",
+      "Six! Seven! Now where was I?",
+      "These moves are locally grown.",
+      "My secret power is being dramatic.",
+      "That tickled my confidence.",
+      "The next round comes with extra wiggles.",
+      "Please give my elbows some space.",
+      "I saved my best move for recess.",
+      "Everybody gets a victory dance."
+    ]
+  },
+  {
+    "id": "garden-zombie",
+    "name": "Garden Zombie",
+    "eyes": [
+      [
+        0.426,
+        0.215
+      ],
+      [
+        0.55,
+        0.215
+      ]
+    ],
+    "mouth": [
+      0.5,
+      0.3
+    ],
+    "phrases": [
+      "I came for brains and stayed for recess.",
+      "My knees have entered party mode.",
+      "That was a very enthusiastic high five.",
+      "I practiced this in front of a tree.",
+      "Who put a trampoline in my shoes?",
+      "My shoulders are doing their homework.",
+      "I meant to do that. Probably.",
+      "Let us settle this with a dance battle.",
+      "The forest has excellent acoustics.",
+      "My left foot would like a recount.",
+      "Someone turn up the chocolate cake.",
+      "I have been training all snack time.",
+      "Six! Seven! Now where was I?",
+      "These moves are locally grown.",
+      "My secret power is being dramatic.",
+      "That tickled my confidence.",
+      "The next round comes with extra wiggles.",
+      "Please give my elbows some space.",
+      "I saved my best move for recess.",
+      "Everybody gets a victory dance."
+    ]
+  },
+  {
+    "id": "block-zombie",
+    "name": "Block Zombie",
+    "eyes": [
+      [
+        0.426,
+        0.215
+      ],
+      [
+        0.55,
+        0.215
+      ]
+    ],
+    "mouth": [
+      0.5,
+      0.3
+    ],
+    "phrases": [
+      "I only dance on the grid.",
+      "My knees have entered party mode.",
+      "That was a very enthusiastic high five.",
+      "I practiced this in front of a tree.",
+      "Who put a trampoline in my shoes?",
+      "My shoulders are doing their homework.",
+      "I meant to do that. Probably.",
+      "Let us settle this with a dance battle.",
+      "The forest has excellent acoustics.",
+      "My left foot would like a recount.",
+      "Someone turn up the chocolate cake.",
+      "I have been training all snack time.",
+      "Six! Seven! Now where was I?",
+      "These moves are locally grown.",
+      "My secret power is being dramatic.",
+      "That tickled my confidence.",
+      "The next round comes with extra wiggles.",
+      "Please give my elbows some space.",
+      "I saved my best move for recess.",
+      "Everybody gets a victory dance."
+    ]
+  },
+  {
+    "id": "block-zombie-shuffle",
+    "name": "Block Zombie Shuffle",
+    "eyes": [
+      [
+        0.426,
+        0.215
+      ],
+      [
+        0.55,
+        0.215
+      ]
+    ],
+    "mouth": [
+      0.5,
+      0.3
+    ],
+    "phrases": [
+      "One block left. Two blocks right.",
+      "My knees have entered party mode.",
+      "That was a very enthusiastic high five.",
+      "I practiced this in front of a tree.",
+      "Who put a trampoline in my shoes?",
+      "My shoulders are doing their homework.",
+      "I meant to do that. Probably.",
+      "Let us settle this with a dance battle.",
+      "The forest has excellent acoustics.",
+      "My left foot would like a recount.",
+      "Someone turn up the chocolate cake.",
+      "I have been training all snack time.",
+      "Six! Seven! Now where was I?",
+      "These moves are locally grown.",
+      "My secret power is being dramatic.",
+      "That tickled my confidence.",
+      "The next round comes with extra wiggles.",
+      "Please give my elbows some space.",
+      "I saved my best move for recess.",
+      "Everybody gets a victory dance."
+    ]
+  },
+  {
+    "id": "garden-zombie-groove",
+    "name": "Garden Zombie Groove",
+    "eyes": [
+      [
+        0.426,
+        0.215
+      ],
+      [
+        0.55,
+        0.215
+      ]
+    ],
+    "mouth": [
+      0.5,
+      0.3
+    ],
+    "phrases": [
+      "My tie has better rhythm than me.",
+      "My knees have entered party mode.",
+      "That was a very enthusiastic high five.",
+      "I practiced this in front of a tree.",
+      "Who put a trampoline in my shoes?",
+      "My shoulders are doing their homework.",
+      "I meant to do that. Probably.",
+      "Let us settle this with a dance battle.",
+      "The forest has excellent acoustics.",
+      "My left foot would like a recount.",
+      "Someone turn up the chocolate cake.",
+      "I have been training all snack time.",
+      "Six! Seven! Now where was I?",
+      "These moves are locally grown.",
+      "My secret power is being dramatic.",
+      "That tickled my confidence.",
+      "The next round comes with extra wiggles.",
+      "Please give my elbows some space.",
+      "I saved my best move for recess.",
+      "Everybody gets a victory dance."
+    ]
   }
 ]

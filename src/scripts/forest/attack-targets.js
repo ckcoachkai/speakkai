@@ -26,6 +26,15 @@ const clonePoint = p => point(p.x, p.y);
 // these body landmarks keep arm, neck and stomach positions stable between
 // frames even when a face is animated.
 const HOST_LANDMARKS = Object.freeze({
+  'golden-cow': {head:point(.48,0.22),neck:point(.5,0.36),arm:point(.26,.51),stomach:point(.50,.57)},
+  'sunset-cows': {head:point(.48,0.22),neck:point(.5,0.36),arm:point(.26,.51),stomach:point(.50,.57)},
+  'round-pikachu': {head:point(.48,0.34),neck:point(.5,0.48),arm:point(.26,.51),stomach:point(.50,.57)},
+  'ultraman': {head:point(.48,0.22),neck:point(.5,0.36),arm:point(.26,.51),stomach:point(.50,.57)},
+  'gundam': {head:point(.48,0.22),neck:point(.5,0.36),arm:point(.26,.51),stomach:point(.50,.57)},
+  'garden-zombie': {head:point(.48,0.22),neck:point(.5,0.36),arm:point(.26,.51),stomach:point(.50,.57)},
+  'block-zombie': {head:point(.48,0.22),neck:point(.5,0.36),arm:point(.26,.51),stomach:point(.50,.57)},
+  'block-zombie-shuffle': {head:point(.48,0.22),neck:point(.5,0.36),arm:point(.26,.51),stomach:point(.50,.57)},
+  'garden-zombie-groove': {head:point(.48,0.22),neck:point(.5,0.36),arm:point(.26,.51),stomach:point(.50,.57)},
   cow: {head:point(.50,.21),neck:point(.50,.34),arm:point(.70,.33),stomach:point(.49,.46)},
   pelican: {head:point(.41,.31),neck:point(.46,.40),arm:point(.30,.44),stomach:point(.60,.48)},
   dog:    { head: point(.34, .22), neck: point(.37, .34), arm: point(.63, .48), stomach: point(.50, .60) },
