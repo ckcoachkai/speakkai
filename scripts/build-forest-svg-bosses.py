@@ -28,7 +28,10 @@ for frame in range(36):
         if el.tag.split('}')[-1] in ('defs','style'):r.append(copy.deepcopy(el))
     ladder=copy.deepcopy(find(cow,'ladder'));ladder.set('transform',f'translate(0 {245+t/1.8*48})');r.append(ladder)
     r.append(copy.deepcopy(find(cow,'cow-wobble')))
-    truck=copy.deepcopy(find(cow,'fire-truck'));truck.set('transform','translate(-260 -25) scale(.5)');r.append(truck)
+    truck=copy.deepcopy(find(cow,'fire-truck'));truck.set('transform','translate(260 -25) scale(-.5 .5)');r.append(truck)
+    for label in truck.iter():
+        if label.tag.split('}')[-1]=='text':
+            label.set('text-anchor','end');label.set('transform',f"translate({float(label.get('x'))*2} 0) scale(-1 1)")
     animate(r,t);(OUT/f'cow-{frame}.svg').write_text(E.tostring(r,encoding='unicode'),'utf-8')
     r=root('285 -90 580 870')
     for el in pelican:
@@ -46,5 +49,8 @@ for frame in range(36):
         set(side+'-crank','d',f'M548 481L{x} {y}');set(side+'-pedal','d',f'M{x-12} {y+7}h36');set(side+'-foot','d',f'M{x-5} {y-8}l20 0 7 9-30 0Z')
     flutter=math.sin(cycle*3)*5
     set('scarf-tail','d',f'M580 247C552 {237+flutter} 529 {248-flutter} 502 {230+flutter}L481 {235+flutter} 492 {247+flutter} 474 {257+flutter}C517 {252-flutter} 546 {270+flutter} 582 260Z')
+    mirror=E.SubElement(r,'{'+NS+'}g',{'transform':'translate(1150 0) scale(-1 1)'})
+    for child in list(r):
+        if child is not mirror and child.tag.split('}')[-1]!='defs':r.remove(child);mirror.append(child)
     (OUT/f'pelican-{frame}.svg').write_text(E.tostring(r,encoding='unicode'),'utf-8')
 print('Prepared 36 original-motion frames per boss.')

@@ -27,7 +27,7 @@ const clonePoint = p => point(p.x, p.y);
 // frames even when a face is animated.
 const HOST_LANDMARKS = Object.freeze({
   cow: {head:point(.50,.21),neck:point(.50,.34),arm:point(.70,.33),stomach:point(.49,.46)},
-  pelican: {head:point(.59,.31),neck:point(.54,.40),arm:point(.70,.44),stomach:point(.40,.48)},
+  pelican: {head:point(.41,.31),neck:point(.46,.40),arm:point(.30,.44),stomach:point(.60,.48)},
   dog:    { head: point(.34, .22), neck: point(.37, .34), arm: point(.63, .48), stomach: point(.50, .60) },
   monkey: { head: point(.48, .21), neck: point(.49, .365), arm: point(.72, .51), stomach: point(.50, .57) },
   parrot: { head: point(.48, .22), neck: point(.49, .35), arm: point(.76, .43), stomach: point(.50, .58) },
