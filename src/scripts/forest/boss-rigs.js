@@ -4,6 +4,8 @@ import {drawHeldNumber} from './six-seven.js';
 const arms = (a,b) => [a,b];
 const legs = (a,b) => [a,b];
 export const BOSS_RIGS = {
+  cow: {neck:[.50,.34],arms:arms([[.36,.35],[.27,.28],[.35,.24]],[[.60,.38],[.72,.33],[.62,.28]]),legs:legs([[.40,.55],[.32,.60],[.39,.65]],[[.59,.55],[.70,.59],[.67,.64]]),fur:'cloth',hair:0,features:[]},
+  pelican: {neck:[.54,.40],arms:arms([[.36,.44],[.31,.45],[.23,.43]],[[.45,.44],[.58,.47],[.75,.44]]),legs:legs([[.37,.57],[.46,.59],[.45,.66]],[[.42,.57],[.50,.60],[.49,.66]]),fur:'cloth',hair:0,features:[]},
   monkey: {neck:[.49,.365], arms:arms([[.40,.40],[.28,.47],[.17,.43]],[[.61,.42],[.72,.51],[.88,.55]]),legs:legs([[.45,.63],[.36,.77],[.31,.92]],[[.59,.65],[.66,.79],[.71,.91]]),fur:'fur',hair:.15,features:[{from:[.35,.70],to:[.17,.60],radius:.095,angle:.21}]},
   parrot: {neck:[.49,.35],arms:arms([[.36,.39],[.22,.32],[.09,.21]],[[.59,.42],[.77,.45],[.93,.43]]),legs:legs([[.42,.64],[.40,.74],[.38,.82]],[[.54,.66],[.57,.76],[.60,.85]]),fur:'feathers',hair:.16,features:[{from:[.54,.65],to:[.85,.85],radius:.105,angle:.11}],wing:1.4},
   rabbit: {neck:[.47,.36],arms:arms([[.35,.39],[.24,.40],[.13,.39]],[[.61,.43],[.74,.48],[.88,.51]]),legs:legs([[.45,.63],[.40,.78],[.43,.92]],[[.60,.64],[.64,.73],[.73,.81]]),fur:'fur',hair:.12,features:[{from:[.38,.12],to:[.20,.31],radius:.105,angle:.18},{from:[.64,.17],to:[.84,.38],radius:.115,angle:.19}]},
@@ -138,7 +140,7 @@ export function drawBoss(ctx,img,host,mesh,box,pose,open,t,gentle,hit,magic) {
   if(pose.sixSeven)BOSS_RIGS[host.id].arms.forEach((arm,i)=>{const p=deform(...arm[2]);drawHeldNumber(ctx,pose.sixSeven.sprites[i],p.x,p.y,.13,.14,pose.sixSeven.pop);});
   const eyes=host.eyes.map(([u,v])=>{const p=deform(u,v);return [p.x,p.y,.008];});
   // Magic shares the same deformed eye anchors, so beams never slide off faces.
-  if(host.id!=='trump'){ctx.save();ctx.scale(1/1024,1/1536);magic.eyes(ctx,t,eyes.map(([x,y,r])=>[x*1024,y*1536,r*1024]));ctx.restore();}
+  if(!['trump','cow','pelican'].includes(host.id)){ctx.save();ctx.scale(1/1024,1/1536);magic.eyes(ctx,t,eyes.map(([x,y,r])=>[x*1024,y*1536,r*1024]));ctx.restore();}
   if(BOSS_RIGS[host.id].sparkles)for(let i=0;i<12;i++){const p=deform(.34+(i%4)*.08,.30+Math.floor(i/4)*.1),size=(.001+Math.max(0,Math.sin(t*2+i))*.003);ctx.fillStyle='#fff4a7';ctx.fillRect(p.x-size,p.y-size*.3,size*2,size*.6);ctx.fillRect(p.x-size*.3,p.y-size,size*.6,size*2);}
   const contact=[host.mouth[0]-.055,host.mouth[1]];
   const resting=createBossDeformer(host.id,pose,t,gentle,0,open)(...contact);

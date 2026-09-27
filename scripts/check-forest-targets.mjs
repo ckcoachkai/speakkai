@@ -20,8 +20,8 @@ function finitePoint(point) {
   return point && Number.isFinite(point.x) && Number.isFinite(point.y);
 }
 
-test('all ten bosses expose bounded landmarks and world targets', () => {
-  assert.equal(HOST_IDS.length, 10, 'the encounter should cover all ten hosts');
+test('all twelve bosses expose bounded landmarks and world targets', () => {
+  assert.equal(HOST_IDS.length, 12, 'the encounter should cover all twelve hosts');
   for (const host of hosts) {
     const landmarks = getBossLandmarks(host);
     for (const zone of ['head', 'neck', 'arm', 'stomach']) {

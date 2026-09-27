@@ -1,0 +1,255 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="780" viewBox="0 0 1000 780" role="img" aria-labelledby="title description">
+  <title id="title">Oh no. It learned to climb.</title>
+  <desc id="description">A horribly drawn, lumpy cow with crooked horns, mismatched wandering eyes, and a disturbingly human, toothy mouth climbs a wonky ladder on a red fire truck forever. Its four noodle legs scramble, its tail swishes, and the truck's emergency light glows. The cow disappears above the frame and emerges again from behind the truck.</desc>
+  <defs>
+    <pattern id="paper" width="67" height="71" patternUnits="userSpaceOnUse">
+      <path d="M8 12h2 M41 8h1 M25 48h2 M59 60h1 M9 65h1" fill="none" stroke="#9f8b66" stroke-width="1" opacity=".16"/>
+    </pattern>
+    <pattern id="hatching" width="13" height="13" patternUnits="userSpaceOnUse" patternTransform="rotate(11)">
+      <path d="M1 0 0 13" stroke="#8d302c" stroke-width="1.6" opacity=".24"/>
+    </pattern>
+    <clipPath id="above-truck"><path d="M0 0H1000V547H0Z"/></clipPath>
+    <path id="rung" d="M-43-6 43-4 45 7-45 6Z"/>
+    <g id="wheel">
+      <path d="M-49-9Q-45-52-4-52 42-54 53-13 62 26 28 48-9 64-40 36-57 17-49-9Z" fill="#292b2b" stroke="#292323" stroke-width="6"/>
+      <path d="M-33-5Q-27-37 2-34 36-32 36 2 36 33 5 36-31 37-33-5Z" fill="#c6c9bf" stroke="#161e22" stroke-width="4"/>
+      <path d="M-18-7 1-20 20-4 12 17-12 19Z" fill="#efe8d6" stroke="#303330" stroke-width="3"/>
+      <path d="M-38-25-32-29M-45 4-42 14M-22 39-14 44M29 32 36 23M41-14 35-25" fill="none" stroke="#636359" stroke-width="3"/>
+      <path d="M0-8 6 0-2 7-6-1Z" fill="#323331"/>
+    </g>
+  </defs>
+  <style>
+    .ink{stroke:#302b29;stroke-linecap:round;stroke-linejoin:round}
+    .scribble{fill:none;stroke:#302b29;stroke-linecap:round;stroke-linejoin:round}
+    .writing{font-family:'Comic Sans MS','Comic Sans',cursive;fill:#302b29}
+  </style>
+
+  <!-- A sheet of paper that has had a difficult afternoon. -->
+  <path fill="#f9efd8" d="M0 0H1000V780H0Z"/>
+  <path fill="url(#paper)" d="M0 0H1000V780H0Z"/>
+  <g class="writing" transform="rotate(-3 70 85)">
+    <text x="62" y="93" font-size="62" font-weight="700" letter-spacing="-3">OH NO.</text>
+    <text x="67" y="132" font-size="22">it learned to climb.</text>
+    <path d="M65 103 281 106 265 110" class="scribble" stroke-width="2.5"/>
+  </g>
+
+  <!-- Clouds drawn from memory, by someone who has never seen one. -->
+  <g fill="#fff8e8" stroke="#d5c8ac" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M367 157Q343 149 351 133 358 120 375 126 373 102 397 105 421 104 423 126 445 117 456 137 471 159 442 161Z"/>
+    <path d="M780 212Q760 205 773 190 779 182 792 187 790 164 813 164 836 164 838 187 858 174 871 192 891 218 860 217Z"/>
+    <path d="M116 285Q98 273 112 261 121 257 131 260 131 239 151 241 171 238 180 262 199 250 208 268 215 286 188 287Z"/>
+  </g>
+  <path d="M334 255q10-12 19-1 6-13 17-6 M260 200q8-9 15 0 8-9 17-2" class="scribble" stroke="#aa9a7c" stroke-width="2" opacity=".55"/>
+
+  <!-- The ladder keeps going beyond the paper. -->
+  <g id="ladder" transform="translate(467 575) rotate(28)" class="ink" stroke-width="4">
+    <g fill="#d7d9c8">
+      <use xlink:href="#rung" y="0"/>
+      <use xlink:href="#rung" y="-48" transform="rotate(.5)"/>
+      <use xlink:href="#rung" y="-96"/>
+      <use xlink:href="#rung" y="-144" transform="rotate(-.5)"/>
+      <use xlink:href="#rung" y="-192"/>
+      <use xlink:href="#rung" y="-240" transform="rotate(.3)"/>
+      <use xlink:href="#rung" y="-288"/>
+      <use xlink:href="#rung" y="-336"/>
+      <use xlink:href="#rung" y="-384" transform="rotate(-.4)"/>
+      <use xlink:href="#rung" y="-432"/>
+      <use xlink:href="#rung" y="-480"/>
+      <use xlink:href="#rung" y="-528" transform="rotate(.2)"/>
+      <use xlink:href="#rung" y="-576"/>
+      <use xlink:href="#rung" y="-624"/>
+      <use xlink:href="#rung" y="-672"/>
+      <use xlink:href="#rung" y="-720"/>
+      <use xlink:href="#rung" y="-768"/>
+      <use xlink:href="#rung" y="-816"/>
+      <use xlink:href="#rung" y="-864"/>
+    </g>
+    <path d="M-53 29-52-873-39-875-38 28Z" fill="#b9c6c2"/>
+    <path d="M38 27 37-874 50-878 54 28Z" fill="#b9c6c2"/>
+    <path d="M-46 12-45-862M45 13 43-860" stroke="#f7f7df" stroke-width="3" fill="none"/>
+    <path d="M-57-359-34-361M33-358 57-359M-57-368-34-370M33-367 57-368" stroke-width="3"/>
+  </g>
+
+  <g clip-path="url(#above-truck)">
+    <g transform="translate(467 575) rotate(28)">
+      <!-- One hidden reset every 18 s. All gait cycles divide 18 exactly. -->
+      <g id="climbing-cow">
+        <animateTransform attributeName="transform" type="translate" values="0 245;0 -905" dur="18s" begin="-6.75s" repeatCount="indefinite"/>
+        <g id="cow-wobble" class="ink" stroke-width="4.5">
+          <animateTransform attributeName="transform" type="rotate" values="-2 0 35;2 0 35;-2 0 35" dur=".9s" repeatCount="indefinite"/>
+
+          <!-- An unnecessarily expressive tail. -->
+          <g>
+            <animateTransform attributeName="transform" type="rotate" values="-14 -56 57;18 -56 57;-14 -56 57" dur="1.8s" repeatCount="indefinite"/>
+            <path d="M-58 55Q-121 100-119 36-119 4-143 22" fill="none" stroke="#302b29" stroke-width="11"/>
+            <path d="M-58 55Q-121 100-119 36-119 4-143 22" fill="none" stroke="#fffbe9" stroke-width="5"/>
+            <path d="M-144 12-156 24-141 40-134 20-140 28Z" fill="#373333" stroke-width="3"/>
+          </g>
+
+          <!-- Far arm and back leg. The feet reach, grip, and slide relative to the belly. -->
+          <g fill="none" stroke-width="20">
+            <path id="far-arm" d="M-44-24Q-104-37-91-82L-46-107">
+              <animate attributeName="d" values="M-44-24Q-104-37-91-82L-46-107;M-44-24Q-107-24-89-52L-46-70;M-44-24Q-99-65-73-124L-46-118;M-44-24Q-104-37-91-82L-46-107" keyTimes="0;.44;.65;1" dur=".9s" repeatCount="indefinite"/>
+            </path>
+            <use xlink:href="#far-arm" stroke="#e4dfce" stroke-width="11"/>
+            <path id="far-leg" d="M-36 88Q-97 119-79 141L-46 150">
+              <animate attributeName="d" values="M-36 88Q-97 119-79 141L-46 150;M-36 88Q-112 99-90 110L-46 111;M-36 88Q-96 98-80 117L-46 126;M-36 88Q-97 119-79 141L-46 150" keyTimes="0;.3;.55;1" dur=".9s" repeatCount="indefinite"/>
+            </path>
+            <use xlink:href="#far-leg" stroke="#e4dfce" stroke-width="11"/>
+          </g>
+          <g transform="translate(-47 -107)">
+            <animateTransform attributeName="transform" type="translate" values="-47 -107;-47 -70;-47 -118;-47 -107" keyTimes="0;.44;.65;1" dur=".9s" repeatCount="indefinite"/>
+            <path d="M-12-7 10-9 15 6-9 10Z" fill="#373332"/>
+            <path d="M0-7 2 6" stroke="#aaa397" stroke-width="2"/>
+          </g>
+          <g>
+            <animateTransform attributeName="transform" type="translate" values="-47 150;-47 111;-47 126;-47 150" keyTimes="0;.3;.55;1" dur=".9s" repeatCount="indefinite"/>
+            <path d="M-12-8 12-5 12 9-10 10Z" fill="#373332"/>
+            <path d="M0-5 1 8" stroke="#aaa397" stroke-width="2"/>
+          </g>
+
+          <!-- Cow-shaped, more or less. -->
+          <path d="M-58-44Q-13-64 30-37 70-21 59 31 75 71 41 100 5 122-38 101-70 112-73 68-91 15-58-44Z" fill="#fffceb"/>
+          <path d="M-54-30Q-33-42-22-18-36-3-21 13-37 37-66 15L-66-8Z" fill="#383434" stroke-width="2"/>
+          <path d="M22 28Q55 10 56 46 65 68 38 84 13 73 24 59 9 44 22 28Z" fill="#383434" stroke-width="2"/>
+          <path d="M-50 78Q-41 62-28 76-10 97-27 103L-46 97Z" fill="#383434" stroke-width="2"/>
+          <path d="M-18 109Q-16 96 7 101L31 108Q31 121 20 123L21 138Q13 145 9 136L7 123 0 124-1 140Q-10 147-14 136L-13 122Q-25 118-18 109Z" fill="#e8a9a1" stroke-width="3"/>
+          <path d="M-67 32-63 47M49-16 54-5" fill="none" stroke="#a59e8a" stroke-width="2"/>
+
+          <!-- A face with absolutely no business being on a cow. -->
+          <g transform="rotate(-14 0 -119)">
+            <g>
+              <animateTransform attributeName="transform" type="rotate" values="0 0 -65;3 0 -65;0 0 -65;-2 0 -65;0 0 -65" dur="1.8s" repeatCount="indefinite"/>
+              <path d="M-47-163Q-87-177-82-209L-72-195Q-67-183-30-181Z" fill="#dcc898"/>
+              <path d="M27-177Q50-198 43-229L61-209Q70-182 46-158Z" fill="#e5cf96"/>
+              <path d="M-57-141Q-93-165-105-142-94-114-59-119Z" fill="#fff9df"/>
+              <path d="M-72-137-95-139-80-126Z" fill="#e6a49c" stroke-width="2"/>
+              <path d="M49-136Q76-166 93-151 103-130 61-114Z" fill="#fff9df"/>
+              <path d="M67-133 86-145 79-128Z" fill="#e6a49c" stroke-width="2"/>
+              <path d="M-57-149Q-44-178-7-174 37-184 59-146L58-111Q72-79 48-58 12-44-23-56-65-51-64-91Z" fill="#fffbea"/>
+              <path d="M-48-155-27-166-19-153-30-145Z" fill="#353334" stroke-width="2"/>
+              <path d="M12-171 14-184 4-175-2-187-8-174" fill="#fffbea" stroke-width="3"/>
+
+              <ellipse cx="-30" cy="-125" rx="25" ry="27" fill="#fffef5" transform="rotate(-9 -30 -125)"/>
+              <ellipse cx="29" cy="-125" rx="16" ry="32" fill="#fffef5" transform="rotate(12 29 -125)"/>
+              <g fill="#403f35" stroke-width="2">
+                <g>
+                  <animateTransform attributeName="transform" type="translate" values="6 5;-7 -6;3 -8;6 5" dur="3.6s" repeatCount="indefinite"/>
+                  <circle cx="-30" cy="-125" r="9" fill="#96b49f"/>
+                  <circle cx="-29" cy="-124" r="4" fill="#242023" stroke="none"/>
+                  <circle cx="-26" cy="-128" r="2" fill="#fff" stroke="none"/>
+                </g>
+                <g>
+                  <animateTransform attributeName="transform" type="translate" values="-5 -10;4 10;-4 3;-5 -10" dur="3s" repeatCount="indefinite"/>
+                  <ellipse cx="29" cy="-125" rx="5" ry="9" fill="#7f92b8"/>
+                  <ellipse cx="29" cy="-124" rx="2" ry="6" fill="#242023" stroke="none"/>
+                </g>
+              </g>
+              <path d="M-51-130-44-128-46-136M-42-103-40-110M40-139 35-137 38-145M34-99 31-105" fill="none" stroke="#cf8d8a" stroke-width="1.5"/>
+              <path d="M-52-162-25-160M15-162 43-170" fill="none" stroke-width="4"/>
+              <path d="M-8-106-11-96-3-94M9-99 13-97" fill="none" stroke-width="2.4"/>
+
+              <!-- Cupid's bow, gums, individually awful teeth, lower lip, chin. -->
+              <g id="human-mouth">
+                <animateTransform attributeName="transform" type="translate" values="0 0;0 2;0 0" dur=".9s" repeatCount="indefinite"/>
+                <path d="M-40-80Q-29-98-8-89-1-94 5-88 27-99 45-78 34-50 1-54-28-53-40-80Z" fill="#cd7475" stroke-width="3"/>
+                <path d="M-34-80Q-18-81-2-77 15-83 38-79 31-60 4-63-20-60-34-80Z" fill="#502d35" stroke-width="2.2"/>
+                <path d="M-30-80-18-79-18-68-27-71Z M-17-79-5-77-5-66-17-67Z M-3-77 9-79 9-67-3-66Z M11-79 23-80 23-69 11-67Z M25-80 34-80 29-71 25-70Z" fill="#fff7dc" stroke-width="1.4"/>
+                <path d="M-15-61Q-3-69 11-62" fill="#e79595" stroke-width="1.5"/>
+                <path d="M-18-58Q3-51 25-61M-29-86-21-88M14-89 23-88" fill="none" stroke="#f2b4a7" stroke-width="2.5"/>
+              </g>
+              <path d="M-18-47 8-45M-39-64-44-62M39-61 42-57" fill="none" stroke-width="2"/>
+              <path d="M-22-48h.5M-14-43h.5M16-48h.5M22-52h.5" fill="none" stroke-width="2"/>
+            </g>
+          </g>
+
+          <!-- Near arm and leg: a lot of effort, very little dignity. -->
+          <g fill="none" stroke-width="20">
+            <path id="near-arm" d="M43-10Q102-7 86-58L47-76">
+              <animate attributeName="d" values="M43-10Q102-7 86-58L47-76;M43-10Q100-40 70-99L47-117;M43-10Q100-25 84-73L47-99;M43-10Q102-7 86-58L47-76" keyTimes="0;.3;.55;1" dur=".9s" repeatCount="indefinite"/>
+            </path>
+            <use xlink:href="#near-arm" stroke="#fffbea" stroke-width="11"/>
+            <path id="near-leg" d="M35 89Q90 105 77 135L46 125">
+              <animate attributeName="d" values="M35 89Q90 105 77 135L46 125;M35 89Q93 117 75 158L46 162;M35 89Q103 96 81 104L46 114;M35 89Q90 105 77 135L46 125" keyTimes="0;.44;.65;1" dur=".9s" repeatCount="indefinite"/>
+            </path>
+            <use xlink:href="#near-leg" stroke="#fffbea" stroke-width="11"/>
+          </g>
+          <g>
+            <animateTransform attributeName="transform" type="translate" values="47 -76;47 -117;47 -99;47 -76" keyTimes="0;.3;.55;1" dur=".9s" repeatCount="indefinite"/>
+            <path d="M-13-8 9-10 14 5 0 12-13 5Z" fill="#363333"/>
+            <path d="M-1-6 2 8" stroke="#aaa397" stroke-width="2"/>
+          </g>
+          <g>
+            <animateTransform attributeName="transform" type="translate" values="47 125;47 162;47 114;47 125" keyTimes="0;.44;.65;1" dur=".9s" repeatCount="indefinite"/>
+            <path d="M-13-8 10-6 13 9-12 10Z" fill="#363333"/>
+            <path d="M0-5 0 8" stroke="#aaa397" stroke-width="2"/>
+          </g>
+          <path d="M106-49 111-57M115-33 126-37M-99 143-109 151" fill="none" stroke-width="2.5" opacity=".65">
+            <animate attributeName="opacity" values="0;.65;0" dur=".9s" repeatCount="indefinite"/>
+          </path>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- The truck is in front, so the cow's reset is completely hidden. -->
+  <path d="M83 714Q335 702 523 715T937 712L898 735 169 735Z" fill="#dfd1b2" opacity=".65"/>
+  <path d="M54 720Q205 716 336 722L697 720 951 721" class="scribble" stroke-width="3"/>
+  <g id="fire-truck" class="ink" stroke-width="4.5">
+    <path d="M364 553 394 516 493 520 541 557Z" fill="#808e88"/>
+    <path d="M431 542 416 510 474 492 500 533Z" fill="#ea7560"/>
+    <circle cx="459" cy="527" r="22" fill="#b1bdb6"/>
+    <path d="M454 518 469 523 465 537 450 534Z" fill="#686f67" stroke-width="3"/>
+    <path d="M152 553 680 548 697 672 164 671Z" fill="#ed5447"/>
+    <path d="M159 565 675 561 682 665 170 663Z" fill="url(#hatching)" stroke="none"/>
+    <path d="M670 548 685 507 822 510 881 564 890 671 677 671Z" fill="#f2634c"/>
+    <path d="M151 615 680 612 887 615 888 633 154 635Z" fill="#f5df9b"/>
+    <path d="M163 670 884 672 891 690 161 689Z" fill="#aab7af"/>
+    <path d="M698 524 754 526 755 575 692 574Z" fill="#b6d5cf"/>
+    <path d="M768 526 814 527 856 568 768 574Z" fill="#b6d5cf"/>
+    <path d="M710 531 703 554M722 532 705 569M784 534 772 557" fill="none" stroke="#f9f6d9" stroke-width="4"/>
+    <path d="M688 588 764 588 767 654 692 653Z" fill="#ed6551" stroke-width="3"/>
+    <path d="M704 600 722 600" stroke-width="5"/>
+    <path d="M867 583 892 583 894 602 869 601Z" fill="#ffdf87" stroke-width="3"/>
+    <path d="M857 645 891 645 896 661 858 662Z" fill="#667b78" stroke-width="3"/>
+    <path d="M865 650 888 651M865 656 889 656" fill="none" stroke="#b4c7bb" stroke-width="2"/>
+    <path d="M145 575 157 575 158 604 144 603Z" fill="#ffc672" stroke-width="3"/>
+    <path d="M835 546 844 530 860 532 860 550 846 550" fill="#d0cbb2" stroke-width="3"/>
+
+    <!-- Equipment locker, crooked hoses, and questionable spelling. -->
+    <path d="M178 564 306 562 309 605 180 607Z" fill="#c8ccc0" stroke-width="3"/>
+    <path d="M186 573 296 572M185 582 298 581M187 592 299 591M187 600 298 599" fill="none" stroke="#7e8d85" stroke-width="2.5"/>
+    <path d="M204 642 228 642 230 660 205 660Z" fill="#6e7972" stroke-width="3"/>
+    <circle cx="182" cy="651" r="9" fill="#e9dac0" stroke-width="3"/>
+    <circle cx="254" cy="651" r="9" fill="#e9dac0" stroke-width="3"/>
+    <path d="M334 570Q310 550 330 548L580 552Q600 554 581 568L345 565Q333 575 347 581L584 579Q606 582 586 598L332 597" fill="none" stroke="#313633" stroke-width="11"/>
+    <path d="M334 570Q310 550 330 548L580 552Q600 554 581 568L345 565Q333 575 347 581L584 579Q606 582 586 598L332 597" fill="none" stroke="#d8c08b" stroke-width="6"/>
+    <path d="M592 591 607 591 608 603 591 603Z" fill="#8a9b93" stroke-width="3"/>
+    <path d="M327 632 632 632 632 663 329 664Z" fill="#d93f39" stroke="none"/>
+    <text x="353" y="658" class="writing" font-size="27" letter-spacing="5" fill="#fff3d6" stroke="none" transform="rotate(-1 353 658)">FIRE TRUK</text>
+    <text x="700" y="643" class="writing" font-size="24" stroke="none">01</text>
+    <path d="M689 496 777 498 779 509 685 508Z" fill="#a7b8b2" stroke-width="3"/>
+    <g id="beacon">
+      <path d="M711 493 715 473Q733 462 751 475L755 495Z" fill="#e95046" stroke-width="3"/>
+      <path d="M721 478 723 489" stroke="#ffccb0" stroke-width="4"/>
+      <path d="M711 491 715 474Q733 463 751 475L755 494Z" fill="#ffb584" stroke="none" opacity=".25">
+        <animate attributeName="opacity" values=".1;.85;.1" dur="1.8s" repeatCount="indefinite"/>
+      </path>
+      <g fill="none" stroke="#d17854" stroke-width="3">
+        <animate attributeName="opacity" values=".15;.8;.15" dur="1.8s" repeatCount="indefinite"/>
+        <path d="M732 455 730 445M757 463 767 454M704 464 694 456"/>
+      </g>
+    </g>
+    <use xlink:href="#wheel" transform="translate(285 665) rotate(-5)"/>
+    <use xlink:href="#wheel" transform="translate(805 665) rotate(8)"/>
+    <path d="M227 664Q231 602 284 606 335 602 344 662M746 665Q746 608 800 605 854 604 864 664" fill="none" stroke="#302b29" stroke-width="7"/>
+    <path d="M229 658Q239 610 283 612 326 610 340 655M750 658Q760 611 803 611 845 612 860 658" fill="none" stroke="#f48569" stroke-width="4"/>
+  </g>
+
+  <g class="writing" transform="rotate(-8 68 457)">
+    <text x="61" y="451" font-size="19">this is fine.</text>
+    <path d="M111 467Q105 499 146 520M137 507 147 520 132 520" class="scribble" stroke-width="2"/>
+  </g>
+  <path d="M81 716 77 706M85 716 88 707M918 716 923 706M925 717 933 711" class="scribble" stroke-width="2"/>
+  <text x="500" y="756" text-anchor="middle" class="writing" font-size="16" letter-spacing="2" fill="#837660">NO DESTINATION. ONLY COW.</text>
+</svg>

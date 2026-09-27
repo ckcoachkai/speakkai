@@ -398,5 +398,85 @@
       "I’m awake against my will.",
       "Wake me up next year."
     ]
+  },
+  {
+    "id": "cow",
+    "name": "Ladder Cow",
+    "eyes": [
+      [
+        0.44,
+        0.2
+      ],
+      [
+        0.55,
+        0.18
+      ]
+    ],
+    "mouth": [
+      0.52,
+      0.28
+    ],
+    "phrases": [
+      "I ordered a milkshake, not an earthquake!",
+      "This ladder has too many steps.",
+      "Moo-ve over, firefighters!",
+      "Who put my dinner on the roof?",
+      "My horns are not handlebars.",
+      "I am raising the steaks.",
+      "Does this truck deliver hay?",
+      "I forgot why I climbed up here.",
+      "Please hold my emergency cheese.",
+      "My hooves did not approve this plan.",
+      "I can see the whole pasture!",
+      "These teeth came with the ladder.",
+      "One small step for cow-kind.",
+      "I am a professional moo-ver.",
+      "The fire truck is my taxi.",
+      "I should have taken the elevator.",
+      "My spots are getting dizzy.",
+      "This is an udder disaster.",
+      "I climbed for the view. I stayed for the snacks.",
+      "Six, seven, MOO!"
+    ]
+  },
+  {
+    "id": "pelican",
+    "name": "Bicycle Pelican",
+    "eyes": [
+      [
+        0.56,
+        0.3
+      ],
+      [
+        0.57,
+        0.3
+      ]
+    ],
+    "mouth": [
+      0.7,
+      0.34
+    ],
+    "phrases": [
+      "My bicycle runs on fish.",
+      "This beak needs its own helmet.",
+      "I forgot how to use the brakes.",
+      "Two wheels. One enormous lunchbox.",
+      "My wings are on vacation.",
+      "Please do not park in my puddle.",
+      "I pedal because flying is too easy.",
+      "The fish said take the scenic route.",
+      "My scarf makes me faster.",
+      "Is this the cycle of life?",
+      "I brought snacks for the entire ocean.",
+      "This bell sounds suspiciously like a duck.",
+      "I am officially a cycle-pelican.",
+      "My legs are doing all the paperwork.",
+      "The wind owes me an apology.",
+      "I have a very large bill.",
+      "Nobody told me hills existed.",
+      "I brake for sardines.",
+      "Next stop: the fish market.",
+      "Six, seven, pedal to heaven!"
+    ]
   }
 ]
