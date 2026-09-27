@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-24T12:24:30.365348+00:00",
+  "updatedAt": "2026-09-27T06:37:02Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -729,6 +729,45 @@
             ],
             "prepareFor": "Your speech about technology’s role in your life."
           }
+        },
+        {
+          "id": "2026-09-27-sun-1130",
+          "date": "2026-09-27",
+          "time": "11:30–13:00",
+          "classContent": [
+            "We began with a physical warm-up game, followed by presentations of the assigned homework. Most students had not remembered to prepare, so most presentations were impromptu. Berlingo remembered and brought his prepared script.\n\nWe then worked on making speech topics more specific and exploring them more deeply. Broad subjects such as technology, the internet and electricity need a narrower focus so students can research and explain something concrete and interesting.\n\nFinally, we explored connecting a topic to the audience: Who does it affect, how does it affect them, and why should they care? This introduced the debate skill of identifying *stakeholders*—the different groups of people affected by a topic—and connected it with thinking about audience demographics in public speaking.\n\nResearch examples included reducing microplastics in water, brain implants intended to help restore sight, satellites for internet access, and nuclear fission for energy. These were suggested research directions, not assigned individual topics."
+          ],
+          "homework": {
+            "title": "Identify the stakeholders affected by your speech topic",
+            "steps": [
+              "Identify all groups affected by your topic, such as teachers, students or other relevant groups.",
+              "Explain the specific connection and how the topic affects each group.",
+              "Explain why each group should care."
+            ],
+            "prepareFor": "Bring your speech topic and be ready for questions about who it affects and how. Prepare to explain these connections aloud, not just list the groups."
+          },
+          "students": [
+            {
+              "name": "James",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-09-27&student=james"
+            },
+            {
+              "name": "Charles",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-09-27&student=charles"
+            },
+            {
+              "name": "Yiyi",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-09-27&student=yiyi"
+            },
+            {
+              "name": "Ethan",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-09-27&student=ethan"
+            },
+            {
+              "name": "Berlingo",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-09-27&student=berlingo"
+            }
+          ]
         }
       ]
     },
@@ -772,6 +811,31 @@
             {
               "name": "April",
               "feedbackUrl": "/fb/?class=sun-1330&date=2026-09-13&student=april"
+            }
+          ]
+        },
+        {
+          "id": "2026-09-27-sun-1330",
+          "date": "2026-09-27",
+          "time": "13:30–15:00",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-09-27&student=arthur"
+            },
+            {
+              "name": "Ning",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-09-27&student=ning"
+            },
+            {
+              "name": "Teresa",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-09-27&student=teresa"
+            },
+            {
+              "name": "Marshall",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-09-27&student=marshall"
             }
           ]
         }

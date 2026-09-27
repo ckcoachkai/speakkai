@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-24T12:24:30.362191+00:00",
+  "updatedAt": "2026-09-27T06:37:02Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -905,6 +905,52 @@
             "en": "Technology is a part of our lives\n\nIf possible, write out your own speech about one piece of technology that is important to you and how it affects your life. Students are encouraged to write the speech themselves.\n\nOrganize your speech around what, why and how: What is the technology? Why is it important to you? How does it affect you?\n\nFinish with a message for the audience.\n\nPrepare a speech lasting one to two minutes.",
             "zh": "科技是我们生活的一部分\n\n如果可以，请写出自己的演讲稿，选择一种对你很重要的科技，并说明它如何影响你的生活。鼓励同学们尽量自己完成写作。\n\n围绕“是什么、为什么、如何”来组织演讲：这是什么科技？它为什么对你重要？它如何影响你？\n\n结尾要给听众留下一个想传达的信息。\n\n演讲时长为一到两分钟。"
           }
+        },
+        {
+          "id": "2026-09-27-sun-1130",
+          "date": "2026-09-27",
+          "time": "11:30–13:00",
+          "status": "held",
+          "students": [
+            {
+              "id": "james",
+              "name": "James",
+              "en": "James came up and spoke despite not having prepared his speech. His main area to improve is making the topic specific: he spoke about “technology” generally, which is too broad for the audience to know exactly what he wants to explain. As we discussed, televisions and many everyday objects are technology; covering the whole category is like trying to give a speech about “the world” or “everything.”\n\nFor his next attempt, James should choose one particular technology and explain what it does, why it interests him, and how it affects people. The playful example of tiny scuba-diving equipment for cockroaches illustrated how narrow and concrete a topic could be; it was not his chosen topic.\n\nHe also needs to breathe and pause between ideas, giving listeners time to understand, and project his voice more loudly so everyone can hear and stay engaged.",
+              "zh": "James 虽然没有提前准备演讲，仍然上台进行了表达。他最需要改进的是把话题具体化：他笼统地谈论“科技”，范围太大，听众难以知道他究竟想解释什么。课堂上我们讨论了，电视和许多日常物品都属于科技；试图涵盖整个类别，就像要讲“世界”或“所有事物”一样。\n\n下一次，James 应选择一项具体的技术，说明它有什么作用、为什么让他感兴趣，以及它如何影响人们。课堂上用“给蟑螂配上微型潜水装备”这一有趣的例子，说明话题可以多么具体；这并不是他选定的话题。\n\n他还需要在不同想法之间呼吸和停顿，让听众有时间理解，并提高音量，让每个人都能听清、保持投入。"
+            },
+            {
+              "id": "charles",
+              "name": "Charles",
+              "en": "Charles spoke about the internet, which was more specific than “technology,” although still a broad topic. He shared his ideas with good logic and a clear structure, making this a good presentation overall.\n\nHis next step is to make the speech more exciting and inspirational. Positive, uplifting language can help the audience feel the significance of the internet and understand why its development matters.\n\nOne direction discussed was organizing the speech chronologically: explain how the internet developed, how it changed people’s lives, and how it helped pave the way for AI tools that now support us in everyday activities. This progression could give his speech a stronger sense of development and lead to an inspiring message about what comes next.",
+              "zh": "Charles 谈论了互联网，比笼统的“科技”更具体，但仍然是一个范围较大的话题。他的表达逻辑清楚、结构良好，整体是一次不错的展示。\n\n下一步是让演讲更加精彩、更有鼓舞人心的力量。积极、振奋的语言可以帮助听众感受到互联网的重要性，并理解其发展为什么值得关注。\n\n课堂上讨论的一个方向是按时间顺序组织演讲：说明互联网如何发展、如何改变人们的生活，以及它如何为今天帮助我们处理日常事务的人工智能工具铺路。这样的推进可以让演讲更有发展脉络，并引出对未来的鼓舞性信息。"
+            },
+            {
+              "id": "yiyi",
+              "name": "Yiyi",
+              "en": "Yiyi delivered an impromptu speech. The main feedback was to research a narrower, more specific technology rather than staying with broad categories such as electricity, technology or the internet. These categories are so large that they do not yet give the audience a particular development to understand.\n\nExamples suggested in class included technologies for reducing microplastics in water; Neuralink and research into brain implants intended to help restore sight; companies launching satellites to improve internet access; and research into nuclear fission to produce more energy. These were possible research directions, not assigned or confirmed student topics.\n\nThe central reminder was to research beyond the broad category and find a concrete, interesting development to explain. A useful next step is to name one technology, explain the problem it addresses, and give a specific detail from research.",
+              "zh": "Yiyi 进行了即兴演讲。主要反馈是研究一项范围更窄、更具体的技术，而不是停留在电力、科技或互联网等大类别。这些类别范围太大，还不能让听众了解一项具体的发展。\n\n课堂上建议的例子包括减少水中微塑料的技术；Neuralink 及旨在帮助恢复视力的脑植入研究；通过发射卫星改善互联网连接的公司；以及利用核裂变产生更多能源的研究。这些是可能的研究方向，并非已经布置或确认的学生选题。\n\n核心提醒是超越宽泛类别，通过研究找到一个具体、有趣的发展加以解释。一个有帮助的下一步是说出一项技术，解释它解决什么问题，再提供一个研究中找到的具体细节。"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "Ethan showed progress in controlling his laughter this time. He settled down and delivered his speech more calmly, allowing him to communicate his ideas more effectively. His speaking pace was still too fast; slowing down and pausing between ideas will help the audience follow him.\n\nTV was an acceptable, more specific technology topic. To make it feel relevant today, he could explain its place alongside the iPads and laptops people now use, rather than describing television only in general terms.\n\nHis main focus remains awareness and control of his body language. He began with his hands in his pockets, then moved into large, uncontrolled gestures. The next step is to keep his hands comfortably at his sides between points and use deliberate gestures that support his words. Watching classmates practise can also help him recognize which movements make a presentation clearer.",
+              "zh": "Ethan 这次在控制笑声方面取得了进步。他平静下来，更从容地完成了演讲，因此能够更有效地表达想法。不过，他的语速仍然过快；放慢速度，并在不同想法之间停顿，可以帮助听众跟上。\n\n电视是一个可以接受、也更具体的科技话题。为了让它与今天的生活更相关，他可以说明电视与人们现在使用的 iPad、笔记本电脑之间的关系，而不只是笼统地介绍电视。\n\n他的主要练习方向仍然是觉察和控制自己的肢体语言。开始时，他把手放在口袋里，之后又出现幅度很大、缺少控制的手势。下一步可以在要点之间让双手自然放在身体两侧，并使用有目的、能够支持语言的手势。观察同学练习，也能帮助他辨认哪些动作会让展示更清楚。"
+            },
+            {
+              "id": "berlingo",
+              "name": "Berlingo",
+              "en": "Berlingo shared his thoughts with a speech he had prepared with his dad’s help. His preparation was a clear strength.\n\nThe next step is to make the writing more conversational and engaging through storytelling, transition words and direct audience connection. When revising together, Berlingo and his dad can add questions such as “Have you ever…?”, inviting listeners to connect the topic to their own experiences.\n\nThese “magical connectors” help guide the audience from one idea to the next. If the speech becomes too technical, listeners may feel confused or lose focus. Combining the information with a relatable example, a question and clear transitions will help Berlingo keep the audience involved while sharing what he has prepared.",
+              "zh": "Berlingo 分享了自己的想法，并带来了在爸爸帮助下准备的演讲稿。他认真进行了准备，这是本次表现中的明显优点。\n\n下一步是通过故事讲述、过渡词以及与听众的直接交流，让文稿更加自然、更有吸引力。Berlingo 和爸爸一起修改时，可以加入“Have you ever…?”这样的提问，邀请听众把话题与自己的经历联系起来。\n\n这些“神奇的连接词”能引导听众从一个想法走向下一个。如果内容过于技术化，听众可能感到困惑或分心。将信息与贴近生活的例子、问题和清楚的过渡结合，可以帮助 Berlingo 在分享准备好的内容时持续吸引听众。"
+            }
+          ],
+          "classContent": {
+            "en": "We began with a physical warm-up game, followed by presentations of the assigned homework. Most students had not remembered to prepare, so most presentations were impromptu. Berlingo remembered and brought his prepared script.\n\nWe then worked on making speech topics more specific and exploring them more deeply. Broad subjects such as technology, the internet and electricity need a narrower focus so students can research and explain something concrete and interesting.\n\nFinally, we explored connecting a topic to the audience: Who does it affect, how does it affect them, and why should they care? This introduced the debate skill of identifying *stakeholders*—the different groups of people affected by a topic—and connected it with thinking about audience demographics in public speaking.\n\nResearch examples included reducing microplastics in water, brain implants intended to help restore sight, satellites for internet access, and nuclear fission for energy. These were suggested research directions, not assigned individual topics.",
+            "zh": "我们先进行了肢体热身游戏，随后展示之前布置的作业。大多数学生没有记得提前准备，因此多数展示采用了即兴形式。Berlingo 记得准备，并带来了演讲稿。\n\n接着，我们练习让演讲话题更具体，并作更深入的探索。科技、互联网和电力等宽泛主题需要缩小范围，才能研究和解释具体、有趣的内容。\n\n最后，我们探讨如何把话题与听众联系起来：它影响谁、如何影响他们，以及他们为什么应该关心？这引入了辩论中的利益相关者概念，即受到话题影响的不同人群，并与演讲中思考听众群体特征的做法联系起来。\n\n研究例子包括减少水中微塑料、旨在帮助恢复视力的脑植入、提供互联网连接的卫星，以及利用核裂变产生能源。这些是建议的研究方向，不是给个人指定的题目。"
+          },
+          "homework": {
+            "en": "Bring your speech topic and prepare to explain:\n\n◆ Who are the stakeholders? Identify the different groups affected, such as teachers, students or other groups relevant to your topic.\n◆ How does the topic affect each group? Explain the specific connection or effect.\n◆ Why should these people care? Explain why the topic matters to them.\n\nNext class, be ready to discuss your topic and answer questions about who it affects and how. Prepare to explain these connections aloud, rather than only listing the groups.",
+            "zh": "带上自己的演讲话题，并准备解释：\n\n◆ 谁是利益相关者？找出受到影响的不同群体，例如老师、学生或与话题相关的其他人群。\n◆ 话题如何影响每个群体？解释具体联系或影响。\n◆ 这些人为什么应该关心？解释话题对他们的重要性。\n\n下次课，请准备讨论自己的话题，并回答它影响谁、如何影响他们的问题。要准备好口头解释这些联系，而不只是列出人群名称。"
+          }
         }
       ]
     },
@@ -960,6 +1006,40 @@
             "en": "Opening statement: Students should be allowed to grade their teachers\n\nConditional homework: Heidi may assign homework. If she does not, complete the assignment below.\n\nDevelop your ideas further and write a two-minute opening statement for the motion “Students should be allowed to grade their teachers.”\n\nSuggested sides: Arthur and Audrey on the pro side; Teresa, Ning and April on the con side.\n\nEach student should introduce the topic, define the key terms, and present three points supporting their side.",
             "zh": "开篇立论：学生应该被允许给自己的老师评分\n\n有条件的作业安排：Heidi 可能会布置作业。如果她没有布置，请完成以下任务。\n\n进一步展开自己的想法，为“学生应该被允许给自己的老师评分”这一辩题写一份两分钟的开篇立论稿。\n\n建议分组：Arthur 和 Audrey 为正方；Teresa、Ning 和 April 为反方。\n\n每位同学都应介绍辩题、解释关键概念，并提出三个支持己方立场的论点。"
           }
+        },
+        {
+          "id": "2026-09-27-sun-1330",
+          "date": "2026-09-27",
+          "time": "13:30–15:00",
+          "status": "held",
+          "students": [
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": "Arthur did not have his homework ready, but he came up and delivered an impromptu speech. He often used several sentences to introduce a point, then restated it as he worked out how to express it. This made the arguments less precise and left less room for specific details and supporting evidence.\n\nHis next focus is preparing and developing each argument using CREI: Claim, Reasoning, Evidence, Impact. State the claim clearly, explain why it makes sense, support it with evidence, and show why the outcome matters. Using preparation time to organize these four parts will help him control his content and develop his ideas instead of repeatedly rephrasing the same point.",
+              "zh": "Arthur 没有准备好作业，但仍然上台完成了一次即兴演讲。他常常用好几句话来引入一个要点，再一边思考如何表达，一边重复陈述。这使论点不够精准，也减少了加入具体细节和支持性证据的空间。\n\n下一步是使用 CREI 准备和展开每个论点：Claim（主张）、Reasoning（推理）、Evidence（证据）、Impact（影响）。先清楚提出主张，解释其合理性，用证据支持，再说明结果为什么重要。利用准备时间组织好这四部分，可以帮助他更好地控制内容、展开想法，而不是反复换一种说法表达同一个要点。"
+            },
+            {
+              "id": "ning",
+              "name": "Ning",
+              "en": "Ning gave a well-organized, clearly structured presentation with good content. Her preparation helped her put her ideas into a logical order, making her reasoning easier to follow.\n\nThis demonstrated why writing down ideas before speaking matters. Notes do not need to be complete sentences: shorthand or a debate “flow” can help organize the argument and make the reasoning easier for judges to follow, especially at the beginning of a speech.\n\nThe next step is to add more examples and specific details within them. After explaining a point, Ning can give a concrete example, describe what happens and who is affected, then explain how it supports her claim. This will strengthen the evidence while preserving the clear organization she already showed.",
+              "zh": "Ning 的展示组织有序、结构清楚，内容也很好。准备帮助她把想法按逻辑排列，让听众更容易理解。\n\n这体现了上台前写下想法的重要性。笔记不必是完整句子：简写或辩论记录“flow”都可以帮助组织论证，让评委更容易跟上推理，尤其是在演讲开头。\n\n下一步是增加更多例子，并补充例子中的具体细节。解释一个要点之后，Ning 可以给出具体例子，描述发生了什么、谁受到影响，再说明它如何支持主张。这样既能加强证据，也能保留她已经展现出的清晰结构。"
+            },
+            {
+              "id": "teresa",
+              "name": "Teresa",
+              "en": "Teresa delivered a well-organized speech with a clear opening, supporting points and a conclusion. Writing down a few words before presenting helped her organize her thoughts and put together a coherent response.\n\nHer main area to work on is time management. The limit was two minutes, and she spoke for two minutes and 30 seconds, finishing 30 seconds over time. When rehearsing, she should look for wording or less essential details she can shorten while preserving her main arguments.\n\nShe can also practise a slightly quicker delivery where her words remain clear, fitting more information into the available time without rushing. Overall, this was a strong, well-prepared presentation; the next step is to keep that structure while finishing within the limit.",
+              "zh": "Teresa 的演讲组织良好，包含清楚的开头、支持性要点和结论。展示前写下几个关键词，帮助她整理思路，形成连贯的回应。\n\n她主要需要练习的是时间管理。规定时长是两分钟，她讲了两分三十秒，超时三十秒。排练时，可以寻找能够缩短的措辞或次要细节，同时保留主要论点。\n\n她也可以在保证吐字清楚的地方稍微加快表达，把更多信息放进规定时间，同时避免仓促。整体而言，这次展示准备充分、表现不错；下一步是在保留结构的同时按时完成。"
+            },
+            {
+              "id": "marshall",
+              "name": "Marshall",
+              "en": "Marshall spoke for approximately three minutes, including some self-introduction and ideas about whether students should grade their teachers. He showed confidence and spoke loudly enough to be heard. He also appeared to have prepared some thoughts on the topic.\n\nThe main difficulty was making his intended meaning clear. He used vocabulary such as “evidence,” but did not always seem comfortable saying and using the words aloud. He appeared to have vocabulary available to express his ideas, while his spoken delivery suggested he may need more practice using it comfortably.\n\nA useful next step is to rehearse short, clear sentences aloud, making sure he can explain each argument in familiar words before adding more complex vocabulary. This will help the audience understand his reasoning while building on the confidence and volume he already demonstrated.",
+              "zh": "Marshall 发言大约三分钟，包括一些自我介绍，以及关于“学生是否应该评价老师”的想法。他表现得自信，声音足够响亮，也似乎提前准备了一些相关想法。\n\n主要困难在于清楚传达自己的意思。他使用了“evidence”等词汇，但在说出和运用这些词时，并不总是显得熟悉自然。他似乎具备表达想法所需的一些词汇，而口头表达显示，他可能需要更多练习，才能更自在地使用它们。\n\n一个有帮助的下一步是大声练习简短、清楚的句子，先确保能用熟悉的词解释每个论点，再加入更复杂的词汇。这样可以在保留自信和音量优势的同时，让听众理解他的推理。"
+            }
+          ],
+          "classContent": null,
+          "homework": null
         }
       ]
     },
