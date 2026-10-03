@@ -316,15 +316,18 @@ async function fetchPublishedSheet(feed) {
 async function main() {
   const feeds = await resolveFeeds();
   const sheets = await Promise.all(feeds.map(fetchPublishedSheet));
-  const publicMonth = process.env.GOOGLE_PUBLIC_SCHEDULE_MONTH?.trim() || "2026-09";
+  const publicMonth = process.env.GOOGLE_PUBLIC_SCHEDULE_MONTH?.trim() || "2026-10";
   const publicMonthKey = parseStartMonth(publicMonth);
-  const publicSheets = sheets.filter((sheet) => toMonthKey(sheet.title) === publicMonthKey)
+  const publicEndMonth = process.env.GOOGLE_PUBLIC_SCHEDULE_END_MONTH?.trim() || "2026-12";
+  const publicEndMonthKey = parseStartMonth(publicEndMonth);
+  if (publicEndMonthKey < publicMonthKey) throw new Error("Public schedule end month precedes its start month.");
+  const publicSheets = sheets.filter((sheet) => toMonthKey(sheet.title) >= publicMonthKey && toMonthKey(sheet.title) <= publicEndMonthKey)
     .map(sheet => ({...sheet, rows: sheet.rows.map(row => ({...row,
       cells: row.cells.map(cell => ({...cell, value: publicScheduleCell(cell.value)})),
     }))}));
 
-  if (publicSheets.length !== 1) {
-    throw new Error(`The public schedule month ${publicMonth} was not found exactly once.`);
+  if (publicSheets.length !== publicEndMonthKey - publicMonthKey + 1) {
+    throw new Error(`The public schedule range ${publicMonth}–${publicEndMonth} is incomplete.`);
   }
 
   const common = {

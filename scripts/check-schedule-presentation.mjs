@@ -4,6 +4,13 @@ import { calendarDisplayEventKind, publicBookingPresentation, scheduleStartMinut
 import { weeklyScheduleBlocks } from '../src/lib/weeklySchedule.ts';
 import { sanitizeCalendarCell } from './schedule-privacy.mjs';
 
+test('holiday boot camps are anonymous group bookings', () => {
+  for (const label of ['Grade 1 SDG boot camp', 'Grades 6–7 competition boot camp']) {
+    assert.equal(calendarDisplayEventKind(label), 'group');
+    assert.deepEqual(publicBookingPresentation(label), {kind: 'group', title: 'Class booked'});
+  }
+});
+
 test('explicit all-day availability replaces Sunday windows without masking a booking', () => {
   const free = sanitizeCalendarCell('20\nFree all day\nMake-up workday: September 25-27 holiday');
   assert.equal(free, '20\nFree all day');

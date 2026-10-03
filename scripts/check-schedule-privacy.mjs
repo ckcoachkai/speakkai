@@ -18,7 +18,7 @@ for(const sheet of publicSchedule.sheets)for(const row of sheet.rows)for(const c
   assert.equal(cell.value, publicScheduleCell(cell.value), 'Public schedule contains a raw/private booking label');
 }
 assertCalendarDisplayPublicSchedule(internalSchedule);
-assert.deepEqual(publicSchedule.sheets.map((sheet) => sheet.title), ["September 2026"]);
+assert.deepEqual(publicSchedule.sheets.map((sheet) => sheet.title), ["October 2026", "November 2026", "December 2026"]);
 for (const title of ["July 2026", "August 2026", "September 2026"]) {
   assert.ok(internalSchedule.sheets.some((sheet) => sheet.title === title), `Internal schedule is missing ${title}.`);
 }

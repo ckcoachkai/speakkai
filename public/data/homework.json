@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-03T09:01:23Z",
+  "updatedAt": "2026-10-03T10:30:00Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1335,8 +1335,16 @@
           "id": "2026-10-03-holiday-competition-camp",
           "date": "2026-10-03",
           "time": "16:00–18:30",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "We began with a short warm-up and an introduction to Original Oratory. We explored how a speech can examine cause and effect, impact, and solutions, helping students move from describing a topic toward explaining why it matters.\n\nEach student delivered a self-introduction and received initial feedback on content and delivery. We focused on developing specific details, organizing ideas clearly, and becoming more aware of what happens while speaking.\n\nA shared delivery priority was controlling filler words such as “uh” and “um.” We created an app to help students notice these sounds and increase their self-awareness. We discussed becoming comfortable with short pauses rather than immediately filling silence. We also worked on awareness of hand gestures and how purposeful movements can support a message.\n\nNext, we explored topic selection through discussion of current events, including AI musicians and AI actors. Students brainstormed possible speech topics and considered five filters:\n\n→ Personal connection: Does the topic connect to their experiences or interests?\n→ Relatability: Can other people connect with it?\n→ Uniqueness: Does it offer a distinctive perspective?\n→ Societal impact: Why does it matter to people or communities?\n→ Researchability: Can they find credible information and specific examples?\n\nWe then began identifying a claim or central idea within each topic: what the student thinks about it and what they want the audience to understand."
+          ],
+          "homework": {
+            "title": "Assigned homework",
+            "steps": [
+              "Prepare approximately 200 words based on your chosen topic. Explain your thoughts and opinions, and begin developing the claim or central idea you could use in your speech.\n\nBe ready to present this at the beginning of the next class. Students may use their notes while presenting if needed. Practising aloud beforehand will help them become familiar with their ideas and notice where they need to pause."
+            ],
+            "prepareFor": "The next class"
+          },
           "students": [
             {
               "name": "Haley",
@@ -1357,6 +1365,36 @@
             {
               "name": "Simon",
               "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-03&student=simon"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "national-holiday-sdg-camp",
+      "sessions": [
+        {
+          "id": "2026-10-03-holiday-sdg-camp",
+          "date": "2026-10-03",
+          "time": "13:00–15:30",
+          "classContent": [
+            "We began with a body warm-up, including jumping and moving left and right, to help students relax and get their blood pumping. We then warmed up their voices through tongue twisters, articulation exercises, and practice with emotional facial expressions.\n\nNext, we introduced a structure for self-introductions and practised using it. Mia gave several self-introductions of approximately one minute each, while Charlotte gave one and appeared more hesitant.\n\nOur topic discussion focused on SDG 6: Clean Water and Sanitation. We explored the problems affecting clean water, what makes water dirty, methods currently used to clean it, and pollution around the world. This led to a discussion about why we need to protect our clean water sources.\n\nWe also introduced self-awareness when presenting, focusing on eye contact, hands, feet, and voice. Students were encouraged to take individual speaking turns, although they continued to prefer coming up together. Mia sometimes encouraged Charlotte to go first, while Charlotte appeared particularly nervous about speaking alone.\n\nFinally, we watched an NSDA storytelling speech, Dinosaur Went to Class. This provided a more accessible example to discuss, as some adult championship speeches could be difficult for them to understand.\n\nThe focus of the first one or two days is to help students become more comfortable speaking aloud and gradually overcome their fear of presenting as we explore more topics."
+          ],
+          "homework": {
+            "title": "Assigned homework",
+            "steps": [
+              "Practise the provided clean water speech script by reading it aloud several more times. The immediate goal is to become more familiar with the words and more comfortable speaking out loud."
+            ],
+            "prepareFor": "The next class"
+          },
+          "students": [
+            {
+              "name": "Mia",
+              "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-03&student=mia"
+            },
+            {
+              "name": "Charlotte",
+              "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-03&student=charlotte"
             }
           ]
         }

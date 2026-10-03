@@ -4,6 +4,7 @@ const nonNameCapitalizedWords = new Set([
 ]);
 
 export function calendarDisplayEventKind(label: string) {
+  if (/\bboot camp\b/i.test(label)) return "group";
   if (/\bVIP\b|\b1\s*(?:-|v)\s*1\b|\b1\s*-?\s*on\s*-?\s*1\b|一对一/i.test(label)) return "vip";
   if (/^Class booked(?: · (?:华漕|龙柏|古北|威宁路|Hongqiao Hub|Huacao|Longbai|Gubei|Weining Road|G\d+(?:–\d+)*))*$/.test(label)) return "group";
   if (/班课|年级|\bSTCC\b|\bgroup\b|\bLogan\s*班\b/i.test(label)) return "group";
