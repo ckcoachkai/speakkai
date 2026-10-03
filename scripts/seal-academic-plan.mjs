@@ -1,0 +1,25 @@
+import { readFile, writeFile, mkdir, rename } from 'node:fs/promises';
+import { webcrypto } from 'node:crypto';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root=path.resolve(fileURLToPath(new URL('..',import.meta.url)));
+const source=process.argv[2] && path.resolve(process.argv[2]);
+const password=process.env.AP_PASSWORD;
+if(!source || !password)throw Error('Provide an external private HTML path and AP_PASSWORD environment variable.');
+if(source.toLowerCase().startsWith((root+path.sep).toLowerCase()))throw Error('Keep plaintext outside the website repository.');
+const html=await readFile(source,'utf8');
+if(!html.includes('<!doctype html>') || html.includes('class="placeholder"'))throw Error('Expected a completed standalone HTML plan.');
+const salt=webcrypto.getRandomValues(new Uint8Array(16));
+const iv=webcrypto.getRandomValues(new Uint8Array(12));
+const material=await webcrypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveKey']);
+const iterations=600000;
+const key=await webcrypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',salt,iterations},material,{name:'AES-GCM',length:256},false,['encrypt']);
+const ciphertext=await webcrypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(html));
+const payload={version:1,updated:'2026-10-04',iterations,salt:Buffer.from(salt).toString('base64'),iv:Buffer.from(iv).toString('base64'),ciphertext:Buffer.from(ciphertext).toString('base64')};
+const dir=path.join(root,'src','data','ap');
+await mkdir(dir,{recursive:true});
+const target=path.join(dir,'plan.json');
+await writeFile(target+'.tmp',JSON.stringify(payload)+'\n');
+await rename(target+'.tmp',target);
+console.log('Academic plan encrypted. No plaintext or password written to the website repository.');

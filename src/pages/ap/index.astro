@@ -1,0 +1,97 @@
+---
+import payload from '../../data/ap/plan.json';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="referrer" content="no-referrer" />
+  <title>Academic plan | SpeakKai</title>
+</head>
+<body>
+  <main id="gate">
+    <a class="brand" href="/">SpeakKai<span>.</span></a>
+    <p class="eyebrow">Private reading room</p>
+    <h1>Academic<br />plan<span>.</span></h1>
+    <p class="intro">Your research, options and next steps.<br />Enter the password to open the plan.</p>
+    <form id="unlock">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required />
+      <button id="open" type="submit">Open the plan <span aria-hidden="true">↗</span></button>
+      <p id="error" role="status" aria-live="polite"></p>
+    </form>
+    <noscript><p>JavaScript is needed to decrypt and open this plan.</p></noscript>
+    <p class="fine">Encrypted in your browser. Refreshing locks the page.</p>
+  </main>
+  <div id="reader" hidden>
+    <nav aria-label="Plan controls"><a class="brand" href="/">SpeakKai<span>.</span></a><span>Academic plan · October 2026</span><button id="lock" type="button">Lock</button></nav>
+    <iframe id="content" title="Academic research and degree plan" sandbox="allow-scripts allow-modals allow-popups allow-popups-to-escape-sandbox" referrerpolicy="no-referrer"></iframe>
+  </div>
+  <script is:inline type="application/json" id="sealed-plan" set:html={JSON.stringify(payload).replaceAll('<','\\u003c')} />
+  <script>
+    const payload=JSON.parse(document.getElementById('sealed-plan')!.textContent!);
+    const gate=document.getElementById('gate')!;
+    const reader=document.getElementById('reader')!;
+    const input=document.getElementById('password') as HTMLInputElement;
+    const form=document.getElementById('unlock') as HTMLFormElement;
+    const button=document.getElementById('open') as HTMLButtonElement;
+    const error=document.getElementById('error')!;
+    const frame=document.getElementById('content') as HTMLIFrameElement;
+    const decode=(value:string)=>Uint8Array.from(atob(value),c=>c.charCodeAt(0));
+    let generation=0;
+    function lock(focus=true){
+      generation++;
+      frame.srcdoc='';
+      frame.removeAttribute('src');
+      reader.hidden=true;
+      gate.hidden=false;
+      input.value='';
+      error.textContent='';
+      button.disabled=false;
+      form.removeAttribute('aria-busy');
+      if(focus)input.focus();
+    }
+    form.addEventListener('submit',async event=>{
+      event.preventDefault();
+      if(button.disabled)return;
+      const request=++generation;
+      const secret=input.value;
+      input.value='';
+      button.disabled=true;
+      form.setAttribute('aria-busy','true');
+      error.textContent='Opening…';
+      try {
+        const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(secret),'PBKDF2',false,['deriveKey']);
+        const key=await crypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',iterations:payload.iterations,salt:decode(payload.salt)},material,{name:'AES-GCM',length:256},false,['decrypt']);
+        const clear=await crypto.subtle.decrypt({name:'AES-GCM',iv:decode(payload.iv)},key,decode(payload.ciphertext));
+        if(request!==generation){new Uint8Array(clear).fill(0);return;}
+        frame.srcdoc=new TextDecoder().decode(clear);
+        new Uint8Array(clear).fill(0);
+        gate.hidden=true;
+        reader.hidden=false;
+        error.textContent='';
+        frame.focus();
+      } catch {
+        if(request===generation){error.textContent='Incorrect password. Please try again.';input.focus();}
+      } finally {
+        if(request===generation){button.disabled=false;form.removeAttribute('aria-busy');}
+      }
+    });
+    document.getElementById('lock')!.addEventListener('click',()=>lock());
+    window.addEventListener('pagehide',()=>lock(false));
+    window.addEventListener('pageshow',event=>{if(event.persisted)lock(false);});
+  </script>
+  <style>
+    :global(*){box-sizing:border-box}:global(body){margin:0;background:#f5f0e8;color:#1d2728;font:16px/1.6 'Segoe UI',Arial,sans-serif}:global([hidden]){display:none!important}
+    a{color:inherit}.brand{font-size:18px;font-weight:700;letter-spacing:-.5px;text-decoration:none}.brand span,h1 span{color:#ad5d3f}
+    #gate{width:min(500px,100%);margin:7vh auto;padding:28px 32px}.eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:#81432f;margin:55px 0 16px}
+    h1{font:clamp(65px,15vw,90px)/.95 Georgia,serif;letter-spacing:-5px;margin:0 0 26px}.intro{color:#677170;margin:0 0 32px}.fine{font-size:12px;color:#677170;margin-top:30px}
+    label{display:block;font-size:13px;margin-bottom:9px}input,button{font:inherit;border-radius:5px;padding:13px 16px;border:1px solid #c5b9a9}input{width:100%;background:#fffaf2;color:#1d2728}input:focus-visible,button:focus-visible{outline:3px solid #ad5d3f;outline-offset:3px}
+    button{cursor:pointer;background:#1d2728;color:#fffaf2}button:disabled{opacity:.55;cursor:wait}form button{display:flex;justify-content:space-between;width:100%;margin-top:14px}#error{font-size:13px;min-height:22px;margin:12px 0 0;color:#81432f}
+    nav{height:56px;display:flex;align-items:center;gap:22px;padding:10px 24px;border-bottom:1px solid #cfc4b5;background:#fffaf2}nav>span{font-size:12px;color:#677170}nav button{margin-left:auto;padding:5px 16px;font-size:13px}iframe{display:block;width:100%;height:calc(100dvh - 56px);border:0;background:#f5f0e8}
+    @media(max-width:500px){#gate{margin:3vh auto;padding:24px}.eyebrow{margin-top:40px}nav{padding:10px 14px;gap:12px}nav>span{font-size:10px}nav .brand{font-size:16px}}
+  </style>
+</body>
+</html>
