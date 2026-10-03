@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-09-27T20:27:22Z",
+  "updatedAt": "2026-10-03T09:01:23Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1323,6 +1323,40 @@
             {
               "name": "Sofia",
               "feedbackUrl": "/fb/?class=huaxin-summer-grade1-morning&date=2026-08-26&student=sofia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "national-holiday-competition-camp",
+      "sessions": [
+        {
+          "id": "2026-10-03-holiday-competition-camp",
+          "date": "2026-10-03",
+          "time": "16:00–18:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Haley",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-03&student=haley"
+            },
+            {
+              "name": "Ivy",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-03&student=ivy"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-03&student=william"
+            },
+            {
+              "name": "Robinson",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-03&student=robinson"
+            },
+            {
+              "name": "Simon",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-03&student=simon"
             }
           ]
         }

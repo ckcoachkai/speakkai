@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-27T20:27:22Z",
+  "updatedAt": "2026-10-03T09:01:23Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1627,6 +1627,55 @@
             "en": "First priority: Students should spend their available practice time becoming more familiar with their final presentation. The goal is to get a clear grasp of the content so that the final delivery can become more natural and confident.\n\n2. If additional time is available, students should practise the dialogues, focusing on how to present two different characters or roles through changes in voice, tone, and body language.\n\n3. If time still remains, students can review the meaning and use of Power, Pitch, Pace, and Pause.",
             "zh": "第一优先：根据自己可用的练习时间，先熟悉最后要展示的演讲。重点是掌握内容，让最后的表达逐渐更自然、更有信心。\n\n2. 如果还有时间，再练习课堂上的对话，通过声音、语气和肢体语言的变化来呈现两个不同的角色。\n\n3. 如果时间允许，可以继续复习 Power、Pitch、Pace 和 Pause 的含义与用法。"
           }
+        }
+      ]
+    },
+    {
+      "id": "national-holiday-competition-camp",
+      "label": {
+        "en": "National Holiday competition camp · Grades 6–7 · 16:00–18:30",
+        "zh": "国庆竞赛营 · 六至七年级 · 16:00–18:30"
+      },
+      "sessions": [
+        {
+          "id": "2026-10-03-holiday-competition-camp",
+          "date": "2026-10-03",
+          "time": "16:00–18:30",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "haley",
+              "name": "Haley",
+              "en": "Haley was our first speaker and delivered a simple self-introduction lasting approximately one minute. She shared basic information about herself, including what she likes to eat. She reacted well to what was happening around her, showing awareness of her surroundings while speaking.\n\nHer next focus is to develop her ideas with more detail and organize them into a clearer, more engaging structure. For example, when mentioning a favourite food, she could explain why she likes it or share a short experience connected to it. This would give the audience more to connect with and make her introduction more memorable.\n\nCompleting a one-minute introduction was a useful starting point. With clearer structure and fuller explanations, Haley can build on this first presentation.",
+              "zh": "Haley 是第一位发言者，进行了约一分钟的简单自我介绍。她分享了自己的基本信息，包括喜欢吃什么。她能够对周围发生的事情作出较好的反应，表现出发言时对周围环境的觉察。\n\n下一步是加入更多细节，并把想法组织成更清楚、更有吸引力的结构。例如，说到喜欢的食物时，可以解释为什么喜欢，或分享一段相关的小经历。这会给听众更多可以产生共鸣的内容，让介绍更令人印象深刻。\n\n完成一分钟的介绍是一个有用的起点。通过更清楚的结构和更充分的解释，Haley 可以在这次展示的基础上继续进步。"
+            },
+            {
+              "id": "ivy",
+              "name": "Ivy",
+              "en": "Ivy was our second speaker and delivered a self-introduction lasting approximately one minute. She shared some of her interests, including her love of cats, giving the audience a starting point for getting to know her.\n\nHer content was still simple, and she did not use hand gestures during this presentation. As we establish the foundations in this new class, her next focus is to expand her ideas and begin using purposeful gestures. For example, she could explain what she likes about cats or share a short experience that illustrates her interest.\n\nCompleting the one-minute introduction was a useful first step. We will build from this by developing clearer structure, more specific details, and delivery skills. Her previous public-speaking experience has not yet been confirmed.\n\nIvy sometimes giggled while presenting. Her next focus is to maintain composure so laughter does not interrupt her message or leave the audience unsure how to respond. If she feels herself starting to giggle, she could briefly pause, take a breath, and return to her next sentence.",
+              "zh": "Ivy 是第二位发言者，进行了约一分钟的自我介绍。她分享了一些兴趣，包括对猫的喜爱，让听众开始了解她。\n\n内容仍较简单，展示时没有使用手势。在这个新班建立基础的过程中，下一步是展开想法，并开始使用有目的的手势。例如，可以解释喜欢猫的哪些特点，或分享一段能体现这份兴趣的小经历。\n\n完成一分钟的介绍是有用的第一步。接下来会通过更清楚的结构、更具体的细节和表达技巧，在此基础上继续练习。她以前是否有公开演讲经验尚未确认。\n\nIvy 展示时有时会咯咯笑。下一步是保持稳定，让笑声不会打断信息或让听众不确定如何回应。如果感觉自己开始笑，可以短暂停顿、呼吸一下，再回到下一句话。"
+            },
+            {
+              "id": "william",
+              "name": "William",
+              "en": "William, a Grade 7 student, spoke for approximately one minute and forty seconds. His ideas and content showed greater depth, giving him more material to develop during his introduction.\n\nAt times, he struggled to find his next words and filled the silence with repeated “um” sounds. His next focus is to become more comfortable with short pauses. When he needs to think, he could pause, take a breath, and then continue. This would help his delivery sound more controlled and give the audience time to follow his ideas.",
+              "zh": "William 是七年级学生，发言约一分四十秒。他的想法与内容体现出更深入的思考，为自我介绍提供了更多可以展开的材料。\n\n有时，他一时找不到下一句话，用重复的“um”填补安静的间隙。下一步是逐渐适应短暂停顿。需要思考时，可以先停顿、呼吸，再继续。这有助于让表达更有控制，也给听众时间跟随他的思路。"
+            },
+            {
+              "id": "robinson",
+              "name": "Robinson",
+              "en": "Robinson delivered a self-introduction lasting approximately two minutes. He included specific details and shared his feelings and opinions, particularly when discussing sports. These personal responses helped the audience learn more about him.\n\nHe spoke with a loud voice, showing enthusiasm, confidence, and conviction in his delivery. His next focus is to organize his material into a clearer structure and narrow the number of topics he covers. Choosing a few main ideas and developing each with details and personal reflections would make his introduction more focused and easier to follow.\n\nHe did not use hand gestures during this presentation. As he practises, he could add a few purposeful gestures to support important points while maintaining his clear, energetic voice.",
+              "zh": "Robinson 进行了约两分钟的自我介绍。他加入了具体细节，也分享了自己的感受和观点，尤其是在谈到运动时。这些个人感受帮助听众进一步了解他。\n\n他的声音响亮，表达中展现出热情、自信和坚定。下一步是把材料组织成更清楚的结构，并减少涉及的不同话题数量。选择几个主要想法，用细节和个人思考充分展开，会让介绍更集中、更容易跟随。\n\n这次展示没有使用手势。练习时，可以加入几个有目的的手势来支持重点，同时保持清楚、有活力的声音。"
+            },
+            {
+              "id": "simon",
+              "name": "Simon",
+              "en": "Simon was our final speaker and delivered a self-introduction lasting approximately two minutes and twenty seconds. He shared plenty of specific details and showed some structure, making his ideas logical and easy to follow. His content gives him a useful foundation to build on.\n\nHis main delivery focus is controlling filler words. He frequently used “uh” while thinking about what to say next and appeared uncomfortable with silence. Learning to allow a short pause would help him maintain a steadier flow and give listeners time to absorb his ideas.\n\nA useful practice is to pause, take a breath, and continue once the next thought is ready. The goal is to become comfortable thinking quietly while remaining connected to the audience.",
+              "zh": "Simon 是最后一位发言者，进行了约两分二十秒的自我介绍。他分享了许多具体细节，并体现出一定结构，使想法有逻辑、容易跟随。他的内容为后续发展提供了有用的基础。\n\n主要表达重点是控制填充词。他思考下一句话时频繁使用“uh”，似乎不太适应安静的间隙。允许自己短暂停顿，有助于保持更稳定的表达节奏，也让听众有时间吸收内容。\n\n一种有用的练习是先停顿、呼吸，待下一想法准备好后再继续。目标是在保持与听众联系的同时，逐渐习惯安静地思考。"
+            }
+          ]
         }
       ]
     }

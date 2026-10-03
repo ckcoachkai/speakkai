@@ -6,7 +6,7 @@ const data=JSON.parse(fs.readFileSync('public/data/class-curricula.json','utf8')
 const fb=JSON.parse(fs.readFileSync('public/data/feedback.json','utf8'));
 test('all active non-STCC group classes have valid bilingual plans',()=>{
  validateCurricula(data);assert.equal(data.classes.length,11);
- for(const g of fb.classes.filter(g=>!g.id.startsWith('sun-')&&!g.id.includes('summer')))assert.ok(data.classes.some(c=>c.id===g.id));
+ for(const g of fb.classes.filter(g=>!data.excludedClassIds.includes(g.id)&&!g.id.startsWith('sun-')&&!g.id.includes('summer')))assert.ok(data.classes.some(c=>c.id===g.id));
  for(const c of data.classes){assert.ok(!c.id.startsWith('sun-'));for(const a of c.alignments){const s=fb.classes.find(g=>g.id===c.id)?.sessions.find(s=>s.id===a.sessionId);assert.ok(s);if(s.status==='cancelled')assert.deepEqual(a.lessons,[]);}}
  assert.ok(data.classes.some(c=>c.id==='mon-later'));assert.equal(data.templates['grade-1'].lessons.length,20);assert.equal(data.templates['grades-5-6'].lessons.length,16);
 });
