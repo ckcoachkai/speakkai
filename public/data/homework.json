@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-04T06:13:46.512743+00:00",
+  "updatedAt": "2026-10-04T08:16:54.813115+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1403,9 +1403,17 @@
           "date": "2026-10-04",
           "time": "13:00–15:30",
           "classContent": [
-            "We began with a self-awareness warm-up, finding differences between two pictures. This helped students practise noticing details about themselves and their surroundings—an important foundation for becoming aware of their voice, movements, and audience while speaking.\n\nWe then began a body warm-up but stopped it early when students started bumping into desks, to keep the activity safe.\n\nCharlotte took an independent speaking turn, with Mia nearby. We introduced clapping once for each word in a short sentence to help her notice and slow her speaking pace. The teacher demonstrated this with a simple sentence such as “I really like blueberries.” The practice suggestion was to repeat the sentence at the same steady pace without clapping.\n\nThe teacher also proposed using a music stand to hold the script, freeing both hands for gestures and making it easier to practise speaking directly to the audience. This is a proposed classroom support, not an assigned homework task."
+            "We began with a self-awareness warm-up, finding differences between two pictures. This helped students practise noticing details about themselves and their surroundings—an important foundation for becoming aware of their voice, movements, and audience while speaking.\n\nWe then began a body warm-up but stopped it early when students started bumping into desks, to keep the activity safe.\n\nCharlotte took an independent speaking turn, with Mia nearby. We introduced clapping once for each word in a short sentence to help her notice and slow her speaking pace. The teacher demonstrated this with a simple sentence such as “I really like blueberries.” The practice suggestion was to repeat the sentence at the same steady pace without clapping.\n\nThe teacher also proposed using a music stand to hold the script, freeing both hands for gestures and making it easier to practise speaking directly to the audience. This is a proposed classroom support, not an assigned homework task.\n\nBoth students continued practising their speeches. Mia spoke at a more comfortable pace and began using her free hand to gesture while speaking.\n\nWe then added hand gestures to the speech practice. The teacher recorded a demonstration video showing how to follow the gestures, giving students a clear model to use during rehearsal.\n\nOur second speech topic was poverty. We explored what poverty means, why it is a problem around the world, and other issues connected with it. We watched examples of places where poverty is prevalent and reviewed the basic speech structure: opening, body, and conclusion.\n\nWe also practised organizing ideas around problems and solutions. Students considered different problems and thought about possible ways to solve them. Finally, we introduced simple impromptu questions so they could practise forming an answer and responding more quickly."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Speech and hand-gesture practice",
+            "steps": [
+              "Use the teacher's demonstration video to practise saying the speech and adding the gestures together.",
+              "Aim for 3–4 rehearsals, if possible."
+            ],
+            "prepareFor": "Feel comfortable saying the words while adding the gestures.",
+            "note": "If possible, record and send the teacher a practice video so he can see your rehearsal at home."
+          },
           "students": [
             {
               "name": "Mia",
