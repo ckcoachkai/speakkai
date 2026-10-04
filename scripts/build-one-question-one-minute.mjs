@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const root='tools/one-question-one-minute/';
+const questions=JSON.parse(fs.readFileSync(root+'questions.json','utf8'));
+assert.equal(questions.length,500);
+assert(questions.every(q=>typeof q==='string'&&q.trim().length>0));
+const source=fs.readFileSync(root+'template.html','utf8');
+assert(source.includes('__QUESTIONS__'));
+fs.writeFileSync('public/games/one-question-one-minute.html',source.replace('__QUESTIONS__',JSON.stringify(questions).replaceAll('<','\\u003c')));
+console.log('Built 500-question recording game.');

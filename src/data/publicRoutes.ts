@@ -27,6 +27,7 @@ export const publicRoutes = [
   "/games/mouse-house/",
   "/tools/class-charades/",
   "/tools/problem-solving-sprint/",
+  "/tools/one-question-one-minute/",
   "/tools/marble-name-picker/",
   "/tools/speech-debate-timer/",
   "/tools/toastmasters-timer/",

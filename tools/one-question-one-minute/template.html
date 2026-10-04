@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>One Question · One Minute</title>
+<style>
+:root{color-scheme:dark;font-family:Arial,Helvetica,sans-serif;background:#10141d;color:#faf8f3}*{box-sizing:border-box}body{margin:0}main{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;padding:clamp(20px,4vw,64px);gap:24px}header{display:flex;align-items:center;justify-content:space-between;gap:20px;color:#aeb9cc;font-size:clamp(16px,1.6vw,26px)}#timer{font-size:clamp(32px,4vw,64px);font-variant-numeric:tabular-nums;color:#f0c979;font-weight:700}section{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:24px 0}h1{font-size:clamp(34px,5.3vw,94px);line-height:1.15;letter-spacing:-.025em;max-width:1550px;margin:0 auto;text-wrap:balance;overflow-wrap:break-word}#hint{font-size:clamp(18px,1.9vw,28px);line-height:1.4;color:#aeb9cc;margin:30px 0 0}footer{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px}button{font:600 clamp(16px,1.5vw,24px)/1.2 Arial,Helvetica,sans-serif;border:1px solid #586376;background:transparent;color:#c9d1df;border-radius:10px;padding:14px 22px;min-height:50px;cursor:pointer}#start{background:#f0c979;color:#161a23;border-color:#f0c979;min-width:180px;font-size:clamp(22px,2vw,30px)}button:hover{filter:brightness(1.15);background:#263044}#start:hover{background:#f6d899}button:focus-visible{outline:3px solid #f0c979;outline-offset:5px}[hidden]{display:none!important}#notice{font-size:16px;color:#aeb9cc;text-align:center;margin:0}body.running footer{opacity:.55}body.running footer:focus-within,body.running footer:hover{opacity:1}:fullscreen{background:#10141d;overflow:auto}@media(max-height:520px){main{padding:16px 24px;gap:12px}section{padding:8px 0}h1{font-size:clamp(28px,4.5vw,54px)}#timer{font-size:32px}#hint{margin-top:16px}button{min-height:44px;padding:10px 18px}}
+.clock-block{display:flex;flex-direction:column;gap:6px;text-align:center}.clock-label{font-size:clamp(12px,1.1vw,18px);color:#aeb9cc}#real-clock{font-size:clamp(22px,2.6vw,42px);font-variant-numeric:tabular-nums;color:#faf8f3}#setup,#zone-setup{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;font-size:clamp(18px,1.6vw,26px)}select{font:inherit;color:#faf8f3;background:#202938;border:1px solid #586376;border-radius:10px;padding:12px;max-width:100%;min-height:50px}select:focus-visible{outline:3px solid #f0c979;outline-offset:4px}header{flex-wrap:wrap}#counter{font-size:clamp(15px,1.6vw,26px)}@media(max-width:450px){header{gap:14px}#counter{flex-basis:100%;text-align:center}.clock-block{text-align:left}.clock-block:last-child{text-align:right}}
+</style></head>
+<body><main>
+<header><span id="counter">60 questions</span><div class="clock-block"><span class="clock-label" id="zone-label">Beijing / Shanghai time</span><time id="real-clock"></time></div><div class="clock-block"><span class="clock-label">This question</span><span id="timer" aria-label="Time remaining">1:00</span></div></header>
+<section aria-live="polite" aria-atomic="true"><h1 id="question">One question.<br>One minute.</h1><p id="hint">Press Start. The next question appears automatically every 60 seconds.</p></section>
+<div id="setup"><label for="duration">Session length</label><select id="duration"><option value="60">1 hour · 60 questions</option><option value="120">2 hours · 120 questions</option><option value="180">3 hours · 180 questions</option><option value="240">4 hours · 240 questions</option><option value="300">5 hours · 300 questions</option><option value="360">6 hours · 360 questions</option><option value="420">7 hours · 420 questions</option><option value="480">8 hours · 480 questions</option><option value="500">All 500 · 8 hours 20 minutes</option></select></div>
+<div id="zone-setup"><label for="timezone">Clock timezone</label> <select id="timezone" aria-label="Clock timezone"><option value="Asia/Shanghai">Beijing / Shanghai (UTC+8)</option></select></div>
+<footer><button id="start" type="button">Start</button><button id="pause" type="button" hidden>Pause</button><button id="reset" type="button" hidden>Reset</button><button id="fullscreen" type="button">Full screen</button></footer>
+<p id="notice" role="status" hidden></p>
+</main>
+<script id="question-bank" type="application/json">__QUESTIONS__</script>
+<script>
+(()=>{
+const questions=JSON.parse(document.getElementById('question-bank').textContent);
+const $=id=>document.getElementById(id);
+let phase='ready',index=0,deadline=0,left=60000,interval=null,wake=null,limit=60;
+let clockFormat=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'});
+const zones=typeof Intl.supportedValuesOf==='function'?Intl.supportedValuesOf('timeZone'):['Asia/Tokyo','Asia/Singapore','Asia/Kolkata','Asia/Dubai','Europe/London','Europe/Paris','America/New_York','America/Chicago','America/Denver','America/Los_Angeles','Australia/Sydney','Pacific/Auckland'];
+for(const zone of ['UTC',...zones]){if(zone==='Asia/Shanghai')continue;const option=document.createElement('option');option.value=zone;option.textContent=zone.replaceAll('_',' ');$('timezone').append(option);}
+$('timezone').addEventListener('change',()=>{const zone=$('timezone').value;clockFormat=new Intl.DateTimeFormat('en-GB',{timeZone:zone,hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'});$('zone-label').textContent=zone==='Asia/Shanghai'?'Beijing / Shanghai time':zone.replaceAll('_',' ');realClock();});
+function realClock(){const now=new Date();$('real-clock').textContent=clockFormat.format(now);$('real-clock').dateTime=now.toISOString();}
+realClock();setInterval(realClock,1000);
+function timer(){const sec=Math.ceil(Math.max(0,left)/1000);$('timer').textContent=Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');}
+function display(){
+ document.body.classList.toggle('running',phase==='running');
+ $('counter').textContent=phase==='ready'?`${limit} questions`:`Question ${index+1} / ${limit}`;
+ $('question').textContent=phase==='ready'?'One question. One minute.':phase==='done'?`All ${limit} questions complete.`:questions[index];
+ $('setup').hidden=phase==='running'||phase==='paused';
+ $('zone-setup').hidden=phase==='running'||phase==='paused';
+ $('hint').hidden=phase==='running';
+ $('hint').textContent=phase==='ready'?'Press Start. The next question appears automatically every 60 seconds.':phase==='paused'?'Paused — resume when you’re ready.':'Your session is finished.';
+ $('start').hidden=phase==='running'||phase==='paused';$('start').textContent=phase==='done'?'Start again':'Start';
+ $('pause').hidden=phase==='ready'||phase==='done';$('pause').textContent=phase==='paused'?'Resume':'Pause';
+ $('reset').hidden=phase==='ready';timer();
+}
+async function keepAwake(){try{if('wakeLock' in navigator&&phase==='running'&&document.visibilityState==='visible')wake=await navigator.wakeLock.request('screen');}catch{}}
+function release(){if(wake){wake.release().catch(()=>{});wake=null;}}
+function tick(){
+ if(phase!=='running')return;
+ left=Math.max(0,deadline-Date.now());
+ if(left===0){
+  const steps=Math.floor((Date.now()-deadline)/60000)+1;
+  if(index+steps>=limit){index=limit-1;phase='done';clearInterval(interval);release();display();return;}
+  index+=steps;deadline+=steps*60000;left=Math.max(0,deadline-Date.now());display();
+ }else timer();
+}
+async function fullscreen(){try{if(!document.fullscreenElement&&document.fullscreenEnabled)await document.documentElement.requestFullscreen();}catch{}}
+$('duration').addEventListener('change',()=>{if(phase==='ready'){limit=Number($('duration').value);display();}});
+$('start').addEventListener('click',()=>{limit=Number($('duration').value);index=0;left=60000;deadline=Date.now()+left;phase='running';clearInterval(interval);interval=setInterval(tick,100);display();fullscreen();keepAwake();});
+$('pause').addEventListener('click',()=>{
+ if(phase==='running'){tick();if(phase!=='running')return;phase='paused';clearInterval(interval);release();}
+ else if(phase==='paused'){phase='running';deadline=Date.now()+left;interval=setInterval(tick,100);keepAwake();}
+ display();
+});
+$('reset').addEventListener('click',()=>{clearInterval(interval);release();phase='ready';index=0;left=60000;limit=Number($('duration').value);display();$('start').focus();});
+$('fullscreen').hidden=!document.fullscreenEnabled;
+$('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await fullscreen();}catch{}});
+document.addEventListener('fullscreenchange',()=>{$('fullscreen').textContent=document.fullscreenElement?'Exit full screen':'Full screen';});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){tick();keepAwake();}});
+display();
+})();
+</script></body></html>
+
