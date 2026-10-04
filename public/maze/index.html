@@ -151,7 +151,8 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
 .upload-button { display: block; padding: 10px; text-align: center; color: var(--cream); border: 1px dashed rgba(243, 228, 187, .28); font-size: 9px; letter-spacing: .11em; cursor: pointer; }
 .upload-button:hover { border-color: var(--yellow); color: var(--yellow); }
 .upload-button span { color: var(--yellow); font-size: 14px; vertical-align: -1px; margin-right: 3px; }
-#musicInput { display: none; }
+#musicInput { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.upload-button:focus-within { outline: 2px solid var(--yellow); outline-offset: 3px; }
 .clear-track { display: block; border: 0; background: transparent; color: var(--muted); padding: 8px 0 0; font-size: 8px; letter-spacing: .13em; cursor: pointer; }
 .clear-track:hover { color: var(--yellow); }
 .clear-track[hidden] { display: none; }
@@ -254,7 +255,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
         </div>
 
         <div class="stage-frame">
-          <div class="hud hud-top" aria-live="polite">
+          <div class="hud hud-top" aria-label="Game statistics">
             <div class="hud-stat"><span class="hud-label">ELAPSED</span><strong id="elapsedValue">00:00</strong></div>
             <div class="hud-stat danger"><span class="hud-label">BOOM</span><strong id="boomValue">30s</strong></div>
             <div class="hud-stat"><span class="hud-label">CAT</span><strong id="catValue">01:00</strong></div>
@@ -333,7 +334,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
       </aside>
     </main>
 
-    <footer class="app-footer"><span><b>DYNAMITE MICE</b> / A NAME PICKER WITH TEETH</span><span>LOCAL SESSION · NO DATA LEAVES THIS DEVICE</span></footer>
+    <footer class="app-footer"><span><b>DYNAMITE MICE</b> / A NAME PICKER WITH TEETH</span><span>LOCAL SESSION · NAMES STAY IN THIS BROWSER</span></footer>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script>window.BACKGROUND_TRACK_DATA = "assets/mouse-maze-mayhem.7a5e617bd89d.mp3"; window.BACKGROUND_TRACK_TITLE = "Mouse Maze Mayhem";</script>
@@ -1706,6 +1707,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         this.lastRenderedTime = null;
         this.staticFrame = null;
         this.staticFrameCtx = null;
+        this.splatLayer = null;
+        this.splatLayerKey = null;
         this.focusId = null;
         this.focusPoint = null;
         this.zoom = 1;
@@ -1922,6 +1925,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         // supplies one atlas. Additional wardrobe/expression keys are carried
         // through unchanged for MouseMazeCast to select at runtime.
         this.assets = Object.assign({ mouse: null, cat: null, tiles: null, props: null, expressions: null, blood: null }, nextAssets);
+        this.splatLayerKey = null;
+        this.spriteCache = Object.create(null);
         this.terrain = null;
         this.terrainKey = '';
         this.invalidate();
@@ -2476,6 +2481,27 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
 
     drawSplatters(ctx) {
       if (!this.gore) return;
+      // In the full-map view these permanent marks do not move. Cache their
+      // composed pixels until the marks, artwork, or viewport change.
+      if (this.overview && this.splats.length > 300 && !this.buildingSplatLayer && !Array.isArray(ctx.log) && typeof document !== 'undefined') {
+        const key = [this.splats.length, this.assetLoadVersion, this.cssWidth, this.cssHeight, this.dpr, this.view.sx, this.view.ox, this.view.oy].join(':');
+        const first = this.splats[0], last = this.splats[this.splats.length - 1];
+        if (key !== this.splatLayerKey || first !== this.splatLayerFirst || last !== this.splatLayerLast) {
+          const layer = this.splatLayer || document.createElement('canvas');
+          layer.width = this.canvas.width; layer.height = this.canvas.height;
+          const layerCtx = layer.getContext('2d');
+          if (layerCtx) {
+            layerCtx.setTransform(this.dpr * this.view.sx, 0, 0, this.dpr * this.view.sy, this.dpr * this.view.ox, this.dpr * this.view.oy);
+            this.buildingSplatLayer = true;
+            try { this.drawSplatters(layerCtx); } finally { this.buildingSplatLayer = false; }
+            this.splatLayer = layer; this.splatLayerKey = key; this.splatLayerFirst = first; this.splatLayerLast = last;
+          }
+        }
+        if (this.splatLayer && this.splatLayerKey === key) {
+          ctx.drawImage(this.splatLayer, -this.view.ox / this.view.sx, -this.view.oy / this.view.sy, this.cssWidth / this.view.sx, this.cssHeight / this.view.sy);
+          return;
+        }
+      }
       for (const s of this.splats) {
         if (!this.inView(s.x, s.y, Math.max(1, (s.r || .1) * 5))) continue;
         ctx.save(); ctx.translate(s.x, s.y);
@@ -2621,7 +2647,15 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     }
 
     drawPoop(ctx, poop, now) {
-      for (const p of poop) {
+      const occupiedPixels = new Set();
+      for (let i = poop.length - 1; i >= 0; i--) {
+        const p = poop[i];
+        if (!this.inView(p.x, p.y, .5)) continue;
+        // Keep every collision object in the engine; skip only props whose
+        // pixels overlap an already drawn prop at the current zoom.
+        const pixelKey = Math.round(p.x * this.view.sx / 2) + ':' + Math.round(p.y * this.view.sy / 2);
+        if (occupiedPixels.has(pixelKey)) continue;
+        occupiedPixels.add(pixelKey);
         ctx.save(); ctx.translate(p.x, p.y);
         if (this.drawProp(ctx, 0, 0, 1, .48)) { ctx.restore(); continue; }
         ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.beginPath(); ctx.ellipse(0, .07, .16, .055, 0, 0, TAU); ctx.fill();
@@ -2639,6 +2673,24 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       if (!image || !(image.naturalWidth || image.width) || !(image.naturalHeight || image.height)) return false;
       const width = image.naturalWidth || image.width, height = image.naturalHeight || image.height;
       const sx = (frame % 2) * width / 2, sy = Math.floor(frame / 2) * height / 3;
+      // Reuse a small, crisp frame instead of resampling the full artwork
+      // atlas thousands of times in a long run. Larger zoom levels get a
+      // higher-resolution cached frame; the original art remains the source.
+      if (!Array.isArray(ctx.log) && typeof document !== 'undefined') {
+        const pixels = clamp(Math.pow(2, Math.ceil(Math.log2(Math.max(16, size * this.view.sx * this.dpr)))), 16, 512);
+        const cacheKey = 'prop:' + this.assetLoadVersion + ':' + frame + ':' + pixels;
+        let sprite = this.spriteCache[cacheKey];
+        if (!sprite) {
+          sprite = document.createElement('canvas'); sprite.width = pixels; sprite.height = pixels;
+          const spriteCtx = sprite.getContext('2d');
+          if (spriteCtx) {
+            spriteCtx.imageSmoothingQuality = 'high';
+            spriteCtx.drawImage(image, sx, sy, width / 2, height / 3, 0, 0, pixels, pixels);
+            this.spriteCache[cacheKey] = sprite;
+          } else sprite = null;
+        }
+        if (sprite) { ctx.drawImage(sprite, x - size / 2, y - size / 2, size, size); return true; }
+      }
       ctx.drawImage(image, sx, sy, width / 2, height / 3, x - size / 2, y - size / 2, size, size);
       return true;
     }
@@ -3337,11 +3389,24 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       if (this.track) { this.track.volume = this.volume; this.track.muted = this.muted; }
     }
     async setTrack(source) {
-      this.track?.pause(); if (this.trackURL?.startsWith('blob:')) URL.revokeObjectURL(this.trackURL);
+      if (this.track) { this.track.onerror = null; this.track.oncanplay = null; this.track.pause(); }
+      if (this.trackURL?.startsWith('blob:')) URL.revokeObjectURL(this.trackURL);
       clearInterval(this.timer); this.timer = null;
-      if (!source) { this.track = null; this.trackURL = null; if (this.active && !this.paused) this.schedule(); return; }
+      if (!source) { this.track = null; this.trackURL = null; if (this.active && !this.paused && this.ctx) { this.nextNote = this.ctx.currentTime + .08; this.schedule(); } return; }
       this.trackURL = typeof source === 'string' ? source : URL.createObjectURL(source);
       this.track = new Audio(this.trackURL); this.track.loop = true; this.track.preload = 'auto'; this.applyVolume();
+      const currentTrack = this.track;
+      currentTrack.oncanplay = () => {
+        if (this.track === currentTrack && this.onTrackStatus) this.onTrackStatus('ready');
+      };
+      currentTrack.onerror = () => {
+        if (this.track !== currentTrack) return;
+        currentTrack.onerror = null; currentTrack.oncanplay = null; currentTrack.pause();
+        if (this.trackURL?.startsWith('blob:')) URL.revokeObjectURL(this.trackURL);
+        this.track = null; this.trackURL = null;
+        if (this.ctx && this.active && !this.paused) { this.nextNote = this.ctx.currentTime + .08; this.schedule(); }
+        if (this.onTrackStatus) this.onTrackStatus('error');
+      };
       if (this.active && !this.paused) { const track = this.track; await track.play().catch(() => {}); if (this.paused || !this.active || this.track !== track) track.pause(); }
     }
     tone(freq, at, length, amplitude = .12, type = 'triangle', target = this.musicGain, bend = null) {
@@ -4015,7 +4080,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     rawLines.forEach(function (line) {
       var value = line.trim().replace(/\s+/g, ' ');
       if (!value) return;
-      if (value.length > 32) { value = value.slice(0, 32).trim(); tooLong += 1; }
+      var characters = typeof Intl !== 'undefined' && Intl.Segmenter
+        ? Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(value), function (part) { return part.segment; })
+        : Array.from(value);
+      if (characters.length > 32) { value = characters.slice(0, 32).join('').trim(); tooLong += 1; }
       var key = value.toLocaleLowerCase();
       if (seen[key]) { duplicateCount += 1; return; }
       seen[key] = true; names.push(value);
@@ -4175,6 +4243,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (window.XEffect && typeof window.XEffect.stop === 'function') window.XEffect.stop();
     runAudio('pauseForSelection');
     dom.continueBtn.focus({preventScroll:true});
+    // A presenter may be adjusting settings below the maze when a name is
+    // chosen. Bring the speaker card into view without changing camera zoom.
+    var speakerBounds = dom.selectionCallout.getBoundingClientRect();
+    if (speakerBounds.top < 0 || speakerBounds.bottom > window.innerHeight) {
+      dom.selectionCallout.scrollIntoView({ block: 'center', behavior: 'instant' });
+    }
   }
   function renderResults() {
     dom.resultsList.textContent = '';
@@ -4188,7 +4262,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   }
   function resultLines() { return results.map(function (r, i) { return (i + 1) + '. ' + r.name + ' — ' + r.reason + ' (' + formatTime(r.time) + ')'; }).join('\n'); }
   function copyResults() { if (!results.length) return; var text = resultLines(); if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { showToast('RESULTS COPIED'); }).catch(function () { showToast('COPY BLOCKED BY BROWSER'); }); else showToast('COPY IS UNAVAILABLE'); }
-  function exportCsv() { if (!results.length) return; var csv = 'Rank,Name,Outcome,Reason,Time\n' + results.map(function (r, i) { return [i + 1, r.name, r.outcome, r.reason, formatTime(r.time)].map(function (v) { return '"' + String(v).replace(/"/g, '""') + '"'; }).join(','); }).join('\n'); var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' }), link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'dynamite-mice-results.csv'; document.body.appendChild(link); link.click(); link.remove(); window.setTimeout(function () { URL.revokeObjectURL(link.href); }, 500); showToast('CSV DOWNLOADED'); }
+  function exportCsv() { if (!results.length) return; var csv = 'Rank,Name,Outcome,Reason,Time\n' + results.map(function (r, i) { return [i + 1, r.name, r.outcome, r.reason, formatTime(r.time)].map(function (v) { var text = String(v); if (/^[\s\u0000-\u001f]*[=+@-]/.test(text)) text = "'" + text; return '"' + text.replace(/"/g, '""') + '"'; }).join(','); }).join('\n'); var blob = new Blob(['\uFEFF', csv], { type: 'text/csv;charset=utf-8' }), link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'dynamite-mice-results.csv'; document.body.appendChild(link); link.click(); link.remove(); window.setTimeout(function () { URL.revokeObjectURL(link.href); }, 500); showToast('CSV DOWNLOADED'); }
   function showToast(message) { dom.toast.textContent = message; dom.toast.classList.add('show'); window.clearTimeout(showToast.timer); showToast.timer = window.setTimeout(function () { dom.toast.classList.remove('show'); }, 2300); }
   function toggleMute() { state.muted = !state.muted; dom.muteIcon.textContent = state.muted ? '×))' : '◖))'; dom.muteBtn.title = state.muted ? 'Unmute sound' : 'Mute sound'; dom.muteBtn.setAttribute('aria-label', dom.muteBtn.title); if (audio && typeof audio.setMuted === 'function') { try { audio.setMuted(state.muted); } catch (_) {} } }
   function toggleFullscreen() { var root = document.documentElement; if (!document.fullscreenElement && root.requestFullscreen) root.requestFullscreen().catch(function () {}); else if (document.exitFullscreen) document.exitFullscreen().catch(function () {}); }
@@ -4274,7 +4348,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (dom.chatterToggle) dom.chatterToggle.addEventListener('change', applyRendererPresentationSettings);
     dom.volumeInput.addEventListener('input', function () { state.volume = Number(dom.volumeInput.value); if (audio && typeof audio.setVolume === 'function') audio.setVolume(state.volume); });
     dom.cheeseBoostInput.addEventListener('input', function () { state.cheeseBoost = Math.max(1, Math.min(100, Math.round(Number(dom.cheeseBoostInput.value) || 1))); dom.cheeseBoostValue.textContent = '+' + state.cheeseBoost + '%'; safeStorageSet(CHEESE_BOOST_STORE_KEY, String(state.cheeseBoost)); if (game && typeof game.setCheeseBoost === 'function') game.setCheeseBoost(state.cheeseBoost); if (renderer && typeof renderer.invalidate === 'function') renderer.invalidate(); renderStats(); });
-    dom.musicInput.addEventListener('change', function () { var file = dom.musicInput.files && dom.musicInput.files[0]; if (!file) return; dom.trackLabel.textContent = file.name.slice(0, 26); if (audio && typeof audio.setTrack === 'function') { try { var loadedTrack = audio.setTrack(file); if (loadedTrack && typeof loadedTrack.catch === 'function') loadedTrack.catch(function () {}); } catch (_) {} } showToast('PERSONAL TRACK LOADED'); });
+    dom.musicInput.addEventListener('change', function () { var file = dom.musicInput.files && dom.musicInput.files[0]; if (!file) return; dom.trackLabel.textContent = file.name.slice(0, 26); dom.sunoNote.textContent = 'Loading track…'; dom.restoreTrackBtn.hidden = !window.BACKGROUND_TRACK_DATA; if (audio && typeof audio.setTrack === 'function') { try { var loadedTrack = audio.setTrack(file); if (loadedTrack && typeof loadedTrack.catch === 'function') loadedTrack.catch(function () {}); } catch (_) {} } showToast('LOADING PERSONAL TRACK'); });
     dom.clearTrackBtn.addEventListener('click', function () { if (audio && typeof audio.setTrack === 'function') { try { var resetTrack = audio.setTrack(null); if (resetTrack && typeof resetTrack.catch === 'function') resetTrack.catch(function () {}); } catch (_) {} } dom.trackLabel.textContent = 'Original chase score'; dom.sunoNote.textContent = 'Instrumental chase score'; dom.restoreTrackBtn.hidden = !window.BACKGROUND_TRACK_DATA; showToast('BUILT-IN SCORE RESTORED'); });
     dom.restoreTrackBtn.addEventListener('click', function () { if (!window.BACKGROUND_TRACK_DATA) return; if (audio) audio.setTrack(window.BACKGROUND_TRACK_DATA); dom.trackLabel.textContent = window.BACKGROUND_TRACK_TITLE || 'Mouse Maze Mayhem'; dom.sunoNote.textContent = 'Loops during play'; dom.restoreTrackBtn.hidden = true; dom.musicInput.value = ''; showToast('BACKGROUND SONG RESTORED'); });
     document.addEventListener('keydown', function (event) { var tag = event.target && event.target.tagName; if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || event.target.isContentEditable) return; if (event.key === ' ') { if (tag === 'BUTTON') return; event.preventDefault(); if (!event.repeat) { if (state.awaiting) continueSelection(); else if (game && game.status === 'running' || game && game.status === 'paused') pause(); else start(); } } else if (event.key.toLowerCase() === 'f') toggleFullscreen(); else if (event.key.toLowerCase() === 'm') toggleMute(); });
@@ -4292,6 +4366,13 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     // v5 control is a percentage per cheese and starts at a sane +1%.
     state.cheeseBoost = Math.max(1, Math.min(100, Math.round(Number(safeStorageGet(CHEESE_BOOST_STORE_KEY)) || 1))); dom.cheeseBoostInput.value = state.cheeseBoost; dom.cheeseBoostValue.textContent = '+' + state.cheeseBoost + '%';
     audio = window.MouseMazeAudio ? new window.MouseMazeAudio() : null; window.mouseAudio = audio; if (audio && typeof audio.setVolume === 'function') audio.setVolume(state.volume);
+    if (audio) audio.onTrackStatus = function (status) {
+      if (status === 'error') {
+        dom.trackLabel.textContent = 'Original chase score'; dom.sunoNote.textContent = 'Track unavailable · built-in score ready';
+        dom.restoreTrackBtn.hidden = !window.BACKGROUND_TRACK_DATA;
+        showToast('TRACK UNAVAILABLE · USING BUILT-IN SCORE');
+      } else if (status === 'ready') { dom.sunoNote.textContent = 'Loops during play'; }
+    };
     feedback = window.MouseMazeFeedback ? new window.MouseMazeFeedback({stage:dom.stageFrame,enabled:true,reducedMotion:state.reducedMotion,vibration:false}) : null; window.mouseFeedback = feedback;
     dom.vibrationRow.hidden = typeof navigator.vibrate !== 'function';
     var embeddedTrack = window.BACKGROUND_TRACK_DATA || window.SUNO_TRACK_DATA;

@@ -1,0 +1,3 @@
+# The maze manifest hashes the exact generated page bytes on Windows and Linux.
+public/maze/index.html text eol=lf
+public/maze/manifest.json text eol=lf
