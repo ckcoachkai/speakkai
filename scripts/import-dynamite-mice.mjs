@@ -37,5 +37,5 @@ let html = source.replace(imageMatch[0], `window.MOUSE_MAZE_ASSETS=${JSON.string
   .replace('</head>', '  <meta name="description" content="Dynamite Mice: a maze name picker with costumed mice, cheese boosts, a chasing cat, and speaker pauses.">\n  <link rel="canonical" href="https://speakkai.com/maze/">\n</head>');
 if (/data:(image|audio)\//.test(html)) throw new Error('Unextracted embedded media remains');
 await writeFile(resolve(output, 'index.html'), html);
-await writeFile(resolve(output, 'manifest.json'), JSON.stringify({ version: 6, sourceSha256: sha256(source), pageSha256: sha256(html), mouseOutfits: 30, catOutfits: 6, files }, null, 2) + '\n');
+await writeFile(resolve(output, 'manifest.json'), JSON.stringify({ version: 7, sourceSha256: sha256(source), pageSha256: sha256(html), mouseOutfits: 30, catOutfits: 6, files }, null, 2) + '\n');
 console.log(JSON.stringify({ route: '/maze/', pageBytes: Buffer.byteLength(html), mediaFiles: files.length, mediaBytes: files.reduce((sum, file) => sum + file.bytes, 0) }));

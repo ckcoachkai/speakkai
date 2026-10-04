@@ -296,7 +296,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
             <div class="hud-stat danger"><span class="hud-label">FUSE</span><strong id="boomValue">30s</strong></div>
             <div class="hud-stat bomb-carrier"><span class="hud-label">BOMB</span><strong id="bombCarrierValue">—</strong></div>
             <div class="hud-stat"><span class="hud-label">CAT</span><strong id="catValue">01:00</strong></div>
-            <div class="hud-stat turbo" title="Speed increase per cheese"><span class="hud-label">CHEESE +</span><strong id="turboValue">+1%</strong></div>
+            <div class="hud-stat turbo" title="First cheese boost; later pickups add progressively less speed"><span class="hud-label">CHEESE +</span><strong id="turboValue">+1%</strong></div>
             <div class="hud-stat lice"><span class="hud-label">LICE</span><strong id="liceValue">0</strong></div>
           </div>
           <div class="camera-toolbar" aria-label="Camera controls">
@@ -351,7 +351,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
           <div class="setting-row"><div><strong>IMPACT EFFECTS</strong><small>Screen shake and hits</small></div><label class="toggle"><input id="impactToggle" type="checkbox" checked><span></span><b class="sr-only">Enable impact effects</b></label></div>
           <div class="setting-row" id="vibrationRow"><div><strong>VIBRATION</strong><small>Haptic feedback</small></div><label class="toggle"><input id="vibrationToggle" type="checkbox"><span></span><b class="sr-only">Enable vibration</b></label></div>
           <div class="setting-row sound-row"><div><strong>SOUNDTRACK</strong><small id="trackLabel">Built-in maze score</small></div><label class="volume-wrap" aria-label="Sound volume"><span>VOL</span><input id="volumeInput" type="range" min="0" max="1" value="0.25" step="0.01"></label></div>
-          <div class="setting-row boost-row"><div><strong>CHEESE BOOST</strong><small>Mice · each cheese</small></div><label class="boost-wrap" aria-label="Mouse speed increase per cheese"><input id="cheeseBoostInput" type="range" min="1" max="100" value="1" step="1"><output id="cheeseBoostValue">+1%</output></label></div>
+          <div class="setting-row boost-row"><div><strong>CHEESE BOOST</strong><small>First bite · smaller gains after</small></div><label class="boost-wrap"><input id="cheeseBoostInput" aria-label="First cheese speed boost, percent; later bites add less" type="range" min="1" max="100" value="1" step="1"><output id="cheeseBoostValue">+1%</output></label></div>
           <div class="setting-row bomb-row"><div><strong>BOMB FUSE</strong><small id="bombIntervalNote">Next fuse · 30 seconds</small></div><label class="boost-wrap" aria-label="Seconds until the next bomb explosion"><input id="bombIntervalInput" type="range" min="10" max="120" value="30" step="5"><output id="bombIntervalValue">30s</output></label></div>
           <p class="suno-note lice-note" id="liceNote">LICE PRESSURE · AFTER 00:10 · −0.01% SPEED EACH</p>
           <div class="setting-row"><div><strong>CAT OUTFIT</strong><small>Choose the cat's look</small></div><label class="select-wrap"><select id="catStyleInput" aria-label="Cat outfit"><option value="random">RANDOM</option><option value="0">ADMIRAL</option><option value="1">CHEF</option><option value="2">DETECTIVE</option><option value="3">PIRATE</option><option value="4">ROYAL</option><option value="5">RACER</option></select></label></div>
@@ -364,7 +364,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
 
         <section class="panel rules-panel">
           <div class="rules-top"><strong class="rules-title">RULES</strong><span class="timer-glyph" aria-hidden="true">◷</span></div>
-          <p>One mouse starts with the bomb and passes it by contact. The carrier gets <strong>+25% speed</strong>; passing never resets the fuse. Cat at <strong>01:00</strong>. Cheese adds speed; poop slows the cat. Escape, explode, or get eaten to be chosen. <strong>Continue</strong> after each speaker.</p>
+          <p>Pass the bomb before the fuse runs out. The carrier gets <strong>+25% speed</strong>; passing keeps the countdown. Cat at <strong>01:00</strong>. Each cheese adds less speed than the last, up to <strong>3×</strong> from cheese. Ground bugs crunch underfoot; lice hitch a ride. Escape, explode, or get eaten to be chosen. <strong>Continue</strong> after each speaker.</p>
         </section>
 
         <section class="panel export-panel">
@@ -544,6 +544,12 @@ const BOMB_CARRIER_BOOST = 1.25;
 const BOMB_PASS_DISTANCE = 0.55;
 const BOMB_PASS_LOCK = 1;
 const BOMB_INITIAL_GRACE = 1;
+const CHEESE_MAX_MULTIPLIER = 3;
+const CHEESE_GAIN_DECAY = 0.5;
+const INSECT_TYPES = ['beetle', 'roach', 'ant', 'spider', 'maggot'];
+const INSECT_START_TIME = 6;
+const INSECT_ROAMING_TARGET = 240;
+const INSECT_MAX_TOTAL = 320;
 
 function normalizeBombInterval(value, fallback = 30) {
   const numeric = Number(value);
@@ -604,7 +610,9 @@ class Game {
     this._cheeseId = 0;
     this._poopId = 0;
     this._louseId = 0;
+    this._insectId = 0;
     this._liceSpawnClock = 0;
+    this._insectSpawnClock = 0;
     this.cheese = [];
     this.cheeseTarget = Number.isFinite(Number(options.cheeseTarget))
       ? clamp(Math.floor(Number(options.cheeseTarget)), 1, 400)
@@ -615,6 +623,13 @@ class Game {
     this.liceMaxTotal = LICE_MAX_TOTAL;
     this.liceEnabled = options.liceEnabled !== false;
     this._liceSeeded = false;
+    this.insects = [];
+    this.insectsEnabled = options.insectsEnabled !== false;
+    this.insectRoamingTarget = INSECT_ROAMING_TARGET;
+    this.insectMaxTotal = INSECT_MAX_TOTAL;
+    this._insectSeeded = false;
+    this._insectRandom = seededRandom((this.seed ^ 0x9e3779b9) >>> 0);
+    this._insectBuckets = new Map();
     this.cat = null;
 
     // The integration contract exposes both a start {x,y} field and a
@@ -674,6 +689,9 @@ class Game {
         confusions: 0,
         lastTurnState: 'start',
         lastConfusedAt: -Infinity,
+        lastWrongTurnAt: -Infinity,
+        lastCrunchAt: -Infinity,
+        crunches: 0,
         lastCheeseAt: -Infinity,
         lastPoopAt: -Infinity,
         _pauseUntil: 0,
@@ -739,6 +757,19 @@ class Game {
     for (const mouse of this.mice) this._effectiveSpeed(mouse);
     if (this.cat) this._effectiveSpeed(this.cat);
     return this.cheeseBoost;
+  }
+
+  _cheeseMultiplierForCount(count, rate) {
+    const pieces = Math.max(0, Math.floor(Number(count) || 0));
+    const normalizedRate = clamp(Number(rate) || 0, 0, 1);
+    // M(n+1) = M(n) + (3 - M(n)) * (rate / 2).
+    // This gives the first pickup exactly `rate`, then smoothly tapers toward
+    // a hard 3x ceiling without multiplying old pickups when the slider moves.
+    return clamp(3 - 2 * Math.pow(1 - normalizedRate / 2, pieces), 1, CHEESE_MAX_MULTIPLIER);
+  }
+
+  _cheeseRate(actor) {
+    return actor === this.cat ? 0.01 : this.cheeseBoost / 100;
   }
 
   setBombInterval(value) {
@@ -938,6 +969,7 @@ class Game {
     mouse.lastTurnState = choseBacktrack
       ? 'backtrack'
       : (choiceDistance > currentDistance ? 'detour' : (junction ? 'junction-turn' : 'progress'));
+    if (choiceDistance > currentDistance || (wanderMode && !(choiceDistance < currentDistance))) mouse.lastWrongTurnAt = this.time;
     if (mouse.deadEnd) mouse.mood = 'nervous';
     else if (this._catEntered) mouse.mood = 'alert';
     else if (mouse.mood === 'confused') mouse.mood = 'curious';
@@ -1088,19 +1120,18 @@ class Game {
   }
 
   _effectiveSpeed(actor) {
-    // Cheese is a percentage of the actor's current speed. For mice the
-    // slider is the per-cheese percentage; cat cheese remains a gentle 1%
-    // per piece. A finite cap keeps extreme long-running games safe while
-    // still making hundreds of cheeses visibly very fast.
+    // Cheese uses a saturating multiplier: the slider controls the first
+    // pickup, subsequent pickups add less, and cheese alone never exceeds 3x.
+    // Lice, fear, poop, and the bomb compose on top of that bounded multiplier.
     const cheeseCount = Math.max(0, Math.floor(Number(actor.cheeseEaten) || 0));
     const liceCount = actor === this.cat ? 0 : Math.max(0, Math.floor(Number(actor.liceCount) || 0));
-    const cheeseRate = actor === this.cat ? 0.01 : this.cheeseBoost / 100;
+    const cheeseRate = this._cheeseRate(actor);
     let cheeseMultiplier = Number(actor.cheeseMultiplier);
     // Preserve a useful debug/test surface when callers set cheeseEaten
     // directly on a fresh actor; collected cheese uses the stored multiplier
     // below so slider changes never rewrite earlier pickups.
     if (!(cheeseMultiplier > 0) || (cheeseCount > 0 && cheeseMultiplier === 1)) {
-      cheeseMultiplier = Math.pow(1 + cheeseRate, cheeseCount);
+      cheeseMultiplier = this._cheeseMultiplierForCount(cheeseCount, cheeseRate);
     }
     const liceMultiplier = Math.pow(0.9999, liceCount);
     actor.speedMultiplier = clamp(
@@ -1256,10 +1287,14 @@ class Game {
       const item = this.cheese[index];
       if (Math.hypot(actor.x - item.x, actor.y - item.y) > 0.34) continue;
       this.cheese.splice(index, 1);
+      const previousMultiplier = clamp(Number(actor.cheeseMultiplier) > 0 ? Number(actor.cheeseMultiplier) : 1, 1, CHEESE_MAX_MULTIPLIER);
+      const pickupRate = this._cheeseRate(actor);
       actor.cheeseEaten += 1;
       actor.lastCheeseAt = this.time;
-      const pickupRate = actor === this.cat ? 0.01 : this.cheeseBoost / 100;
-      actor.cheeseMultiplier = (Number(actor.cheeseMultiplier) > 0 ? actor.cheeseMultiplier : 1) * (1 + pickupRate);
+      // Compute only this pickup's gain from the current slider. Earlier
+      // collected boosts stay fixed if the slider changes during a run.
+      const nextMultiplier = previousMultiplier + (CHEESE_MAX_MULTIPLIER - previousMultiplier) * (pickupRate / 2);
+      actor.cheeseMultiplier = clamp(nextMultiplier, 1, CHEESE_MAX_MULTIPLIER);
       this._effectiveSpeed(actor);
       this._emit({
         type: 'cheese',
@@ -1269,6 +1304,8 @@ class Game {
         x: item.x,
         y: item.y,
         speedMultiplier: actor.speedMultiplier,
+        boostPercent: previousMultiplier > 0 ? (actor.cheeseMultiplier / previousMultiplier - 1) * 100 : 0,
+        cheeseMultiplier: actor.cheeseMultiplier,
         time: this.time,
       });
       return true;
@@ -1480,6 +1517,169 @@ class Game {
     }
   }
 
+  _insectBucket(x, y) {
+    return `${Math.floor(x / 2)},${Math.floor(y / 2)}`;
+  }
+
+  _rebuildInsectBuckets() {
+    const buckets = new Map();
+    for (const insect of this.insects) {
+      const bucket = this._insectBucket(insect.x, insect.y);
+      if (!buckets.has(bucket)) buckets.set(bucket, []);
+      buckets.get(bucket).push(insect);
+    }
+    this._insectBuckets = buckets;
+  }
+
+  _spawnInsect() {
+    if (!this._floorCells.length || this.insects.length >= this.insectMaxTotal) return null;
+    const cell = this._floorCells[Math.floor(this._insectRandom() * this._floorCells.length)];
+    const position = center(cell);
+    const type = INSECT_TYPES[Math.floor(this._insectRandom() * INSECT_TYPES.length)];
+    const speed = 0.28 + this._insectRandom() * 0.5;
+    const insect = {
+      id: `insect-${++this._insectId}`,
+      type,
+      x: position.x,
+      y: position.y,
+      angle: this._insectRandom() * Math.PI * 2,
+      phase: this._insectRandom() * Math.PI * 2,
+      speed,
+      baseSpeed: speed,
+      _cell: { ...cell },
+      _previousCell: null,
+      _route: [],
+      _repathTimer: 0,
+    };
+    this.insects.push(insect);
+    return insect;
+  }
+
+  _planInsect(insect) {
+    const current = cellAt(insect.x, insect.y);
+    if (this.grid[current.y]?.[current.x] === 0) insect._cell = current;
+    const allOptions = walkableNeighbors(this.grid, this.cols, this.rows, insect._cell);
+    if (!allOptions.length) {
+      insect._route = [];
+      return;
+    }
+    const forward = allOptions.filter((candidate) => !insect._previousCell
+      || candidate.x !== insect._previousCell.x || candidate.y !== insect._previousCell.y);
+    const options = forward.length ? forward : allOptions;
+    const choice = options[Math.floor(this._insectRandom() * options.length)];
+    insect._route = [choice];
+    insect._repathTimer = 0.22 + this._insectRandom() * 0.45;
+  }
+
+  _moveInsect(insect, dt) {
+    let remaining = dt;
+    let guard = 0;
+    while (remaining > 1e-9 && insect._route.length && guard++ < 64) {
+      const targetCell = insect._route[0];
+      const target = center(targetCell);
+      const dx = target.x - insect.x;
+      const dy = target.y - insect.y;
+      const distance = Math.hypot(dx, dy);
+      if (distance < 0.0001) {
+        insect.x = target.x;
+        insect.y = target.y;
+        insect._route.shift();
+        insect._previousCell = insect._cell;
+        insect._cell = { ...targetCell };
+        continue;
+      }
+      const movement = Math.min(distance, insect.speed * remaining);
+      insect.angle = Math.atan2(dy, dx);
+      insect.x += dx / distance * movement;
+      insect.y += dy / distance * movement;
+      remaining -= movement / Math.max(insect.speed, 1e-9);
+      if (movement + 1e-8 < distance) break;
+      insect.x = target.x;
+      insect.y = target.y;
+      insect._route.shift();
+      insect._previousCell = insect._cell;
+      insect._cell = { ...targetCell };
+    }
+  }
+
+  _crushInsectsOnSegment(mouse, start, end) {
+    if (!this.insects.length || !mouse?.alive) return 0;
+    const minX = Math.floor((Math.min(start.x, end.x) - 0.34) / 2);
+    const maxX = Math.floor((Math.max(start.x, end.x) + 0.34) / 2);
+    const minY = Math.floor((Math.min(start.y, end.y) - 0.34) / 2);
+    const maxY = Math.floor((Math.max(start.y, end.y) + 0.34) / 2);
+    const candidates = new Set();
+    for (let by = minY; by <= maxY; by += 1) {
+      for (let bx = minX; bx <= maxX; bx += 1) {
+        for (const insect of this._insectBuckets.get(`${bx},${by}`) || []) candidates.add(insect);
+      }
+    }
+    const hits = [];
+    const length = Math.hypot(end.x - start.x, end.y - start.y);
+    for (const insect of candidates) {
+      if (!this.insects.includes(insect)) continue;
+      const hit = this._segmentDistance(insect.x, insect.y, start.x, start.y, end.x, end.y);
+      if (hit.distance > 0.34 || hit.along > length + 1e-7) continue;
+      const dx = end.x - start.x;
+      const dy = end.y - start.y;
+      const lengthSquared = dx * dx + dy * dy;
+      const projection = lengthSquared > 0
+        ? clamp(((insect.x - start.x) * dx + (insect.y - start.y) * dy) / lengthSquared, 0, 1)
+        : 0;
+      const passPoint = { x: start.x + dx * projection, y: start.y + dy * projection };
+      if (this._lineWalkable(passPoint, { x: insect.x, y: insect.y })) hits.push({ insect, along: hit.along });
+    }
+    hits.sort((a, b) => a.along - b.along);
+    for (const hit of hits) {
+      const index = this.insects.indexOf(hit.insect);
+      if (index < 0) continue;
+      const insect = this.insects[index];
+      this.insects.splice(index, 1);
+      mouse.lastCrunchAt = this.time;
+      mouse.crunches = (Number(mouse.crunches) || 0) + 1;
+      mouse.lastTurnState = 'crunch';
+      mouse.mood = 'celebrating';
+      this._emit({
+        type: 'insect-crushed',
+        insectId: insect.id,
+        insectType: insect.type,
+        typeName: insect.type,
+        actorId: mouse.id,
+        x: insect.x,
+        y: insect.y,
+        time: this.time,
+      });
+    }
+    return hits.length;
+  }
+
+  _updateInsects(dt) {
+    if (this.status !== 'running' || !this.insectsEnabled || this.time + 1e-8 < INSECT_START_TIME
+      || !Number.isFinite(dt) || dt <= 0) return;
+    let spawnBudget;
+    if (!this._insectSeeded) {
+      this._insectSeeded = true;
+      spawnBudget = this.insectRoamingTarget;
+      this._insectSpawnClock = 0;
+    } else {
+      this._insectSpawnClock += dt * 10;
+      spawnBudget = Math.floor(this._insectSpawnClock);
+      this._insectSpawnClock -= spawnBudget;
+    }
+    while (spawnBudget-- > 0 && this.insects.length < this.insectMaxTotal
+      && this.insects.length < this.insectRoamingTarget) this._spawnInsect();
+    this._rebuildInsectBuckets();
+    for (const insect of this.insects) {
+      insect._repathTimer = Math.max(0, insect._repathTimer - dt);
+      // Keep a chosen axis-aligned segment until its center is reached. A
+      // timer may request a new route later, but never replaces a fractional
+      // segment and cuts across a wall corner.
+      if (!insect._route.length) this._planInsect(insect);
+      this._moveInsect(insect, dt);
+    }
+    this._rebuildInsectBuckets();
+  }
+
   _updateMouse(mouse, dt) {
     if (!mouse.alive) return;
     mouse._detourTimer -= dt;
@@ -1518,7 +1718,11 @@ class Game {
           this._planMouse(mouse);
         }
       }
-    }, (start, end) => this._maybePassBomb(mouse, start, end));
+    }, (start, end) => {
+      this._crushInsectsOnSegment(mouse, start, end);
+      this._maybePassBomb(mouse, start, end);
+    });
+    this._crushInsectsOnSegment(mouse, { x: mouse.x, y: mouse.y }, { x: mouse.x, y: mouse.y });
     this._collectCheese(mouse, 'mouse');
     if (Math.hypot(mouse.x - this.exit.x, mouse.y - this.exit.y) < 0.28) this.choose(mouse, 'escaped');
   }
@@ -1671,6 +1875,7 @@ class Game {
         if (this.status !== 'running') break;
       }
       if (this.status === 'running') this._updateLice(slice);
+      if (this.status === 'running') this._updateInsects(slice);
       if (this.status === 'running') this._updateCat(slice);
       if (this.status === 'running') this._fillCheese();
       this._checkTimedEvents();
@@ -1723,6 +1928,7 @@ class Game {
       lice: this.lice.length,
       roamingLice: this.lice.length - attachedLice,
       attachedLice,
+      insects: this.insects.length,
       catIn: Boolean(this.cat),
       nextExplosionIn: Math.max(0, this.nextExplosion - this.time),
       bombInterval: this.bombInterval,
@@ -1784,6 +1990,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     cheese: ['Worth the detour!', 'Cheese-powered!', 'A snack and a speed boost.', 'Fuel for tiny feet!', 'Now we are cooking!', 'One more piece cannot hurt.'],
     poop: ['Emergency pit stop.', 'A little surprise for the cat.', 'No time for a bathroom!', 'Do not step in that.'],
     itchy: ['Who invited the hitchhikers?', 'Something is tickling my ears!', 'No free rides!', 'I need a scratch and a snack.', 'Tiny passengers. Big itch.'],
+    crunch: ['Crunch! Problem solved.', 'Tiny snack, big victory.', 'That one was ticklish.', 'I caught the hitchhiker!'],
     exit: ['There! The way out!', 'I can see daylight!', 'Almost there!', 'Nobody say "wrong turn".'],
     cat: ['Dinner is on the move.', 'Come back, little snacks.', 'I can wait. Can you?', 'Table for thirty mice?', 'Stop running. I am hungry.', 'Who ordered the chase?'],
     catSlow: ['That was NOT a truffle.', 'Something tastes very wrong.', 'Who left that here?!', 'I need a moment.'],
@@ -1819,9 +2026,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (actor.hasBomb && remaining <= 6) return 'alarm';
     if (actor.hasBomb) return 'carrier';
     if (game.cat && Math.hypot(game.cat.x - actor.x, game.cat.y - actor.y) < 6) return 'panic';
-    if (Number(actor.confusedUntil) > time || actor.deadEnd || actor.mood === 'confused') return 'lost';
+    if (Number(actor.confusedUntil) > time || actor.deadEnd || actor.mood === 'confused' || (Number.isFinite(actor.lastWrongTurnAt) && time - actor.lastWrongTurnAt < 1.8)) return 'lost';
     if (Number.isFinite(actor.lastCheeseAt) && time - actor.lastCheeseAt < 1.8) return 'cheese';
     if (Number.isFinite(actor.lastPoopAt) && time - actor.lastPoopAt < 1.1) return 'poop';
+    if (Number.isFinite(actor.lastCrunchAt) && time - actor.lastCrunchAt < 1.25) return 'crunch';
     if (actor.liceCount > 0 && Math.floor(time / 7) % 3 === 2) return 'itchy';
     if (game.exit && Math.hypot(actor.x - game.exit.x, actor.y - game.exit.y) < 4) return 'exit';
     return 'wandering';
@@ -1835,6 +2043,128 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     const choices = lines[state] || lines.wandering;
     return choices[((id + step * 3) % choices.length + choices.length) % choices.length];
   }
+  // Keep the face treatment separate from chatter. The sprite already carries
+  // the costume and broad pose; these small marks give the face a readable,
+  // continuous reaction without swapping to a second atlas or drawing a
+  // ghosted pair of bodies during a run.
+  function expressionState(actor, game, kind) {
+    const state = situation(actor, game, kind);
+    if (kind !== 'mouse') return state;
+    const time = Number(game.time) || 0;
+    const fuse = Number(game.nextExplosion) - time;
+    if (state === 'panic') return 'panic';
+    if (state === 'alarm' || (actor.hasBomb && fuse <= 6)) return 'alarm';
+    if (state === 'lost') return 'lost';
+    if (state === 'cheese') return 'cheese';
+    if (state === 'poop') return 'poop';
+    if (state === 'itchy') return 'itchy';
+    if (state === 'crunch') return 'crunch';
+    if (state === 'exit') return 'exit';
+    if (state === 'carrier') return 'carrier';
+    return 'curious';
+  }
+  const FACE_ANCHORS = {
+    Safari: [.336, .062, .344, -.035], Aviator: [.337, .058, .346, -.034], Pirate: [.334, .064, .343, -.032], Astronaut: [.325, .110, .338, .012], Scuba: [.329, .090, .340, -.010], Mountaineer: [.337, .060, .346, -.034],
+    chef: [.342, .180, .351, .075], firefighter: [.338, .075, .347, -.020], doctor: [.334, .075, .343, -.020], detective: [.337, .061, .346, -.033], mechanic: [.333, .067, .342, -.030], conductor: [.336, .063, .345, -.032],
+    wizard: [.329, .105, .338, .008], knight: [.325, .110, .335, .012], king: [.333, .075, .342, -.020], archer: [.331, .066, .340, -.030], viking: [.331, .080, .340, -.015], jester: [.333, .080, .342, -.015],
+    skateboarder: [.335, .064, .344, -.032], 'basketball-player': [.336, .063, .345, -.032], rockstar: [.335, .065, .344, -.030], 'ballet-dancer': [.337, .068, .346, -.030], 'business-mouse': [.336, .062, .345, -.033], 'raincoat-mouse': [.334, .067, .343, -.030],
+    cowboy: [.334, .066, .343, -.030], sailor: [.336, .065, .345, -.030], gardener: [.333, .067, .342, -.030], magician: [.331, .105, .340, .008], winter: [.334, .080, .343, -.015], dragon: [.328, .090, .337, -.010],
+  };
+  function drawFaceExpression(ctx, actor, game, now, state, w, h, reducedMotion, costumeName) {
+    // Keep the original painted eyes. Each costume gets a calibrated muzzle
+    // and cheek anchor so accents never land on a hat, visor, or chest.
+    const anchor = FACE_ANCHORS[costumeName] || FACE_ANCHORS.Safari;
+    // x values are signed offsets from the actor center; y values are offsets
+    // from the sprite center. This keeps the muzzle on the right-facing face.
+    const mouthX = anchor[0] * w;
+    const mouthY = anchor[1] * h;
+    const cheekX = anchor[2] * w;
+    const cheekY = anchor[3] * h;
+    const mouthW = clamp(w * .047, .058, .085);
+    const mouthH = clamp(h * .044, .045, .068);
+    ctx.save();
+    ctx.globalAlpha = .82;
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.strokeStyle = state === 'cheese' || state === 'exit' ? '#6c302d' : '#3a202b';
+    ctx.lineWidth = clamp(w * .012, .012, .022);
+    ctx.fillStyle = state === 'poop' ? 'rgba(125,156,88,.95)' : '#8f3940';
+    ctx.lineWidth = clamp(w * .011, .011, .020);
+    if (state === 'panic' || state === 'alarm') {
+      ctx.beginPath(); ctx.ellipse(mouthX, mouthY, mouthW, mouthH * 1.08, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#fff0d8'; ctx.fillRect(mouthX - mouthW * .55, mouthY - mouthH * .7, mouthW * 1.1, mouthH * .22);
+    } else if (state === 'cheese' || state === 'exit' || state === 'carrier' || state === 'crunch') {
+      ctx.beginPath(); ctx.arc(mouthX - w * .01, mouthY - h * .01, mouthW, .08, Math.PI - .08); ctx.stroke();
+      if (state === 'cheese') { ctx.fillStyle = '#f6d966'; ctx.beginPath(); ctx.arc(cheekX + w * .015, cheekY, w * .018, 0, Math.PI * 2); ctx.fill(); }
+      if (state === 'crunch') { ctx.fillStyle = '#b8df70'; ctx.beginPath(); ctx.arc(cheekX + w * .035, cheekY + h * .02, w * .014, 0, Math.PI * 2); ctx.fill(); }
+    } else if (state === 'lost' || state === 'poop') {
+      ctx.beginPath(); ctx.moveTo(mouthX - mouthW, mouthY + h * .012); ctx.quadraticCurveTo(mouthX, mouthY + h * .04, mouthX + mouthW, mouthY + h * .012); ctx.stroke();
+    } else {
+      ctx.beginPath(); ctx.arc(mouthX, mouthY, mouthW * .5, 0, Math.PI * 2); ctx.stroke();
+    }
+    if (state === 'panic' || state === 'alarm') {
+      ctx.fillStyle = 'rgba(122,213,231,.9)';
+      ctx.beginPath(); ctx.ellipse(cheekX + w * .055, cheekY + h * .055, w * .014, h * .035, -.28, 0, Math.PI * 2); ctx.fill();
+      if (state === 'alarm') {
+        ctx.fillStyle = '#ff8a4f'; ctx.strokeStyle = '#8f2637'; ctx.lineWidth = clamp(w * .013, .013, .022);
+        ctx.beginPath(); ctx.moveTo(cheekX + w * .10, cheekY - h * .08); ctx.lineTo(cheekX + w * .12, cheekY - h * .13); ctx.lineTo(cheekX + w * .14, cheekY - h * .08); ctx.lineTo(cheekX + w * .18, cheekY - h * .11); ctx.stroke();
+      }
+    } else if (state === 'itchy') {
+      ctx.strokeStyle = '#f0c65c'; ctx.lineWidth = clamp(w * .014, .014, .024);
+      for (let i = -1; i <= 1; i += 1) { ctx.beginPath(); ctx.moveTo(cheekX - w * .04 + i * w * .018, cheekY - h * .08); ctx.lineTo(cheekX - w * .01 + i * w * .018, cheekY - h * (.13 + Math.abs(i) * .02)); ctx.stroke(); }
+    } else if (state === 'lost') {
+      ctx.strokeStyle = '#f5c957'; ctx.lineWidth = clamp(w * .012, .012, .020);
+      ctx.beginPath(); ctx.arc(cheekX + w * .04, cheekY - h * .06, w * .025, .15, Math.PI * 1.75); ctx.stroke();
+      // A wrong-turn brow sits over the painted eyes; the floating '?' remains
+      // a secondary cue, never the only facial reaction.
+      ctx.strokeStyle = '#3a202b'; ctx.lineWidth = clamp(w * .016, .016, .026);
+      const browY = -h * .13;
+      ctx.beginPath(); ctx.moveTo(mouthX - w * .16, browY - h * .018); ctx.lineTo(mouthX - w * .07, browY + h * .012); ctx.moveTo(mouthX - w * .055, browY + h * .012); ctx.lineTo(mouthX + w * .035, browY - h * .018); ctx.stroke();
+    } else if (state === 'poop') {
+      ctx.strokeStyle = 'rgba(125,156,88,.9)'; ctx.lineWidth = clamp(w * .012, .012, .020);
+      ctx.beginPath(); ctx.arc(cheekX + w * .06, cheekY - h * .045, w * .03, Math.PI * 1.05, Math.PI * 1.85); ctx.stroke();
+    } else if (state === 'carrier') {
+      ctx.fillStyle = '#e9513d'; ctx.beginPath(); ctx.arc(cheekX + w * .06, cheekY - h * .05, w * .018, 0, Math.PI * 2); ctx.fill();
+    } else if (state === 'exit') {
+      ctx.strokeStyle = '#a7ec76'; ctx.lineWidth = clamp(w * .014, .014, .024);
+      ctx.beginPath(); ctx.moveTo(cheekX + w * .045, cheekY - h * .02); ctx.lineTo(cheekX + w * .08, cheekY - h * .055); ctx.lineTo(cheekX + w * .115, cheekY - h * .02); ctx.stroke();
+    }
+    ctx.restore();
+  }
+  function drawGaitFrame(ctx, currentImage, currentRect, nextImage, nextRect, x, y, w, h, transition) {
+    // Blend only the moving lower body during the short pose transition. The
+    // head, face, hat, and costume chest remain a single painted frame, so
+    // the motion reads as a soft leg transition without a doubled character.
+    if (!nextImage || transition <= .001 || typeof ctx.rect !== 'function' || typeof ctx.clip !== 'function') {
+      drawFrame(ctx, currentImage, currentRect[0], currentRect[1], currentRect[2], currentRect[3], x, y, w, h);
+      return;
+    }
+    // Draw complementary lower-body weights. Painting the current frame
+    // opaque and then adding the next frame would leave doubled feet behind.
+    ctx.save();
+    ctx.beginPath(); ctx.rect(x - .04 * w, y, w * 1.08, h * .59); ctx.clip();
+    drawFrame(ctx, currentImage, currentRect[0], currentRect[1], currentRect[2], currentRect[3], x, y, w, h);
+    ctx.restore();
+    ctx.save();
+    ctx.beginPath(); ctx.rect(x - .04 * w, y + h * .57, w * 1.08, h * .48); ctx.clip();
+    ctx.globalAlpha = 1 - transition;
+    drawFrame(ctx, currentImage, currentRect[0], currentRect[1], currentRect[2], currentRect[3], x, y, w, h);
+    ctx.globalAlpha = transition;
+    drawFrame(ctx, nextImage, nextRect[0], nextRect[1], nextRect[2], nextRect[3], x, y, w, h);
+    ctx.restore();
+  }
+  function spritePixelHeight(ctx, h) {
+    // Keep diagnostic/mock contexts untouched: getTransform is only a real
+    // browser-canvas signal, so detail LOD never changes unit-test fallbacks.
+    if (!ctx || typeof ctx.getTransform !== 'function' || Array.isArray(ctx.log)) return null;
+    const transform = ctx.getTransform();
+    if (!transform) return null;
+    // A local vertical vector is (b, d). Older canvas shims expose only c/d,
+    // so retain that pair as a compatibility fallback when b is unavailable.
+    const verticalScale = Math.hypot(Number(transform.b), Number(transform.d));
+    const fallbackScale = Math.hypot(Number(transform.c), Number(transform.d));
+    const scale = Number.isFinite(verticalScale) && verticalScale > 0 ? verticalScale : fallbackScale;
+    return Number.isFinite(scale) && scale > 0 ? Math.abs(h) * scale : null;
+  }
   function drawActor(ctx, actor, now, assets, game, reducedMotion, kind, override) {
     const selected = appearance(actor, kind, override);
     if (!selected) return false;
@@ -1844,7 +2174,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     const confused = kind === 'mouse' && Number(actor.confusedUntil) > time;
     const moving = game.status !== 'ready' && !confused;
     const phase = Number(actor.phase) || selected.index * .73;
-    const pace = kind === 'cat' && situationName === 'catSlow' ? 3 : 7.5;
+    const actorSpeed = clamp(Number(actor.speed) || 1, .35, 3.2);
+    const pace = kind === 'cat' && situationName === 'catSlow' ? 3 : (kind === 'cat' ? 6 : 6.5 + actorSpeed * 1.4);
     const frameB = !reducedMotion && moving && Math.floor(now * pace + phase) % 2 === 1;
     let image = assets[frameB ? meta.assetKeyB : meta.assetKeyA];
     let rect = frameB ? meta.rectB : meta.rectA;
@@ -1856,6 +2187,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     const height = kind === 'cat' ? 1.48 : 1.19;
     const scale = Math.min(height / sh, (kind === 'cat' ? 2.45 : 2.05) / sw);
     const w = sw * scale, h = sh * scale;
+    const bodyPixels = spritePixelHeight(ctx, h);
+    const skipGaitBlend = bodyPixels !== null && bodyPixels < 28;
+    const skipFaceAccents = bodyPixels !== null && bodyPixels < 18;
     const flip = Math.cos(Number(actor.angle) || 0) < 0 ? -1 : 1;
     const cheeseHop = !reducedMotion && Number.isFinite(actor.lastCheeseAt) ? Math.max(0, 1 - (time - actor.lastCheeseAt) / .55) : 0;
     ctx.save();
@@ -1865,7 +2199,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       ctx.rotate(confused ? Math.sin(now * 5 + phase) * .075 : stride * .018);
       ctx.scale(1 + stride * .012, 1 - Math.abs(stride) * .014);
     }
-    drawFrame(ctx, image, sx, sy, sw, sh, -w / 2, -h / 2, w, h);
+    const nextFrameB = !frameB;
+    const nextImage = assets[nextFrameB ? meta.assetKeyB : meta.assetKeyA];
+    const nextRect = nextFrameB ? meta.rectB : meta.rectA;
+    const gaitCycle = now * pace + phase;
+    const gaitFraction = gaitCycle - Math.floor(gaitCycle);
+    const gaitTransition = !reducedMotion && moving && !skipGaitBlend ? clamp((gaitFraction - .68) / .32, 0, 1) : 0;
+    drawGaitFrame(ctx, image, rect, nextImage, nextRect, -w / 2, -h / 2, w, h, gaitTransition);
+    if (kind === 'mouse' && !skipFaceAccents) drawFaceExpression(ctx, actor, game, now, expressionState(actor, game, kind), w, h, reducedMotion, meta.name);
     // Readable reactions keep each costume intact while its character reacts.
     if (kind === 'mouse' && ['panic', 'alarm', 'carrier'].includes(situationName)) {
       ctx.fillStyle = '#9dd9ed';
@@ -1874,7 +2215,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         ctx.beginPath(); ctx.ellipse(.26 + i * .11, -h * .32 + drop, .025, .048, -.38, 0, Math.PI * 2); ctx.fill();
       }
     }
-    if (confused || situationName === 'catSlow') {
+    if ((confused || situationName === 'catSlow') && !skipFaceAccents) {
       ctx.fillStyle = situationName === 'catSlow' ? '#bfd76c' : '#ffe38c';
       ctx.font = 'bold .25px system-ui, sans-serif'; ctx.textAlign = 'center';
       // Undo facing for the readable punctuation only.
@@ -1938,7 +2279,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   const api = {
     drawMouse: (ctx, mouse, now, assets, game, reducedMotion) => drawActor(ctx, mouse, now, assets, game, reducedMotion, 'mouse'),
     drawCat: (ctx, cat, now, assets, game, reducedMotion, style) => drawActor(ctx, cat, now, assets, game, reducedMotion, 'cat', style),
-    drawChatter, getLine, situation,
+    drawChatter, getLine, situation, expressionState,
     getVariant: appearance,
     counts: () => ({ mouse: catalog('mouse').length, cat: catalog('cat').length })
   };
@@ -2550,6 +2891,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         this.effects.push({ kind: 'cheese', x, y, start: now, length: .42, seed: event.id || 1, boost: actualBoost, actorId: event.actorId || null });
       } else if (event.type === 'poop') {
         this.effects.push({ kind: 'poop', x, y, start: now, length: .7, seed: event.id || 1 });
+      } else if (event.type === 'insect-crushed') {
+        // A crush remains readable with gore disabled: the dark squash mark,
+        // tiny crumbs, and restrained impact ring are ordinary arcade
+        // feedback. Graphic blood/debris is added only by spawnInsectCrush
+        // when gore is enabled.
+        this.spawnInsectCrush(x, y, now, event.insectType, event.actorId || event.time || 1);
       } else if (event.type === 'cat-slow') {
         this.effects.push({ kind: 'slow', x, y, start: now, length: 1.3, seed: event.time || 1 });
       } else if (event.type === 'cat-enter') {
@@ -2564,12 +2911,35 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     spawnExplosion(x, y, start, seed, effectKind) {
       seed = typeof seed === 'number' ? seed : (parseInt(String(seed).replace(/\D/g, ''), 10) || 1);
       const pieces = [];
-      const n = this.reducedMotion ? 28 : 132;
+      // Six concurrent impacts are enough to show a rapid speaker queue while
+      // keeping the large principal payload bounded on low-end devices.
+      const impactKinds = new Set(['explosion', 'gore-eat']);
+      let activeImpacts = 0;
+      for (const effect of this.effects) if (impactKinds.has(effect.kind) && start - effect.start <= effect.length + .2) activeImpacts += 1;
+      if (activeImpacts >= 6) {
+        const oldestIndex = this.effects.findIndex(effect => impactKinds.has(effect.kind));
+        if (oldestIndex >= 0) this.effects.splice(oldestIndex, 1);
+      }
+      const n = this.reducedMotion ? 46 : 240;
       for (let i = 0; i < n; i++) {
         const a = hash(i + 11, i * 3 + 2, Number(seed) || 1) * TAU;
         const speed = 1.2 + hash(i + 7, i + 12, Number(seed) || 1) * 7.4;
-        const type = i % 11 === 0 ? 'liver' : i % 8 === 0 ? 'intestine' : i % 13 === 0 ? 'bone' : (i % 4 === 0 ? 'organ' : 'gore');
+        const type = i % 6 === 0 ? 'maggot' : i % 11 === 0 ? 'liver' : i % 8 === 0 ? 'intestine' : i % 13 === 0 ? 'bone' : (i % 4 === 0 ? 'organ' : 'gore');
         pieces.push({ type, a, speed, size: .055 + hash(i, i + 3, Number(seed) || 1) * .105, spin: (hash(i + 1, i + 8, Number(seed) || 1) - .5) * 8 });
+      }
+      // Fine flecks fill the space between the larger shards and maggots.
+      // Both streams have fixed budgets; the concurrent-impact cap keeps
+      // rapid speaker selections from accumulating expensive bursts.
+      const flecks = [];
+      const fleckCount = this.reducedMotion ? 20 : 96;
+      for (let i = 0; i < fleckCount; i++) {
+        const a = hash(i + 1201, i * 5 + 1207, Number(seed) || 1) * TAU;
+        flecks.push({
+          a,
+          speed: 2.2 + hash(i + 1211, i + 1217, Number(seed) || 1) * 6.4,
+          size: .012 + hash(i + 1221, i + 1227, Number(seed) || 1) * .035,
+          dark: i % 5 === 0,
+        });
       }
       // Both dynamite impacts and cat captures use this same impact payload.
       // Keeping the jet/droplet counts here guarantees equal blood volume for
@@ -2578,6 +2948,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       this.effects.push({
         kind: effectKind || 'explosion', x, y, start, length: this.reducedMotion ? 1.25 : 2.25,
         pieces, seed: Number(seed) || 1,
+        flecks,
         jetCount: this.reducedMotion ? 4 : 14,
         dropletCount: this.reducedMotion ? 18 : 72
       });
@@ -2598,7 +2969,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
             x: x + Math.cos(p.a) * dist,
             y: y + Math.sin(p.a) * dist + .24 * settleTime * settleTime,
             r: p.size,
-            kind: p.type === 'intestine' ? 'intestine' : p.type === 'liver' ? 'liver' : p.type === 'bone' ? 'bone' : p.type === 'organ' ? 'organ' : 'blood',
+            kind: p.type === 'intestine' ? 'intestine' : p.type === 'liver' ? 'liver' : p.type === 'bone' ? 'bone' : p.type === 'organ' ? 'organ' : p.type === 'maggot' ? 'maggot' : 'blood',
             angle: p.a
           });
         }
@@ -2699,6 +3070,31 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       if (this.splats.length > 2600) this.splats.splice(0, this.splats.length - 2600);
     }
 
+    spawnInsectCrush(x, y, start, insectType, seed) {
+      const numericSeed = typeof seed === 'number'
+        ? seed
+        : ((parseInt(String(seed || '').replace(/\D/g, ''), 10) || 1) + Math.round((Number(x) || 0) * 31 + (Number(y) || 0) * 17));
+      const fragments = [];
+      const count = this.reducedMotion ? 4 : 9;
+      for (let i = 0; i < count; i++) {
+        const a = hash(i + 1301, i * 7 + 1307, numericSeed) * TAU;
+        fragments.push({
+          a,
+          speed: .24 + hash(i + 1311, i + 1317, numericSeed) * .72,
+          size: .018 + hash(i + 1321, i + 1327, numericSeed) * .026,
+          pale: i % 3 === 0,
+        });
+      }
+      this.effects.push({
+        kind: 'insect-crush', x, y, start, length: this.reducedMotion ? .42 : .72,
+        seed: numericSeed, insectType: insectType || 'insect', fragments,
+      });
+      if (this.gore) {
+        this.splats.push({ kind: 'insect-stain', x, y, r: .07 + hash(1331, 1337, numericSeed) * .08, angle: hash(1341, 1347, numericSeed) * TAU });
+        if (this.splats.length > 2600) this.splats.splice(0, this.splats.length - 2600);
+      }
+    }
+
     spawnEscape(x, y, start) {
       this.effects.push({ kind: 'escape', x, y, start, length: 1.5, seed: 18 });
     }
@@ -2773,6 +3169,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       this.drawSplatters(ctx);
       this.drawCheese(ctx, game.cheese || [], tNow);
       this.drawPoop(ctx, game.poop || [], tNow);
+      this.drawInsects(ctx, game.insects || [], tNow, game);
       this.drawEffects(ctx, tNow, game);
       this.drawLice(ctx, game.lice || [], tNow, game);
       this.drawMice(ctx, game.mice || [], tNow, game);
@@ -2907,6 +3304,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
           ctx.rotate(s.angle || 0); ctx.fillStyle = '#d6bf99'; ctx.strokeStyle = '#745254'; ctx.lineWidth = .014;
           roundRect(ctx, -s.r * 1.5, -s.r * .16, s.r * 3, s.r * .32, s.r * .12); ctx.fill(); ctx.stroke();
           ctx.fillStyle = '#e8d8b5'; ctx.beginPath(); ctx.arc(-s.r * 1.35, 0, s.r * .23, 0, TAU); ctx.arc(s.r * 1.35, 0, s.r * .23, 0, TAU); ctx.fill();
+        } else if (s.kind === 'maggot') {
+          ctx.strokeStyle = '#7f4b45'; ctx.lineWidth = Math.max(.018, s.r * .42); ctx.lineCap = 'round'; ctx.rotate(s.angle || 0);
+          ctx.beginPath(); ctx.moveTo(-s.r * 1.8, 0); ctx.bezierCurveTo(-s.r * .8, -s.r * .45, s.r * .65, s.r * .42, s.r * 1.8, 0); ctx.stroke();
+          ctx.strokeStyle = '#e1b28e'; ctx.lineWidth = Math.max(.009, s.r * .22);
+          ctx.beginPath(); ctx.moveTo(-s.r * 1.4, 0); ctx.lineTo(s.r * 1.25, 0); ctx.stroke();
+          ctx.fillStyle = '#f0c79d'; ctx.beginPath(); ctx.arc(-s.r * 1.35, 0, s.r * .34, 0, TAU); ctx.fill();
         } else if (s.kind === 'liver' || s.kind === 'organ') {
           ctx.rotate(s.angle || .4); ctx.fillStyle = s.kind === 'liver' ? '#6b202e' : '#852536'; ctx.strokeStyle = '#c96158'; ctx.lineWidth = .018;
           ctx.beginPath(); ctx.moveTo(-s.r * 1.25, -.02); ctx.bezierCurveTo(-s.r * .85, -s.r * 1.15, s.r * .95, -s.r * .98, s.r * 1.3, -.03); ctx.bezierCurveTo(s.r * .85, s.r * .92, -s.r * .45, s.r * .78, -s.r * 1.25, -.02); ctx.fill(); ctx.stroke();
@@ -3043,6 +3446,122 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       }
       ctx.drawImage(image, sx, sy, width / 2, height / 3, x - size / 2, y - size / 2, size, size);
       return true;
+    }
+
+    drawInsects(ctx, insects, now, game) {
+      if (!Array.isArray(insects) || !insects.length) return;
+      // The engine keeps this pool bounded, but cap drawing independently so
+      // imported/debug state cannot turn a close inspection into a fill-rate
+      // trap. Overview insects are simplified; close zoom reveals the species.
+      const close = !this.overview && this.view.sx >= 14;
+      const limit = close ? 320 : 260;
+      let drawn = 0;
+      for (let index = 0; index < insects.length && drawn < limit; index += 1) {
+        const insect = insects[index];
+        if (!insect || insect.dead || insect.crushed) continue;
+        const x = Number(insect.x), y = Number(insect.y);
+        if (!Number.isFinite(x) || !Number.isFinite(y) || !this.inView(x, y, close ? .42 : .16)) continue;
+        this.drawInsect(ctx, insect, now, close, index);
+        drawn += 1;
+      }
+    }
+
+    drawInsect(ctx, insect, now, close, index) {
+      const type = String(insect.type || 'beetle').toLowerCase();
+      const seed = Number.isFinite(Number(index)) ? Number(index) + 1 : 1;
+      const phase = Number.isFinite(Number(insect.phase)) ? Number(insect.phase) : hash(seed, seed + 19, seed) * TAU;
+      const angle = Number.isFinite(Number(insect.angle)) ? Number(insect.angle) : phase;
+      const wiggle = this.reducedMotion ? 0 : Math.sin(now * (type === 'maggot' ? 12 : 8) + phase) * .045;
+      const scale = close ? 1 : .78;
+      const body = type === 'spider' ? '#3f2a36' : type === 'roach' ? '#704333' : type === 'ant' ? '#4a3030' : type === 'maggot' ? '#d2a27f' : '#244b42';
+      const edge = close ? 'rgba(25,13,20,.95)' : 'rgba(25,13,20,.86)';
+      ctx.save();
+      ctx.translate(Number(insect.x), Number(insect.y) + wiggle * .25);
+      ctx.rotate(angle + (this.reducedMotion ? 0 : Math.sin(now * 5 + phase) * .035));
+      ctx.scale(scale, scale);
+      // Ground shadow gives the tiny creatures a stable visual anchor in the
+      // full maze while preserving the dark arcade palette.
+      ctx.fillStyle = 'rgba(5,2,8,.46)';
+      ctx.beginPath(); ctx.ellipse(.02, .10, close ? .20 : .13, close ? .055 : .035, 0, 0, TAU); ctx.fill();
+      if (!close) {
+        const radius = .062 + hash(seed + 2, seed + 7, seed) * .018;
+        ctx.fillStyle = body; ctx.strokeStyle = edge; ctx.lineWidth = .018;
+        if (type === 'spider') {
+          ctx.beginPath(); ctx.arc(0, 0, radius * 1.18, 0, TAU); ctx.fill(); ctx.stroke();
+          ctx.strokeStyle = '#b68a83'; ctx.lineWidth = .012;
+          for (let leg = 0; leg < 4; leg += 1) {
+            const a = -1.15 + leg * .76;
+            ctx.beginPath(); ctx.moveTo(Math.cos(a) * radius * .55, Math.sin(a) * radius * .55); ctx.lineTo(Math.cos(a) * radius * 2.0, Math.sin(a) * radius * 1.4); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(Math.cos(Math.PI - a) * radius * .55, Math.sin(Math.PI - a) * radius * .55); ctx.lineTo(Math.cos(Math.PI - a) * radius * 2.0, Math.sin(Math.PI - a) * radius * 1.4); ctx.stroke();
+          }
+        } else if (type === 'maggot') {
+          ctx.beginPath(); ctx.ellipse(0, 0, radius * 1.75, radius * .7, 0, 0, TAU); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = '#f2d3a2'; ctx.beginPath(); ctx.arc(-radius * .9, -.01, radius * .3, 0, TAU); ctx.fill();
+        } else {
+          ctx.beginPath(); ctx.ellipse(0, 0, radius * 1.35, radius * .72, 0, 0, TAU); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = 'rgba(255,224,150,.74)'; ctx.beginPath(); ctx.arc(-radius * .43, -radius * .28, radius * .22, 0, TAU); ctx.fill();
+        }
+        ctx.restore();
+        return;
+      }
+
+      // Close view: each species gets a silhouette, moving legs/feelers, and
+      // one or two high-contrast markings so the player can identify the
+      // insect before a mouse steps on it.
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      const r = .105 + hash(seed + 29, seed + 31, seed) * .028;
+      const legStroke = type === 'spider' ? '#ae8a9e' : '#4b3032';
+      ctx.strokeStyle = legStroke; ctx.lineWidth = .018;
+      const legPairs = type === 'spider' ? 4 : type === 'maggot' ? 0 : 3;
+      for (let pair = 0; pair < legPairs; pair += 1) {
+        const t = (pair - (legPairs - 1) / 2) / Math.max(1, legPairs - 1);
+        for (const side of [-1, 1]) {
+          const rootX = t * r * .95;
+          const rootY = side * r * .38;
+          const flutter = this.reducedMotion ? 0 : Math.sin(now * 10 + phase + pair + (side > 0 ? .7 : 0)) * .025;
+          const footX = rootX + (type === 'spider' ? (side * .12 + t * .06) : (side * .07));
+          const footY = side * (r * 1.7 + flutter);
+          ctx.beginPath(); ctx.moveTo(rootX, rootY); ctx.lineTo(footX, footY); ctx.stroke();
+        }
+      }
+      if (type === 'spider') {
+        ctx.fillStyle = '#46303f'; ctx.strokeStyle = edge; ctx.lineWidth = .024;
+        ctx.beginPath(); ctx.ellipse(.05, .015, r * 1.22, r * .93, 0, 0, TAU); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#241a28'; ctx.beginPath(); ctx.arc(-r * .78, -.01, r * .57, 0, TAU); ctx.fill();
+        ctx.fillStyle = '#f8d96e'; ctx.beginPath(); ctx.arc(-r * .92, -.10, .024, 0, TAU); ctx.arc(-r * .92, .10, .024, 0, TAU); ctx.fill();
+      } else if (type === 'maggot') {
+        // Seven overlapping rounded segments follow a shallow sine spine so
+        // the maggot reads as a soft wriggling body rather than a boat with
+        // stray ticks. The dark rim separates its cream tissue from the maze.
+        for (let segment = 0; segment < 7; segment += 1) {
+          const t = segment / 6;
+          const sx = -r * 1.42 + t * r * 2.84;
+          const sy = Math.sin(t * Math.PI * 1.45 + phase) * r * .16 + wiggle * (1 - Math.abs(t - .5) * 1.25);
+          const sw = r * (.34 - t * .055);
+          ctx.fillStyle = segment === 0 ? '#f0c79d' : (segment % 2 ? '#dcb08b' : '#c99578');
+          ctx.strokeStyle = edge; ctx.lineWidth = .018;
+          ctx.beginPath(); ctx.ellipse(sx, sy, sw, sw * .62, 0, 0, TAU); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = 'rgba(255,236,192,.42)'; ctx.beginPath(); ctx.ellipse(sx - sw * .2, sy - sw * .18, sw * .34, sw * .12, 0, 0, TAU); ctx.fill();
+        }
+        ctx.fillStyle = '#3b2027'; ctx.beginPath(); ctx.arc(-r * 1.47, -.02, .024, 0, TAU); ctx.fill();
+      } else if (type === 'ant') {
+        ctx.fillStyle = '#5a3530'; ctx.strokeStyle = edge; ctx.lineWidth = .022;
+        for (let segment = -1; segment <= 1; segment += 1) { ctx.beginPath(); ctx.arc(segment * r * .72, 0, r * (segment === 0 ? .62 : .5), 0, TAU); ctx.fill(); ctx.stroke(); }
+        ctx.strokeStyle = '#d09b7d'; ctx.lineWidth = .016;
+        ctx.beginPath(); ctx.moveTo(-r * 1.0, -.05); ctx.quadraticCurveTo(-r * 1.7, -.38, -r * 1.9, -.26); ctx.moveTo(-r * 1.0, .05); ctx.quadraticCurveTo(-r * 1.7, .38, -r * 1.9, .26); ctx.stroke();
+      } else if (type === 'roach') {
+        ctx.fillStyle = '#754735'; ctx.strokeStyle = edge; ctx.lineWidth = .023;
+        ctx.beginPath(); ctx.ellipse(.10, 0, r * 1.42, r * .68, 0, 0, TAU); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#a96d4d'; ctx.beginPath(); ctx.ellipse(-r * .9, 0, r * .58, r * .54, 0, 0, TAU); ctx.fill();
+        ctx.strokeStyle = '#d39b73'; ctx.lineWidth = .014;
+        ctx.beginPath(); ctx.moveTo(-r * 1.15, -.08); ctx.quadraticCurveTo(-r * 1.9, -.5, -r * 2.15, -.38); ctx.moveTo(-r * 1.15, .08); ctx.quadraticCurveTo(-r * 1.9, .5, -r * 2.15, .38); ctx.stroke();
+      } else {
+        ctx.fillStyle = '#296253'; ctx.strokeStyle = edge; ctx.lineWidth = .024;
+        ctx.beginPath(); ctx.ellipse(.08, 0, r * 1.38, r * .92, 0, 0, TAU); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#8cc7a1'; ctx.beginPath(); ctx.ellipse(.04, -.01, r * .48, r * .73, 0, 0, TAU); ctx.fill();
+        ctx.strokeStyle = '#e0bd79'; ctx.lineWidth = .014; ctx.beginPath(); ctx.moveTo(-r * .9, -.08); ctx.lineTo(-r * 1.65, -.32); ctx.moveTo(-r * .9, .08); ctx.lineTo(-r * 1.65, .32); ctx.stroke();
+      }
+      ctx.restore();
     }
 
     drawLice(ctx, lice, now, game) {
@@ -3559,6 +4078,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         const u = clamp(age / fx.length, 0, 1);
         if (fx.kind === 'explosion') this.drawExplosion(ctx, fx, age, u);
         else if (fx.kind === 'eat') this.drawEat(ctx, fx, age, u);
+        else if (fx.kind === 'insect-crush') this.drawInsectCrush(ctx, fx, age, u);
         else if (fx.kind === 'escape') this.drawEscape(ctx, fx, age, u);
         else if (fx.kind === 'gore-eat') this.drawExplosion(ctx, fx, age, u);
         else if (fx.kind === 'cheese') this.drawCheesePop(ctx, fx, u);
@@ -3591,11 +4111,30 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
           ctx.strokeStyle = 'rgba(182,21,38,.65)'; ctx.lineWidth = Math.max(.008, p.size * .13);
           ctx.beginPath(); ctx.moveTo(-p.size * .95, 0); ctx.lineTo(-p.size * .18, 0); ctx.stroke();
         }
-        if (p.type === 'liver') { ctx.fillStyle = '#762c35'; ctx.strokeStyle = '#c25c54'; ctx.lineWidth = .018; ctx.beginPath(); ctx.moveTo(-p.size, -.02); ctx.bezierCurveTo(-p.size * .8, -.12, p.size * 1.5, -.12, p.size, .03); ctx.bezierCurveTo(p.size * .7, .12, -.4 * p.size, .1, -p.size, -.02); ctx.fill(); ctx.stroke(); }
+        if (p.type === 'maggot') {
+          ctx.strokeStyle = '#7f4b45'; ctx.lineWidth = Math.max(.022, p.size * .46); ctx.lineCap = 'round';
+          const wiggle = Math.sin(p.spin * age + p.a) * p.size * .8;
+          ctx.beginPath(); ctx.moveTo(-p.size * 1.8, 0); ctx.bezierCurveTo(-p.size * .9, wiggle, p.size * .6, -wiggle, p.size * 1.8, 0); ctx.stroke();
+          ctx.strokeStyle = '#e1b28e'; ctx.lineWidth = Math.max(.012, p.size * .23);
+          ctx.beginPath(); ctx.moveTo(-p.size * 1.45, 0); ctx.bezierCurveTo(-p.size * .7, wiggle * .7, p.size * .45, -wiggle * .7, p.size * 1.45, 0); ctx.stroke();
+          ctx.fillStyle = '#f0c79d'; ctx.beginPath(); ctx.arc(-p.size * 1.4, 0, p.size * .46, 0, TAU); ctx.fill();
+        }
+        else if (p.type === 'liver') { ctx.fillStyle = '#762c35'; ctx.strokeStyle = '#c25c54'; ctx.lineWidth = .018; ctx.beginPath(); ctx.moveTo(-p.size, -.02); ctx.bezierCurveTo(-p.size * .8, -.12, p.size * 1.5, -.12, p.size, .03); ctx.bezierCurveTo(p.size * .7, .12, -.4 * p.size, .1, -p.size, -.02); ctx.fill(); ctx.stroke(); }
         else if (p.type === 'intestine') { ctx.strokeStyle = '#d49379'; ctx.lineWidth = Math.max(.018, p.size * .5); ctx.beginPath(); ctx.arc(0, 0, p.size * 1.8, 0, Math.PI * 1.65); ctx.stroke(); }
         else if (p.type === 'bone') { ctx.fillStyle = '#d7c09a'; ctx.strokeStyle = '#71484c'; ctx.lineWidth = .012; roundRect(ctx, -p.size * .65, -p.size * .12, p.size * 1.3, p.size * .24, p.size * .1); ctx.fill(); ctx.stroke(); }
         else { ctx.fillStyle = i % 3 ? '#9a2430' : '#c83e39'; ctx.beginPath(); ctx.ellipse(0, 0, p.size * 1.2, p.size * .72, .2, 0, TAU); ctx.fill(); }
         ctx.restore();
+      }
+      // Fine flecks add a second layer of motion between the larger pieces.
+      for (let i = 0; this.gore && Array.isArray(fx.flecks) && i < fx.flecks.length; i++) {
+        const p = fx.flecks[i]; const tt = Math.min(1.15, Math.max(0, age));
+        const dist = p.speed * tt - .7 * tt * tt;
+        const px = fx.x + Math.cos(p.a) * dist;
+        const py = fx.y + Math.sin(p.a) * dist + .28 * tt * tt;
+        const alpha = age > 1 ? 1 - (age - 1) / 1.25 : 1;
+        if (alpha <= 0) continue;
+        ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = p.dark ? '#42121f' : '#d76852';
+        ctx.beginPath(); ctx.ellipse(px, py, p.size * 1.25, p.size * .72, p.a, 0, TAU); ctx.fill(); ctx.restore();
       }
       if (this.gore && !this.reducedMotion && age < 1.18) {
         // Animated arterial jets remain attached to the impact point for the
@@ -3639,6 +4178,34 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         ctx.strokeStyle = 'rgba(255,207,86,' + (1 - age / .5) + ')'; ctx.lineWidth = .028;
         for (let i = 0; i < 12; i++) { const a = i * TAU / 12 + fx.seed; ctx.beginPath(); ctx.moveTo(fx.x + Math.cos(a) * .26, fx.y + Math.sin(a) * .26); ctx.lineTo(fx.x + Math.cos(a) * (.55 + age) , fx.y + Math.sin(a) * (.55 + age)); ctx.stroke(); }
       }
+    }
+
+    drawInsectCrush(ctx, fx, age, u) {
+      const alpha = 1 - u;
+      const radius = .09 + easeOut(Math.min(1, age / .22)) * .34;
+      ctx.save(); ctx.globalAlpha = alpha;
+      // Squash, ring, and dark crumbs remain as ordinary arcade feedback when
+      // gore is disabled. Gore adds only the small red stain and pale tissue.
+      ctx.fillStyle = 'rgba(25,13,19,.62)';
+      ctx.beginPath(); ctx.ellipse(fx.x, fx.y + .025, .24 + u * .12, .07, 0, 0, TAU); ctx.fill();
+      if (!this.reducedMotion) {
+        ctx.strokeStyle = 'rgba(245,213,126,' + alpha * .7 + ')'; ctx.lineWidth = .018;
+        ctx.beginPath(); ctx.arc(fx.x, fx.y, radius, 0, TAU); ctx.stroke();
+      }
+      const fragments = Array.isArray(fx.fragments) ? fx.fragments : [];
+      for (let i = 0; i < fragments.length; i += 1) {
+        const p = fragments[i]; const t = Math.min(.58, Math.max(0, age));
+        const dist = Math.max(0, p.speed * t - .35 * t * t);
+        const px = fx.x + Math.cos(p.a) * dist;
+        const py = fx.y + Math.sin(p.a) * dist + .08 * t * t;
+        ctx.fillStyle = this.gore ? (p.pale ? '#d4a37f' : '#4c2831') : '#614344';
+        ctx.beginPath(); ctx.ellipse(px, py, p.size * 1.35, p.size * .74, p.a, 0, TAU); ctx.fill();
+      }
+      if (this.gore) {
+        ctx.fillStyle = 'rgba(115,23,38,' + alpha * .78 + ')';
+        ctx.beginPath(); ctx.ellipse(fx.x, fx.y, .09 + u * .06, .035 + u * .02, fx.seed, 0, TAU); ctx.fill();
+      }
+      ctx.restore();
     }
 
     drawEat(ctx, fx, age, u) {
@@ -3697,7 +4264,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     constructor() {
       this.volume = .28; this.muted = false; this.active = false; this.paused = false;
       this.ctx = null; this.track = null; this.trackURL = null; this.timer = null; this.step = 0;
-      this.bpm = 132; this.nextNote = 0; this.lastCheese = 0;
+      this.bpm = 132; this.nextNote = 0; this.lastCheese = 0; this.lastCrunch = -Infinity;
       this.selectionPauseTimer = null;
       this.lifecycle = 0;
     }
@@ -3856,6 +4423,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         this.tone(230, t, .33, .17, 'triangle', this.fxGain, 40);
       } else if (event.type === 'cheese' && t - this.lastCheese > .22) {
         this.lastCheese = t; this.tone(1000, t, .047, .045, 'sine', this.fxGain, 1450);
+      } else if (event.type === 'insect-crushed' && t - this.lastCrunch > .16) {
+        // A soft dry crack, throttled across the whole crowd so a swarm
+        // cannot pile up hundreds of sounds or obscure the soundtrack.
+        this.lastCrunch = t;
+        this.hiss(t, .045, .045, 1700, this.fxGain, 'bandpass');
+        this.tone(180, t, .028, .035, 'triangle', this.fxGain, 70);
       } else if (event.type === 'finished') {
         [60,64,67,72].forEach((n,i) => this.tone(note(n), t + i * .09, .75, .2, 'triangle', this.fxGain));
       }
@@ -4431,6 +5004,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   var feedback = null;
   var raf = 0;
   var lastFrame = 0;
+  var lastStatsFrame = 0;
   var calloutTimer = 0;
   var results = [];
   var currentNames = [];
@@ -4725,7 +5299,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     else { setFocusMode(!state.focusMode); showToast(state.focusMode ? 'MAZE FOCUS ENABLED' : 'MAZE FOCUS CLOSED'); }
   }
   function focusPrimaryAction() { if (!game || game.status === 'ready' || game.status === 'finished') start(); else pause(); revealFocusControls(); }
-  function frame(now) { raf = requestAnimationFrame(frame); if (!lastFrame) lastFrame = now; var dt = Math.min(0.1, Math.max(0, (now - lastFrame) / 1000)); lastFrame = now; if (game && game.status === 'running') { game.update(dt); var events = typeof game.drainEvents === 'function' ? game.drainEvents() : []; events.forEach(handleEvent); } if (renderer && game) renderer.render(game, now / 1000); renderStats(); }
+  function frame(now) { raf = requestAnimationFrame(frame); if (!lastFrame) lastFrame = now; var dt = Math.min(0.1, Math.max(0, (now - lastFrame) / 1000)); lastFrame = now; if (game && game.status === 'running') { game.update(dt); var events = typeof game.drainEvents === 'function' ? game.drainEvents() : []; events.forEach(handleEvent); } if (renderer && game) renderer.render(game, now / 1000); if (now - lastStatsFrame >= 100) { renderStats(); lastStatsFrame = now; } }
   function step(seconds) { var dt = Math.max(0, Number(seconds) || 0); if (!game) return; if (game.status === 'running') { game.update(dt); var events = typeof game.drainEvents === 'function' ? game.drainEvents() : []; events.forEach(handleEvent); } if (renderer) renderer.render(game, (performance.now ? performance.now() : Date.now()) / 1000); renderStats(); }
   function applyRendererPresentationSettings() {
     if (!renderer) return;
@@ -4829,8 +5403,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     dom.zoomValue.textContent = '×1.0';
     if (dom.catStyleInput) dom.catStyleInput.value = 'random';
     if (dom.chatterToggle) dom.chatterToggle.checked = true;
-    // Legacy multiplier preferences are intentionally not migrated: the
-    // v5 control is a percentage per cheese and starts at a sane +1%.
+    // Keep the chosen percentage; v7 applies it to diminishing future gains.
     state.cheeseBoost = Math.max(1, Math.min(100, Math.round(Number(safeStorageGet(CHEESE_BOOST_STORE_KEY)) || 1))); dom.cheeseBoostInput.value = state.cheeseBoost; dom.cheeseBoostValue.textContent = '+' + state.cheeseBoost + '%';
     state.bombInterval = Math.max(10, Math.min(120, Math.round((Number(safeStorageGet(BOMB_INTERVAL_STORE_KEY)) || 30) / 5) * 5)); renderBombControl();
     audio = window.MouseMazeAudio ? new window.MouseMazeAudio() : null; window.mouseAudio = audio; if (audio && typeof audio.setVolume === 'function') audio.setVolume(state.volume);
