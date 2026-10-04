@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-04T09:14:25.531901+00:00",
+  "updatedAt": "2026-10-04T12:09:13.680346+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1372,8 +1372,19 @@
           "id": "2026-10-04-holiday-competition-camp",
           "date": "2026-10-04",
           "time": "16:00–18:30",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "Today’s main focus was speaking with the audience, rather than simply talking at them. The class generally showed good structure and logic, so we introduced audience-engagement techniques: rhetorical questions, direct audience address, visualization, sensory language, and emotional expression.\n\nWe also discussed improving clarity by simplifying complex explanations and shortening sentences when ideas were difficult to express or follow.\n\nWe reviewed opening, body, and conclusion, explored different hooks, and developed the cause → effect → impact → solution framework. Examples from world-champion speeches and NSDA Original Oratory speakers helped illustrate the different parts.\n\nThe central goal was to identify a problem in society, explain why it matters, raise awareness, and offer a potential solution. Students should express their own stance and viewpoint, rather than only introduce information about a topic.\n\nOverall, the teacher was very pleased with the class. Everyone listened attentively, worked well and thought deeply about what they needed to complete. The students showed motivation and a positive attitude, and appeared to enjoy the lesson. Several students had also done research, which the teacher wanted to acknowledge and applaud."
+          ],
+          "homework": {
+            "title": "Speech-planning rough draft",
+            "steps": [
+              "Focus on the final “Plan the whole speech” section of the Speech Structure and Audience Engagement PDF.",
+              "Fill in one or two pages if possible, using notes or key sentences to record your ideas.",
+              "Use the form prompts: opening hooks; main thesis, social problem and relevance; signposting; cause; effect; impact; personal connection; bridge towards hope and solution; call to action; reverse hook."
+            ],
+            "prepareFor": "Bring your ideas together and identify the parts your speech needs.",
+            "note": "This is a working rough draft, not a polished final speech. The teacher will help develop and polish it."
+          },
           "students": [
             {
               "name": "Haley",
