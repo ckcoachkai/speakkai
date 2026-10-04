@@ -21,6 +21,7 @@ export const publicRoutes = [
   "/speak/",
   "/apps/classroom-timer/",
   "/forest/",
+  "/maze/",
   "/games/ice-drop/",
   "/games/keeperfall/",
   "/games/mouse-house/",

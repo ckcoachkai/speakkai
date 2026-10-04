@@ -1,0 +1,129 @@
+{
+  "version": 5,
+  "sourceSha256": "7e7f196dde81190bda0a2c0baa9ab4eb57b623b34d5a37443a922adf3489b4e4",
+  "pageSha256": "24b3c9c5054a653e80a8a165621d1d0a22cf961e328ba7d4838ef94290a79a53",
+  "mouseOutfits": 30,
+  "catOutfits": 6,
+  "files": [
+    {
+      "path": "assets/mouse.74f695c2bbb8.webp",
+      "type": "image/webp",
+      "bytes": 297260,
+      "sha256": "74f695c2bbb85623587bbe5af669febe6cb2e0a614c91f08868cf81de78d8ca7"
+    },
+    {
+      "path": "assets/expressions.59a11a7107fc.webp",
+      "type": "image/webp",
+      "bytes": 437740,
+      "sha256": "59a11a7107fc66212668b43d7169d9d27ab57154884c94c1484e49c6a322854b"
+    },
+    {
+      "path": "assets/cat.d2ee57fac4f9.webp",
+      "type": "image/webp",
+      "bytes": 353392,
+      "sha256": "d2ee57fac4f928f6f7744866787ebe07d56f8504598a61971bb851d59a8924d3"
+    },
+    {
+      "path": "assets/tiles.2ad4bd2f760e.webp",
+      "type": "image/webp",
+      "bytes": 524964,
+      "sha256": "2ad4bd2f760e7ecc3a49789c2a756d75a4f1fb1e5b8f68a3bfb772bfb98cf6a2"
+    },
+    {
+      "path": "assets/props.85e671a695bd.webp",
+      "type": "image/webp",
+      "bytes": 284014,
+      "sha256": "85e671a695bd34d6165266edb383d410e2b49afb8233faab13b0fa4f3ae86093"
+    },
+    {
+      "path": "assets/blood.afa5cbc405e4.webp",
+      "type": "image/webp",
+      "bytes": 535308,
+      "sha256": "afa5cbc405e426c5ea0efcbec09ffee2eea21cfb06cef3ab4263e84789b38530"
+    },
+    {
+      "path": "assets/lice.89923a98f508.webp",
+      "type": "image/webp",
+      "bytes": 166162,
+      "sha256": "89923a98f508f056e930310e3d30df126f084440f96b32788ca346e4acb509cb"
+    },
+    {
+      "path": "assets/catWardrobeA.3612b79ff1f3.webp",
+      "type": "image/webp",
+      "bytes": 348178,
+      "sha256": "3612b79ff1f3937328a4d73a7e5f0d3fdd60e2d443c82ca32ed2140c06635913"
+    },
+    {
+      "path": "assets/catWardrobeB.644718d31180.webp",
+      "type": "image/webp",
+      "bytes": 318118,
+      "sha256": "644718d311802dde83b4d712a4095c398c2c3c0ede24c845edc016a8c895e812"
+    },
+    {
+      "path": "assets/mouseWardrobe1A.b7c94d11d3d7.webp",
+      "type": "image/webp",
+      "bytes": 326580,
+      "sha256": "b7c94d11d3d7e9e8cc3dde4c10ea20aec718304862ba8bb895814e77f199a634"
+    },
+    {
+      "path": "assets/mouseWardrobe1B.ec5129bb14c7.webp",
+      "type": "image/webp",
+      "bytes": 369116,
+      "sha256": "ec5129bb14c7390f780fb774c64e2b3e0508619f86c5be51b38f944eda0bc54d"
+    },
+    {
+      "path": "assets/mouseWardrobe2A.2b8368148b67.webp",
+      "type": "image/webp",
+      "bytes": 396194,
+      "sha256": "2b8368148b677e779374fa5da64a6ca8fdfd94e3e64754d8147a0b68aa1310de"
+    },
+    {
+      "path": "assets/mouseWardrobe2B.c00718b2e354.webp",
+      "type": "image/webp",
+      "bytes": 368862,
+      "sha256": "c00718b2e354356e2654ce53e866c1f20344be41ff0bc9f00680b99ecdd2f1db"
+    },
+    {
+      "path": "assets/mouseWardrobe3A.7add30c4117a.webp",
+      "type": "image/webp",
+      "bytes": 428716,
+      "sha256": "7add30c4117af4c9f00281ca265a53b6832b34ad0be33ed2b0583a21bb3c0eea"
+    },
+    {
+      "path": "assets/mouseWardrobe3B.d1d1c8b16ba1.webp",
+      "type": "image/webp",
+      "bytes": 406488,
+      "sha256": "d1d1c8b16ba116c441eecc2cb63ee0e9065df3fa1fa13300ee45078cc596ace0"
+    },
+    {
+      "path": "assets/mouseWardrobe4A.8d7720892264.webp",
+      "type": "image/webp",
+      "bytes": 455242,
+      "sha256": "8d772089226444540763f354351e0cecd603578a2c905ea1cf38cc5e2c15df7b"
+    },
+    {
+      "path": "assets/mouseWardrobe4B.d9f2f099d7ca.webp",
+      "type": "image/webp",
+      "bytes": 416830,
+      "sha256": "d9f2f099d7ca83bc62bc00e8f6eb70a083b13d8d84962d7a69976e0567ca8e26"
+    },
+    {
+      "path": "assets/mouseWardrobe5A.fba51307a9cb.webp",
+      "type": "image/webp",
+      "bytes": 330322,
+      "sha256": "fba51307a9cb536676714ebf04cb9ef2b52bba70c427ca586e49c693f570794c"
+    },
+    {
+      "path": "assets/mouseWardrobe5B.6fab0731a743.webp",
+      "type": "image/webp",
+      "bytes": 308188,
+      "sha256": "6fab0731a7438859824f6d86f9f3079ef60ed206fd8adee2ed487c5fa76d6ccf"
+    },
+    {
+      "path": "assets/mouse-maze-mayhem.7a5e617bd89d.mp3",
+      "type": "audio/mpeg",
+      "bytes": 5863304,
+      "sha256": "7a5e617bd89d4c7355b14ea2ed01d140006233813dea512e2965276b35a4a06a"
+    }
+  ]
+}
