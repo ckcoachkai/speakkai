@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-03T10:30:00Z",
+  "updatedAt": "2026-10-04T06:13:46.512743+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1395,6 +1395,25 @@
             {
               "name": "Charlotte",
               "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-03&student=charlotte"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-04-holiday-sdg-camp",
+          "date": "2026-10-04",
+          "time": "13:00–15:30",
+          "classContent": [
+            "We began with a self-awareness warm-up, finding differences between two pictures. This helped students practise noticing details about themselves and their surroundings—an important foundation for becoming aware of their voice, movements, and audience while speaking.\n\nWe then began a body warm-up but stopped it early when students started bumping into desks, to keep the activity safe.\n\nCharlotte took an independent speaking turn, with Mia nearby. We introduced clapping once for each word in a short sentence to help her notice and slow her speaking pace. The teacher demonstrated this with a simple sentence such as “I really like blueberries.” The practice suggestion was to repeat the sentence at the same steady pace without clapping.\n\nThe teacher also proposed using a music stand to hold the script, freeing both hands for gestures and making it easier to practise speaking directly to the audience. This is a proposed classroom support, not an assigned homework task."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Mia",
+              "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-04&student=mia"
+            },
+            {
+              "name": "Charlotte",
+              "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-04&student=charlotte"
             }
           ]
         }
