@@ -1,0 +1,44 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import vm from 'node:vm';
+
+const html = await readFile(new URL(process.argv.includes('--dist') ? '../dist/maze/index.html' : '../public/maze/index.html', import.meta.url), 'utf8');
+const source = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).find(s => s.includes('class Game {'));
+assert(source, 'Embedded engine missing');
+const context = vm.createContext({});
+vm.runInContext(source, context);
+const { Game } = context.MouseMazeEngine;
+const names = Array.from({ length: 8 }, (_, i) => `Mouse ${i + 1}`);
+const game = new Game({ names, seed: 6304, liceEnabled: false });
+assert.equal(game.bombInterval, 30);
+assert.equal(game.mice.filter(m => m.hasBomb).length, 1);
+assert(game.mice.some(m => m.hasBomb && m.id === game.bombCarrierId));
+game.start();
+game.setBombInterval(15);
+assert.equal(game.nextExplosion, 30, 'Changing the next fuse must preserve the current deadline');
+// Isolate deadline ownership from movement so this also catches any return to
+// random victim selection in the actual packaged engine.
+for (const m of game.mice) m.speed = 0;
+let owner;
+const explode = game._explodeOne.bind(game);
+game._explodeOne = function () { owner = this.bombCarrierId; return explode(); };
+game.update(30);
+assert.equal(game.status, 'awaiting');
+assert.equal(game.pendingSelection.id, owner);
+assert.equal(game.pendingSelection.outcome, 'exploded');
+assert.equal(game.time, 30);
+assert.equal(game.nextExplosion, 45);
+game.update(100); assert.equal(game.time, 30);
+game.resume(); assert.equal(game.status, 'awaiting');
+game.continueSelection();
+assert.equal(game.mice.filter(m => m.alive && m.hasBomb).length, 1);
+assert.notEqual(game.bombCarrierId, owner);
+game.update(15);
+assert.equal(game.time, 45); assert.equal(game.status, 'awaiting');
+assert.equal(game.selections.length, 2);
+assert.equal(new Set(game.selections.map(s => s.id)).size, 2);
+assert.match(html, /id="bombIntervalInput"[^>]*min="10"[^>]*max="120"/);
+assert.match(html, /focus-mode/);
+assert.match(html, /frameCache = new WeakMap/);
+assert.match(html, /'none' : 'auto'/);
+console.log('Packaged bomb checks pass: single owner, exact fuse, carrier-only explosion, next-fuse setting, speaker hold, reassignment and performance integrations.');

@@ -50,6 +50,7 @@ jobs:
         run: |
           node scripts/check-maze.mjs --dist
           node scripts/check-maze-regressions.mjs --dist
+          node scripts/check-maze-bomb.mjs --dist
       - name: Verify illustrated topic library
         run: node scripts/check-topics.mjs
       - name: Verify Bob character data, encryption, and save conflicts

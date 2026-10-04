@@ -1,7 +1,7 @@
 {
-  "version": 5,
-  "sourceSha256": "d00cc3014c19ed1fb282085fb2489d951361a70eee21c45e24afd358a15700eb",
-  "pageSha256": "fef1a64ddeb78c98a7e6ddc1c9279aa8efe20196cf668bb98651232b5427a766",
+  "version": 6,
+  "sourceSha256": "67f491593459269d09af45afed1c8cd511dd7e8c528d61b9324de1631b32e713",
+  "pageSha256": "dac35db2f28e7de7a5c9e98970c6028132d28d8ee8ed7fbbf733a7cd8e6576b2",
   "mouseOutfits": 30,
   "catOutfits": 6,
   "files": [

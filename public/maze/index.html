@@ -62,13 +62,15 @@ h1 span { color: var(--red); }
 .stage-frame::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(10, 7, 12, .62), transparent 14%, transparent 75%, rgba(10, 7, 12, .82)); z-index: 1; }
 .stage-ribbon { position: absolute; z-index: 3; top: 14px; left: 18px; display: flex; gap: 10px; color: rgba(243, 228, 187, .6); font-size: 9px; letter-spacing: .17em; font-weight: 800; }
 .stage-ribbon b { color: var(--red); }
-#mazeCanvas { position: absolute; display: block; left: 0; right: 0; top: 94px; bottom: auto; width: 100%; height: calc(100% - 139px); min-height: 0; touch-action: none; cursor: grab; }
+#mazeCanvas { position: absolute; display: block; left: 0; right: 0; top: 110px; bottom: auto; width: 100%; height: calc(100% - 155px); min-height: 0; touch-action: none; cursor: grab; }
 #mazeCanvas.is-panning { cursor: grabbing; }
 .hud { position: absolute; left: 24px; right: 24px; top: 42px; z-index: 3; display: flex; gap: 10px; pointer-events: none; }
 .hud-stat { background: rgba(23, 17, 29, .84); border: 1px solid rgba(243, 228, 187, .16); padding: 9px 13px 8px; min-width: 103px; }
 .hud-label { display: block; font-size: 8px; color: var(--muted); letter-spacing: .16em; font-weight: 800; margin-bottom: 3px; }
 .hud-stat strong { font-family: var(--display); font-size: 21px; letter-spacing: .05em; }
 .hud-stat.danger strong { color: var(--red); }
+.hud-stat.bomb-carrier { min-width: 112px; max-width: 170px; }
+.hud-stat.bomb-carrier strong { color: var(--yellow); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .camera-toolbar { position: absolute; z-index: 5; top: 12px; right: 18px; display: flex; align-items: center; gap: 5px; }
 .camera-button { height: 27px; min-width: 48px; padding: 0 8px; border: 1px solid rgba(243, 228, 187, .25); background: rgba(23, 17, 29, .86); color: var(--cream); font-size: 9px; font-weight: 800; letter-spacing: .1em; }
 .camera-button:hover, .camera-button[aria-pressed="true"] { border-color: var(--yellow); color: var(--yellow); }
@@ -228,6 +230,40 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
 
 .setting-row[hidden] { display: none; }
 
+/* Keep the carrier readable without squeezing the clocks into narrow cells. */
+@media (max-width: 1120px) {
+  .hud { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hud .hud-stat { min-width: 0; max-width: none; overflow: hidden; }
+  #mazeCanvas { top: 180px; height: calc(100% - 225px); }
+}
+@media (max-width: 540px) {
+  #mazeCanvas { top: 150px; height: calc(100% - 191px); }
+  .hud-label { font-size: 8px; }
+  .hud-stat strong { font-size: 17px; }
+}
+
+/* A restrained, presenter-friendly focus mode. Native fullscreen is used
+   when available; the same class is also the honest fallback for embedded
+   browsers that do not expose the Fullscreen API. */
+.focus-controls { position: absolute; z-index: 9; top: 13px; right: 13px; display: flex; gap: 6px; opacity: 1; transition: opacity .25s ease; }
+.focus-controls[hidden] { display: none; }
+.focus-controls.is-idle { opacity: 0; pointer-events: none; }
+.focus-controls.is-idle:focus-within { opacity: 1; pointer-events: auto; }
+.focus-control-button { min-height: 44px; padding: 0 12px; border: 1px solid rgba(243,228,187,.35); background: rgba(16,6,15,.76); color: var(--cream); font-size: 9px; font-weight: 900; letter-spacing: .12em; border-radius: 3px; }
+.focus-control-button:hover, .focus-control-button:focus-visible { border-color: var(--yellow); color: var(--yellow); background: rgba(16,6,15,.92); }
+.focus-control-button span:first-child { margin-right: 5px; color: var(--yellow); }
+.focus-mode { overflow: hidden; }
+.focus-mode .app-shell { width: 100vw; max-width: none; height: 100dvh; padding: 0; margin: 0; }
+.focus-mode .topbar, .focus-mode .stage-head, .focus-mode .stage-controls, .focus-mode .control-column, .focus-mode .app-footer { display: none; }
+.focus-mode .page-grid { display: block; width: 100vw; height: 100dvh; padding: 0; }
+.focus-mode .stage-column { width: 100vw; height: 100dvh; }
+.focus-mode .stage-frame { width: 100vw; height: 100dvh; min-height: 0; border: 0; box-shadow: none; }
+.focus-mode .stage-frame::before { background: linear-gradient(180deg, rgba(10,7,12,.25), transparent 15%, transparent 82%, rgba(10,7,12,.35)); }
+.focus-mode #mazeCanvas { top: 0; height: 100%; }
+.focus-mode .hud, .focus-mode .camera-toolbar, .focus-mode .stage-bottom { display: none; }
+.focus-mode .selection-callout { z-index: 10; }
+@media (prefers-reduced-motion: reduce) { .focus-controls { transition: none; } }
+
 </style>
   <meta name="description" content="Dynamite Mice: a maze name picker with costumed mice, cheese boosts, a chasing cat, and speaker pauses.">
   <link rel="canonical" href="https://speakkai.com/maze/">
@@ -240,7 +276,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
         <span><strong>DYNAMITE</strong><em>MICE</em></span>
       </a>
       <div class="top-actions">
-        <button class="icon-button" id="fullscreenBtn" type="button" title="Toggle fullscreen" aria-label="Toggle fullscreen"><span aria-hidden="true">⛶</span></button>
+        <button class="icon-button" id="fullscreenBtn" type="button" title="Focus maze fullscreen" aria-label="Focus maze fullscreen" aria-pressed="false"><span aria-hidden="true">⛶</span></button>
         <button class="icon-button" id="muteBtn" type="button" title="Mute sound" aria-label="Mute sound"><span id="muteIcon" aria-hidden="true">◖))</span></button>
       </div>
     </header>
@@ -257,7 +293,8 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
         <div class="stage-frame">
           <div class="hud hud-top" aria-label="Game statistics">
             <div class="hud-stat"><span class="hud-label">ELAPSED</span><strong id="elapsedValue">00:00</strong></div>
-            <div class="hud-stat danger"><span class="hud-label">BOOM</span><strong id="boomValue">30s</strong></div>
+            <div class="hud-stat danger"><span class="hud-label">FUSE</span><strong id="boomValue">30s</strong></div>
+            <div class="hud-stat bomb-carrier"><span class="hud-label">BOMB</span><strong id="bombCarrierValue">—</strong></div>
             <div class="hud-stat"><span class="hud-label">CAT</span><strong id="catValue">01:00</strong></div>
             <div class="hud-stat turbo" title="Speed increase per cheese"><span class="hud-label">CHEESE +</span><strong id="turboValue">+1%</strong></div>
             <div class="hud-stat lice"><span class="hud-label">LICE</span><strong id="liceValue">0</strong></div>
@@ -281,6 +318,10 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
             <div class="meter-track"><span id="aliveMeter"></span></div>
             <div class="meter-group chosen-meter"><span>CHOSEN</span><strong id="chosenValue">0</strong></div>
             <div class="cheese-count"><span class="cheese-icon" aria-hidden="true">◆</span><strong id="cheeseValue">400</strong><span>CHEESE</span></div>
+          </div>
+          <div class="focus-controls" id="focusControls" aria-label="Fullscreen maze controls" hidden>
+            <button class="focus-control-button" id="focusPauseBtn" type="button"><span aria-hidden="true">Ⅱ</span><span id="focusPauseText">PAUSE</span></button>
+            <button class="focus-control-button" id="focusExitBtn" type="button"><span aria-hidden="true">×</span><span>EXIT</span></button>
           </div>
         </div>
 
@@ -311,6 +352,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
           <div class="setting-row" id="vibrationRow"><div><strong>VIBRATION</strong><small>Haptic feedback</small></div><label class="toggle"><input id="vibrationToggle" type="checkbox"><span></span><b class="sr-only">Enable vibration</b></label></div>
           <div class="setting-row sound-row"><div><strong>SOUNDTRACK</strong><small id="trackLabel">Built-in maze score</small></div><label class="volume-wrap" aria-label="Sound volume"><span>VOL</span><input id="volumeInput" type="range" min="0" max="1" value="0.25" step="0.01"></label></div>
           <div class="setting-row boost-row"><div><strong>CHEESE BOOST</strong><small>Mice · each cheese</small></div><label class="boost-wrap" aria-label="Mouse speed increase per cheese"><input id="cheeseBoostInput" type="range" min="1" max="100" value="1" step="1"><output id="cheeseBoostValue">+1%</output></label></div>
+          <div class="setting-row bomb-row"><div><strong>BOMB FUSE</strong><small id="bombIntervalNote">Next fuse · 30 seconds</small></div><label class="boost-wrap" aria-label="Seconds until the next bomb explosion"><input id="bombIntervalInput" type="range" min="10" max="120" value="30" step="5"><output id="bombIntervalValue">30s</output></label></div>
           <p class="suno-note lice-note" id="liceNote">LICE PRESSURE · AFTER 00:10 · −0.01% SPEED EACH</p>
           <div class="setting-row"><div><strong>CAT OUTFIT</strong><small>Choose the cat's look</small></div><label class="select-wrap"><select id="catStyleInput" aria-label="Cat outfit"><option value="random">RANDOM</option><option value="0">ADMIRAL</option><option value="1">CHEF</option><option value="2">DETECTIVE</option><option value="3">PIRATE</option><option value="4">ROYAL</option><option value="5">RACER</option></select></label></div>
           <div class="setting-row"><div><strong>CHATTER</strong><small>Speech bubbles from mice and cat</small></div><label class="toggle"><input id="chatterToggle" type="checkbox" checked><span></span><b class="sr-only">Enable character chatter</b></label></div>
@@ -322,7 +364,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
 
         <section class="panel rules-panel">
           <div class="rules-top"><strong class="rules-title">RULES</strong><span class="timer-glyph" aria-hidden="true">◷</span></div>
-          <p>A random boom every <strong>30s</strong>. Cat at <strong>01:00</strong>. Cheese adds speed; poop slows the cat. Escape, explode, or get eaten to be chosen. <strong>Continue</strong> after each speaker.</p>
+          <p>One mouse starts with the bomb and passes it by contact. The carrier gets <strong>+25% speed</strong>; passing never resets the fuse. Cat at <strong>01:00</strong>. Cheese adds speed; poop slows the cat. Escape, explode, or get eaten to be chosen. <strong>Continue</strong> after each speaker.</p>
         </section>
 
         <section class="panel export-panel">
@@ -495,6 +537,20 @@ const MAX_ACTOR_SPEED = 1000000;
 const LICE_START_TIME = 10;
 const LICE_ROAMING_TARGET = 360;
 const LICE_MAX_TOTAL = 520;
+const BOMB_INTERVAL_MIN = 10;
+const BOMB_INTERVAL_MAX = 120;
+const BOMB_INTERVAL_STEP = 5;
+const BOMB_CARRIER_BOOST = 1.25;
+const BOMB_PASS_DISTANCE = 0.55;
+const BOMB_PASS_LOCK = 1;
+const BOMB_INITIAL_GRACE = 1;
+
+function normalizeBombInterval(value, fallback = 30) {
+  const numeric = Number(value);
+  const source = Number.isFinite(numeric) ? numeric : fallback;
+  const stepped = Math.round(source / BOMB_INTERVAL_STEP) * BOMB_INTERVAL_STEP;
+  return clamp(stepped, BOMB_INTERVAL_MIN, BOMB_INTERVAL_MAX);
+}
 
 class Game {
   constructor(options = {}) {
@@ -529,10 +585,15 @@ class Game {
     }
 
     this.time = 0;
-    // Explosions happen on the speaker-friendly cadence: 30, 60, 90…
-    // Keep this as simulation time rather than wall-clock time so a paused
-    // selection can never cause the schedule to jump when it is continued.
-    this.nextExplosion = 30;
+    // The bomb fuse is a speaker-friendly, adjustable cadence. `nextExplosion`
+    // is the active fuse deadline; changing `bombInterval` never rewrites a
+    // fuse that is already counting down.
+    this.bombInterval = normalizeBombInterval(options.bombInterval, 30);
+    this.nextExplosion = this.bombInterval;
+    this.bombCarrierId = null;
+    this._bombPassLockUntil = 0;
+    this._bombGraceUntil = BOMB_INITIAL_GRACE;
+    this._bombTransferSerial = 0;
     this.status = 'ready';
     this.selections = [];
     this.events = [];
@@ -590,6 +651,8 @@ class Game {
         speed: 0.45 + this.random() * 0.9,
         baseSpeed: 0,
         speedMultiplier: 1,
+        bombSpeedMultiplier: 1,
+        hasBomb: false,
         alive: true,
         color: ['#f3c990', '#c98162', '#e9a98e', '#f0dfb0', '#9c6a58', '#d4a16d'][index % 6],
         phase: this.random() * Math.PI * 2,
@@ -615,10 +678,17 @@ class Game {
         lastPoopAt: -Infinity,
         _pauseUntil: 0,
         _lastConfusionEvent: -Infinity,
+        _bombTargetId: null,
+        _bombRepathTimer: 0,
       };
     });
 
     for (const mouse of this.mice) mouse.baseSpeed = mouse.speed;
+
+    // Exactly one living mouse starts with the bomb. The assignment is
+    // deterministic for a seeded game and is also available to the renderer
+    // before Start is pressed.
+    this._assignBombCarrier(null, 'initial');
 
     this._fillCheese();
   }
@@ -650,6 +720,10 @@ class Game {
       }
       return this.status;
     }
+    // A carrier can have just escaped, been caught, or detonated. Continue is
+    // the clean handoff boundary: assign the existing fuse to a survivor
+    // without changing its deadline.
+    if (!this._getBombCarrier()) this._assignBombCarrier(null, 'continue');
     this.status = 'running';
     return this.status;
   }
@@ -667,8 +741,71 @@ class Game {
     return this.cheeseBoost;
   }
 
+  setBombInterval(value) {
+    this.bombInterval = normalizeBombInterval(value, this.bombInterval);
+    // Before Start there is no active countdown yet, so the slider defines the
+    // initial fuse. Once play has begun, leave the active deadline untouched;
+    // the new interval applies to the fuse created by the next detonation.
+    if (this.status === 'ready' && this.time === 0) this.nextExplosion = this.bombInterval;
+    return this.bombInterval;
+  }
+
   _emit(event) {
     this.events.push(event);
+  }
+
+  _getBombCarrier() {
+    const direct = this.bombCarrierId
+      ? this.mice.find((mouse) => mouse.id === this.bombCarrierId)
+      : null;
+    if (direct?.alive && direct.hasBomb) return direct;
+    const flagged = this.mice.find((mouse) => mouse.alive && mouse.hasBomb);
+    if (flagged) {
+      this.bombCarrierId = flagged.id;
+      return flagged;
+    }
+    this.bombCarrierId = null;
+    return null;
+  }
+
+  _assignBombCarrier(mouseOrId = null, reason = 'assignment') {
+    const requested = typeof mouseOrId === 'string'
+      ? this.mice.find((mouse) => mouse.id === mouseOrId)
+      : mouseOrId;
+    const living = this.mice.filter((mouse) => mouse.alive);
+    const target = requested?.alive
+      ? requested
+      : (living.length ? living[Math.floor(this.random() * living.length)] : null);
+    if (!target) {
+      this.bombCarrierId = null;
+      for (const mouse of this.mice) mouse.hasBomb = false;
+      return null;
+    }
+    for (const mouse of this.mice) mouse.hasBomb = mouse === target;
+    this.bombCarrierId = target.id;
+    target._bombTargetId = null;
+    target._bombRepathTimer = 0;
+    target._route = [];
+    this._effectiveSpeed(target);
+    this._emit({
+      type: 'bomb-assigned',
+      carrierId: target.id,
+      actorId: target.id,
+      reason,
+      fuseAt: this.nextExplosion,
+      time: this.time,
+    });
+    return target;
+  }
+
+  _removeBombFromCarrier(mouse, reason = 'removed') {
+    if (!mouse || (!mouse.hasBomb && this.bombCarrierId !== mouse.id)) return false;
+    mouse.hasBomb = false;
+    mouse.bombSpeedMultiplier = 1;
+    if (this.bombCarrierId === mouse.id) this.bombCarrierId = null;
+    this._effectiveSpeed(mouse);
+    this._emit({ type: 'bomb-carrier-removed', carrierId: mouse.id, reason, time: this.time });
+    return true;
   }
 
   _floorKeySet() {
@@ -806,6 +943,150 @@ class Game {
     else if (mouse.mood === 'confused') mouse.mood = 'curious';
   }
 
+  _planBombCarrier(mouse) {
+    const living = this.mice.filter((candidate) => candidate.alive && candidate !== mouse);
+    if (!living.length) {
+      mouse._bombTargetId = null;
+      mouse._route = [];
+      return null;
+    }
+    const from = cellAt(mouse.x, mouse.y);
+    if (this.grid[from.y]?.[from.x] !== 0) {
+      mouse._route = [];
+      mouse._bombTargetId = null;
+      return null;
+    }
+    const distances = distanceMap(this.grid, this.cols, this.rows, from);
+    let target = null;
+    let targetDistance = Infinity;
+    let targetProximity = Infinity;
+    for (const candidate of living) {
+      const candidateCell = cellAt(candidate.x, candidate.y);
+      const distance = distances.get(key(candidateCell.x, candidateCell.y));
+      if (!Number.isFinite(distance)) continue;
+      const proximity = Math.hypot(candidate.x - mouse.x, candidate.y - mouse.y);
+      if (distance < targetDistance || (distance === targetDistance && proximity < targetProximity)) {
+        target = candidate;
+        targetDistance = distance;
+        targetProximity = proximity;
+      }
+    }
+    if (!target) {
+      mouse._bombTargetId = null;
+      mouse._route = [];
+      return null;
+    }
+    const to = cellAt(target.x, target.y);
+    const path = shortestPath(this.grid, this.cols, this.rows, from, to);
+    const ownCenter = center(from);
+    const needsCenter = Math.hypot(mouse.x - ownCenter.x, mouse.y - ownCenter.y) > 1e-7;
+    mouse._bombTargetId = target.id;
+    mouse._route = path.length
+      ? (needsCenter ? [from, ...path.slice(1)] : path.slice(1))
+      : [];
+    mouse._bombRepathTimer = 0.22;
+    return target;
+  }
+
+  _lineWalkable(start, end) {
+    if (!start || !end) return false;
+    const distance = Math.hypot(end.x - start.x, end.y - start.y);
+    const steps = Math.max(1, Math.ceil(distance / 0.08));
+    for (let index = 0; index <= steps; index += 1) {
+      const fraction = index / steps;
+      const x = start.x + (end.x - start.x) * fraction;
+      const y = start.y + (end.y - start.y) * fraction;
+      if (this.grid[Math.floor(y)]?.[Math.floor(x)] !== 0) return false;
+    }
+    return true;
+  }
+
+  _transferBomb(carrier, target) {
+    if (!carrier?.alive || !carrier.hasBomb || !target?.alive || target === carrier) return false;
+    const fromId = carrier.id;
+    for (const mouse of this.mice) mouse.hasBomb = mouse === target;
+    this.bombCarrierId = target.id;
+    carrier._bombTargetId = null;
+    carrier._bombRepathTimer = 0;
+    carrier._route = [];
+    target._bombTargetId = null;
+    target._bombRepathTimer = 0;
+    target._route = [];
+    this._bombTransferSerial += 1;
+    this._bombPassLockUntil = this.time + BOMB_PASS_LOCK;
+    this._effectiveSpeed(carrier);
+    this._effectiveSpeed(target);
+    this._emit({
+      type: 'bomb-pass',
+      fromId,
+      toId: target.id,
+      carrierId: target.id,
+      x: target.x,
+      y: target.y,
+      time: this.time,
+    });
+    return true;
+  }
+
+  _maybePassBomb(actor, start, end) {
+    if (this.status !== 'running' || this.time + 1e-9 < this._bombGraceUntil
+      || this.time + 1e-9 < this._bombPassLockUntil) return false;
+    const carrier = this._getBombCarrier();
+    if (!carrier || !actor?.alive) return false;
+
+    // Both sides of a crossing can discover the handoff. This matters when a
+    // fast unarmed mouse crosses a slower carrier between simulation frames.
+    if (actor !== carrier) {
+      const hit = this._segmentDistance(carrier.x, carrier.y, start.x, start.y, end.x, end.y);
+      const length = Math.hypot(end.x - start.x, end.y - start.y);
+      if (hit.distance > BOMB_PASS_DISTANCE || hit.along > length + 1e-7) return false;
+      const dx = end.x - start.x;
+      const dy = end.y - start.y;
+      const lengthSquared = dx * dx + dy * dy;
+      const projection = lengthSquared > 0
+        ? clamp(((carrier.x - start.x) * dx + (carrier.y - start.y) * dy) / lengthSquared, 0, 1)
+        : 0;
+      const passPoint = { x: start.x + dx * projection, y: start.y + dy * projection };
+      if (!this._lineWalkable(passPoint, { x: carrier.x, y: carrier.y })) return false;
+      return this._transferBomb(carrier, actor);
+    }
+
+    let candidate = null;
+    let candidateAlong = Infinity;
+    for (const mouse of this.mice) {
+      if (!mouse.alive || mouse === carrier) continue;
+      const hit = this._segmentDistance(mouse.x, mouse.y, start.x, start.y, end.x, end.y);
+      const length = Math.hypot(end.x - start.x, end.y - start.y);
+      if (hit.distance > BOMB_PASS_DISTANCE || hit.along > length + 1e-7) continue;
+      // A nearby mouse behind a wall is not a valid pass target. The swept
+      // segment itself is from the carrier's actual wall-safe movement.
+      const dx = end.x - start.x;
+      const dy = end.y - start.y;
+      const lengthSquared = dx * dx + dy * dy;
+      const projection = lengthSquared > 0
+        ? clamp(((mouse.x - start.x) * dx + (mouse.y - start.y) * dy) / lengthSquared, 0, 1)
+        : 0;
+      const passPoint = { x: start.x + dx * projection, y: start.y + dy * projection };
+      if (!this._lineWalkable(passPoint, { x: mouse.x, y: mouse.y })) continue;
+      if (hit.along < candidateAlong) {
+        candidate = mouse;
+        candidateAlong = hit.along;
+      }
+    }
+    return candidate ? this._transferBomb(carrier, candidate) : false;
+  }
+
+  _updateBombCarrier(carrier, dt) {
+    const target = carrier._bombTargetId
+      ? this.mice.find((mouse) => mouse.id === carrier._bombTargetId && mouse.alive && mouse !== carrier)
+      : null;
+    carrier._bombRepathTimer = Math.max(0, (Number(carrier._bombRepathTimer) || 0) - dt);
+    // A same-cell target legitimately produces an empty route. Do not run a
+    // full maze distance search every frame while the pair is still close;
+    // the short repath timer keeps target changes responsive and bounded.
+    if (!target || carrier._bombRepathTimer <= 0) this._planBombCarrier(carrier);
+  }
+
   _effectiveSpeed(actor) {
     // Cheese is a percentage of the actor's current speed. For mice the
     // slider is the per-cheese percentage; cat cheese remains a gentle 1%
@@ -844,8 +1125,10 @@ class Game {
     const baselineSpeed = Number.isFinite(Number(actor.baseSpeed)) && configuredSpeed !== Number(actor.baseSpeed)
       ? configuredSpeed
       : Number(actor.baseSpeed);
+    const bombMultiplier = actor !== this.cat && actor.hasBomb ? BOMB_CARRIER_BOOST : 1;
+    actor.bombSpeedMultiplier = bombMultiplier;
     const speed = clamp(
-      Number.isFinite(baselineSpeed) ? baselineSpeed * actor.speedMultiplier * poopSlow * fear : 0,
+      Number.isFinite(baselineSpeed) ? baselineSpeed * actor.speedMultiplier * poopSlow * fear * bombMultiplier : 0,
       0,
       MAX_ACTOR_SPEED,
     );
@@ -902,7 +1185,7 @@ class Game {
    * several cells, but each adjacent segment is still walked so walls cannot
    * be tunneled through and cheese/poop on the crossed path is consumed.
    */
-  _moveAlongRoute(actor, dt, onArrive) {
+  _moveAlongRoute(actor, dt, onArrive, onSegment) {
     let remaining = dt;
     let arrivedAny = false;
     let guard = 0;
@@ -936,6 +1219,9 @@ class Game {
         const fraction = distance > 0 ? clamp(hit.along / distance, 0, 1) : 0;
         actor.x = start.x + dx * fraction;
         actor.y = start.y + dy * fraction;
+        const transferSerial = this._bombTransferSerial;
+        if (onSegment && hit.along > 1e-8) onSegment(start, { x: actor.x, y: actor.y });
+        if (transferSerial !== this._bombTransferSerial) break;
         actor.angle = Math.atan2(dy, dx);
         const consumedDistance = hit.along;
         remaining = Math.max(0, remaining - consumedDistance / speed);
@@ -948,6 +1234,9 @@ class Game {
       const fraction = movement / distance;
       actor.x = start.x + dx * fraction;
       actor.y = start.y + dy * fraction;
+      const transferSerial = this._bombTransferSerial;
+      if (onSegment && movement > 1e-8) onSegment(start, { x: actor.x, y: actor.y });
+      if (transferSerial !== this._bombTransferSerial) break;
       actor.angle = Math.atan2(dy, dx);
       remaining = Math.max(0, remaining - movement / speed);
       if (movement + 1e-8 < distance) break;
@@ -1203,8 +1492,16 @@ class Game {
       this._emit({ type: 'poop', id: item.id, x: item.x, y: item.y, time: this.time });
     }
 
-    if (!mouse._route.length) this._planMouse(mouse);
+    if (mouse.hasBomb && this.mice.some((candidate) => candidate.alive && candidate !== mouse)) {
+      this._updateBombCarrier(mouse, dt);
+    } else if (!mouse._route.length) {
+      this._planMouse(mouse);
+    }
     this._effectiveSpeed(mouse);
+    // When several mice are still sharing the entrance cell, the carrier may
+    // have no center-to-center route yet. Treat that stationary proximity as
+    // a valid swept handoff after the short spawn grace period.
+    if (mouse.hasBomb) this._maybePassBomb(mouse, { x: mouse.x, y: mouse.y }, { x: mouse.x, y: mouse.y });
     // A route is chosen before the pause so the renderer can show the mouse
     // looking around; movement resumes on the next simulation slice.
     if (Number(mouse.confusedUntil) > this.time + 1e-9) return;
@@ -1214,8 +1511,14 @@ class Game {
       if (target.x === this._exitCell.x && target.y === this._exitCell.y) {
         // Do not replan from the exit before the outcome check below.
         mouse._route = [];
-      } else if (!mouse._route.length) this._planMouse(mouse);
-    });
+      } else if (!mouse._route.length) {
+        if (mouse.hasBomb && this.mice.some((candidate) => candidate.alive && candidate !== mouse)) {
+          this._planBombCarrier(mouse);
+        } else {
+          this._planMouse(mouse);
+        }
+      }
+    }, (start, end) => this._maybePassBomb(mouse, start, end));
     this._collectCheese(mouse, 'mouse');
     if (Math.hypot(mouse.x - this.exit.x, mouse.y - this.exit.y) < 0.28) this.choose(mouse, 'escaped');
   }
@@ -1300,10 +1603,17 @@ class Game {
   }
 
   _explodeOne() {
-    const alive = this.mice.filter((mouse) => mouse.alive);
-    if (!alive.length) return;
-    const mouse = alive[Math.floor(this.random() * alive.length)];
-    this.choose(mouse, 'exploded');
+    const carrier = this._getBombCarrier();
+    if (!carrier) return false;
+    this._emit({
+      type: 'bomb-detonated',
+      carrierId: carrier.id,
+      id: carrier.id,
+      x: carrier.x,
+      y: carrier.y,
+      time: this.time,
+    });
+    return this.choose(carrier, 'exploded');
   }
 
   _checkTimedEvents() {
@@ -1315,7 +1625,7 @@ class Game {
       // explosion pending until Continue acknowledges the first outcome.
       if (this.status === 'awaiting') break;
       const explosionTime = this.nextExplosion;
-      this.nextExplosion += 30;
+      this.nextExplosion = explosionTime + this.bombInterval;
       // Snap the event timestamp without moving simulation time backwards.
       // update() normally lands exactly on this boundary.
       if (this.time < explosionTime) this.time = explosionTime;
@@ -1375,6 +1685,8 @@ class Game {
       : mouseOrId;
     if (this.status === 'awaiting') return false;
     if (!mouse || !this.mice.includes(mouse) || !mouse.alive || !['escaped', 'exploded', 'eaten'].includes(outcome)) return false;
+    const wasCarrier = mouse.hasBomb || this.bombCarrierId === mouse.id;
+    if (wasCarrier) this._removeBombFromCarrier(mouse, `selected:${outcome}`);
     mouse.alive = false;
     mouse.outcome = outcome;
     const selected = {
@@ -1413,6 +1725,9 @@ class Game {
       attachedLice,
       catIn: Boolean(this.cat),
       nextExplosionIn: Math.max(0, this.nextExplosion - this.time),
+      bombInterval: this.bombInterval,
+      bombCarrierId: this.bombCarrierId,
+      bombCarrierName: this.mice.find((mouse) => mouse.id === this.bombCarrierId)?.name || null,
       catInSeconds: Math.max(0, 60 - this.time),
       time: this.time,
     };
@@ -1430,10 +1745,41 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
 (function (root) {
   'use strict';
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const frameCache = new WeakMap();
+  function drawFrame(ctx, image, sx, sy, sw, sh, x, y, w, h) {
+    // Keep the original source rectangles and animations. At overview scale,
+    // resample each costume frame once instead of the large atlas every draw.
+    if (root.document && typeof ctx.getTransform === 'function' && !Array.isArray(ctx.log)) {
+      const transform = ctx.getTransform();
+      const requested = Math.abs(h) * Math.hypot(transform.c, transform.d);
+      const pixels = clamp(2 ** Math.ceil(Math.log2(Math.max(16, requested))), 16, 512);
+      // At close range the original art already has the right resolution.
+      if (pixels < sh) {
+        let frames = frameCache.get(image);
+        if (!frames) { frames = new Map(); frameCache.set(image, frames); }
+        const key = [sx, sy, sw, sh, pixels].join(':');
+        let frame = frames.get(key);
+        if (!frame) {
+          frame = root.document.createElement('canvas');
+          frame.height = pixels; frame.width = Math.max(1, Math.round(pixels * sw / sh));
+          const painter = frame.getContext('2d');
+          if (painter) {
+            painter.imageSmoothingQuality = 'high';
+            painter.drawImage(image, sx, sy, sw, sh, 0, 0, frame.width, frame.height);
+            if (frames.size >= 32) frames.delete(frames.keys().next().value);
+            frames.set(key, frame);
+          } else frame = null;
+        }
+        if (frame) { ctx.drawImage(frame, x, y, w, h); return; }
+      }
+    }
+    ctx.drawImage(image, sx, sy, sw, sh, x, y, w, h);
+  }
   const lines = {
     wandering: ['Left feels right.', 'Has anyone seen the exit?', 'Follow me! Probably.', 'I know this bit. I think.', 'A perfectly normal shortcut.', 'Was that the same wall?', 'Cheese first. Plans later.', 'I have a very small map.'],
     lost: ['Wait... this again?', 'That wall was not in my plan.', 'Wrong turn!', 'I meant the other left.', 'Nope. Definitely a dead end.', 'I may be a little lost.', 'Recalculating!', 'Who moved the exit?'],
-    alarm: ['That ticking is getting loud.', 'Please be the other timer.', 'Thirty seconds is not enough!', 'Keep those paws moving!', 'Why did I pack dynamite?', 'I can explain the backpack.'],
+    alarm: ['Take it! TAKE IT!', 'The fuse is almost gone!', 'Somebody catch this!', 'No time for cheese!', 'I need a handoff!', 'Too hot! Too hot!'],
+    carrier: ['Your turn to carry it!', 'Special delivery!', 'Catch! Please?', 'Coming through! Hot potato!', 'Somebody take this thing!', 'I brought a surprise!'],
     panic: ['CAT! CAT! CAT!', 'I am mostly fluff!', 'Do not order the mouse!', 'Run now. Think later!', 'My legs have a plan!', 'Not on the menu!'],
     cheese: ['Worth the detour!', 'Cheese-powered!', 'A snack and a speed boost.', 'Fuel for tiny feet!', 'Now we are cooking!', 'One more piece cannot hurt.'],
     poop: ['Emergency pit stop.', 'A little surprise for the cat.', 'No time for a bathroom!', 'Do not step in that.'],
@@ -1470,7 +1816,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       return 'cat';
     }
     const remaining = Number(game.nextExplosion) - time;
-    if (remaining <= 6) return 'alarm';
+    if (actor.hasBomb && remaining <= 6) return 'alarm';
+    if (actor.hasBomb) return 'carrier';
     if (game.cat && Math.hypot(game.cat.x - actor.x, game.cat.y - actor.y) < 6) return 'panic';
     if (Number(actor.confusedUntil) > time || actor.deadEnd || actor.mood === 'confused') return 'lost';
     if (Number.isFinite(actor.lastCheeseAt) && time - actor.lastCheeseAt < 1.8) return 'cheese';
@@ -1518,9 +1865,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       ctx.rotate(confused ? Math.sin(now * 5 + phase) * .075 : stride * .018);
       ctx.scale(1 + stride * .012, 1 - Math.abs(stride) * .014);
     }
-    ctx.drawImage(image, sx, sy, sw, sh, -w / 2, -h / 2, w, h);
+    drawFrame(ctx, image, sx, sy, sw, sh, -w / 2, -h / 2, w, h);
     // Readable reactions keep each costume intact while its character reacts.
-    if (kind === 'mouse' && (situationName === 'panic' || situationName === 'alarm')) {
+    if (kind === 'mouse' && ['panic', 'alarm', 'carrier'].includes(situationName)) {
       ctx.fillStyle = '#9dd9ed';
       for (let i = 0; i < 2; i++) {
         const drop = reducedMotion ? 0 : ((now * 1.4 + i * .5 + phase) % 1) * .10;
@@ -1547,7 +1894,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     const ctx = renderer.ctx;
     const candidates = (game.mice || []).filter(m => m.alive && renderer.inView(m.x, m.y, .2));
     candidates.sort((a, b) => {
-      const score = m => (Number(m.confusedUntil) > time ? -100 : 0) + ((numberId(m) + cycle * 11) % 83);
+      const score = m => (m.hasBomb ? -200 : Number(m.confusedUntil) > time ? -100 : 0) + ((numberId(m) + cycle * 11) % 83);
       return score(a) - score(b);
     });
     const choices = [];
@@ -1557,7 +1904,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       if (choices.length >= max) break;
       const situationName = situation(mouse, game, 'mouse');
       const localPhase = (time + numberId(mouse) * .23) % 7;
-      if (localPhase > 2.5 && !['lost', 'alarm', 'panic'].includes(situationName)) continue;
+      if (localPhase > 2.5 && !['lost', 'alarm', 'panic', 'carrier'].includes(situationName)) continue;
       const point = renderer.worldToScreen(mouse.x, mouse.y);
       if (choices.some(c => Math.hypot(point.x - c.point.x, point.y - c.point.y) < 160)) continue;
       choices.push({ actor: mouse, kind: 'mouse', point });
@@ -1572,14 +1919,17 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       const w = Math.min(renderer.cssWidth - 12, ctx.measureText(text).width + 18);
       const h = 29;
       const x = clamp(p.x - w / 2, 6, renderer.cssWidth - w - 6);
-      const y = clamp(p.y - renderer.view.sx * .9 - h - 10, 5, renderer.cssHeight - h - 7);
+      // Near the top edge, put chatter below the actor so it cannot cover
+      // the carrier's name and fuse badge after clamping to the canvas.
+      const below = p.y - renderer.view.sx * .9 - h - 10 < 5;
+      const y = clamp(below ? p.y + Math.max(24, renderer.view.sx * .9) + 12 : p.y - renderer.view.sx * .9 - h - 10, 5, renderer.cssHeight - h - 7);
       if (occupied.some(b => x < b.x + b.w + 7 && x + w + 7 > b.x && y < b.y + h + 7 && y + h + 7 > b.y)) continue;
       occupied.push({ x, y, w });
       ctx.fillStyle = choice.kind === 'cat' ? 'rgba(60,20,31,.96)' : 'rgba(253,240,204,.97)';
       ctx.strokeStyle = choice.kind === 'cat' ? '#ed9f80' : '#aa8e68'; ctx.lineWidth = 1;
       roundBox(ctx, x, y, w, h); ctx.fill(); ctx.stroke();
       const tip = clamp(p.x, x + 10, x + w - 10);
-      ctx.beginPath(); ctx.moveTo(tip - 4, y + h - 1); ctx.lineTo(tip, y + h + 6); ctx.lineTo(tip + 4, y + h - 1); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(tip - 4, below ? y + 1 : y + h - 1); ctx.lineTo(tip, below ? y - 6 : y + h + 6); ctx.lineTo(tip + 4, below ? y + 1 : y + h - 1); ctx.fill();
       ctx.fillStyle = choice.kind === 'cat' ? '#fff1d1' : '#392821'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(text, x + w / 2, y + h / 2, w - 12);
     }
@@ -2823,12 +3173,19 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
           const showLabel = this.shouldShowMouseLabel(m, game, group.length);
           this.drawMouse(ctx, m, now, game, !showLabel);
         }
-        if (group.length > 2 && !this.overview) this.drawNameLabel(ctx, {x:group[0].x,y:group[0].y,name:group.length + ' MICE'}, game);
+        if (group.length > 2 && !this.overview && !group.some(m => m.hasBomb)) this.drawNameLabel(ctx, {x:group[0].x,y:group[0].y,name:group.length + ' MICE'}, game);
+      }
+      // Draw the carrier marker last so a crowded corridor cannot hide it.
+      const carrier = mice.find(m => m.alive && m.hasBomb);
+      if (carrier && this.inView(carrier.x, carrier.y, 1)) {
+        this.drawBombMarker(carrier, now, game);
+        this.drawNameLabel(ctx, carrier, game);
       }
     }
 
     shouldShowMouseLabel(mouse, game, groupLength) {
       if (!mouse) return false;
+      if (mouse.hasBomb) return false; // its marker and label are drawn last
       if (!this.overview) return groupLength <= 2 || mouse.id === this.focusId || mouse.id === this.hoveredMouseId;
       // The overview stays readable: identify the focused/hovered character,
       // while the sprites themselves remain visible across the whole map.
@@ -2847,12 +3204,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         try { customDrawn = root.MouseMazeCast.drawMouse(ctx, m, now, this.assets, game, this.reducedMotion) === true; } catch (error) { customDrawn = false; }
       }
       if (customDrawn) {
+        if (m.hasBomb) this.drawDynamite(ctx, m, now, game);
         ctx.restore();
         if (!hideLabel) this.drawNameLabel(ctx, m, game);
         return;
       }
       if (this.assets && (this.assets.mouse || this.assets.expressions)) {
         this.drawMouseSprite(ctx, m, now);
+        if (m.hasBomb) this.drawDynamite(ctx, m, now, game);
         ctx.restore();
         if (!hideLabel) this.drawNameLabel(ctx, m, game);
         return;
@@ -2887,7 +3246,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       for (let i = -1; i <= 1; i++) { ctx.beginPath(); ctx.moveTo(.20, .04); ctx.lineTo(.39, .04 + i * .07); ctx.stroke(); }
       ctx.strokeStyle = '#583440'; ctx.lineWidth = .018; ctx.beginPath(); ctx.arc(.16, .09, .055, .1, 1.55); ctx.stroke();
       // Dynamite strapped at the back, with a readable countdown display.
-      this.drawDynamite(ctx, m, now, game);
+      if (m.hasBomb) this.drawDynamite(ctx, m, now, game);
       ctx.restore();
       if (!hideLabel) this.drawNameLabel(ctx, m, game);
     }
@@ -2982,13 +3341,13 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       };
       let state = states[0];
       if (catArrival) state = states[7];
-      else if (nextIn <= 3) state = states[3];
+      else if (mouse.hasBomb && nextIn <= 3) state = states[3];
       else if (catDistance < 2.6) state = states[6];
       else if (mouse.mood === 'panicked' || Number(mouse.fearMultiplier) > 1.2) state = states[5];
       else if (mouse.mood === 'trapped') state = states[3];
       else if (mouse.mood === 'nervous' || mouse.deadEnd) state = states[2];
       else if (mouse.mood === 'alert') state = states[4];
-      else if (nextIn <= 10) state = states[8];
+      else if (mouse.hasBomb && nextIn <= 10) state = states[8];
       else if (moodState[mood] != null) state = states[moodState[mood]];
       else if (exitDistance < 2.4) state = states[9];
       else if (!this.reducedMotion && Math.abs(Math.sin(now * 7 + (mouse.phase || 0))) > .15) state = states[1];
@@ -3045,12 +3404,28 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       ctx.restore();
     }
 
+    drawBombMarker(mouse, now, game) {
+      const c = this.ctx, p = this.worldToScreen(mouse.x, mouse.y);
+      const remaining = Math.max(0, game.nextExplosion - game.time);
+      const pulse = this.reducedMotion ? 0 : Math.sin(now * (remaining < 6 ? 8 : 4)) * 1.5;
+      const radius = Math.max(13, this.view.sx * .62) + pulse;
+      c.save(); c.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+      c.strokeStyle = '#211016'; c.lineWidth = 6;
+      c.beginPath(); c.arc(p.x, p.y, radius, 0, TAU); c.stroke();
+      c.strokeStyle = remaining < 6 ? '#ff7662' : '#ffcf70'; c.lineWidth = 2.5;
+      c.beginPath(); c.arc(p.x, p.y, radius, 0, TAU); c.stroke();
+      c.restore();
+    }
+
     drawNameLabel(ctx, m, game) {
       if (!this.inView(m.x, m.y, .35)) return;
       const p = this.worldToScreen(m.x, m.y - .46);
       const name = String(m.name || 'Mouse');
       const max = 18;
-      const shown = name.length > max ? name.slice(0, max - 1) + '…' : name;
+      const characters = typeof Intl !== 'undefined' && Intl.Segmenter
+        ? Array.from(new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(name), part => part.segment)
+        : Array.from(name);
+      const shown = characters.length > max ? characters.slice(0, max - 1).join('') + '…' : name;
       const size = clamp(this.view.sx * .15, 10, 15);
       const c = this.ctx;
       // drawMouse is called while the map is scaled/transformed. Labels and
@@ -3068,9 +3443,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       const countdown = Math.max(0, nextExplosion - simulationTime);
       const timerText = String(Math.ceil(countdown)).padStart(2, '0');
       const tx = p.x + w / 2 + 5, ty = p.y;
+      if (m.hasBomb) {
       c.fillStyle = 'rgba(65,16,25,.96)'; roundRect(c, tx - 1, ty - size * .65, size * 2.1, size * 1.3, 4); c.fill();
       c.fillStyle = '#e9513d'; roundRect(c, tx + 1, ty - size * .48, size * .28, size * .96, 2); c.fill();
       c.fillStyle = '#ffe0a0'; c.font = '800 ' + clamp(size * .78, 9, 12) + 'px ui-monospace, monospace'; c.textAlign = 'left'; c.fillText(timerText, tx + size * .43, ty + 1);
+      }
       const eventBoost = m && m.id ? Number(this.boostByActor[m.id]) : NaN;
       const liveBoost = Number(m.speedMultiplier);
       const speedMultiplier = Number.isFinite(liveBoost) ? liveBoost : eventBoost;
@@ -3078,7 +3455,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         const boost = this.formatBoost(speedMultiplier);
         c.font = '900 ' + clamp(size * .72, 8, 11) + 'px ui-monospace, monospace';
         const bw = c.measureText(boost).width + 8;
-        const bx = clamp(tx + size * 2.2, 3, this.cssWidth - bw - 3);
+        const bx = clamp(tx + (m.hasBomb ? size * 2.2 : 0), 3, this.cssWidth - bw - 3);
         c.fillStyle = 'rgba(245,179,54,.96)'; roundRect(c, bx, ty - size * .56, bw, size * 1.12, 4); c.fill();
         c.fillStyle = '#351b1b'; c.textAlign = 'center'; c.fillText(boost, bx + bw / 2, ty + 1);
       }
@@ -3394,7 +3771,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       clearInterval(this.timer); this.timer = null;
       if (!source) { this.track = null; this.trackURL = null; if (this.active && !this.paused && this.ctx) { this.nextNote = this.ctx.currentTime + .08; this.schedule(); } return; }
       this.trackURL = typeof source === 'string' ? source : URL.createObjectURL(source);
-      this.track = new Audio(this.trackURL); this.track.loop = true; this.track.preload = 'auto'; this.applyVolume();
+      this.track = new Audio(this.trackURL); this.track.loop = true;
+      // A hosted song starts streaming on Play instead of competing with the
+      // artwork at page load. Local uploads still preload for validation.
+      this.track.preload = typeof source === 'string' && !source.startsWith('data:') ? 'none' : 'auto';
+      this.applyVolume();
       const currentTrack = this.track;
       currentTrack.oncanplay = () => {
         if (this.track === currentTrack && this.onTrackStatus) this.onTrackStatus('ready');
@@ -4058,18 +4439,22 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   var followedMouseId = null;
   var dom = {};
   var CHEESE_BOOST_STORE_KEY = 'dynamite-mice-cheese-boost-percent-v1';
-  var state = { running: false, awaiting: false, muted: false, volume: 0.25, reducedMotion: false, gore: true, cheeseBoost: 1, catStyle: 'random', chatter: true };
+  var BOMB_INTERVAL_STORE_KEY = 'dynamite-mice-bomb-interval-v1';
+  var state = { running: false, awaiting: false, muted: false, volume: 0.25, reducedMotion: false, gore: true, cheeseBoost: 1, bombInterval: 30, catStyle: 'random', chatter: true, focusMode: false };
   var pointerDrag = null;
   var suppressCanvasClick = false;
+  var focusHideTimer = 0;
 
   function byId(id) { return document.getElementById(id); }
   function cacheDom() {
     dom.restoreTrackBtn = byId('restoreTrackBtn');
     dom.continueBtn = byId('continueBtn'); dom.speakerNote = byId('speakerNote'); dom.turboValue = byId('turboValue');
     dom.cheeseBoostInput = byId('cheeseBoostInput'); dom.cheeseBoostValue = byId('cheeseBoostValue');
+    dom.bombIntervalInput = byId('bombIntervalInput'); dom.bombIntervalValue = byId('bombIntervalValue'); dom.bombIntervalNote = byId('bombIntervalNote');
+    dom.bombCarrierValue = byId('bombCarrierValue'); dom.focusControls = byId('focusControls'); dom.focusPauseBtn = byId('focusPauseBtn'); dom.focusPauseText = byId('focusPauseText'); dom.focusExitBtn = byId('focusExitBtn');
     dom.stageFrame = document.querySelector('.stage-frame'); dom.impactToggle = byId('impactToggle'); dom.vibrationToggle = byId('vibrationToggle'); dom.vibrationRow = byId('vibrationRow');
     dom.zoomInput = byId('zoomInput'); dom.zoomValue = byId('zoomValue'); dom.overviewBtn = byId('overviewBtn'); dom.followBtn = byId('followBtn');
-    ['mazeCanvas', 'rosterInput', 'rosterCount', 'charCount', 'inputNote', 'startBtn', 'startBtnText', 'pauseBtn', 'pauseBtnText', 'newMazeBtn', 'fullscreenBtn', 'muteBtn', 'muteIcon', 'goreToggle', 'motionToggle', 'impactToggle', 'vibrationToggle', 'catStyleInput', 'chatterToggle', 'volumeInput', 'musicInput', 'clearTrackBtn', 'trackLabel', 'sunoNote', 'elapsedValue', 'boomValue', 'catValue', 'liceValue', 'liceNote', 'aliveValue', 'chosenValue', 'cheeseValue', 'aliveMeter', 'stageStatus', 'stageStatusText', 'selectionCallout', 'calloutKicker', 'calloutName', 'calloutReason', 'resultsEmpty', 'resultsList', 'resultCount', 'copyBtn', 'csvBtn', 'toast'].forEach(function (id) { dom[id] = byId(id); });
+    ['mazeCanvas', 'rosterInput', 'rosterCount', 'charCount', 'inputNote', 'startBtn', 'startBtnText', 'pauseBtn', 'pauseBtnText', 'newMazeBtn', 'fullscreenBtn', 'muteBtn', 'muteIcon', 'goreToggle', 'motionToggle', 'impactToggle', 'vibrationToggle', 'catStyleInput', 'chatterToggle', 'volumeInput', 'musicInput', 'clearTrackBtn', 'trackLabel', 'sunoNote', 'elapsedValue', 'boomValue', 'bombCarrierValue', 'catValue', 'liceValue', 'liceNote', 'aliveValue', 'chosenValue', 'cheeseValue', 'aliveMeter', 'stageStatus', 'stageStatusText', 'selectionCallout', 'calloutKicker', 'calloutName', 'calloutReason', 'resultsEmpty', 'resultsList', 'resultCount', 'copyBtn', 'csvBtn', 'toast'].forEach(function (id) { dom[id] = byId(id); });
   }
   function safeStorageGet(key) { try { return window.localStorage.getItem(key); } catch (_) { return null; } }
   function safeStorageSet(key, val) { try { window.localStorage.setItem(key, val); } catch (_) {} }
@@ -4114,7 +4499,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (window.XEffect && typeof window.XEffect.reset === 'function') window.XEffect.reset();
     if (feedback) feedback.reset();
     currentNames = names.slice(); results = []; selectedNames = Object.create(null);
-    game = new window.MouseMazeEngine.Game({ names: names.slice(), cols: 61, rows: 41, cheeseBoost: state.cheeseBoost });
+    game = new window.MouseMazeEngine.Game({ names: names.slice(), cols: 61, rows: 41, cheeseBoost: state.cheeseBoost, bombInterval: state.bombInterval });
+    renderBombControl();
     window.mouseGame = game;
     if (!renderer) renderer = new window.MouseMazeRenderer(dom.mazeCanvas, { gore: state.gore, reducedMotion: state.reducedMotion });
     window.mouseRenderer = renderer;
@@ -4203,13 +4589,43 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (game && (game.status === 'running' || game.status === 'paused' || game.status === 'awaiting') && !window.confirm('Start a new maze? The current run will be cleared.')) return;
     var names = namesFromInput(); if (!names) return; createGame(names); showToast('NEW MAZE GENERATED');
   }
-  function updateStatus(text, mode) { dom.stageStatusText.textContent = text; dom.stageStatus.className = 'stage-status is-' + mode; }
+  function updateStatus(text, mode) { dom.stageStatusText.textContent = text; dom.stageStatus.className = 'stage-status is-' + mode; renderBombControl(); }
   function formatTime(seconds) { var total = Math.max(0, Math.floor(Number(seconds) || 0)); var min = Math.floor(total / 60); var sec = total % 60; return String(min).padStart(2, '0') + ':' + String(sec).padStart(2, '0'); }
-  function stats() { return game && typeof game.getStats === 'function' ? game.getStats() : { alive: currentNames.length, chosen: results.length, cheese: 400, lice: 0, time: 0, nextExplosionIn: 30, catInSeconds: 60 }; }
+  function stats() { return game && typeof game.getStats === 'function' ? game.getStats() : { alive: currentNames.length, chosen: results.length, cheese: 400, lice: 0, time: 0, nextExplosionIn: state.bombInterval, bombInterval: state.bombInterval, bombCarrierId: null, catInSeconds: 60 }; }
+  function bombCarrier() {
+    if (!game || !Array.isArray(game.mice)) return null;
+    var s = stats(), id = game.bombCarrierId || s.bombCarrierId;
+    return game.mice.find(function (mouse) { return (id != null && String(mouse.id) === String(id)) || mouse.hasBomb === true; }) || null;
+  }
+  function renderBombControl() {
+    if (!dom.bombIntervalValue) return;
+    dom.bombIntervalValue.textContent = String(state.bombInterval) + 's';
+    dom.bombIntervalInput.value = String(state.bombInterval);
+    dom.bombIntervalInput.setAttribute('aria-label', 'Bomb fuse duration');
+    dom.bombIntervalInput.setAttribute('aria-valuetext', state.bombInterval + ' seconds');
+    var isReady = !game || game.status === 'ready';
+    dom.bombIntervalNote.textContent = (isReady ? 'Initial fuse · ' : 'Next fuse · ') + state.bombInterval + ' seconds';
+  }
+  function setBombInterval(value) {
+    var numeric = Number(value);
+    if (!Number.isFinite(numeric)) numeric = 30;
+    state.bombInterval = Math.max(10, Math.min(120, Math.round(numeric / 5) * 5));
+    safeStorageSet(BOMB_INTERVAL_STORE_KEY, String(state.bombInterval));
+    renderBombControl();
+    // The engine owns the active countdown. Its setter deliberately applies
+    // this value to the next fuse, leaving the current fuse unchanged.
+    if (game && typeof game.setBombInterval === 'function') game.setBombInterval(state.bombInterval);
+    renderStats();
+  }
   function renderStats() {
     var s = stats(), alive = Number(s.alive) || 0, chosen = Number(s.chosen) || results.length, total = Math.max(currentNames.length, alive + chosen, 1);
     dom.elapsedValue.textContent = formatTime(s.time);
-    dom.boomValue.textContent = game && game.status === 'finished' ? '—' : (s.nextExplosionIn == null ? '—' : Math.max(0, Math.ceil(s.nextExplosionIn)) + 's');
+    var nextIn = s.nextExplosionIn;
+    if (game && Number.isFinite(Number(game.nextExplosion)) && Number.isFinite(Number(game.time))) nextIn = Number(game.nextExplosion) - Number(game.time);
+    dom.boomValue.textContent = game && game.status === 'finished' ? '—' : (nextIn == null ? '—' : Math.max(0, Math.ceil(Number(nextIn))) + 's');
+    var carrier = bombCarrier();
+    dom.bombCarrierValue.textContent = carrier ? String(carrier.name) : '—';
+    dom.bombCarrierValue.title = carrier ? 'Bomb carrier: ' + String(carrier.name) : 'No bomb carrier';
     dom.catValue.textContent = s.catIn ? 'LIVE' : formatTime(s.catInSeconds == null ? 0 : s.catInSeconds);
     var liceRaw = s.lice == null ? (s.liceCount == null ? (game && Number(game.lice)) || 0 : s.liceCount) : s.lice;
     var liceCount = Number(liceRaw) || 0;
@@ -4218,8 +4634,13 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     dom.aliveValue.textContent = String(alive); dom.chosenValue.textContent = String(chosen); dom.cheeseValue.textContent = String(s.cheese == null ? 400 : s.cheese); dom.resultCount.textContent = String(results.length);
     dom.aliveMeter.style.width = Math.max(0, Math.min(100, alive / total * 100)) + '%';
     dom.turboValue.textContent = '+' + state.cheeseBoost + '%';
+    if (dom.focusPauseText) {
+      var ready = !game || game.status === 'ready' || game.status === 'finished';
+      dom.focusPauseText.textContent = ready ? 'START' : (game.status === 'paused' ? 'RESUME' : 'PAUSE');
+      dom.focusPauseBtn.disabled = !!(state.awaiting || (game && game.status === 'awaiting'));
+    }
   }
-  function reasonLabel(outcome) { return ({ escaped: 'made the exit', exploded: 'went BOOM', eaten: 'cat got them' })[outcome] || outcome || 'chosen'; }
+  function reasonLabel(outcome) { return ({ escaped: 'made the exit', exploded: 'the bomb detonated', eaten: 'cat got them' })[outcome] || outcome || 'chosen'; }
   function handleEvent(event) {
     if (!event) return;
     if (feedback) feedback.handleEvent(event);
@@ -4230,6 +4651,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       var key = String(event.id || event.name || '').toLocaleLowerCase(); if (selectedNames[key]) return; selectedNames[key] = true;
       results.push({ name: String(event.name || ''), reason: reasonLabel(event.outcome), outcome: event.outcome || '', time: Number(event.time) || 0, order: results.length + 1 });
       showSelection(results[results.length - 1]); renderResults();
+    } else if (event.type === 'bomb-assigned') {
+      if (!state.focusMode) { var assigned = bombCarrier(); showToast('BOMB ON ' + (assigned ? String(assigned.name) : 'A MOUSE')); }
+    } else if (event.type === 'bomb-pass' || event.type === 'bomb-passed') {
+      // The carrier ring, fuse badge and HUD update together. Frequent
+      // handoffs need no extra toast or screen-reader interruption.
     } else if (event.type === 'cat-enter') { showToast('THE CAT IS IN THE MAZE'); }
     else if (event.type === 'finished') { state.running = false; state.awaiting = false; dom.startBtn.disabled = false; dom.pauseBtn.disabled = true; if (window.XEffect && typeof window.XEffect.stop === 'function') window.XEffect.stop(); dom.startBtnText.textContent = 'RUN AGAIN'; setRosterEnabled(true); setRunActive(true); updateStatus('Finished', 'finished'); showToast('THE LEDGER IS COMPLETE'); }
   }
@@ -4265,7 +4691,40 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   function exportCsv() { if (!results.length) return; var csv = 'Rank,Name,Outcome,Reason,Time\n' + results.map(function (r, i) { return [i + 1, r.name, r.outcome, r.reason, formatTime(r.time)].map(function (v) { var text = String(v); if (/^[\s\u0000-\u001f]*[=+@-]/.test(text)) text = "'" + text; return '"' + text.replace(/"/g, '""') + '"'; }).join(','); }).join('\n'); var blob = new Blob(['\uFEFF', csv], { type: 'text/csv;charset=utf-8' }), link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'dynamite-mice-results.csv'; document.body.appendChild(link); link.click(); link.remove(); window.setTimeout(function () { URL.revokeObjectURL(link.href); }, 500); showToast('CSV DOWNLOADED'); }
   function showToast(message) { dom.toast.textContent = message; dom.toast.classList.add('show'); window.clearTimeout(showToast.timer); showToast.timer = window.setTimeout(function () { dom.toast.classList.remove('show'); }, 2300); }
   function toggleMute() { state.muted = !state.muted; dom.muteIcon.textContent = state.muted ? '×))' : '◖))'; dom.muteBtn.title = state.muted ? 'Unmute sound' : 'Mute sound'; dom.muteBtn.setAttribute('aria-label', dom.muteBtn.title); if (audio && typeof audio.setMuted === 'function') { try { audio.setMuted(state.muted); } catch (_) {} } }
-  function toggleFullscreen() { var root = document.documentElement; if (!document.fullscreenElement && root.requestFullscreen) root.requestFullscreen().catch(function () {}); else if (document.exitFullscreen) document.exitFullscreen().catch(function () {}); }
+  function setFocusMode(enabled) {
+    state.focusMode = !!enabled;
+    document.body.classList.toggle('focus-mode', state.focusMode);
+    if (dom.focusControls) {
+      dom.focusControls.hidden = !state.focusMode;
+      dom.focusControls.classList.remove('is-idle');
+    }
+    if (state.focusMode) revealFocusControls(); else window.clearTimeout(focusHideTimer);
+    if (dom.fullscreenBtn) {
+      dom.fullscreenBtn.setAttribute('aria-pressed', state.focusMode ? 'true' : 'false');
+      dom.fullscreenBtn.title = state.focusMode ? 'Exit fullscreen' : 'Focus maze fullscreen';
+      dom.fullscreenBtn.setAttribute('aria-label', dom.fullscreenBtn.title);
+    }
+    if (renderer) renderer.resize();
+  }
+  function revealFocusControls() {
+    if (!state.focusMode || !dom.focusControls) return;
+    dom.focusControls.classList.remove('is-idle');
+    window.clearTimeout(focusHideTimer);
+    focusHideTimer = window.setTimeout(function () {
+      if (state.focusMode && document.activeElement && !dom.focusControls.contains(document.activeElement)) dom.focusControls.classList.add('is-idle');
+    }, 2800);
+  }
+  function toggleFullscreen() {
+    if (document.fullscreenElement) { if (document.exitFullscreen) document.exitFullscreen().catch(function () {}); return; }
+    // Native fullscreen can be unavailable or rejected in an embedded frame.
+    // In that fallback state F and the compact Exit control must close focus
+    // directly instead of repeatedly retrying the native request.
+    if (state.focusMode) { setFocusMode(false); return; }
+    var root = document.documentElement;
+    if (root.requestFullscreen) root.requestFullscreen().then(function () { setFocusMode(true); }).catch(function () { setFocusMode(!state.focusMode); });
+    else { setFocusMode(!state.focusMode); showToast(state.focusMode ? 'MAZE FOCUS ENABLED' : 'MAZE FOCUS CLOSED'); }
+  }
+  function focusPrimaryAction() { if (!game || game.status === 'ready' || game.status === 'finished') start(); else pause(); revealFocusControls(); }
   function frame(now) { raf = requestAnimationFrame(frame); if (!lastFrame) lastFrame = now; var dt = Math.min(0.1, Math.max(0, (now - lastFrame) / 1000)); lastFrame = now; if (game && game.status === 'running') { game.update(dt); var events = typeof game.drainEvents === 'function' ? game.drainEvents() : []; events.forEach(handleEvent); } if (renderer && game) renderer.render(game, now / 1000); renderStats(); }
   function step(seconds) { var dt = Math.max(0, Number(seconds) || 0); if (!game) return; if (game.status === 'running') { game.update(dt); var events = typeof game.drainEvents === 'function' ? game.drainEvents() : []; events.forEach(handleEvent); } if (renderer) renderer.render(game, (performance.now ? performance.now() : Date.now()) / 1000); renderStats(); }
   function applyRendererPresentationSettings() {
@@ -4339,6 +4798,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     dom.continueBtn.addEventListener('click', continueSelection);
     dom.rosterInput.addEventListener('input', function () { rosterIsDemo = false; refreshRosterNote(); });
     dom.startBtn.addEventListener('click', start); dom.pauseBtn.addEventListener('click', pause); dom.newMazeBtn.addEventListener('click', newRun); dom.fullscreenBtn.addEventListener('click', toggleFullscreen); dom.muteBtn.addEventListener('click', toggleMute); dom.copyBtn.addEventListener('click', copyResults); dom.csvBtn.addEventListener('click', exportCsv);
+    if (dom.focusPauseBtn) dom.focusPauseBtn.addEventListener('click', focusPrimaryAction);
+    if (dom.focusExitBtn) dom.focusExitBtn.addEventListener('click', function () { if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {}); else setFocusMode(false); });
+    if (dom.stageFrame) {
+      dom.stageFrame.addEventListener('pointermove', revealFocusControls, { passive: true });
+      dom.stageFrame.addEventListener('touchstart', revealFocusControls, { passive: true });
+    }
     dom.goreToggle.addEventListener('change', function () { state.gore = dom.goreToggle.checked; if (renderer) renderer.setGore(state.gore); });
     dom.motionToggle.addEventListener('change', function () { state.reducedMotion = dom.motionToggle.checked; if (renderer) renderer.setReducedMotion(state.reducedMotion); });
     dom.motionToggle.addEventListener('change', function () { if (feedback) feedback.setReducedMotion(state.reducedMotion); });
@@ -4348,11 +4813,13 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (dom.chatterToggle) dom.chatterToggle.addEventListener('change', applyRendererPresentationSettings);
     dom.volumeInput.addEventListener('input', function () { state.volume = Number(dom.volumeInput.value); if (audio && typeof audio.setVolume === 'function') audio.setVolume(state.volume); });
     dom.cheeseBoostInput.addEventListener('input', function () { state.cheeseBoost = Math.max(1, Math.min(100, Math.round(Number(dom.cheeseBoostInput.value) || 1))); dom.cheeseBoostValue.textContent = '+' + state.cheeseBoost + '%'; safeStorageSet(CHEESE_BOOST_STORE_KEY, String(state.cheeseBoost)); if (game && typeof game.setCheeseBoost === 'function') game.setCheeseBoost(state.cheeseBoost); if (renderer && typeof renderer.invalidate === 'function') renderer.invalidate(); renderStats(); });
+    dom.bombIntervalInput.addEventListener('input', function () { setBombInterval(dom.bombIntervalInput.value); });
     dom.musicInput.addEventListener('change', function () { var file = dom.musicInput.files && dom.musicInput.files[0]; if (!file) return; dom.trackLabel.textContent = file.name.slice(0, 26); dom.sunoNote.textContent = 'Loading track…'; dom.restoreTrackBtn.hidden = !window.BACKGROUND_TRACK_DATA; if (audio && typeof audio.setTrack === 'function') { try { var loadedTrack = audio.setTrack(file); if (loadedTrack && typeof loadedTrack.catch === 'function') loadedTrack.catch(function () {}); } catch (_) {} } showToast('LOADING PERSONAL TRACK'); });
     dom.clearTrackBtn.addEventListener('click', function () { if (audio && typeof audio.setTrack === 'function') { try { var resetTrack = audio.setTrack(null); if (resetTrack && typeof resetTrack.catch === 'function') resetTrack.catch(function () {}); } catch (_) {} } dom.trackLabel.textContent = 'Original chase score'; dom.sunoNote.textContent = 'Instrumental chase score'; dom.restoreTrackBtn.hidden = !window.BACKGROUND_TRACK_DATA; showToast('BUILT-IN SCORE RESTORED'); });
     dom.restoreTrackBtn.addEventListener('click', function () { if (!window.BACKGROUND_TRACK_DATA) return; if (audio) audio.setTrack(window.BACKGROUND_TRACK_DATA); dom.trackLabel.textContent = window.BACKGROUND_TRACK_TITLE || 'Mouse Maze Mayhem'; dom.sunoNote.textContent = 'Loops during play'; dom.restoreTrackBtn.hidden = true; dom.musicInput.value = ''; showToast('BACKGROUND SONG RESTORED'); });
-    document.addEventListener('keydown', function (event) { var tag = event.target && event.target.tagName; if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || event.target.isContentEditable) return; if (event.key === ' ') { if (tag === 'BUTTON') return; event.preventDefault(); if (!event.repeat) { if (state.awaiting) continueSelection(); else if (game && game.status === 'running' || game && game.status === 'paused') pause(); else start(); } } else if (event.key.toLowerCase() === 'f') toggleFullscreen(); else if (event.key.toLowerCase() === 'm') toggleMute(); });
+    document.addEventListener('keydown', function (event) { var tag = event.target && event.target.tagName; if (event.key === 'Escape' && state.focusMode && !document.fullscreenElement) { setFocusMode(false); return; } if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || event.target.isContentEditable) return; if (event.key === ' ') { if (tag === 'BUTTON') return; event.preventDefault(); if (!event.repeat) { if (state.awaiting) continueSelection(); else if (game && game.status === 'running' || game && game.status === 'paused') pause(); else start(); } } else if (event.key.toLowerCase() === 'f') { event.preventDefault(); toggleFullscreen(); } else if (event.key.toLowerCase() === 'm') toggleMute(); if (state.focusMode) revealFocusControls(); });
     window.addEventListener('resize', function () { if (renderer) renderer.resize(); });
+    document.addEventListener('fullscreenchange', function () { setFocusMode(!!document.fullscreenElement); });
     document.addEventListener('visibilitychange', function () { if (document.hidden && game && game.status === 'running') pause(); });
   }
   function init() {
@@ -4365,6 +4832,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     // Legacy multiplier preferences are intentionally not migrated: the
     // v5 control is a percentage per cheese and starts at a sane +1%.
     state.cheeseBoost = Math.max(1, Math.min(100, Math.round(Number(safeStorageGet(CHEESE_BOOST_STORE_KEY)) || 1))); dom.cheeseBoostInput.value = state.cheeseBoost; dom.cheeseBoostValue.textContent = '+' + state.cheeseBoost + '%';
+    state.bombInterval = Math.max(10, Math.min(120, Math.round((Number(safeStorageGet(BOMB_INTERVAL_STORE_KEY)) || 30) / 5) * 5)); renderBombControl();
     audio = window.MouseMazeAudio ? new window.MouseMazeAudio() : null; window.mouseAudio = audio; if (audio && typeof audio.setVolume === 'function') audio.setVolume(state.volume);
     if (audio) audio.onTrackStatus = function (status) {
       if (status === 'error') {
