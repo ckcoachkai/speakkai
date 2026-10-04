@@ -1,2937 +1,651 @@
 <!doctype html>
-<html lang="en" data-visualize-standalone>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<title>Imagination Sprint</title>
-<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
-</head>
-<body>
-<iframe id="codex-visualization" sandbox="allow-scripts" referrerpolicy="no-referrer" title="Imagination Sprint" data-srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot;&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
-&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
-&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
-&lt;title&gt;Imagination Sprint&lt;/title&gt;
-&lt;style&gt;:root {
-  color-scheme: light dark;
-  background-color: var(
-    --background,
-    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
-  ) !important;
-
-  /* Agent-facing contract; keep in sync with SKILL.md. */
-  --background: var(
-    --color-background-primary,
-    light-dark(rgb(255 255 255), rgb(24 24 24))
-  );
-  --foreground: var(
-    --color-text-primary,
-    light-dark(rgb(26 28 31), rgb(255 255 255))
-  );
-  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
-  --card-foreground: var(
-    --color-text-primary,
-    light-dark(rgb(26 28 31), rgb(255 255 255))
-  );
-  --popover: var(
-    --color-background-secondary,
-    light-dark(rgb(255 255 255), rgb(45 45 45))
-  );
-  --popover-foreground: var(
-    --color-text-primary,
-    light-dark(rgb(26 28 31), rgb(255 255 255))
-  );
-  --primary: var(
-    --color-text-info,
-    light-dark(rgb(51 156 255), rgb(131 195 255))
-  );
-  --primary-foreground: var(
-    --color-text-inverse,
-    light-dark(rgb(255 255 255), rgb(13 13 13))
-  );
-  --secondary: var(
-    --color-background-secondary,
-    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
-  );
-  --secondary-foreground: var(
-    --color-text-primary,
-    light-dark(rgb(26 28 31), rgb(255 255 255))
-  );
-  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
-  --muted-foreground: var(
-    --color-text-secondary,
-    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
-  );
-  --accent: var(
-    --color-background-info,
-    light-dark(rgb(229 242 255), rgb(13 39 63))
-  );
-  --accent-foreground: var(
-    --color-text-info,
-    light-dark(rgb(51 156 255), rgb(131 195 255))
-  );
-  --destructive: var(
-    --color-text-warning,
-    light-dark(rgb(226 85 7), rgb(255 133 73))
-  );
-  --border: var(
-    --color-border-secondary,
-    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
-  );
-  --input: var(
-    --color-border-primary,
-    light-dark(
-      rgb(26 28 31 / 11.8%),
-      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
-    )
-  );
-  --ring: var(
-    --color-ring-primary,
-    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
-  );
-  --font-size-base: var(--font-text-md-size, 14px);
-  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
-  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
-  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
-  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
-  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
-  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
-  --viz-series-1: var(--primary);
-  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
-  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
-  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
-  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
-  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
-
-  /* Internal implementation variables; not part of the agent contract. */
-  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
-  --font-mono:
-    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
-    monospace;
-  --font-size-normal: max(11px, var(--font-size-base));
-  --font-size-tooltip: calc(var(--font-size-base) - 1px);
-  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
-  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
-  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
-  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
-  --font-weight-normal: 430;
-  --font-weight-medium: 500;
-  --icon-size: 16px;
-  --line-height-normal: calc(var(--font-size-normal) * 1.5);
-  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
-  --line-height-small: calc(var(--font-size-small) + 4px);
-  --corner-shape: round;
-  --radius: var(--border-radius-lg, 10px);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-2xl: calc(var(--radius) * 1.6);
-  --radius-full: 9999px;
-  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
-  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
-
-  /* Legacy aliases; not part of the current agent contract. */
-  --viz-bg: transparent;
-  --viz-panel: var(--card);
-  --viz-border: var(--border);
-  --viz-text: var(--foreground);
-  --viz-muted: var(--muted-foreground);
-  --viz-accent: var(--primary);
-  --viz-accent-text: var(--primary-foreground);
-  --viz-accent-bg: var(--accent);
-  --viz-font-size: var(--font-size-base);
-  --viz-warning: var(--destructive);
-}
-
-:root[data-theme=&quot;light&quot;] {
-  color-scheme: light;
-}
-
-:root[data-theme=&quot;dark&quot;] {
-  color-scheme: dark;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html &gt; body {
-  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
-  --color-background-primary: var(
-    --background,
-    light-dark(rgb(255 255 255), rgb(24 24 24))
-  );
-  --color-text-primary: var(
-    --foreground,
-    light-dark(rgb(26 28 31), rgb(255 255 255))
-  );
-  --color-border-secondary: var(
-    --border,
-    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
-  );
-
-  margin: 0;
-  padding: var(--visualize-paint-gutter, 0px);
-  color: var(--foreground);
-  background: transparent !important;
-  font-family: var(--font-sans) !important;
-  font-size: var(--font-size-normal);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
-}
-
-.cursor-interaction {
-  cursor: var(--cursor-interaction, pointer);
-}
-
-a {
-  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
-  cursor: var(--cursor-interaction, pointer);
-  font-weight: var(--font-weight-medium, 500);
-  text-decoration: none;
-  text-underline-offset: 2px;
-}
-
-a:is(:hover, :focus-visible) {
-  text-decoration-line: underline;
-  text-decoration-style: dashed;
-  text-decoration-thickness: 0.5px;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin-block: 0;
-}
-
-h1 {
-  font-size: var(--font-size-h1);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.25;
-}
-
-h2 {
-  font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.25;
-}
-
-h3,
-h4,
-h5,
-h6 {
-  font-size: var(--font-size-h3);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.3;
-}
-
-b,
-strong,
-th {
-  font-weight: var(--font-weight-medium);
-}
-
-code:not(pre code) {
-  display: inline;
-  padding: 1px 6px;
-  border-radius: var(--radius-sm);
-  corner-shape: var(--corner-shape);
-  background: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 0.92em;
-  overflow-wrap: anywhere;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  word-break: break-word;
-}
-
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-  scrollbar-width: thin;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  color: var(--foreground);
-  font: inherit;
-  text-align: start;
-}
-
-.table :is(th, td) {
-  padding-block: 10px;
-  padding-inline: 0 24px;
-  overflow-wrap: anywhere;
-  border-bottom: 1px solid var(--border);
-  text-align: start;
-  vertical-align: top;
-}
-
-.table-responsive &gt; .table :is(th, td) {
-  overflow-wrap: break-word;
-}
-
-.table :is(th, td):last-child {
-  padding-inline-end: 0;
-}
-
-.table :is(caption, thead th) {
-  font-weight: 600;
-}
-
-.table thead th {
-  padding-block: 8px;
-  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
-}
-
-.table tbody tr:last-child :is(th, td) {
-  border-bottom: 0;
-}
-
-.table.table-sm :is(th, td) {
-  padding-block: 6px;
-}
-
-.table.table-sm :is(th, td):not(:last-child) {
-  padding-inline-end: 16px;
-}
-
-.table :is(.text-end, [align=&quot;right&quot;]) {
-  text-align: end;
-  font-variant-numeric: tabular-nums;
-}
-
-.table :is(.text-center, [align=&quot;center&quot;]) {
-  text-align: center;
-}
-
-.table .text-nowrap {
-  white-space: nowrap;
-}
-
-#widget {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  padding: 0;
-  background: transparent !important;
-}
-
-.card {
-  min-width: 0;
-  padding: 12px;
-  overflow: hidden;
-  overflow-wrap: break-word;
-  border-radius: var(--radius-2xl);
-  corner-shape: var(--corner-shape);
-  color: var(--card-foreground);
-  background: var(--card);
-}
-
-.widget {
-  min-width: 0;
-  overflow: hidden;
-  border: 0;
-  border-radius: var(--radius-lg);
-  corner-shape: var(--corner-shape);
-  box-shadow: 0 0 0 0.5px var(--border-strong, var(--border));
-  color: var(--foreground);
-  background: var(--background);
-}
-
-#widget &gt; :not(.card, .widget, .progress) {
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.tooltip {
-  position: fixed;
-  z-index: 50;
-  top: 0;
-  left: 0;
-  width: max-content;
-  max-width: min(
-    20rem,
-    var(--tooltip-available-width, calc(100vw - 10px)),
-    calc(100vw - 10px)
-  );
-  max-height: min(
-    var(--tooltip-available-height, calc(100vh - 10px)),
-    calc(100vh - 10px)
-  );
-  padding: 4px 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  corner-shape: var(--corner-shape);
-  color: var(--popover-foreground);
-  background: var(--popover);
-  box-shadow: none;
-  font-size: var(--font-size-tooltip);
-  line-height: var(--line-height-tooltip);
-  overflow-wrap: break-word;
-  white-space: normal;
-  pointer-events: none;
-  user-select: none;
-}
-
-.viz-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
-  gap: 10px;
-}
-
-.viz-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.viz-stat-value {
-  font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.25;
-}
-
-.viz-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-}
-
-hr {
-  width: 100%;
-  height: 1px;
-  margin-block: 6px;
-  border: 0;
-  background: var(--border);
-}
-
-.nav {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 4px;
-}
-
-.progress {
-  display: flex;
-  height: 8px;
-  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
-  overflow: hidden;
-  border: 0;
-  border-radius: var(--radius-full);
-  background: var(--muted);
-}
-
-.progress-bar:only-child {
-  border-radius: var(--radius-full);
-}
-
-.progress-bar {
-  height: 100%;
-  flex-shrink: 0;
-  border: 0;
-  background: var(--viz-series-1);
-}
-
-.viz-badge {
-  padding: 3px 8px;
-  border-radius: var(--radius-full);
-  color: var(--accent-foreground);
-  background: var(--accent);
-  font-weight: var(--font-weight-medium);
-}
-
-small,
-.text-small,
-.viz-badge {
-  font-size: var(--font-size-small);
-  line-height: var(--line-height-small);
-}
-
-.text-muted {
-  color: var(--muted-foreground);
-}
-
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.viz-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-.viz-controls &gt; .form-label {
-  display: grid;
-  min-width: min(100%, 260px);
-  flex: 1 1 280px;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 2px 12px;
-  margin-bottom: 0;
-}
-
-.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
-  grid-column: 1 / -1;
-}
-
-.btn,
-.nav-link,
-.form-check-input,
-.form-control,
-.form-range,
-.form-select {
-  font: inherit;
-}
-
-.btn,
-.nav-link {
-  appearance: button;
-  display: inline-flex;
-  inline-size: fit-content;
-  max-inline-size: 100%;
-  min-height: 28px;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  margin: 0;
-  padding: 0 8px;
-  -webkit-app-region: no-drag;
-  border: 1px solid var(--input);
-  border-radius: var(--radius-lg);
-  corner-shape: var(--corner-shape);
-  color: var(--secondary-foreground);
-  background: var(--secondary);
-  cursor: var(--cursor-interaction, pointer);
-  text-align: center;
-  text-decoration: none;
-  white-space: nowrap;
-  user-select: none;
-  -webkit-font-smoothing: antialiased;
-}
-
-.btn:is(.btn-block, .viz-tile) {
-  inline-size: 100%;
-}
-
-.btn.viz-tile {
-  min-width: 0;
-  overflow-wrap: anywhere;
-  white-space: normal;
-}
-
-a.btn {
-  cursor: var(--cursor-interaction, pointer);
-  text-decoration: none;
-}
-
-.btn:not(:disabled):hover,
-.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
-  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.btn-primary {
-  border-color: transparent;
-  color: var(--primary-foreground);
-  background: var(--foreground);
-  background-clip: padding-box;
-}
-
-.btn-primary .text-muted {
-  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
-}
-
-.btn-primary:not(:disabled):hover {
-  background: color-mix(in srgb, var(--foreground) 80%, transparent);
-  background-clip: padding-box;
-}
-
-.btn-ghost {
-  border-color: transparent;
-  color: var(--muted-foreground);
-  background: transparent;
-}
-
-.btn-ghost:not(:disabled):hover {
-  color: var(--foreground);
-  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.nav-pills .nav-link {
-  min-width: 0;
-  border-color: transparent;
-  color: var(--muted-foreground);
-  background: transparent;
-}
-
-.nav-justified .nav-link {
-  flex: 1 1 0;
-  overflow-wrap: anywhere;
-  white-space: normal;
-}
-
-.nav-pills .nav-link.active {
-  color: var(--foreground);
-  background: var(--muted);
-}
-
-/* Shared preview chrome; product styles stay inside each variant. */
-.viz-dotted-background {
-  background-image: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--foreground) 14%, transparent) 0.8px,
-    transparent 0.8px
-  );
-  background-position: center;
-  background-size: 16px 16px;
-}
-
-.viz-carousel {
-  position: relative;
-  min-width: 0;
-}
-
-.viz-carousel:has(&gt; .viz-carousel-controls) {
-  min-height: calc(60px + var(--viz-carousel-picker-height, 0px));
-  padding-bottom: 60px;
-}
-
-.viz-carousel &gt; [data-variant][hidden] {
-  display: none !important;
-}
-
-.viz-carousel &gt; [data-variant] {
-  isolation: isolate;
-}
-
-.viz-carousel-controls {
-  --viz-carousel-hover: light-dark(
-    color-mix(in srgb, var(--foreground) 5.4%, transparent),
-    color-mix(in srgb, var(--foreground) 7.8%, transparent)
-  );
-  position: absolute;
-  z-index: 2;
-  bottom: 8px;
-  left: 50%;
-  display: flex;
-  width: max-content;
-  /* Leave room for the host&#x27;s design-controls launcher at the trailing edge. */
-  max-width: calc(100% - 96px);
-  align-items: center;
-  gap: 0;
-  padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-sans);
-  /* Match the settings dropdown chrome independently of the content font size. */
-  font-size: 13px;
-  font-weight: var(--font-weight-normal);
-  line-height: 18px;
-  transform: translateX(-50%);
-  user-select: none;
-}
-
-/* Keep authored mockup button styles out of the shared carousel chrome. */
-.viz-carousel-controls button,
-.viz-carousel-picker &gt; summary {
-  display: flex !important;
-  height: auto !important;
-  min-height: 30px;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 4px;
-  padding: 0 6px !important;
-  -webkit-app-region: no-drag;
-  border: 0 !important;
-  border-radius: 14px !important;
-  color: inherit !important;
-  background: transparent !important;
-  font: inherit !important;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.viz-carousel-controls &gt; button,
-.viz-carousel-picker &gt; summary {
-  position: relative;
-  isolation: isolate;
-}
-
-.viz-carousel-controls &gt; button {
-  --icon-size: 16px;
-  width: 30px !important;
-  padding: 0 !important;
-}
-
-.viz-carousel-picker &gt; summary {
-  padding-inline: 12px !important;
-}
-
-.viz-carousel-controls .viz-carousel-caret {
-  width: 14px;
-  height: 14px;
-  flex: none;
-  margin: 0;
-  color: inherit;
-  transform: rotate(180deg);
-}
-
-.viz-carousel-controls &gt; button &gt; svg,
-.viz-carousel-controls .viz-carousel-caret,
-.viz-carousel-count {
-  opacity: 0.5;
-}
-
-.viz-carousel-controls &gt; button::before,
-.viz-carousel-picker &gt; summary::before {
-  position: absolute;
-  z-index: -1;
-  inset: 3px;
-  border-radius: 12px;
-  content: &quot;&quot;;
-  pointer-events: none;
-}
-
-.viz-carousel-controls &gt; button:hover::before,
-.viz-carousel-picker &gt; summary:hover::before {
-  background: var(--viz-carousel-hover);
-}
-
-.viz-carousel-controls &gt; button,
-.viz-carousel-controls [data-lucide],
-.viz-carousel-controls .lucide {
-  flex-shrink: 0;
-}
-
-.viz-carousel-picker {
-  min-width: 0;
-}
-
-.viz-carousel-picker &gt; summary {
-  min-width: 0;
-  list-style: none;
-}
-
-.viz-carousel-picker &gt; summary::-webkit-details-marker {
-  display: none;
-}
-
-.viz-carousel-count {
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-.viz-carousel-name {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.viz-carousel-options {
-  position: absolute;
-  right: 0;
-  bottom: calc(100% + 4px);
-  left: 0;
-  display: flex;
-  max-height: 240px;
-  flex-direction: column;
-  gap: 2px;
-  overflow: auto;
-  padding: 4px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--background);
-  box-shadow: 0 4px 12px light-dark(rgb(0 0 0 / 6%), rgb(0 0 0 / 25%));
-}
-
-.viz-carousel-options &gt; button {
-  border-radius: max(0px, calc(var(--radius-lg) - 5px)) !important;
-  width: 100% !important;
-  min-height: 28px;
-  justify-content: flex-start !important;
-  padding: 4px 8px !important;
-  font-size: var(--font-size-small) !important;
-  text-align: start;
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
-
-.viz-carousel-options &gt; [aria-current=&quot;true&quot;],
-.viz-carousel-options &gt; button:hover {
-  background: var(--viz-carousel-hover) !important;
-}
-
-.btn:disabled,
-.nav-link:disabled,
-.nav-link[aria-disabled=&quot;true&quot;] {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
-[data-lucide] {
-  stroke-width: 1.6;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--foreground);
-}
-
-.form-control {
-  display: block;
-  width: 100%;
-  min-height: 28px;
-  padding: 0 8px;
-  outline: none;
-  border: 1px solid var(--input);
-  border-radius: var(--radius-lg);
-  corner-shape: var(--corner-shape);
-  color: var(--foreground);
-  background: var(--secondary);
-}
-
-.form-control::placeholder {
-  color: var(--muted-foreground);
-}
-
-.form-control[type=&quot;file&quot;] {
-  padding: 0;
-  overflow: hidden;
-  cursor: var(--cursor-interaction, pointer);
-}
-
-.form-control[type=&quot;file&quot;]::file-selector-button {
-  min-height: 26px;
-  margin-right: 8px;
-  padding: 0 8px;
-  border: 0;
-  border-right: 1px solid var(--input);
-  color: var(--secondary-foreground);
-  background: var(--secondary);
-  cursor: inherit;
-  font: inherit;
-}
-
-.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
-  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.form-control-color[type=&quot;color&quot;] {
-  width: 40px;
-  height: 28px;
-  padding: 3px;
-  cursor: var(--cursor-interaction, pointer);
-}
-
-.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
-
-.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
-  border: 0;
-  border-radius: calc(var(--radius-lg) - 4px);
-  corner-shape: var(--corner-shape);
-}
-
-textarea.form-control {
-  height: auto;
-  min-height: 72px;
-  padding: 8px 10px;
-  resize: vertical;
-}
-
-.form-control:focus-visible {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-control:disabled,
-.form-select:disabled {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
-.form-select {
-  appearance: none;
-  display: block;
-  width: 100%;
-  min-height: 28px;
-  margin: 0;
-  padding: 0 32px 0 8px;
-  outline: none;
-  border: 1px solid var(--input);
-  border-radius: var(--radius-lg);
-  corner-shape: var(--corner-shape);
-  color: var(--foreground);
-  background-color: var(--secondary);
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
-    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
-  background-position:
-    calc(100% - 14px) 50%,
-    calc(100% - 10px) 50%;
-  background-repeat: no-repeat;
-  background-size: 4px 4px;
-  cursor: var(--cursor-interaction, default);
-}
-
-.form-select:not(:disabled):hover {
-  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.form-select:focus-visible {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-check {
-  display: flex;
-  min-height: 20px;
-  align-items: center;
-  gap: 6px;
-}
-
-.form-check-input {
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  flex: 0 0 auto;
-  margin: 0;
-  border: 1px solid var(--input);
-  color: var(--primary-foreground);
-  background-color: transparent;
-  cursor: var(--cursor-interaction, default);
-  transition:
-    background-color 150ms,
-    border-color 150ms,
-    box-shadow 150ms;
-}
-
-.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
-  border-color: var(--input);
-  border-radius: var(--radius-sm);
-  corner-shape: var(--corner-shape);
-  background-color: var(--secondary);
-  box-shadow: var(--shadow-sm);
-}
-
-.form-check:not(.form-switch)
-  .form-check-input:not(:disabled):not(:checked):hover {
-  background-color: var(--card);
-}
-
-.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
-  border-color: var(--primary);
-  background-color: var(--primary);
-}
-
-.form-check:not(.form-switch)
-  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: var(--primary-foreground);
-  content: &quot;&quot;;
-  mask: var(--checkmark-image) center / 12px 12px no-repeat;
-}
-
-.form-check-input[type=&quot;radio&quot;] {
-  width: 14px;
-  height: 14px;
-  border-radius: var(--radius-full);
-}
-
-.form-check-input[type=&quot;radio&quot;]:checked {
-  border: 2px solid var(--primary);
-  background:
-    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
-    var(--primary);
-}
-
-.form-check:not(.form-switch) .form-check-input:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-
-.form-check:not(.form-switch) .form-check-input:disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
-  cursor: not-allowed;
-}
-
-.form-switch .form-check-input:disabled,
-.form-switch .form-check-input:disabled + .form-check-label {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.form-check-label {
-  color: var(--foreground);
-  cursor: var(--cursor-interaction, default);
-}
-
-.form-switch .form-check-input {
-  position: relative;
-  width: 32px;
-  height: 20px;
-  border: 0;
-  border-radius: var(--radius-full);
-  background: var(--muted);
-  box-shadow: none;
-  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.form-switch .form-check-input::before {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 16px;
-  height: 16px;
-  box-sizing: border-box;
-  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
-  border-radius: var(--radius-full);
-  background: light-dark(var(--primary-foreground), var(--foreground));
-  box-shadow: var(--shadow-sm);
-  content: &quot;&quot;;
-  transform: translate(2px, -50%);
-  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.form-switch .form-check-input:checked {
-  background: var(--primary);
-}
-
-.form-switch .form-check-input:checked::before {
-  transform: translate(14px, -50%);
-}
-
-.form-switch .form-check-input:focus-visible {
-  box-shadow: 0 0 0 2px var(--ring);
-}
-
-.form-range {
-  appearance: none;
-  display: block;
-  width: 100%;
-  height: 28px;
-  flex: 1;
-  margin: 0;
-  padding: 0;
-  outline: none;
-  border: 0;
-  accent-color: var(--primary);
-  background: linear-gradient(
-      color-mix(in srgb, var(--foreground) 7%, transparent),
-      color-mix(in srgb, var(--foreground) 7%, transparent)
-    )
-    center / 100% 2px no-repeat;
-}
-
-.form-range::-webkit-slider-runnable-track {
-  height: 28px;
-  background: transparent;
-}
-
-.form-range::-webkit-slider-thumb {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  margin-top: 4px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  background: light-dark(var(--primary-foreground), var(--foreground));
-}
-
-.form-range:focus-visible::-webkit-slider-thumb {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-range::-moz-range-track {
-  height: 28px;
-  background: transparent;
-}
-
-.form-range::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  background: light-dark(var(--primary-foreground), var(--foreground));
-}
-
-.form-range:focus-visible::-moz-range-thumb {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-range:disabled {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
-.btn:not(.btn-primary, .viz-tile):is(
-  [aria-pressed=&quot;true&quot;],
-  [aria-selected=&quot;true&quot;],
-  .is-selected
-) {
-  border-color: var(--primary);
-  color: var(--primary-foreground);
-  background: var(--primary);
-}
-
-.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
-  border-color: var(--primary);
-  box-shadow: inset 0 0 0 1px var(--primary);
-}
-
-.btn:focus-visible,
-.nav-link:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-
-.viz-carousel-controls :is(button, summary):focus-visible {
-  outline: 2px solid var(--ring) !important;
-  outline-offset: 2px !important;
-}
-
-@media (pointer: coarse) {
-  .viz-carousel:has(&gt; .viz-carousel-controls) {
-    min-height: calc(76px + var(--viz-carousel-picker-height, 0px));
-    padding-bottom: 76px;
-  }
-
-  .btn,
-  .nav-link,
-  .viz-carousel-controls button,
-  .viz-carousel-picker &gt; summary,
-  .form-control,
-  .form-select {
-    min-width: 44px;
-    min-height: 44px;
-  }
-
-  /* Keep small-screen WebKit from zooming when a text field receives focus. */
-  .form-control,
-  .form-select {
-    font-size: max(16px, var(--font-size-normal));
-  }
-
-  .form-control[type=&quot;file&quot;]::file-selector-button {
-    min-width: 44px;
-    min-height: 44px;
-  }
-
-  .form-control-color[type=&quot;color&quot;] {
-    width: 44px;
-    height: 44px;
-  }
-
-  .form-control:is(
-    [type=&quot;date&quot;],
-    [type=&quot;datetime-local&quot;],
-    [type=&quot;month&quot;],
-    [type=&quot;time&quot;],
-    [type=&quot;week&quot;]
-  ) {
-    min-width: 0;
-    max-width: 100%;
-    padding-block: 8px;
-  }
-
-  .form-check {
-    min-height: 44px;
-    padding-inline: 15px;
-  }
-
-  .form-check-input {
-    position: relative;
-  }
-
-  .form-check-input::after {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 44px;
-    height: 44px;
-    content: &quot;&quot;;
-    transform: translate(-50%, -50%);
-  }
-
-  .form-check-label {
-    display: inline-flex;
-    min-width: 44px;
-    min-height: 44px;
-    align-items: center;
-  }
-
-  .form-range {
-    height: 44px;
-    touch-action: pan-y;
-  }
-
-  .form-range::-webkit-slider-runnable-track {
-    height: 44px;
-  }
-
-  .form-range::-moz-range-track {
-    height: 44px;
-  }
-
-  .form-range::-webkit-slider-thumb {
-    margin-top: 12px;
-  }
-}
-
-svg {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-#widget &gt; svg {
-  width: 100%;
-}
-
-/* Model-authored chart rules can otherwise stretch icons after these styles load. */
-svg.lucide {
-  display: block;
-  width: var(--icon-size) !important;
-  height: var(--icon-size) !important;
-  flex: none;
-  margin: 0 !important;
-  stroke-width: 1.6;
-}
-
-.text-warning,
-.text-destructive {
-  color: var(--destructive);
-}
-
-html&gt;body{padding:0}&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;script type=&quot;application/json&quot; id=&quot;codex-visualization-widget-state&quot;&gt;__CODEX_VISUALIZATION_WIDGET_STATE__&lt;/script&gt;
-&lt;script&gt;(() =&gt; {
-  const root = document.documentElement;
-  const mediaQuery = globalThis.matchMedia(&quot;(prefers-color-scheme: dark)&quot;);
-  const apply = Reflect.apply;
-  const isArray = Array.isArray;
-  const hasOwn = Object.hasOwn;
-  const parentWindow = globalThis.parent;
-  const stringify = JSON.stringify;
-  const parse = JSON.parse;
-  const encode = TextEncoder.prototype.encode.bind(new TextEncoder());
-  const initialStateElement = document.getElementById(
-    &quot;codex-visualization-widget-state&quot;,
-  );
-  const initialGlobals = parse(initialStateElement?.textContent ?? &quot;{}&quot;);
-  initialStateElement?.remove();
-  /** @type {Record&lt;string, unknown&gt; | null} */
-  let state = initialGlobals.widgetState ?? null;
-  const statePersistence = initialGlobals.statePersistence ?? &quot;none&quot;;
-  let nextStateRequestId = 0;
-  /** @type {Map&lt;number, { resolve: () =&gt; void; reject: (error: Error) =&gt; void; timeout: ReturnType&lt;typeof globalThis.setTimeout&gt;; serializedState: string }&gt;} */
-  const pendingStateWrites = new Map();
-  const persistenceError = () =&gt;
-    Object.assign(
-      new Error(&quot;The host could not persist the widget state update&quot;),
-      {
-        code: -32000,
-        data: { code: &quot;widget_state_persistence_failed&quot;, retryable: false },
-      },
-    );
-  /**
-   * @param {object} prototype
-   * @param {string} property
-   */
-  const getPrototypeGetter = (prototype, property) =&gt; {
-    // oxlint-disable-next-line typescript/unbound-method -- invoked through captured Reflect.apply
-    const getter = Object.getOwnPropertyDescriptor(prototype, property)?.get;
-    if (getter == null) {
-      throw new Error(`Missing ${property} getter`);
-    }
-    return getter;
-  };
-  const getMessageData = getPrototypeGetter(MessageEvent.prototype, &quot;data&quot;);
-  const getMessagePorts = getPrototypeGetter(MessageEvent.prototype, &quot;ports&quot;);
-  const getMessageSource = getPrototypeGetter(MessageEvent.prototype, &quot;source&quot;);
-  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
-  const addHostMessageListener = MessagePort.prototype.addEventListener;
-  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
-  const postHostMessage = MessagePort.prototype.postMessage;
-  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
-  const startHostPort = MessagePort.prototype.start;
-  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
-  const stopMessagePropagation = Event.prototype.stopImmediatePropagation;
-  /** @type {MessagePort | null} */
-  let hostPort = null;
-  const postToHost = (type, payload) =&gt; {
-    if (hostPort != null) {
-      apply(postHostMessage, hostPort, [{ type, ...payload }]);
-    }
-  };
-  const openExternal = ({ href }) =&gt; {
-    if (globalThis.navigator.userActivation?.isActive === true) {
-      postToHost(&quot;open-external&quot;, { href });
-    }
-  };
-  const sendFollowUpMessage = ({ context, prompt, title }) =&gt; {
-    if (globalThis.navigator.userActivation?.isActive === true) {
-      postToHost(&quot;follow-up&quot;, { context, prompt, title });
-    }
-    return Promise.resolve();
-  };
-  /**
-   * @param {Record&lt;string, unknown&gt; | ((previous: Record&lt;string, unknown&gt; | null) =&gt; Record&lt;string, unknown&gt;)} next
-   * @returns {Promise&lt;void&gt;}
-   */
-  const setWidgetState = async (next) =&gt; {
-    const nextState = typeof next === &quot;function&quot; ? next(state) : next;
-    if (
-      nextState == null ||
-      typeof nextState !== &quot;object&quot; ||
-      isArray(nextState)
-    ) {
-      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
-    }
-    const inputState = stringify(
-      nextState,
-      (_key, /** @type {unknown} */ value) =&gt; {
-        if (
-          typeof value === &quot;undefined&quot; ||
-          typeof value === &quot;function&quot; ||
-          typeof value === &quot;symbol&quot; ||
-          (typeof value === &quot;number&quot; &amp;&amp; !Number.isFinite(value))
-        ) {
-          throw new TypeError(&quot;Widget state must be a JSON object&quot;);
-        }
-        return value;
-      },
-    );
-    const parsedState = parse(inputState);
-    if (
-      parsedState == null ||
-      typeof parsedState !== &quot;object&quot; ||
-      isArray(parsedState)
-    ) {
-      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
-    }
-    const storedState = {
-      modelContent: null,
-      privateContent: null,
-      ...parsedState,
-    };
-    const serializedState = stringify(storedState);
-    if (encode(serializedState).length &gt; 16 * 1024) {
-      throw new TypeError(
-        &quot;Widget state must be a JSON object of at most 16 KiB&quot;,
-      );
-    }
-    if (
-      hasOwn(storedState, &quot;imageIds&quot;) &amp;&amp;
-      (!isArray(storedState.imageIds) ||
-        storedState.imageIds.some(
-          (/** @type {unknown} */ id) =&gt; typeof id !== &quot;string&quot;,
-        ))
-    ) {
-      throw new TypeError(&quot;Widget state imageIds must be an array of strings&quot;);
-    }
-    if (storedState.imageIds?.length &gt; 0) {
-      throw Object.assign(
-        new TypeError(&quot;Visualization state does not support image attachments&quot;),
-        { code: -32602, data: { code: &quot;images_unsupported&quot; } },
-      );
-    }
-    state = storedState;
-    globalThis.openai.widgetState = state;
-    globalThis.dispatchEvent(
-      new CustomEvent(&quot;openai:set_globals&quot;, {
-        detail: { globals: { widgetState: state } },
-      }),
-    );
-    if (statePersistence === &quot;none&quot;) {
-      throw persistenceError();
-    }
-    const id = ++nextStateRequestId;
-    return new Promise((resolve, reject) =&gt; {
-      const timeout = globalThis.setTimeout(() =&gt; {
-        pendingStateWrites.delete(id);
-        reject(persistenceError());
-      }, 30_000);
-      pendingStateWrites.set(id, { resolve, reject, timeout, serializedState });
-      postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
-    });
-  };
-  const syncTheme = () =&gt; {
-    const theme = mediaQuery.matches ? &quot;dark&quot; : &quot;light&quot;;
-    root.dataset.theme = theme;
-    globalThis.openai = {
-      ...globalThis.openai,
-      openExternal,
-      sendFollowUpMessage,
-      setWidgetState,
-      theme,
-      visualizationStyleVariables: {},
-      visualizationTheme: theme,
-      widgetState: state,
-      statePersistence,
-      stateModelContext: &quot;none&quot;,
-    };
-    globalThis.dispatchEvent(
-      new CustomEvent(&quot;openai:set_globals&quot;, {
-        detail: { globals: globalThis.openai },
-      }),
-    );
-  };
-  const sendHeight = () =&gt; {
-    postToHost(&quot;height&quot;, {
-      height: Math.ceil(
-        Math.max(
-          document.body.scrollHeight,
-          document.body.getBoundingClientRect().height,
-        ),
-      ),
-    });
-  };
-
-  globalThis.addEventListener(
-    &quot;message&quot;,
-    (event) =&gt; {
-      const data = apply(getMessageData, event, []);
-      const ports = apply(getMessagePorts, event, []);
-      const source = apply(getMessageSource, event, []);
-      if (
-        hostPort != null ||
-        source !== parentWindow ||
-        typeof data !== &quot;object&quot; ||
-        data?.type !== &quot;codex-visualization-initialize&quot; ||
-        !isArray(ports) ||
-        ports.length !== 1
-      ) {
-        return;
-      }
-      apply(stopMessagePropagation, event, []);
-      const nextHostPort = ports[0];
-      try {
-        apply(addHostMessageListener, nextHostPort, [
-          &quot;message&quot;,
-          (event) =&gt; {
-            const data = apply(getMessageData, event, []);
-            if (typeof data === &quot;object&quot; &amp;&amp; data?.type === &quot;measure&quot;) {
-              sendHeight();
-            } else if (
-              typeof data === &quot;object&quot; &amp;&amp;
-              data?.type === &quot;widget-state-result&quot;
-            ) {
-              /** @type {unknown} */
-              const id = data.id;
-              if (typeof id !== &quot;number&quot;) {
-                return;
-              }
-              const pending = pendingStateWrites.get(id);
-              if (pending != null) {
-                pendingStateWrites.delete(id);
-                globalThis.clearTimeout(pending.timeout);
-                if (data.ok === true) {
-                  pending.resolve();
-                } else {
-                  pending.reject(persistenceError());
-                }
-              }
-            }
-          },
-        ]);
-        apply(startHostPort, nextHostPort, []);
-      } catch {
-        return;
-      }
-      hostPort = nextHostPort;
-      for (const [id, { serializedState }] of pendingStateWrites) {
-        postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
-      }
-      sendHeight();
-    },
-    { capture: true },
-  );
-  document.currentScript?.remove();
-  mediaQuery.addEventListener(&quot;change&quot;, syncTheme);
-  globalThis.addEventListener(&quot;click&quot;, (event) =&gt; {
-    if (event.defaultPrevented) {
-      return;
-    }
-    let element = null;
-    if (event.target instanceof globalThis.Element) {
-      element = event.target;
-    } else if (event.target instanceof globalThis.Node) {
-      element = event.target.parentElement;
-    }
-    const link = element?.closest(&quot;a[href]&quot;);
-    const href = link?.getAttribute(&quot;href&quot;);
-    if (href == null) {
-      return;
-    }
-    if (href.startsWith(&quot;#&quot;)) {
-      let id;
-      try {
-        id = decodeURIComponent(href.slice(1));
-      } catch {
-        return;
-      }
-      const target = id.length === 0 ? root : document.getElementById(id);
-      if (
-        target == null ||
-        globalThis.navigator.userActivation?.isActive !== true
-      ) {
-        return;
-      }
-      event.preventDefault();
-      postToHost(&quot;scroll-to&quot;, {
-        top: target.getBoundingClientRect().top + globalThis.scrollY,
-      });
-      return;
-    }
-    event.preventDefault();
-    openExternal({ href });
-  });
-  new ResizeObserver(sendHeight).observe(document.body);
-  syncTheme();
-})();
-&lt;/script&gt;
-&lt;div id=&quot;imagination-sprint&quot;&gt;
-  &lt;header&gt;&lt;h2&gt;Problem-solving sprint&lt;/h2&gt;&lt;p class=&quot;text-muted&quot;&gt;500 problem prompts · 1 minute&lt;/p&gt;&lt;/header&gt;
-  &lt;div class=&quot;viz-row&quot;&gt;&lt;span class=&quot;tabular-nums&quot; id=&quot;clock&quot;&gt;60 seconds&lt;/span&gt;&lt;span id=&quot;score&quot;&gt;0 answered&lt;/span&gt;&lt;span class=&quot;text-muted&quot; id=&quot;skips&quot;&gt;0 skipped&lt;/span&gt;&lt;/div&gt;
-  &lt;div class=&quot;progress&quot; role=&quot;progressbar&quot; aria-label=&quot;Time remaining&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;60&quot; aria-valuenow=&quot;60&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:100%&quot;&gt;&lt;/div&gt;&lt;/div&gt;
-  &lt;section class=&quot;question-area&quot; aria-live=&quot;polite&quot; aria-atomic=&quot;true&quot;&gt;
-    &lt;p class=&quot;text-small text-muted&quot; id=&quot;number&quot;&gt;500 PROBLEMS · ONE MINUTE&lt;/p&gt;
-    &lt;h2 id=&quot;prompt&quot;&gt;How many problems can you solve in 60 seconds?&lt;/h2&gt;
-    &lt;p id=&quot;cue&quot;&gt;Say what you would do and why.&lt;/p&gt;
-  &lt;/section&gt;
-  &lt;div class=&quot;viz-controls&quot;&gt;
-    &lt;button class=&quot;btn btn-primary&quot; id=&quot;start&quot; type=&quot;button&quot;&gt;Start 60-second round&lt;/button&gt;
-    &lt;button class=&quot;btn btn-primary&quot; id=&quot;answer&quot; type=&quot;button&quot; hidden&gt;Answered +1&lt;/button&gt;
-    &lt;button class=&quot;btn&quot; id=&quot;skip&quot; type=&quot;button&quot; hidden&gt;Skip&lt;/button&gt;
-    &lt;button class=&quot;btn btn-ghost&quot; id=&quot;reset&quot; type=&quot;button&quot;&gt;Reset&lt;/button&gt;
-  &lt;/div&gt;
-  &lt;div id=&quot;results&quot; hidden&gt;&lt;details&gt;&lt;summary&gt;Review this round&lt;/summary&gt;&lt;ol id=&quot;review&quot;&gt;&lt;/ol&gt;&lt;/details&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;style&gt;
-#imagination-sprint [hidden] {display:none!important}
-#imagination-sprint header {padding-right:90px}
-#imagination-sprint .question-area {padding:24px 0; min-height:155px}
-#imagination-sprint .progress {margin-top:16px}
-#imagination-sprint #results {margin-top:20px}
-#imagination-sprint li {margin:10px 0}
-&lt;/style&gt;
-&lt;script&gt;
-(() =&gt; {
-const root = document.getElementById(&#x27;imagination-sprint&#x27;);
-const el = id =&gt; root.querySelector(&#x27;#&#x27;+id);
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Problem-solving Sprint</title><style>* { box-sizing: border-box; }
+html { color-scheme: light; background:#f6f8fc; color:#142443; font-family:Arial,Helvetica,sans-serif; }
+body { margin:0; }
+[hidden] { display:none!important; }
+#imagination-sprint { min-height:100vh; min-height:100svh; display:flex; flex-direction:column; padding:clamp(18px,3vw,48px); gap:clamp(14px,2vh,24px); }
+header { display:flex; align-items:center; flex-wrap:wrap; gap:10px 24px; }
+header h2 { font-size:clamp(22px,2.3vw,34px); margin:0; }
+header p { margin:0; font-size:clamp(16px,1.5vw,22px); color:#52627b; }
+#fullscreen { margin-left:auto; font-size:18px; min-height:48px; padding:10px 18px; }
+.viz-row { display:flex; align-items:baseline; flex-wrap:wrap; gap:12px clamp(20px,4vw,64px); font-size:clamp(22px,3vw,40px); font-weight:700; }
+#clock { font-size:clamp(36px,5vw,70px); font-variant-numeric:tabular-nums; }
+#skips { color:#52627b; font-weight:400; }
+.progress { height:12px; border-radius:6px; overflow:hidden; background:#dbe3ef; }
+.progress-bar { height:100%; background:#2764d7; }
+.question-area { flex:1; display:flex; flex-direction:column; justify-content:center; text-align:center; padding:clamp(16px,3vh,42px) 0; }
+#number { font-size:clamp(16px,1.6vw,24px); letter-spacing:.06em; color:#52627b; margin:0 0 20px; }
+#prompt { font-size:clamp(32px,5.5vw,88px); line-height:1.12; letter-spacing:-.025em; margin:0 auto; max-width:1600px; overflow-wrap:break-word; text-wrap:balance; }
+#cue { font-size:clamp(20px,2vw,30px); line-height:1.4; margin:24px 0 0; color:#52627b; }
+.viz-controls { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; }
+button { font:700 clamp(20px,2.1vw,32px)/1.2 Arial,Helvetica,sans-serif; padding:20px 32px; border:2px solid #c4d0e3; border-radius:14px; background:#fff; color:#142443; cursor:pointer; min-height:64px; }
+button:hover { background:#e8eef8; }
+button:focus-visible,summary:focus-visible { outline:4px solid #f0a600; outline-offset:4px; }
+.btn-primary { background:#245bce; color:#fff; border-color:#245bce; }
+.btn-primary:hover { background:#1949ad; }
+button:disabled { opacity:.5; cursor:default; }
+#results { font-size:clamp(18px,1.8vw,26px); line-height:1.5; }
+summary { cursor:pointer; padding:14px 0; }
+li { margin:14px 0; }
+:fullscreen { background:#f6f8fc; overflow:auto; }
+@media(max-width:600px) { header {gap:12px;} header p {flex-basis:100%;order:3;} #fullscreen {font-size:16px;padding:10px 12px;} header h2 {max-width:65%;} .viz-row {gap:8px 20px;} button {padding:16px 20px;min-height:58px;} .question-area {padding:12px 0;} #number {margin-bottom:16px;} #cue {margin-top:18px;} }
+@media(max-height:550px) and (min-width:601px) { #imagination-sprint {padding:16px 28px;gap:10px;} #clock {font-size:36px;} .viz-row {font-size:24px;} #prompt {font-size:clamp(32px,4vw,52px);} .question-area {padding:6px 0;} #number {margin-bottom:10px;} #cue {margin-top:12px;font-size:20px;} button {padding:12px 24px;min-height:48px;} }
+</style></head>
+<body><script>
+window.openai={widgetState:null,setWidgetState:async function(state){this.widgetState=state;try{localStorage.setItem('speakkai-sprint-v2',JSON.stringify(state));}catch{}}};
+try{window.openai.widgetState=JSON.parse(localStorage.getItem('speakkai-sprint-v2'));}catch{}
+</script><div id="imagination-sprint">
+  <header><h2>Problem-solving sprint</h2><p class="text-muted">500 problem prompts · 1 minute</p><button id="fullscreen" type="button" aria-pressed="false">Full screen</button></header>
+  <div class="viz-row"><span class="tabular-nums" id="clock">60 seconds</span><span id="score">0 answered</span><span class="text-muted" id="skips">0 skipped</span></div>
+  <div class="progress" role="progressbar" aria-label="Time remaining" aria-valuemin="0" aria-valuemax="60" aria-valuenow="60"><div class="progress-bar" style="width:100%"></div></div>
+  <section class="question-area" aria-live="polite" aria-atomic="true">
+    <p class="text-small text-muted" id="number">500 PROBLEMS · ONE MINUTE</p>
+    <h2 id="prompt">How many problems can you solve in 60 seconds?</h2>
+    <p id="cue">Say what you would do and why.</p>
+  </section>
+  <div class="viz-controls">
+    <button class="btn btn-primary" id="start" type="button">Start 60-second round</button>
+    <button class="btn btn-primary" id="answer" type="button" hidden>Answered +1</button>
+    <button class="btn" id="skip" type="button" hidden>Skip</button>
+    <button class="btn btn-ghost" id="reset" type="button">Reset</button>
+  </div>
+  <div id="results" hidden><details><summary>Review this round</summary><ol id="review"></ol></details></div>
+</div>
+
+<script>
+(() => {
+const root = document.getElementById('imagination-sprint');
+const el = id => root.querySelector('#'+id);
 const prompts = [
-  &quot;You forgot your homework.&quot;,
-  &quot;You lost your pencil.&quot;,
-  &quot;Your pencil breaks during a test.&quot;,
-  &quot;You forgot your notebook.&quot;,
-  &quot;You are late for school.&quot;,
-  &quot;You cannot understand the teacher.&quot;,
-  &quot;Your classroom is too noisy.&quot;,
-  &quot;Your desk is messy.&quot;,
-  &quot;You forgot your lunch.&quot;,
-  &quot;You cannot find your classroom.&quot;,
-  &quot;Your friend keeps talking during class.&quot;,
-  &quot;You have too much homework.&quot;,
-  &quot;You do not understand your homework.&quot;,
-  &quot;You forgot there was a test today.&quot;,
-  &quot;You are nervous about a test.&quot;,
-  &quot;You finished your work too early.&quot;,
-  &quot;You cannot see the board.&quot;,
-  &quot;You cannot hear the teacher.&quot;,
-  &quot;Someone took your seat.&quot;,
-  &quot;Your chair is broken.&quot;,
-  &quot;The classroom is too hot.&quot;,
-  &quot;The classroom is too cold.&quot;,
-  &quot;Your computer stops working.&quot;,
-  &quot;The classroom Wi-Fi stops working.&quot;,
-  &quot;You accidentally delete your homework.&quot;,
-  &quot;Your printer has no paper.&quot;,
-  &quot;Your printer has no ink.&quot;,
-  &quot;You leave your book at school.&quot;,
-  &quot;You leave your homework at home.&quot;,
-  &quot;You forget your teacher&#x27;s instructions.&quot;,
-  &quot;You cannot remember a new word.&quot;,
-  &quot;You have trouble reading a difficult book.&quot;,
-  &quot;You cannot solve a math problem.&quot;,
-  &quot;You make many spelling mistakes.&quot;,
-  &quot;You are afraid to answer a question.&quot;,
-  &quot;Nobody volunteers to answer.&quot;,
-  &quot;Everyone talks at the same time.&quot;,
-  &quot;Your group cannot agree.&quot;,
-  &quot;One student does all the group work.&quot;,
-  &quot;One student does not help the group.&quot;,
-  &quot;Your group presentation is tomorrow and you are not ready.&quot;,
-  &quot;Your partner is absent.&quot;,
-  &quot;Your teammate forgets their part of the presentation.&quot;,
-  &quot;You forget your speech.&quot;,
-  &quot;You speak too quietly.&quot;,
-  &quot;You speak too quickly.&quot;,
-  &quot;You feel nervous speaking in front of the class.&quot;,
-  &quot;Nobody listens to your presentation.&quot;,
-  &quot;Your presentation is too long.&quot;,
-  &quot;Your presentation is too short.&quot;,
-  &quot;You forget to bring your project.&quot;,
-  &quot;Your science project breaks.&quot;,
-  &quot;You spill water on your homework.&quot;,
-  &quot;Your backpack is too heavy.&quot;,
-  &quot;Your locker will not open.&quot;,
-  &quot;You lose your school ID.&quot;,
-  &quot;You miss the school bus.&quot;,
-  &quot;The school bus is late.&quot;,
-  &quot;The bus is too crowded.&quot;,
-  &quot;You sit next to someone who keeps bothering you.&quot;,
-  &quot;Someone keeps copying your answers.&quot;,
-  &quot;Someone cuts in front of you in line.&quot;,
-  &quot;Students leave trash in the classroom.&quot;,
-  &quot;Nobody cleans up after an activity.&quot;,
-  &quot;The classroom has too much trash.&quot;,
-  &quot;Students waste too much paper.&quot;,
-  &quot;Students waste water.&quot;,
-  &quot;The school bathrooms are dirty.&quot;,
-  &quot;The playground is dirty.&quot;,
-  &quot;The library is too noisy.&quot;,
-  &quot;You cannot find the book you want.&quot;,
-  &quot;Someone forgets to return a library book.&quot;,
-  &quot;You damage a library book by accident.&quot;,
-  &quot;Your class has only one computer.&quot;,
-  &quot;Two students want the same toy.&quot;,
-  &quot;Two students want the same book.&quot;,
-  &quot;Everyone wants to be the group leader.&quot;,
-  &quot;Nobody wants to be the group leader.&quot;,
-  &quot;Your team keeps losing a classroom game.&quot;,
-  &quot;Someone cheats during a game.&quot;,
-  &quot;Students argue about the rules.&quot;,
-  &quot;Your class pet escapes.&quot;,
-  &quot;Nobody remembers to feed the class pet.&quot;,
-  &quot;The classroom plants are dying.&quot;,
-  &quot;Nobody wants to water the plants.&quot;,
-  &quot;You have trouble making friends at a new school.&quot;,
-  &quot;A new student is sitting alone.&quot;,
-  &quot;Someone is being left out of a game.&quot;,
-  &quot;Your best friend is angry with you.&quot;,
-  &quot;Two friends are arguing.&quot;,
-  &quot;Someone says something mean.&quot;,
-  &quot;Someone laughs at another student&#x27;s mistake.&quot;,
-  &quot;A student is being bullied.&quot;,
-  &quot;You see someone cheating.&quot;,
-  &quot;Someone takes something without asking.&quot;,
-  &quot;You accidentally break your friend&#x27;s pencil.&quot;,
-  &quot;Your friend loses something you lent them.&quot;,
-  &quot;You promised to help someone but forgot.&quot;,
-  &quot;Your class cannot decide what activity to do.&quot;,
-  &quot;Your class wants to make school more fun.&quot;,
-  &quot;Your room is messy.&quot;,
-  &quot;You cannot find your socks.&quot;,
-  &quot;You cannot find your keys.&quot;,
-  &quot;You lose your phone.&quot;,
-  &quot;Your phone battery dies.&quot;,
-  &quot;Your charger breaks.&quot;,
-  &quot;There is no electricity.&quot;,
-  &quot;The Wi-Fi stops working.&quot;,
-  &quot;The TV remote is missing.&quot;,
-  &quot;The television stops working.&quot;,
-  &quot;Your computer freezes.&quot;,
-  &quot;You forget your password.&quot;,
-  &quot;You spill juice on the floor.&quot;,
-  &quot;You break a cup.&quot;,
-  &quot;You drop your dinner.&quot;,
-  &quot;You burn your toast.&quot;,
-  &quot;Your food is too salty.&quot;,
-  &quot;Your food is too spicy.&quot;,
-  &quot;Your soup is too hot.&quot;,
-  &quot;Your ice cream melts.&quot;,
-  &quot;You are hungry but there is no food ready.&quot;,
-  &quot;You do not know how to cook.&quot;,
-  &quot;You forget to buy milk.&quot;,
-  &quot;The refrigerator is too full.&quot;,
-  &quot;Food in the refrigerator goes bad.&quot;,
-  &quot;You buy too much food.&quot;,
-  &quot;Your family wastes too much food.&quot;,
-  &quot;You forget to wash the dishes.&quot;,
-  &quot;The sink is full of dirty dishes.&quot;,
-  &quot;The trash can is full.&quot;,
-  &quot;The trash smells bad.&quot;,
-  &quot;You forget to take out the trash.&quot;,
-  &quot;Your clothes are dirty.&quot;,
-  &quot;You run out of clean socks.&quot;,
-  &quot;Your favorite shirt has a stain.&quot;,
-  &quot;Your shirt has a hole.&quot;,
-  &quot;Your shoe breaks.&quot;,
-  &quot;Your shoelace breaks.&quot;,
-  &quot;Your shoes are wet.&quot;,
-  &quot;You step in a puddle.&quot;,
-  &quot;You forget your umbrella.&quot;,
-  &quot;It starts raining while you are outside.&quot;,
-  &quot;Your umbrella breaks.&quot;,
-  &quot;Your house is too hot.&quot;,
-  &quot;Your house is too cold.&quot;,
-  &quot;Your bedroom light stops working.&quot;,
-  &quot;You hear a strange noise at night.&quot;,
-  &quot;You cannot sleep.&quot;,
-  &quot;Your neighbor is being too loud.&quot;,
-  &quot;Your family members are all using the bathroom.&quot;,
-  &quot;You wake up late.&quot;,
-  &quot;Your alarm does not ring.&quot;,
-  &quot;You keep pressing the snooze button.&quot;,
-  &quot;You have only ten minutes to get ready.&quot;,
-  &quot;You cannot decide what to wear.&quot;,
-  &quot;Your clothes do not fit anymore.&quot;,
-  &quot;You forget an important birthday.&quot;,
-  &quot;You forget to buy a birthday present.&quot;,
-  &quot;You have no money for an expensive present.&quot;,
-  &quot;You need to make a present quickly.&quot;,
-  &quot;Your birthday cake gets damaged.&quot;,
-  &quot;Nobody brings plates to a picnic.&quot;,
-  &quot;Nobody brings cups to a party.&quot;,
-  &quot;Too many people come to your party.&quot;,
-  &quot;Nobody comes to your party on time.&quot;,
-  &quot;Your music is too loud.&quot;,
-  &quot;Your family cannot decide what movie to watch.&quot;,
-  &quot;Everyone wants to use the TV.&quot;,
-  &quot;Everyone wants to use the computer.&quot;,
-  &quot;You and your sibling want the same toy.&quot;,
-  &quot;Your sibling keeps entering your room.&quot;,
-  &quot;Your sibling takes your things.&quot;,
-  &quot;You accidentally take your sibling&#x27;s things.&quot;,
-  &quot;You and your parents disagree about bedtime.&quot;,
-  &quot;You want a pet, but your parents say no.&quot;,
-  &quot;Your pet is hungry.&quot;,
-  &quot;Your dog runs away.&quot;,
-  &quot;Your cat hides somewhere in the house.&quot;,
-  &quot;Your pet makes a mess.&quot;,
-  &quot;Your dog chews your shoe.&quot;,
-  &quot;Your cat scratches the sofa.&quot;,
-  &quot;Your pet will not eat.&quot;,
-  &quot;Your pet wakes you up at night.&quot;,
-  &quot;Your fish tank is dirty.&quot;,
-  &quot;You forget to feed your fish.&quot;,
-  &quot;Your plant is dying.&quot;,
-  &quot;You forget to water your plants.&quot;,
-  &quot;You have too many toys.&quot;,
-  &quot;You have too many books.&quot;,
-  &quot;You have nowhere to put your things.&quot;,
-  &quot;Your family needs to clean the house quickly.&quot;,
-  &quot;Guests are arriving in 20 minutes.&quot;,
-  &quot;The doorbell does not work.&quot;,
-  &quot;You lock yourself out.&quot;,
-  &quot;You cannot open a jar.&quot;,
-  &quot;You cannot reach something on a high shelf.&quot;,
-  &quot;Something rolls under the sofa.&quot;,
-  &quot;You find a bug in your bedroom.&quot;,
-  &quot;There is a mosquito in your room.&quot;,
-  &quot;You need to finish your chores before going out.&quot;,
-  &quot;Your friend is sad.&quot;,
-  &quot;Your friend is angry.&quot;,
-  &quot;Your friend is crying.&quot;,
-  &quot;Your friend feels lonely.&quot;,
-  &quot;Your friend is scared.&quot;,
-  &quot;Your friend is nervous about school.&quot;,
-  &quot;Your friend failed a test.&quot;,
-  &quot;Your friend lost something important.&quot;,
-  &quot;Your friend forgot their lunch.&quot;,
-  &quot;Your friend has no pencil.&quot;,
-  &quot;Your friend falls down.&quot;,
-  &quot;Your friend gets hurt while playing.&quot;,
-  &quot;Your friend is sick.&quot;,
-  &quot;Your friend cannot come to your party.&quot;,
-  &quot;Your friend forgot your birthday.&quot;,
-  &quot;You forgot your friend&#x27;s birthday.&quot;,
-  &quot;Your friend does not answer your messages.&quot;,
-  &quot;Your friend misunderstands your message.&quot;,
-  &quot;You accidentally say something rude.&quot;,
-  &quot;Your joke hurts someone&#x27;s feelings.&quot;,
-  &quot;Someone tells a lie about you.&quot;,
-  &quot;Someone spreads a rumor.&quot;,
-  &quot;Your friends are arguing.&quot;,
-  &quot;Two friends ask you to choose sides.&quot;,
-  &quot;Your friend does not want to share.&quot;,
-  &quot;You do not want to share something special.&quot;,
-  &quot;Someone keeps interrupting you.&quot;,
-  &quot;Someone does not listen to you.&quot;,
-  &quot;Someone keeps shouting.&quot;,
-  &quot;Someone talks too quietly for you to hear.&quot;,
-  &quot;Your friend cancels your plans.&quot;,
-  &quot;You need to cancel plans with your friend.&quot;,
-  &quot;Your friend arrives very late.&quot;,
-  &quot;You arrive very late.&quot;,
-  &quot;Your friend borrows something and loses it.&quot;,
-  &quot;You lose something you borrowed.&quot;,
-  &quot;Your friend breaks your toy.&quot;,
-  &quot;You accidentally break your friend&#x27;s toy.&quot;,
-  &quot;Your friend wants to play a different game.&quot;,
-  &quot;Nobody can agree on what game to play.&quot;,
-  &quot;One person keeps changing the rules.&quot;,
-  &quot;Someone cheats.&quot;,
-  &quot;Someone gets angry after losing.&quot;,
-  &quot;Someone always wants to win.&quot;,
-  &quot;Your team blames you for losing.&quot;,
-  &quot;Nobody wants you on their team.&quot;,
-  &quot;Someone is picked last for a team.&quot;,
-  &quot;Someone is sitting alone at lunch.&quot;,
-  &quot;A new student does not know anyone.&quot;,
-  &quot;Someone cannot speak your language well.&quot;,
-  &quot;You cannot understand someone&#x27;s accent.&quot;,
-  &quot;You forget someone&#x27;s name.&quot;,
-  &quot;Someone forgets your name.&quot;,
-  &quot;You meet someone who is very shy.&quot;,
-  &quot;You are too shy to introduce yourself.&quot;,
-  &quot;Nobody starts the conversation.&quot;,
-  &quot;There is an awkward silence.&quot;,
-  &quot;You have nothing to talk about.&quot;,
-  &quot;Your friend keeps looking at their phone while you talk.&quot;,
-  &quot;Your friend posts an embarrassing picture of you.&quot;,
-  &quot;Someone takes your picture without asking.&quot;,
-  &quot;You send a message to the wrong person.&quot;,
-  &quot;You send an embarrassing message by accident.&quot;,
-  &quot;You accidentally call someone.&quot;,
-  &quot;Your group chat has too many messages.&quot;,
-  &quot;Someone keeps sending messages late at night.&quot;,
-  &quot;Someone shares private information.&quot;,
-  &quot;Your friend tells you a secret.&quot;,
-  &quot;Someone asks you to tell them another person&#x27;s secret.&quot;,
-  &quot;Your friends want you to do something you think is wrong.&quot;,
-  &quot;Everyone wants to go somewhere you do not like.&quot;,
-  &quot;You want to leave a party early.&quot;,
-  &quot;Your friend wants to stay longer.&quot;,
-  &quot;Your friend has forgotten their money.&quot;,
-  &quot;You have forgotten your money.&quot;,
-  &quot;Your friend cannot afford something.&quot;,
-  &quot;Your friends want to buy an expensive gift.&quot;,
-  &quot;You disagree about how to split a bill.&quot;,
-  &quot;Someone eats your food without asking.&quot;,
-  &quot;Your friend does not like the restaurant you chose.&quot;,
-  &quot;Nobody can decide where to eat.&quot;,
-  &quot;One friend is vegetarian.&quot;,
-  &quot;One friend has a food allergy.&quot;,
-  &quot;Someone orders too much food.&quot;,
-  &quot;Your friends are always late.&quot;,
-  &quot;Your friend talks too much.&quot;,
-  &quot;Your friend never talks.&quot;,
-  &quot;Someone keeps complaining.&quot;,
-  &quot;Someone refuses to apologize.&quot;,
-  &quot;You need to apologize.&quot;,
-  &quot;Your friend apologizes but you are still angry.&quot;,
-  &quot;You disagree with your best friend.&quot;,
-  &quot;Your friend likes something you dislike.&quot;,
-  &quot;You like something your friends dislike.&quot;,
-  &quot;Your friends make fun of your hobby.&quot;,
-  &quot;Your friend wants to quit something.&quot;,
-  &quot;Your friend is afraid to try something new.&quot;,
-  &quot;Your friend needs encouragement.&quot;,
-  &quot;You want to make a new friend.&quot;,
-  &quot;You want your friend group to get along better.&quot;,
-  &quot;There is trash in the park.&quot;,
-  &quot;There is plastic in a river.&quot;,
-  &quot;People waste too much water.&quot;,
-  &quot;People use too much electricity.&quot;,
-  &quot;People leave lights on.&quot;,
-  &quot;People use too many plastic bags.&quot;,
-  &quot;People throw away too much food.&quot;,
-  &quot;People do not recycle.&quot;,
-  &quot;Recycling bins are difficult to find.&quot;,
-  &quot;The neighborhood is too noisy.&quot;,
-  &quot;There are too many cars.&quot;,
-  &quot;Traffic is very bad.&quot;,
-  &quot;Cars are parked everywhere.&quot;,
-  &quot;There are not enough parking spaces.&quot;,
-  &quot;People drive too fast near a school.&quot;,
-  &quot;A traffic light is broken.&quot;,
-  &quot;A streetlight is broken.&quot;,
-  &quot;A road has a large hole.&quot;,
-  &quot;The sidewalk is broken.&quot;,
-  &quot;A street floods when it rains.&quot;,
-  &quot;There are not enough trees.&quot;,
-  &quot;Trees are being cut down.&quot;,
-  &quot;A park has no shade.&quot;,
-  &quot;The playground equipment is broken.&quot;,
-  &quot;There are not enough playgrounds.&quot;,
-  &quot;The park is too crowded.&quot;,
-  &quot;People leave dog waste in the park.&quot;,
-  &quot;Dogs are running around without leashes.&quot;,
-  &quot;There are stray animals in the neighborhood.&quot;,
-  &quot;Birds cannot find enough food in winter.&quot;,
-  &quot;A pond is dirty.&quot;,
-  &quot;Fish are dying in a river.&quot;,
-  &quot;A beach is covered in trash.&quot;,
-  &quot;People leave trash after picnics.&quot;,
-  &quot;People use too many disposable cups.&quot;,
-  &quot;Restaurants use too much plastic.&quot;,
-  &quot;Your school wastes too much paper.&quot;,
-  &quot;Your school wastes too much food.&quot;,
-  &quot;Your school uses too much electricity.&quot;,
-  &quot;Your school needs more plants.&quot;,
-  &quot;Your neighborhood needs more recycling bins.&quot;,
-  &quot;Your neighborhood needs more trash cans.&quot;,
-  &quot;There are too many mosquitoes.&quot;,
-  &quot;There are too many flies around the trash.&quot;,
-  &quot;The air smells bad.&quot;,
-  &quot;Air pollution is getting worse.&quot;,
-  &quot;The city is getting hotter.&quot;,
-  &quot;There is not enough clean water.&quot;,
-  &quot;Water is being wasted.&quot;,
-  &quot;A community has dirty drinking water.&quot;,
-  &quot;There has not been enough rain.&quot;,
-  &quot;A town has a drought.&quot;,
-  &quot;Heavy rain causes flooding.&quot;,
-  &quot;A storm damages houses.&quot;,
-  &quot;A strong wind knocks down trees.&quot;,
-  &quot;A neighborhood loses electricity.&quot;,
-  &quot;A neighborhood loses water.&quot;,
-  &quot;People need help after a storm.&quot;,
-  &quot;Families need food after a disaster.&quot;,
-  &quot;People need clean drinking water after a disaster.&quot;,
-  &quot;An animal shelter is full.&quot;,
-  &quot;A food bank needs more food.&quot;,
-  &quot;A charity needs volunteers.&quot;,
-  &quot;Elderly people in the neighborhood need help.&quot;,
-  &quot;Someone cannot carry their groceries.&quot;,
-  &quot;A person in a wheelchair cannot enter a building.&quot;,
-  &quot;A building has no elevator.&quot;,
-  &quot;A playground is not accessible to everyone.&quot;,
-  &quot;A public bathroom is dirty.&quot;,
-  &quot;There are not enough public bathrooms.&quot;,
-  &quot;The bus is always crowded.&quot;,
-  &quot;The bus is always late.&quot;,
-  &quot;There are not enough buses.&quot;,
-  &quot;A bus stop has no seats.&quot;,
-  &quot;A bus stop has no shelter from rain.&quot;,
-  &quot;People do not know when the bus will arrive.&quot;,
-  &quot;Train tickets are too expensive.&quot;,
-  &quot;Public transportation stops too early.&quot;,
-  &quot;People have trouble finding directions.&quot;,
-  &quot;Tourists keep getting lost.&quot;,
-  &quot;A sign is difficult to understand.&quot;,
-  &quot;A sign is broken.&quot;,
-  &quot;A store has a very long line.&quot;,
-  &quot;A restaurant is too crowded.&quot;,
-  &quot;A restaurant takes too long to serve food.&quot;,
-  &quot;A shop runs out of an important item.&quot;,
-  &quot;A customer receives the wrong order.&quot;,
-  &quot;Someone loses their wallet in a mall.&quot;,
-  &quot;A child gets separated from their parents.&quot;,
-  &quot;Someone leaves their bag on a bus.&quot;,
-  &quot;People talk loudly in a movie theater.&quot;,
-  &quot;Someone uses their phone during a movie.&quot;,
-  &quot;A library needs more books.&quot;,
-  &quot;A community center needs more activities.&quot;,
-  &quot;Children have nowhere safe to play.&quot;,
-  &quot;Teenagers say there is nothing to do.&quot;,
-  &quot;Neighbors do not know each other.&quot;,
-  &quot;People in the community rarely help each other.&quot;,
-  &quot;Your neighborhood wants to become cleaner.&quot;,
-  &quot;Your town wants to become a better place to live.&quot;,
-  &quot;You wake up and your voice is gone.&quot;,
-  &quot;You wake up and you are only 10 centimeters tall.&quot;,
-  &quot;You suddenly become three meters tall.&quot;,
-  &quot;You wake up with a tail.&quot;,
-  &quot;You wake up with wings but cannot fly.&quot;,
-  &quot;You can fly but do not know how to land.&quot;,
-  &quot;You become invisible.&quot;,
-  &quot;You cannot turn off your invisibility.&quot;,
-  &quot;You can read everyone&#x27;s thoughts.&quot;,
-  &quot;Everyone can read your thoughts.&quot;,
-  &quot;You can only speak in questions.&quot;,
-  &quot;You can only whisper.&quot;,
-  &quot;You can only shout.&quot;,
-  &quot;Everything you say becomes true.&quot;,
-  &quot;Nobody can understand what you say.&quot;,
-  &quot;Everyone in the world forgets your name.&quot;,
-  &quot;You forget your own name.&quot;,
-  &quot;You wake up in a different country.&quot;,
-  &quot;You wake up on a deserted island.&quot;,
-  &quot;You are lost in a forest.&quot;,
-  &quot;You are lost in a huge shopping mall.&quot;,
-  &quot;You are locked inside your school overnight.&quot;,
-  &quot;You are stuck in an elevator.&quot;,
-  &quot;You are stuck on top of a mountain.&quot;,
-  &quot;Your boat stops working.&quot;,
-  &quot;Your bicycle breaks far from home.&quot;,
-  &quot;Your car runs out of fuel.&quot;,
-  &quot;Your phone dies when you are lost.&quot;,
-  &quot;You have no internet for one week.&quot;,
-  &quot;Every phone in the world stops working.&quot;,
-  &quot;Every computer stops working.&quot;,
-  &quot;The world&#x27;s electricity disappears for one day.&quot;,
-  &quot;All clocks stop working.&quot;,
-  &quot;Nobody knows what time it is.&quot;,
-  &quot;The sun does not come up one morning.&quot;,
-  &quot;It does not stop raining for one month.&quot;,
-  &quot;It suddenly starts snowing in summer.&quot;,
-  &quot;It becomes extremely hot in winter&quot;,
-  &quot;Your town gets covered in snow overnight.&quot;,
-  &quot;Your school suddenly has no electricity.&quot;,
-  &quot;Your school has no water for a day.&quot;,
-  &quot;All the teachers disappear for one day.&quot;,
-  &quot;Every student becomes the teacher for a day.&quot;,
-  &quot;Your teacher suddenly becomes a child.&quot;,
-  &quot;Your parents suddenly become children.&quot;,
-  &quot;Your pet starts talking.&quot;,
-  &quot;Your dog refuses to stop talking.&quot;,
-  &quot;Your cat becomes the mayor of your town.&quot;,
-  &quot;Your pet gets lost in a giant shopping mall.&quot;,
-  &quot;You find a baby dragon in your backyard.&quot;,
-  &quot;The dragon keeps accidentally starting fires.&quot;,
-  &quot;A dinosaur appears at your school.&quot;,
-  &quot;A dinosaur is blocking the road.&quot;,
-  &quot;A giant is sleeping in the middle of your town.&quot;,
-  &quot;Aliens land on your school playground.&quot;,
-  &quot;The aliens cannot understand your language.&quot;,
-  &quot;An alien wants to live in your house.&quot;,
-  &quot;A robot moves into your neighborhood.&quot;,
-  &quot;Your robot helper stops following instructions.&quot;,
-  &quot;Your robot does all your homework incorrectly.&quot;,
-  &quot;Every robot in the city stops working.&quot;,
-  &quot;Your computer starts talking to you.&quot;,
-  &quot;Your phone refuses to let you use it.&quot;,
-  &quot;Your alarm clock runs away every morning.&quot;,
-  &quot;Your refrigerator will not open.&quot;,
-  &quot;Everything in your refrigerator freezes.&quot;,
-  &quot;Your house starts moving by itself.&quot;,
-  &quot;Your bedroom suddenly has no door.&quot;,
-  &quot;Your bedroom fills with balloons.&quot;,
-  &quot;Your house is surrounded by water.&quot;,
-  &quot;A tree grows through the middle of your house.&quot;,
-  &quot;Your backyard becomes a jungle.&quot;,
-  &quot;A wild monkey steals your backpack.&quot;,
-  &quot;A bird steals your lunch.&quot;,
-  &quot;A squirrel steals your homework.&quot;,
-  &quot;One hundred cats appear outside your house.&quot;,
-  &quot;One hundred dogs follow you to school.&quot;,
-  &quot;Thousands of frogs appear in your neighborhood.&quot;,
-  &quot;Your town is invaded by giant chickens.&quot;,
-  &quot;A giant spider builds a web across your street.&quot;,
-  &quot;Every animal at the zoo escapes.&quot;,
-  &quot;You find a penguin walking down your street.&quot;,
-  &quot;A whale is stuck near the beach.&quot;,
-  &quot;A baby elephant gets lost in your neighborhood.&quot;,
-  &quot;You discover a mysterious egg.&quot;,
-  &quot;The mysterious egg starts moving.&quot;,
-  &quot;You discover a secret door in your classroom.&quot;,
-  &quot;The secret door leads to an unknown world.&quot;,
-  &quot;You find a treasure map but part of it is missing.&quot;,
-  &quot;You find a treasure chest but cannot open it.&quot;,
-  &quot;You find $1,000 but do not know who it belongs to.&quot;,
-  &quot;You win $1 million but must spend it helping your community.&quot;,
-  &quot;You become the principal of your school for one day.&quot;,
-  &quot;You become mayor of your city for one week.&quot;,
-  &quot;You can make one new rule for your school.&quot;,
-  &quot;Your school can only keep three subjects.&quot;,
-  &quot;There are no cars allowed in your city anymore.&quot;,
-  &quot;Your town must produce zero trash for one week.&quot;,
-  &quot;Your class has $1,000 to solve one problem at school.&quot;,
-  &quot;You can solve one problem in the entire world. Which problem do you choose, and how would you solve it?&quot;
+  "You forgot your homework.",
+  "You lost your pencil.",
+  "Your pencil breaks during a test.",
+  "You forgot your notebook.",
+  "You are late for school.",
+  "You cannot understand the teacher.",
+  "Your classroom is too noisy.",
+  "Your desk is messy.",
+  "You forgot your lunch.",
+  "You cannot find your classroom.",
+  "Your friend keeps talking during class.",
+  "You have too much homework.",
+  "You do not understand your homework.",
+  "You forgot there was a test today.",
+  "You are nervous about a test.",
+  "You finished your work too early.",
+  "You cannot see the board.",
+  "You cannot hear the teacher.",
+  "Someone took your seat.",
+  "Your chair is broken.",
+  "The classroom is too hot.",
+  "The classroom is too cold.",
+  "Your computer stops working.",
+  "The classroom Wi-Fi stops working.",
+  "You accidentally delete your homework.",
+  "Your printer has no paper.",
+  "Your printer has no ink.",
+  "You leave your book at school.",
+  "You leave your homework at home.",
+  "You forget your teacher's instructions.",
+  "You cannot remember a new word.",
+  "You have trouble reading a difficult book.",
+  "You cannot solve a math problem.",
+  "You make many spelling mistakes.",
+  "You are afraid to answer a question.",
+  "Nobody volunteers to answer.",
+  "Everyone talks at the same time.",
+  "Your group cannot agree.",
+  "One student does all the group work.",
+  "One student does not help the group.",
+  "Your group presentation is tomorrow and you are not ready.",
+  "Your partner is absent.",
+  "Your teammate forgets their part of the presentation.",
+  "You forget your speech.",
+  "You speak too quietly.",
+  "You speak too quickly.",
+  "You feel nervous speaking in front of the class.",
+  "Nobody listens to your presentation.",
+  "Your presentation is too long.",
+  "Your presentation is too short.",
+  "You forget to bring your project.",
+  "Your science project breaks.",
+  "You spill water on your homework.",
+  "Your backpack is too heavy.",
+  "Your locker will not open.",
+  "You lose your school ID.",
+  "You miss the school bus.",
+  "The school bus is late.",
+  "The bus is too crowded.",
+  "You sit next to someone who keeps bothering you.",
+  "Someone keeps copying your answers.",
+  "Someone cuts in front of you in line.",
+  "Students leave trash in the classroom.",
+  "Nobody cleans up after an activity.",
+  "The classroom has too much trash.",
+  "Students waste too much paper.",
+  "Students waste water.",
+  "The school bathrooms are dirty.",
+  "The playground is dirty.",
+  "The library is too noisy.",
+  "You cannot find the book you want.",
+  "Someone forgets to return a library book.",
+  "You damage a library book by accident.",
+  "Your class has only one computer.",
+  "Two students want the same toy.",
+  "Two students want the same book.",
+  "Everyone wants to be the group leader.",
+  "Nobody wants to be the group leader.",
+  "Your team keeps losing a classroom game.",
+  "Someone cheats during a game.",
+  "Students argue about the rules.",
+  "Your class pet escapes.",
+  "Nobody remembers to feed the class pet.",
+  "The classroom plants are dying.",
+  "Nobody wants to water the plants.",
+  "You have trouble making friends at a new school.",
+  "A new student is sitting alone.",
+  "Someone is being left out of a game.",
+  "Your best friend is angry with you.",
+  "Two friends are arguing.",
+  "Someone says something mean.",
+  "Someone laughs at another student's mistake.",
+  "A student is being bullied.",
+  "You see someone cheating.",
+  "Someone takes something without asking.",
+  "You accidentally break your friend's pencil.",
+  "Your friend loses something you lent them.",
+  "You promised to help someone but forgot.",
+  "Your class cannot decide what activity to do.",
+  "Your class wants to make school more fun.",
+  "Your room is messy.",
+  "You cannot find your socks.",
+  "You cannot find your keys.",
+  "You lose your phone.",
+  "Your phone battery dies.",
+  "Your charger breaks.",
+  "There is no electricity.",
+  "The Wi-Fi stops working.",
+  "The TV remote is missing.",
+  "The television stops working.",
+  "Your computer freezes.",
+  "You forget your password.",
+  "You spill juice on the floor.",
+  "You break a cup.",
+  "You drop your dinner.",
+  "You burn your toast.",
+  "Your food is too salty.",
+  "Your food is too spicy.",
+  "Your soup is too hot.",
+  "Your ice cream melts.",
+  "You are hungry but there is no food ready.",
+  "You do not know how to cook.",
+  "You forget to buy milk.",
+  "The refrigerator is too full.",
+  "Food in the refrigerator goes bad.",
+  "You buy too much food.",
+  "Your family wastes too much food.",
+  "You forget to wash the dishes.",
+  "The sink is full of dirty dishes.",
+  "The trash can is full.",
+  "The trash smells bad.",
+  "You forget to take out the trash.",
+  "Your clothes are dirty.",
+  "You run out of clean socks.",
+  "Your favorite shirt has a stain.",
+  "Your shirt has a hole.",
+  "Your shoe breaks.",
+  "Your shoelace breaks.",
+  "Your shoes are wet.",
+  "You step in a puddle.",
+  "You forget your umbrella.",
+  "It starts raining while you are outside.",
+  "Your umbrella breaks.",
+  "Your house is too hot.",
+  "Your house is too cold.",
+  "Your bedroom light stops working.",
+  "You hear a strange noise at night.",
+  "You cannot sleep.",
+  "Your neighbor is being too loud.",
+  "Your family members are all using the bathroom.",
+  "You wake up late.",
+  "Your alarm does not ring.",
+  "You keep pressing the snooze button.",
+  "You have only ten minutes to get ready.",
+  "You cannot decide what to wear.",
+  "Your clothes do not fit anymore.",
+  "You forget an important birthday.",
+  "You forget to buy a birthday present.",
+  "You have no money for an expensive present.",
+  "You need to make a present quickly.",
+  "Your birthday cake gets damaged.",
+  "Nobody brings plates to a picnic.",
+  "Nobody brings cups to a party.",
+  "Too many people come to your party.",
+  "Nobody comes to your party on time.",
+  "Your music is too loud.",
+  "Your family cannot decide what movie to watch.",
+  "Everyone wants to use the TV.",
+  "Everyone wants to use the computer.",
+  "You and your sibling want the same toy.",
+  "Your sibling keeps entering your room.",
+  "Your sibling takes your things.",
+  "You accidentally take your sibling's things.",
+  "You and your parents disagree about bedtime.",
+  "You want a pet, but your parents say no.",
+  "Your pet is hungry.",
+  "Your dog runs away.",
+  "Your cat hides somewhere in the house.",
+  "Your pet makes a mess.",
+  "Your dog chews your shoe.",
+  "Your cat scratches the sofa.",
+  "Your pet will not eat.",
+  "Your pet wakes you up at night.",
+  "Your fish tank is dirty.",
+  "You forget to feed your fish.",
+  "Your plant is dying.",
+  "You forget to water your plants.",
+  "You have too many toys.",
+  "You have too many books.",
+  "You have nowhere to put your things.",
+  "Your family needs to clean the house quickly.",
+  "Guests are arriving in 20 minutes.",
+  "The doorbell does not work.",
+  "You lock yourself out.",
+  "You cannot open a jar.",
+  "You cannot reach something on a high shelf.",
+  "Something rolls under the sofa.",
+  "You find a bug in your bedroom.",
+  "There is a mosquito in your room.",
+  "You need to finish your chores before going out.",
+  "Your friend is sad.",
+  "Your friend is angry.",
+  "Your friend is crying.",
+  "Your friend feels lonely.",
+  "Your friend is scared.",
+  "Your friend is nervous about school.",
+  "Your friend failed a test.",
+  "Your friend lost something important.",
+  "Your friend forgot their lunch.",
+  "Your friend has no pencil.",
+  "Your friend falls down.",
+  "Your friend gets hurt while playing.",
+  "Your friend is sick.",
+  "Your friend cannot come to your party.",
+  "Your friend forgot your birthday.",
+  "You forgot your friend's birthday.",
+  "Your friend does not answer your messages.",
+  "Your friend misunderstands your message.",
+  "You accidentally say something rude.",
+  "Your joke hurts someone's feelings.",
+  "Someone tells a lie about you.",
+  "Someone spreads a rumor.",
+  "Your friends are arguing.",
+  "Two friends ask you to choose sides.",
+  "Your friend does not want to share.",
+  "You do not want to share something special.",
+  "Someone keeps interrupting you.",
+  "Someone does not listen to you.",
+  "Someone keeps shouting.",
+  "Someone talks too quietly for you to hear.",
+  "Your friend cancels your plans.",
+  "You need to cancel plans with your friend.",
+  "Your friend arrives very late.",
+  "You arrive very late.",
+  "Your friend borrows something and loses it.",
+  "You lose something you borrowed.",
+  "Your friend breaks your toy.",
+  "You accidentally break your friend's toy.",
+  "Your friend wants to play a different game.",
+  "Nobody can agree on what game to play.",
+  "One person keeps changing the rules.",
+  "Someone cheats.",
+  "Someone gets angry after losing.",
+  "Someone always wants to win.",
+  "Your team blames you for losing.",
+  "Nobody wants you on their team.",
+  "Someone is picked last for a team.",
+  "Someone is sitting alone at lunch.",
+  "A new student does not know anyone.",
+  "Someone cannot speak your language well.",
+  "You cannot understand someone's accent.",
+  "You forget someone's name.",
+  "Someone forgets your name.",
+  "You meet someone who is very shy.",
+  "You are too shy to introduce yourself.",
+  "Nobody starts the conversation.",
+  "There is an awkward silence.",
+  "You have nothing to talk about.",
+  "Your friend keeps looking at their phone while you talk.",
+  "Your friend posts an embarrassing picture of you.",
+  "Someone takes your picture without asking.",
+  "You send a message to the wrong person.",
+  "You send an embarrassing message by accident.",
+  "You accidentally call someone.",
+  "Your group chat has too many messages.",
+  "Someone keeps sending messages late at night.",
+  "Someone shares private information.",
+  "Your friend tells you a secret.",
+  "Someone asks you to tell them another person's secret.",
+  "Your friends want you to do something you think is wrong.",
+  "Everyone wants to go somewhere you do not like.",
+  "You want to leave a party early.",
+  "Your friend wants to stay longer.",
+  "Your friend has forgotten their money.",
+  "You have forgotten your money.",
+  "Your friend cannot afford something.",
+  "Your friends want to buy an expensive gift.",
+  "You disagree about how to split a bill.",
+  "Someone eats your food without asking.",
+  "Your friend does not like the restaurant you chose.",
+  "Nobody can decide where to eat.",
+  "One friend is vegetarian.",
+  "One friend has a food allergy.",
+  "Someone orders too much food.",
+  "Your friends are always late.",
+  "Your friend talks too much.",
+  "Your friend never talks.",
+  "Someone keeps complaining.",
+  "Someone refuses to apologize.",
+  "You need to apologize.",
+  "Your friend apologizes but you are still angry.",
+  "You disagree with your best friend.",
+  "Your friend likes something you dislike.",
+  "You like something your friends dislike.",
+  "Your friends make fun of your hobby.",
+  "Your friend wants to quit something.",
+  "Your friend is afraid to try something new.",
+  "Your friend needs encouragement.",
+  "You want to make a new friend.",
+  "You want your friend group to get along better.",
+  "There is trash in the park.",
+  "There is plastic in a river.",
+  "People waste too much water.",
+  "People use too much electricity.",
+  "People leave lights on.",
+  "People use too many plastic bags.",
+  "People throw away too much food.",
+  "People do not recycle.",
+  "Recycling bins are difficult to find.",
+  "The neighborhood is too noisy.",
+  "There are too many cars.",
+  "Traffic is very bad.",
+  "Cars are parked everywhere.",
+  "There are not enough parking spaces.",
+  "People drive too fast near a school.",
+  "A traffic light is broken.",
+  "A streetlight is broken.",
+  "A road has a large hole.",
+  "The sidewalk is broken.",
+  "A street floods when it rains.",
+  "There are not enough trees.",
+  "Trees are being cut down.",
+  "A park has no shade.",
+  "The playground equipment is broken.",
+  "There are not enough playgrounds.",
+  "The park is too crowded.",
+  "People leave dog waste in the park.",
+  "Dogs are running around without leashes.",
+  "There are stray animals in the neighborhood.",
+  "Birds cannot find enough food in winter.",
+  "A pond is dirty.",
+  "Fish are dying in a river.",
+  "A beach is covered in trash.",
+  "People leave trash after picnics.",
+  "People use too many disposable cups.",
+  "Restaurants use too much plastic.",
+  "Your school wastes too much paper.",
+  "Your school wastes too much food.",
+  "Your school uses too much electricity.",
+  "Your school needs more plants.",
+  "Your neighborhood needs more recycling bins.",
+  "Your neighborhood needs more trash cans.",
+  "There are too many mosquitoes.",
+  "There are too many flies around the trash.",
+  "The air smells bad.",
+  "Air pollution is getting worse.",
+  "The city is getting hotter.",
+  "There is not enough clean water.",
+  "Water is being wasted.",
+  "A community has dirty drinking water.",
+  "There has not been enough rain.",
+  "A town has a drought.",
+  "Heavy rain causes flooding.",
+  "A storm damages houses.",
+  "A strong wind knocks down trees.",
+  "A neighborhood loses electricity.",
+  "A neighborhood loses water.",
+  "People need help after a storm.",
+  "Families need food after a disaster.",
+  "People need clean drinking water after a disaster.",
+  "An animal shelter is full.",
+  "A food bank needs more food.",
+  "A charity needs volunteers.",
+  "Elderly people in the neighborhood need help.",
+  "Someone cannot carry their groceries.",
+  "A person in a wheelchair cannot enter a building.",
+  "A building has no elevator.",
+  "A playground is not accessible to everyone.",
+  "A public bathroom is dirty.",
+  "There are not enough public bathrooms.",
+  "The bus is always crowded.",
+  "The bus is always late.",
+  "There are not enough buses.",
+  "A bus stop has no seats.",
+  "A bus stop has no shelter from rain.",
+  "People do not know when the bus will arrive.",
+  "Train tickets are too expensive.",
+  "Public transportation stops too early.",
+  "People have trouble finding directions.",
+  "Tourists keep getting lost.",
+  "A sign is difficult to understand.",
+  "A sign is broken.",
+  "A store has a very long line.",
+  "A restaurant is too crowded.",
+  "A restaurant takes too long to serve food.",
+  "A shop runs out of an important item.",
+  "A customer receives the wrong order.",
+  "Someone loses their wallet in a mall.",
+  "A child gets separated from their parents.",
+  "Someone leaves their bag on a bus.",
+  "People talk loudly in a movie theater.",
+  "Someone uses their phone during a movie.",
+  "A library needs more books.",
+  "A community center needs more activities.",
+  "Children have nowhere safe to play.",
+  "Teenagers say there is nothing to do.",
+  "Neighbors do not know each other.",
+  "People in the community rarely help each other.",
+  "Your neighborhood wants to become cleaner.",
+  "Your town wants to become a better place to live.",
+  "You wake up and your voice is gone.",
+  "You wake up and you are only 10 centimeters tall.",
+  "You suddenly become three meters tall.",
+  "You wake up with a tail.",
+  "You wake up with wings but cannot fly.",
+  "You can fly but do not know how to land.",
+  "You become invisible.",
+  "You cannot turn off your invisibility.",
+  "You can read everyone's thoughts.",
+  "Everyone can read your thoughts.",
+  "You can only speak in questions.",
+  "You can only whisper.",
+  "You can only shout.",
+  "Everything you say becomes true.",
+  "Nobody can understand what you say.",
+  "Everyone in the world forgets your name.",
+  "You forget your own name.",
+  "You wake up in a different country.",
+  "You wake up on a deserted island.",
+  "You are lost in a forest.",
+  "You are lost in a huge shopping mall.",
+  "You are locked inside your school overnight.",
+  "You are stuck in an elevator.",
+  "You are stuck on top of a mountain.",
+  "Your boat stops working.",
+  "Your bicycle breaks far from home.",
+  "Your car runs out of fuel.",
+  "Your phone dies when you are lost.",
+  "You have no internet for one week.",
+  "Every phone in the world stops working.",
+  "Every computer stops working.",
+  "The world's electricity disappears for one day.",
+  "All clocks stop working.",
+  "Nobody knows what time it is.",
+  "The sun does not come up one morning.",
+  "It does not stop raining for one month.",
+  "It suddenly starts snowing in summer.",
+  "It becomes extremely hot in winter",
+  "Your town gets covered in snow overnight.",
+  "Your school suddenly has no electricity.",
+  "Your school has no water for a day.",
+  "All the teachers disappear for one day.",
+  "Every student becomes the teacher for a day.",
+  "Your teacher suddenly becomes a child.",
+  "Your parents suddenly become children.",
+  "Your pet starts talking.",
+  "Your dog refuses to stop talking.",
+  "Your cat becomes the mayor of your town.",
+  "Your pet gets lost in a giant shopping mall.",
+  "You find a baby dragon in your backyard.",
+  "The dragon keeps accidentally starting fires.",
+  "A dinosaur appears at your school.",
+  "A dinosaur is blocking the road.",
+  "A giant is sleeping in the middle of your town.",
+  "Aliens land on your school playground.",
+  "The aliens cannot understand your language.",
+  "An alien wants to live in your house.",
+  "A robot moves into your neighborhood.",
+  "Your robot helper stops following instructions.",
+  "Your robot does all your homework incorrectly.",
+  "Every robot in the city stops working.",
+  "Your computer starts talking to you.",
+  "Your phone refuses to let you use it.",
+  "Your alarm clock runs away every morning.",
+  "Your refrigerator will not open.",
+  "Everything in your refrigerator freezes.",
+  "Your house starts moving by itself.",
+  "Your bedroom suddenly has no door.",
+  "Your bedroom fills with balloons.",
+  "Your house is surrounded by water.",
+  "A tree grows through the middle of your house.",
+  "Your backyard becomes a jungle.",
+  "A wild monkey steals your backpack.",
+  "A bird steals your lunch.",
+  "A squirrel steals your homework.",
+  "One hundred cats appear outside your house.",
+  "One hundred dogs follow you to school.",
+  "Thousands of frogs appear in your neighborhood.",
+  "Your town is invaded by giant chickens.",
+  "A giant spider builds a web across your street.",
+  "Every animal at the zoo escapes.",
+  "You find a penguin walking down your street.",
+  "A whale is stuck near the beach.",
+  "A baby elephant gets lost in your neighborhood.",
+  "You discover a mysterious egg.",
+  "The mysterious egg starts moving.",
+  "You discover a secret door in your classroom.",
+  "The secret door leads to an unknown world.",
+  "You find a treasure map but part of it is missing.",
+  "You find a treasure chest but cannot open it.",
+  "You find $1,000 but do not know who it belongs to.",
+  "You win $1 million but must spend it helping your community.",
+  "You become the principal of your school for one day.",
+  "You become mayor of your city for one week.",
+  "You can make one new rule for your school.",
+  "Your school can only keep three subjects.",
+  "There are no cars allowed in your city anymore.",
+  "Your town must produce zero trash for one week.",
+  "Your class has $1,000 to solve one problem at school.",
+  "You can solve one problem in the entire world. Which problem do you choose, and how would you solve it?"
 ];
-let state = {phase:&#x27;ready&#x27;,order:[],history:[],deadline:0};
+let state = {phase:'ready',order:[],history:[],deadline:0};
 let ticker;
 function save() {
- if(window.openai?.setWidgetState) window.openai.setWidgetState({modelContent:{game:&#x27;Problem-solving sprint&#x27;,answered:state.history.filter(h=&gt;h.ok).length,skipped:state.history.filter(h=&gt;!h.ok).length,phase:state.phase},privateContent:{version:2,...state}}).catch(()=&gt;{});
+ if(window.openai?.setWidgetState) window.openai.setWidgetState({modelContent:{game:'Problem-solving sprint',answered:state.history.filter(h=>h.ok).length,skipped:state.history.filter(h=>!h.ok).length,phase:state.phase},privateContent:{version:2,...state}}).catch(()=>{});
 }
-function remaining(){return state.phase===&#x27;ready&#x27;?60:Math.max(0,Math.ceil((state.deadline-Date.now())/1000));}
+function remaining(){return state.phase==='ready'?60:Math.max(0,Math.ceil((state.deadline-Date.now())/1000));}
 function render(){
- const active=state.phase===&#x27;playing&#x27;;
- const done=state.phase===&#x27;done&#x27;;
- const count=state.history.filter(h=&gt;h.ok).length;
+ const active=state.phase==='playing';
+ const done=state.phase==='done';
+ const count=state.history.filter(h=>h.ok).length;
  const left=remaining();
- el(&#x27;clock&#x27;).textContent=left+&#x27; seconds&#x27;;
- el(&#x27;score&#x27;).textContent=count+&#x27; answered&#x27;;
- el(&#x27;skips&#x27;).textContent=(state.history.length-count)+&#x27; skipped&#x27;;
- root.querySelector(&#x27;.progress&#x27;).setAttribute(&#x27;aria-valuenow&#x27;,left);
- root.querySelector(&#x27;.progress-bar&#x27;).style.width=(left/60*100)+&#x27;%&#x27;;
- el(&#x27;start&#x27;).hidden=active;el(&#x27;answer&#x27;).hidden=!active;el(&#x27;skip&#x27;).hidden=!active;
- el(&#x27;answer&#x27;).disabled=!active;el(&#x27;skip&#x27;).disabled=!active;
- el(&#x27;results&#x27;).hidden=!done;
+ el('clock').textContent=left+' seconds';
+ el('score').textContent=count+' answered';
+ el('skips').textContent=(state.history.length-count)+' skipped';
+ root.querySelector('.progress').setAttribute('aria-valuenow',left);
+ root.querySelector('.progress-bar').style.width=(left/60*100)+'%';
+ el('start').hidden=active;el('answer').hidden=!active;el('skip').hidden=!active;
+ el('answer').disabled=!active;el('skip').disabled=!active;
+ el('results').hidden=!done;
  if(active){
   const idx=state.order[state.history.length];
-  el(&#x27;number&#x27;).textContent=&#x27;PROBLEM &#x27;+(1+idx)+&#x27; · &#x27;+(state.history.length+1)+&#x27; OF 500&#x27;;
-  el(&#x27;prompt&#x27;).textContent=prompts[idx];
-  el(&#x27;cue&#x27;).textContent=&#x27;What would you do? “I would… because…”&#x27;;
- }else if(state.phase===&#x27;ready&#x27;){
-  el(&#x27;number&#x27;).textContent=&#x27;500 PROBLEMS · ONE MINUTE&#x27;;
-  el(&#x27;prompt&#x27;).textContent=&#x27;How many problems can you solve in 60 seconds?&#x27;;
-  el(&#x27;cue&#x27;).textContent=&#x27;Say what you would do and why.&#x27;;
-  el(&#x27;start&#x27;).textContent=&#x27;Start 60-second round&#x27;;
+  el('number').textContent='PROBLEM '+(1+idx)+' · '+(state.history.length+1)+' OF 500';
+  el('prompt').textContent=prompts[idx];
+  el('cue').textContent='What would you do? “I would… because…”';
+ }else if(state.phase==='ready'){
+  el('number').textContent='500 PROBLEMS · ONE MINUTE';
+  el('prompt').textContent='How many problems can you solve in 60 seconds?';
+  el('cue').textContent='Say what you would do and why.';
+  el('start').textContent='Start 60-second round';
  }else if(done){
-  el(&#x27;number&#x27;).textContent=state.history.length===500?&#x27;ALL 500 PROMPTS COMPLETED&#x27;:&#x27;TIME’S UP&#x27;;
-  el(&#x27;prompt&#x27;).textContent=count+&#x27; &#x27;+(count===1?&#x27;problem&#x27;:&#x27;problems&#x27;)+&#x27; answered!&#x27;;
-  el(&#x27;cue&#x27;).textContent=&#x27;Ready for another problem-solving sprint?&#x27;;
-  el(&#x27;start&#x27;).textContent=&#x27;Play again&#x27;;
-  el(&#x27;review&#x27;).replaceChildren();
-  state.history.forEach(h=&gt;{const li=document.createElement(&#x27;li&#x27;);li.textContent=(h.ok?&#x27;Answered&#x27;:&#x27;Skipped&#x27;)+&#x27; · &#x27;+(1+h.idx)+&#x27;. &#x27;+prompts[h.idx];el(&#x27;review&#x27;).append(li);});
-  if(state.history.length&lt;500){const li=document.createElement(&#x27;li&#x27;);li.textContent=&#x27;Unfinished · &#x27;+prompts[state.order[state.history.length]];el(&#x27;review&#x27;).append(li);}
+  el('number').textContent=state.history.length===500?'ALL 500 PROMPTS COMPLETED':'TIME’S UP';
+  el('prompt').textContent=count+' '+(count===1?'problem':'problems')+' answered!';
+  el('cue').textContent='Ready for another problem-solving sprint?';
+  el('start').textContent='Play again';
+  el('review').replaceChildren();
+  state.history.forEach(h=>{const li=document.createElement('li');li.textContent=(h.ok?'Answered':'Skipped')+' · '+(1+h.idx)+'. '+prompts[h.idx];el('review').append(li);});
+  if(state.history.length<500){const li=document.createElement('li');li.textContent='Unfinished · '+prompts[state.order[state.history.length]];el('review').append(li);}
  }
 }
-function finish(){state.phase=&#x27;done&#x27;;clearInterval(ticker);render();save();el(&#x27;start&#x27;).focus();}
+function finish(){state.phase='done';clearInterval(ticker);render();save();el('start').focus();}
 function tick(){
- if(state.phase!==&#x27;playing&#x27;)return;
+ if(state.phase!=='playing')return;
  const left=remaining();
  if(left===0){finish();return;}
- el(&#x27;clock&#x27;).textContent=left+&#x27; seconds&#x27;;
- root.querySelector(&#x27;.progress&#x27;).setAttribute(&#x27;aria-valuenow&#x27;,left);
- root.querySelector(&#x27;.progress-bar&#x27;).style.width=(left/60*100)+&#x27;%&#x27;;
+ el('clock').textContent=left+' seconds';
+ root.querySelector('.progress').setAttribute('aria-valuenow',left);
+ root.querySelector('.progress-bar').style.width=(left/60*100)+'%';
 }
 function mark(ok){
- if(state.phase!==&#x27;playing&#x27;)return;
- if(Date.now()&gt;=state.deadline){finish();return;}
+ if(state.phase!=='playing')return;
+ if(Date.now()>=state.deadline){finish();return;}
  state.history.push({idx:state.order[state.history.length],ok});
  if(state.history.length===500)finish();else{render();save();}
 }
-el(&#x27;start&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{
- const order=Array.from({length:prompts.length},(_,i)=&gt;i);
- for(let i=order.length-1;i&gt;0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
- state={phase:&#x27;playing&#x27;,order,history:[],deadline:Date.now()+60000};
- clearInterval(ticker);ticker=setInterval(tick,100);render();save();el(&#x27;answer&#x27;).focus();
+el('start').addEventListener('click',()=>{
+ const order=Array.from({length:prompts.length},(_,i)=>i);
+ for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
+ state={phase:'playing',order,history:[],deadline:Date.now()+60000};
+ clearInterval(ticker);ticker=setInterval(tick,100);render();save();el('answer').focus();
 });
-el(&#x27;answer&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;mark(true));
-el(&#x27;skip&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;mark(false));
-el(&#x27;reset&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{clearInterval(ticker);state={phase:&#x27;ready&#x27;,order:[],history:[],deadline:0};el(&#x27;review&#x27;).replaceChildren();render();save();el(&#x27;start&#x27;).focus();});
+el('answer').addEventListener('click',()=>mark(true));
+el('skip').addEventListener('click',()=>mark(false));
+el('reset').addEventListener('click',()=>{clearInterval(ticker);state={phase:'ready',order:[],history:[],deadline:0};el('review').replaceChildren();render();save();el('start').focus();});
 function restore(snapshot){
  const s=snapshot?.privateContent;
- if(s?.version===2&amp;&amp;s.phase===&#x27;ready&#x27;){clearInterval(ticker);state={phase:&#x27;ready&#x27;,order:[],history:[],deadline:0};render();return;}
- if(!s||s.version!==2||![&#x27;playing&#x27;,&#x27;done&#x27;].includes(s.phase)||!Array.isArray(s.order)||s.order.length!==500||new Set(s.order).size!==500||!s.order.every(n=&gt;Number.isInteger(n)&amp;&amp;n&gt;=0&amp;&amp;n&lt;500)||!Array.isArray(s.history)||s.history.length&gt;500||!s.history.every((h,i)=&gt;h.idx===s.order[i]&amp;&amp;typeof h.ok===&#x27;boolean&#x27;)||!Number.isFinite(s.deadline))return;
+ if(s?.version===2&&s.phase==='ready'){clearInterval(ticker);state={phase:'ready',order:[],history:[],deadline:0};render();return;}
+ if(!s||s.version!==2||!['playing','done'].includes(s.phase)||!Array.isArray(s.order)||s.order.length!==500||new Set(s.order).size!==500||!s.order.every(n=>Number.isInteger(n)&&n>=0&&n<500)||!Array.isArray(s.history)||s.history.length>500||!s.history.every((h,i)=>h.idx===s.order[i]&&typeof h.ok==='boolean')||!Number.isFinite(s.deadline))return;
  state={phase:s.phase,order:s.order.slice(),history:s.history.slice(),deadline:s.deadline};
  clearInterval(ticker);
- if(state.phase===&#x27;playing&#x27;&amp;&amp;(remaining()===0||state.history.length===500))state.phase=&#x27;done&#x27;;
- render();if(state.phase===&#x27;playing&#x27;)ticker=setInterval(tick,100);
+ if(state.phase==='playing'&&(remaining()===0||state.history.length===500))state.phase='done';
+ render();if(state.phase==='playing')ticker=setInterval(tick,100);
 }
 render();
 restore(window.openai?.widgetState);
-window.addEventListener(&#x27;openai:set_globals&#x27;,e=&gt;{if(e.detail?.globals?.widgetState)restore(e.detail.globals.widgetState);});
-})();
-&lt;/script&gt;
-
-&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-(() =&gt; {
-  if (window.FloatingUIDOM == null) {
-    return;
-  }
-  const { autoUpdate, computePosition, flip, offset, shift, size } =
-    window.FloatingUIDOM;
-  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
-  const tooltipId = `codex-visualization-tooltip-${
-    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
-  }`;
-  const tooltipGap = 5;
-  const hoverDelay = 700;
-  const skipDelay = 300;
-  let activeTrigger = null;
-  let pendingTrigger = null;
-  let tooltip = null;
-  let openTimeout = null;
-  let autoUpdateCleanup = null;
-  let positionRequest = 0;
-  let skipDelayUntil = 0;
-  let lastPointerWasTouch = false;
-  let pinnedByTouch = false;
-
-  const getTrigger = (event) =&gt; {
-    for (const target of event.composedPath()) {
-      if (target?.nodeType === Node.ELEMENT_NODE) {
-        const trigger = target.closest(&quot;[data-tooltip]&quot;);
-        if (trigger) return trigger;
-      }
-    }
-    return null;
-  };
-  const containsTarget = (trigger, target) =&gt;
-    target?.nodeType != null &amp;&amp; trigger.contains(target);
-  const getContent = (trigger) =&gt;
-    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
-  const getPlacement = (trigger) =&gt; {
-    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
-    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
-  };
-  const getTooltip = () =&gt; {
-    if (tooltip == null) {
-      tooltip = document.createElement(&quot;div&quot;);
-      tooltip.id = tooltipId;
-      tooltip.className = &quot;tooltip&quot;;
-      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
-    }
-    return tooltip;
-  };
-  const setDescribedBy = (trigger, described) =&gt; {
-    const ids = new Set(
-      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
-        .split(/\s+/)
-        .filter(Boolean),
-    );
-    if (described) {
-      ids.add(tooltipId);
-    } else {
-      ids.delete(tooltipId);
-    }
-    if (ids.size === 0) {
-      trigger.removeAttribute(&quot;aria-describedby&quot;);
-    } else {
-      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
-    }
-  };
-  const clearOpenTimeout = () =&gt; {
-    if (openTimeout != null) {
-      window.clearTimeout(openTimeout);
-      openTimeout = null;
-    }
-    pendingTrigger = null;
-  };
-  const closeTooltip = (activateSkipDelay = true) =&gt; {
-    clearOpenTimeout();
-    pinnedByTouch = false;
-    positionRequest += 1;
-    autoUpdateCleanup?.();
-    autoUpdateCleanup = null;
-    if (activeTrigger == null) {
-      return;
-    }
-    setDescribedBy(activeTrigger, false);
-    activeTrigger = null;
-    tooltip?.remove();
-    if (activateSkipDelay) {
-      skipDelayUntil = Date.now() + skipDelay;
-    }
-  };
-  const updatePosition = (trigger, floating) =&gt; {
-    const request = ++positionRequest;
-    void computePosition(trigger, floating, {
-      middleware: [
-        offset(tooltipGap),
-        flip({ padding: tooltipGap }),
-        shift({ padding: tooltipGap }),
-        size({
-          padding: tooltipGap,
-          apply({ availableHeight, availableWidth, elements }) {
-            elements.floating.style.setProperty(
-              &quot;--tooltip-available-width&quot;,
-              `${Math.max(0, availableWidth)}px`,
-            );
-            elements.floating.style.setProperty(
-              &quot;--tooltip-available-height&quot;,
-              `${Math.max(0, availableHeight)}px`,
-            );
-          },
-        }),
-      ],
-      placement: getPlacement(trigger),
-      strategy: &quot;fixed&quot;,
-    })
-      .then(({ x, y }) =&gt; {
-        if (activeTrigger !== trigger || request !== positionRequest) {
-          return;
-        }
-        const scale = window.devicePixelRatio || 1;
-        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
-        floating.style.visibility = &quot;visible&quot;;
-      })
-      .catch(() =&gt; {
-        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
-          closeTooltip(false);
-        }
-      });
-  };
-  const openTooltip = (trigger) =&gt; {
-    const content = getContent(trigger);
-    if (!trigger.isConnected || content.length === 0) {
-      return;
-    }
-    clearOpenTimeout();
-    if (activeTrigger === trigger) {
-      return;
-    }
-    closeTooltip();
-    const floating = getTooltip();
-    floating.textContent = content;
-    floating.style.visibility = &quot;hidden&quot;;
-    floating.style.transform = &quot;translate(0, 0)&quot;;
-    document.body.appendChild(floating);
-    activeTrigger = trigger;
-    setDescribedBy(trigger, true);
-    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
-      updatePosition(trigger, floating);
-    });
-  };
-  const requestOpen = (trigger, immediate = false) =&gt; {
-    if (
-      getContent(trigger).length === 0 ||
-      activeTrigger === trigger ||
-      pendingTrigger === trigger
-    ) {
-      return;
-    }
-    clearOpenTimeout();
-    pendingTrigger = trigger;
-    const delay =
-      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
-        ? 0
-        : hoverDelay;
-    if (delay === 0) {
-      openTooltip(trigger);
-      return;
-    }
-    openTimeout = window.setTimeout(() =&gt; {
-      openTimeout = null;
-      pendingTrigger = null;
-      openTooltip(trigger);
-    }, delay);
-  };
-  const handlePointerOpen = (event) =&gt; {
-    if (event.pointerType === &quot;touch&quot;) {
-      return;
-    }
-    const trigger = getTrigger(event);
-    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
-      return;
-    }
-    requestOpen(trigger);
-  };
-  const handlePointer = (event) =&gt; {
-    lastPointerWasTouch =
-      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
-  };
-  const handleTouchClick = (event) =&gt; {
-    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
-    lastPointerWasTouch = false;
-    if (!isTouch || event.detail === 0) {
-      return;
-    }
-    const trigger = getTrigger(event);
-    if (
-      trigger == null ||
-      !trigger.isConnected ||
-      getContent(trigger).length === 0 ||
-      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
-    ) {
-      if (pinnedByTouch) {
-        closeTooltip();
-      }
-      return;
-    }
-    openTooltip(trigger);
-    pinnedByTouch = activeTrigger === trigger;
-    window.setTimeout(() =&gt; {
-      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
-        closeTooltip(false);
-      }
-    }, 0);
-  };
-  const handleLeave = (event) =&gt; {
-    if (pinnedByTouch) {
-      return;
-    }
-    const trigger = getTrigger(event);
-    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
-      return;
-    }
-    if (activeTrigger === trigger || pendingTrigger === trigger) {
-      closeTooltip();
-    }
-  };
-  const handleFocusIn = (event) =&gt; {
-    const trigger = getTrigger(event);
-    if (trigger?.matches(&quot;:focus-visible&quot;)) {
-      requestOpen(trigger, true);
-    }
-  };
-  const handleKeyDown = (event) =&gt; {
-    if (event.key === &quot;Escape&quot;) {
-      closeTooltip();
-    }
-  };
-  const handleContextMenu = (event) =&gt; {
-    lastPointerWasTouch = false;
-    const trigger = getTrigger(event);
-    if (activeTrigger === trigger || pendingTrigger === trigger) {
-      closeTooltip();
-    }
-  };
-  const handlers = {
-    pointerover: handlePointerOpen,
-    pointerdown: handlePointer,
-    pointercancel: handlePointer,
-    click: handleTouchClick,
-    pointerout: handleLeave,
-    focusin: handleFocusIn,
-    focusout: handleLeave,
-    keydown: handleKeyDown,
-    contextmenu: handleContextMenu,
-  };
-  const roots = new Map();
-  const handledEvents = new WeakSet();
-  const handleEvent = (event) =&gt; {
-    if (handledEvents.has(event)) return;
-    handledEvents.add(event);
-    handlers[event.type](event);
-  };
-  const discoverRoots = (node) =&gt; {
-    if (node.shadowRoot) listen(node.shadowRoot);
-    for (const element of node.querySelectorAll(&quot;*&quot;)) {
-      if (element.shadowRoot) listen(element.shadowRoot);
-    }
-  };
-  const listen = (root) =&gt; {
-    if (roots.has(root)) return;
-    for (const type of Object.keys(handlers)) root.addEventListener(type, handleEvent);
-    const observer = new window.MutationObserver((records) =&gt; {
-      for (const { addedNodes } of records) {
-        for (const node of addedNodes) {
-          if (node.nodeType === Node.ELEMENT_NODE) discoverRoots(node);
-        }
-      }
-      for (const [root, cleanup] of roots) {
-        if (root.host &amp;&amp; !root.host.isConnected) {
-          cleanup();
-          roots.delete(root);
-        }
-      }
-      if (activeTrigger &amp;&amp; !activeTrigger.isConnected) closeTooltip(false);
-    });
-    observer.observe(root, { childList: true, subtree: true });
-    roots.set(root, () =&gt; {
-      observer.disconnect();
-      for (const type of Object.keys(handlers)) root.removeEventListener(type, handleEvent);
-    });
-    discoverRoots(root);
-  };
-  const destroy = () =&gt; {
-    closeTooltip(false);
-    lastPointerWasTouch = false;
-    for (const cleanup of roots.values()) cleanup();
-    roots.clear();
-    tooltip = null;
-  };
-
-  // Events between children of one shadow root never reach the document.
-  listen(document);
-  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
-})();
-&lt;/script&gt;
-&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
-(() =&gt; {
-  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
-  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
-  const selectTab = (selected) =&gt; {
-    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
-    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
-      const active = tab === selected;
-      tab.classList.toggle(&quot;active&quot;, active);
-      tab.setAttribute(&quot;aria-selected&quot;, String(active));
-      const id = tab.getAttribute(&quot;aria-controls&quot;);
-      const panel = id &amp;&amp; document.getElementById(id);
-      if (panel != null) {
-        panel.hidden = id !== panelId;
-        if (!panel.hidden &amp;&amp; selected.id) {
-          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
-        }
-      }
-    }
-  };
-  const interact = (event) =&gt; {
-    const tab = event.target?.closest?.(selector);
-    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
-      return;
-    }
-    if (event.type === &quot;click&quot;) {
-      selectTab(tab);
-      return;
-    }
-    const tabs = Array.from(
-      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
-    ).filter((candidate) =&gt; !candidate.matches(disabled));
-    const current = tabs.indexOf(tab);
-    let next;
-    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
-      next = (current + 1) % tabs.length;
-    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
-      next = (current + tabs.length - 1) % tabs.length;
-    } else if (event.key === &quot;Home&quot;) {
-      next = 0;
-    } else if (event.key === &quot;End&quot;) {
-      next = tabs.length - 1;
-    } else {
-      return;
-    }
-    event.preventDefault();
-    tabs[next].focus();
-    selectTab(tabs[next]);
-  };
-
-  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
-    const selected =
-      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
-      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
-      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
-    if (selected != null) {
-      selectTab(selected);
-    }
-  }
-  document.addEventListener(&quot;click&quot;, interact);
-  document.addEventListener(&quot;keydown&quot;, interact);
-  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
-    document.removeEventListener(&quot;click&quot;, interact);
-    document.removeEventListener(&quot;keydown&quot;, interact);
-  }, { once: true });
-})();
-&lt;/script&gt;
-&lt;script id=&quot;codex-visualization-carousel&quot;&gt;
-  (() =&gt; {
-    for (const root of document.querySelectorAll(&quot;.viz-carousel&quot;)) {
-      const panels = Array.from(
-        root.querySelectorAll(&quot;:scope &gt; [data-variant]&quot;),
-      );
-      if (panels.length === 0) {
-        continue;
-      }
-      root.setAttribute(&quot;role&quot;, &quot;group&quot;);
-      panels.forEach((panel, index) =&gt; {
-        panel.hidden = index !== 0;
-        panel.setAttribute(&quot;role&quot;, &quot;group&quot;);
-        if (!panel.hasAttribute(&quot;aria-label&quot;)) {
-          panel.setAttribute(&quot;aria-label&quot;, panel.dataset.variant);
-        }
-      });
-      root.dataset.activeVariant = panels[0].dataset.variant;
-      if (panels.length === 1) {
-        continue;
-      }
-
-      const controls = document.createElement(&quot;div&quot;);
-      controls.className = &quot;viz-carousel-controls&quot;;
-      // Portable copy of the settings dropdown&#x27;s legacy glyph; no 14px icon-package preset matches it.
-      // https://github.com/openai/openai/blob/master/codex/codex-apps/webview/src/icons/chevron.svg
-      controls.innerHTML = `
-      &lt;button type=&quot;button&quot; class=&quot;viz-carousel-previous cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;chevron-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
-      &lt;details class=&quot;viz-carousel-picker&quot;&gt;
-        &lt;summary class=&quot;cursor-interaction&quot;&gt;
-          &lt;span class=&quot;viz-carousel-count tabular-nums&quot;&gt;&lt;/span&gt;
-          &lt;span class=&quot;viz-carousel-name&quot;&gt;&lt;/span&gt;
-          &lt;svg class=&quot;viz-carousel-caret&quot; width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 20 21&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;
-            &lt;path d=&quot;M15.2793 7.71101C15.539 7.45131 15.961 7.45131 16.2207 7.71101C16.4804 7.97071 16.4804 8.39272 16.2207 8.65242L10.4707 14.4024C10.211 14.6621 9.78902 14.6621 9.52932 14.4024L3.77932 8.65242L3.69436 8.54792C3.52385 8.28979 3.55205 7.93828 3.77932 7.71101C4.00659 7.48374 4.3581 7.45554 4.61623 7.62605L4.72073 7.71101L10 12.9903L15.2793 7.71101Z&quot; fill=&quot;currentColor&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;0.6&quot; /&gt;
-          &lt;/svg&gt;
-        &lt;/summary&gt;
-        &lt;div class=&quot;viz-carousel-options&quot;&gt;&lt;/div&gt;
-      &lt;/details&gt;
-      &lt;button type=&quot;button&quot; class=&quot;viz-carousel-next cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;`;
-      const previous = controls.querySelector(&quot;.viz-carousel-previous&quot;);
-      const next = controls.querySelector(&quot;.viz-carousel-next&quot;);
-      const picker = controls.querySelector(&quot;.viz-carousel-picker&quot;);
-      const summary = picker.querySelector(&quot;summary&quot;);
-      const count = controls.querySelector(&quot;.viz-carousel-count&quot;);
-      const name = controls.querySelector(&quot;.viz-carousel-name&quot;);
-      const options = controls.querySelector(&quot;.viz-carousel-options&quot;);
-      const status = document.createElement(&quot;span&quot;);
-      status.className = &quot;sr-only&quot;;
-      status.setAttribute(&quot;role&quot;, &quot;status&quot;);
-      status.setAttribute(&quot;aria-live&quot;, &quot;polite&quot;);
-      status.setAttribute(&quot;aria-atomic&quot;, &quot;true&quot;);
-      previous.setAttribute(
-        &quot;aria-label&quot;,
-        root.dataset.previousLabel ?? &quot;Previous variant&quot;,
-      );
-      next.setAttribute(&quot;aria-label&quot;, root.dataset.nextLabel ?? &quot;Next variant&quot;);
-
-      let active = 0;
-      let mousePointerId = null;
-      let summaryPointerHandled = false;
-      summary.addEventListener(&quot;pointerdown&quot;, (event) =&gt; {
-        summaryPointerHandled =
-          event.pointerType === &quot;mouse&quot; &amp;&amp; event.button === 0 &amp;&amp; !event.ctrlKey;
-        if (!summaryPointerHandled) {
-          return;
-        }
-        event.preventDefault();
-        summary.focus({ preventScroll: true });
-        picker.open = !picker.open;
-        mousePointerId = picker.open ? event.pointerId : null;
-      });
-      summary.addEventListener(&quot;click&quot;, (event) =&gt; {
-        if (summaryPointerHandled &amp;&amp; event.detail &gt; 0) {
-          event.preventDefault();
-        }
-      });
-      const choices = panels.map((panel, index) =&gt; {
-        const choice = document.createElement(&quot;button&quot;);
-        choice.type = &quot;button&quot;;
-        choice.className = &quot;cursor-interaction&quot;;
-        choice.textContent = panel.dataset.variant;
-        choice.addEventListener(&quot;click&quot;, () =&gt; {
-          select(index);
-          summary.focus();
-        });
-        choice.addEventListener(&quot;pointerup&quot;, (event) =&gt; {
-          if (
-            picker.open &amp;&amp;
-            event.pointerType === &quot;mouse&quot; &amp;&amp;
-            event.button === 0 &amp;&amp;
-            event.pointerId === mousePointerId
-          ) {
-            choice.click();
-          }
-        });
-        options.appendChild(choice);
-        return choice;
-      });
-      const select = (index) =&gt; {
-        const changed = active !== index;
-        active = index;
-        panels.forEach((panel, position) =&gt; {
-          panel.hidden = position !== active;
-          choices[position].setAttribute(
-            &quot;aria-current&quot;,
-            String(position === active),
-          );
-        });
-        root.dataset.activeVariant = panels[active].dataset.variant;
-        count.textContent = `${active + 1} / ${panels.length}`;
-        name.textContent = panels[active].dataset.variant;
-        picker.open = false;
-        mousePointerId = null;
-        if (changed) {
-          status.textContent = `${count.textContent}: ${name.textContent}`;
-        }
-      };
-      previous.addEventListener(&quot;click&quot;, () =&gt;
-        select((active + panels.length - 1) % panels.length),
-      );
-      next.addEventListener(&quot;click&quot;, () =&gt;
-        select((active + 1) % panels.length),
-      );
-      picker.addEventListener(&quot;keydown&quot;, (event) =&gt; {
-        if (event.key === &quot;Escape&quot; &amp;&amp; picker.open) {
-          event.preventDefault();
-          picker.open = false;
-          mousePointerId = null;
-          summary.focus();
-          return;
-        }
-        if (event.altKey || event.ctrlKey || event.metaKey) {
-          return;
-        }
-        const index = choices.indexOf(document.activeElement);
-        let nextIndex;
-        if (event.key === &quot;ArrowDown&quot;) {
-          nextIndex = index &lt; 0 ? active : (index + 1) % choices.length;
-        } else if (event.key === &quot;ArrowUp&quot;) {
-          nextIndex = index &lt; 0 ? active : (index + choices.length - 1) % choices.length;
-        } else if (picker.open &amp;&amp; event.key === &quot;Home&quot;) {
-          nextIndex = 0;
-        } else if (picker.open &amp;&amp; event.key === &quot;End&quot;) {
-          nextIndex = choices.length - 1;
-        } else {
-          return;
-        }
-        event.preventDefault();
-        picker.open = true;
-        choices[nextIndex].focus();
-      });
-      picker.addEventListener(&quot;focusout&quot;, (event) =&gt; {
-        if (!picker.contains(event.relatedTarget)) {
-          picker.open = false;
-          mousePointerId = null;
-        }
-      });
-      const dismiss = (event) =&gt; {
-        if (!summary.contains(event.target)) {
-          mousePointerId = null;
-        }
-        if (!picker.contains(event.target)) {
-          picker.open = false;
-        }
-      };
-      const endPointerSelection = () =&gt; {
-        mousePointerId = null;
-      };
-      const sizePicker = () =&gt; {
-        root.style.setProperty(
-          &quot;--viz-carousel-picker-height&quot;,
-          `${picker.open ? options.offsetHeight : 0}px`,
-        );
-      };
-      picker.addEventListener(&quot;toggle&quot;, sizePicker);
-      window.addEventListener(&quot;resize&quot;, sizePicker);
-      document.addEventListener(&quot;pointerdown&quot;, dismiss);
-      document.addEventListener(&quot;pointerup&quot;, endPointerSelection);
-      document.addEventListener(&quot;pointercancel&quot;, endPointerSelection);
-      window.addEventListener(&quot;blur&quot;, endPointerSelection);
-      window.addEventListener(
-        &quot;pagehide&quot;,
-        () =&gt; {
-          document.removeEventListener(&quot;pointerdown&quot;, dismiss);
-          document.removeEventListener(&quot;pointerup&quot;, endPointerSelection);
-          document.removeEventListener(&quot;pointercancel&quot;, endPointerSelection);
-          window.removeEventListener(&quot;blur&quot;, endPointerSelection);
-          window.removeEventListener(&quot;resize&quot;, sizePicker);
-        },
-        { once: true },
-      );
-      root.append(controls, status);
-      select(0);
-    }
-  })();
-&lt;/script&gt;
-&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-(() =&gt; {
-  const initialize = () =&gt; {
-    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
-  };
-  if (globalThis.lucide != null) {
-    initialize();
-    return;
-  }
-  document
-    .getElementById(&quot;codex-visualization-lucide&quot;)
-    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
-})();
-&lt;/script&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-"></iframe>
-<script>(() => {
-  const frame = document.getElementById("codex-visualization");
-  if (!(frame instanceof HTMLIFrameElement)) {
-    return;
-  }
-  let viewportHeight = globalThis.innerHeight;
-  const storageKey = `codex:visualization-widget-state-v2:${JSON.stringify([
-    globalThis.location.pathname,
-    globalThis.location.search,
-  ])}`;
-  const parseState = (serializedState) => {
-    if (
-      typeof serializedState !== "string" ||
-      new TextEncoder().encode(serializedState).length > 16 * 1024
-    ) {
-      throw new TypeError(
-        "Widget state must be a JSON object of at most 16 KiB",
-      );
-    }
-    /** @type {unknown} */
-    const state = JSON.parse(serializedState);
-    if (
-      state == null ||
-      typeof state !== "object" ||
-      Array.isArray(state) ||
-      ("imageIds" in state &&
-        (!Array.isArray(state.imageIds) || state.imageIds.length > 0))
-    ) {
-      throw new TypeError("Widget state must be a JSON object");
-    }
-    const storedState = { modelContent: null, privateContent: null, ...state };
-    const canonicalState = JSON.stringify(
-      storedState,
-      (_key, /** @type {unknown} */ value) => {
-        if (typeof value === "number" && !Number.isFinite(value)) {
-          throw new TypeError("Widget state must contain finite numbers");
-        }
-        return value;
-      },
-    );
-    if (new TextEncoder().encode(canonicalState).length > 16 * 1024) {
-      throw new TypeError(
-        "Widget state must be a JSON object of at most 16 KiB",
-      );
-    }
-    return storedState;
-  };
-  let storage = null;
-  let state = null;
-  try {
-    const localStorage = globalThis.localStorage;
-    const probeKey = `${storageKey}:probe`;
-    localStorage.setItem(probeKey, "1");
-    localStorage.removeItem(probeKey);
-    storage = localStorage;
-    const savedState = storage.getItem(storageKey);
-    if (savedState != null) {
-      try {
-        state = parseState(savedState);
-      } catch {
-        // Invalid saved state does not disable future writes.
-      }
-    }
-  } catch {
-    storage = null;
-  }
-  const initialGlobals = {
-    widgetState: state,
-    statePersistence: storage == null ? "none" : "local",
-  };
-
-  const channel = new MessageChannel();
-  channel.port1.addEventListener("message", (event) => {
-    const data = event.data;
-    if (typeof data !== "object" || data == null) {
-      return;
-    }
-    if (data.type === "widget-state-write") {
-      if (!Number.isSafeInteger(data.id) || data.id <= 0) {
-        return;
-      }
-      let ok = false;
-      try {
-        if (storage != null) {
-          const state = parseState(data.state);
-          storage.setItem(storageKey, JSON.stringify(state));
-          ok = true;
-        }
-      } catch {
-        // Storage denial, quota limits, and invalid state return a failed receipt.
-      }
-      channel.port1.postMessage({
-        type: "widget-state-result",
-        id: data.id,
-        ok,
-      });
-      return;
-    }
-    if (data.type === "height") {
-      const height = data.height;
-      if (
-        typeof height === "number" &&
-        Number.isFinite(height) &&
-        height >= 0 &&
-        height <= 10_000
-      ) {
-        frame.style.height = Math.ceil(height) + "px";
-      }
-      return;
-    }
-    if (data.type === "scroll-to") {
-      const top = data.top;
-      if (
-        typeof top === "number" &&
-        Number.isFinite(top) &&
-        top >= 0 &&
-        globalThis.navigator.userActivation?.isActive === true
-      ) {
-        globalThis.scrollTo({
-          top: Math.ceil(
-            globalThis.scrollY + frame.getBoundingClientRect().top + top,
-          ),
-        });
-      }
-      return;
-    }
-    if (data.type === "open-external") {
-      const rawHref = data.href;
-      if (typeof rawHref !== "string") {
-        return;
-      }
-      let href;
-      try {
-        const url = new URL(rawHref, document.baseURI);
-        if (url.protocol !== "https:") {
-          return;
-        }
-        href = url.href;
-      } catch {
-        return;
-      }
-      if (globalThis.navigator.userActivation?.isActive === true) {
-        const anchor = document.createElement("a");
-        anchor.href = href;
-        anchor.rel = "noopener noreferrer";
-        anchor.target = "_blank";
-        document.body.appendChild(anchor);
-        anchor.click();
-        anchor.remove();
-      }
-      return;
-    }
-    if (data.type === "follow-up") {
-      const prompt = data.prompt;
-      if (
-        typeof prompt !== "string" ||
-        globalThis.navigator.userActivation?.isActive !== true
-      ) {
-        return;
-      }
-      const title = data.title;
-      globalThis.prompt(typeof title === "string" ? title : prompt, prompt);
-    }
-  });
-  channel.port1.start();
-  const srcdoc = frame.dataset.srcdoc;
-  if (srcdoc == null) {
-    return;
-  }
-  globalThis.addEventListener("resize", () => {
-    const height = Number.parseFloat(frame.style.height);
-    if (!Number.isFinite(height) || height <= viewportHeight) {
-      frame.style.removeProperty("height");
-    }
-    viewportHeight = globalThis.innerHeight;
-    channel.port1.postMessage({ type: "measure" });
-  });
-  frame.addEventListener(
-    "load",
-    () => {
-      frame.contentWindow?.postMessage(
-        { type: "codex-visualization-initialize" },
-        "*",
-        [channel.port2],
-      );
-    },
-    { once: true },
-  );
-  // Match the trusted bootstrap element, not the same text in an authored title.
-  frame.srcdoc = srcdoc.replace(
-    '<script type="application/json" id="codex-visualization-widget-state">__CODEX_VISUALIZATION_WIDGET_STATE__<\/script>',
-    () =>
-      '<script type="application/json" id="codex-visualization-widget-state">' +
-      JSON.stringify(initialGlobals).replaceAll("<", "\\u003c") +
-      "<\/script>",
-  );
-  delete frame.dataset.srcdoc;
+window.addEventListener('openai:set_globals',e=>{if(e.detail?.globals?.widgetState)restore(e.detail.globals.widgetState);});
 })();
 </script>
-</body>
-</html>
+<script>(() => {
+ const button=document.getElementById('fullscreen');
+ if(!document.fullscreenEnabled){button.hidden=true;return;}
+ button.addEventListener('click',async()=>{
+  try {if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}
+  catch {button.textContent='Full screen unavailable';}
+ });
+ document.addEventListener('fullscreenchange',()=>{
+  const active=!!document.fullscreenElement;
+  button.textContent=active?'Exit full screen':'Full screen';
+  button.setAttribute('aria-pressed',String(active));
+ });
+})();
+</script></body></html>
