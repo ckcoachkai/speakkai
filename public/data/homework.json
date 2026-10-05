@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-05T08:55:59.734996+00:00",
+  "updatedAt": "2026-10-05T13:47:13.712685+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1412,8 +1412,19 @@
           "id": "2026-10-05-holiday-competition-camp",
           "date": "2026-10-05",
           "time": "16:00–18:30",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "◆ Homework review and audience engagement\n\nWe began by reviewing the students’ homework speeches. One shared priority was maintaining audience engagement throughout the speech. We discussed using rhetorical questions beyond the opening to reconnect with listeners as the ideas develop.\n\n◆ Rhetorical devices and persuasion\n\nWe explored commonly used rhetorical devices: anaphora, parallelism, juxtaposition, hyperbole, simile, metaphor and the rule of three. These techniques can help emphasize key ideas and make the language more memorable. We also briefly introduced ethos, pathos and logos.\n\n◆ Personal connection and storytelling\n\nThe main focus was developing a stronger personal connection: explaining why the speaker cares about the issue and connecting that experience to the wider message. We explored the hero’s journey and practised planning a personal narrative using this sequence:\n\nBackground → Struggle → Lowest point → Words of wisdom → Apply → Success\n\nStudents began developing their personal connection for inclusion in their speeches. Some said they had completed writing at home but had not brought their scripts. With the final presentation approaching, I need to review each complete script and provide basic polishing. Today’s central task was adding the personal connection and strengthening the language through commonly used rhetorical devices."
+          ],
+          "homework": {
+            "title": "Completed speech script",
+            "steps": [
+              "Add your personal connection or personal story to your speech and connect it clearly to the main issue.",
+              "Include at least one example each of anaphora, parallelism, juxtaposition, hyperbole, simile and metaphor.",
+              "Include at least three uses of the rule of three.",
+              "Send me your completed speech script so I can review and polish it before the final presentation. If you have already written it at home, please send that version."
+            ],
+            "prepareFor": "Teacher review and basic polishing before the final presentation."
+          },
           "students": [
             {
               "name": "Haley",

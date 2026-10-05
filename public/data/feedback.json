@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T08:55:59.721745+00:00",
+  "updatedAt": "2026-10-05T13:47:13.694225+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1734,14 +1734,20 @@
           "date": "2026-10-05",
           "time": "16:00–18:30",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "◆ Homework review and audience engagement\n\nWe began by reviewing the students’ homework speeches. One shared priority was maintaining audience engagement throughout the speech. We discussed using rhetorical questions beyond the opening to reconnect with listeners as the ideas develop.\n\n◆ Rhetorical devices and persuasion\n\nWe explored commonly used rhetorical devices: anaphora, parallelism, juxtaposition, hyperbole, simile, metaphor and the rule of three. These techniques can help emphasize key ideas and make the language more memorable. We also briefly introduced ethos, pathos and logos.\n\n◆ Personal connection and storytelling\n\nThe main focus was developing a stronger personal connection: explaining why the speaker cares about the issue and connecting that experience to the wider message. We explored the hero’s journey and practised planning a personal narrative using this sequence:\n\nBackground → Struggle → Lowest point → Words of wisdom → Apply → Success\n\nStudents began developing their personal connection for inclusion in their speeches. Some said they had completed writing at home but had not brought their scripts. With the final presentation approaching, I need to review each complete script and provide basic polishing. Today’s central task was adding the personal connection and strengthening the language through commonly used rhetorical devices.",
+            "zh": "◆ 【作业回顾与听众互动】\n\n我们先回顾了学生的作业演讲。共同需要加强的一点，是在整篇演讲中持续吸引听众。我们讨论了不要只在开头使用修辞性提问，而要随着想法的发展继续运用提问，重新与听众建立连接。\n\n◆ 【修辞手法与说服力】\n\n我们学习了演讲中常用的修辞手法：首语重复、平行结构、并置对比、夸张、明喻、隐喻和三项法则。这些技巧可以强调关键想法，让语言更容易被记住。我们也简要介绍了信誉诉求（ethos）、情感诉求（pathos）和逻辑诉求（logos）。\n\n◆ 【个人联系与故事表达】\n\n今天的主要重点是加强个人联系：说明演讲者为什么在乎这个问题，并把个人经历与更广泛的信息连接起来。我们学习了英雄之旅，并尝试按以下顺序规划个人故事：\n\n背景 → 挣扎 → 最低谷 → 智慧启示 → 付诸实践 → 成功\n\n学生开始发展准备加入演讲的个人联系。部分学生表示已在家完成写作，但没有带来稿子。最终展示即将到来，我需要看到每位学生的完整稿件，以便进行基础润色。今天的核心任务是加入个人联系，并通过常用修辞手法进一步提升表达。"
+          },
+          "homework": {
+            "en": "◆ Completed speech script\n\n→ Add your personal connection or personal story to your speech and connect it clearly to the main issue.\n→ Include at least one example each of anaphora, parallelism, juxtaposition, hyperbole, simile and metaphor.\n→ Include at least three uses of the rule of three.\n→ Send me your completed speech script so I can review and polish it before the final presentation. If you have already written it at home, please send that version.",
+            "zh": "◆ 【完整演讲稿】\n\n→ 将个人联系或个人故事加入演讲，并清楚地把它与主要问题联系起来。\n→ 首语重复、平行结构、并置对比、夸张、明喻和隐喻，每一种至少使用一个例子。\n→ 至少使用三处三项法则。\n→ 将完成的演讲稿发给我，让我在最终展示前进行检查和润色。如果已经在家写好，请把已有的版本发给我。"
+          },
           "students": [
             {
               "id": "haley",
               "name": "Haley",
-              "en": null,
-              "zh": null
+              "en": "◆ Detailed content and personal storytelling\n\nHaley’s speech included a personal story and plenty of specific detail. Her content and overall structure were well developed, giving her a strong foundation to build on.\n\n◆ Connections between ideas and wider relevance\n\nAlthough the individual sections contained good material, the speech sometimes felt like separate blocks. Her next step is to strengthen the transitions and explain how each example connects to her main message.\n\nSome examples may also be harder for other people to relate to. Stepping back from the personal story to explain what it reveals about a wider social issue would help listeners understand why it matters beyond her own experience. The aim is to preserve her useful detail while making the whole speech feel more connected.",
+              "zh": "◆ 【详细内容与个人故事】\n\nHaley 的演讲包含个人故事和丰富的具体细节。内容与整体结构发展得较好，为进一步提升打下了扎实基础。\n\n◆ 【想法之间的连接与更广泛的意义】\n\n虽然各个部分都有好的内容，但演讲有时像几个分开的板块。下一步是加强过渡，并说明每个例子如何连接到主要信息。\n\n有些例子也可能较难让其他人产生共鸣。如果能从个人故事退后一步，解释它反映了怎样的社会问题，就能帮助听众理解这个话题为什么不只关乎她自己的经历。目标是在保留有价值的细节的同时，让整篇演讲更加连贯。"
             },
             {
               "id": "ivy",
