@@ -1,0 +1,11 @@
+---
+import HistoryArchive from '../../components/history/HistoryArchive.astro';
+export function getStaticPaths() {
+  return [
+    { params: { person: 'gong-xiongqi' }, props: { person: 'gong' as const } },
+    { params: { person: 'man-tienan' }, props: { person: 'man' as const } },
+    { params: { person: 'liu-tiehu' }, props: { person: 'liu' as const } },
+  ];
+}
+---
+<HistoryArchive person={Astro.props.person} />
