@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-04T12:09:13.680346+00:00",
+  "updatedAt": "2026-10-05T08:55:59.734996+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1407,6 +1407,35 @@
               "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-04&student=simon"
             }
           ]
+        },
+        {
+          "id": "2026-10-05-holiday-competition-camp",
+          "date": "2026-10-05",
+          "time": "16:00–18:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Haley",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-05&student=haley"
+            },
+            {
+              "name": "Ivy",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-05&student=ivy"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-05&student=william"
+            },
+            {
+              "name": "Robinson",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-05&student=robinson"
+            },
+            {
+              "name": "Simon",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-05&student=simon"
+            }
+          ]
         }
       ]
     },
@@ -1462,6 +1491,33 @@
             {
               "name": "Charlotte",
               "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-04&student=charlotte"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-05-holiday-sdg-camp",
+          "date": "2026-10-05",
+          "time": "13:00–15:30",
+          "classContent": [
+            "◆ Homework review and preparation\n\nWe began by reviewing homework. Both students reported practising their speech once or twice. We discussed practising more regularly as we begin preparing for the final presentation.\n\n◆ Infrastructure and key messages\n\nToday’s topic was infrastructure. Although the concept was challenging, we introduced it through familiar examples: roads, lighting, pipes and bridges—the systems and structures that help places function. We kept the discussion concrete rather than exploring infrastructure problems around the world in depth, to keep the introduction suitable for their age.\n\nWe also introduced the idea of a key message, using advertisements to show how a clear central idea can be obvious, easy to understand and easy to remember.\n\n◆ Developing the final speeches\n\nThe students completed a planning activity and chose favourite sports as their subject. Mia chose swimming. Charlotte initially chose basketball before changing to swimming, so both final speeches are now about swimming. We worked on giving the speeches different angles. I helped polish and expand their drafts.\n\nFrom previous summer, winter and other camps, I have found that starting final-speech preparation two days in advance gives students a better chance of memorizing their speech. We are beginning preparation early so they can read aloud, become comfortable with the wording and work towards presenting without looking at paper.\n\n◆ Planned next lesson\n\nOnce they are more familiar with the wording, we plan to work on voice, vocal variety and body language tomorrow, alongside our last topic before the final presentation."
+          ],
+          "homework": {
+            "title": "Final swimming speech practice",
+            "steps": [
+              "Practise reading your final swimming speech aloud 5–10 times, if possible.",
+              "Focus on becoming comfortable with the words and saying the sentences clearly.",
+              "Gradually become less dependent on the script, working towards delivering the final presentation without looking at paper."
+            ],
+            "prepareFor": "Planned vocal variety and body language work in the next class."
+          },
+          "students": [
+            {
+              "name": "Mia",
+              "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-05&student=mia"
+            },
+            {
+              "name": "Charlotte",
+              "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-05&student=charlotte"
             }
           ]
         }
