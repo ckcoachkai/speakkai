@@ -1,7 +1,7 @@
 {
-  "version": 8,
-  "sourceSha256": "6e149dd45768cda59b74b140994687b57cd8b26c6d589d0a44a94a74bd40b5ba",
-  "pageSha256": "8b0be3a0785e78d2b57a0cc891cb6420376dc181a60e0900647d1c8a2cca508d",
+  "version": 9,
+  "sourceSha256": "6fdcba429977b1a335190b5ebba7224b601ed9bdd2240aeee7b5b984fb199c09",
+  "pageSha256": "0a9be2504c3834d744d2e2d8dc79d7771252858fd1829b156db74a905419969a",
   "mouseOutfits": 30,
   "catOutfits": 6,
   "files": [
@@ -46,6 +46,12 @@
       "type": "image/webp",
       "bytes": 415386,
       "sha256": "b99f3aa0c09e6a70ee69e3ea0fbd8910a15297ef142231b556a0ceae55014525"
+    },
+    {
+      "path": "assets/alienAnatomy.daaa91c80f23.webp",
+      "type": "image/webp",
+      "bytes": 494074,
+      "sha256": "daaa91c80f233427af15b0a5e41555bef57c916fecbecc2c4cf6c3cb78d34754"
     },
     {
       "path": "assets/lice.89923a98f508.webp",

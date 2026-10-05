@@ -1,6 +1,8 @@
-# Dynamite Mice at /maze/ — v8 release notes
+# Dynamite Mice at /maze/ — v9 release notes
 
-The v8 standalone is prepared for the static `/maze/` route; final publication verification is still pending. Twenty WebP image atlases and the supplied Mouse Maze Mayhem MP3 are extracted into content-addressed assets; game code, controls, artwork and audio bytes are preserved. Roster names and fuse/cheese preferences remain in browser local storage.
+The v9 standalone is prepared for the static `/maze/` route. Twenty-one WebP image atlases and the supplied Mouse Maze Mayhem MP3 are extracted into content-addressed assets; game code, controls, artwork and audio bytes are preserved. Roster names and fuse/cheese preferences remain in browser local storage.
+
+V9 adds four illustrated alien organs, fourteen persistent labels on the latest impact, and transfer of every attached insect/louse from the faster mouse to the slower mouse during contact. Transfers preserve existing wounds, respect walls, and require separation plus cooldown before the same pair can pass again. Same-slice swept movement prevents update-order bias. A broadphase limits collision work in crowded games. Mobile speaker cards leave the labels unobstructed. See `maze-v9-qa.md` for verification and limits; the final live receipt is in the workspace's `work/mouse-maze/v9-qa/live-verification.json`.
 
 V6 replaces random timed victims with one transferable bomb. The carrier runs 25% faster and pursues another mouse. Wall-aware contact passes the same fuse, with a one-second cooldown. The fuse defaults to 30 game seconds and can be set to 10–120 seconds in five-second steps. Changes during a race apply to the next fuse. Escape, capture, and explosion still select a speaker and pause until Continue. Fullscreen hides the editing interface and HUD; the speaker overlay and auto-hiding Pause/Exit controls remain available.
 
@@ -15,16 +17,18 @@ node scripts/check-maze-regressions.mjs
 node scripts/check-maze-bomb.mjs
 node scripts/check-maze-v7.mjs
 node scripts/check-maze-v8.mjs
+node scripts/check-maze-v9.mjs
 npm run build
 node scripts/check-maze.mjs --dist
 node scripts/check-maze-regressions.mjs --dist
 node scripts/check-maze-bomb.mjs --dist
 node scripts/check-maze-v7.mjs --dist
 node scripts/check-maze-v8.mjs --dist
+node scripts/check-maze-v9.mjs --dist
 ```
 
 The media manifest records the original source hash and each deployed asset hash. The checker reconstructs the standalone source in memory and compares its hash, so extraction cannot silently change game logic or presentation.
 
 The deterministic v8 suites currently report 105/105 engine checks, 50/50 movement-matrix angles and 12/12 full production-rule races. All five package checks pass against both `public` and `dist`. Chromium checks cover ready/running/paused drag, outside/Escape cancellation, click-follow at 4×, explicit fullscreen Escape exit, the devoured UI result and CSV, music pause/Continue resume, Gore and reduced-motion toggles, Map, and 375px/320px no-horizontal-overflow layouts. A natural unaccelerated fullscreen 30-second explosion held exact time, actor positions and canvas screenshot bytes for 1.1 seconds; the song paused and Continue resumed while preserving fullscreen. An 80-mouse stress run with 400 cheese, 520 lice, 294 insects and 247 attached insects measured 4.13 ms mean render, 5.3 ms p95 render, 3.71 ms mean update, 4.6 ms p95 update, and 13.66 ms mean frame time. Cat verification covered 12 game seconds, 7.43 cells crossed across 9 distinct cells, 0.72–1.5× speed bursts and wall safety. The final close-zoom inspection found the anatomy labels readable; live `/maze/` hash/manifest/media verification remains pending. See `work/mouse-maze/v8-qa/REVIEW.md` for current evidence and limitations, and `maze-v7-qa.md`/`maze-v6-qa.md` for preceding releases. GitHub Pages publishes main through the normal site deployment workflow after these gates pass.
 
-Rollback: after publication, revert only the v8 maze release commit on current main, preserving unrelated site commits, then let the same deployment workflow finish. Record the exact v8 commit and Actions run in the release receipt. The preceding v6 maze baseline is `8dfdc8492b1c3f3aaa47765a568f81cedfb5455e`; do not reset the site to that commit because it would discard later unrelated updates.
+Rollback: after publication, revert only the v9 maze release commit on current main, preserving unrelated site commits, then let the same deployment workflow finish. Record the exact v9 commit and Actions run in the release receipt. The preceding v8 maze release is `6b1ced923358098344d5ab7a3d63a0ad0727fecc`; do not reset the site to that commit because it would discard later unrelated updates.
