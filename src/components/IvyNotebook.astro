@@ -41,6 +41,8 @@ document.getElementById('lesson')!.addEventListener('change',async event=>{const
 document.getElementById('lock')!.addEventListener('click',()=>{password='';frame.srcdoc='';notebook.hidden=true;gate.hidden=false;input.focus();});
 window.addEventListener('popstate',()=>location.reload());
 </script>
+</body>
+</html>
 <style>
 :global(*){box-sizing:border-box}:global(body){margin:0;background:#f5f3ec;color:#234d3e;font:16px Arial,sans-serif}:global([hidden]){display:none!important}#gate{max-width:440px;margin:12vh auto;padding:32px}a{color:inherit}#gate>a{text-decoration:none;font-weight:bold}h1{font:100px Georgia,serif;letter-spacing:-5px;margin:36px 0}h1 span{color:#b67743}label{display:block;font-size:14px;margin-bottom:10px}input,button,select{font:inherit;border-radius:4px;padding:14px;border:1px solid #bbc8b9}input{width:100%;background:#fffef9}button{background:#234d3e;color:white;cursor:pointer}form button{width:100%;margin-top:16px}button:disabled{opacity:.65}#error{font-size:14px;min-height:20px}nav{min-height:68px;display:flex;align-items:center;gap:18px;padding:10px 24px;border-bottom:1px solid #ccd4c9}nav label{margin:0}nav select,nav button{padding:8px}nav button{margin-left:auto}iframe{display:block;border:0;width:100%;height:calc(100dvh - 68px);background:#f5f3ec}@media(max-width:500px){nav{gap:10px;padding:10px;font-size:13px}nav label{display:none}select{max-width:140px}}
 </style>
