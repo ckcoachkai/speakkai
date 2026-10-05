@@ -12,7 +12,7 @@ const html = await readFile(resolve(base, 'index.html'), 'utf8');
 assert.equal(hash(html), manifest.pageSha256);
 assert.equal(manifest.mouseOutfits, 30);
 assert.equal(manifest.catOutfits, 6);
-assert.equal(manifest.files.length, 20);
+assert.equal(manifest.files.length, 21);
 assert.match(html, /rel="canonical" href="https:\/\/speakkai\.com\/maze\/"/);
 assert(!/data:(image|audio)\//.test(html), 'Media must be cacheable external files');
 assert(!/file:\/\/|C:[\\/]Users[\\/]/i.test(html), 'Published page must not contain machine-local file paths');
@@ -27,7 +27,8 @@ for (const file of manifest.files) {
 const images = html.match(/window\.MOUSE_MAZE_ASSETS=(\{.*?\});(?=window\.MOUSE_MAZE_CHARACTER_ART=)/);
 assert(images);
 const hostedImages = JSON.parse(images[1]);
-assert.equal(Object.keys(hostedImages).length, 19);
+assert.equal(Object.keys(hostedImages).length, 20);
+assert(hostedImages.anatomy, 'Detailed anatomy artwork is required');
 const embeddedImages = {};
 for (const [name, url] of Object.entries(hostedImages)) {
   assert(originalUris.has(url), name);
@@ -40,4 +41,4 @@ const restored = html.replace(images[0], `window.MOUSE_MAZE_ASSETS=${JSON.string
   .replace('  <meta name="description" content="Dynamite Mice: a maze name picker with costumed mice, cheese boosts, a chasing cat, and speaker pauses.">\n  <link rel="canonical" href="https://speakkai.com/maze/">\n', '');
 assert.equal(hash(restored), manifest.sourceSha256, 'Game logic and presentation must match the approved standalone version');
 for (const script of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) new Script(script[1]);
-console.log('Maze verified: exact source parity, 30 mice, 6 cats, 19 images, song, and canonical route.');
+console.log('Maze verified: exact source parity, 30 mice, 6 cats, 20 images, song, and canonical route.');

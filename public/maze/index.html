@@ -63,7 +63,8 @@ h1 span { color: var(--red); }
 .stage-ribbon { position: absolute; z-index: 3; top: 14px; left: 18px; display: flex; gap: 10px; color: rgba(243, 228, 187, .6); font-size: 9px; letter-spacing: .17em; font-weight: 800; }
 .stage-ribbon b { color: var(--red); }
 #mazeCanvas { position: absolute; display: block; left: 0; right: 0; top: 110px; bottom: auto; width: 100%; height: calc(100% - 155px); min-height: 0; touch-action: none; cursor: grab; }
-#mazeCanvas.is-panning { cursor: grabbing; }
+#mazeCanvas.is-panning, #mazeCanvas.is-dragging-mouse { cursor: grabbing; }
+#mazeCanvas.is-pressing-mouse { cursor: grab; }
 .hud { position: absolute; left: 24px; right: 24px; top: 42px; z-index: 3; display: flex; gap: 10px; pointer-events: none; }
 .hud-stat { background: rgba(23, 17, 29, .84); border: 1px solid rgba(243, 228, 187, .16); padding: 9px 13px 8px; min-width: 103px; }
 .hud-label { display: block; font-size: 8px; color: var(--muted); letter-spacing: .16em; font-weight: 800; margin-bottom: 3px; }
@@ -197,7 +198,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
 .input-note, .roster-footer, .setting-row small, .suno-note, .results-list .result-reason, .results-list .result-time, .upload-button, .clear-track, .text-button { font-size: 11px; }
 .setting-row strong { font-size: 11px; }
 @media (max-width: 820px) { .top-actions { margin-left: auto; } }
-@media (max-width: 1120px) { .app-shell { padding: 0 22px 16px; } .page-grid { grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; } .stage-frame { min-height: 440px; } #mazeCanvas { min-height: 0; } .control-hint { display: none; } }
+@media (max-width: 1120px) { .app-shell { padding: 0 22px 16px; } .page-grid { grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; } .stage-frame { min-height: 440px; } #mazeCanvas { min-height: 0; } .control-hint { display: block; flex: 1 0 100%; order: 5; text-align: center; font-size: 8px; white-space: normal; } .camera-hint { margin-right: 0; } }
 @media (max-width: 820px) { .topbar-meta { display: none; } .page-grid { display: block; padding-top: 25px; } .control-column { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; align-items: start; max-height: none; overflow: visible; } .roster-panel, .export-panel { grid-row: span 2; } .rules-panel { grid-column: 1 / -1; } .stage-frame { height: min(75vw, 640px); min-height: 400px; } #mazeCanvas { min-height: 0; } }
 @media (max-width: 540px) { .app-shell { padding: 0 14px 14px; } .topbar { height: 69px; } .brand > span:last-child { font-size: 19px; } .brand-mark { width: 31px; height: 31px; } .edition { display: none; } .stage-head { align-items: start; flex-direction: column; gap: 13px; } h1 { font-size: clamp(43px, 13vw, 62px); } .stage-status { padding-bottom: 0; } .stage-frame { height: 112vw; min-height: 380px; } #mazeCanvas { min-height: 0; } .hud { left: 11px; right: 11px; top: 42px; gap: 5px; } .hud-stat { min-width: 0; flex: 1; padding: 7px 8px; overflow: hidden; } .hud-label { font-size: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .hud-stat strong { font-size: 17px; white-space: nowrap; } .stage-bottom { left: 11px; right: 11px; bottom: 11px; gap: 7px; } .meter-group { gap: 3px; } .meter-group span, .cheese-count span:last-child { font-size: 7px; } .cheese-count { margin-left: 3px; gap: 3px; } .stage-controls { flex-wrap: wrap; } .button { flex: 1 1 auto; padding: 0 10px; } .control-column { display: flex; align-items: stretch; } .panel { padding: 16px; } .roster-panel { order: 0; } .settings-panel { order: 1; } .rules-panel { order: 2; } .export-panel { order: 3; } .app-footer { display: block; line-height: 1.8; } .app-footer span { display: block; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
@@ -304,7 +305,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
             <button class="camera-button" id="followBtn" type="button">FOLLOW</button>
             <label class="zoom-control" for="zoomInput"><span>ZOOM</span><input id="zoomInput" type="range" min="1" max="8" step=".1" value="1"><output id="zoomValue">×1.0</output></label>
           </div>
-          <canvas id="mazeCanvas" aria-label="Animated mouse maze. Names are represented by mice trying to reach the exit." tabindex="0"></canvas>
+          <canvas id="mazeCanvas" aria-label="Animated mouse maze. Names are represented by mice trying to reach the exit. Hold a mouse to move it; drag empty floor to pan when zoomed." title="Hold a mouse to move · drag empty floor to pan" tabindex="0"></canvas>
           <div class="selection-callout" id="selectionCallout" role="dialog" aria-labelledby="calloutName" aria-describedby="calloutReason speakerNote" hidden>
             <span class="callout-kicker" id="calloutKicker">NAME PICKED</span>
             <strong id="calloutName">—</strong>
@@ -329,7 +330,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
           <button class="button button-primary" id="startBtn" type="button"><span class="button-glyph" aria-hidden="true">▶</span><span id="startBtnText">START RUN</span></button>
           <button class="button button-ghost" id="pauseBtn" type="button" disabled><span class="button-glyph" aria-hidden="true">Ⅱ</span><span id="pauseBtnText">PAUSE</span></button>
           <button class="button button-ghost" id="newMazeBtn" type="button"><span class="button-glyph" aria-hidden="true">↻</span>NEW MAZE</button>
-          <p class="control-hint"><span class="camera-hint">Scroll to zoom · drag to pan</span> <kbd>SPACE</kbd> start / pause / continue <kbd>F</kbd> fullscreen <kbd>M</kbd> mute</p>
+          <p class="control-hint"><span class="camera-hint">Click to follow · hold to move · drag floor to pan · Scroll to zoom</span> <kbd>SPACE</kbd> start / pause / continue <kbd>F</kbd> fullscreen <kbd>M</kbd> mute</p>
         </div>
 
         <div class="mobile-results-anchor" id="mobileResultsAnchor"></div>
@@ -364,7 +365,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
 
         <section class="panel rules-panel">
           <div class="rules-top"><strong class="rules-title">RULES</strong><span class="timer-glyph" aria-hidden="true">◷</span></div>
-          <p>Pass the bomb before the fuse runs out. The carrier gets <strong>+25% speed</strong>; passing keeps the countdown. Cat at <strong>01:00</strong>. Each cheese adds less speed than the last, up to <strong>3×</strong> from cheese. Ground bugs crunch underfoot; lice hitch a ride. Escape, explode, or get eaten to be chosen. <strong>Continue</strong> after each speaker.</p>
+          <p>Pass the bomb before the fuse runs out. The carrier gets <strong>+25% speed</strong>; passing keeps the countdown. Cat at <strong>01:00</strong>, stalking then sprinting. Cheese gains taper toward <strong>3×</strong>. Most bugs crunch underfoot; some cling on and slowly eat their host. Escape, explode, get caught, or be devoured to be chosen. <strong>Continue</strong> after each speaker.</p>
         </section>
 
         <section class="panel export-panel">
@@ -380,7 +381,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script>window.BACKGROUND_TRACK_DATA = "assets/mouse-maze-mayhem.7a5e617bd89d.mp3"; window.BACKGROUND_TRACK_TITLE = "Mouse Maze Mayhem";</script>
-<script>window.MOUSE_MAZE_ASSETS={"mouse":"assets/mouse.74f695c2bbb8.webp","expressions":"assets/expressions.59a11a7107fc.webp","cat":"assets/cat.d2ee57fac4f9.webp","tiles":"assets/tiles.2ad4bd2f760e.webp","props":"assets/props.85e671a695bd.webp","blood":"assets/blood.afa5cbc405e4.webp","lice":"assets/lice.89923a98f508.webp","catWardrobeA":"assets/catWardrobeA.3612b79ff1f3.webp","catWardrobeB":"assets/catWardrobeB.644718d31180.webp","mouseWardrobe1A":"assets/mouseWardrobe1A.b7c94d11d3d7.webp","mouseWardrobe1B":"assets/mouseWardrobe1B.ec5129bb14c7.webp","mouseWardrobe2A":"assets/mouseWardrobe2A.2b8368148b67.webp","mouseWardrobe2B":"assets/mouseWardrobe2B.c00718b2e354.webp","mouseWardrobe3A":"assets/mouseWardrobe3A.7add30c4117a.webp","mouseWardrobe3B":"assets/mouseWardrobe3B.d1d1c8b16ba1.webp","mouseWardrobe4A":"assets/mouseWardrobe4A.8d7720892264.webp","mouseWardrobe4B":"assets/mouseWardrobe4B.d9f2f099d7ca.webp","mouseWardrobe5A":"assets/mouseWardrobe5A.fba51307a9cb.webp","mouseWardrobe5B":"assets/mouseWardrobe5B.6fab0731a743.webp"};window.MOUSE_MAZE_CHARACTER_ART={"mouse":[{"name":"Safari","wardrobe":"khaki pith hat, olive explorer vest, binoculars","rectA":[12,90,501,396],"rectB":[20,79,491,422],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Aviator","wardrobe":"brown leather flight jacket, brass goggles, red scarf","rectA":[529,97,495,392],"rectB":[530,80,489,421],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Pirate","wardrobe":"navy striped shirt, red sash, black tricorn hat","rectA":[16,583,498,387],"rectB":[23,558,491,431],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Astronaut","wardrobe":"white spacesuit, clear bubble helmet, ears visible","rectA":[512,570,503,424],"rectB":[512,545,510,463],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Scuba","wardrobe":"teal wetsuit, round mask, orange breathing hose","rectA":[12,1069,502,391],"rectB":[14,1033,500,444],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Mountaineer","wardrobe":"red parka, blue knit cap, climbing carabiner","rectA":[512,1047,501,418],"rectB":[512,1024,512,451],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"chef","rectA":[49,13,541,424],"rectB":[48,7,539,430],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"firefighter","rectA":[618,49,542,388],"rectB":[617,48,542,389],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"doctor","rectA":[48,460,542,395],"rectB":[51,458,541,392],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"detective","rectA":[616,458,547,398],"rectB":[614,458,551,399],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"mechanic","rectA":[44,874,546,391],"rectB":[44,874,549,392],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"conductor","rectA":[622,874,542,391],"rectB":[620,874,547,391],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"wizard","rectA":[69,29,561,442],"rectB":[65,26,570,447],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"knight","rectA":[770,31,559,437],"rectB":[769,27,562,446],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"king","rectA":[60,550,580,400],"rectB":[69,554,562,392],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"archer","rectA":[768,550,564,399],"rectB":[764,553,571,393],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"viking","rectA":[56,1052,588,396],"rectB":[55,1049,589,402],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"jester","rectA":[773,1043,553,413],"rectB":[769,1043,561,413],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"skateboarder","rectA":[34,12,593,397],"rectB":[35,9,592,405],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"basketball-player","rectA":[657,13,588,396],"rectB":[627,13,622,401],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"rockstar","rectA":[33,423,594,413],"rectB":[34,420,593,416],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"ballet-dancer","rectA":[627,428,620,398],"rectB":[627,427,627,409],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"business-mouse","rectA":[29,836,598,403],"rectB":[38,836,589,408],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"raincoat-mouse","rectA":[627,836,621,402],"rectB":[627,836,627,406],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"cowboy","outfit":"brown cowboy hat, checked shirt, red neckerchief","rectA":[18,13,592,392],"rectB":[18,11,592,396],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"sailor","outfit":"navy and white striped shirt, white sailor cap","rectA":[644,33,594,353],"rectB":[640,30,602,358],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"gardener","outfit":"green overalls, straw hat","rectA":[12,439,603,377],"rectB":[16,433,595,389],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"magician","outfit":"black tailcoat, purple bow tie, black top hat","rectA":[693,426,495,403],"rectB":[689,423,503,409],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"winter","outfit":"blue sweater, red scarf, earmuffs","rectA":[18,863,592,364],"rectB":[13,853,601,384],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"dragon","outfit":"green dragon onesie with small fabric wings","rectA":[673,851,535,388],"rectB":[669,847,544,397],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"}],"cat":[{"name":"admiral","rectA":[85,92,487,307],"rectB":[101,97,463,291],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"chef","rectA":[703,91,494,308],"rectB":[728,94,454,294],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"detective","rectA":[82,490,513,298],"rectB":[101,493,494,293],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"pirate","rectA":[699,492,493,310],"rectB":[728,493,449,297],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"royal","rectA":[81,863,509,319],"rectB":[101,867,476,312],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"racer","rectA":[698,877,499,303],"rectB":[728,886,453,288],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"}]};window.MOUSE_MAZE_LICE_ART={"assetKey":"liceAtlas","kind":"lice","sourceSize":[1536,1024],"grid":[2,2],"frames":[{"name":"walk-a","x":225,"y":118,"w":404,"h":293},{"name":"walk-b","x":920,"y":118,"w":400,"h":309},{"name":"walk-c","x":227,"y":597,"w":409,"h":318},{"name":"walk-d","x":920,"y":596,"w":400,"h":305}]};</script>
+<script>window.MOUSE_MAZE_ASSETS={"mouse":"assets/mouse.74f695c2bbb8.webp","expressions":"assets/expressions.59a11a7107fc.webp","cat":"assets/cat.d2ee57fac4f9.webp","tiles":"assets/tiles.2ad4bd2f760e.webp","props":"assets/props.85e671a695bd.webp","blood":"assets/blood.afa5cbc405e4.webp","anatomy":"assets/anatomy.b99f3aa0c09e.webp","lice":"assets/lice.89923a98f508.webp","catWardrobeA":"assets/catWardrobeA.3612b79ff1f3.webp","catWardrobeB":"assets/catWardrobeB.644718d31180.webp","mouseWardrobe1A":"assets/mouseWardrobe1A.b7c94d11d3d7.webp","mouseWardrobe1B":"assets/mouseWardrobe1B.ec5129bb14c7.webp","mouseWardrobe2A":"assets/mouseWardrobe2A.2b8368148b67.webp","mouseWardrobe2B":"assets/mouseWardrobe2B.c00718b2e354.webp","mouseWardrobe3A":"assets/mouseWardrobe3A.7add30c4117a.webp","mouseWardrobe3B":"assets/mouseWardrobe3B.d1d1c8b16ba1.webp","mouseWardrobe4A":"assets/mouseWardrobe4A.8d7720892264.webp","mouseWardrobe4B":"assets/mouseWardrobe4B.d9f2f099d7ca.webp","mouseWardrobe5A":"assets/mouseWardrobe5A.fba51307a9cb.webp","mouseWardrobe5B":"assets/mouseWardrobe5B.6fab0731a743.webp"};window.MOUSE_MAZE_CHARACTER_ART={"mouse":[{"name":"Safari","wardrobe":"khaki pith hat, olive explorer vest, binoculars","rectA":[12,90,501,396],"rectB":[20,79,491,422],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Aviator","wardrobe":"brown leather flight jacket, brass goggles, red scarf","rectA":[529,97,495,392],"rectB":[530,80,489,421],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Pirate","wardrobe":"navy striped shirt, red sash, black tricorn hat","rectA":[16,583,498,387],"rectB":[23,558,491,431],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Astronaut","wardrobe":"white spacesuit, clear bubble helmet, ears visible","rectA":[512,570,503,424],"rectB":[512,545,510,463],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Scuba","wardrobe":"teal wetsuit, round mask, orange breathing hose","rectA":[12,1069,502,391],"rectB":[14,1033,500,444],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Mountaineer","wardrobe":"red parka, blue knit cap, climbing carabiner","rectA":[512,1047,501,418],"rectB":[512,1024,512,451],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"chef","rectA":[49,13,541,424],"rectB":[48,7,539,430],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"firefighter","rectA":[618,49,542,388],"rectB":[617,48,542,389],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"doctor","rectA":[48,460,542,395],"rectB":[51,458,541,392],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"detective","rectA":[616,458,547,398],"rectB":[614,458,551,399],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"mechanic","rectA":[44,874,546,391],"rectB":[44,874,549,392],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"conductor","rectA":[622,874,542,391],"rectB":[620,874,547,391],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"wizard","rectA":[69,29,561,442],"rectB":[65,26,570,447],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"knight","rectA":[770,31,559,437],"rectB":[769,27,562,446],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"king","rectA":[60,550,580,400],"rectB":[69,554,562,392],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"archer","rectA":[768,550,564,399],"rectB":[764,553,571,393],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"viking","rectA":[56,1052,588,396],"rectB":[55,1049,589,402],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"jester","rectA":[773,1043,553,413],"rectB":[769,1043,561,413],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"skateboarder","rectA":[34,12,593,397],"rectB":[35,9,592,405],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"basketball-player","rectA":[657,13,588,396],"rectB":[627,13,622,401],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"rockstar","rectA":[33,423,594,413],"rectB":[34,420,593,416],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"ballet-dancer","rectA":[627,428,620,398],"rectB":[627,427,627,409],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"business-mouse","rectA":[29,836,598,403],"rectB":[38,836,589,408],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"raincoat-mouse","rectA":[627,836,621,402],"rectB":[627,836,627,406],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"cowboy","outfit":"brown cowboy hat, checked shirt, red neckerchief","rectA":[18,13,592,392],"rectB":[18,11,592,396],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"sailor","outfit":"navy and white striped shirt, white sailor cap","rectA":[644,33,594,353],"rectB":[640,30,602,358],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"gardener","outfit":"green overalls, straw hat","rectA":[12,439,603,377],"rectB":[16,433,595,389],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"magician","outfit":"black tailcoat, purple bow tie, black top hat","rectA":[693,426,495,403],"rectB":[689,423,503,409],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"winter","outfit":"blue sweater, red scarf, earmuffs","rectA":[18,863,592,364],"rectB":[13,853,601,384],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"dragon","outfit":"green dragon onesie with small fabric wings","rectA":[673,851,535,388],"rectB":[669,847,544,397],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"}],"cat":[{"name":"admiral","rectA":[85,92,487,307],"rectB":[101,97,463,291],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"chef","rectA":[703,91,494,308],"rectB":[728,94,454,294],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"detective","rectA":[82,490,513,298],"rectB":[101,493,494,293],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"pirate","rectA":[699,492,493,310],"rectB":[728,493,449,297],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"royal","rectA":[81,863,509,319],"rectB":[101,867,476,312],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"racer","rectA":[698,877,499,303],"rectB":[728,886,453,288],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"}]};window.MOUSE_MAZE_LICE_ART={"assetKey":"liceAtlas","kind":"lice","sourceSize":[1536,1024],"grid":[2,2],"frames":[{"name":"walk-a","x":225,"y":118,"w":404,"h":293},{"name":"walk-b","x":920,"y":118,"w":400,"h":309},{"name":"walk-c","x":227,"y":597,"w":409,"h":318},{"name":"walk-d","x":920,"y":596,"w":400,"h":305}]};</script>
 <script>
 /*
  * Deterministic simulation for Dynamite Mice.
@@ -546,10 +547,18 @@ const BOMB_PASS_LOCK = 1;
 const BOMB_INITIAL_GRACE = 1;
 const CHEESE_MAX_MULTIPLIER = 3;
 const CHEESE_GAIN_DECAY = 0.5;
+// Keep the ground-effect list bounded during long classroom runs. The newest
+// droppings are retained because they are the ones the cat can still eat.
+const MAX_POOP = 1200;
 const INSECT_TYPES = ['beetle', 'roach', 'ant', 'spider', 'maggot'];
 const INSECT_START_TIME = 6;
 const INSECT_ROAMING_TARGET = 240;
 const INSECT_MAX_TOTAL = 320;
+const INSECT_MAX_ATTACHED = 12;
+const INSECT_ATTACH_CHANCE = 0.18;
+const MOUSE_STUCK_LIMIT = 2.4;
+const MOUSE_LOOP_WINDOW = 14;
+const MOUSE_LOOP_UNIQUE_LIMIT = 4;
 
 function normalizeBombInterval(value, fallback = 30) {
   const numeric = Number(value);
@@ -607,6 +616,7 @@ class Game {
     this._catEntered = false;
     this._finishedEvent = false;
     this.pendingSelection = null;
+    this._draggingMouseId = null;
     this._cheeseId = 0;
     this._poopId = 0;
     this._louseId = 0;
@@ -627,6 +637,10 @@ class Game {
     this.insectsEnabled = options.insectsEnabled !== false;
     this.insectRoamingTarget = INSECT_ROAMING_TARGET;
     this.insectMaxTotal = INSECT_MAX_TOTAL;
+    this.insectAttachChance = Number.isFinite(Number(options.insectAttachChance))
+      ? clamp(Number(options.insectAttachChance), 0, 1)
+      : INSECT_ATTACH_CHANCE;
+    this.insectFatal = options.insectFatal !== false;
     this._insectSeeded = false;
     this._insectRandom = seededRandom((this.seed ^ 0x9e3779b9) >>> 0);
     this._insectBuckets = new Map();
@@ -692,6 +706,20 @@ class Game {
         lastWrongTurnAt: -Infinity,
         lastCrunchAt: -Infinity,
         crunches: 0,
+        insectCount: 0,
+        insectTypes: [],
+        insectDamage: 0,
+        damageStage: 0,
+        lastBiteAt: -Infinity,
+        _lastDamageEvent: -Infinity,
+        _damageStageEvent: 0,
+        dragging: false,
+        _dragSnapshot: null,
+        _stuckTime: 0,
+        _lastMotionX: spawn.x,
+        _lastMotionY: spawn.y,
+        _lastUnstuckAt: -Infinity,
+        _recentCells: [key(maze.start.x, maze.start.y)],
         lastCheeseAt: -Infinity,
         lastPoopAt: -Infinity,
         _pauseUntil: 0,
@@ -725,6 +753,112 @@ class Game {
     // An outcome is an explicit speaker pause. Only Continue may leave it.
     if (this.status === 'paused') this.status = 'running';
     return this.status;
+  }
+
+  _nearestWalkableCell(x, y) {
+    if (!Number.isFinite(Number(x)) || !Number.isFinite(Number(y))) return null;
+    const px = Number(x);
+    const py = Number(y);
+    let best = null;
+    let bestDistance = Infinity;
+    // The floor list is small for the intentionally compact maze and this
+    // keeps the drop contract deterministic even when a pointer is over a
+    // wall corner. A two-cell radius is the normal drag affordance; the full
+    // fallback handles a pointer just outside the visible maze edge.
+    for (const cell of this._floorCells) {
+      const position = center(cell);
+      const distance = Math.hypot(position.x - px, position.y - py);
+      if (distance < bestDistance
+        || (distance === bestDistance && (cell.y < best.y || (cell.y === best.y && cell.x < best.x)))) {
+        best = cell;
+        bestDistance = distance;
+      }
+    }
+    if (!best || bestDistance > 4.5) return null;
+    return { cell: { x: best.x, y: best.y }, point: center(best), distance: bestDistance };
+  }
+
+  getMouseDropPoint(x, y) {
+    const result = this._nearestWalkableCell(x, y);
+    if (!result) return null;
+    return { ...result.point, cellX: result.cell.x, cellY: result.cell.y, valid: true };
+  }
+
+  beginMouseDrag(mouseOrId) {
+    if (!['ready', 'running', 'paused'].includes(this.status)) return false;
+    const mouse = typeof mouseOrId === 'string'
+      ? this.mice.find((candidate) => candidate.id === mouseOrId)
+      : mouseOrId;
+    if (!mouse || !this.mice.includes(mouse) || !mouse.alive) return false;
+    if (this._draggingMouseId && this._draggingMouseId !== mouse.id) this.cancelMouseDrag(this._draggingMouseId);
+    mouse.dragging = true;
+    mouse._dragSnapshot = {
+      x: mouse.x,
+      y: mouse.y,
+      angle: mouse.angle,
+      cell: { ...mouse._cell },
+      previousCell: mouse._previousCell ? { ...mouse._previousCell } : null,
+      route: mouse._route.map((item) => ({ ...item })),
+      confusedUntil: mouse.confusedUntil,
+      pauseUntil: mouse._pauseUntil,
+      stuckTime: mouse._stuckTime,
+    };
+    this._draggingMouseId = mouse.id;
+    return true;
+  }
+
+  endMouseDrag(mouseOrId, x, y) {
+    const id = typeof mouseOrId === 'string' ? mouseOrId : mouseOrId?.id;
+    if (!id || id !== this._draggingMouseId) return false;
+    const mouse = this.mice.find((candidate) => candidate.id === id);
+    if (!mouse?.dragging || !mouse.alive) return false;
+    const point = this.getMouseDropPoint(x, y);
+    if (!point) {
+      this.cancelMouseDrag(id);
+      return false;
+    }
+    mouse.x = point.x;
+    mouse.y = point.y;
+    mouse._cell = { x: point.cellX, y: point.cellY };
+    mouse._previousCell = null;
+    mouse._route = [];
+    mouse._visited = new Map([[key(point.cellX, point.cellY), 1]]);
+    mouse._recentCells = [key(point.cellX, point.cellY)];
+    mouse._stuckTime = 0;
+    mouse._lastMotionX = mouse.x;
+    mouse._lastMotionY = mouse.y;
+    mouse.confusedUntil = this.time;
+    mouse._pauseUntil = this.time;
+    mouse._bombTargetId = null;
+    mouse._bombRepathTimer = 0;
+    mouse.dragging = false;
+    mouse._dragSnapshot = null;
+    this._draggingMouseId = null;
+    this._emit({ type: 'mouse-relocated', actorId: mouse.id, x: mouse.x, y: mouse.y, cellX: point.cellX, cellY: point.cellY, time: this.time });
+    return { ...point };
+  }
+
+  cancelMouseDrag(mouseOrId) {
+    const id = typeof mouseOrId === 'string' ? mouseOrId : mouseOrId?.id;
+    if (!id || id !== this._draggingMouseId) return false;
+    const mouse = this.mice.find((candidate) => candidate.id === id);
+    if (!mouse?.dragging) return false;
+    const snapshot = mouse._dragSnapshot;
+    if (snapshot) {
+      mouse.x = snapshot.x;
+      mouse.y = snapshot.y;
+      mouse.angle = snapshot.angle;
+      mouse._cell = { ...snapshot.cell };
+      mouse._previousCell = snapshot.previousCell ? { ...snapshot.previousCell } : null;
+      mouse._route = snapshot.route.map((item) => ({ ...item }));
+      mouse.confusedUntil = snapshot.confusedUntil;
+      mouse._pauseUntil = snapshot.pauseUntil;
+      mouse._stuckTime = snapshot.stuckTime;
+    }
+    mouse.dragging = false;
+    mouse._dragSnapshot = null;
+    this._draggingMouseId = null;
+    return true;
   }
 
   continueSelection() {
@@ -895,6 +1029,88 @@ class Game {
     }
   }
 
+  _noteMouseCell(mouse, cell = null) {
+    const current = cell || cellAt(mouse.x, mouse.y);
+    const currentKey = key(current.x, current.y);
+    if (!Array.isArray(mouse._recentCells)) mouse._recentCells = [];
+    if (mouse._recentCells[mouse._recentCells.length - 1] !== currentKey) {
+      mouse._recentCells.push(currentKey);
+      if (mouse._recentCells.length > MOUSE_LOOP_WINDOW) mouse._recentCells.shift();
+    }
+  }
+
+  _unstickMouse(mouse, reason = 'immobile') {
+    if (!mouse?.alive || mouse.dragging || this.status !== 'running') return false;
+    const current = cellAt(mouse.x, mouse.y);
+    if (this.grid[current.y]?.[current.x] !== 0) return false;
+    const neighbors = walkableNeighbors(this.grid, this.cols, this.rows, current);
+    if (!neighbors.length) return false;
+    const previous = mouse._previousCell;
+    const candidates = neighbors.filter((candidate) => !previous
+      || candidate.x !== previous.x || candidate.y !== previous.y);
+    const usable = candidates.length ? candidates : neighbors;
+    const currentDistance = this._exitDistances.get(key(current.x, current.y)) ?? Infinity;
+    const ranked = usable.map((candidate) => {
+      const candidateKey = key(candidate.x, candidate.y);
+      const distance = this._exitDistances.get(candidateKey) ?? Infinity;
+      const visits = mouse._visited.get(candidateKey) || 0;
+      return {
+        candidate,
+        score: visits * 12 + (Number.isFinite(distance) ? distance : 9999)
+          + (distance > currentDistance ? 2 : 0),
+      };
+    }).sort((a, b) => a.score - b.score
+      || a.candidate.y - b.candidate.y || a.candidate.x - b.candidate.x);
+    const choice = ranked[0].candidate;
+    const ownCenter = center(current);
+    const needsCenter = Math.hypot(mouse.x - ownCenter.x, mouse.y - ownCenter.y) > 1e-7;
+    // Finish the current center-to-center segment before taking a turn. A
+    // direct perpendicular turn from a fractional position would cut a wall
+    // corner and can look like a stuck/teleporting mouse.
+    mouse._route = needsCenter ? [current, choice] : [choice];
+    mouse._cell = current;
+    mouse._visited.set(key(choice.x, choice.y), (mouse._visited.get(key(choice.x, choice.y)) || 0) + 1);
+    mouse._stuck = 0;
+    mouse._stuckTime = 0;
+    mouse._lastUnstuckAt = this.time;
+    mouse._lastMotionX = mouse.x;
+    mouse._lastMotionY = mouse.y;
+    mouse._recentCells = [key(current.x, current.y)];
+    mouse.confusedUntil = this.time;
+    mouse._pauseUntil = this.time;
+    mouse.lastTurnState = 'unstuck';
+    mouse.mood = 'determined';
+    this._emit({
+      type: 'mouse-unstuck',
+      actorId: mouse.id,
+      reason,
+      x: mouse.x,
+      y: mouse.y,
+      time: this.time,
+    });
+    return true;
+  }
+
+  _monitorMouseProgress(mouse, dt) {
+    const moved = Math.hypot(mouse.x - mouse._lastMotionX, mouse.y - mouse._lastMotionY);
+    if (moved > 0.001) {
+      mouse._stuckTime = 0;
+      mouse._lastMotionX = mouse.x;
+      mouse._lastMotionY = mouse.y;
+    } else if (this.time >= mouse.confusedUntil && mouse._route.length) {
+      mouse._stuckTime = (Number(mouse._stuckTime) || 0) + dt;
+    } else if (!mouse._route.length) {
+      mouse._stuckTime = Math.max(0, (Number(mouse._stuckTime) || 0) - dt * 0.5);
+    }
+    const recent = Array.isArray(mouse._recentCells) ? mouse._recentCells.slice(-MOUSE_LOOP_WINDOW) : [];
+    const loop = recent.length >= MOUSE_LOOP_WINDOW
+      && new Set(recent).size <= MOUSE_LOOP_UNIQUE_LIMIT
+      && !mouse.deadEnd;
+    const canRecover = this.time - (Number(mouse._lastUnstuckAt) || -Infinity) >= 2.2;
+    if (canRecover && mouse._stuckTime >= MOUSE_STUCK_LIMIT) this._unstickMouse(mouse, 'immobile');
+    else if (canRecover && loop) this._unstickMouse(mouse, 'local-loop');
+  }
+
   _planMouse(mouse) {
     const current = cellAt(mouse.x, mouse.y);
     if (this.grid[current.y]?.[current.x] !== 0) {
@@ -904,6 +1120,7 @@ class Game {
     } else {
       mouse._cell = current;
     }
+    this._noteMouseCell(mouse, mouse._cell);
     const allOptions = walkableNeighbors(this.grid, this.cols, this.rows, mouse._cell);
     const previous = mouse._previousCell;
     const forwardOptions = allOptions.filter((candidate) => !previous
@@ -933,7 +1150,7 @@ class Game {
     const currentDistance = this._exitDistances.get(key(mouse._cell.x, mouse._cell.y)) ?? Infinity;
     // Occasionally suspend even the mild exit preference. The remembered
     // local trail then wins, producing wrong turns and genuine exploration.
-    const wanderMode = junction && this.random() < 0.36;
+    const wanderMode = junction && this.random() < 0.48;
     const weighted = options.map((candidate) => {
       const candidateKey = key(candidate.x, candidate.y);
       const distance = this._exitDistances.get(candidateKey) ?? Infinity;
@@ -944,6 +1161,7 @@ class Game {
       // The local trail is the primary signal. Progress helps only as a tie
       // breaker, so a mouse can walk away from the exit into a side corridor.
       let weight = visits === 0 ? 6.2 : 0.75 / (1 + visits * 1.15);
+      if (visits >= 3) weight *= 0.45;
       if (!wanderMode) weight *= improvesExit ? 1.3 : (worsensExit ? 0.92 : 1.04);
       if (isBacktrack && options.length > 1) weight *= 0.14;
       if (isBacktrack && mouse.deadEnd) weight *= 12;
@@ -1013,9 +1231,14 @@ class Game {
     const ownCenter = center(from);
     const needsCenter = Math.hypot(mouse.x - ownCenter.x, mouse.y - ownCenter.y) > 1e-7;
     mouse._bombTargetId = target.id;
-    mouse._route = path.length
-      ? (needsCenter ? [from, ...path.slice(1)] : path.slice(1))
-      : [];
+    // Pursuit is refreshed one orthogonal cell at a time. Keeping the route
+    // short means a moving target cannot leave a carrier committed to a long
+    // stale path, while the optional current-cell waypoint preserves corner
+    // safety when the carrier is fractional.
+    const nextStep = path.length > 1 ? path[1] : null;
+    mouse._route = nextStep
+      ? (needsCenter ? [from, nextStep] : [nextStep])
+      : (needsCenter ? [from] : []);
     mouse._bombRepathTimer = 0.22;
     return target;
   }
@@ -1113,10 +1336,11 @@ class Game {
       ? this.mice.find((mouse) => mouse.id === carrier._bombTargetId && mouse.alive && mouse !== carrier)
       : null;
     carrier._bombRepathTimer = Math.max(0, (Number(carrier._bombRepathTimer) || 0) - dt);
-    // A same-cell target legitimately produces an empty route. Do not run a
-    // full maze distance search every frame while the pair is still close;
-    // the short repath timer keeps target changes responsive and bounded.
-    if (!target || carrier._bombRepathTimer <= 0) this._planBombCarrier(carrier);
+    // Never replace a partially traversed segment. Replanning every fraction
+    // of a second used to prepend the carrier's current cell and make it
+    // shuttle back to center forever. A same-cell target legitimately leaves
+    // an empty route; the pass check handles that proximity directly.
+    if (!carrier._route.length && (!target || carrier._bombRepathTimer <= 0)) this._planBombCarrier(carrier);
   }
 
   _effectiveSpeed(actor) {
@@ -1158,8 +1382,12 @@ class Game {
       : Number(actor.baseSpeed);
     const bombMultiplier = actor !== this.cat && actor.hasBomb ? BOMB_CARRIER_BOOST : 1;
     actor.bombSpeedMultiplier = bombMultiplier;
+    const catCycle = actor === this.cat
+      ? 0.72 + 0.78 * Math.pow(Math.max(0, Math.sin(this.time * 0.22 + 0.7)), 4)
+      : 1;
+    if (actor === this.cat) actor.speedBurstMultiplier = catCycle;
     const speed = clamp(
-      Number.isFinite(baselineSpeed) ? baselineSpeed * actor.speedMultiplier * poopSlow * fear * bombMultiplier : 0,
+      Number.isFinite(baselineSpeed) ? baselineSpeed * actor.speedMultiplier * poopSlow * fear * bombMultiplier * catCycle : 0,
       0,
       MAX_ACTOR_SPEED,
     );
@@ -1546,6 +1774,12 @@ class Game {
       phase: this._insectRandom() * Math.PI * 2,
       speed,
       baseSpeed: speed,
+      attached: false,
+      attachedTo: null,
+      targetId: null,
+      attachedAt: -Infinity,
+      _attachAngle: 0,
+      _attachRadius: 0.2,
       _cell: { ...cell },
       _previousCell: null,
       _route: [],
@@ -1602,6 +1836,93 @@ class Game {
     }
   }
 
+  _attachedInsectsFor(mouse) {
+    return this.insects.filter((insect) => insect.attachedTo === mouse.id || insect.targetId === mouse.id);
+  }
+
+  _setMouseDamageStage(mouse) {
+    const damage = clamp(Number(mouse.insectDamage) || 0, 0, 1);
+    const stage = damage >= 1 ? 4 : damage >= 0.82 ? 4 : damage >= 0.6 ? 3 : damage >= 0.35 ? 2 : damage >= 0.15 ? 1 : 0;
+    mouse.insectDamage = damage;
+    mouse.damageStage = stage;
+    return stage;
+  }
+
+  _refreshMouseInsectDamage(mouse, dt) {
+    if (!mouse?.alive) return false;
+    const attached = this._attachedInsectsFor(mouse);
+    const count = Math.min(INSECT_MAX_ATTACHED, attached.length);
+    if (mouse.insectCount !== count || !Array.isArray(mouse.insectTypes)) mouse.insectTypes = attached.slice(0, INSECT_MAX_ATTACHED).map((insect) => insect.type);
+    mouse.insectCount = count;
+    if (count <= 0 || !(dt > 0)) {
+      this._setMouseDamageStage(mouse);
+      return false;
+    }
+    // A single bug takes roughly two minutes to consume a mouse; a full
+    // cluster reaches the terminal state in about one minute. The bounded
+    // curve keeps early visual damage readable instead of spiking on contact.
+    const duration = clamp(126 - Math.max(0, count - 1) * 6, 60, 126);
+    const previousStage = Number(mouse.damageStage) || 0;
+    mouse.insectDamage = clamp((Number(mouse.insectDamage) || 0) + dt / duration, 0, 1);
+    const stage = this._setMouseDamageStage(mouse);
+    mouse.lastBiteAt = this.time;
+    if (stage !== previousStage || this.time - (Number(mouse._lastDamageEvent) || -Infinity) >= 2.5) {
+      mouse._lastDamageEvent = this.time;
+      this._emit({
+        type: 'insect-bite',
+        actorId: mouse.id,
+        insectCount: count,
+        damage: mouse.insectDamage,
+        damageStage: stage,
+        x: mouse.x,
+        y: mouse.y,
+        time: this.time,
+      });
+    }
+    if (this.insectFatal && mouse.insectDamage >= 1 && this.status === 'running') {
+      return this.choose(mouse, 'devoured');
+    }
+    return false;
+  }
+
+  _attachInsect(insect, mouse) {
+    if (!insect || insect.attachedTo || insect.targetId || !mouse?.alive) return false;
+    if (this._attachedInsectsFor(mouse).length >= INSECT_MAX_ATTACHED) return false;
+    insect.attachedTo = mouse.id;
+    insect.targetId = mouse.id;
+    insect.attachedAt = this.time;
+    insect.attached = true;
+    insect._route = [];
+    insect._attachAngle = this._insectRandom() * Math.PI * 2;
+    insect._attachRadius = 0.18 + this._insectRandom() * 0.12;
+    insect.x = mouse.x + Math.cos(insect._attachAngle) * insect._attachRadius;
+    insect.y = mouse.y + Math.sin(insect._attachAngle) * insect._attachRadius;
+    const attachments = this._attachedInsectsFor(mouse);
+    mouse.insectCount = attachments.length;
+    mouse.insectTypes = attachments.map((item) => item.type);
+    this._emit({ type: 'insect-attached', actorId: mouse.id, insectId: insect.id, insectType: insect.type, x: insect.x, y: insect.y, time: this.time });
+    return true;
+  }
+
+  _crushInsect(insect, mouse) {
+    const index = this.insects.indexOf(insect);
+    if (index < 0) return false;
+    this.insects.splice(index, 1);
+    mouse.lastCrunchAt = this.time;
+    mouse.crunches = (Number(mouse.crunches) || 0) + 1;
+    mouse.lastTurnState = 'crunch';
+    mouse.mood = 'celebrating';
+    this._emit({ type: 'insect-crushed', insectId: insect.id, insectType: insect.type, typeName: insect.type, actorId: mouse.id, x: insect.x, y: insect.y, time: this.time });
+    return true;
+  }
+
+  _resolveInsectContact(insect, mouse) {
+    if (!insect || !mouse?.alive || insect.attachedTo || insect.targetId) return false;
+    const canAttach = insect.canAttach !== false && this._attachedInsectsFor(mouse).length < INSECT_MAX_ATTACHED;
+    if (canAttach && this._insectRandom() < this.insectAttachChance) return this._attachInsect(insect, mouse);
+    return this._crushInsect(insect, mouse);
+  }
+
   _crushInsectsOnSegment(mouse, start, end) {
     if (!this.insects.length || !mouse?.alive) return 0;
     const minX = Math.floor((Math.min(start.x, end.x) - 0.34) / 2);
@@ -1631,24 +1952,7 @@ class Game {
     }
     hits.sort((a, b) => a.along - b.along);
     for (const hit of hits) {
-      const index = this.insects.indexOf(hit.insect);
-      if (index < 0) continue;
-      const insect = this.insects[index];
-      this.insects.splice(index, 1);
-      mouse.lastCrunchAt = this.time;
-      mouse.crunches = (Number(mouse.crunches) || 0) + 1;
-      mouse.lastTurnState = 'crunch';
-      mouse.mood = 'celebrating';
-      this._emit({
-        type: 'insect-crushed',
-        insectId: insect.id,
-        insectType: insect.type,
-        typeName: insect.type,
-        actorId: mouse.id,
-        x: insect.x,
-        y: insect.y,
-        time: this.time,
-      });
+      if (this.insects.includes(hit.insect)) this._resolveInsectContact(hit.insect, mouse);
     }
     return hits.length;
   }
@@ -1669,7 +1973,30 @@ class Game {
     while (spawnBudget-- > 0 && this.insects.length < this.insectMaxTotal
       && this.insects.length < this.insectRoamingTarget) this._spawnInsect();
     this._rebuildInsectBuckets();
+    const alive = this.mice.filter((mouse) => mouse.alive);
+    const aliveById = new Map(alive.map((mouse) => [mouse.id, mouse]));
+    const miceByBucket = new Map();
+    for (const mouse of alive) {
+      const bucket = this._insectBucket(mouse.x, mouse.y);
+      if (!miceByBucket.has(bucket)) miceByBucket.set(bucket, []);
+      miceByBucket.get(bucket).push(mouse);
+    }
     for (const insect of this.insects) {
+      if (insect.attachedTo || insect.targetId) {
+        const attachedMouse = aliveById.get(insect.attachedTo || insect.targetId);
+        if (attachedMouse) {
+          const angle = Number(insect._attachAngle) || 0;
+          const radius = Number(insect._attachRadius) || 0.2;
+          insect.x = attachedMouse.x + Math.cos(angle + attachedMouse.angle * 0.08) * radius;
+          insect.y = attachedMouse.y + Math.sin(angle + attachedMouse.angle * 0.08) * radius;
+          insect.angle = attachedMouse.angle;
+          continue;
+        }
+        insect.attached = false;
+        insect.attachedTo = null;
+        insect.targetId = null;
+        insect.attachedAt = -Infinity;
+      }
       insect._repathTimer = Math.max(0, insect._repathTimer - dt);
       // Keep a chosen axis-aligned segment until its center is reached. A
       // timer may request a new route later, but never replaces a fractional
@@ -1678,15 +2005,43 @@ class Game {
       this._moveInsect(insect, dt);
     }
     this._rebuildInsectBuckets();
+    // Roaming insects can reach a stationary mouse between movement slices.
+    // Moving-mouse contacts are also caught by the swept segment above.
+    for (const insect of [...this.insects]) {
+      if (!this.insects.includes(insect) || insect.attachedTo || insect.targetId) continue;
+      const bx = Math.floor(insect.x / 2);
+      const by = Math.floor(insect.y / 2);
+      let contact = null;
+      for (let oy = -1; oy <= 1 && !contact; oy += 1) {
+        for (let ox = -1; ox <= 1 && !contact; ox += 1) {
+          for (const mouse of miceByBucket.get(`${bx + ox},${by + oy}`) || []) {
+            if (Math.hypot(mouse.x - insect.x, mouse.y - insect.y) <= 0.38) { contact = mouse; break; }
+          }
+        }
+      }
+      if (contact) this._resolveInsectContact(insect, contact);
+    }
+    for (const mouse of this.mice) {
+      if (this.status !== 'running') break;
+      this._refreshMouseInsectDamage(mouse, dt);
+    }
   }
 
   _updateMouse(mouse, dt) {
     if (!mouse.alive) return;
+    // A held mouse is intentionally frozen in world space while the rest of
+    // the simulation continues. Attachments still follow it in _updateLice /
+    // _updateInsects, and the bomb/fuse continues to tick normally.
+    if (mouse.dragging) {
+      this._effectiveSpeed(mouse);
+      return;
+    }
     mouse._detourTimer -= dt;
     mouse.poopClock -= dt;
     if (mouse.poopClock <= 0) {
       const item = { id: `poop-${++this._poopId}`, x: mouse.x, y: mouse.y, createdAt: this.time };
       this.poop.push(item);
+      if (this.poop.length > MAX_POOP) this.poop.splice(0, this.poop.length - MAX_POOP);
       mouse.lastPoopAt = this.time;
       mouse.poopClock = 3.4 + this.random() * 4.5;
       this._emit({ type: 'poop', id: item.id, x: item.x, y: item.y, time: this.time });
@@ -1724,6 +2079,7 @@ class Game {
     });
     this._crushInsectsOnSegment(mouse, { x: mouse.x, y: mouse.y }, { x: mouse.x, y: mouse.y });
     this._collectCheese(mouse, 'mouse');
+    this._monitorMouseProgress(mouse, dt);
     if (Math.hypot(mouse.x - this.exit.x, mouse.y - this.exit.y) < 0.28) this.choose(mouse, 'escaped');
   }
 
@@ -1746,6 +2102,12 @@ class Game {
       _targetId: null,
       _route: [],
       _repathTimer: 0,
+      _wanderTimer: 0,
+      _stuckTime: 0,
+      _lastUnstuckAt: -Infinity,
+      _lastMotionX: spawn.x,
+      _lastMotionY: spawn.y,
+      speedBurstMultiplier: 1,
     };
     this._effectiveSpeed(this.cat);
     this._catEntered = true;
@@ -1754,6 +2116,8 @@ class Game {
 
   _updateCat(dt) {
     if (!this.cat) return;
+    this.cat._stuckTime = Number(this.cat._stuckTime) || 0;
+    this.cat._wanderTimer = Math.max(0, (Number(this.cat._wanderTimer) || 0) - dt);
     this.cat._repathTimer = Math.max(0, this.cat._repathTimer - dt);
     const alive = this.mice.filter((mouse) => mouse.alive);
     if (!alive.length) return;
@@ -1773,20 +2137,53 @@ class Game {
     if (!target) return;
     const from = cellAt(this.cat.x, this.cat.y);
     const to = cellAt(target.x, target.y);
-    if (!this.cat._route.length || this.cat._repathTimer <= 0
-      || this.cat._route[this.cat._route.length - 1]?.x !== to.x
-      || this.cat._route[this.cat._route.length - 1]?.y !== to.y) {
-      const route = shortestPath(this.grid, this.cols, this.rows, from, to);
+    // A route owns the current center-to-center segment. Do not replace it
+    // just because the target moved to another cell or a short repath timer
+    // expired; doing that while fractional made the cat reverse to its own
+    // center every frame. Pursuit is refreshed after the route is exhausted.
+    if (!this.cat._route.length) {
+      let route = shortestPath(this.grid, this.cols, this.rows, from, to);
+      // At a few junctions the cat takes a short, deterministic detour. The
+      // target remains the nearest living mouse, so wandering creates pursuit
+      // tension without turning the hunter into a random wall walker.
+      if (route.length > 2 && this.cat._wanderTimer <= 0 && this.random() < 0.15) {
+        const detours = walkableNeighbors(this.grid, this.cols, this.rows, from)
+          .map((candidate) => ({ candidate, path: shortestPath(this.grid, this.cols, this.rows, candidate, to) }))
+          .filter((item) => item.path.length > 0);
+        if (detours.length) {
+          const detour = detours[Math.floor(this.random() * detours.length)];
+          route = [from, ...detour.path];
+        }
+        this.cat._wanderTimer = 1.2 + this.random() * 1.8;
+      }
       // If the target changes while the cat is between cell centers, return
       // to its own cell center before taking a new route. Otherwise the first
       // turn could draw a diagonal across a wall corner at high speed.
       const ownCenter = center(from);
       const needsCenter = Math.hypot(this.cat.x - ownCenter.x, this.cat.y - ownCenter.y) > 1e-7;
-      this.cat._route = route.length ? (needsCenter ? [from, ...route.slice(1)] : route.slice(1)) : [];
+      // Commit only the next center-to-center step. The nearest target is
+      // recomputed after arrival, so the cat keeps pursuing moving mice while
+      // never replacing a fractional segment mid-turn.
+      const nextStep = route.length > 1 ? route[1] : null;
+      this.cat._route = nextStep
+        ? (needsCenter ? [from, nextStep] : [nextStep])
+        : (needsCenter ? [from] : []);
       this.cat._repathTimer = 0.25;
     }
     this._effectiveSpeed(this.cat);
+    const beforeX = this.cat.x;
+    const beforeY = this.cat.y;
     this._moveAlongRoute(this.cat, dt);
+    if (Math.hypot(this.cat.x - beforeX, this.cat.y - beforeY) > 0.001) {
+      this.cat._stuckTime = 0;
+      this.cat._lastMotionX = this.cat.x;
+      this.cat._lastMotionY = this.cat.y;
+    } else if (this.cat._route.length && this.time - (Number(this.cat._lastUnstuckAt) || -Infinity) >= 2.2) {
+      this.cat._stuckTime += dt;
+    }
+    if (this.cat._stuckTime >= 2.4 && this.time - (Number(this.cat._lastUnstuckAt) || -Infinity) >= 2.2) {
+      this._unstickCat(target);
+    }
     this._collectCheese(this.cat, 'cat');
     if (this.status !== 'running') return;
     for (const mouse of alive) {
@@ -1806,6 +2203,32 @@ class Game {
     }
   }
 
+  _unstickCat(target = null) {
+    if (!this.cat || this.status !== 'running') return false;
+    const from = cellAt(this.cat.x, this.cat.y);
+    const neighbors = walkableNeighbors(this.grid, this.cols, this.rows, from);
+    if (!neighbors.length) return false;
+    const targetCell = target ? cellAt(target.x, target.y) : from;
+    const previous = this.cat._previousCell;
+    const options = neighbors.filter((candidate) => !previous
+      || candidate.x !== previous.x || candidate.y !== previous.y);
+    const usable = options.length ? options : neighbors;
+    const ranked = usable.map((candidate) => ({
+      candidate,
+      distance: shortestPath(this.grid, this.cols, this.rows, candidate, targetCell).length || 9999,
+    })).sort((a, b) => a.distance - b.distance || a.candidate.y - b.candidate.y || a.candidate.x - b.candidate.x);
+    const choice = ranked[0].candidate;
+    const ownCenter = center(from);
+    const needsCenter = Math.hypot(this.cat.x - ownCenter.x, this.cat.y - ownCenter.y) > 1e-7;
+    this.cat._route = needsCenter ? [from, choice] : [choice];
+    this.cat._stuckTime = 0;
+    this.cat._lastUnstuckAt = this.time;
+    this.cat._lastMotionX = this.cat.x;
+    this.cat._lastMotionY = this.cat.y;
+    this._emit({ type: 'cat-unstuck', actorId: this.cat.id, x: this.cat.x, y: this.cat.y, time: this.time });
+    return true;
+  }
+
   _explodeOne() {
     const carrier = this._getBombCarrier();
     if (!carrier) return false;
@@ -1818,6 +2241,21 @@ class Game {
       time: this.time,
     });
     return this.choose(carrier, 'exploded');
+  }
+
+  _clearMouseAttachments(mouse) {
+    if (!mouse) return;
+    this.insects = this.insects.filter((insect) => {
+      if (insect.attachedTo !== mouse.id && insect.targetId !== mouse.id) return true;
+      return false;
+    });
+    this.lice = this.lice.filter((louse) => {
+      if (louse.targetId !== mouse.id) return true;
+      return false;
+    });
+    mouse.insectCount = 0;
+    mouse.insectTypes = [];
+    mouse.liceCount = 0;
   }
 
   _checkTimedEvents() {
@@ -1889,9 +2327,11 @@ class Game {
       ? this.mice.find((candidate) => candidate.id === mouseOrId)
       : mouseOrId;
     if (this.status === 'awaiting') return false;
-    if (!mouse || !this.mice.includes(mouse) || !mouse.alive || !['escaped', 'exploded', 'eaten'].includes(outcome)) return false;
+    if (!mouse || !this.mice.includes(mouse) || !mouse.alive || !['escaped', 'exploded', 'eaten', 'devoured'].includes(outcome)) return false;
+    if (mouse.dragging) this.cancelMouseDrag(mouse.id);
     const wasCarrier = mouse.hasBomb || this.bombCarrierId === mouse.id;
     if (wasCarrier) this._removeBombFromCarrier(mouse, `selected:${outcome}`);
+    this._clearMouseAttachments(mouse);
     mouse.alive = false;
     mouse.outcome = outcome;
     const selected = {
@@ -1920,6 +2360,7 @@ class Game {
   getStats() {
     const alive = this.mice.filter((mouse) => mouse.alive).length;
     const attachedLice = this.lice.filter((louse) => louse.attached).length;
+    const attachedInsects = this.insects.filter((insect) => insect.attachedTo || insect.targetId).length;
     return {
       alive,
       chosen: this.selections.length,
@@ -1929,6 +2370,7 @@ class Game {
       roamingLice: this.lice.length - attachedLice,
       attachedLice,
       insects: this.insects.length,
+      attachedInsects,
       catIn: Boolean(this.cat),
       nextExplosionIn: Math.max(0, this.nextExplosion - this.time),
       bombInterval: this.bombInterval,
@@ -1952,6 +2394,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   'use strict';
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const frameCache = new WeakMap();
+  // Damage masks are cropped per atlas/frame/stage and kept in a small LRU.
+  // They are only built in a real browser canvas and only for gore stages
+  // that remove a silhouette feature, so overview rendering stays cheap.
+  const damageFrameCache = new WeakMap();
+  const damageCacheOrder = [];
+  let damageCacheBytes = 0;
+  const DAMAGE_CACHE_MAX_BYTES = 32 * 1024 * 1024;
+  const DAMAGE_CACHE_MAX_ENTRIES = 192;
   function drawFrame(ctx, image, sx, sy, sw, sh, x, y, w, h) {
     // Keep the original source rectangles and animations. At overview scale,
     // resample each costume frame once instead of the large atlas every draw.
@@ -1980,6 +2430,126 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       }
     }
     ctx.drawImage(image, sx, sy, sw, sh, x, y, w, h);
+  }
+
+  const DAMAGE_ANCHORS = {
+    // Fractions of the rendered sprite width/height, in the same local space
+    // used by the wound rims below. Helmeted costumes use a lower cheek notch
+    // rather than cutting through the enclosing helmet shell.
+    default: { ear: true, earX: -.10, earY: -.22, eyeX: .29, eyeY: -.07, foreX: .17, foreY: .17, hindX: -.29, hindY: .31 },
+    Astronaut: { ear: false, earX: -.10, earY: -.22, eyeX: .30, eyeY: -.07, foreX: .20, foreY: .20, hindX: -.27, hindY: .32 },
+    Scuba: { ear: false, earX: -.10, earY: -.22, eyeX: .30, eyeY: -.07, foreX: .20, foreY: .18, hindX: -.28, hindY: .32 },
+    chef: { ear: true, earX: -.07, earY: -.22, eyeX: .27, eyeY: -.11, foreX: .28, foreY: .15, hindX: -.29, hindY: .31 },
+    wizard: { ear: true, earX: -.08, earY: -.22, eyeX: .27, eyeY: -.04, foreX: .19, foreY: .12, hindX: -.29, hindY: .31 },
+    magician: { ear: true, earX: -.08, earY: -.22, eyeX: .27, eyeY: -.04, foreX: .19, foreY: .12, hindX: -.29, hindY: .31 },
+    knight: { ear: true, earX: -.08, earY: -.20, eyeX: .27, eyeY: -.05, foreX: .24, foreY: .14, hindX: -.28, hindY: .31 },
+    dragon: { ear: true, earX: -.12, earY: -.20, eyeX: .25, eyeY: -.04, foreX: .28, foreY: .17, hindX: -.30, hindY: .32 },
+  };
+  function damageAnchor(costumeName) { return DAMAGE_ANCHORS[costumeName] || DAMAGE_ANCHORS.default; }
+  function damagePoint(x, y, sw, sh) { return [(x + .5) * sw, (y + .5) * sh]; }
+  function cutPolygon(mask, points, sw, sh) {
+    mask.beginPath();
+    points.forEach((point, index) => {
+      const [x, y] = damagePoint(point[0], point[1], sw, sh);
+      if (index === 0) mask.moveTo(x, y); else mask.lineTo(x, y);
+    });
+    mask.closePath(); mask.fill();
+  }
+  function damageGeometry(costumeName, stage) {
+    const a = damageAnchor(costumeName);
+    return {
+      ear: a.ear ? [[a.earX - .10, a.earY + .10], [a.earX - .03, a.earY - .13], [a.earX + .11, a.earY - .20], [a.earX + .17, a.earY + .05], [a.earX + .03, a.earY + .16]] : null,
+      eye: { x: a.eyeX, y: a.eyeY, rx: .024, ry: .034 },
+      forearm: stage >= 3 ? { x: a.foreX, y: a.foreY, rx: .034, ry: .040 } : null,
+      frontFoot: stage >= 4 ? { x: a.foreX + .08, y: a.foreY + .19, rx: .040, ry: .032 } : null,
+      rearFoot: stage >= 4 ? { x: a.hindX, y: .39, rx: .050, ry: .040 } : null,
+    };
+  }
+  function cutEllipse(mask, oval, sw, sh) {
+    if (!oval) return;
+    const [x, y] = damagePoint(oval.x, oval.y, sw, sh);
+    mask.beginPath(); mask.ellipse(x, y, Math.max(2, oval.rx * sw), Math.max(2, oval.ry * sh), 0, 0, Math.PI * 2); mask.fill();
+  }
+  function paintDamageRim(mask, geometry, width, height) {
+    mask.globalCompositeOperation = 'source-atop';
+    mask.strokeStyle = 'rgba(224,69,67,.95)';
+    mask.lineWidth = Math.max(1, Math.min(width, height) * .018);
+    mask.lineJoin = 'round'; mask.lineCap = 'round';
+    if (geometry.ear) {
+      mask.beginPath();
+      geometry.ear.forEach((point, index) => {
+        const [x, y] = damagePoint(point[0], point[1], width, height);
+        if (index === 0) mask.moveTo(x, y); else mask.lineTo(x, y);
+      });
+      mask.closePath(); mask.stroke();
+    }
+    const ovals = [geometry.eye, geometry.forearm, geometry.frontFoot, geometry.rearFoot].filter(Boolean);
+    for (const oval of ovals) {
+      const [x, y] = damagePoint(oval.x, oval.y, width, height);
+      mask.beginPath(); mask.ellipse(x, y, oval.rx * width, oval.ry * height, 0, 0, Math.PI * 2); mask.stroke();
+    }
+    // Pale edge details are painted before the cut, then source-atop clips
+    // them to actual sprite pixels. No detached bone strokes can escape.
+    mask.strokeStyle = 'rgba(247,215,168,.92)';
+    mask.lineWidth = Math.max(1, Math.min(width, height) * .012);
+    for (const oval of ovals) {
+      const [x, y] = damagePoint(oval.x, oval.y, width, height);
+      mask.beginPath(); mask.moveTo(x - oval.rx * width * .55, y - oval.ry * height * .72); mask.lineTo(x - oval.rx * width * .15, y - oval.ry * height * .94); mask.stroke();
+    }
+    mask.globalCompositeOperation = 'source-over';
+  }
+  function touchDamageEntry(record) {
+    const index = damageCacheOrder.indexOf(record);
+    if (index >= 0) damageCacheOrder.splice(index, 1);
+    damageCacheOrder.push(record);
+  }
+  function createDamageFrame(image, rect, stage, costumeName, snapshotHeight) {
+    if (!root.document || typeof root.document.createElement !== 'function' || stage < 2) return null;
+    const [sx, sy, sw, sh] = rect;
+    let perImage = damageFrameCache.get(image);
+    if (!perImage) { perImage = new Map(); damageFrameCache.set(image, perImage); }
+    const pixels = Math.max(64, Math.min(256, Math.round(snapshotHeight) || 128));
+    const key = [sx, sy, sw, sh, stage, costumeName || 'default', pixels].join(':');
+    const existing = perImage.get(key);
+    if (existing) { touchDamageEntry(existing.record); return existing.canvas; }
+    const canvas = root.document.createElement('canvas');
+    canvas.height = pixels; canvas.width = Math.max(1, Math.round(pixels * sw / sh));
+    const mask = canvas.getContext('2d');
+    if (!mask) return null;
+    mask.drawImage(image, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+    const geometry = damageGeometry(costumeName, stage);
+    paintDamageRim(mask, geometry, canvas.width, canvas.height);
+    mask.globalCompositeOperation = 'destination-out';
+    if (stage >= 2) {
+      if (geometry.ear) cutPolygon(mask, geometry.ear, canvas.width, canvas.height);
+      cutEllipse(mask, geometry.eye, canvas.width, canvas.height);
+    }
+    if (stage >= 3) {
+      cutEllipse(mask, geometry.forearm, canvas.width, canvas.height);
+    }
+    if (stage >= 4) {
+      cutEllipse(mask, geometry.frontFoot, canvas.width, canvas.height);
+      cutEllipse(mask, geometry.rearFoot, canvas.width, canvas.height);
+    }
+    mask.globalCompositeOperation = 'source-over';
+    const record = { image, perImage, key };
+    const entry = { canvas, record, bytes: canvas.width * canvas.height * 4 };
+    perImage.set(key, entry);
+    damageCacheOrder.push(record);
+    damageCacheBytes += entry.bytes;
+    while (damageCacheOrder.length > DAMAGE_CACHE_MAX_ENTRIES || damageCacheBytes > DAMAGE_CACHE_MAX_BYTES) {
+      const oldRecord = damageCacheOrder.shift();
+      const old = oldRecord && oldRecord.perImage.get(oldRecord.key);
+      if (old) { oldRecord.perImage.delete(oldRecord.key); damageCacheBytes -= old.bytes; }
+    }
+    return canvas;
+  }
+  function drawDamageFrame(ctx, image, rect, x, y, w, h, stage, costumeName, gore, snapshotHeight) {
+    if (gore !== false && stage >= 2) {
+      const damageFrame = createDamageFrame(image, rect, stage, costumeName, snapshotHeight);
+      if (damageFrame) { ctx.drawImage(damageFrame, x, y, w, h); return; }
+    }
+    drawFrame(ctx, image, rect[0], rect[1], rect[2], rect[3], x, y, w, h);
   }
   const lines = {
     wandering: ['Left feels right.', 'Has anyone seen the exit?', 'Follow me! Probably.', 'I know this bit. I think.', 'A perfectly normal shortcut.', 'Was that the same wall?', 'Cheese first. Plans later.', 'I have a very small map.'],
@@ -2070,6 +2640,18 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     skateboarder: [.335, .064, .344, -.032], 'basketball-player': [.336, .063, .345, -.032], rockstar: [.335, .065, .344, -.030], 'ballet-dancer': [.337, .068, .346, -.030], 'business-mouse': [.336, .062, .345, -.033], 'raincoat-mouse': [.334, .067, .343, -.030],
     cowboy: [.334, .066, .343, -.030], sailor: [.336, .065, .345, -.030], gardener: [.333, .067, .342, -.030], magician: [.331, .105, .340, .008], winter: [.334, .080, .343, -.015], dragon: [.328, .090, .337, -.010],
   };
+  const TEAR_ANCHORS = {
+    // Final near/far eye origins read directly from the atlas crops. These
+    // are lower-eyelid tear starts, not muzzle offsets or duplicate eyes.
+    Safari: [.29, -.055, .39, -.055],
+    Astronaut: [.30, -.055, .41, -.055],
+    chef: [.27, -.095, .37, -.095],
+    wizard: [.27, -.025, .38, -.025],
+    knight: [.27, -.035, .37, -.035],
+    dragon: [.25, -.025, .36, -.025],
+    Scuba: [.30, -.055, .40, -.055],
+    mechanic: [.29, -.055, .39, -.055],
+  };
   function drawFaceExpression(ctx, actor, game, now, state, w, h, reducedMotion, costumeName) {
     // Keep the original painted eyes. Each costume gets a calibrated muzzle
     // and cheek anchor so accents never land on a hat, visor, or chest.
@@ -2130,26 +2712,160 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     }
     ctx.restore();
   }
-  function drawGaitFrame(ctx, currentImage, currentRect, nextImage, nextRect, x, y, w, h, transition) {
+
+  // The face in each atlas is intentionally left untouched.  These tears sit
+  // on top of the painted eye(s), so a costume keeps its original expression
+  // while the current run can still communicate the ongoing bug pressure.
+  // `gore` is optional for compatibility with older renderer callers.
+  function drawRedTears(ctx, actor, now, w, h, reducedMotion, costumeName, gore) {
+    if (gore === false || !ctx || w < .06 || h < .06) return;
+    const tearAnchor = TEAR_ANCHORS[costumeName] || TEAR_ANCHORS.Safari;
+    const t = Number(now) || 0;
+    const phase = Number(actor.phase) || 0;
+    // A side-on mouse has one strong visible eye and a softer far-eye tear.
+    // Keeping both close to the calibrated muzzle anchor prevents tears from
+    // appearing on helmets, visors, or costume chests.
+    const eyes = [
+      { x: tearAnchor[0] * w, y: (tearAnchor[1] + .015) * h, alpha: .94, offset: 0 },
+      { x: tearAnchor[2] * w, y: (tearAnchor[3] + .015) * h, alpha: .56, offset: 1.7 }
+    ];
+    ctx.save();
+    ctx.globalAlpha = .82;
+    ctx.strokeStyle = '#8f2434';
+    ctx.fillStyle = '#d33a43';
+    ctx.lineCap = 'round';
+    ctx.lineWidth = clamp(w * .014, .011, .024);
+    for (const eye of eyes) {
+      const wave = reducedMotion ? 0 : Math.sin(t * 4.8 + phase + eye.offset) * h * .012;
+      const length = h * (.105 + (reducedMotion ? 0 : .022 * (0.5 + .5 * Math.sin(t * 2.1 + eye.offset))));
+      ctx.globalAlpha = eye.alpha;
+      ctx.beginPath();
+      ctx.moveTo(eye.x, eye.y);
+      ctx.quadraticCurveTo(eye.x - w * .012, eye.y + length * .45, eye.x + wave, eye.y + length);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(eye.x + wave, eye.y + length + h * .014, w * .018, h * .032, -.2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function stageFor(actor) {
+    const explicit = Number(actor && actor.damageStage);
+    if (Number.isFinite(explicit)) return clamp(Math.floor(explicit), 0, 4);
+    const value = Number(actor && (actor.insectDamage ?? actor.bugDamage));
+    if (!Number.isFinite(value) || value <= .02) return 0;
+    return clamp(Math.ceil(clamp(value, 0, 1) * 4), 1, 4);
+  }
+
+  function insectCountFor(actor) {
+    const explicit = Number(actor && actor.insectCount);
+    if (Number.isFinite(explicit)) return clamp(Math.floor(explicit), 0, 8);
+    // Lice are still insects in older saved games. The renderer has its own
+    // detailed attached-lice pass; this fallback only adds the other-bug cue
+    // once the engine starts exposing a separate insect count.
+    return 0;
+  }
+
+  function drawWound(ctx, x, y, r, seed, reducedMotion) {
+    const pulse = reducedMotion ? 0 : Math.sin((Number(seed) || 0) * 2.7) * r * .08;
+    ctx.save();
+    ctx.fillStyle = 'rgba(76,24,34,.92)';
+    ctx.strokeStyle = 'rgba(226,65,65,.9)';
+    ctx.lineWidth = Math.max(.008, r * .14);
+    ctx.beginPath();
+    ctx.moveTo(x - r, y + r * .2);
+    ctx.lineTo(x - r * .48, y - r * .84 + pulse);
+    ctx.lineTo(x + r * .12, y - r * .55);
+    ctx.lineTo(x + r * .8, y - r * .26);
+    ctx.lineTo(x + r * .56, y + r * .62);
+    ctx.lineTo(x - r * .12, y + r * .88);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = 'rgba(245,122,92,.82)';
+    ctx.lineWidth = Math.max(.006, r * .09);
+    ctx.beginPath(); ctx.moveTo(x - r * .7, y); ctx.lineTo(x + r * .64, y + r * .2); ctx.moveTo(x - r * .28, y - r * .64); ctx.lineTo(x + r * .35, y + r * .52); ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawDamage(ctx, actor, now, w, h, reducedMotion, gore, stage, costumeName) {
+    if (gore === false || stage <= 0) return;
+    const t = Number(now) || 0;
+    const pulse = Number.isFinite(Number(actor.lastBiteAt)) ? Math.max(0, 1 - Math.abs((Number(actor.lastBiteAt) - (Number(actor._visualTime) || t)) / .65)) : 0;
+    const twitch = reducedMotion ? 0 : Math.sin(t * 10 + (Number(actor.phase) || 0)) * h * .012 * (stage >= 3 ? 1 : .5);
+    ctx.save();
+    ctx.globalAlpha = .96;
+    // Each step adds a distinct readable silhouette change while leaving the
+    // original outfit and painted face intact.
+    if (stage >= 1) {
+      drawWound(ctx, -.12 * w, .08 * h + twitch, .055 * Math.min(w, h), t + 1, reducedMotion);
+      drawWound(ctx, .04 * w, .25 * h - twitch, .035 * Math.min(w, h), t + 5, reducedMotion);
+    }
+    if (pulse > 0 && !reducedMotion) {
+      ctx.globalAlpha = .25 + pulse * .45;
+      ctx.fillStyle = '#e64e4e';
+      ctx.beginPath(); ctx.arc(.07 * w, .20 * h, .022 + pulse * .018, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawAttachedInsects(ctx, actor, now, w, h, reducedMotion, stage) {
+    const count = insectCountFor(actor);
+    if (!count) return;
+    const t = Number(now) || 0;
+    const phase = Number(actor.phase) || 0;
+    const types = Array.isArray(actor.insectTypes) ? actor.insectTypes : null;
+    const shown = Math.min(5, count);
+    ctx.save();
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    for (let i = 0; i < shown; i += 1) {
+      const type = String(types && types[i] || ['beetle', 'roach', 'ant', 'spider', 'maggot'][i % 5]);
+      const a = phase + i * 2.17;
+      const bob = reducedMotion ? 0 : Math.sin(t * (5.5 + i * .7) + a) * h * .018;
+      const anchor = [[-.17, .09], [-.06, .12], [.11, .10], [-.21, -.02], [.02, .27]][i];
+      const x = anchor[0] * w + Math.cos(a) * w * .012;
+      const y = anchor[1] * h + bob * .45;
+      const r = Math.max(.018, Math.min(w, h) * (stage >= 3 ? .034 : .028));
+      ctx.save(); ctx.translate(x, y); ctx.rotate(a + (reducedMotion ? 0 : Math.sin(t * 4 + a) * .18));
+      if (type === 'spider') {
+        ctx.strokeStyle = '#30243a'; ctx.lineWidth = Math.max(.008, r * .22);
+        for (let leg = 0; leg < 4; leg += 1) { const yy = (leg - 1.5) * r * .45; ctx.beginPath(); ctx.moveTo(0, yy); ctx.lineTo(-r * (1.6 + leg % 2 * .4), yy + (leg % 2 ? -r : r)); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0, yy); ctx.lineTo(r * (1.6 + leg % 2 * .4), yy + (leg % 2 ? r : -r)); ctx.stroke(); }
+        ctx.fillStyle = '#62436f'; ctx.beginPath(); ctx.arc(0, 0, r * 1.05, 0, Math.PI * 2); ctx.fill();
+      } else if (type === 'maggot') {
+        ctx.strokeStyle = '#d7bd7a'; ctx.lineWidth = Math.max(.012, r * .55); ctx.beginPath(); ctx.moveTo(-r * 1.5, 0); ctx.quadraticCurveTo(0, -r, r * 1.45, 0); ctx.stroke();
+        ctx.fillStyle = '#4b3031'; ctx.beginPath(); ctx.arc(r * 1.3, 0, r * .24, 0, Math.PI * 2); ctx.fill();
+      } else {
+        ctx.fillStyle = type === 'ant' ? '#28252b' : type === 'roach' ? '#714536' : '#48714c';
+        ctx.beginPath(); ctx.ellipse(0, 0, r * 1.6, r * .78, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#2b202b'; ctx.lineWidth = Math.max(.006, r * .16);
+        for (let leg = -1; leg <= 1; leg += 1) { ctx.beginPath(); ctx.moveTo(leg * r * .45, -r * .25); ctx.lineTo(leg * r * .8, -r * .9); ctx.moveTo(leg * r * .45, r * .25); ctx.lineTo(leg * r * .8, r * .9); ctx.stroke(); }
+      }
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+  function drawGaitFrame(ctx, currentImage, currentRect, nextImage, nextRect, x, y, w, h, transition, painter) {
     // Blend only the moving lower body during the short pose transition. The
     // head, face, hat, and costume chest remain a single painted frame, so
     // the motion reads as a soft leg transition without a doubled character.
+    const paint = typeof painter === 'function'
+      ? painter
+      : (paintCtx, paintImage, paintRect, paintX, paintY, paintW, paintH) => drawFrame(paintCtx, paintImage, paintRect[0], paintRect[1], paintRect[2], paintRect[3], paintX, paintY, paintW, paintH);
     if (!nextImage || transition <= .001 || typeof ctx.rect !== 'function' || typeof ctx.clip !== 'function') {
-      drawFrame(ctx, currentImage, currentRect[0], currentRect[1], currentRect[2], currentRect[3], x, y, w, h);
+      paint(ctx, currentImage, currentRect, x, y, w, h);
       return;
     }
     // Draw complementary lower-body weights. Painting the current frame
     // opaque and then adding the next frame would leave doubled feet behind.
     ctx.save();
     ctx.beginPath(); ctx.rect(x - .04 * w, y, w * 1.08, h * .59); ctx.clip();
-    drawFrame(ctx, currentImage, currentRect[0], currentRect[1], currentRect[2], currentRect[3], x, y, w, h);
+    paint(ctx, currentImage, currentRect, x, y, w, h);
     ctx.restore();
     ctx.save();
     ctx.beginPath(); ctx.rect(x - .04 * w, y + h * .57, w * 1.08, h * .48); ctx.clip();
     ctx.globalAlpha = 1 - transition;
-    drawFrame(ctx, currentImage, currentRect[0], currentRect[1], currentRect[2], currentRect[3], x, y, w, h);
+    paint(ctx, currentImage, currentRect, x, y, w, h);
     ctx.globalAlpha = transition;
-    drawFrame(ctx, nextImage, nextRect[0], nextRect[1], nextRect[2], nextRect[3], x, y, w, h);
+    paint(ctx, nextImage, nextRect, x, y, w, h);
     ctx.restore();
   }
   function spritePixelHeight(ctx, h) {
@@ -2165,7 +2881,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     const scale = Number.isFinite(verticalScale) && verticalScale > 0 ? verticalScale : fallbackScale;
     return Number.isFinite(scale) && scale > 0 ? Math.abs(h) * scale : null;
   }
-  function drawActor(ctx, actor, now, assets, game, reducedMotion, kind, override) {
+  function drawActor(ctx, actor, now, assets, game, reducedMotion, kind, override, gore) {
     const selected = appearance(actor, kind, override);
     if (!selected) return false;
     const meta = selected.entry;
@@ -2173,9 +2889,13 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     const time = Number(game.time) || 0;
     const confused = kind === 'mouse' && Number(actor.confusedUntil) > time;
     const moving = game.status !== 'ready' && !confused;
+    const damageStage = kind === 'mouse' ? stageFor(actor) : 0;
     const phase = Number(actor.phase) || selected.index * .73;
     const actorSpeed = clamp(Number(actor.speed) || 1, .35, 3.2);
-    const pace = kind === 'cat' && situationName === 'catSlow' ? 3 : (kind === 'cat' ? 6 : 6.5 + actorSpeed * 1.4);
+    const burstMultiplier = kind === 'cat'
+      ? clamp(Number(actor.speedBurstMultiplier ?? actor.burstMultiplier) || 1, .35, 3.5)
+      : 1;
+    const pace = (kind === 'cat' && situationName === 'catSlow' ? 3 : (kind === 'cat' ? 6 : 6.5 + actorSpeed * 1.4)) * burstMultiplier;
     const frameB = !reducedMotion && moving && Math.floor(now * pace + phase) % 2 === 1;
     let image = assets[frameB ? meta.assetKeyB : meta.assetKeyA];
     let rect = frameB ? meta.rectB : meta.rectA;
@@ -2190,13 +2910,15 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     const bodyPixels = spritePixelHeight(ctx, h);
     const skipGaitBlend = bodyPixels !== null && bodyPixels < 28;
     const skipFaceAccents = bodyPixels !== null && bodyPixels < 18;
+    const damageSnapshotHeight = bodyPixels !== null && bodyPixels >= 180 ? 256 : 128;
     const flip = Math.cos(Number(actor.angle) || 0) < 0 ? -1 : 1;
     const cheeseHop = !reducedMotion && Number.isFinite(actor.lastCheeseAt) ? Math.max(0, 1 - (time - actor.lastCheeseAt) / .55) : 0;
     ctx.save();
     ctx.scale(flip, 1);
     if (!reducedMotion) {
-      ctx.translate(0, moving ? -Math.abs(stride) * .035 - Math.sin(cheeseHop * Math.PI) * .13 : Math.sin(now * 2.5 + phase) * .01);
-      ctx.rotate(confused ? Math.sin(now * 5 + phase) * .075 : stride * .018);
+      const limp = damageStage >= 4 ? Math.sin(now * 5.2 + phase) * .025 : damageStage >= 3 ? Math.sin(now * 6.1 + phase) * .012 : 0;
+      ctx.translate(0, moving ? -Math.abs(stride) * .035 - Math.sin(cheeseHop * Math.PI) * .13 + limp : Math.sin(now * 2.5 + phase) * .01);
+      ctx.rotate(confused ? Math.sin(now * 5 + phase) * .075 : stride * .018 + (damageStage >= 4 ? Math.sin(now * 4.1 + phase) * .035 : 0));
       ctx.scale(1 + stride * .012, 1 - Math.abs(stride) * .014);
     }
     const nextFrameB = !frameB;
@@ -2205,8 +2927,19 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     const gaitCycle = now * pace + phase;
     const gaitFraction = gaitCycle - Math.floor(gaitCycle);
     const gaitTransition = !reducedMotion && moving && !skipGaitBlend ? clamp((gaitFraction - .68) / .32, 0, 1) : 0;
-    drawGaitFrame(ctx, image, rect, nextImage, nextRect, -w / 2, -h / 2, w, h, gaitTransition);
-    if (kind === 'mouse' && !skipFaceAccents) drawFaceExpression(ctx, actor, game, now, expressionState(actor, game, kind), w, h, reducedMotion, meta.name);
+    const paintSprite = (paintCtx, paintImage, paintRect, paintX, paintY, paintW, paintH) =>
+      drawDamageFrame(paintCtx, paintImage, paintRect, paintX, paintY, paintW, paintH, damageStage, meta.name, gore, damageSnapshotHeight);
+    drawGaitFrame(ctx, image, rect, nextImage, nextRect, -w / 2, -h / 2, w, h, gaitTransition, kind === 'mouse' ? paintSprite : null);
+    if (kind === 'mouse') {
+      // Keep the running pose on top of the original atlas, then add small
+      // stateful overlays. All of these are presentation-only.
+      drawDamage(ctx, actor, now, w, h, reducedMotion, gore, damageStage, meta.name);
+      drawAttachedInsects(ctx, actor, now, w, h, reducedMotion, damageStage);
+      if (!skipFaceAccents) {
+        drawFaceExpression(ctx, actor, game, now, expressionState(actor, game, kind), w, h, reducedMotion, meta.name);
+        drawRedTears(ctx, actor, now, w, h, reducedMotion, meta.name, gore);
+      }
+    }
     // Readable reactions keep each costume intact while its character reacts.
     if (kind === 'mouse' && ['panic', 'alarm', 'carrier'].includes(situationName)) {
       ctx.fillStyle = '#9dd9ed';
@@ -2277,7 +3010,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     ctx.restore();
   }
   const api = {
-    drawMouse: (ctx, mouse, now, assets, game, reducedMotion) => drawActor(ctx, mouse, now, assets, game, reducedMotion, 'mouse'),
+    drawMouse: (ctx, mouse, now, assets, game, reducedMotion, gore) => drawActor(ctx, mouse, now, assets, game, reducedMotion, 'mouse', null, gore === undefined ? true : gore),
     drawCat: (ctx, cat, now, assets, game, reducedMotion, style) => drawActor(ctx, cat, now, assets, game, reducedMotion, 'cat', style),
     drawChatter, getLine, situation, expressionState,
     getVariant: appearance,
@@ -2352,6 +3085,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       this.catArrivalUntil = 0;
       this.effects = [];
       this.splats = [];
+      this.impactSerial = 0;
+      this.latestImpactId = 0;
       this.lastTime = 0;
       // The caller's timestamp is a wall clock.  Keep a separate presentation
       // clock so a paused/awaiting game cannot accidentally animate forward
@@ -2366,13 +3101,17 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       this.lastRenderedTime = null;
       this.staticFrame = null;
       this.staticFrameCtx = null;
-      this.assets = { mouse: null, cat: null, tiles: null, props: null, expressions: null, blood: null };
+      this.assets = { mouse: null, cat: null, tiles: null, props: null, expressions: null, blood: null, anatomy: null };
       this.tileLayout = {
         floor: [{ col: 0, row: 0 }, { col: 1, row: 0 }, { col: 0, row: 1 }],
         wall: [{ col: 1, row: 1 }, { col: 0, row: 2 }, { col: 1, row: 2 }]
       };
       this.assetLoadVersion = 0;
       this.pointer = { x: 0, y: 0 };
+      // Dragging is presentation-only. The engine owns the authoritative
+      // destination and movement pause; this value is just the latest
+      // validated point to paint as a ghost while the pointer is held.
+      this.dragPreview = { mouseId: null, point: null };
       this.spriteCache = Object.create(null);
       this.resize();
     }
@@ -2385,6 +3124,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         // the same Game is passed repeatedly from the animation loop.
         this.effects.length = 0;
         this.splats.length = 0;
+        this.impactSerial = 0;
+        this.latestImpactId = 0;
         this.spriteCache = Object.create(null);
         this.terrain = null;
         this.terrainKey = '';
@@ -2409,6 +3150,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         this.manualCamera = false;
         this.followFocus = true;
         this.hoveredMouseId = null;
+        this.dragPreview = { mouseId: null, point: null };
         this.cameraFrozen = false;
         this.catArrivalUntil = 0;
       }
@@ -2615,7 +3357,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         // Keep the stable names available even when a small custom pack only
         // supplies one atlas. Additional wardrobe/expression keys are carried
         // through unchanged for MouseMazeCast to select at runtime.
-        this.assets = Object.assign({ mouse: null, cat: null, tiles: null, props: null, expressions: null, blood: null }, nextAssets);
+        this.assets = Object.assign({ mouse: null, cat: null, tiles: null, props: null, expressions: null, blood: null, anatomy: null }, nextAssets);
         this.splatLayerKey = null;
         this.spriteCache = Object.create(null);
         this.terrain = null;
@@ -2712,6 +3454,22 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     screenToWorld(clientX, clientY) {
       const rect = this.canvas.getBoundingClientRect ? this.canvas.getBoundingClientRect() : { left: 0, top: 0 };
       return { x: (clientX - rect.left - this.view.ox) / this.view.sx, y: (clientY - rect.top - this.view.oy) / this.view.sy };
+    }
+
+    // The app/engine pair calls this while a mouse is being held. The point
+    // has already been clamped to a legal floor cell by the engine; retaining
+    // it here keeps this renderer independent of maze collision rules.
+    setMouseDragPreview(mouseId, point) {
+      if (mouseId == null || !point || !Number.isFinite(Number(point.x)) || !Number.isFinite(Number(point.y))) {
+        this.dragPreview = { mouseId: null, point: null };
+      } else {
+        this.dragPreview = {
+          mouseId: String(mouseId),
+          point: { x: Number(point.x), y: Number(point.y) }
+        };
+      }
+      this.invalidate();
+      return this.dragPreview.point;
     }
 
     pickMouse(clientX, clientY) {
@@ -2878,12 +3636,16 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         this.cameraFrozen = true;
         this.focusId = event.id || this.focusId;
         this.focusPoint = { x, y };
+        if (event.id != null && String(this.dragPreview.mouseId) === String(event.id)) {
+          this.dragPreview = { mouseId: null, point: null };
+        }
         // Keep overview mode intact for speaker pauses. In a close view the
         // selected mouse is brought into the safe margin without changing the
         // user's zoom level.
         if (!this.overview) this.ensurePointVisible(x, y, 44);
         if (event.outcome === 'exploded') this.spawnExplosion(x, y, now, event.id);
         else if (event.outcome === 'eaten') this.spawnEat(x, y, now, event.id || event.time || 14);
+        else if (event.outcome === 'devoured' || event.outcome === 'infested') this.spawnDevoured(x, y, now, event.id || event.time || 23);
         else this.spawnEscape(x, y, now);
       } else if (event.type === 'cheese') {
         const actualBoost = Math.max(1, Number(event.speedMultiplier) || Number(event.boost) || 1);
@@ -2897,6 +3659,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         // feedback. Graphic blood/debris is added only by spawnInsectCrush
         // when gore is enabled.
         this.spawnInsectCrush(x, y, now, event.insectType, event.actorId || event.time || 1);
+      } else if (event.type === 'insect-attached' || event.type === 'lice-arrival') {
+        this.spawnInsectFeedback(x, y, now, 'insect-attached', event.insectType || event.type, event.actorId || event.time || 1);
+      } else if (event.type === 'insect-bite' || event.type === 'insect-damage' || event.type === 'bite') {
+        this.spawnInsectFeedback(x, y, now, 'insect-bite', event.insectType || 'insect', event.actorId || event.time || 1);
+      } else if (event.type === 'unstuck' || event.type === 'mouse-unstuck' || event.type === 'unstuck-helped') {
+        this.effects.push({ kind: 'unstuck', x, y, start: now, length: .9, seed: event.actorId || event.time || 1 });
       } else if (event.type === 'cat-slow') {
         this.effects.push({ kind: 'slow', x, y, start: now, length: 1.3, seed: event.time || 1 });
       } else if (event.type === 'cat-enter') {
@@ -2910,10 +3678,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
 
     spawnExplosion(x, y, start, seed, effectKind) {
       seed = typeof seed === 'number' ? seed : (parseInt(String(seed).replace(/\D/g, ''), 10) || 1);
+      const impactId = ++this.impactSerial;
+      this.latestImpactId = impactId;
       const pieces = [];
       // Six concurrent impacts are enough to show a rapid speaker queue while
       // keeping the large principal payload bounded on low-end devices.
-      const impactKinds = new Set(['explosion', 'gore-eat']);
+      const impactKinds = new Set(['explosion', 'gore-eat', 'devoured']);
       let activeImpacts = 0;
       for (const effect of this.effects) if (impactKinds.has(effect.kind) && start - effect.start <= effect.length + .2) activeImpacts += 1;
       if (activeImpacts >= 6) {
@@ -2921,11 +3691,19 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         if (oldestIndex >= 0) this.effects.splice(oldestIndex, 1);
       }
       const n = this.reducedMotion ? 46 : 240;
+      const namedDebris = [
+        { type: 'liver', label: 'LIVER' }, { type: 'heart', label: 'HEART' },
+        { type: 'stomach', label: 'STOMACH' }, { type: 'kidney-left', label: 'LEFT KIDNEY' },
+        { type: 'kidney-right', label: 'RIGHT KIDNEY' }, { type: 'eye-left', label: 'LEFT EYE' },
+        { type: 'eye-right', label: 'RIGHT EYE' }, { type: 'foot-left', label: 'LEFT FOOT' },
+        { type: 'foot-right', label: 'RIGHT FOOT' }, { type: 'tail', label: 'TAIL' }
+      ];
       for (let i = 0; i < n; i++) {
         const a = hash(i + 11, i * 3 + 2, Number(seed) || 1) * TAU;
         const speed = 1.2 + hash(i + 7, i + 12, Number(seed) || 1) * 7.4;
-        const type = i % 6 === 0 ? 'maggot' : i % 11 === 0 ? 'liver' : i % 8 === 0 ? 'intestine' : i % 13 === 0 ? 'bone' : (i % 4 === 0 ? 'organ' : 'gore');
-        pieces.push({ type, a, speed, size: .055 + hash(i, i + 3, Number(seed) || 1) * .105, spin: (hash(i + 1, i + 8, Number(seed) || 1) - .5) * 8 });
+        const named = namedDebris[i];
+        const type = named ? named.type : (i % 6 === 0 ? 'maggot' : i % 19 === 0 ? 'bone' : (i % 4 === 0 ? 'organ' : 'gore'));
+        pieces.push({ type, label: named ? named.label : null, anatomy: !!named, a, speed, size: .055 + hash(i, i + 3, Number(seed) || 1) * .105, spin: (hash(i + 1, i + 8, Number(seed) || 1) - .5) * 8 });
       }
       // Fine flecks fill the space between the larger shards and maggots.
       // Both streams have fixed budgets; the concurrent-impact cap keeps
@@ -2947,9 +3725,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       // remain different.
       this.effects.push({
         kind: effectKind || 'explosion', x, y, start, length: this.reducedMotion ? 1.25 : 2.25,
-        pieces, seed: Number(seed) || 1,
+        pieces, seed: Number(seed) || 1, impactId,
         flecks,
-        jetCount: this.reducedMotion ? 4 : 14,
+        jetCount: this.reducedMotion ? 2 : 6,
         dropletCount: this.reducedMotion ? 18 : 72
       });
       if (this.gore) {
@@ -2957,7 +3735,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         for (let i = 0; i < count; i++) {
           const a = hash(i, i + 34, Number(seed) || 1) * TAU;
           const r = .08 + hash(i + 4, i + 5, Number(seed) || 1) * 1.38;
-          this.splats.push({ x: x + Math.cos(a) * r, y: y + Math.sin(a) * r, r: .035 + hash(i + 8, i + 9, Number(seed) || 1) * .19, kind: i % 13 === 0 ? 'liver' : i % 9 === 0 ? 'intestine' : i % 7 === 0 ? 'bone' : i % 4 === 0 ? 'puddle' : 'blood', angle: a });
+          this.splats.push({ x: x + Math.cos(a) * r, y: y + Math.sin(a) * r, r: .035 + hash(i + 8, i + 9, Number(seed) || 1) * .19, kind: i % 7 === 0 ? 'bone' : i % 4 === 0 ? 'puddle' : 'blood', angle: a, impactId });
         }
         // A few fragments remain where the blast landed after the animated
         // burst finishes. These are renderer-owned marks, never game state.
@@ -2965,12 +3743,20 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         for (let i = 0; i < pieces.length; i += 1) {
           const p = pieces[i];
           const dist = p.speed * settleTime - .55 * settleTime * settleTime;
+          const rawX = x + Math.cos(p.a) * dist;
+          const rawY = y + Math.sin(p.a) * dist + .24 * settleTime * settleTime;
+          const cols = Number.isFinite(Number(this.game && this.game.cols)) ? Number(this.game.cols) : Infinity;
+          const rows = Number.isFinite(Number(this.game && this.game.rows)) ? Number(this.game.rows) : Infinity;
+          const maxX = Math.max(.7, cols - .7);
+          const maxY = Math.max(.7, rows - .7);
+          const landedX = p.anatomy ? clamp(rawX, .7, maxX) : rawX;
+          const landedY = p.anatomy ? clamp(rawY, .7, maxY) : rawY;
           this.splats.push({
-            x: x + Math.cos(p.a) * dist,
-            y: y + Math.sin(p.a) * dist + .24 * settleTime * settleTime,
+            x: landedX,
+            y: landedY,
             r: p.size,
-            kind: p.type === 'intestine' ? 'intestine' : p.type === 'liver' ? 'liver' : p.type === 'bone' ? 'bone' : p.type === 'organ' ? 'organ' : p.type === 'maggot' ? 'maggot' : 'blood',
-            angle: p.a
+            kind: p.type === 'intestine' ? 'intestine' : p.type === 'liver' ? 'liver' : p.type === 'bone' ? 'bone' : p.type === 'organ' ? 'organ' : p.type === 'maggot' ? 'maggot' : (p.anatomy ? p.type : 'blood'),
+            angle: p.a, label: p.label || null, impactId
           });
         }
         this.addBloodFlood(x, y, Number(seed) || 1);
@@ -2993,7 +3779,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       for (let i = 0; i < n; i++) {
         const a = hash(i + 91, i * 5 + 7, seed) * TAU;
         const distance = .18 + Math.pow(hash(i + 18, i + 3, seed), .58) * 3.15;
-        const kind = i % 19 === 0 ? 'liver' : i % 17 === 0 ? 'intestine' : i % 23 === 0 ? 'bone' : i % 5 === 0 ? 'puddle' : 'blood';
+        const kind = i % 23 === 0 ? 'bone' : i % 5 === 0 ? 'puddle' : 'blood';
         this.splats.push({
           x: x + Math.cos(a) * distance,
           y: y + Math.sin(a) * distance,
@@ -3003,22 +3789,22 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
           elongated: kind === 'blood' && i % 3 === 0
         });
       }
-      const sprays = this.reducedMotion ? 2 : 11;
+      const sprays = this.reducedMotion ? 1 : 4;
       for (let i = 0; i < sprays; i++) {
         const a = hash(i + 301, i + 4, seed) * TAU;
-        this.splats.push({ kind: 'spray', x, y, r: .35 + hash(i + 6, i + 9, seed) * 1.9, angle: a });
+        this.splats.push({ kind: 'spray', x, y, r: .24 + hash(i + 6, i + 9, seed) * .9, angle: a });
       }
       // A few heavy arterial streaks and wet impact droplets sit on top of
       // the broad flood. They settle as persistent decals and stay bounded by
       // the same splat budget as the rest of the scene.
-      const jets = this.reducedMotion ? 3 : 9;
+      const jets = this.reducedMotion ? 1 : 4;
       for (let i = 0; i < jets; i++) {
         const a = hash(i + 401, i + 17, seed) * TAU;
         this.splats.push({
           kind: 'jet', x, y,
-          r: .42 + hash(i + 405, i + 19, seed) * 1.65,
+          r: .24 + hash(i + 405, i + 19, seed) * .86,
           angle: a,
-          width: .035 + hash(i + 407, i + 22, seed) * .055,
+          width: .024 + hash(i + 407, i + 22, seed) * .035,
           elongated: true
         });
       }
@@ -3068,6 +3854,27 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       if (this.gore) this.spawnExplosion(x, y, start, impactSeed, 'gore-eat');
       this.effects.push({ kind: 'eat', x, y, start, length: 1.35, seed: impactSeed });
       if (this.splats.length > 2600) this.splats.splice(0, this.splats.length - 2600);
+    }
+
+    spawnDevoured(x, y, start, seed) {
+      // Devouring is a distinct outcome, but shares the same substantial
+      // impact payload and speaker-friendly settle/hold as an explosion.
+      this.spawnExplosion(x, y, start, seed, 'devoured');
+      this.effects.push({ kind: 'devoured-feed', x, y, start, length: this.reducedMotion ? 1.05 : 1.8, seed: Number(seed) || 23 });
+      if (this.splats.length > 2600) this.splats.splice(0, this.splats.length - 2600);
+    }
+
+    spawnInsectFeedback(x, y, start, kind, insectType, seed) {
+      const numericSeed = typeof seed === 'number'
+        ? seed
+        : ((parseInt(String(seed || '').replace(/\D/g, ''), 10) || 1) + Math.round((Number(x) || 0) * 17 + (Number(y) || 0) * 29));
+      this.effects.push({
+        kind: kind || 'insect-attached', x: Number(x) || 0, y: Number(y) || 0,
+        start, length: this.reducedMotion ? .34 : .72, seed: numericSeed, insectType: insectType || 'insect'
+      });
+      // Attachment events can be frequent with hundreds of bugs. Keep only a
+      // small rolling visual queue so a busy swarm cannot crowd out outcomes.
+      if (this.effects.length > 140) this.effects.splice(0, this.effects.length - 140);
     }
 
     spawnInsectCrush(x, y, start, insectType, seed) {
@@ -3174,7 +3981,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       this.drawLice(ctx, game.lice || [], tNow, game);
       this.drawMice(ctx, game.mice || [], tNow, game);
       this.drawAttachedLice(ctx, game.mice || [], tNow, game);
+      this.drawMouseDragPreview(ctx, game, tNow);
       if (game.cat) this.drawCat(ctx, game.cat, tNow, game, this.catStyle);
+      if (this.gore && !this.overview && this.view.sx >= 14) {
+        this.drawAnatomyLabels(ctx, this.splats.filter(s => s.label && s.impactId === this.latestImpactId));
+      }
       ctx.restore();
       this.drawVignette(ctx);
       if (this.chatter && root.MouseMazeCast && typeof root.MouseMazeCast.drawChatter === 'function') {
@@ -3252,6 +4063,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       for (const s of this.splats) {
         if (!this.inView(s.x, s.y, Math.max(1, (s.r || .1) * 5))) continue;
         ctx.save(); ctx.translate(s.x, s.y);
+        if (['liver', 'heart', 'stomach', 'kidney-left', 'kidney-right', 'eye-left', 'eye-right', 'foot-left', 'foot-right', 'tail'].includes(s.kind)) {
+          this.drawNamedAnatomy(ctx, s.kind, Math.max(.06, (s.r || .08) * 1.5), 0);
+          ctx.restore();
+          continue;
+        }
         if (this.assets && this.assets.blood && (s.kind === 'puddle' || s.kind === 'blood' || s.kind === 'spray')) {
           if (this.drawBloodDecal(ctx, s)) {
             ctx.restore();
@@ -3267,11 +4083,18 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
           if (this.drawProp(ctx, 0, 0, propFrame, propSize)) { ctx.restore(); continue; }
         }
         if (s.kind === 'spray') {
+          // Arterial spray is represented as a short wet smear plus a few
+          // separated droplets; the long spaghetti lines obscured the maze.
           ctx.rotate(s.angle || 0); ctx.lineCap = 'round';
-          ctx.strokeStyle = 'rgba(38,2,13,.84)'; ctx.lineWidth = .085; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(s.r, 0); ctx.stroke();
-          ctx.strokeStyle = 'rgba(120,9,28,.82)'; ctx.lineWidth = .038; ctx.beginPath(); ctx.moveTo(s.r * .08, 0); ctx.lineTo(s.r * .92, 0); ctx.stroke();
-          ctx.strokeStyle = 'rgba(228,66,62,.46)'; ctx.lineWidth = .015; ctx.beginPath(); ctx.moveTo(s.r * .16, -.012); ctx.lineTo(s.r * .74, -.012); ctx.stroke();
-          ctx.lineWidth = .022; ctx.beginPath(); ctx.moveTo(s.r * .34, 0); ctx.lineTo(s.r * .7, -.14); ctx.moveTo(s.r * .52, 0); ctx.lineTo(s.r * .87, .16); ctx.stroke();
+          ctx.fillStyle = 'rgba(58,2,17,.82)'; ctx.beginPath(); ctx.ellipse(s.r * .55, 0, Math.max(.07, s.r * .22), Math.max(.035, s.r * .08), 0, 0, TAU); ctx.fill();
+          ctx.fillStyle = 'rgba(138,11,31,.82)'; ctx.beginPath(); ctx.ellipse(s.r * .55, -.01, Math.max(.04, s.r * .13), Math.max(.018, s.r * .045), 0, 0, TAU); ctx.fill();
+          for (let i = 0; i < 5; i += 1) {
+            const t = .2 + i * .17;
+            const wobble = Math.sin(i * 4.7 + s.r * 7) * .08 * s.r;
+            const rr = .018 + (i % 2) * .012;
+            ctx.fillStyle = i % 2 ? 'rgba(168,18,38,.84)' : 'rgba(228,68,61,.68)';
+            ctx.beginPath(); ctx.ellipse(s.r * t, wobble, rr * 1.45, rr, 0, 0, TAU); ctx.fill();
+          }
         } else if (s.kind === 'jet') {
           // Thick, irregular arterial streak: dark clot edge, translucent
           // red body, and a small specular ridge for a wet painted finish.
@@ -3351,7 +4174,41 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       }
     }
 
+    drawAnatomyLabels(ctx, splats) {
+      const scale = Math.max(1, Number(this.view.sx) || 1);
+      const offset = Math.max(14, .32 * scale);
+      const occupied = [];
+      // Latest-impact labels are deliberately few and collision-checked in
+      // screen pixels, while their pills are painted in world coordinates so
+      // they remain attached to the landed anatomy at every zoom.
+      for (const splat of splats) {
+        const label = String(splat.label || '');
+        if (!label || !this.inView(splat.x, splat.y, 1)) continue;
+        ctx.save(); ctx.translate(splat.x, splat.y); ctx.scale(1 / scale, 1 / scale);
+        ctx.font = '700 11px system-ui,sans-serif'; ctx.letterSpacing = '0px'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        const metrics = ctx.measureText(label);
+        const width = metrics.width + 10;
+        const height = 18;
+        const screen = this.worldToScreen(splat.x, splat.y);
+        const box = { x: screen.x - width / 2, y: screen.y - offset - height / 2, w: width, h: height };
+        if (box.x < 3 || box.y < 3 || box.x + box.w > this.cssWidth - 3 || box.y + box.h > this.cssHeight - 3 || occupied.some(other => box.x < other.x + other.w + 4 && box.x + box.w + 4 > other.x && box.y < other.y + other.h + 4 && box.y + box.h + 4 > other.y)) { ctx.restore(); continue; }
+        occupied.push(box);
+        ctx.strokeStyle = 'rgba(246,192,111,.7)'; ctx.lineWidth = .8; ctx.beginPath(); ctx.moveTo(0, -2); ctx.lineTo(0, -offset + 9); ctx.stroke();
+        ctx.fillStyle = 'rgba(22,7,15,.86)'; roundRect(ctx, -width / 2, -offset - height / 2, width, height, 3); ctx.fill();
+        ctx.stroke(); ctx.fillStyle = '#ffe1a4'; ctx.fillText(label, 0, -offset);
+        ctx.restore();
+      }
+    }
+
     drawBloodDecal(ctx, splat) {
+      const anatomy = this.assets && this.assets.anatomy;
+      if (anatomy && splat.kind === 'puddle') {
+        const size = Math.max(.38, (splat.r || .2) * (splat.central ? 4.2 : 3.3));
+        const unit = (anatomy.naturalWidth || anatomy.width) / 1254;
+        ctx.save(); ctx.rotate(splat.angle || 0); ctx.globalAlpha = splat.central ? .97 : .82;
+        ctx.drawImage(anatomy, 855 * unit, 860 * unit, 399 * unit, 365 * unit, -size / 2, -size / 2, size, size * .915);
+        ctx.restore(); return true;
+      }
       const image = this.assets && this.assets.blood;
       if (!image) return false;
       const width = image.naturalWidth || image.width;
@@ -3458,11 +4315,69 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       let drawn = 0;
       for (let index = 0; index < insects.length && drawn < limit; index += 1) {
         const insect = insects[index];
-        if (!insect || insect.dead || insect.crushed) continue;
+        if (!insect || insect.dead || insect.crushed || this.attachedMouseId(insect) != null) continue;
         const x = Number(insect.x), y = Number(insect.y);
         if (!Number.isFinite(x) || !Number.isFinite(y) || !this.inView(x, y, close ? .42 : .16)) continue;
         this.drawInsect(ctx, insect, now, close, index);
         drawn += 1;
+      }
+    }
+
+    attachedMouseId(insect) {
+      if (!insect) return null;
+      const raw = insect.attachedTo != null ? insect.attachedTo
+        : (insect.attachedToMouseId != null ? insect.attachedToMouseId
+          : (insect.mouseId != null ? insect.mouseId : (insect.targetId != null ? insect.targetId : null)));
+      if (raw == null || raw === false || raw === true) return null;
+      if (typeof raw === 'object') return raw.id != null ? String(raw.id) : null;
+      return String(raw);
+    }
+
+    drawAttachedInsects(ctx, insects, mice, now, game) {
+      if (!Array.isArray(insects) || !insects.length || !Array.isArray(mice) || !mice.length) return;
+      const miceById = new Map(mice.filter(mouse => mouse && mouse.alive).map(mouse => [String(mouse.id), mouse]));
+      const groups = new Map();
+      for (const insect of insects) {
+        if (!insect || insect.dead || insect.crushed) continue;
+        const mouseId = this.attachedMouseId(insect);
+        if (mouseId == null || !miceById.has(mouseId)) continue;
+        if (!groups.has(mouseId)) groups.set(mouseId, []);
+        groups.get(mouseId).push(insect);
+      }
+      if (!groups.size) return;
+      const close = !this.overview && this.view.sx >= 14;
+      const maxDetailed = close ? 6 : 2;
+      for (const [mouseId, attached] of groups) {
+        const mouse = miceById.get(mouseId);
+        if (!mouse || !this.inView(mouse.x, mouse.y, close ? 1.2 : .7)) continue;
+        const visible = Math.min(maxDetailed, attached.length);
+        const mouseAngle = Number.isFinite(Number(mouse.angle)) ? Number(mouse.angle) : 0;
+        const seed = String(mouse.id || '').split('').reduce((sum, char) => sum + char.charCodeAt(0), 19);
+        for (let i = 0; i < visible; i += 1) {
+          const insect = attached[i];
+          const hashSeed = seed + i * 31 + String(insect.id || '').length * 7;
+          // Keep the cluster moving with the actor's facing axis rather than
+          // leaving bugs at stale engine coordinates. Small offsets around
+          // the torso read as attachment; maggots cling along the back.
+          const angle = hash(hashSeed, hashSeed + 3, seed) * TAU;
+          const radius = close ? .16 + hash(hashSeed + 4, hashSeed + 9, seed) * .25 : .12 + hash(hashSeed + 4, hashSeed + 9, seed) * .11;
+          const localX = Math.cos(angle) * radius;
+          const localY = Math.sin(angle) * radius * .64;
+          const x = mouse.x + Math.cos(mouseAngle) * localX - Math.sin(mouseAngle) * localY;
+          const y = mouse.y + Math.sin(mouseAngle) * localX + Math.cos(mouseAngle) * localY;
+          const proxy = Object.assign({}, insect, { x, y, angle: mouseAngle + (Number(insect.angle) || angle) });
+          this.drawInsect(ctx, proxy, now, close, hashSeed);
+          // A tiny attachment glint communicates contact without competing
+          // with the character art or generating a high-frequency effect.
+          if (close && !this.reducedMotion) {
+            ctx.save(); ctx.globalAlpha = .28 + Math.sin(now * 5 + hashSeed) * .08; ctx.strokeStyle = '#d76c53'; ctx.lineWidth = .012;
+            ctx.beginPath(); ctx.arc(x, y, .13, 0, TAU); ctx.stroke(); ctx.restore();
+          }
+        }
+        if (attached.length > visible && close) {
+          ctx.save(); ctx.globalAlpha = .82; ctx.fillStyle = '#f4c78d'; ctx.font = '900 .15px ui-monospace,monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText('+' + (attached.length - visible), mouse.x + .34, mouse.y - .36); ctx.restore();
+        }
       }
     }
 
@@ -3702,6 +4617,69 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       }
     }
 
+    drawMouseDragPreview(ctx, game, now) {
+      const preview = this.dragPreview;
+      // Speaker cards are deliberately authoritative visual holds: do not
+      // paint a new destination over the held selection until Continue.
+      if (!preview || preview.mouseId == null || !preview.point || !game || game.status === 'awaiting' || game.status === 'finished') return;
+      const mouse = (game.mice || []).find(item => item && String(item.id) === String(preview.mouseId));
+      if (!mouse || !mouse.alive) {
+        this.dragPreview = { mouseId: null, point: null };
+        return;
+      }
+      const x = Number(preview.point.x), y = Number(preview.point.y);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+      const px = Number(mouse.x), py = Number(mouse.y);
+      const pulse = this.reducedMotion ? 0 : Math.sin(now * 6.5) * .025;
+      const viewScale = Math.max(1, Number(this.view.sx) || 1);
+      const ringRadius = Math.max(.35, 10 / viewScale);
+      const outerRadius = Math.max(.48, 14 / viewScale);
+      const ringWidth = Math.max(.035, 1.4 / viewScale);
+      const tetherWidth = Math.max(.035, 1 / viewScale);
+      const dashLength = Math.max(.08, 6 / viewScale);
+      const dashGap = Math.max(.06, 4 / viewScale);
+      ctx.save();
+      // Grab tether: a soft arc and short dashes keep the drag interaction
+      // legible even when the destination is several corridors away.
+      ctx.globalAlpha = .72;
+      ctx.strokeStyle = '#f0bf72'; ctx.lineWidth = tetherWidth; ctx.lineCap = 'round';
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([dashLength, dashGap]);
+      ctx.beginPath(); ctx.moveTo(px, py - .08);
+      ctx.quadraticCurveTo((px + x) * .5, Math.min(py, y) - Math.max(.34, 12 / viewScale), x, y - .05); ctx.stroke();
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+      ctx.globalAlpha = .95;
+      ctx.strokeStyle = '#ffe08a'; ctx.lineWidth = ringWidth;
+      ctx.beginPath(); ctx.arc(x, y, ringRadius + pulse, 0, TAU); ctx.stroke();
+      ctx.strokeStyle = 'rgba(255,230,151,.55)'; ctx.lineWidth = Math.max(.022, .9 / viewScale);
+      ctx.beginPath(); ctx.arc(x, y, outerRadius + pulse, 0, TAU); ctx.stroke();
+      // Four corner ticks read as a drop target at overview scale.
+      for (let i = 0; i < 4; i += 1) {
+        const a = i * Math.PI / 2 + Math.PI / 4;
+        ctx.beginPath(); ctx.moveTo(x + Math.cos(a) * (ringRadius * .82), y + Math.sin(a) * (ringRadius * .82)); ctx.lineTo(x + Math.cos(a) * outerRadius, y + Math.sin(a) * outerRadius); ctx.stroke();
+      }
+      // Translucent silhouette at the legal floor point. It deliberately has
+      // no name, bomb, or authoritative state attached to it.
+      ctx.translate(x, y + .02); ctx.rotate(Number(mouse.angle) || 0); ctx.globalAlpha = .42;
+      const ghost = Object.assign({}, mouse, {
+        id: 'drag-preview-' + String(mouse.id), x, y, hasBomb: false, dragging: false,
+        damageStage: 0, insectCount: 0, insectDamage: 0, liceCount: 0,
+        mood: 'curious', outcome: null
+      });
+      let customGhost = false;
+      if (root.MouseMazeCast && typeof root.MouseMazeCast.drawMouse === 'function') {
+        try { customGhost = root.MouseMazeCast.drawMouse(ctx, ghost, now, this.assets, game, this.reducedMotion, this.gore) === true; } catch (error) { customGhost = false; }
+      }
+      if (!customGhost) {
+        ctx.fillStyle = '#f7d5a0'; ctx.strokeStyle = '#fff0b0'; ctx.lineWidth = Math.max(.025, 1 / viewScale);
+        ctx.beginPath(); ctx.ellipse(0, .03, .25, .19, 0, 0, TAU); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(-.15, -.18, .12, .14, -.35, 0, TAU); ctx.ellipse(.15, -.18, .12, .14, .35, 0, TAU); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#fff2c7'; ctx.beginPath(); ctx.arc(.065, -.08, .045, 0, TAU); ctx.arc(.16, -.075, .045, 0, TAU); ctx.fill();
+      }
+      ctx.restore();
+      ctx.save(); ctx.globalAlpha = .95; ctx.fillStyle = '#ffe19a'; ctx.font = '900 ' + Math.max(.13, 11 / viewScale) + 'px ui-monospace,monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('DROP', x, y + ringRadius + Math.max(.24, 8 / viewScale)); ctx.restore();
+    }
+
     shouldShowMouseLabel(mouse, game, groupLength) {
       if (!mouse) return false;
       if (mouse.hasBomb) return false; // its marker and label are drawn last
@@ -3712,6 +4690,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     }
 
     drawMouse(ctx, m, now, game, hideLabel) {
+      if (m.hasBomb) this.drawCarrierGlow(ctx, m, now);
       const bob = this.reducedMotion ? 0 : Math.sin(now * 9 + (m.phase || 0)) * .018;
       const run = Math.sin(now * 15 + (m.phase || 0));
       const mouseTilt = Number.isFinite(m.angle) ? (this.assets && (this.assets.mouse || this.assets.expressions) ? clamp(m.angle, -.16, .16) : m.angle) : 0;
@@ -3720,7 +4699,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       ctx.fillStyle = 'rgba(0,0,0,.42)'; ctx.beginPath(); ctx.ellipse(-.015, .23, .33, .11, -.16, 0, TAU); ctx.fill();
       let customDrawn = false;
       if (root.MouseMazeCast && typeof root.MouseMazeCast.drawMouse === 'function') {
-        try { customDrawn = root.MouseMazeCast.drawMouse(ctx, m, now, this.assets, game, this.reducedMotion) === true; } catch (error) { customDrawn = false; }
+        try { customDrawn = root.MouseMazeCast.drawMouse(ctx, m, now, this.assets, game, this.reducedMotion, this.gore) === true; } catch (error) { customDrawn = false; }
       }
       if (customDrawn) {
         if (m.hasBomb) this.drawDynamite(ctx, m, now, game);
@@ -3768,6 +4747,20 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       if (m.hasBomb) this.drawDynamite(ctx, m, now, game);
       ctx.restore();
       if (!hideLabel) this.drawNameLabel(ctx, m, game);
+    }
+
+    drawCarrierGlow(ctx, mouse, now) {
+      const pulse = this.reducedMotion ? 0 : Math.sin(now * 5.5 + (mouse.phase || 0)) * .06;
+      const radius = .72 + pulse;
+      const glow = ctx.createRadialGradient(mouse.x, mouse.y + .02, .06, mouse.x, mouse.y + .02, radius);
+      glow.addColorStop(0, 'rgba(255,220,113,.34)');
+      glow.addColorStop(.42, 'rgba(241,177,69,.16)');
+      glow.addColorStop(1, 'rgba(241,177,69,0)');
+      ctx.save(); ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(mouse.x, mouse.y + .02, radius, 0, TAU); ctx.fill();
+      if (!this.reducedMotion) {
+        ctx.strokeStyle = 'rgba(255,220,113,.48)'; ctx.lineWidth = .022; ctx.beginPath(); ctx.arc(mouse.x, mouse.y + .02, .52 + pulse * .55, 0, TAU); ctx.stroke();
+      }
+      ctx.restore();
     }
 
     drawMouseSprite(ctx, mouse, now) {
@@ -4079,15 +5072,115 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         if (fx.kind === 'explosion') this.drawExplosion(ctx, fx, age, u);
         else if (fx.kind === 'eat') this.drawEat(ctx, fx, age, u);
         else if (fx.kind === 'insect-crush') this.drawInsectCrush(ctx, fx, age, u);
+        else if (fx.kind === 'insect-attached' || fx.kind === 'insect-bite') this.drawInsectFeedback(ctx, fx, age, u);
         else if (fx.kind === 'escape') this.drawEscape(ctx, fx, age, u);
-        else if (fx.kind === 'gore-eat') this.drawExplosion(ctx, fx, age, u);
+        else if (fx.kind === 'gore-eat' || fx.kind === 'devoured') this.drawExplosion(ctx, fx, age, u);
+        else if (fx.kind === 'devoured-feed') this.drawDevouredFeed(ctx, fx, age, u);
         else if (fx.kind === 'cheese') this.drawCheesePop(ctx, fx, u);
         else if (fx.kind === 'poop') this.drawPoopPop(ctx, fx, u);
         else if (fx.kind === 'slow') this.drawSlow(ctx, fx, u);
         else if (fx.kind === 'cat-enter') this.drawCatEnter(ctx, fx, u);
         else if (fx.kind === 'finish') this.drawFinish(ctx, fx, u);
+        else if (fx.kind === 'unstuck') this.drawUnstuck(ctx, fx, age, u);
       }
       this.effects = live;
+    }
+
+    drawAnatomyAtlas(ctx, type, size) {
+      const image = this.assets && this.assets.anatomy;
+      const width = image && (image.naturalWidth || image.width), height = image && (image.naturalHeight || image.height);
+      if (!image || !width || !height || typeof ctx.drawImage !== 'function') return false;
+      // The atlas is a transparent 1254px square. Crops are kept as data here
+      // so the browser build can ship one image while the renderer still
+      // draws paired organs at the same scale as the procedural fallback.
+      const rects = {
+        heart: [45, 5, 330, 430], liver: [430, 65, 450, 345],
+        kidney: [935, 20, 310, 405], stomach: [20, 440, 405, 370],
+        eye: [490, 500, 355, 270], foot: [900, 435, 350, 385], tail: [430, 805, 375, 445]
+      };
+      const key = type === 'kidney-left' || type === 'kidney-right' ? 'kidney'
+        : type === 'eye-left' || type === 'eye-right' ? 'eye'
+          : type === 'foot-left' || type === 'foot-right' ? 'foot' : type;
+      const rect = rects[key];
+      if (!rect) return false;
+      const sxScale = width / 1254, syScale = height / 1254;
+      const sx = rect[0] * sxScale, sy = rect[1] * syScale, sw = rect[2] * sxScale, sh = rect[3] * syScale;
+      const r = Math.max(.045, Number(size) || .08);
+      const targetHeight = key === 'liver' || key === 'eye' ? r * 2.65 : key === 'tail' ? r * 3.2 : r * 3.0;
+      const targetWidth = targetHeight * rect[2] / rect[3];
+      const mirror = /-right$/.test(type);
+      ctx.save();
+      if (mirror) ctx.scale(-1, 1);
+      ctx.drawImage(image, sx, sy, sw, sh, -targetWidth / 2, -targetHeight / 2, targetWidth, targetHeight);
+      ctx.restore();
+      return true;
+    }
+
+    drawNamedAnatomy(ctx, type, size, angle) {
+      const r = Math.max(.045, Number(size) || .08);
+      ctx.save();
+      if (Number.isFinite(Number(angle))) ctx.rotate(Number(angle));
+      ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+      if (this.drawAnatomyAtlas(ctx, type, r)) { ctx.restore(); return; }
+      const dark = '#3b101a';
+      if (type === 'heart') {
+        const heart = typeof ctx.createRadialGradient === 'function' ? ctx.createRadialGradient(-r * .36, -r * .42, r * .08, r * .18, r * .2, r * 1.55) : null;
+        if (heart) { heart.addColorStop(0, '#ef7569'); heart.addColorStop(.36, '#bd3548'); heart.addColorStop(1, '#6d1d31'); ctx.fillStyle = heart; } else ctx.fillStyle = '#a92336';
+        ctx.strokeStyle = dark; ctx.lineWidth = Math.max(.012, r * .12);
+        // A muscular, asymmetric heart: the broad right-side ventricle
+        // descends farther than the smaller atrial lobe on the left.
+        ctx.beginPath(); ctx.moveTo(-r * .12, -r * .58); ctx.bezierCurveTo(-r * .78, -r * 1.02, -r * 1.4, -.52 * r, -r * 1.05, .12 * r); ctx.bezierCurveTo(-r * .84, r * .62, -.22 * r, r * .75, r * .16, r * 1.45); ctx.bezierCurveTo(r * .52, r * .7, r * 1.25, r * .34, r * 1.12, -.24 * r); ctx.bezierCurveTo(r * 1.04, -.68 * r, r * .6, -.78 * r, r * .3, -.48 * r); ctx.bezierCurveTo(r * .2, -.92 * r, -.02 * r, -r * .96, -.12 * r, -.58 * r); ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.strokeStyle = 'rgba(73,15,28,.72)'; ctx.lineWidth = Math.max(.009, r * .06); ctx.beginPath(); ctx.moveTo(-r * .05, -.48 * r); ctx.bezierCurveTo(-r * .2, -.04 * r, -.03 * r, r * .34, r * .16, r * 1.08); ctx.moveTo(r * .16, -.36 * r); ctx.bezierCurveTo(r * .48, -.12 * r, r * .54, r * .36, r * .44, r * .72); ctx.stroke();
+        ctx.strokeStyle = '#a22e43'; ctx.lineWidth = Math.max(.035, r * .23); ctx.beginPath(); ctx.moveTo(r * .15, -.52 * r); ctx.bezierCurveTo(r * .34, -.82 * r, r * .62, -.96 * r, r * .56, -r * 1.22); ctx.bezierCurveTo(r * .5, -r * 1.4, r * .24, -r * 1.38, r * .1, -r * 1.22); ctx.stroke();
+        ctx.strokeStyle = '#e06b6d'; ctx.lineWidth = Math.max(.022, r * .13); ctx.beginPath(); ctx.moveTo(-r * .18, -.54 * r); ctx.bezierCurveTo(-r * .5, -.86 * r, -r * .72, -r * 1.02, -r * .58, -r * 1.24); ctx.stroke();
+        ctx.fillStyle = 'rgba(255,178,146,.58)'; ctx.beginPath(); ctx.ellipse(-r * .62, -.42 * r, r * .25, r * .1, -.58, 0, TAU); ctx.fill();
+      } else if (type === 'stomach') {
+        const stomach = typeof ctx.createLinearGradient === 'function' ? ctx.createLinearGradient(-r, -r, r, r) : null;
+        if (stomach) { stomach.addColorStop(0, '#f0aa8f'); stomach.addColorStop(.45, '#c87970'); stomach.addColorStop(1, '#7f3948'); ctx.fillStyle = stomach; } else ctx.fillStyle = '#c4776d';
+        ctx.strokeStyle = dark; ctx.lineWidth = Math.max(.012, r * .12);
+        // Esophageal inlet at upper left and a narrower pyloric outlet at
+        // right make this read as a stomach sac rather than a generic blob.
+        ctx.strokeStyle = '#d8897d'; ctx.lineWidth = Math.max(.025, r * .18); ctx.beginPath(); ctx.moveTo(-r * .26, -r * 1.42); ctx.lineTo(-r * .28, -r * .86); ctx.stroke();
+        ctx.fillStyle = stomach || '#c4776d'; ctx.strokeStyle = dark; ctx.lineWidth = Math.max(.012, r * .12);
+        ctx.beginPath(); ctx.moveTo(-r * .3, -r * .9); ctx.bezierCurveTo(-r * 1.08, -r * 1.02, -r * 1.3, -.18 * r, -.72 * r, r * .64); ctx.bezierCurveTo(-r * .4, r * 1.18, r * .4, r * 1.16, r * .68, r * .62); ctx.bezierCurveTo(r * 1.02, r * .08, r * .92, -.32 * r, r * .35, -.7 * r); ctx.bezierCurveTo(r * .06, -.9 * r, -.02 * r, -r * 1.02, -.3 * r, -.9 * r); ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.strokeStyle = '#d8897d'; ctx.lineWidth = Math.max(.02, r * .14); ctx.beginPath(); ctx.moveTo(r * .5, r * .26); ctx.bezierCurveTo(r * 1.0, r * .12, r * 1.18, r * .22, r * 1.4, r * .1); ctx.stroke();
+        ctx.strokeStyle = 'rgba(103,30,39,.72)'; ctx.lineWidth = Math.max(.008, r * .055); ctx.beginPath(); ctx.arc(r * .08, r * .08, r * .46, -.36, 1.55); ctx.arc(-r * .18, r * .18, r * .36, .2, 1.72); ctx.stroke();
+        ctx.fillStyle = 'rgba(255,191,151,.52)'; ctx.beginPath(); ctx.ellipse(-r * .58, -.46 * r, r * .28, r * .12, -.58, 0, TAU); ctx.fill();
+      } else if (type === 'kidney-left' || type === 'kidney-right') {
+        const side = type === 'kidney-left' ? 1 : -1;
+        const kidney = typeof ctx.createRadialGradient === 'function' ? ctx.createRadialGradient(-side * r * .34, -r * .42, r * .08, 0, r * .2, r * 1.48) : null;
+        if (kidney) { kidney.addColorStop(0, '#d85d66'); kidney.addColorStop(.48, '#8e2c43'); kidney.addColorStop(1, '#4a172a'); ctx.fillStyle = kidney; } else ctx.fillStyle = '#792538';
+        ctx.strokeStyle = dark; ctx.lineWidth = Math.max(.012, r * .12);
+        ctx.beginPath(); ctx.moveTo(-side * r * .12, -r * 1.08); ctx.bezierCurveTo(-side * r * 1.03, -r * 1.16, -side * r * 1.26, -.08 * r, -side * r * .7, r * .76); ctx.bezierCurveTo(-side * r * .38, r * 1.2, side * r * .1, r * .95, side * r * .04, r * .32); ctx.bezierCurveTo(side * r * .02, r * .1, side * r * .2, -.02 * r, side * r * .42, -.18 * r); ctx.bezierCurveTo(side * r * .18, -.34 * r, side * r * .2, -.72 * r, -side * r * .12, -r * 1.08); ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.strokeStyle = '#ec8b7a'; ctx.lineWidth = Math.max(.014, r * .08); ctx.beginPath(); ctx.moveTo(side * r * .18, -.1 * r); ctx.bezierCurveTo(side * r * .44, r * .16, side * r * .3, r * .42, side * r * .52, r * .86); ctx.stroke();
+        ctx.strokeStyle = '#e27a76'; ctx.lineWidth = Math.max(.022, r * .1); ctx.beginPath(); ctx.moveTo(side * r * .15, r * .56); ctx.bezierCurveTo(side * r * .2, r * .94, side * r * .1, r * 1.24, side * r * .06, r * 1.5); ctx.stroke();
+        ctx.fillStyle = 'rgba(244,137,123,.54)'; ctx.beginPath(); ctx.ellipse(-side * r * .5, -.48 * r, r * .2, r * .1, -.5 * side, 0, TAU); ctx.fill();
+      } else if (type === 'eye-left' || type === 'eye-right') {
+        ctx.fillStyle = '#f6e6d0'; ctx.strokeStyle = dark; ctx.lineWidth = Math.max(.01, r * .1);
+        ctx.beginPath(); ctx.ellipse(0, 0, r * 1.35, r * .86, 0, 0, TAU); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#8f2936'; ctx.beginPath(); ctx.arc(r * .14, 0, r * .48, 0, TAU); ctx.fill();
+        ctx.fillStyle = '#20121c'; ctx.beginPath(); ctx.arc(r * .14, 0, r * .22, 0, TAU); ctx.fill();
+        ctx.fillStyle = '#fff4e7'; ctx.beginPath(); ctx.arc(r * .02, -r * .22, r * .11, 0, TAU); ctx.fill();
+      } else if (type === 'foot-left' || type === 'foot-right') {
+        const foot = typeof ctx.createLinearGradient === 'function' ? ctx.createLinearGradient(-r, -r, r, r) : null;
+        if (foot) { foot.addColorStop(0, '#f0b09b'); foot.addColorStop(.55, '#cf857c'); foot.addColorStop(1, '#7f4451'); ctx.fillStyle = foot; } else ctx.fillStyle = '#ce8b7d';
+        ctx.strokeStyle = dark; ctx.lineWidth = Math.max(.01, r * .1);
+        // Ankle, heel, arch, ball, and five slender toes give the foot a
+        // readable articulated structure instead of three round nubs.
+        ctx.beginPath(); ctx.moveTo(-r * .34, -r * 1.42); ctx.lineTo(r * .22, -r * 1.35); ctx.bezierCurveTo(r * .12, -r * .86, r * .28, -.7 * r, r * .62, -.34 * r); ctx.bezierCurveTo(r * 1.12, r * .18, r * 1.12, r * .74, r * .62, r * 1.0); ctx.bezierCurveTo(r * .02, r * 1.34, -r * .72, r * 1.0, -r * .68, r * .48); ctx.bezierCurveTo(-r * .72, -.08 * r, -r * .46, -.5 * r, -r * .34, -r * 1.42); ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.strokeStyle = 'rgba(109,42,48,.7)'; ctx.lineWidth = Math.max(.008, r * .05); ctx.beginPath(); ctx.arc(-r * .18, r * .16, r * .54, -.3, 1.82); ctx.stroke();
+        for (let i = 0; i < 5; i += 1) { const tx = -r * .5 + i * r * .27; const len = r * (.38 + (4 - i) * .035); ctx.strokeStyle = '#d98d83'; ctx.lineWidth = Math.max(.018, r * .1); ctx.beginPath(); ctx.moveTo(tx, -.62 * r); ctx.bezierCurveTo(tx - r * .03, -.92 * r, tx + r * .02, -r * (1.18 + (i % 2) * .07), tx + r * .04, -r * (1.35 + (i % 3) * .05)); ctx.stroke(); ctx.strokeStyle = 'rgba(255,183,154,.55)'; ctx.lineWidth = Math.max(.006, r * .03); ctx.beginPath(); ctx.moveTo(tx - r * .02, -.7 * r); ctx.lineTo(tx + r * .03, -.98 * r); ctx.stroke(); }
+      } else if (type === 'tail') {
+        ctx.strokeStyle = '#b96c73'; ctx.lineWidth = Math.max(.02, r * .36); ctx.beginPath(); ctx.moveTo(-r * 1.5, r * .2); ctx.bezierCurveTo(-r * .45, -r * 1.2, r * .45, r * 1.2, r * 1.65, -.1 * r); ctx.stroke();
+        ctx.strokeStyle = 'rgba(246,154,150,.5)'; ctx.lineWidth = Math.max(.008, r * .1); ctx.beginPath(); ctx.moveTo(-r * 1.36, r * .12); ctx.bezierCurveTo(-r * .42, -r * .98, r * .4, r * 1.0, r * 1.45, -.08 * r); ctx.stroke();
+      } else {
+        // Liver: a broad two-lobed mass with a glossy ridge, kept separate
+        // from the smaller spherical gore pieces.
+        ctx.fillStyle = '#762535'; ctx.strokeStyle = dark; ctx.lineWidth = Math.max(.012, r * .12);
+        ctx.beginPath(); ctx.moveTo(-r * 1.3, 0); ctx.bezierCurveTo(-r * 1.1, -r * 1.15, r * .1, -r * 1.0, r * 1.4, -.26 * r); ctx.bezierCurveTo(r * .94, r * .9, -.4 * r, r * 1.06, -r * 1.3, 0); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = 'rgba(236,103,101,.52)'; ctx.beginPath(); ctx.ellipse(-r * .55, -.48 * r, r * .4, r * .12, -.25, 0, TAU); ctx.fill();
+      }
+      ctx.restore();
     }
 
     drawExplosion(ctx, fx, age, u) {
@@ -4105,13 +5198,16 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         const alpha = age > 1.25 ? 1 - (age - 1.25) / 1.0 : 1;
         if (alpha <= 0) continue;
         ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y); ctx.rotate(p.a + p.spin * age);
-        if (p.type === 'gore' || p.type === 'organ') {
+        if (p.anatomy) {
+          this.drawNamedAnatomy(ctx, p.type, p.size * 1.55, 0);
+        }
+        else if (p.type === 'gore' || p.type === 'organ') {
           ctx.strokeStyle = 'rgba(74,4,17,.72)'; ctx.lineCap = 'round'; ctx.lineWidth = Math.max(.018, p.size * .38);
           ctx.beginPath(); ctx.moveTo(-p.size * (1.2 + p.speed * .14), 0); ctx.lineTo(-p.size * .12, 0); ctx.stroke();
           ctx.strokeStyle = 'rgba(182,21,38,.65)'; ctx.lineWidth = Math.max(.008, p.size * .13);
           ctx.beginPath(); ctx.moveTo(-p.size * .95, 0); ctx.lineTo(-p.size * .18, 0); ctx.stroke();
         }
-        if (p.type === 'maggot') {
+        else if (!p.anatomy && p.type === 'maggot') {
           ctx.strokeStyle = '#7f4b45'; ctx.lineWidth = Math.max(.022, p.size * .46); ctx.lineCap = 'round';
           const wiggle = Math.sin(p.spin * age + p.a) * p.size * .8;
           ctx.beginPath(); ctx.moveTo(-p.size * 1.8, 0); ctx.bezierCurveTo(-p.size * .9, wiggle, p.size * .6, -wiggle, p.size * 1.8, 0); ctx.stroke();
@@ -4144,17 +5240,17 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         for (let i = 0; i < (fx.jetCount || 14); i++) {
           const a = hash(i + 901, i + 937, fx.seed) * TAU;
           const phase = hash(i + 911, i + 947, fx.seed) * .16;
-          const reach = clamp((age - phase) * (2.9 + hash(i + 921, i + 957, fx.seed) * 2.2), 0, .92 + hash(i + 931, i + 967, fx.seed) * 1.65);
+          const reach = clamp((age - phase) * (2.2 + hash(i + 921, i + 957, fx.seed) * 1.5), 0, .58 + hash(i + 931, i + 967, fx.seed) * .92);
           if (reach <= .025) continue;
           const side = Math.sin(i * 2.71 + fx.seed) * .14;
           const ex = fx.x + Math.cos(a) * reach;
           const ey = fx.y + Math.sin(a) * reach + .10 * age * age;
           ctx.save(); ctx.lineCap = 'round'; ctx.globalAlpha = jetFade;
-          ctx.strokeStyle = 'rgba(29,1,11,.78)'; ctx.lineWidth = .08 + reach * .018;
+          ctx.strokeStyle = 'rgba(29,1,11,.72)'; ctx.lineWidth = .055 + reach * .012;
           ctx.beginPath(); ctx.moveTo(fx.x, fx.y); ctx.quadraticCurveTo(fx.x + Math.cos(a + .42) * reach * .46, fx.y + Math.sin(a + .42) * reach * .46 + side, ex, ey); ctx.stroke();
-          ctx.strokeStyle = 'rgba(151,10,30,.86)'; ctx.lineWidth = .035 + reach * .008;
+          ctx.strokeStyle = 'rgba(151,10,30,.82)'; ctx.lineWidth = .026 + reach * .006;
           ctx.beginPath(); ctx.moveTo(fx.x, fx.y - .008); ctx.quadraticCurveTo(fx.x + Math.cos(a + .42) * reach * .46, fx.y + Math.sin(a + .42) * reach * .46 + side - .01, ex, ey); ctx.stroke();
-          ctx.strokeStyle = 'rgba(241,74,63,.42)'; ctx.lineWidth = .012;
+          ctx.strokeStyle = 'rgba(241,74,63,.34)'; ctx.lineWidth = .009;
           ctx.beginPath(); ctx.moveTo(fx.x + Math.cos(a) * .08, fx.y + Math.sin(a) * .08); ctx.lineTo(ex - Math.cos(a) * .12, ey - Math.sin(a) * .12); ctx.stroke();
           ctx.fillStyle = 'rgba(185,19,38,.84)'; ctx.beginPath(); ctx.arc(ex, ey, .022 + reach * .012, 0, TAU); ctx.fill();
           ctx.restore();
@@ -4204,6 +5300,58 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       if (this.gore) {
         ctx.fillStyle = 'rgba(115,23,38,' + alpha * .78 + ')';
         ctx.beginPath(); ctx.ellipse(fx.x, fx.y, .09 + u * .06, .035 + u * .02, fx.seed, 0, TAU); ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    drawInsectFeedback(ctx, fx, age, u) {
+      const alpha = 1 - u;
+      const bite = fx.kind === 'insect-bite';
+      ctx.save(); ctx.globalAlpha = alpha * (bite ? .74 : .58);
+      ctx.strokeStyle = bite ? '#e66d56' : '#e7c879'; ctx.lineWidth = bite ? .024 : .018;
+      ctx.beginPath(); ctx.arc(fx.x, fx.y, .12 + easeOut(Math.min(1, age / .25)) * (bite ? .22 : .16), 0, TAU); ctx.stroke();
+      if (bite) {
+        ctx.fillStyle = 'rgba(169,29,45,.72)';
+        for (let i = 0; i < 3; i += 1) {
+          const a = hash(i + 1811, i + 1817, fx.seed) * TAU;
+          const d = .10 + age * .22;
+          ctx.beginPath(); ctx.arc(fx.x + Math.cos(a) * d, fx.y + Math.sin(a) * d, .018, 0, TAU); ctx.fill();
+        }
+      } else {
+        ctx.fillStyle = '#f7dca0'; ctx.beginPath(); ctx.arc(fx.x, fx.y - .22 - age * .12, .026, 0, TAU); ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    drawDevouredFeed(ctx, fx, age, u) {
+      const alpha = 1 - u;
+      const count = this.reducedMotion ? 4 : 10;
+      ctx.save(); ctx.globalAlpha = alpha * .88;
+      for (let i = 0; i < count; i += 1) {
+        const a = hash(i + 1911, i + 1917, fx.seed) * TAU + age * (i % 2 ? .7 : -.55);
+        const radius = .24 + Math.min(.58, age * .36) + hash(i + 1921, i + 1927, fx.seed) * .16;
+        const x = fx.x + Math.cos(a) * radius;
+        const y = fx.y + Math.sin(a) * radius;
+        ctx.fillStyle = i % 3 === 0 ? '#d7a27f' : '#633d36';
+        ctx.beginPath(); ctx.ellipse(x, y, .07, .035, a, 0, TAU); ctx.fill();
+        ctx.strokeStyle = 'rgba(240,177,116,.58)'; ctx.lineWidth = .012;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(fx.x + Math.cos(a) * .10, fx.y + Math.sin(a) * .10); ctx.stroke();
+      }
+      if (!this.reducedMotion) {
+        ctx.strokeStyle = 'rgba(229,81,64,' + alpha * .68 + ')'; ctx.lineWidth = .035;
+        ctx.beginPath(); ctx.arc(fx.x, fx.y, .28 + age * .22, 0, TAU); ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    drawUnstuck(ctx, fx, age, u) {
+      const alpha = 1 - u;
+      ctx.save(); ctx.globalAlpha = alpha * .9; ctx.strokeStyle = '#9cf06f'; ctx.lineWidth = .026; ctx.lineCap = 'round';
+      const distance = .18 + age * .34;
+      ctx.beginPath(); ctx.arc(fx.x, fx.y, distance, 0, TAU); ctx.stroke();
+      for (let i = 0; i < 4; i += 1) {
+        const a = i * TAU / 4 + fx.seed * .03;
+        ctx.beginPath(); ctx.moveTo(fx.x + Math.cos(a) * .14, fx.y + Math.sin(a) * .14); ctx.lineTo(fx.x + Math.cos(a) * distance, fx.y + Math.sin(a) * distance); ctx.stroke();
       }
       ctx.restore();
     }
@@ -4265,6 +5413,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       this.volume = .28; this.muted = false; this.active = false; this.paused = false;
       this.ctx = null; this.track = null; this.trackURL = null; this.timer = null; this.step = 0;
       this.bpm = 132; this.nextNote = 0; this.lastCheese = 0; this.lastCrunch = -Infinity;
+      // Bug events are intentionally mixed into one quiet, global channel.
+      // Hundreds of insects can be active, but their attach/bite notifications
+      // must never turn into a continuous layer of noise.
+      this.lastBugCue = -Infinity;
       this.selectionPauseTimer = null;
       this.lifecycle = 0;
     }
@@ -4415,6 +5567,24 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       } else if (event.type === 'selected' && event.outcome === 'eaten') {
         this.tone(150, t, .26, .25, 'sawtooth', this.fxGain, 50);
         this.hiss(t, .15, .13, 450, this.fxGain, 'lowpass');
+      } else if (event.type === 'selected' && event.outcome === 'devoured') {
+        // Bug consumption is a capture outcome: use the existing low capture
+        // colour, with a slightly longer tail so the speaker hold has a clear
+        // audible impact before the app's pauseForSelection() takes over.
+        this.tone(118, t, .34, .28, 'sawtooth', this.fxGain, 34);
+        this.hiss(t, .22, .16, 390, this.fxGain, 'lowpass');
+      } else if ((event.type === 'insect-attached' || event.type === 'insect-attach') && t - this.lastBugCue > .22) {
+        this.lastBugCue = t;
+        // A small dry tick acknowledges a bug finding a host without adding a
+        // voice for every attached insect in a swarm.
+        this.tone(330, t, .032, .025, 'triangle', this.fxGain, 190);
+        this.hiss(t, .026, .018, 2400, this.fxGain, 'bandpass');
+      } else if ((event.type === 'insect-bite' || event.type === 'insect-bit') && t - this.lastBugCue > .32) {
+        this.lastBugCue = t;
+        // Bites are rarer, lower, and share the same throttle as attaches so a
+        // heavily infested run remains musically quiet and bounded.
+        this.tone(92, t, .055, .032, 'triangle', this.fxGain, 58);
+        this.hiss(t, .045, .021, 620, this.fxGain, 'lowpass');
       } else if (event.type === 'selected' && event.outcome === 'escaped') {
         [72,76,79,84].forEach((n,i) => this.tone(note(n), t + i * .075, .30, .2, 'triangle', this.fxGain));
       } else if (event.type === 'cat-enter') {
@@ -4954,7 +6124,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       if (outcome === 'exploded' || outcome === 'explode' || outcome === 'boom') {
         this._pulse('maze-impact-exploded', 540);
         this._buzz([30, 18, 62]);
-      } else if (outcome === 'eaten' || outcome === 'capture' || outcome === 'cat') {
+      } else if (outcome === 'eaten' || outcome === 'devoured' || outcome === 'capture' || outcome === 'cat') {
         this._pulse('maze-impact-capture', 360);
         this._buzz([24, 14, 28]);
       } else if (outcome === 'escaped' || outcome === 'escape') {
@@ -5003,6 +6173,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   var audio = null;
   var feedback = null;
   var raf = 0;
+  var presentationRAFActive = false;
   var lastFrame = 0;
   var lastStatsFrame = 0;
   var calloutTimer = 0;
@@ -5018,6 +6189,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   var pointerDrag = null;
   var suppressCanvasClick = false;
   var focusHideTimer = 0;
+  var MOUSE_HOLD_MS = 180;
 
   function byId(id) { return document.getElementById(id); }
   function cacheDom() {
@@ -5069,6 +6241,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   }
   function createGame(names) {
     if (!window.MouseMazeEngine || !window.MouseMazeEngine.Game) { showToast('GAME ENGINE IS STILL LOADING'); return false; }
+    cancelPointerInteraction('new-maze');
     runAudio('stop'); window.clearTimeout(calloutTimer); dom.selectionCallout.hidden = true;
     if (window.XEffect && typeof window.XEffect.reset === 'function') window.XEffect.reset();
     if (feedback) feedback.reset();
@@ -5088,7 +6261,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     syncCameraControls();
     state.running = false; state.awaiting = false; lastFrame = 0; dom.startBtn.disabled = false; dom.pauseBtn.disabled = true; dom.pauseBtnText.textContent = 'PAUSE'; dom.startBtnText.textContent = 'START RUN'; setRosterEnabled(true); setRunActive(false);
     updateStatus('Ready', 'ready'); renderStats(); renderResults();
-    if (!raf) raf = requestAnimationFrame(frame);
+    ensurePresentationRAF();
     return true;
   }
   function setRosterEnabled(enabled) {
@@ -5140,7 +6313,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (game.status === 'paused' && typeof game.resume === 'function') game.resume(); else if (typeof game.start === 'function') game.start();
     state.running = true; setRosterEnabled(false); setRunActive(true); dom.pauseBtn.disabled = false; dom.startBtn.disabled = true; dom.startBtnText.textContent = 'PLAYING'; dom.pauseBtnText.textContent = 'PAUSE'; updateStatus('Playing', 'running');
     var audioStart = runAudio('start'); if (audioStart && typeof audioStart.catch === 'function') audioStart.catch(function () {});
-    if (!raf) raf = requestAnimationFrame(frame);
+    ensurePresentationRAF();
   }
   function pause() { if (!game || state.awaiting || game.status === 'awaiting' || game.status === 'finished') return; if (game.status === 'running' && typeof game.pause === 'function') { game.pause(); state.running = false; if (window.XEffect && typeof window.XEffect.stop === 'function') window.XEffect.stop(); dom.pauseBtnText.textContent = 'RESUME'; dom.startBtn.disabled = false; dom.startBtnText.textContent = 'RESUME'; updateStatus('Paused', 'paused'); if (feedback) feedback.stop(); runAudio('pause'); } else if (game.status === 'paused') { resume(); } }
   function resume() { if (!game || state.awaiting || game.status === 'awaiting' || game.status === 'finished') return; if (typeof game.resume === 'function') game.resume(); state.running = true; lastFrame = 0; dom.startBtn.disabled = true; dom.startBtnText.textContent = 'RUNNING'; dom.pauseBtn.disabled = false; dom.pauseBtnText.textContent = 'PAUSE'; updateStatus('Playing', 'running'); var a = runAudio('resume'); if (a && typeof a.catch === 'function') a.catch(function () {}); }
@@ -5214,9 +6387,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       dom.focusPauseBtn.disabled = !!(state.awaiting || (game && game.status === 'awaiting'));
     }
   }
-  function reasonLabel(outcome) { return ({ escaped: 'made the exit', exploded: 'the bomb detonated', eaten: 'cat got them' })[outcome] || outcome || 'chosen'; }
+  function reasonLabel(outcome) { return ({ escaped: 'made the exit', exploded: 'the bomb detonated', eaten: 'cat got them', devoured: 'the bugs got them' })[outcome] || outcome || 'chosen'; }
   function handleEvent(event) {
     if (!event) return;
+    if (event.type === 'selected') cancelPointerInteraction('selected');
     if (feedback) feedback.handleEvent(event);
     if (renderer && typeof renderer.handleEvent === 'function') renderer.handleEvent(event);
     if (audio && typeof audio.handleEvent === 'function') { try { audio.handleEvent(event); } catch (_) {} }
@@ -5234,6 +6408,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     else if (event.type === 'finished') { state.running = false; state.awaiting = false; dom.startBtn.disabled = false; dom.pauseBtn.disabled = true; if (window.XEffect && typeof window.XEffect.stop === 'function') window.XEffect.stop(); dom.startBtnText.textContent = 'RUN AGAIN'; setRosterEnabled(true); setRunActive(true); updateStatus('Finished', 'finished'); showToast('THE LEDGER IS COMPLETE'); }
   }
   function showSelection(item) {
+    cancelPointerInteraction('selection');
     dom.calloutName.textContent = item.name; dom.calloutReason.textContent = item.reason + ' · ' + formatTime(item.time); dom.calloutKicker.textContent = 'CHOSEN · ' + item.order; dom.selectionCallout.hidden = false;
     dom.selectionCallout.classList.toggle('long-name', item.name.length > 18);
     window.clearTimeout(calloutTimer); state.awaiting = true; state.running = false;
@@ -5299,6 +6474,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     else { setFocusMode(!state.focusMode); showToast(state.focusMode ? 'MAZE FOCUS ENABLED' : 'MAZE FOCUS CLOSED'); }
   }
   function focusPrimaryAction() { if (!game || game.status === 'ready' || game.status === 'finished') start(); else pause(); revealFocusControls(); }
+  function ensurePresentationRAF() {
+    if (presentationRAFActive || typeof requestAnimationFrame !== 'function') return;
+    presentationRAFActive = true;
+    raf = requestAnimationFrame(frame);
+  }
   function frame(now) { raf = requestAnimationFrame(frame); if (!lastFrame) lastFrame = now; var dt = Math.min(0.1, Math.max(0, (now - lastFrame) / 1000)); lastFrame = now; if (game && game.status === 'running') { game.update(dt); var events = typeof game.drainEvents === 'function' ? game.drainEvents() : []; events.forEach(handleEvent); } if (renderer && game) renderer.render(game, now / 1000); if (now - lastStatsFrame >= 100) { renderStats(); lastStatsFrame = now; } }
   function step(seconds) { var dt = Math.max(0, Number(seconds) || 0); if (!game) return; if (game.status === 'running') { game.update(dt); var events = typeof game.drainEvents === 'function' ? game.drainEvents() : []; events.forEach(handleEvent); } if (renderer) renderer.render(game, (performance.now ? performance.now() : Date.now()) / 1000); renderStats(); }
   function applyRendererPresentationSettings() {
@@ -5322,6 +6502,103 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (next > 1 && renderer.setOverview) renderer.setOverview(false);
     syncCameraControls();
   }
+  function dragStatusAllowed() {
+    return !!(game && (game.status === 'ready' || game.status === 'running' || game.status === 'paused') && !state.awaiting);
+  }
+  function clearMouseDragPreview() {
+    if (renderer && typeof renderer.setMouseDragPreview === 'function') renderer.setMouseDragPreview(null, null);
+    ensurePresentationRAF();
+  }
+  function releasePointer(pointer) {
+    if (!pointer || !dom.mazeCanvas || !dom.mazeCanvas.releasePointerCapture) return;
+    try {
+      if (dom.mazeCanvas.hasPointerCapture && dom.mazeCanvas.hasPointerCapture(pointer.id)) dom.mazeCanvas.releasePointerCapture(pointer.id);
+    } catch (_) {}
+  }
+  function cancelPointerInteraction(reason) {
+    var pointer = pointerDrag;
+    if (!pointer) { clearMouseDragPreview(); return; }
+    // A cancelled press must not become a click when the pointer is released.
+    // The next pointerdown explicitly starts a fresh click gesture.
+    suppressCanvasClick = true;
+    if (pointer.holdTimer) window.clearTimeout(pointer.holdTimer);
+    if (pointer.mouseId != null && pointer.started && game && typeof game.cancelMouseDrag === 'function') {
+      try { game.cancelMouseDrag(pointer.mouseId, reason || 'cancelled'); } catch (_) {}
+    }
+    clearMouseDragPreview();
+    pointerDrag = null;
+    releasePointer(pointer);
+    if (dom.mazeCanvas) dom.mazeCanvas.classList.remove('is-panning', 'is-dragging-mouse', 'is-pressing-mouse');
+  }
+  function dropPointAt(clientX, clientY) {
+    if (!renderer || typeof renderer.screenToWorld !== 'function' || !game || typeof game.getMouseDropPoint !== 'function') return null;
+    if (!isClientPointInsideCanvas(clientX, clientY)) return null;
+    var world = renderer.screenToWorld(clientX, clientY);
+    if (!world || !Number.isFinite(Number(world.x)) || !Number.isFinite(Number(world.y))) return null;
+    try { return game.getMouseDropPoint(Number(world.x), Number(world.y)); } catch (_) { return null; }
+  }
+  function isClientPointInsideCanvas(clientX, clientY) {
+    var canvas = dom.mazeCanvas;
+    var rect = canvas && canvas.getBoundingClientRect ? canvas.getBoundingClientRect() : null;
+    return !rect || (clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom);
+  }
+  function updateMouseDragPreview(pointer, clientX, clientY) {
+    if (!pointer || pointer.mouseId == null || !renderer || typeof renderer.setMouseDragPreview !== 'function') return;
+    var point = dropPointAt(clientX, clientY);
+    pointer.dropPoint = point && point.valid !== false ? point : null;
+    renderer.setMouseDragPreview(pointer.mouseId, pointer.dropPoint);
+  }
+  function beginHeldMouse(pointer) {
+    if (!pointerDrag || pointerDrag !== pointer || pointer.mouseId == null || !dragStatusAllowed()) return;
+    pointer.holdTimer = 0;
+    if (!game || typeof game.beginMouseDrag !== 'function') return;
+    var began = false;
+    try { began = game.beginMouseDrag(pointer.mouseId) !== false; } catch (_) { began = false; }
+    if (!began) { cancelPointerInteraction('begin-rejected'); return; }
+    pointer.started = true;
+    dom.mazeCanvas.classList.remove('is-pressing-mouse');
+    dom.mazeCanvas.classList.add('is-dragging-mouse');
+    updateMouseDragPreview(pointer, pointer.lastX, pointer.lastY);
+  }
+  function finishPointerInteraction(event, cancelled) {
+    var pointer = pointerDrag;
+    if (!pointer || pointer.id !== event.pointerId) return;
+    if (pointer.holdTimer) window.clearTimeout(pointer.holdTimer);
+    var wasDrag = pointer.mouseId != null && pointer.started;
+    // A short click keeps the mouse selected at pointerdown. This avoids a
+    // moving mouse escaping the click hit-test before the browser dispatches
+    // click, while still reserving held pointers for relocation.
+    var shouldFollowCandidate = pointer.mouseId != null
+      && !pointer.started
+      && !pointer.moved
+      && !cancelled
+      && dragStatusAllowed()
+      && isClientPointInsideCanvas(event.clientX, event.clientY)
+      && game
+      && game.mice
+      && game.mice.some(function (mouse) { return mouse.id === pointer.mouseId && mouse.alive; });
+    if (pointer.mouseId != null && pointer.started && !cancelled && dragStatusAllowed()) {
+      // Always resolve against the release position. The pointer may have
+      // moved from a valid preview cell to outside the canvas between the last
+      // move event and pointerup; in that case the drop must cancel rather than
+      // silently using the stale preview cell.
+      var point = dropPointAt(event.clientX, event.clientY);
+      if (point && point.valid !== false && game && typeof game.endMouseDrag === 'function') {
+        try { game.endMouseDrag(pointer.mouseId, Number(point.x), Number(point.y)); } catch (_) { try { game.cancelMouseDrag(pointer.mouseId, 'drop-error'); } catch (_) {} }
+      } else if (game && typeof game.cancelMouseDrag === 'function') {
+        try { game.cancelMouseDrag(pointer.mouseId, 'invalid-drop'); } catch (_) {}
+      }
+    } else if (pointer.mouseId != null && pointer.started && game && typeof game.cancelMouseDrag === 'function') {
+      try { game.cancelMouseDrag(pointer.mouseId, cancelled ? 'pointer-cancelled' : 'released'); } catch (_) {}
+    }
+    clearMouseDragPreview();
+    suppressCanvasClick = !!(cancelled || wasDrag || pointer.moved || shouldFollowCandidate);
+    pointerDrag = null;
+    releasePointer(pointer);
+    dom.mazeCanvas.classList.remove('is-panning', 'is-dragging-mouse', 'is-pressing-mouse');
+    if (shouldFollowCandidate) followMouse(pointer.mouseId);
+    window.setTimeout(function () { suppressCanvasClick = false; }, 0);
+  }
   function bindCanvasCamera() {
     var canvas = dom.mazeCanvas;
     if (!canvas) return;
@@ -5336,8 +6613,20 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       cameraZoomAt(next, event.clientX, event.clientY);
     }, { passive: false });
     canvas.addEventListener('pointerdown', function (event) {
-      if (!renderer || !renderer.getZoom || Number(renderer.getZoom()) <= 1 || event.button !== 0) return;
-      pointerDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, moved: false };
+      if (event.button !== 0 || !renderer) return;
+      cancelPointerInteraction('replaced');
+      suppressCanvasClick = false;
+      if (!dragStatusAllowed()) return;
+      var hit = typeof renderer.pickMouse === 'function' ? renderer.pickMouse(event.clientX, event.clientY) : null;
+      if (hit && hit.alive && typeof game.beginMouseDrag === 'function') {
+        pointerDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, lastX: event.clientX, lastY: event.clientY, moved: false, mouseId: hit.id, started: false, dropPoint: null, holdTimer: 0 };
+        pointerDrag.holdTimer = window.setTimeout(function () { beginHeldMouse(pointerDrag); }, MOUSE_HOLD_MS);
+        canvas.setPointerCapture(event.pointerId);
+        canvas.classList.add('is-pressing-mouse');
+        return;
+      }
+      if (!renderer.getZoom || Number(renderer.getZoom()) <= 1) return;
+      pointerDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, lastX: event.clientX, lastY: event.clientY, moved: false, mouseId: null, started: false, holdTimer: 0 };
       canvas.setPointerCapture(event.pointerId);
       canvas.classList.add('is-panning');
     });
@@ -5345,23 +6634,18 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       if (!pointerDrag || pointerDrag.id !== event.pointerId) return;
       var dx = event.clientX - pointerDrag.x, dy = event.clientY - pointerDrag.y;
       if (Math.abs(dx) + Math.abs(dy) > 3) pointerDrag.moved = true;
-      if (pointerDrag.moved && renderer && typeof renderer.panBy === 'function') {
+      if (pointerDrag.mouseId != null) {
+        if (pointerDrag.started) { event.preventDefault(); updateMouseDragPreview(pointerDrag, event.clientX, event.clientY); }
+      } else if (pointerDrag.moved && renderer && typeof renderer.panBy === 'function') {
         event.preventDefault();
         renderer.panBy(dx, dy);
         syncCameraControls();
       }
-      pointerDrag.x = event.clientX; pointerDrag.y = event.clientY;
+      pointerDrag.x = event.clientX; pointerDrag.y = event.clientY; pointerDrag.lastX = event.clientX; pointerDrag.lastY = event.clientY;
     });
-    function finishPointer(event) {
-      if (!pointerDrag || pointerDrag.id !== event.pointerId) return;
-      suppressCanvasClick = pointerDrag.moved;
-      if (canvas.hasPointerCapture && canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
-      pointerDrag = null;
-      canvas.classList.remove('is-panning');
-      window.setTimeout(function () { suppressCanvasClick = false; }, 0);
-    }
-    canvas.addEventListener('pointerup', finishPointer);
-    canvas.addEventListener('pointercancel', finishPointer);
+    canvas.addEventListener('pointerup', function (event) { finishPointerInteraction(event, false); });
+    canvas.addEventListener('pointercancel', function (event) { finishPointerInteraction(event, true); });
+    canvas.addEventListener('lostpointercapture', function (event) { if (pointerDrag && pointerDrag.id === event.pointerId) finishPointerInteraction(event, true); });
   }
   function bind() {
     dom.zoomInput.addEventListener('input', function () { cameraZoomAt(Number(dom.zoomInput.value), null, null); });
@@ -5391,10 +6675,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     dom.musicInput.addEventListener('change', function () { var file = dom.musicInput.files && dom.musicInput.files[0]; if (!file) return; dom.trackLabel.textContent = file.name.slice(0, 26); dom.sunoNote.textContent = 'Loading track…'; dom.restoreTrackBtn.hidden = !window.BACKGROUND_TRACK_DATA; if (audio && typeof audio.setTrack === 'function') { try { var loadedTrack = audio.setTrack(file); if (loadedTrack && typeof loadedTrack.catch === 'function') loadedTrack.catch(function () {}); } catch (_) {} } showToast('LOADING PERSONAL TRACK'); });
     dom.clearTrackBtn.addEventListener('click', function () { if (audio && typeof audio.setTrack === 'function') { try { var resetTrack = audio.setTrack(null); if (resetTrack && typeof resetTrack.catch === 'function') resetTrack.catch(function () {}); } catch (_) {} } dom.trackLabel.textContent = 'Original chase score'; dom.sunoNote.textContent = 'Instrumental chase score'; dom.restoreTrackBtn.hidden = !window.BACKGROUND_TRACK_DATA; showToast('BUILT-IN SCORE RESTORED'); });
     dom.restoreTrackBtn.addEventListener('click', function () { if (!window.BACKGROUND_TRACK_DATA) return; if (audio) audio.setTrack(window.BACKGROUND_TRACK_DATA); dom.trackLabel.textContent = window.BACKGROUND_TRACK_TITLE || 'Mouse Maze Mayhem'; dom.sunoNote.textContent = 'Loops during play'; dom.restoreTrackBtn.hidden = true; dom.musicInput.value = ''; showToast('BACKGROUND SONG RESTORED'); });
-    document.addEventListener('keydown', function (event) { var tag = event.target && event.target.tagName; if (event.key === 'Escape' && state.focusMode && !document.fullscreenElement) { setFocusMode(false); return; } if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || event.target.isContentEditable) return; if (event.key === ' ') { if (tag === 'BUTTON') return; event.preventDefault(); if (!event.repeat) { if (state.awaiting) continueSelection(); else if (game && game.status === 'running' || game && game.status === 'paused') pause(); else start(); } } else if (event.key.toLowerCase() === 'f') { event.preventDefault(); toggleFullscreen(); } else if (event.key.toLowerCase() === 'm') toggleMute(); if (state.focusMode) revealFocusControls(); });
+    document.addEventListener('keydown', function (event) { var tag = event.target && event.target.tagName; if (event.key === 'Escape') { if (pointerDrag) { cancelPointerInteraction('escape'); event.preventDefault(); return; } if (state.focusMode) { event.preventDefault(); if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {}); else setFocusMode(false); return; } } if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || event.target.isContentEditable) return; if (event.key === ' ') { if (tag === 'BUTTON') return; event.preventDefault(); if (!event.repeat) { if (state.awaiting) continueSelection(); else if (game && game.status === 'running' || game && game.status === 'paused') pause(); else start(); } } else if (event.key.toLowerCase() === 'f') { event.preventDefault(); toggleFullscreen(); } else if (event.key.toLowerCase() === 'm') toggleMute(); if (state.focusMode) revealFocusControls(); });
     window.addEventListener('resize', function () { if (renderer) renderer.resize(); });
     document.addEventListener('fullscreenchange', function () { setFocusMode(!!document.fullscreenElement); });
     document.addEventListener('visibilitychange', function () { if (document.hidden && game && game.status === 'running') pause(); });
+    window.addEventListener('blur', function () { cancelPointerInteraction('window-blur'); });
+    document.addEventListener('visibilitychange', function () { if (document.hidden) cancelPointerInteraction('hidden'); });
   }
   function init() {
     cacheDom(); var stored = safeStorageGet(STORE_KEY); var initial = stored ? uniqueNames(stored).names : DEMO_NAMES.slice(); dom.rosterInput.value = initial.join('\n'); rosterIsDemo = !stored; refreshRosterNote();
