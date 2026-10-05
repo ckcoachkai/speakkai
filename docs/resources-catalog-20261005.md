@@ -10,7 +10,7 @@ The public library has 17 finished browser games and apps: 15 classroom tools an
 - Would you, though? (`/tools/would-you-though/`): October 4 completed edition with 100 conversation questions, ten categories, previous/next and optional follow-ups.
 - Two Perspectives (`/tools/two-perspectives/`): October 4 completed edition with 3,000 questions, collection/topic selection, previous/next and optional notes.
 
-The two conversation apps appear under **Adults 18+**, outside the default classroom results. Only their runtime files are published; local server scripts, research/review records and source archives are not included.
+The two adult conversation apps and the Adults 18+ filter are now hidden from the public Resources catalog at user request. Their standalone routes remain available. Only their runtime files are published; local server scripts, research/review records and source archives are not included.
 
 ## Existing entries preserved
 

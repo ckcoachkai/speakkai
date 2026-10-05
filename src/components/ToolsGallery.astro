@@ -1,7 +1,8 @@
 ---
 import resourceStyles from "../styles/resources.css?url";
-import tools from '../data/resourceTools.json';
-import { Search, Gamepad2, Mic, Timer, Users, Heart, Grid2X2 } from '@lucide/astro';
+import allTools from '../data/resourceTools.json';
+const tools = allTools.filter(tool => !('adult' in tool && tool.adult));
+import { Search, Gamepad2, Mic, Timer, Users, Grid2X2 } from '@lucide/astro';
 interface Props { headingLevel?: 'h2' | 'h3'; language?: 'en' | 'zh-CN'; }
 const { language = 'en' } = Astro.props;
 const zh = language === 'zh-CN';
@@ -11,7 +12,6 @@ const filters = [
   {id:'speaking',label:zh?'表达练习':'Speaking',icon:Mic},
   {id:'timers',label:zh?'计时器':'Timers',icon:Timer},
   {id:'games',label:zh?'游戏与工具':'Games & apps',icon:Gamepad2},
-  {id:'adults',label:zh?'成人 18+':'Adults 18+',icon:Heart},
 ];
 ---
 <link rel="stylesheet" href={resourceStyles} />
@@ -32,7 +32,6 @@ const filters = [
     </article>)}
   </div>
   <div class="catalog-empty" hidden><h3>{zh?'没有匹配结果':'No matches yet'}</h3><p>{zh?'试试其他词，或重置筛选。':'Try another word or clear the filters.'}</p><button type="button" class="clear-search">{zh?'重置筛选':'Clear filters'}</button></div>
-  <noscript><p>{zh?'成人对话工具：':'Adult conversation tools: '}<a href="/tools/would-you-though/">Would you, though? · 18+</a> · <a href="/tools/two-perspectives/">Two Perspectives · 18+</a></p></noscript>
 </div>
 <script>
   document.querySelectorAll<HTMLElement>('.resource-catalog').forEach(catalog=>{
