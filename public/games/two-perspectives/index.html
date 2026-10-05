@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f0e8">
+  <title>Two Perspectives — Conversation Questions</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+<meta name="description" content="3,000 adult conversation questions about life, culture and dating."></head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Two Perspectives home">
+      <span class="mark">2<span>p</span></span>
+      <span class="brand-name">TWO<br>PERSPECTIVES</span>
+    </a>
+  </header>
+
+  <main>
+    <section class="controls" aria-label="Question filters">
+      <label for="collection">COLLECTION
+        <select id="collection" aria-label="Collection"></select>
+      </label>
+      <label for="category">TOPIC
+        <select id="category" aria-label="Category"></select>
+      </label>
+    </section>
+
+    <p class="data-status" id="dataStatus" role="status" hidden></p>
+
+    <article class="question-stage" aria-label="Current question">
+      <div class="question-main" aria-live="polite" aria-atomic="true">
+        <p class="question-meta"><span id="number"></span><span aria-hidden="true"> · </span><span id="topic"></span></p>
+        <h1 id="question" tabindex="-1">One question. Two perspectives.</h1>
+      </div>
+      <div class="followup-area" id="followupArea" hidden>
+        <button id="followupToggle" type="button" aria-expanded="false" aria-controls="followup">+ Follow-up</button>
+        <p id="followup" hidden></p>
+      </div>
+      <details class="info-panel" id="infoPanel" hidden>
+        <summary id="infoSummary">Question notes</summary>
+        <div id="infoBody"></div>
+      </details>
+    </article>
+
+    <nav class="navigation" aria-label="Question navigation">
+      <button id="previous" class="previous" type="button" title="Previous question (Left arrow)">← Previous</button>
+      <button id="next" class="next" type="button" title="Next random question (Space or Right arrow)">Next question <span>→</span></button>
+    </nav>
+    <div class="under-controls"><span id="progress" role="status"></span></div>
+  </main>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

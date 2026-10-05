@@ -1,231 +1,58 @@
 ---
-interface Props {
-  headingLevel?: "h2" | "h3";
-  language?: "en" | "zh-CN";
-}
-const { headingLevel = "h2", language = "en" } = Astro.props;
-const chinese = language === "zh-CN";
-const Heading = headingLevel;
-
-const sections = [
-  {
-    title: "Games",
-    zhTitle: "游戏",
-    description: "Playable browser games and larger game projects created for classes, practice, or personal design work.",
-    zhDescription: "为课堂、练习或个人设计项目制作的浏览器游戏与大型游戏项目。",
-    tools: [
-      {name: "One Question, One Minute", zhName: "一分钟，一个问题", description: "Press Start for fullscreen video practice. A new question every minute, 1–8 hour sessions or all 500 questions, and a live clock in your chosen timezone.", zhDescription: "点击开始即可全屏练习或录制视频。每分钟自动换题，可选1至8小时或全部500题，并显示所选时区的实时时钟。", href: "/tools/one-question-one-minute/", image: "/images/game-previews/one-question-one-minute.webp", imageAlt: "Large speaking question with a live clock and one-minute countdown", zhImageAlt: "大字表达问题、实时时钟与一分钟倒计时", label: "Speaking & video practice", zhLabel: "表达与视频练习"},
-      {name: "Problem-solving Sprint", zhName: "一分钟解决问题", description: "Solve as many problems as you can in 60 seconds. Includes 500 speaking prompts, answer and skip controls, and a reset button for a fresh round.", zhDescription: "在60秒内尽可能多地提出解决方案。包含500个英文表达提示、回答计分、跳过和重置功能。", href: "/tools/problem-solving-sprint/", image: "/images/game-previews/problem-solving-sprint.webp", imageAlt: "Problem-solving Sprint with a 60-second timer and 500 speaking prompts", zhImageAlt: "含60秒计时器与500个英文表达提示的问题解决游戏", label: "Speaking game", zhLabel: "表达游戏"},
-      {name: "Keeperfall", zhName: "Keeperfall 地牢游戏", description: "A complete local dungeon-building and automatic-raiding game with a persistent keeper, creatures, loot and rivals.", zhDescription: "完整的本地地牢经营与自动远征游戏，包含守护者、伙伴、装备和对手。", href: "/games/keeperfall/", image: "/images/game-previews/keeperfall.webp", imageAlt: "Keeperfall dungeon game interface", zhImageAlt: "Keeperfall 地牢游戏界面", label: "Browser game", zhLabel: "浏览器游戏"},
-      {name: "Mouse House", zhName: "Mouse House 点名追逐", description: "A cartoon maze chase where mice, cheese and a cat pick the next student through a simulated race.", zhDescription: "用老鼠、奶酪和猫的迷宫追逐，模拟选出下一位学生。", href: "/games/mouse-house/", image: "/images/game-previews/mouse-house.webp", imageAlt: "Mouse House maze chase name picker", zhImageAlt: "Mouse House 迷宫追逐点名器", label: "Classroom game", zhLabel: "课堂游戏"},
-      {name: "Class Charades", zhName: "课堂比划猜词", description: "Run fast-paced charades rounds with prompts, a timer, and live team scoring.", zhDescription: "使用提示、计时器和实时小组计分，组织快速的比划猜词活动。", href: "/tools/class-charades/", image: "/images/class-charades-preview.webp", imageAlt: "Class Charades game arena preview", zhImageAlt: "课堂比划猜词游戏界面预览", label: "Classroom game", zhLabel: "课堂游戏"},
-    ],
-  },
-  {
-    title: "Name Pickers",
-    zhTitle: "点名器",
-    description: "Randomizers and participation games for choosing the next speaker without a plain list.",
-    zhDescription: "用随机器和参与型游戏选择下一位发言者，而不是只看名单。",
-    tools: [
-      {name: "The Hungry Forest", zhName: "森林点名游戏", description: "A lively name picker with dancing characters, banana boosts and a new turn for every student.", zhDescription: "选择会跳舞的角色，让学生在香蕉加速的趣味赛跑中轮流参与。", href: "/forest/", image: "/forest/preview.webp", imageAlt: "Moonlit forest for The Hungry Forest classroom name picker", zhImageAlt: "森林点名游戏的月光森林场景", label: "Name picker", zhLabel: "点名器"},
-      {name: "Ice Drop", zhName: "Ice Drop 冰面点名", description: "A dramatic 3D name picker where students stand on melting ice and the first fall chooses the turn.", zhDescription: "学生站在融化冰面上的 3D 点名器，先掉落者进入本轮。", href: "/games/ice-drop/", image: "/images/game-previews/ice-drop.webp", imageAlt: "Ice Drop 3D classroom name picker", zhImageAlt: "Ice Drop 3D 课堂点名器", label: "3D name picker", zhLabel: "3D 点名器"},
-      {name: "Marble Name Picker", zhName: "弹珠点名器", description: "Release player marbles and let the physics board choose the next participant.", zhDescription: "释放代表参与者的弹珠，让物理轨道选出下一位参与者。", href: "/tools/marble-name-picker/", image: "/images/marble-name-picker-preview.webp", imageAlt: "Marble Name Picker physics board preview", zhImageAlt: "弹珠点名器物理轨道预览", label: "Name picker", zhLabel: "点名器"},
-      {name: "Wheel of Doom", zhName: "随机点名转盘", description: "Choose the next participant with a colorful, customizable random wheel.", zhDescription: "用可自定义的彩色随机转盘，选择下一位参与者。", href: "/tools/wheel-of-doom/", image: "/images/wheel-of-doom-preview.webp", imageAlt: "Wheel of Doom random name picker preview", zhImageAlt: "随机点名转盘预览", label: "Name picker", zhLabel: "点名器"},
-    ],
-  },
-  {
-    title: "Apps",
-    zhTitle: "应用",
-    description: "Small classroom and speaking utilities that are useful during lessons, meetings and practice.",
-    zhDescription: "适合课堂、会议和练习时使用的小型工具。",
-    tools: [
-      {name: "Kai Class Time", zhName: "Kai 课堂计时器", description: "A classroom clock with schedule awareness, reset cues and simple controls for live teaching.", zhDescription: "面向现场教学的课堂时钟，带课程表、提醒和简洁控制。", href: "/apps/classroom-timer/", image: "/images/game-previews/classroom-timer.webp", imageAlt: "Kai Class Time classroom timer app", zhImageAlt: "Kai 课堂计时器应用", label: "Classroom app", zhLabel: "课堂应用"},
-      {name: "Toastmasters Speech Timer", zhName: "Toastmasters 演讲计时器", description: "Time speeches, evaluations, and Table Topics with clear timing signals.", zhDescription: "用清晰的计时信号，为演讲、点评与即兴演讲计时。", href: "/tools/toastmasters-timer/", image: "/images/toastmasters-timer-preview.webp", imageAlt: "Toastmasters Speech Timer preview", zhImageAlt: "Toastmasters 演讲计时器预览", label: "Speaking app", zhLabel: "表达应用"},
-      {name: "Speech & Debate Timer", zhName: "演讲与辩论计时器", description: "Competition and classroom timing for speech and debate events.", zhDescription: "用于演讲与辩论竞赛及课堂活动的计时。", href: "/tools/speech-debate-timer/", image: "/images/speech-debate-timer-preview.webp", imageAlt: "Student Speech and Debate Timer preview", zhImageAlt: "学生演讲与辩论计时器预览", label: "Competition app", zhLabel: "竞赛应用"},
-    ],
-  },
+import resourceStyles from "../styles/resources.css?url";
+import tools from '../data/resourceTools.json';
+import { Search, Gamepad2, Mic, Timer, Users, Heart, Grid2X2 } from '@lucide/astro';
+interface Props { headingLevel?: 'h2' | 'h3'; language?: 'en' | 'zh-CN'; }
+const { language = 'en' } = Astro.props;
+const zh = language === 'zh-CN';
+const filters = [
+  {id:'all',label:zh?'课堂资源':'All classroom',icon:Grid2X2},
+  {id:'pickers',label:zh?'点名器':'Name pickers',icon:Users},
+  {id:'speaking',label:zh?'表达练习':'Speaking',icon:Mic},
+  {id:'timers',label:zh?'计时器':'Timers',icon:Timer},
+  {id:'games',label:zh?'游戏与工具':'Games & apps',icon:Gamepad2},
+  {id:'adults',label:zh?'成人 18+':'Adults 18+',icon:Heart},
 ];
 ---
-
-<div class="tools-sections" aria-label={chinese ? "游戏、点名器和应用" : "Games, name pickers and apps"}>
-  {
-    sections.map((section) => {
-      return (
-        <section class="tools-section" aria-labelledby={`tools-${section.title.toLowerCase().replaceAll(" ", "-")}`}>
-          <header class="tools-section-header">
-            <Heading id={`tools-${section.title.toLowerCase().replaceAll(" ", "-")}`}>
-              {chinese ? section.zhTitle : section.title}
-            </Heading>
-            <p>{chinese ? section.zhDescription : section.description}</p>
-          </header>
-          <div class="tools-grid">
-            {section.tools.map((tool) => {
-              return (
-                <article class="tool-card">
-                  <img
-                    class="tool-preview"
-                    src={tool.image}
-                    width="1280"
-                    height="720"
-                    loading="lazy"
-                    decoding="async"
-                    alt={chinese ? tool.zhImageAlt : tool.imageAlt}
-                    />
-                    <div class="tool-content">
-                    <span class="tool-label">{chinese ? tool.zhLabel : tool.label}</span>
-                    <h3 class="tool-title">{chinese ? tool.zhName : tool.name}</h3>
-                    <p>{chinese ? tool.zhDescription : tool.description}</p>
-                    <a class="tool-link" href={tool.href}>
-                      {chinese ? "打开（英文）" : "Open"}
-                    </a>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </section>
-      );
-    })
-  }
+<link rel="stylesheet" href={resourceStyles} />
+<div class="resource-catalog" data-filter="all" data-language={language}>
+  <div class="catalog-controls">
+    <div class="filter-list" role="group" aria-label={zh?'选择类别':'Choose a category'}>
+      {filters.map(({id,label,icon:Icon})=><button type="button" class="filter" data-category={id} aria-pressed={id==='all'}><Icon size={17} aria-hidden="true" />{label}<span>{id==='all'?tools.filter(t=>!('adult' in t)).length:tools.filter(t=>t.category===id).length}</span></button>)}
+    </div>
+    <label class="catalog-search"><Search size={18} aria-hidden="true" /><input type="search" placeholder={zh?'搜索…':'Find a game or app…'} aria-label={zh?'搜索游戏和应用':'Search games and apps'} /></label>
+  </div>
+  <div class="catalog-meta"><p class="catalog-count" aria-live="polite" aria-atomic="true">{zh?'15 个课堂游戏与应用':'15 classroom games & apps'}</p><span>{zh?'免费 · 浏览器打开':'Free · Open in your browser'}</span></div>
+  <div class="tools-grid">
+    {tools.map((tool,index)=><article class:list={['tool-card',{'adult-card':'adult' in tool}]} data-category={tool.category} data-search={[tool.name,tool.zhName,tool.label].join(' ').toLowerCase()}>
+      <a class="tool-link" href={tool.href} aria-label={zh?'打开 '+tool.zhName+'（英文）':'Open '+tool.name}>
+        <div class="preview-frame"><img class="tool-preview" src={tool.image} width="640" height="400" loading={index<3?'eager':'lazy'} decoding="async" alt={zh?tool.zhImageAlt:tool.imageAlt} /><span class="open-icon" aria-hidden="true">↗</span>{'note' in tool && <span class="preview-note">{zh?tool.zhNote:tool.note}</span>}</div>
+        <div class="tool-content"><span class="tool-label">{zh?tool.zhLabel:tool.label}</span><h3 class="tool-title">{zh?tool.zhName:tool.name}</h3><p>{zh?tool.zhDescription:tool.description}</p></div>
+      </a>
+    </article>)}
+  </div>
+  <div class="catalog-empty" hidden><h3>{zh?'没有匹配结果':'No matches yet'}</h3><p>{zh?'试试其他词，或重置筛选。':'Try another word or clear the filters.'}</p><button type="button" class="clear-search">{zh?'重置筛选':'Clear filters'}</button></div>
+  <noscript><p>{zh?'成人对话工具：':'Adult conversation tools: '}<a href="/tools/would-you-though/">Would you, though? · 18+</a> · <a href="/tools/two-perspectives/">Two Perspectives · 18+</a></p></noscript>
 </div>
-
-<style>
-  .tools-sections {
-    display: grid;
-    gap: clamp(28px, 5vw, 48px);
-  }
-
-  .tools-section {
-    display: grid;
-    gap: 18px;
-  }
-
-  .tools-section-header {
-    display: grid;
-    max-width: 760px;
-    gap: 8px;
-  }
-
-  .tools-section-header :global(h2),
-  .tools-section-header :global(h3) {
-    margin: 0;
-    color: #142b50;
-    font-size: clamp(25px, 3vw, 34px);
-    line-height: 1.1;
-    letter-spacing: 0;
-  }
-
-  .tools-section-header p {
-    margin: 0;
-    color: #5b6b80;
-    font-size: 16px;
-    line-height: 1.6;
-  }
-
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-  }
-
-  .tool-card {
-    overflow: hidden;
-    border: 1px solid #b8cbe2;
-    border-radius: 0;
-    background: rgb(255 255 255 / 94%);
-    box-shadow: 0 20px 46px rgb(16 34 74 / 11%);
-    transition:
-      translate 0.2s ease,
-      box-shadow 0.2s ease;
-  }
-
-  .tool-card:hover {
-    translate: 0 -5px;
-    box-shadow: 0 28px 58px rgb(16 34 74 / 16%);
-  }
-
-  .tool-preview {
-    display: block;
-    width: 100%;
-    height: 190px;
-    object-fit: cover;
-    object-position: center top;
-    border-bottom: 1px solid #d7e0ec;
-    background: #0b111b;
-  }
-
-  .tool-content {
-    display: grid;
-    align-content: start;
-    justify-items: start;
-    gap: 13px;
-    padding: 20px;
-  }
-
-  .tool-label {
-    display: inline-flex;
-    width: fit-content;
-    align-items: center;
-    gap: 7px;
-    color: #28518d;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 0;
-    text-transform: uppercase;
-  }
-
-  .tool-title {
-    margin: 0;
-    color: #142b50;
-    font-size: 23px;
-    line-height: 1.15;
-    letter-spacing: 0;
-  }
-
-  p {
-    margin: 0;
-    color: #5b6b80;
-    font-size: 15px;
-    line-height: 1.6;
-  }
-
-  .tool-link {
-    display: inline-flex;
-    width: fit-content;
-    min-height: 44px;
-    align-items: center;
-    gap: 9px;
-    margin-top: 3px;
-    padding: 11px 16px;
-    border: 1px solid #d4a900;
-    border-radius: 999px;
-    background: #ffcc00;
-    color: #10224a;
-    font-size: 15px;
-    font-weight: 850;
-    text-decoration: none;
-  }
-
-  .tool-link:hover {
-    background: #ffdf57;
-  }
-  .tool-link:focus-visible {
-    outline: 3px solid #10224a;
-    outline-offset: 3px;
-  }
-
-  @media (max-width: 920px) {
-    .tools-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+<script>
+  document.querySelectorAll<HTMLElement>('.resource-catalog').forEach(catalog=>{
+    const input=catalog.querySelector<HTMLInputElement>('input[type="search"]')!;
+    const buttons=catalog.querySelectorAll<HTMLButtonElement>('.filter');
+    const cards=catalog.querySelectorAll<HTMLElement>('.tool-card');
+    const count=catalog.querySelector<HTMLElement>('.catalog-count')!;
+    const empty=catalog.querySelector<HTMLElement>('.catalog-empty')!;
+    const zh=catalog.dataset.language==='zh-CN';
+    function update(){
+      const category=catalog.dataset.filter||'all';
+      const query=input.value.trim().toLowerCase();let visible=0;
+      cards.forEach(card=>{const categoryMatch=category==='all'?card.dataset.category!=='adults':card.dataset.category===category;card.hidden=!(categoryMatch&&(card.dataset.search||'').includes(query));if(!card.hidden)visible++;});
+      buttons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.category===category)));
+      count.textContent=zh?visible+' 个'+(category==='adults'?'成人':'课堂')+'游戏与应用':visible+' '+(category==='adults'?'adult conversation tools':'games & apps');
+      empty.hidden=visible!==0;
     }
-  }
-
-  @media (max-width: 680px) {
-    .tools-grid {
-      grid-template-columns: 1fr;
-    }
-    .tool-preview {
-      height: clamp(150px, 42vw, 175px);
-    }
-  }
-</style>
+    buttons.forEach(button=>button.addEventListener('click',()=>{catalog.dataset.filter=button.dataset.category;update();}));
+    input.addEventListener('input',update);
+    catalog.querySelector('.clear-search')?.addEventListener('click',()=>{input.value='';catalog.dataset.filter='all';update();input.focus();});
+    update();
+  });
+</script>

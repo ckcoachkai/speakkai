@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#faf9f6">
+  <title>X</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, Helvetica, sans-serif; background: #faf9f6; color: #252525; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+    button { font: inherit; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+    #screen { position: fixed; inset: 0; display: grid; grid-template-rows: 1fr auto; background: #faf9f6; transition: background-color 100ms linear, color 100ms linear; padding: max(24px, env(safe-area-inset-top)) max(30px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(30px, env(safe-area-inset-left)); }
+    #screen[data-phase="red"] { background: #d61b35; color: #fff; }
+    #screen[data-phase="white"] { background: #fff; color: #252525; }
+    #screen[data-phase="blue"] { background: #174bd6; color: #fff; }
+    .center { display: flex; align-items: center; justify-content: center; position: relative; min-height: 0; }
+    #x { width: min(66vmin, 580px); height: min(66vmin, 580px); display: grid; place-items: center; border: 0; padding: 0; border-radius: 50%; background: transparent; color: #d61b35; cursor: pointer; outline-offset: 10px; touch-action: none; user-select: none; }
+    #x svg { display: block; width: 82%; height: 82%; overflow: visible; transition: transform 120ms ease, color 100ms linear; }
+    #x:hover svg { transform: scale(1.025); }
+    #x:active svg, #x[data-held] svg { transform: scale(.94); }
+    #x:focus-visible { outline: 3px solid currentColor; }
+    #screen[data-phase="red"] #x, #screen[data-phase="blue"] #x { color: #fff; }
+    .hint { position: absolute; bottom: max(28px, 6vh); margin: 0; font-size: 12px; font-weight: 400; letter-spacing: .025em; opacity: .48; pointer-events: none; }
+    footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 52px; }
+    .stats { display: flex; gap: 22px; align-items: center; }
+    .counter { display: flex; align-items: baseline; gap: 8px; }
+    #count { font-size: 32px; font-weight: 600; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+    .times { font-size: 18px; opacity: .42; }
+    #time { border-left: 1px solid currentColor; padding-left: 22px; font-size: 14px; font-variant-numeric: tabular-nums; opacity: .5; }
+    #reset { border: 1px solid #d8d6d1; border-radius: 999px; background: transparent; color: inherit; padding: 10px 19px; min-height: 42px; cursor: pointer; font-size: 12px; }
+    #reset:hover { background: #ffffff30; }
+    #reset:active { transform: scale(.96); }
+    #screen[data-phase="red"] #reset, #screen[data-phase="blue"] #reset { border-color: #ffffff70; }
+    #fullscreen { position: absolute; z-index: 2; right: max(28px, env(safe-area-inset-right)); top: max(24px, env(safe-area-inset-top)); padding: 10px; width: 42px; height: 42px; border: 0; border-radius: 8px; color: inherit; background: transparent; opacity: .4; cursor: pointer; }
+    #fullscreen:hover { opacity: .8; }
+    #fullscreen svg { width: 100%; height: 100%; }
+    #status { position: absolute; bottom: 90px; left: 24px; right: 24px; text-align: center; font-size: 12px; margin: 0; }
+    #status:empty { display: none; }
+    @media (max-height: 430px) { #screen { padding-top: 12px; padding-bottom: 12px; } .hint { bottom: 4px; } #x { width: 60vmin; height: 60vmin; } }
+    @media (max-width: 480px) { #screen { padding-left: 22px; padding-right: 22px; } #x { width: 83vmin; height: 83vmin; } .hint { bottom: 10vh; } }
+    @media (prefers-reduced-motion: reduce) { #screen, #x svg { transition: none; } #x:hover svg, #x:active svg, #x[data-held] svg { transform: none; } }
+  </style>
+</head>
+<body>
+  <main id="screen" data-phase="idle">
+    <button id="fullscreen" type="button" aria-label="Enter full screen" title="Full screen (F)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg>
+    </button>
+    <div class="center">
+      <button id="x" type="button" aria-label="Hold X for sound and lights; release to stop">
+        <svg viewBox="0 0 240 240" fill="none" aria-hidden="true"><path d="M42 42 198 198M198 42 42 198" stroke="currentColor" stroke-width="48" stroke-linecap="square"/></svg>
+      </button>
+      <p class="hint">Hold X · release to stop</p>
+    </div>
+    <footer>
+      <div class="stats">
+        <div class="counter" aria-label="Total X presses"><span id="count" aria-live="polite">0</span><span class="times" aria-hidden="true">×</span></div>
+        <span id="time" role="timer" aria-label="Elapsed time since first X press">00:00</span>
+      </div>
+      <button id="reset" type="button">Reset</button>
+    </footer>
+    <p id="status" role="status"></p>
+  </main>
+  <script>
+(function (global) {
+  'use strict';
+
+  var DURATION = 3;
+  var SAMPLE_RATE = 44100;
+  var FADE_SECONDS = 0.025;
+
+  function setParam(param, value) {
+    if (param) param.value = value;
+  }
+
+  function makeNoiseBuffer(context, seconds) {
+    var length = Math.max(1, Math.floor(context.sampleRate * seconds));
+    var buffer = context.createBuffer(1, length, context.sampleRate);
+    var data = buffer.getChannelData(0);
+    for (var i = 0; i < data.length; i += 1) {
+      // A little DC-free, uneven noise makes the duck sound raspier than white noise.
+      data[i] = (Math.random() * 2 - 1) * (0.72 + Math.random() * 0.28);
+    }
+    return buffer;
+  }
+
+  function addModulatedTone(context, destination, options) {
+    var tone = context.createOscillator();
+    var lfo = context.createOscillator();
+    var depth = context.createGain();
+    var gain = context.createGain();
+
+    tone.type = options.type || 'sine';
+    lfo.type = 'sine';
+    setParam(tone.frequency, options.base);
+    setParam(lfo.frequency, options.rate);
+    setParam(depth.gain, options.depth);
+    setParam(gain.gain, options.level);
+
+    lfo.connect(depth);
+    depth.connect(tone.frequency);
+    tone.connect(gain);
+    gain.connect(destination);
+    tone.start(0);
+    lfo.start(0);
+    tone.stop(DURATION);
+    lfo.stop(DURATION);
+  }
+
+  function renderSiren() {
+    var OfflineContext = global.OfflineAudioContext || global.webkitOfflineAudioContext;
+    if (!OfflineContext) return Promise.reject(new Error('OfflineAudioContext is unavailable'));
+
+    var frames = Math.floor(SAMPLE_RATE * DURATION);
+    var context;
+    try {
+      context = new OfflineContext(1, frames, SAMPLE_RATE);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+
+    var compressor = context.createDynamicsCompressor();
+    setParam(compressor.threshold, -18);
+    setParam(compressor.knee, 20);
+    setParam(compressor.ratio, 10);
+    setParam(compressor.attack, 0.003);
+    setParam(compressor.release, 0.11);
+
+    var master = context.createGain();
+    master.gain.setValueAtTime(0.0001, 0);
+    master.gain.linearRampToValueAtTime(0.72, FADE_SECONDS);
+    master.gain.setValueAtTime(0.72, DURATION - FADE_SECONDS);
+    master.gain.linearRampToValueAtTime(0.0001, DURATION);
+    compressor.connect(master);
+    master.connect(context.destination);
+
+    // Police siren: two offset sweeps give the familiar rising/falling pair.
+    addModulatedTone(context, compressor, {
+      type: 'sine', base: 720, depth: 500, rate: 1.12, level: 0.34
+    });
+    addModulatedTone(context, compressor, {
+      type: 'triangle', base: 820, depth: 470, rate: 1.12, level: 0.14
+    });
+
+    // Fire-truck horn: slower, lower, and rougher than the police tones.
+    addModulatedTone(context, compressor, {
+      type: 'sawtooth', base: 390, depth: 155, rate: 0.68, level: 0.16
+    });
+    addModulatedTone(context, compressor, {
+      type: 'square', base: 205, depth: 72, rate: 0.68, level: 0.09
+    });
+
+    // The duck is entirely synthetic: a band-passed noise rasp plus high quacks.
+    var duckRasp = context.createBufferSource();
+    var duckFilter = context.createBiquadFilter();
+    var duckGain = context.createGain();
+    duckRasp.buffer = makeNoiseBuffer(context, 0.18);
+    duckRasp.loop = true;
+    duckFilter.type = 'bandpass';
+    setParam(duckFilter.frequency, 1650);
+    setParam(duckFilter.Q, 1.1);
+    setParam(duckGain.gain, 0.0001);
+    duckRasp.connect(duckFilter);
+    duckFilter.connect(duckGain);
+    duckGain.connect(compressor);
+    duckRasp.start(0);
+    duckRasp.stop(DURATION);
+
+    for (var t = 0.18; t < DURATION - 0.08; t += 0.43) {
+      var end = Math.min(t + 0.19, DURATION - 0.035);
+      var peak = Math.min(0.23, 0.16 + ((Math.floor(t * 10) % 3) * 0.018));
+      duckGain.gain.setValueAtTime(0.0001, t);
+      duckGain.gain.linearRampToValueAtTime(peak, t + 0.014);
+      duckGain.gain.setValueAtTime(peak * 0.76, Math.min(t + 0.09, end));
+      duckGain.gain.linearRampToValueAtTime(0.0001, end);
+
+      var quack = context.createOscillator();
+      var quackGain = context.createGain();
+      quack.type = 'sawtooth';
+      quack.frequency.setValueAtTime(690 + ((Math.floor(t * 10) % 2) * 90), t);
+      quack.frequency.exponentialRampToValueAtTime(1550, Math.min(t + 0.08, end));
+      quack.frequency.exponentialRampToValueAtTime(820, end);
+      quackGain.gain.setValueAtTime(0.0001, t);
+      quackGain.gain.linearRampToValueAtTime(0.12, t + 0.012);
+      quackGain.gain.linearRampToValueAtTime(0.0001, end);
+      quack.connect(quackGain);
+      quackGain.connect(compressor);
+      quack.start(t);
+      quack.stop(end + 0.002);
+    }
+
+    return context.startRendering();
+  }
+
+  class AlarmAudio {
+    constructor() {
+      this._context = null;
+      this._buffer = null;
+      this._renderPromise = null;
+      this._startPromise = null;
+      this._source = null;
+      this._output = null;
+      this._active = false;
+      this._generation = 0;
+    }
+
+    get active() {
+      return this._active;
+    }
+
+    get contextState() {
+      return this._context ? this._context.state : 'uninitialized';
+    }
+
+    async render() {
+      if (this._buffer) return this._buffer;
+      if (!this._renderPromise) {
+        this._renderPromise = renderSiren().then(function (buffer) {
+          this._buffer = buffer;
+          return buffer;
+        }.bind(this)).finally(function () {
+          this._renderPromise = null;
+        }.bind(this));
+      }
+      return this._renderPromise;
+    }
+
+    async start(options) {
+      options = options || {};
+      var loop = Boolean(options.loop);
+
+      var AudioContext = global.AudioContext || global.webkitAudioContext;
+      if (!AudioContext) return false;
+      if (!this._context) {
+        try {
+          this._context = new AudioContext();
+        } catch (error) {
+          return false;
+        }
+      }
+
+      // Every press owns a fresh generation and burst. Cancel the previous
+      // source, but let its tiny fade finish while the new burst starts.
+      this._generation += 1;
+      this._cancelSource();
+      var generation = this._generation;
+
+      // Call resume before the first await so a user gesture is preserved.
+      var resumePromise;
+      try {
+        // Attach the rejection handler immediately; offline rendering may take
+        // long enough that a bare rejected resume promise would be unhandled.
+        resumePromise = Promise.resolve(this._context.resume()).then(function () {
+          return true;
+        }, function () {
+          return false;
+        });
+      } catch (error) {
+        resumePromise = Promise.resolve(false);
+      }
+
+      var operation = { promise: null };
+      operation.promise = (async function () {
+        try {
+          var buffer = await this.render();
+          var resumed = await resumePromise;
+          if (!resumed || generation !== this._generation || !buffer || this._context.state === 'closed') {
+            return false;
+          }
+
+          var source = this._context.createBufferSource();
+          var output = this._context.createGain();
+          source.buffer = buffer;
+          source.loop = loop;
+          output.gain.setValueAtTime(0.0001, this._context.currentTime);
+          output.gain.linearRampToValueAtTime(0.78, this._context.currentTime + FADE_SECONDS);
+          source.connect(output);
+          output.connect(this._context.destination);
+          source.onended = function () {
+            if (this._source === source) {
+              this._source = null;
+              this._output = null;
+              this._active = false;
+            }
+            try { source.disconnect(); } catch (ignored) { /* already disconnected */ }
+            try { output.disconnect(); } catch (ignored) { /* already disconnected */ }
+          }.bind(this);
+          this._source = source;
+          this._output = output;
+          this._active = true;
+          try {
+            source.start();
+          } catch (error) {
+            this._cancelSource();
+            return false;
+          }
+          return true;
+        } catch (error) {
+          return false;
+        } finally {
+          if (this._startPromise === operation.promise) this._startPromise = null;
+        }
+      }.call(this));
+      this._startPromise = operation.promise;
+      return operation.promise;
+    }
+
+    stop() {
+      this._generation += 1;
+      this._cancelSource();
+    }
+
+    _cancelSource() {
+      this._active = false;
+      var source = this._source;
+      var output = this._output;
+      this._source = null;
+      this._output = null;
+      if (!source || !output || !this._context) return;
+
+      var now = this._context.currentTime;
+      try {
+        output.gain.cancelScheduledValues(now);
+        output.gain.setValueAtTime(Math.max(0.0001, output.gain.value), now);
+        output.gain.linearRampToValueAtTime(0, now + 0.005);
+        source.stop(now + 0.005);
+      } catch (error) {
+        try { source.stop(); } catch (ignored) { /* already stopped */ }
+      }
+    }
+  }
+
+  global.AlarmAudio = AlarmAudio;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'simple-x-session-v1';
+  const screen = document.getElementById('screen');
+  const xButton = document.getElementById('x');
+  const resetButton = document.getElementById('reset');
+  const fullscreenButton = document.getElementById('fullscreen');
+  const countLabel = document.getElementById('count');
+  const timeLabel = document.getElementById('time');
+  const status = document.getElementById('status');
+  const sound = new window.AlarmAudio();
+  // Prepare the sound without opening an audio device or playing anything.
+  sound.render().catch(() => {});
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let count = 0;
+  let startedAt = null;
+  let clockInterval = null;
+  let flashInterval = null;
+  let alarmGeneration = 0;
+  const heldInputs = new Set();
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (Number.isSafeInteger(saved?.count) && saved.count > 0 && Number.isFinite(saved.startedAt) && saved.startedAt > 0 && saved.startedAt <= Date.now()) {
+      count = saved.count;
+      startedAt = saved.startedAt;
+    }
+  } catch (_) { /* The app still works if browser storage is disabled. */ }
+
+  function save() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({count, startedAt})); } catch (_) {}
+  }
+
+  function updateTime() {
+    const elapsed = startedAt === null ? 0 : Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
+    const seconds = String(elapsed % 60).padStart(2, '0');
+    const minutes = String(Math.floor(elapsed / 60) % 60).padStart(2, '0');
+    const hours = Math.floor(elapsed / 3600);
+    timeLabel.textContent = hours ? `${String(hours).padStart(2, '0')}:${minutes}:${seconds}` : `${minutes}:${seconds}`;
+  }
+
+  function startClock() {
+    if (clockInterval === null) clockInterval = setInterval(updateTime, 250);
+    updateTime();
+  }
+
+  function stopAlarm() {
+    alarmGeneration += 1;
+    clearInterval(flashInterval);
+    flashInterval = null;
+    heldInputs.clear();
+    delete xButton.dataset.held;
+    screen.dataset.phase = 'idle';
+    sound.stop();
+  }
+
+  function beginPress(input) {
+    if (heldInputs.has(input)) return;
+    const alreadyHeld = heldInputs.size > 0;
+    heldInputs.add(input);
+    xButton.dataset.held = 'true';
+    if (count < Number.MAX_SAFE_INTEGER) count += 1;
+    if (startedAt === null) startedAt = Date.now();
+    countLabel.textContent = String(count);
+    startClock();
+    save();
+    status.textContent = '';
+    if (alreadyHeld) return;
+
+    clearInterval(flashInterval);
+    flashInterval = null;
+    const generation = ++alarmGeneration;
+    screen.dataset.phase = 'red';
+    sound.start({loop: true}).then(playing => {
+      if (generation !== alarmGeneration) return;
+      if (!playing) status.textContent = 'Sound could not start. Check your browser audio settings.';
+      // A release invalidates this generation, including audio still being prepared.
+      if (!reducedMotion.matches) {
+        const phases = ['red', 'white', 'blue'];
+        let phase = 0;
+        flashInterval = setInterval(() => {
+          phase = (phase + 1) % phases.length;
+          screen.dataset.phase = phases[phase];
+        }, 750);
+      }
+    });
+  }
+
+  function endPress(input) {
+    if (!heldInputs.delete(input)) return;
+    if (heldInputs.size === 0) stopAlarm();
+  }
+
+  function keyboardInput(event) {
+    if (event.key.toLowerCase() === 'x' || event.code === 'KeyX') return 'key:x';
+    if (event.code === 'Space' || event.key === ' ') return 'key:space';
+    if (event.key === 'Enter') return 'key:enter';
+    return null;
+  }
+
+  function reset() {
+    stopAlarm();
+    count = 0;
+    startedAt = null;
+    clearInterval(clockInterval);
+    clockInterval = null;
+    countLabel.textContent = '0';
+    updateTime();
+    status.textContent = '';
+    save();
+  }
+
+  async function toggleFullscreen() {
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen();
+      else if (screen.requestFullscreen) await screen.requestFullscreen();
+      else status.textContent = 'Use your browser’s full-screen option.';
+    } catch (_) { status.textContent = 'Use F11 or your browser’s full-screen option.'; }
+  }
+
+  xButton.addEventListener('pointerdown', event => {
+    if (!event.isPrimary || event.button !== 0) return;
+    event.preventDefault();
+    xButton.focus({preventScroll: true});
+    xButton.setPointerCapture(event.pointerId);
+    beginPress(`pointer:${event.pointerId}`);
+  });
+  function releasePointer(event) {
+    endPress(`pointer:${event.pointerId}`);
+  }
+  xButton.addEventListener('pointerup', releasePointer);
+  xButton.addEventListener('pointercancel', releasePointer);
+  xButton.addEventListener('lostpointercapture', releasePointer);
+  resetButton.addEventListener('click', reset);
+  fullscreenButton.addEventListener('click', toggleFullscreen);
+  document.addEventListener('fullscreenchange', () => {
+    const full = Boolean(document.fullscreenElement);
+    fullscreenButton.setAttribute('aria-label', full ? 'Exit full screen' : 'Enter full screen');
+    fullscreenButton.title = full ? 'Exit full screen (F)' : 'Full screen (F)';
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') { stopAlarm(); return; }
+    if (event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.target.closest?.('input, textarea, select, [contenteditable="true"]')) return;
+    const input = keyboardInput(event);
+    if (input === 'key:x' || (input && event.target === xButton)) {
+      event.preventDefault();
+      beginPress(input);
+    }
+    else if (event.key.toLowerCase() === 'f') { event.preventDefault(); toggleFullscreen(); }
+  });
+  document.addEventListener('keyup', event => {
+    const input = keyboardInput(event);
+    if (input && heldInputs.has(input)) {
+      event.preventDefault();
+      endPress(input);
+    }
+  });
+  xButton.addEventListener('blur', stopAlarm);
+  window.addEventListener('blur', stopAlarm);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAlarm();
+    else updateTime();
+  });
+  window.addEventListener('pagehide', stopAlarm);
+  reducedMotion.addEventListener('change', () => {
+    if (reducedMotion.matches && flashInterval !== null) {
+      clearInterval(flashInterval);
+      flashInterval = null;
+      screen.dataset.phase = 'red';
+    }
+  });
+  countLabel.textContent = String(count);
+  if (startedAt !== null) startClock();
+})();
+
+  </script>
+</body>
+</html>
