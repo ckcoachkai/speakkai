@@ -1,7 +1,7 @@
 {
-  "version": 9,
-  "sourceSha256": "6fdcba429977b1a335190b5ebba7224b601ed9bdd2240aeee7b5b984fb199c09",
-  "pageSha256": "0a9be2504c3834d744d2e2d8dc79d7771252858fd1829b156db74a905419969a",
+  "version": 10,
+  "sourceSha256": "04b0d1408f5fa91c8a649334945968dfcbda44f71c10a4ce4c71eb06645e5a5a",
+  "pageSha256": "2969e4290a616b26e5067cad8435640a4a09240b6a9113d7c4e4be9895e05b56",
   "mouseOutfits": 30,
   "catOutfits": 6,
   "files": [
@@ -52,6 +52,12 @@
       "type": "image/webp",
       "bytes": 494074,
       "sha256": "daaa91c80f233427af15b0a5e41555bef57c916fecbecc2c4cf6c3cb78d34754"
+    },
+    {
+      "path": "assets/crawlers.c46bb825a609.webp",
+      "type": "image/webp",
+      "bytes": 423058,
+      "sha256": "c46bb825a6099e470e45a65891b61cbe3a59dcc97fd0a9990cb9d0c7bece0749"
     },
     {
       "path": "assets/lice.89923a98f508.webp",

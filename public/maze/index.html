@@ -359,7 +359,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
           <div class="setting-row" id="vibrationRow"><div><strong>VIBRATION</strong><small>Haptic feedback</small></div><label class="toggle"><input id="vibrationToggle" type="checkbox"><span></span><b class="sr-only">Enable vibration</b></label></div>
           <div class="setting-row sound-row"><div><strong>SOUNDTRACK</strong><small id="trackLabel">Built-in maze score</small></div><label class="volume-wrap" aria-label="Sound volume"><span>VOL</span><input id="volumeInput" type="range" min="0" max="1" value="0.25" step="0.01"></label></div>
           <div class="setting-row boost-row"><div><strong>CHEESE BOOST</strong><small>First bite · smaller gains after</small></div><label class="boost-wrap"><input id="cheeseBoostInput" aria-label="First cheese speed boost, percent; later bites add less" type="range" min="1" max="100" value="1" step="1"><output id="cheeseBoostValue">+1%</output></label></div>
-          <div class="setting-row bomb-row"><div><strong>BOMB FUSE</strong><small id="bombIntervalNote">Next fuse · 30 seconds</small></div><label class="boost-wrap" aria-label="Seconds until the next bomb explosion"><input id="bombIntervalInput" type="range" min="10" max="120" value="30" step="5"><output id="bombIntervalValue">30s</output></label></div>
+          <div class="setting-row bomb-row"><div><strong>CARRIED FUSE</strong><small id="bombIntervalNote">Next fuse · 30 seconds</small></div><label class="boost-wrap" aria-label="Seconds until the next carried bomb explosion"><input id="bombIntervalInput" type="range" min="10" max="120" value="30" step="5"><output id="bombIntervalValue">30s</output></label></div>
           <p class="suno-note lice-note" id="liceNote">LICE PRESSURE · AFTER 00:10 · −0.01% SPEED EACH</p>
           <div class="setting-row"><div><strong>CAT OUTFIT</strong><small>Choose the cat's look</small></div><label class="select-wrap"><select id="catStyleInput" aria-label="Cat outfit"><option value="random">RANDOM</option><option value="0">ADMIRAL</option><option value="1">CHEF</option><option value="2">DETECTIVE</option><option value="3">PIRATE</option><option value="4">ROYAL</option><option value="5">RACER</option></select></label></div>
           <div class="setting-row"><div><strong>CHATTER</strong><small>Speech bubbles from mice and cat</small></div><label class="toggle"><input id="chatterToggle" type="checkbox" checked><span></span><b class="sr-only">Enable character chatter</b></label></div>
@@ -371,7 +371,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
 
         <section class="panel rules-panel">
           <div class="rules-top"><strong class="rules-title">RULES</strong><span class="timer-glyph" aria-hidden="true">◷</span></div>
-          <p>Pass the bomb before the fuse runs out. The carrier gets <strong>+25% speed</strong>; passing keeps the countdown. Cat at <strong>01:00</strong>, stalking then sprinting. Cheese gains taper toward <strong>3×</strong>. Most bugs crunch underfoot; some cling on and slowly eat their host. Faster mice pass all their bugs to slower mice on contact. Escape, explode, get caught, or be devoured to be chosen. <strong>Continue</strong> after each speaker.</p>
+          <p>Pass the bomb before its fuse runs out. The carrier gets <strong>+25% speed</strong>; passing keeps the countdown. Floor bombs appear every <strong>5 seconds</strong> and explode <strong>10 seconds</strong> later. Nearby mice are chosen; a blasted cat returns to the entrance. Cat at <strong>01:00</strong>, stalking then sprinting. Cheese gains taper toward <strong>3×</strong>. Bugs crunch underfoot or cling on and feed. Faster mice pass their bugs to slower mice. <strong>Continue</strong> after each speaker.</p>
         </section>
 
         <section class="panel export-panel">
@@ -387,7 +387,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script>window.BACKGROUND_TRACK_DATA = "assets/mouse-maze-mayhem.7a5e617bd89d.mp3"; window.BACKGROUND_TRACK_TITLE = "Mouse Maze Mayhem";</script>
-<script>window.MOUSE_MAZE_ASSETS={"mouse":"assets/mouse.74f695c2bbb8.webp","expressions":"assets/expressions.59a11a7107fc.webp","cat":"assets/cat.d2ee57fac4f9.webp","tiles":"assets/tiles.2ad4bd2f760e.webp","props":"assets/props.85e671a695bd.webp","blood":"assets/blood.afa5cbc405e4.webp","anatomy":"assets/anatomy.b99f3aa0c09e.webp","alienAnatomy":"assets/alienAnatomy.daaa91c80f23.webp","lice":"assets/lice.89923a98f508.webp","catWardrobeA":"assets/catWardrobeA.3612b79ff1f3.webp","catWardrobeB":"assets/catWardrobeB.644718d31180.webp","mouseWardrobe1A":"assets/mouseWardrobe1A.b7c94d11d3d7.webp","mouseWardrobe1B":"assets/mouseWardrobe1B.ec5129bb14c7.webp","mouseWardrobe2A":"assets/mouseWardrobe2A.2b8368148b67.webp","mouseWardrobe2B":"assets/mouseWardrobe2B.c00718b2e354.webp","mouseWardrobe3A":"assets/mouseWardrobe3A.7add30c4117a.webp","mouseWardrobe3B":"assets/mouseWardrobe3B.d1d1c8b16ba1.webp","mouseWardrobe4A":"assets/mouseWardrobe4A.8d7720892264.webp","mouseWardrobe4B":"assets/mouseWardrobe4B.d9f2f099d7ca.webp","mouseWardrobe5A":"assets/mouseWardrobe5A.fba51307a9cb.webp","mouseWardrobe5B":"assets/mouseWardrobe5B.6fab0731a743.webp"};window.MOUSE_MAZE_CHARACTER_ART={"mouse":[{"name":"Safari","wardrobe":"khaki pith hat, olive explorer vest, binoculars","rectA":[12,90,501,396],"rectB":[20,79,491,422],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Aviator","wardrobe":"brown leather flight jacket, brass goggles, red scarf","rectA":[529,97,495,392],"rectB":[530,80,489,421],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Pirate","wardrobe":"navy striped shirt, red sash, black tricorn hat","rectA":[16,583,498,387],"rectB":[23,558,491,431],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Astronaut","wardrobe":"white spacesuit, clear bubble helmet, ears visible","rectA":[512,570,503,424],"rectB":[512,545,510,463],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Scuba","wardrobe":"teal wetsuit, round mask, orange breathing hose","rectA":[12,1069,502,391],"rectB":[14,1033,500,444],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Mountaineer","wardrobe":"red parka, blue knit cap, climbing carabiner","rectA":[512,1047,501,418],"rectB":[512,1024,512,451],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"chef","rectA":[49,13,541,424],"rectB":[48,7,539,430],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"firefighter","rectA":[618,49,542,388],"rectB":[617,48,542,389],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"doctor","rectA":[48,460,542,395],"rectB":[51,458,541,392],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"detective","rectA":[616,458,547,398],"rectB":[614,458,551,399],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"mechanic","rectA":[44,874,546,391],"rectB":[44,874,549,392],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"conductor","rectA":[622,874,542,391],"rectB":[620,874,547,391],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"wizard","rectA":[69,29,561,442],"rectB":[65,26,570,447],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"knight","rectA":[770,31,559,437],"rectB":[769,27,562,446],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"king","rectA":[60,550,580,400],"rectB":[69,554,562,392],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"archer","rectA":[768,550,564,399],"rectB":[764,553,571,393],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"viking","rectA":[56,1052,588,396],"rectB":[55,1049,589,402],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"jester","rectA":[773,1043,553,413],"rectB":[769,1043,561,413],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"skateboarder","rectA":[34,12,593,397],"rectB":[35,9,592,405],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"basketball-player","rectA":[657,13,588,396],"rectB":[627,13,622,401],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"rockstar","rectA":[33,423,594,413],"rectB":[34,420,593,416],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"ballet-dancer","rectA":[627,428,620,398],"rectB":[627,427,627,409],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"business-mouse","rectA":[29,836,598,403],"rectB":[38,836,589,408],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"raincoat-mouse","rectA":[627,836,621,402],"rectB":[627,836,627,406],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"cowboy","outfit":"brown cowboy hat, checked shirt, red neckerchief","rectA":[18,13,592,392],"rectB":[18,11,592,396],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"sailor","outfit":"navy and white striped shirt, white sailor cap","rectA":[644,33,594,353],"rectB":[640,30,602,358],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"gardener","outfit":"green overalls, straw hat","rectA":[12,439,603,377],"rectB":[16,433,595,389],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"magician","outfit":"black tailcoat, purple bow tie, black top hat","rectA":[693,426,495,403],"rectB":[689,423,503,409],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"winter","outfit":"blue sweater, red scarf, earmuffs","rectA":[18,863,592,364],"rectB":[13,853,601,384],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"dragon","outfit":"green dragon onesie with small fabric wings","rectA":[673,851,535,388],"rectB":[669,847,544,397],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"}],"cat":[{"name":"admiral","rectA":[85,92,487,307],"rectB":[101,97,463,291],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"chef","rectA":[703,91,494,308],"rectB":[728,94,454,294],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"detective","rectA":[82,490,513,298],"rectB":[101,493,494,293],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"pirate","rectA":[699,492,493,310],"rectB":[728,493,449,297],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"royal","rectA":[81,863,509,319],"rectB":[101,867,476,312],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"racer","rectA":[698,877,499,303],"rectB":[728,886,453,288],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"}]};window.MOUSE_MAZE_LICE_ART={"assetKey":"liceAtlas","kind":"lice","sourceSize":[1536,1024],"grid":[2,2],"frames":[{"name":"walk-a","x":225,"y":118,"w":404,"h":293},{"name":"walk-b","x":920,"y":118,"w":400,"h":309},{"name":"walk-c","x":227,"y":597,"w":409,"h":318},{"name":"walk-d","x":920,"y":596,"w":400,"h":305}]};</script>
+<script>window.MOUSE_MAZE_ASSETS={"mouse":"assets/mouse.74f695c2bbb8.webp","expressions":"assets/expressions.59a11a7107fc.webp","cat":"assets/cat.d2ee57fac4f9.webp","tiles":"assets/tiles.2ad4bd2f760e.webp","props":"assets/props.85e671a695bd.webp","blood":"assets/blood.afa5cbc405e4.webp","anatomy":"assets/anatomy.b99f3aa0c09e.webp","alienAnatomy":"assets/alienAnatomy.daaa91c80f23.webp","crawlers":"assets/crawlers.c46bb825a609.webp","lice":"assets/lice.89923a98f508.webp","catWardrobeA":"assets/catWardrobeA.3612b79ff1f3.webp","catWardrobeB":"assets/catWardrobeB.644718d31180.webp","mouseWardrobe1A":"assets/mouseWardrobe1A.b7c94d11d3d7.webp","mouseWardrobe1B":"assets/mouseWardrobe1B.ec5129bb14c7.webp","mouseWardrobe2A":"assets/mouseWardrobe2A.2b8368148b67.webp","mouseWardrobe2B":"assets/mouseWardrobe2B.c00718b2e354.webp","mouseWardrobe3A":"assets/mouseWardrobe3A.7add30c4117a.webp","mouseWardrobe3B":"assets/mouseWardrobe3B.d1d1c8b16ba1.webp","mouseWardrobe4A":"assets/mouseWardrobe4A.8d7720892264.webp","mouseWardrobe4B":"assets/mouseWardrobe4B.d9f2f099d7ca.webp","mouseWardrobe5A":"assets/mouseWardrobe5A.fba51307a9cb.webp","mouseWardrobe5B":"assets/mouseWardrobe5B.6fab0731a743.webp"};window.MOUSE_MAZE_CHARACTER_ART={"mouse":[{"name":"Safari","wardrobe":"khaki pith hat, olive explorer vest, binoculars","rectA":[12,90,501,396],"rectB":[20,79,491,422],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Aviator","wardrobe":"brown leather flight jacket, brass goggles, red scarf","rectA":[529,97,495,392],"rectB":[530,80,489,421],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Pirate","wardrobe":"navy striped shirt, red sash, black tricorn hat","rectA":[16,583,498,387],"rectB":[23,558,491,431],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Astronaut","wardrobe":"white spacesuit, clear bubble helmet, ears visible","rectA":[512,570,503,424],"rectB":[512,545,510,463],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Scuba","wardrobe":"teal wetsuit, round mask, orange breathing hose","rectA":[12,1069,502,391],"rectB":[14,1033,500,444],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"Mountaineer","wardrobe":"red parka, blue knit cap, climbing carabiner","rectA":[512,1047,501,418],"rectB":[512,1024,512,451],"assetKeyA":"mouseWardrobe1A","assetKeyB":"mouseWardrobe1B"},{"name":"chef","rectA":[49,13,541,424],"rectB":[48,7,539,430],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"firefighter","rectA":[618,49,542,388],"rectB":[617,48,542,389],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"doctor","rectA":[48,460,542,395],"rectB":[51,458,541,392],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"detective","rectA":[616,458,547,398],"rectB":[614,458,551,399],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"mechanic","rectA":[44,874,546,391],"rectB":[44,874,549,392],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"conductor","rectA":[622,874,542,391],"rectB":[620,874,547,391],"assetKeyA":"mouseWardrobe2A","assetKeyB":"mouseWardrobe2B"},{"name":"wizard","rectA":[69,29,561,442],"rectB":[65,26,570,447],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"knight","rectA":[770,31,559,437],"rectB":[769,27,562,446],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"king","rectA":[60,550,580,400],"rectB":[69,554,562,392],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"archer","rectA":[768,550,564,399],"rectB":[764,553,571,393],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"viking","rectA":[56,1052,588,396],"rectB":[55,1049,589,402],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"jester","rectA":[773,1043,553,413],"rectB":[769,1043,561,413],"assetKeyA":"mouseWardrobe3A","assetKeyB":"mouseWardrobe3B"},{"name":"skateboarder","rectA":[34,12,593,397],"rectB":[35,9,592,405],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"basketball-player","rectA":[657,13,588,396],"rectB":[627,13,622,401],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"rockstar","rectA":[33,423,594,413],"rectB":[34,420,593,416],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"ballet-dancer","rectA":[627,428,620,398],"rectB":[627,427,627,409],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"business-mouse","rectA":[29,836,598,403],"rectB":[38,836,589,408],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"raincoat-mouse","rectA":[627,836,621,402],"rectB":[627,836,627,406],"assetKeyA":"mouseWardrobe4A","assetKeyB":"mouseWardrobe4B"},{"name":"cowboy","outfit":"brown cowboy hat, checked shirt, red neckerchief","rectA":[18,13,592,392],"rectB":[18,11,592,396],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"sailor","outfit":"navy and white striped shirt, white sailor cap","rectA":[644,33,594,353],"rectB":[640,30,602,358],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"gardener","outfit":"green overalls, straw hat","rectA":[12,439,603,377],"rectB":[16,433,595,389],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"magician","outfit":"black tailcoat, purple bow tie, black top hat","rectA":[693,426,495,403],"rectB":[689,423,503,409],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"winter","outfit":"blue sweater, red scarf, earmuffs","rectA":[18,863,592,364],"rectB":[13,853,601,384],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"},{"name":"dragon","outfit":"green dragon onesie with small fabric wings","rectA":[673,851,535,388],"rectB":[669,847,544,397],"assetKeyA":"mouseWardrobe5A","assetKeyB":"mouseWardrobe5B"}],"cat":[{"name":"admiral","rectA":[85,92,487,307],"rectB":[101,97,463,291],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"chef","rectA":[703,91,494,308],"rectB":[728,94,454,294],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"detective","rectA":[82,490,513,298],"rectB":[101,493,494,293],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"pirate","rectA":[699,492,493,310],"rectB":[728,493,449,297],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"royal","rectA":[81,863,509,319],"rectB":[101,867,476,312],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"},{"name":"racer","rectA":[698,877,499,303],"rectB":[728,886,453,288],"assetKeyA":"catWardrobeA","assetKeyB":"catWardrobeB"}]};window.MOUSE_MAZE_LICE_ART={"assetKey":"liceAtlas","kind":"lice","sourceSize":[1536,1024],"grid":[2,2],"frames":[{"name":"walk-a","x":225,"y":118,"w":404,"h":293},{"name":"walk-b","x":920,"y":118,"w":400,"h":309},{"name":"walk-c","x":227,"y":597,"w":409,"h":318},{"name":"walk-d","x":920,"y":596,"w":400,"h":305}]};</script>
 <script>
 /*
  * Deterministic simulation for Dynamite Mice.
@@ -568,6 +568,15 @@ const MOUSE_LOOP_UNIQUE_LIMIT = 4;
 const BUG_TRANSFER_DISTANCE = 0.52;
 const BUG_TRANSFER_SEPARATION = 0.84;
 const BUG_TRANSFER_COOLDOWN = 1.1;
+// Floor bombs are independent hazards. The carried bomb continues to use the
+// speaker-friendly adjustable fuse below; these bombs create a second,
+// spatially readable source of suspense.
+const FLOOR_BOMB_SPAWN_INTERVAL = 5;
+const FLOOR_BOMB_FUSE = 10;
+const FLOOR_BOMB_MAX_ACTIVE = 4;
+const FLOOR_BOMB_BLAST_RADIUS = 2.4;
+const FLOOR_BOMB_NEAR_CHANCE = 0.62;
+const CAT_BOMB_SPEED = 1.3;
 
 function normalizeBombInterval(value, fallback = 30) {
   const numeric = Number(value);
@@ -614,6 +623,15 @@ class Game {
     // fuse that is already counting down.
     this.bombInterval = normalizeBombInterval(options.bombInterval, 30);
     this.nextExplosion = this.bombInterval;
+    // Independent floor bombs begin appearing at 5s and are armed for a
+    // separate ten-second fuse. `floorBombs` is the live public list used by
+    // the renderer; detonated bombs are removed after their event is emitted.
+    this.floorBombsEnabled = options.floorBombsEnabled !== false;
+    this.floorBombs = [];
+    this._floorBombId = 0;
+    this._nextFloorBombSpawn = this.floorBombsEnabled ? FLOOR_BOMB_SPAWN_INTERVAL : Infinity;
+    this._floorBombTickMarks = new Map();
+    this._floorBombSelectionQueue = [];
     this.bombCarrierId = null;
     this._bombPassLockUntil = 0;
     this._bombGraceUntil = BOMB_INITIAL_GRACE;
@@ -883,6 +901,17 @@ class Game {
 
   continueSelection() {
     if (this.status !== 'awaiting') return false;
+    // A single blast can catch several mice. Present every casualty in turn
+    // so the speaker never loses names while the clock remains frozen.
+    while (this._floorBombSelectionQueue.length) {
+      const next = this._floorBombSelectionQueue.shift();
+      const mouse = this.mice.find((candidate) => candidate.id === next.id);
+      if (!mouse?.alive) continue;
+      this.pendingSelection = null;
+      this.status = 'running';
+      this.choose(mouse, 'exploded', { cause: 'floor-bomb', bombId: next.bombId });
+      return this.status;
+    }
     this.pendingSelection = null;
     if (!this.mice.some((mouse) => mouse.alive)) {
       if (!this._finishedEvent) {
@@ -933,6 +962,170 @@ class Game {
     // the new interval applies to the fuse created by the next detonation.
     if (this.status === 'ready' && this.time === 0) this.nextExplosion = this.bombInterval;
     return this.bombInterval;
+  }
+
+  _floorBombCellOccupied(cell) {
+    return this.floorBombs.some((bomb) => key(Math.floor(bomb.x), Math.floor(bomb.y)) === key(cell.x, cell.y));
+  }
+
+  _randomFloorBombCell() {
+    if (!this._floorCells.length) return null;
+    const living = this.mice.filter((mouse) => mouse.alive);
+    // Most bombs land within a short path of a living mouse, which makes the
+    // hazard legible and threatening. The remainder are genuinely map-wide.
+    if (living.length && this.random() < FLOOR_BOMB_NEAR_CHANCE) {
+      const target = living[Math.floor(this.random() * living.length)];
+      const origin = cellAt(target.x, target.y);
+      const distances = distanceMap(this.grid, this.cols, this.rows, origin);
+      const nearby = this._floorCells.filter((cell) => {
+        const distance = distances.get(key(cell.x, cell.y));
+        return Number.isFinite(distance) && distance >= 2 && distance <= 6
+          && !this._floorBombCellOccupied(cell);
+      });
+      if (nearby.length) return nearby[Math.floor(this.random() * nearby.length)];
+    }
+    const available = this._floorCells.filter((cell) => !this._floorBombCellOccupied(cell));
+    if (available.length) return available[Math.floor(this.random() * available.length)];
+    return null;
+  }
+
+  _spawnFloorBomb() {
+    if (!this.floorBombsEnabled) return null;
+    if (this.floorBombs.length >= FLOOR_BOMB_MAX_ACTIVE) return null;
+    const cell = this._randomFloorBombCell();
+    if (!cell) return null;
+    const position = center(cell);
+    const bomb = {
+      id: `floor-bomb-${++this._floorBombId}`,
+      x: position.x,
+      y: position.y,
+      spawnedAt: this.time,
+      explodeAt: this.time + FLOOR_BOMB_FUSE,
+    };
+    this.floorBombs.push(bomb);
+    this._floorBombTickMarks.set(bomb.id, new Set());
+    this._emit({
+      type: 'floor-bomb-spawned',
+      id: bomb.id,
+      bombId: bomb.id,
+      x: bomb.x,
+      y: bomb.y,
+      spawnedAt: bomb.spawnedAt,
+      explodeAt: bomb.explodeAt,
+      time: this.time,
+    });
+    return bomb;
+  }
+
+  _nextFloorBombTickDeadline() {
+    if (!this.floorBombsEnabled) return Infinity;
+    let next = Infinity;
+    for (const bomb of this.floorBombs) {
+      const marks = this._floorBombTickMarks.get(bomb.id) || new Set();
+      for (const secondsLeft of [3, 2, 1]) {
+        if (marks.has(secondsLeft)) continue;
+        next = Math.min(next, bomb.explodeAt - secondsLeft);
+      }
+    }
+    return next;
+  }
+
+  _emitFloorBombTicks() {
+    if (!this.floorBombsEnabled) return;
+    for (const bomb of this.floorBombs) {
+      const marks = this._floorBombTickMarks.get(bomb.id) || new Set();
+      for (const secondsLeft of [3, 2, 1]) {
+        const deadline = bomb.explodeAt - secondsLeft;
+        if (this.time + 1e-8 < deadline || marks.has(secondsLeft)) continue;
+        if (this.time < deadline) this.time = deadline;
+        marks.add(secondsLeft);
+        this._floorBombTickMarks.set(bomb.id, marks);
+        this._emit({
+          type: 'floor-bomb-tick',
+          id: bomb.id,
+          bombId: bomb.id,
+          secondsLeft,
+          x: bomb.x,
+          y: bomb.y,
+          time: this.time,
+        });
+      }
+    }
+  }
+
+  _floorBombBlastCells(bomb) {
+    const origin = cellAt(bomb.x, bomb.y);
+    if (this.grid[origin.y]?.[origin.x] !== 0) return new Map();
+    const distances = distanceMap(this.grid, this.cols, this.rows, origin);
+    return new Map([...distances.entries()].filter(([, distance]) => distance <= FLOOR_BOMB_BLAST_RADIUS + 1e-9));
+  }
+
+  _resetCatFromBomb(bomb) {
+    if (!this.cat) return false;
+    const cells = this._floorBombBlastCells(bomb);
+    const catCell = cellAt(this.cat.x, this.cat.y);
+    const pathDistance = cells.get(key(catCell.x, catCell.y));
+    if (!Number.isFinite(pathDistance)) return false;
+    const spawn = center(this._startCell);
+    const fromX = this.cat.x;
+    const fromY = this.cat.y;
+    this.cat.x = spawn.x;
+    this.cat.y = spawn.y;
+    this.cat._targetId = null;
+    this.cat._route = [];
+    this.cat._repathTimer = 0;
+    this.cat._wanderTimer = 0;
+    this.cat._stuckTime = 0;
+    this.cat._lastUnstuckAt = this.time;
+    this.cat._lastMotionX = spawn.x;
+    this.cat._lastMotionY = spawn.y;
+    this._emit({
+      type: 'cat-bomb-hit',
+      id: this.cat.id,
+      actorId: this.cat.id,
+      bombId: bomb.id,
+      fromX,
+      fromY,
+      x: spawn.x,
+      y: spawn.y,
+      time: this.time,
+    });
+    return true;
+  }
+
+  _explodeFloorBomb(bomb) {
+    if (!bomb || !this.floorBombs.includes(bomb)) return false;
+    const blastCells = this._floorBombBlastCells(bomb);
+    const hitIds = this.mice
+      .filter((mouse) => mouse.alive && Number.isFinite(blastCells.get(key(Math.floor(mouse.x), Math.floor(mouse.y)))))
+      .map((mouse) => mouse.id);
+    const catFromX = this.cat?.x;
+    const catFromY = this.cat?.y;
+    const catHit = this._resetCatFromBomb(bomb);
+    this.floorBombs = this.floorBombs.filter((candidate) => candidate !== bomb);
+    this._floorBombTickMarks.delete(bomb.id);
+    this._emit({
+      type: 'floor-bomb-exploded',
+      id: bomb.id,
+      bombId: bomb.id,
+      x: bomb.x,
+      y: bomb.y,
+      radius: FLOOR_BOMB_BLAST_RADIUS,
+      hitIds,
+      catHit,
+      fromX: catHit ? catFromX : undefined,
+      fromY: catHit ? catFromY : undefined,
+      catX: catHit ? this.cat.x : undefined,
+      catY: catHit ? this.cat.y : undefined,
+      time: this.time,
+    });
+    for (const id of hitIds) this._floorBombSelectionQueue.push({ id, bombId: bomb.id });
+    if (this.status === 'running' && hitIds.length) {
+      const first = this._floorBombSelectionQueue.shift();
+      const mouse = this.mice.find((candidate) => candidate.id === first.id);
+      if (mouse?.alive) this.choose(mouse, 'exploded', { cause: 'floor-bomb', bombId: first.bombId });
+    }
+    return true;
   }
 
   _emit(event) {
@@ -2364,14 +2557,14 @@ class Game {
       x: spawn.x,
       y: spawn.y,
       angle: 0,
-      speed: 1.0,
-      baseSpeed: 1.0,
+      speed: CAT_BOMB_SPEED,
+      baseSpeed: CAT_BOMB_SPEED,
       speedMultiplier: 1,
       cheeseEaten: 0,
       lastCheeseAt: -Infinity,
       slowUntil: 0,
-      _effectiveSpeed: 1.0,
-      effectiveSpeed: 1.0,
+      _effectiveSpeed: CAT_BOMB_SPEED,
+      effectiveSpeed: CAT_BOMB_SPEED,
       _targetId: null,
       _route: [],
       _repathTimer: 0,
@@ -2532,20 +2725,34 @@ class Game {
   }
 
   _checkTimedEvents() {
-    // Fixed events are processed even when an outcome has just put the game in
-    // awaiting state. That guarantees the cat still enters at exactly 60s when
-    // the second explosion is the selection at that same deadline.
+    // All timed hazards run only while the simulation is actually running.
+    // Continue acknowledges a speaker hold before any overdue event is
+    // released, so a selection never advances the game clock behind the
+    // speaker's back.
+    if (this.status === 'awaiting') return;
+    while (this.time + 1e-8 >= this._nextFloorBombSpawn && this._nextFloorBombSpawn < 24 * 60 * 60) {
+      if (this.time < this._nextFloorBombSpawn) this.time = this._nextFloorBombSpawn;
+      this._spawnFloorBomb();
+      this._nextFloorBombSpawn += FLOOR_BOMB_SPAWN_INTERVAL;
+    }
+    this._emitFloorBombTicks();
+    while (this.floorBombs.length) {
+      const bomb = this.floorBombs
+        .filter((candidate) => this.time + 1e-8 >= candidate.explodeAt)
+        .sort((a, b) => a.explodeAt - b.explodeAt || a.id.localeCompare(b.id))[0];
+      if (!bomb) break;
+      if (this.time < bomb.explodeAt) this.time = bomb.explodeAt;
+      this._explodeFloorBomb(bomb);
+      if (this.status === 'awaiting') return;
+    }
     while (this.time + 1e-8 >= this.nextExplosion && this.nextExplosion < 24 * 60 * 60) {
-      // A mouse can reach the exit on the same fixed deadline. Keep that
-      // explosion pending until Continue acknowledges the first outcome.
-      if (this.status === 'awaiting') break;
       const explosionTime = this.nextExplosion;
       this.nextExplosion = explosionTime + this.bombInterval;
       // Snap the event timestamp without moving simulation time backwards.
       // update() normally lands exactly on this boundary.
       if (this.time < explosionTime) this.time = explosionTime;
       this._explodeOne();
-      if (this.status === 'awaiting') break;
+      if (this.status === 'awaiting') return;
     }
     if (!this._catEntered && this.time + 1e-8 >= 60) {
       this._spawnCat();
@@ -2564,16 +2771,31 @@ class Game {
     if (this.status !== 'running' || !Number.isFinite(dt) || dt <= 0) return this.time;
     let remaining = Math.min(dt, 3600);
     while (remaining > 1e-9 && this.status === 'running') {
-      if (this.time + 1e-8 >= this.nextExplosion || (!this._catEntered && this.time + 1e-8 >= 60)) {
+      const nextFloorBombExplosion = this.floorBombs.reduce((next, bomb) => Math.min(next, bomb.explodeAt), Infinity);
+      const nextFloorBombTick = this._nextFloorBombTickDeadline();
+      if (this.time + 1e-8 >= this.nextExplosion
+        || this.time + 1e-8 >= this._nextFloorBombSpawn
+        || this.time + 1e-8 >= nextFloorBombExplosion
+        || this.time + 1e-8 >= nextFloorBombTick
+        || (!this._catEntered && this.time + 1e-8 >= 60)) {
         this._checkTimedEvents();
         if (this.status !== 'running') break;
         continue;
       }
       // Land on a fixed deadline instead of stepping across it. This keeps
-      // explosions on 30-second boundaries and cat entrance at 60 seconds.
+      // explosions and floor-bomb fuses on exact simulation boundaries.
       const untilExplosion = this.nextExplosion - this.time;
+      const untilFloorSpawn = this._nextFloorBombSpawn - this.time;
+      const untilFloorExplosion = nextFloorBombExplosion - this.time;
+      const untilFloorTick = nextFloorBombTick - this.time;
       const untilCat = !this._catEntered ? 60 - this.time : Infinity;
-      const untilFixed = Math.min(untilExplosion > 1e-9 ? untilExplosion : Infinity, untilCat > 1e-9 ? untilCat : Infinity);
+      const untilFixed = Math.min(
+        untilExplosion > 1e-9 ? untilExplosion : Infinity,
+        untilFloorSpawn > 1e-9 ? untilFloorSpawn : Infinity,
+        untilFloorExplosion > 1e-9 ? untilFloorExplosion : Infinity,
+        untilFloorTick > 1e-9 ? untilFloorTick : Infinity,
+        untilCat > 1e-9 ? untilCat : Infinity,
+      );
       const slice = Math.min(remaining, 1 / 30, untilFixed);
       if (slice <= 1e-9) {
         this._checkTimedEvents();
@@ -2598,7 +2820,7 @@ class Game {
     return this.time;
   }
 
-  choose(mouseOrId, outcome) {
+  choose(mouseOrId, outcome, metadata = null) {
     const mouse = typeof mouseOrId === 'string'
       ? this.mice.find((candidate) => candidate.id === mouseOrId)
       : mouseOrId;
@@ -2620,6 +2842,10 @@ class Game {
       time: this.time,
       order: this.selections.length + 1,
     };
+    if (metadata && typeof metadata === 'object') {
+      if (metadata.cause) selected.cause = metadata.cause;
+      if (metadata.bombId) selected.bombId = metadata.bombId;
+    }
     this.selections.push(selected);
     this.pendingSelection = selected;
     this.status = 'awaiting';
@@ -2642,6 +2868,9 @@ class Game {
       chosen: this.selections.length,
       cheese: this.cheese.length,
       cheeseTarget: this.cheeseTarget,
+      floorBombsEnabled: this.floorBombsEnabled,
+      floorBombs: this.floorBombs.length,
+      nextFloorBombIn: Math.max(0, this._nextFloorBombSpawn - this.time),
       lice: this.lice.length,
       roamingLice: this.lice.length - attachedLice,
       attachedLice,
@@ -3036,11 +3265,64 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
 
   function insectCountFor(actor) {
     const explicit = Number(actor && actor.insectCount);
-    if (Number.isFinite(explicit)) return clamp(Math.floor(explicit), 0, 8);
+    if (Number.isFinite(explicit)) return clamp(Math.floor(explicit), 0, 99);
     // Lice are still insects in older saved games. The renderer has its own
     // detailed attached-lice pass; this fallback only adds the other-bug cue
     // once the engine starts exposing a separate insect count.
     return 0;
+  }
+
+  // Give attached bugs a readable relationship to the damage they are
+  // causing. The sprite already carries the insect; these small, warm bite
+  // marks sit immediately beneath it and pulse gently instead of becoming a
+  // generic red overlay across the torso. They are intentionally drawn in
+  // the same local anchors as drawAttachedInsects(), so a viewer can follow
+  // "bug -> bite -> wound" at overview scale and inspect the detail up close.
+  function drawBiteSignals(ctx, actor, now, w, h, reducedMotion, stage, gore) {
+    if (gore === false) return;
+    const count = insectCountFor(actor);
+    if (!count || !ctx) return;
+    const t = Number(now) || 0;
+    const phase = Number(actor.phase) || 0;
+    const shown = Math.min(5, count);
+    const anchors = [[-.17, .09], [-.06, .12], [.11, .10], [-.21, -.02], [.02, .27]];
+    ctx.save();
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    for (let i = 0; i < shown; i += 1) {
+      const a = phase + i * 2.17;
+      const bob = reducedMotion ? 0 : Math.sin(t * (5.5 + i * .7) + a) * h * .018;
+      const anchor = anchors[i];
+      const bx = anchor[0] * w + Math.cos(a) * w * .012;
+      const by = anchor[1] * h + bob * .45;
+      const r = Math.max(.018, Math.min(w, h) * .028);
+      const pulse = reducedMotion ? .52 : .58 + .42 * (.5 + .5 * Math.sin(t * 5.2 + a));
+      const markX = bx + Math.cos(a + .8) * r * 1.55;
+      const markY = by + Math.sin(a + .8) * r * 1.1;
+
+      // A tight amber halo identifies the active feeding point; the crimson
+      // crescents read as two distinct tooth/nibble marks even when the bug
+      // itself is only a few pixels wide in the overview.
+      ctx.globalAlpha = .22 + pulse * .22;
+      ctx.strokeStyle = stage >= 2 ? '#ef694f' : '#f1c35c';
+      ctx.lineWidth = Math.max(.007, r * .18);
+      ctx.beginPath(); ctx.arc(bx, by, r * (1.45 + pulse * .24), 0, Math.PI * 2); ctx.stroke();
+      ctx.globalAlpha = .55 + pulse * .25;
+      ctx.strokeStyle = stage >= 2 ? '#d94145' : '#c9784c';
+      ctx.lineWidth = Math.max(.009, r * .20);
+      for (let tooth = 0; tooth < 2; tooth += 1) {
+        const tx = markX + Math.cos(a + tooth * .52) * r * (tooth ? .45 : -.05);
+        const ty = markY + Math.sin(a + tooth * .52) * r * (tooth ? .45 : -.05);
+        ctx.beginPath();
+        ctx.arc(tx, ty, r * .38, a + .55, a + 2.45);
+        ctx.stroke();
+      }
+      // A tiny wet highlight makes the bite read as an active nibble without
+      // adding a large blood blob or obscuring the costume artwork.
+      ctx.fillStyle = stage >= 2 ? '#eb5b50' : '#e3a453';
+      ctx.globalAlpha = .42 + pulse * .28;
+      ctx.beginPath(); ctx.arc(markX + r * .42, markY + r * .28, r * .16, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
   }
 
   function drawWound(ctx, x, y, r, seed, reducedMotion) {
@@ -3211,6 +3493,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       // stateful overlays. All of these are presentation-only.
       drawDamage(ctx, actor, now, w, h, reducedMotion, gore, damageStage, meta.name);
       drawAttachedInsects(ctx, actor, now, w, h, reducedMotion, damageStage);
+      drawBiteSignals(ctx, actor, now, w, h, reducedMotion, damageStage, gore);
       if (!skipFaceAccents) {
         drawFaceExpression(ctx, actor, game, now, expressionState(actor, game, kind), w, h, reducedMotion, meta.name);
         drawRedTears(ctx, actor, now, w, h, reducedMotion, meta.name, gore);
@@ -3377,7 +3660,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       this.lastRenderedTime = null;
       this.staticFrame = null;
       this.staticFrameCtx = null;
-      this.assets = { mouse: null, cat: null, tiles: null, props: null, expressions: null, blood: null, anatomy: null, alienAnatomy: null };
+      this.assets = { mouse: null, cat: null, tiles: null, props: null, expressions: null, blood: null, anatomy: null, alienAnatomy: null, crawlers: null };
       this.tileLayout = {
         floor: [{ col: 0, row: 0 }, { col: 1, row: 0 }, { col: 0, row: 1 }],
         wall: [{ col: 1, row: 1 }, { col: 0, row: 2 }, { col: 1, row: 2 }]
@@ -3633,7 +3916,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         // Keep the stable names available even when a small custom pack only
         // supplies one atlas. Additional wardrobe/expression keys are carried
         // through unchanged for MouseMazeCast to select at runtime.
-        this.assets = Object.assign({ mouse: null, cat: null, tiles: null, props: null, expressions: null, blood: null, anatomy: null, alienAnatomy: null }, nextAssets);
+        this.assets = Object.assign({ mouse: null, cat: null, tiles: null, props: null, expressions: null, blood: null, anatomy: null, alienAnatomy: null, crawlers: null }, nextAssets);
         this.splatLayerKey = null;
         this.spriteCache = Object.create(null);
         this.terrain = null;
@@ -3907,7 +4190,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         // Every selection becomes a speaker-friendly hold.  The first half
         // second is allowed to show the impact, then the exact frame is held
         // until the engine returns to running after Continue is pressed.
-        this.awaiting = { startedAt: now, settle: this.reducedMotion ? .28 : .54 };
+        // The impact is a short arcade set piece. Keep the simulation paused
+        // immediately, while the renderer gets enough time to show the large
+        // debris burst shrinking into the maze floor before caching the frame.
+        const fullImpact = this.gore && ['exploded', 'eaten', 'devoured', 'infested'].includes(String(event.outcome || ''));
+        this.awaiting = { startedAt: now, settle: this.reducedMotion ? .28 : (fullImpact ? 3.4 : .54) };
         this.freezeLocked = false;
         this.cameraFrozen = true;
         this.focusId = event.id || this.focusId;
@@ -3919,6 +4206,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         // selected mouse is brought into the safe margin without changing the
         // user's zoom level.
         if (!this.overview) this.ensurePointVisible(x, y, 44);
+        if (event.cause === 'floor-bomb') this.cancelFloorBombBursts(x, y);
         if (event.outcome === 'exploded') this.spawnExplosion(x, y, now, event.id);
         else if (event.outcome === 'eaten') this.spawnEat(x, y, now, event.id || event.time || 14);
         else if (event.outcome === 'devoured' || event.outcome === 'infested') this.spawnDevoured(x, y, now, event.id || event.time || 23);
@@ -3929,6 +4217,27 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         this.effects.push({ kind: 'cheese', x, y, start: now, length: .42, seed: event.id || 1, boost: actualBoost, actorId: event.actorId || null });
       } else if (event.type === 'poop') {
         this.effects.push({ kind: 'poop', x, y, start: now, length: .7, seed: event.id || 1 });
+      } else if (event.type === 'floor-bomb-spawned') {
+        // The authoritative floorBombs array is drawn every frame. This
+        // event only invalidates the cached frame so a newly armed bomb is
+        // immediately visible in overview mode.
+        this.invalidate();
+      } else if (event.type === 'floor-bomb-exploded') {
+        const hits = Array.isArray(event.hitIds) ? event.hitIds : [];
+        // A bomb that catches a mouse is followed by the engine's selected
+        // event, which supplies the existing large body-part presentation.
+        // Misses receive this small world-space blast instead.
+        if (!hits.length) {
+          this.effects.push({
+            kind: 'floor-bomb-blast', x, y, start: now, length: this.reducedMotion ? .34 : .82,
+            radius: Math.max(.5, Number(event.radius) || 1.15), seed: event.id || event.time || 31
+          });
+        }
+        if (event.catHit) {
+          this.effects.push({ kind: 'cat-bomb-hit', fromX: event.fromX == null ? x : event.fromX, fromY: event.fromY == null ? y : event.fromY, x, y, start: now, length: .9, seed: event.id || event.time || 37 });
+        }
+      } else if (event.type === 'cat-bomb-hit') {
+        this.effects.push({ kind: 'cat-bomb-hit', fromX: event.fromX, fromY: event.fromY, x, y, start: now, length: .9, seed: event.id || event.time || 37 });
       } else if (event.type === 'insect-crushed') {
         // A crush remains readable with gore disabled: the dark squash mark,
         // tiny crumbs, and restrained impact ring are ordinary arcade
@@ -3994,6 +4303,49 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         const type = named ? named.type : (i % 6 === 0 ? 'maggot' : i % 19 === 0 ? 'bone' : (i % 4 === 0 ? 'organ' : 'gore'));
         pieces.push({ type, label: named ? named.label : null, anatomy: !!named, a, speed, size: .055 + hash(i, i + 3, Number(seed) || 1) * .105, spin: (hash(i + 1, i + 8, Number(seed) || 1) - .5) * 8 });
       }
+      // A compact foreground payload makes the event read as a set piece even
+      // when the complete maze is visible. These are presentation-only
+      // duplicates of the landed world decals; the engine remains untouched.
+      const foregroundPieces = [];
+      const largeNames = namedDebris.slice();
+      const crawlerTypes = ['centipede', 'millipede', 'bedbug', 'leech', 'worm', 'centipede', 'leech', 'bedbug', 'millipede', 'worm', 'centipede', 'bedbug', 'leech', 'millipede'];
+      for (let i = 0; i < largeNames.length + crawlerTypes.length; i += 1) {
+        const isCrawler = i >= largeNames.length;
+        const type = isCrawler ? crawlerTypes[i - largeNames.length] : largeNames[i].type;
+        const angle = hash(i + 1701, i + 1707, Number(seed) || 1) * TAU;
+        // Anatomical pieces get a larger silhouette than the crawlers, while
+        // both groups fan across the central 60–75% of the viewport.
+        const source = !isCrawler ? pieces[i] : null;
+        // Store a viewport-relative size factor. The peak anatomy silhouettes
+        // occupy roughly 22–38% of the short viewport dimension, with a
+        // mobile cap applied at draw time so several parts do not become one
+        // unreadable pile.
+        const base = isCrawler
+          ? .12 + hash(i + 1711, i + 1717, Number(seed) || 1) * .08
+          : .17 + (source ? source.size * 1.3 : .1);
+        foregroundPieces.push({
+          type,
+          crawler: isCrawler,
+          label: isCrawler ? null : largeNames[i].label,
+          anatomy: !isCrawler,
+          a: angle,
+          range: (isCrawler ? .32 : .46) + hash(i + 1731, i + 1737, Number(seed) || 1) * (isCrawler ? .34 : .56),
+          base,
+          spin: (hash(i + 1741, i + 1747, Number(seed) || 1) - .5) * 5.8,
+          crawl: .3 + hash(i + 1751, i + 1757, Number(seed) || 1) * .7,
+          seed: Number(seed) || 1
+        });
+        if (source) foregroundPieces[foregroundPieces.length - 1].a = source.a;
+      }
+      const cols = Number.isFinite(Number(this.game && this.game.cols)) ? Number(this.game.cols) : Infinity;
+      const rows = Number.isFinite(Number(this.game && this.game.rows)) ? Number(this.game.rows) : Infinity;
+      foregroundPieces.forEach((piece, index) => {
+        const source = !piece.crawler && pieces[index];
+        if (source) piece.a = source.a;
+        const distance = source ? source.speed * 1.3 - .55 * 1.3 * 1.3 : .55 + piece.range * .45;
+        piece.landX = clamp(x + Math.cos(piece.a) * distance, .7, Math.max(.7, cols - .7));
+        piece.landY = clamp(y + Math.sin(piece.a) * distance + .24 * 1.3 * 1.3, .7, Math.max(.7, rows - .7));
+      });
       // Fine flecks fill the space between the larger shards and maggots.
       // Both streams have fixed budgets; the concurrent-impact cap keeps
       // rapid speaker selections from accumulating expensive bursts.
@@ -4013,8 +4365,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       // the two selection outcomes while allowing their non-gore accents to
       // remain different.
       this.effects.push({
-        kind: effectKind || 'explosion', x, y, start, length: this.reducedMotion ? 1.25 : 2.25,
+        kind: effectKind || 'explosion', x, y, start, length: this.reducedMotion ? 1.25 : 3.55,
         pieces, seed: Number(seed) || 1, impactId,
+        foregroundPieces,
         flecks,
         jetCount: this.reducedMotion ? 2 : 6,
         dropletCount: this.reducedMotion ? 18 : 72
@@ -4046,6 +4399,16 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
             r: p.size,
             kind: p.type === 'intestine' ? 'intestine' : p.type === 'liver' ? 'liver' : p.type === 'bone' ? 'bone' : p.type === 'organ' ? 'organ' : p.type === 'maggot' ? 'maggot' : (p.anatomy ? p.type : 'blood'),
             angle: p.a, label: p.label || null, impactId
+          });
+        }
+        // The crawlers do not disappear with the foreground animation. A
+        // tiny settled decal lets each one become part of the maze floor.
+        for (const crawler of foregroundPieces) {
+          if (!crawler.crawler) continue;
+          this.splats.push({
+            x: crawler.landX, y: crawler.landY,
+            r: .045 + hash(crawler.seed + crawler.a * 17, crawler.seed + 19, crawler.seed) * .045,
+            kind: 'crawler', crawlerType: crawler.type, angle: crawler.a, impactId
           });
         }
         this.addBloodFlood(x, y, Number(seed) || 1);
@@ -4206,6 +4569,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       this.effects.push({ kind: 'escape', x, y, start, length: 1.5, seed: 18 });
     }
 
+    cancelFloorBombBursts(x, y) {
+      const radius = .95;
+      for (const effect of this.effects) {
+        if (!effect || effect.kind !== 'floor-bomb-blast') continue;
+        if (Math.hypot((Number(effect.x) || 0) - (Number(x) || 0), (Number(effect.y) || 0) - (Number(y) || 0)) <= radius) effect.cancelled = true;
+      }
+    }
+
     render(game, visualTime) {
       if (!this.ctx || !game) return;
       if (game !== this.game) this.setGame(game);
@@ -4217,6 +4588,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         // Continue is represented by the engine returning to running. Reset
         // the wall anchor so a long held popup never causes an animation jump.
         if (this.awaiting || this.freezeLocked) {
+          // Continue can be pressed while the foreground set piece is still
+          // settling. Preserve the landed decals, but cancel the screen-space
+          // spotlight so the next live round is immediately readable.
+          for (const effect of this.effects) {
+            if (effect && (effect.kind === 'explosion' || effect.kind === 'gore-eat' || effect.kind === 'devoured')) effect.foregroundCancelled = true;
+          }
           this.awaiting = null;
           this.freezeLocked = false;
           this.cameraFrozen = false;
@@ -4276,19 +4653,28 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       this.drawSplatters(ctx);
       this.drawCheese(ctx, game.cheese || [], tNow);
       this.drawPoop(ctx, game.poop || [], tNow);
+      this.drawFloorBombs(ctx, game.floorBombs || [], game.time || 0, tNow);
       this.drawInsects(ctx, game.insects || [], tNow, game);
       this.drawEffects(ctx, tNow, game);
       this.drawLice(ctx, game.lice || [], tNow, game);
       this.drawMice(ctx, game.mice || [], tNow, game);
+      this.drawAttachedInsects(ctx, game.insects || [], game.mice || [], tNow, game);
       this.drawAttachedLice(ctx, game.mice || [], tNow, game);
       this.drawMouseDragPreview(ctx, game, tNow);
       if (game.cat) this.drawCat(ctx, game.cat, tNow, game, this.catStyle);
       const labelHold = status === 'awaiting' || status === 'finished';
-      if (this.gore && (labelHold || (!this.overview && this.view.sx >= 14))) {
+      const activeImpact = this.effects.find(effect => effect && effect.impactId === this.latestImpactId &&
+        (effect.kind === 'explosion' || effect.kind === 'gore-eat' || effect.kind === 'devoured'));
+      const impactSettled = this.reducedMotion || !activeImpact || activeImpact.foregroundCancelled || (tNow - activeImpact.start >= 2.55);
+      if (this.gore && impactSettled && (labelHold || (!this.overview && this.view.sx >= 14))) {
         this.drawAnatomyLabels(ctx, this.splats.filter(s => s.label && s.impactId === this.latestImpactId));
       }
       ctx.restore();
       this.drawVignette(ctx);
+      // The foreground burst is deliberately drawn after the world transform:
+      // at overview (and at 8x close inspection) the pieces still fill a
+      // consistent, legible portion of the player's viewport.
+      this.drawForegroundImpacts(ctx, tNow);
       if (this.chatter && root.MouseMazeCast && typeof root.MouseMazeCast.drawChatter === 'function') {
         try { root.MouseMazeCast.drawChatter(this, game, tNow); } catch (error) { /* optional art hook */ }
       }
@@ -4365,7 +4751,20 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         if (!this.inView(s.x, s.y, Math.max(1, (s.r || .1) * 5))) continue;
         ctx.save(); ctx.translate(s.x, s.y);
         if (['liver', 'heart', 'stomach', 'kidney-left', 'kidney-right', 'eye-left', 'eye-right', 'foot-left', 'foot-right', 'tail', 'alien-nebula', 'alien-void', 'alien-echo', 'alien-plasma'].includes(s.kind)) {
+          if (s.label && s.impactId === this.latestImpactId && !this.reducedMotion) {
+            const alien = String(s.label).indexOf('ALIEN ·') === 0;
+            const radius = Math.max(.16, (s.r || .08) * 2.2);
+            const glow = ctx.createRadialGradient(0, 0, .02, 0, 0, radius);
+            glow.addColorStop(0, alien ? 'rgba(133,255,203,.18)' : 'rgba(255,173,104,.13)');
+            glow.addColorStop(1, alien ? 'rgba(133,255,203,0)' : 'rgba(255,173,104,0)');
+            ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(0, 0, radius, 0, TAU); ctx.fill();
+          }
           this.drawNamedAnatomy(ctx, s.kind, Math.max(.06, (s.r || .08) * 1.5), 0);
+          ctx.restore();
+          continue;
+        }
+        if (s.kind === 'crawler') {
+          this.drawForegroundCrawler(ctx, s.crawlerType || 'centipede', Math.max(.055, (s.r || .06) * 2.4), s.angle || 0, 1, (s.angle || 0) * 7);
           ctx.restore();
           continue;
         }
@@ -4479,37 +4878,28 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       const source = Array.isArray(splats) ? splats.filter(s => s && s.label) : [];
       if (!source.length || !ctx || typeof ctx.setTransform !== 'function') return;
       const width = this.cssWidth, height = this.cssHeight;
-      const rows = Math.ceil(source.length / 2);
-      const rowGap = Math.min(22, Math.max(18, (height - 20) / Math.max(1, rows)));
-      const fontPx = width < 420 ? 10 : 11;
-      const railPad = 5;
-      const maxRailWidth = Math.max(96, width * .43);
       ctx.save();
       ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
-      ctx.font = '800 ' + fontPx + 'px system-ui,sans-serif'; ctx.textBaseline = 'middle';
+      const fontPx = clamp(this.view.sx * .19, 6, 10);
+      ctx.font = '800 ' + fontPx + 'px system-ui,sans-serif'; ctx.textBaseline = 'top';
       for (let i = 0; i < source.length; i += 1) {
         const splat = source[i];
         const label = String(splat.label);
-        const side = i % 2;
-        const row = Math.floor(i / 2);
-        const metrics = ctx.measureText(label);
-        const boxWidth = Math.min(maxRailWidth, Math.max(72, metrics.width + 14));
-        const boxHeight = 18;
-        const bx = side === 0 ? railPad : width - railPad - boxWidth;
-        const by = Math.min(height - boxHeight - 4, 6 + row * rowGap);
         const target = this.worldToScreen(Number(splat.x) || 0, Number(splat.y) || 0);
-        const tx = clamp(target.x, 4, width - 4), ty = clamp(target.y, 4, height - 4);
-        const edgeX = side === 0 ? bx + boxWidth : bx;
-        // Every named part receives a rail entry. Offscreen anatomy points to
-        // the nearest canvas edge rather than silently disappearing.
-        ctx.strokeStyle = 'rgba(248,204,125,.68)'; ctx.lineWidth = 1;
-        if (typeof ctx.setLineDash === 'function') ctx.setLineDash([3, 3]);
-        ctx.beginPath(); ctx.moveTo(edgeX, by + boxHeight / 2); ctx.lineTo(tx, ty); ctx.stroke();
-        if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
-        ctx.fillStyle = '#ffe49f'; ctx.beginPath(); ctx.arc(tx, ty, 2.2, 0, TAU); ctx.fill();
-        ctx.fillStyle = 'rgba(23,10,18,.94)'; roundRect(ctx, bx, by, boxWidth, boxHeight, 4); ctx.fill();
-        ctx.strokeStyle = 'rgba(247,196,112,.9)'; ctx.lineWidth = 1; ctx.stroke();
-        ctx.fillStyle = '#ffe7b1'; ctx.textAlign = 'center'; ctx.fillText(label, bx + boxWidth / 2, by + boxHeight / 2 + .3, boxWidth - 6);
+        // Labels belong to the settled part. Offscreen pieces do not create
+        // edge rails or pills; they simply wait until a close camera reveals
+        // the actual debris.
+        if (!Number.isFinite(target.x) || !Number.isFinite(target.y) || target.x < -12 || target.y < -12 || target.x > width + 12 || target.y > height + 12) continue;
+        const alien = label.indexOf('ALIEN ·') === 0;
+        const x = clamp(target.x, 3, width - 3);
+        const y = clamp(target.y + Math.max(3, this.view.sx * .22), 3, height - fontPx - 2);
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.shadowColor = alien ? 'rgba(155,255,215,.62)' : 'rgba(255,195,112,.48)';
+        ctx.shadowBlur = 3;
+        ctx.fillStyle = alien ? '#b9ffe2' : '#ffe0a0';
+        ctx.fillText(label, x, y, Math.max(20, width * .26));
+        ctx.restore();
       }
       ctx.restore();
     }
@@ -4592,6 +4982,72 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       }
     }
 
+    drawFloorBombs(ctx, bombs, simulationTime, now) {
+      if (!Array.isArray(bombs)) return;
+      for (const bomb of bombs) {
+        if (!bomb || bomb.exploded || !Number.isFinite(Number(bomb.x)) || !Number.isFinite(Number(bomb.y))) continue;
+        if (!this.inView(Number(bomb.x), Number(bomb.y), 2)) continue;
+        const spawned = Number.isFinite(Number(bomb.spawnedAt)) ? Number(bomb.spawnedAt) : Number(simulationTime) || 0;
+        const explodeAt = Number(bomb.explodeAt);
+        const fuseLength = Math.max(1, Number.isFinite(explodeAt) ? explodeAt - spawned : 10);
+        const remaining = Number.isFinite(explodeAt) ? explodeAt - (Number(simulationTime) || 0) : fuseLength;
+        const danger = remaining <= 3.05;
+        const pulse = this.reducedMotion ? 0 : Math.sin(now * (danger ? 11 : 4) + (Number(bomb.id) || 1)) * .04;
+        ctx.save(); ctx.translate(Number(bomb.x), Number(bomb.y));
+        // Keep the warning range modest so a field of bombs does not wash out
+        // the maze. It becomes brighter during the final three seconds.
+        const glowRadius = danger ? .92 + pulse : .68;
+        const glow = ctx.createRadialGradient(0, 0, .06, 0, 0, glowRadius);
+        glow.addColorStop(0, danger ? 'rgba(255,91,48,.28)' : 'rgba(255,174,65,.13)');
+        glow.addColorStop(1, 'rgba(255,72,40,0)');
+        ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(0, 0, glowRadius, 0, TAU); ctx.fill();
+        ctx.strokeStyle = danger ? 'rgba(255,108,55,.58)' : 'rgba(247,184,76,.26)';
+        ctx.lineWidth = danger ? .035 : .022;
+        if (typeof ctx.setLineDash === 'function') ctx.setLineDash(danger ? [0.08, 0.08] : []);
+        ctx.beginPath(); ctx.arc(0, 0, glowRadius * .78, 0, TAU); ctx.stroke();
+        if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+        this.drawFloorBomb(ctx, bomb, remaining, fuseLength, now);
+        ctx.restore();
+      }
+    }
+
+    drawFloorBomb(ctx, bomb, remaining, fuseLength, now) {
+      const danger = remaining <= 3.05;
+      const body = ctx.createRadialGradient(-.08, -.11, .025, .03, .04, .29);
+      body.addColorStop(0, danger ? '#6a3940' : '#47515a');
+      body.addColorStop(.56, danger ? '#2e1b25' : '#222b33');
+      body.addColorStop(1, '#0c1118');
+      ctx.save();
+      if (!this.reducedMotion) ctx.rotate(Math.sin(now * .8 + (Number(bomb.id) || 1)) * .035);
+      ctx.fillStyle = 'rgba(8,6,13,.65)'; ctx.beginPath(); ctx.ellipse(.05, .2, .29, .09, 0, 0, TAU); ctx.fill();
+      ctx.fillStyle = body; ctx.strokeStyle = danger ? '#ef754d' : '#7d8790'; ctx.lineWidth = .024;
+      ctx.beginPath(); ctx.arc(0, 0, .235, 0, TAU); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = danger ? '#d9493f' : '#273843'; ctx.beginPath(); ctx.arc(-.07, -.08, .08, 0, TAU); ctx.fill();
+      ctx.fillStyle = 'rgba(220,245,255,.5)'; ctx.beginPath(); ctx.arc(-.1, -.12, .025, 0, TAU); ctx.fill();
+      // Short curved wick with a spark that burns down toward the casing.
+      const fuse = clamp(remaining / Math.max(1, fuseLength), 0, 1);
+      ctx.strokeStyle = '#be9b72'; ctx.lineWidth = .028; ctx.lineCap = 'round';
+      const baseX = .08, baseY = -.19, tipX = .25, tipY = -.43;
+      const sparkX = baseX + (tipX - baseX) * fuse, sparkY = baseY + (tipY - baseY) * fuse;
+      ctx.beginPath(); ctx.moveTo(baseX, baseY); ctx.bezierCurveTo(baseX + (sparkX - baseX) * .46, baseY + (sparkY - baseY) * .72, sparkX, sparkY, sparkX, sparkY); ctx.stroke();
+      const flicker = this.reducedMotion ? .035 : .035 + Math.abs(Math.sin(now * 19 + (Number(bomb.id) || 1))) * .035;
+      ctx.fillStyle = danger ? '#ffad45' : '#ffd77b'; ctx.beginPath(); ctx.arc(sparkX, sparkY, flicker, 0, TAU); ctx.fill();
+      if (!this.reducedMotion) {
+        ctx.strokeStyle = danger ? 'rgba(255,104,42,.9)' : 'rgba(255,205,103,.65)'; ctx.lineWidth = .014;
+        for (let i = 0; i < 3; i += 1) {
+          const a = now * 5 + i * 2.1; ctx.beginPath(); ctx.moveTo(sparkX, sparkY); ctx.lineTo(sparkX + Math.cos(a) * .10, sparkY + Math.sin(a) * .10); ctx.stroke();
+        }
+      }
+      if (danger && Number.isFinite(remaining)) {
+        const seconds = Math.max(0, remaining).toFixed(1);
+        ctx.font = '900 .16px ui-monospace,monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        const w = Math.max(.36, seconds.length * .095);
+        ctx.fillStyle = 'rgba(27,8,14,.94)'; roundRect(ctx, -w / 2, .28, w, .19, .045); ctx.fill();
+        ctx.fillStyle = '#ffd18c'; ctx.fillText(seconds, 0, .375);
+      }
+      ctx.restore();
+    }
+
     drawProp(ctx, x, y, frame, size) {
       const image = this.assets && this.assets.props;
       if (!image || !(image.naturalWidth || image.width) || !(image.naturalHeight || image.height)) return false;
@@ -4647,6 +5103,38 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       return String(raw);
     }
 
+    drawBugDamageIndicator(ctx, mouse, count, now, offsetY) {
+      if (!mouse || !mouse.alive || !Number.isFinite(Number(count)) || count <= 0) return;
+      const progress = clamp(1 - Math.exp(-Math.max(0, count) / 8), .12, 1);
+      const x = Number(mouse.x), y = Number(mouse.y) + (Number(offsetY) || 0);
+      if (!this.inView(x, y, .9)) return;
+      const radius = this.overview ? .22 : .27;
+      ctx.save(); ctx.translate(x, y); ctx.globalAlpha = .88;
+      ctx.strokeStyle = 'rgba(34,12,20,.78)'; ctx.lineWidth = .075; ctx.beginPath(); ctx.arc(0, 0, radius, 0, TAU); ctx.stroke();
+      ctx.strokeStyle = progress > .72 ? '#ef6b56' : '#d49d5f'; ctx.lineWidth = .035;
+      ctx.beginPath(); ctx.arc(0, 0, radius, -Math.PI / 2, -Math.PI / 2 + TAU * progress); ctx.stroke();
+      // Three tiny body segments form an icon that remains legible in the
+      // overview; close zoom also gets a warm pulse from the active feeding.
+      const pulse = this.reducedMotion ? 0 : Math.sin(now * 7 + count) * .018;
+      ctx.fillStyle = progress > .72 ? '#d95c4d' : '#c18a59';
+      ctx.beginPath(); ctx.arc(-.065, pulse, .045, 0, TAU); ctx.arc(0, -.01 - pulse, .052, 0, TAU); ctx.arc(.065, pulse, .04, 0, TAU); ctx.fill();
+      if (!this.overview || count > 4) {
+        ctx.font = '900 .14px ui-monospace,monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#ffe1a3';
+        ctx.fillText(String(Math.min(999, Math.floor(count))), 0, radius + .16);
+      }
+      ctx.restore();
+    }
+
+    drawAttachmentNibble(ctx, x, y, now, phase) {
+      if (this.reducedMotion) return;
+      ctx.save(); ctx.translate(x, y); ctx.globalAlpha = .55 + Math.sin(now * 9 + phase) * .16;
+      ctx.strokeStyle = '#f08562'; ctx.lineWidth = .018; ctx.lineCap = 'round';
+      const radius = .105 + Math.sin(now * 8 + phase) * .012;
+      ctx.beginPath(); ctx.arc(0, 0, radius, -.72, .52); ctx.stroke();
+      ctx.beginPath(); ctx.arc(0, 0, radius * .74, 2.34, 3.5); ctx.stroke();
+      ctx.restore();
+    }
+
     drawAttachedInsects(ctx, insects, mice, now, game) {
       if (!Array.isArray(insects) || !insects.length || !Array.isArray(mice) || !mice.length) return;
       const miceById = new Map(mice.filter(mouse => mouse && mouse.alive).map(mouse => [String(mouse.id), mouse]));
@@ -4681,6 +5169,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
           const y = mouse.y + Math.sin(mouseAngle) * localX + Math.cos(mouseAngle) * localY;
           const proxy = Object.assign({}, insect, { x, y, angle: mouseAngle + (Number(insect.angle) || angle) });
           this.drawInsect(ctx, proxy, now, close, hashSeed);
+          if (close) this.drawAttachmentNibble(ctx, x, y, now, hashSeed);
           // A tiny attachment glint communicates contact without competing
           // with the character art or generating a high-frequency effect.
           if (close && !this.reducedMotion) {
@@ -4692,6 +5181,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
           ctx.save(); ctx.globalAlpha = .82; ctx.fillStyle = '#f4c78d'; ctx.font = '900 .15px ui-monospace,monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           ctx.fillText('+' + (attached.length - visible), mouse.x + .34, mouse.y - .36); ctx.restore();
         }
+        const logicalCount = Number(mouse.insectCount != null ? mouse.insectCount : (mouse.bugCount != null ? mouse.bugCount : attached.length));
+        this.drawBugDamageIndicator(ctx, mouse, Math.max(attached.length, Number.isFinite(logicalCount) ? logicalCount : 0), now, close ? .48 : .42);
       }
     }
 
@@ -4832,7 +5323,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
             phase: hash(n + 41, n + 51, seed) * TAU,
             id: 'attached-' + seed + '-' + n
           };
-          if (close) this.drawLouse(ctx, attached, now, true, seed + n);
+          if (close) {
+            this.drawLouse(ctx, attached, now, true, seed + n);
+            this.drawAttachmentNibble(ctx, attached.x, attached.y, now, seed + n);
+          }
           else {
             ctx.save(); ctx.translate(attached.x, attached.y);
             const r = .032 + hash(n + 61, n + 71, seed) * .018;
@@ -4842,6 +5336,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
             ctx.restore();
           }
         }
+        this.drawBugDamageIndicator(ctx, mouse, count, now, close ? -.5 : -.42);
       }
     }
 
@@ -5375,6 +5870,148 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       }
     }
 
+    drawForegroundCrawler(ctx, type, size, angle, alpha, phase) {
+      const image = this.assets && this.assets.crawlers;
+      const width = image && (image.naturalWidth || image.width), height = image && (image.naturalHeight || image.height);
+      const frames = { centipede: 0, millipede: 1, bedbug: 2, leech: 3, worm: 3 };
+      const frame = frames[type] == null ? 0 : frames[type];
+      ctx.save();
+      ctx.globalAlpha *= alpha;
+      ctx.translate(0, Math.sin(phase) * Math.max(2, size * .06));
+      ctx.rotate(angle + Math.sin(phase * .72) * .15);
+      if (image && width && height && typeof ctx.drawImage === 'function') {
+        // The top row deliberately uses unequal source widths: the
+        // centipede antenna crosses the nominal 627px seam, so clipping it at
+        // half-width loses the tip. Preserve each frame's native aspect ratio
+        // and use transparent padding in the destination instead of stretching
+        // the right-hand skin narrow.
+        const rects = [[0, 0, 660, 627], [660, 0, 594, 627], [0, 627, 627, 627], [627, 627, 627, 627]];
+        const rect = rects[frame] || rects[0];
+        const sx = rect[0] * width / 1254, sy = rect[1] * height / 1254;
+        const sw = rect[2] * width / 1254, sh = rect[3] * height / 1254;
+        const targetHeight = size * .68;
+        const targetWidth = targetHeight * (rect[2] / rect[3]);
+        ctx.drawImage(image, sx, sy, sw, sh, -targetWidth * .5, -targetHeight * .5, targetWidth, targetHeight);
+      } else {
+        // The atlas is optional in test harnesses and in reduced bundles. The
+        // fallback keeps each species distinct and readable at large scale.
+        const long = type === 'centipede' || type === 'millipede' || type === 'leech' || type === 'worm';
+        const body = type === 'bedbug' ? '#7e3e45' : type === 'leech' ? '#492c56' : type === 'worm' ? '#9c634d' : type === 'millipede' ? '#75483d' : '#8b3938';
+        ctx.fillStyle = body; ctx.strokeStyle = 'rgba(31,12,24,.95)'; ctx.lineWidth = Math.max(1.2, size * .035);
+        ctx.beginPath(); ctx.ellipse(0, 0, long ? size * .72 : size * .52, size * .28, 0, 0, TAU); ctx.fill(); ctx.stroke();
+        if (type === 'bedbug') {
+          ctx.fillStyle = '#bd6a62'; ctx.beginPath(); ctx.ellipse(-size * .08, -size * .03, size * .24, size * .11, -.15, 0, TAU); ctx.fill();
+        } else {
+          const legs = type === 'leech' || type === 'worm' ? 0 : type === 'millipede' ? 12 : 8;
+          ctx.strokeStyle = type === 'millipede' ? '#c89068' : '#dc8c70'; ctx.lineWidth = Math.max(1, size * .025); ctx.lineCap = 'round';
+          for (let i = 0; i < legs; i += 1) {
+            const x = -size * .56 + (i / Math.max(1, legs - 1)) * size * 1.12;
+            const side = i % 2 ? -1 : 1;
+            ctx.beginPath(); ctx.moveTo(x, side * size * .15); ctx.lineTo(x + Math.sin(i * 2.1 + phase) * size * .08, side * size * (.42 + (i % 3) * .03)); ctx.stroke();
+          }
+        }
+      }
+      ctx.restore();
+    }
+
+    drawForegroundImpacts(ctx, now) {
+      if (!this.gore || !ctx) return;
+      const impacts = this.effects.filter(effect =>
+        effect && !effect.foregroundCancelled &&
+        (effect.kind === 'explosion' || effect.kind === 'gore-eat' || effect.kind === 'devoured') &&
+        Array.isArray(effect.foregroundPieces)
+      );
+      if (!impacts.length) return;
+      const width = this.cssWidth, height = this.cssHeight;
+      const minSize = Math.min(width, height);
+      for (const fx of impacts) {
+        const age = now - fx.start;
+        if (age < -.05 || age > 3.48) continue;
+        const source = this.worldToScreen(Number(fx.x) || 0, Number(fx.y) || 0);
+        // When close zoom crops the source completely, keep the set piece in
+        // the readable middle of the viewport rather than losing it offscreen.
+        const cx = clamp(Number.isFinite(source.x) ? source.x : width * .5, width * .38, width * .62);
+        const cy = clamp(Number.isFinite(source.y) ? source.y : height * .5, height * .38, height * .62);
+        const reduced = this.reducedMotion;
+        const burstEnd = reduced ? .18 : .88;
+        const shrinkStart = reduced ? .14 : .82;
+        const shrinkEnd = reduced ? .28 : 3.38;
+        const burst = easeOut(clamp(age / burstEnd, 0, 1));
+        const shrink = clamp((age - shrinkStart) / Math.max(.01, shrinkEnd - shrinkStart), 0, 1);
+        const sizeScale = reduced ? .34 : (age < shrinkStart ? lerp(.45, 1.08, burst) : lerp(1.08, .055, Math.pow(shrink, 1.18)));
+        const fade = reduced ? 1 : (age > 3.08 ? clamp(1 - (age - 3.08) / .36, .18, 1) : 1);
+        ctx.save();
+        ctx.globalCompositeOperation = 'source-over';
+        // Warm flash and a dark wet halo anchor the otherwise airy debris.
+        if (!reduced && age < .62) {
+          const flash = clamp(1 - age / .62, 0, 1);
+          const gradient = ctx.createRadialGradient(cx, cy, 2, cx, cy, minSize * (.18 + flash * .16));
+          gradient.addColorStop(0, 'rgba(255,239,177,' + (flash * .48) + ')');
+          gradient.addColorStop(.45, 'rgba(201,38,47,' + (flash * .2) + ')');
+          gradient.addColorStop(1, 'rgba(73,8,24,0)');
+          ctx.fillStyle = gradient; ctx.fillRect(0, 0, width, height);
+        }
+        for (let i = 0; i < fx.foregroundPieces.length; i += 1) {
+          const p = fx.foregroundPieces[i];
+          const basePx = Math.min(p.base * minSize, minSize < 420 ? 112 : minSize * .42);
+          const dirX = Math.cos(p.a), dirY = Math.sin(p.a);
+          const xRange = width * (.095 + p.range * .23);
+          const yRange = height * (.085 + p.range * .22);
+          const edge = Math.max(12, basePx * sizeScale * (p.crawler ? .55 : .80));
+          const burstX = clamp(cx + dirX * xRange * burst, edge, width - edge);
+          const burstY = clamp(cy + dirY * yRange * burst + (age * age) * height * .018, edge, height - edge);
+          const landed = this.worldToScreen(p.landX, p.landY);
+          const settle = clamp((age - 1.02) / 2.3, 0, 1);
+          const sx = lerp(burstX, Number.isFinite(landed.x) ? landed.x : burstX, settle);
+          const sy = lerp(burstY, Number.isFinite(landed.y) ? landed.y : burstY, settle);
+          const alpha = fade * (p.crawler ? .94 : 1);
+          ctx.save(); ctx.globalAlpha = alpha; ctx.translate(sx, sy);
+          const wobble = Math.sin(age * (p.crawler ? 10 : 5) + p.seed + i) * (p.crawler ? .18 : .05);
+          if (!reduced && !p.crawler && p.label) {
+            const alien = String(p.label).indexOf('ALIEN ·') === 0;
+            const glow = ctx.createRadialGradient(0, 0, 2, 0, 0, Math.max(16, basePx * sizeScale * .78));
+            glow.addColorStop(0, alien ? 'rgba(133,255,203,.22)' : 'rgba(255,173,104,.16)');
+            glow.addColorStop(1, alien ? 'rgba(133,255,203,0)' : 'rgba(255,173,104,0)');
+            ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(0, 0, Math.max(16, basePx * sizeScale * .78), 0, TAU); ctx.fill();
+          }
+          if (p.crawler) {
+            this.drawForegroundCrawler(ctx, p.type, basePx * sizeScale, p.a + p.spin * age + wobble, alpha, age * p.crawl * 8 + i);
+          } else {
+            const r = Math.max(3.5, basePx * sizeScale / 2.8);
+            this.drawNamedAnatomy(ctx, p.type, r, p.a + p.spin * age + wobble);
+            if (p.label && (sizeScale > .08 || reduced)) {
+              const alien = String(p.label).indexOf('ALIEN ·') === 0;
+              ctx.save(); ctx.globalAlpha = alpha * (reduced ? .9 : .82);
+              ctx.font = '800 ' + clamp(this.cssWidth * .007, 6, 10) + 'px system-ui,sans-serif';
+              ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+              ctx.shadowColor = alien ? 'rgba(155,255,215,.7)' : 'rgba(255,195,112,.58)'; ctx.shadowBlur = 3;
+              ctx.fillStyle = alien ? '#b9ffe2' : '#ffe0a0';
+              ctx.fillText(p.label, 0, Math.max(4, basePx * sizeScale * .5 + 3));
+              ctx.restore();
+            }
+          }
+          // A tiny crimson cast shadow makes the giant pieces sit in the
+          // scene instead of reading as flat UI stickers.
+          if (!reduced && sizeScale > .16) {
+            ctx.globalAlpha = alpha * .22; ctx.fillStyle = '#2b0618';
+            ctx.beginPath(); ctx.ellipse(0, Math.max(3, basePx * sizeScale * .3), Math.max(5, basePx * sizeScale * .5), Math.max(2, basePx * sizeScale * .12), 0, 0, TAU); ctx.fill();
+          }
+          ctx.restore();
+        }
+        if (!reduced && age < 2.7) {
+          const dust = clamp(1 - Math.max(0, age - 1.2) / 1.5, 0, 1);
+          ctx.save(); ctx.globalAlpha = dust * .6; ctx.fillStyle = '#b52e3b';
+          for (let i = 0; i < 22; i += 1) {
+            const a = hash(i + 1811, i + 1817, fx.seed) * TAU;
+            const d = minSize * (.12 + hash(i + 1821, i + 1827, fx.seed) * .38) * clamp(age / 1.1, 0, 1);
+            ctx.beginPath(); ctx.arc(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 1.2 + hash(i + 1831, i + 1837, fx.seed) * 3.2, 0, TAU); ctx.fill();
+          }
+          ctx.restore();
+        }
+        ctx.restore();
+      }
+    }
+
     drawEffects(ctx, now, game) {
       const live = [];
       for (const fx of this.effects) {
@@ -5397,8 +6034,44 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         else if (fx.kind === 'cat-enter') this.drawCatEnter(ctx, fx, u);
         else if (fx.kind === 'finish') this.drawFinish(ctx, fx, u);
         else if (fx.kind === 'unstuck') this.drawUnstuck(ctx, fx, age, u);
+        else if (fx.kind === 'floor-bomb-blast') this.drawFloorBombBlast(ctx, fx, age, u);
+        else if (fx.kind === 'cat-bomb-hit') this.drawCatBombHit(ctx, fx, age, u);
       }
       this.effects = live;
+    }
+
+    drawFloorBombBlast(ctx, fx, age, u) {
+      if (fx.cancelled) return;
+      const alpha = 1 - u;
+      const radius = Math.max(.5, Number(fx.radius) || 1.1);
+      ctx.save(); ctx.globalAlpha = alpha * .82;
+      ctx.strokeStyle = 'rgba(255,154,64,.9)'; ctx.lineWidth = .05;
+      ctx.beginPath(); ctx.arc(fx.x, fx.y, .12 + radius * easeOut(u), 0, TAU); ctx.stroke();
+      ctx.strokeStyle = 'rgba(91,24,35,.78)'; ctx.lineWidth = .035;
+      ctx.beginPath(); ctx.arc(fx.x, fx.y, .18 + radius * .72 * easeOut(u), 0, TAU); ctx.stroke();
+      for (let i = 0; i < 8; i += 1) {
+        const a = hash(i + 2101, i + 2107, fx.seed) * TAU;
+        const d = radius * (.22 + .75 * easeOut(u));
+        const sx = fx.x + Math.cos(a) * d * .35, sy = fx.y + Math.sin(a) * d * .35;
+        const ex = fx.x + Math.cos(a) * d, ey = fx.y + Math.sin(a) * d;
+        ctx.strokeStyle = i % 2 ? 'rgba(205,63,50,.85)' : 'rgba(255,197,88,.82)'; ctx.lineWidth = .022;
+        ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(ex, ey); ctx.stroke();
+      }
+      ctx.fillStyle = 'rgba(25,9,18,.8)'; ctx.beginPath(); ctx.arc(fx.x, fx.y, .08 + u * .1, 0, TAU); ctx.fill();
+      ctx.restore();
+    }
+
+    drawCatBombHit(ctx, fx, age, u) {
+      const sx = Number(fx.fromX), sy = Number(fx.fromY), tx = Number(fx.x), ty = Number(fx.y);
+      if (![sx, sy, tx, ty].every(Number.isFinite)) return;
+      const travel = clamp(age / .58, 0, 1);
+      const alpha = 1 - u;
+      ctx.save(); ctx.globalAlpha = alpha * .8; ctx.strokeStyle = 'rgba(255,180,77,.85)'; ctx.lineWidth = .035;
+      ctx.beginPath(); ctx.moveTo(sx, sy); ctx.quadraticCurveTo((sx + tx) / 2, Math.min(sy, ty) - .8, tx, ty); ctx.stroke();
+      const px = sx + (tx - sx) * travel, py = sy + (ty - sy) * travel - Math.sin(travel * Math.PI) * .8;
+      ctx.fillStyle = '#ffd267'; ctx.beginPath(); ctx.arc(px, py, .07, 0, TAU); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,95,54,.8)'; ctx.lineWidth = .025; ctx.beginPath(); ctx.arc(tx, ty, .2 + .42 * u, 0, TAU); ctx.stroke();
+      ctx.restore();
     }
 
     drawAnatomyAtlas(ctx, type, size) {
@@ -5788,6 +6461,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       this.volume = .28; this.muted = false; this.active = false; this.paused = false;
       this.ctx = null; this.track = null; this.trackURL = null; this.timer = null; this.step = 0;
       this.bpm = 132; this.nextNote = 0; this.lastCheese = 0; this.lastCrunch = -Infinity;
+      this.lastExplosion = -Infinity; this.lastFloorBomb = -Infinity;
+      this.lastFuseTick = -Infinity; this.lastBombPass = -Infinity;
+      this.lastCatHit = -Infinity;
       // Bug events are intentionally mixed into one quiet, global channel.
       // Hundreds of insects can be active, but their attach/bite notifications
       // must never turn into a continuous layer of noise.
@@ -5900,6 +6576,34 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       gain.gain.setValueAtTime(amplitude, at); gain.gain.exponentialRampToValueAtTime(.0001, at + length);
       noise.connect(filter); filter.connect(gain); gain.connect(target); noise.start(at); noise.stop(at + length + .01);
     }
+    // The game deliberately uses short synthesized layers for impacts. This
+    // keeps the supplied music intact, avoids external API/network latency,
+    // and gives every event a consistent volume ceiling.
+    crunch(at, insectType = 'insect') {
+      const seed = String(insectType || 'insect').length * 17 + Math.floor(at * 1000);
+      const pitch = 128 + (Math.abs(Math.sin(seed * 1.73)) * 95);
+      this.hiss(at, .065, .055, pitch * 11, this.fxGain, 'bandpass');
+      this.tone(pitch, at, .052, .042, 'triangle', this.fxGain, Math.max(36, pitch * .42));
+    }
+    explosion(at, intensity = 1) {
+      const power = Math.max(.55, Math.min(1.15, Number(intensity) || 1));
+      // A low pressure hit, a noisy crack, and a small debris tail read as one
+      // impact on laptop speakers without becoming a harsh wall of noise.
+      this.tone(112, at, .58, .62 * power, 'sine', this.fxGain, 25);
+      this.hiss(at, .62, .34 * power, 360, this.fxGain, 'lowpass');
+      this.hiss(at + .012, .36, .19 * power, 2300, this.fxGain, 'bandpass');
+    }
+    catBite(at) {
+      this.tone(156, at, .22, .19, 'sawtooth', this.fxGain, 58);
+      this.hiss(at, .12, .105, 540, this.fxGain, 'lowpass');
+      this.hiss(at + .025, .065, .035, 2100, this.fxGain, 'bandpass');
+    }
+    fuseTick(at, remaining = 0) {
+      const urgent = Number(remaining) <= 3;
+      const pitch = urgent ? 820 : 560;
+      this.tone(pitch, at, .035, urgent ? .07 : .038, 'square', this.fxGain, pitch * .68);
+      this.hiss(at, .018, urgent ? .022 : .012, 3200, this.fxGain, 'highpass');
+    }
     schedule() {
       if (!this.ctx || this.track || !this.active || this.paused) return;
       clearInterval(this.timer);
@@ -5935,13 +6639,21 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     handleEvent(event) {
       if (!this.ctx || !this.active || this.paused || this.muted) return;
       const t = this.ctx.currentTime;
-      if (event.type === 'selected' && event.outcome === 'exploded') {
-        this.tone(120, t, .50, .85, 'sine', this.fxGain, 25);
-        this.hiss(t, .7, .48, 800, this.fxGain, 'lowpass');
-        this.hiss(t + .015, .22, .15, 2500, this.fxGain);
+      const type = String(event.type || '');
+      if (type === 'floor-bomb-exploded' || type === 'bomb-exploded' || type === 'explosion') {
+        // The floor-bomb event is followed by selected(cause=floor-bomb).
+        // Deduping here keeps one detonation from becoming two loud hits.
+        if (t - this.lastExplosion > .08) {
+          this.lastExplosion = t;
+          this.explosion(t, event.catHit ? 1.08 : 1);
+        }
+      } else if (type === 'selected' && event.outcome === 'exploded') {
+        if (t - this.lastExplosion > .08) {
+          this.lastExplosion = t;
+          this.explosion(t, event.cause === 'floor-bomb' ? 1 : 1.08);
+        }
       } else if (event.type === 'selected' && event.outcome === 'eaten') {
-        this.tone(150, t, .26, .25, 'sawtooth', this.fxGain, 50);
-        this.hiss(t, .15, .13, 450, this.fxGain, 'lowpass');
+        this.catBite(t);
       } else if (event.type === 'selected' && event.outcome === 'devoured') {
         // Bug consumption is a capture outcome: use the existing low capture
         // colour, with a slightly longer tail so the speaker hold has a clear
@@ -5960,20 +6672,50 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         // heavily infested run remains musically quiet and bounded.
         this.tone(92, t, .055, .032, 'triangle', this.fxGain, 58);
         this.hiss(t, .045, .021, 620, this.fxGain, 'lowpass');
+        // One quiet extra nibble makes prolonged infestation readable without
+        // creating a voice for every attached bug.
+        if (Math.floor(t * 10) % 3 === 0) this.hiss(t + .018, .028, .012, 2400, this.fxGain, 'bandpass');
       } else if (event.type === 'selected' && event.outcome === 'escaped') {
         [72,76,79,84].forEach((n,i) => this.tone(note(n), t + i * .075, .30, .2, 'triangle', this.fxGain));
       } else if (event.type === 'cat-enter') {
         [46,45,40,33].forEach((n,i) => this.tone(note(n), t + i * .16, .38, .22, 'sawtooth', this.fxGain));
       } else if (event.type === 'cat-slow') {
         this.tone(230, t, .33, .17, 'triangle', this.fxGain, 40);
+      } else if (event.type === 'cat-bomb-hit') {
+        if (t - this.lastCatHit > .12) {
+          this.lastCatHit = t;
+          this.tone(185, t, .28, .24, 'sawtooth', this.fxGain, 62);
+          this.tone(520, t + .035, .20, .12, 'triangle', this.fxGain, 190);
+          this.hiss(t, .20, .10, 720, this.fxGain, 'bandpass');
+        }
+      } else if (event.type === 'floor-bomb-spawned') {
+        if (t - this.lastFloorBomb > .30) {
+          this.lastFloorBomb = t;
+          this.tone(205, t, .10, .045, 'triangle', this.fxGain, 150);
+          this.hiss(t, .035, .018, 1700, this.fxGain, 'bandpass');
+        }
+      } else if (event.type === 'floor-bomb-tick' || event.type === 'bomb-fuse-tick') {
+        if (t - this.lastFuseTick > .12) {
+          this.lastFuseTick = t;
+          this.fuseTick(t, event.remaining ?? event.secondsRemaining ?? 0);
+        }
+      } else if (event.type === 'bomb-assigned') {
+        if (t - this.lastBombPass > .16) {
+          this.lastBombPass = t;
+          this.tone(680, t, .12, .065, 'square', this.fxGain, 420);
+          this.hiss(t, .035, .018, 2600, this.fxGain, 'highpass');
+        }
+      } else if ((event.type === 'bomb-pass' || event.type === 'bomb-passed') && t - this.lastBombPass > .12) {
+        this.lastBombPass = t;
+        this.tone(480, t, .16, .08, 'triangle', this.fxGain, 760);
+        this.hiss(t, .06, .025, 2200, this.fxGain, 'bandpass');
       } else if (event.type === 'cheese' && t - this.lastCheese > .22) {
         this.lastCheese = t; this.tone(1000, t, .047, .045, 'sine', this.fxGain, 1450);
       } else if (event.type === 'insect-crushed' && t - this.lastCrunch > .16) {
-        // A soft dry crack, throttled across the whole crowd so a swarm
-        // cannot pile up hundreds of sounds or obscure the soundtrack.
+        // A layered dry crunch, throttled across the whole crowd so a swarm
+        // cannot pile up hundreds of voices or obscure the soundtrack.
         this.lastCrunch = t;
-        this.hiss(t, .045, .045, 1700, this.fxGain, 'bandpass');
-        this.tone(180, t, .028, .035, 'triangle', this.fxGain, 70);
+        this.crunch(t, event.insectType || event.typeName || 'insect');
       } else if (event.type === 'finished') {
         [60,64,67,72].forEach((n,i) => this.tone(note(n), t + i * .09, .75, .2, 'triangle', this.fxGain));
       }
@@ -6388,6 +7130,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
 
   function safeVibrate(pattern) {
     try {
+      if (root.navigator && root.navigator.userActivation && !root.navigator.userActivation.hasBeenActive) return;
       if (root.navigator && typeof root.navigator.vibrate === 'function') root.navigator.vibrate(pattern);
     } catch (_) {
       // Browsers can expose vibrate and still reject it outside a gesture.

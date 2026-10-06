@@ -140,7 +140,11 @@ const anatomyLabels = [
 ];
 for (const label of anatomyLabels) assert(rendererSource.includes(label), `Renderer declares ${label} anatomy label`);
 assert.match(rendererSource, /awaiting.*finished|finished.*awaiting/s, 'Labels have a hold/finished visibility state');
-assert.match(rendererSource, /collision|label.*offset|offset.*label/i, 'Labels retain a collision/offset guard');
+const labelRenderer = rendererSource.match(/drawAnatomyLabels\(ctx, splats\)\s*\{([\s\S]*?)\n\s{4}\}\n\n\s{4}drawBloodDecal/)?.[1] || '';
+assert(labelRenderer, 'Direct anatomy-label renderer is present');
+assert.match(labelRenderer, /fontPx[\s\S]*?fillText/, 'Anatomy labels use compact direct text');
+assert.match(labelRenderer, /shadowColor[\s\S]*?shadowBlur/, 'Anatomy labels retain a subtle glow');
+assert.doesNotMatch(labelRenderer, /ctx\.(?:moveTo|lineTo|stroke)\s*\(/, 'Anatomy labels do not draw connecting lines or rails');
 
 const assetMatch = html.match(/window\.MOUSE_MAZE_ASSETS=(\{.*?\});(?=window\.MOUSE_MAZE_CHARACTER_ART=)/s);
 assert(assetMatch, 'Packaged v9 asset manifest is present');

@@ -16,7 +16,7 @@ const musicMatch = source.match(/window\.BACKGROUND_TRACK_DATA\s*=\s*"(data:audi
 if (!imageMatch || !characterMatch || !musicMatch) throw new Error('Missing game media or wardrobe data');
 const images = JSON.parse(imageMatch[1]);
 const characters = JSON.parse(characterMatch[1]);
-if (Object.keys(images).length !== 21 || !images.anatomy || !images.alienAnatomy || characters.mouse.length !== 30 || characters.cat.length !== 6) throw new Error('Expected the complete v9 cast and both anatomy atlases');
+if (Object.keys(images).length !== 22 || !images.anatomy || !images.alienAnatomy || !images.crawlers || characters.mouse.length !== 30 || characters.cat.length !== 6) throw new Error('Expected the complete v10 cast, anatomy and crawler atlases');
 await mkdir(resolve(output, 'assets'), { recursive: true });
 const files = [];
 async function media(name, uri, type, extension) {
@@ -37,5 +37,5 @@ let html = source.replace(imageMatch[0], `window.MOUSE_MAZE_ASSETS=${JSON.string
   .replace('</head>', '  <meta name="description" content="Dynamite Mice: a maze name picker with costumed mice, cheese boosts, a chasing cat, and speaker pauses.">\n  <link rel="canonical" href="https://speakkai.com/maze/">\n</head>');
 if (/data:(image|audio)\//.test(html)) throw new Error('Unextracted embedded media remains');
 await writeFile(resolve(output, 'index.html'), html);
-await writeFile(resolve(output, 'manifest.json'), JSON.stringify({ version: 9, sourceSha256: sha256(source), pageSha256: sha256(html), mouseOutfits: 30, catOutfits: 6, files }, null, 2) + '\n');
+await writeFile(resolve(output, 'manifest.json'), JSON.stringify({ version: 10, sourceSha256: sha256(source), pageSha256: sha256(html), mouseOutfits: 30, catOutfits: 6, files }, null, 2) + '\n');
 console.log(JSON.stringify({ route: '/maze/', pageBytes: Buffer.byteLength(html), mediaFiles: files.length, mediaBytes: files.reduce((sum, file) => sum + file.bytes, 0) }));

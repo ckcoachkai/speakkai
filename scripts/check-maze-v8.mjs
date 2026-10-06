@@ -94,9 +94,11 @@ assert.equal(fatalGame.selections.length, 1);
 assert(fatalGame.drainEvents().some(event => event.type === 'selected' && event.outcome === 'devoured'));
 assert.equal(fatalGame.continueSelection(), 'finished');
 
-// Preserve the prior timed-game contract: the default fuse remains 30 seconds,
-// the cat enters at 60 seconds, and Continue is the only way out of a hold.
-const timed = new Game({ names: ['A', 'B', 'C'], seed: 8132, liceEnabled: false, insectsEnabled: false });
+// Preserve the prior timed-game contract: the default carried fuse remains 30
+// seconds and Continue is the only way out of its speaker hold. Cat entry is
+// checked in a separate no-carrier fixture below so a simultaneous 60-second
+// carried detonation cannot hide the independent cat-entry contract.
+const timed = new Game({ names: ['A', 'B', 'C'], seed: 8132, liceEnabled: false, insectsEnabled: false, floorBombsEnabled: false });
 assert.equal(timed.bombInterval, 30);
 for (const mouse of timed.mice) mouse.speed = 0;
 timed.start();
@@ -105,11 +107,14 @@ assert.equal(timed.status, 'awaiting');
 assert.equal(timed.pendingSelection?.outcome, 'exploded');
 assert.equal(timed.time, 30);
 assert.equal(timed.continueSelection(), 'running');
-timed.update(30);
-assert.equal(timed.time, 60);
-assert.equal(timed.status, 'awaiting');
-assert(timed.cat, 'Cat still enters at 60 seconds when a second timed selection pauses the run');
-assert.equal(timed.continueSelection(), 'running');
+const catTimed = new Game({ names: ['Cat target', 'Cat decoy'], seed: 8133, liceEnabled: false, insectsEnabled: false, floorBombsEnabled: false, bombInterval: 120 });
+for (const mouse of catTimed.mice) mouse.speed = 0;
+catTimed.start();
+catTimed.update(60);
+assert(Math.abs(catTimed.time - 60) < 1e-8, 'Cat-entry fixture reaches the 60-second boundary');
+assert.equal(catTimed.status, 'running');
+assert(catTimed.cat, 'Cat enters at 60 seconds when no carried fuse competes at the same boundary');
+assert.equal(catTimed.cat.speed, 1.3, 'Cat uses the v10 30% speed increase');
 
 // UI and accessibility/report contracts for the new interactions and preserved
 // controls. These strings are intentionally cheap smoke checks; browser QA
