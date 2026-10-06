@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T13:47:13.694225+00:00",
+  "updatedAt": "2026-10-06T07:57:47.638620+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1867,6 +1867,31 @@
               "zh": "◆ 【自信与语速】\n\nCharlotte 今天展现了令人鼓舞的进步。她愿意独自上台，不再需要同伴的支持，并且表现良好。她的语速也放慢了，在我们一直练习的节奏方面取得进步。\n\n◆ 【发展独立想法】\n\nCharlotte 最初选择篮球，后来将话题改为游泳，并加入了爸爸喜欢游泳这一想法。她的内容仍需要更有个人特色的角度和更多变化。下一步是发展自己的想法，并用自己的语言表达。今天为两篇演讲寻找不同角度的练习，为她把内容变得更个人化提供了起点。\n\n一个可尝试的辅导方法是：先请她说明为什么选择游泳，并分享个人经历或观点，再动笔写下来。她表示之前的演讲练习了一到两次；新的作业是如果可以，练习5–10次。"
             }
           ]
+        },
+        {
+          "id": "2026-10-06-holiday-sdg-camp",
+          "date": "2026-10-06",
+          "time": "13:00–15:30",
+          "classContent": {
+            "en": "◆ Homework presentations and concentration\n\nWe began with presentations of the homework speeches. Both Mia and Charlotte came on stage confidently and used hand gestures during their first attempt.\n\nOn the second attempt, we introduced distractions so they could practise maintaining concentration while speaking. Both managed reasonably well, although neither particularly enjoyed the distractions. Charlotte’s pace became a little fast during this attempt.\n\n◆ Vocal variety and body language\n\nToday’s main focus was vocal variety and body language. We started with articulation practice, then explored power, pitch, pace and pause. We worked through the Bear and the Bee dialogue and looked at examples of voice actors, particularly in video games, demonstrating how they change their voices. We did not introduce the different categories of dialogue today.",
+            "zh": "◆ 【作业展示与专注】\n\n我们先进行了作业演讲展示。Mia 和 Charlotte 都自信地上台，并在第一次展示中运用了手势。\n\n第二次展示时，我们加入了一些干扰，让她们练习在说话时保持专注。两人都应对得还不错，不过都不太喜欢这些干扰。Charlotte 在这次展示中的语速有些快。\n\n◆ 【声音变化与肢体语言】\n\n今天的主要重点是声音变化和肢体语言。我们从发音练习开始，随后学习了力度、音高、语速和停顿。我们练习了《Bear and the Bee》的对话，并观看了配音演员的示例，特别是电子游戏配音，观察他们如何改变声音。今天没有介绍不同的对话类别。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "mia",
+              "name": "Mia",
+              "en": "◆ Confidence and expressive delivery\n\nMia presented confidently and included hand gestures in her first attempt. She also managed the distraction exercise reasonably well, although she did not particularly enjoy it. Today’s voice work gives her further ways to make her delivery expressive alongside her gestures.",
+              "zh": "◆ 【自信与生动表达】\n\nMia 展示时很自信，并在第一次展示中加入了手势。她在干扰练习中也应对得还不错，虽然她不太喜欢这些干扰。今天的声音练习为她提供了更多表达方式，可以与手势配合，让展示更加生动。"
+            },
+            {
+              "id": "charlotte",
+              "name": "Charlotte",
+              "en": "◆ Confidence, gestures and pacing\n\nCharlotte presented confidently and used hand gestures during her first attempt. During her second attempt, her pace became a little fast, so maintaining a steady, clear speaking speed remains a focus. She managed the distraction exercise reasonably well despite finding the distractions unwelcome.",
+              "zh": "◆ 【自信、手势与语速】\n\nCharlotte 展示时很自信，并在第一次展示中运用了手势。第二次展示时，她的语速有些快，因此保持稳定、清楚的语速仍然是练习重点。虽然她不太喜欢干扰，她在这项练习中还是应对得还不错。"
+            }
+          ],
+          "status": "held"
         }
       ]
     }

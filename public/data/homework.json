@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-05T13:47:13.712685+00:00",
+  "updatedAt": "2026-10-06T07:57:51.189609+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1529,6 +1529,25 @@
             {
               "name": "Charlotte",
               "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-05&student=charlotte"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-06-holiday-sdg-camp",
+          "date": "2026-10-06",
+          "time": "13:00–15:30",
+          "classContent": [
+            "◆ Homework presentations and concentration\n\nWe began with presentations of the homework speeches. Both Mia and Charlotte came on stage confidently and used hand gestures during their first attempt.\n\nOn the second attempt, we introduced distractions so they could practise maintaining concentration while speaking. Both managed reasonably well, although neither particularly enjoyed the distractions. Charlotte’s pace became a little fast during this attempt.\n\n◆ Vocal variety and body language\n\nToday’s main focus was vocal variety and body language. We started with articulation practice, then explored power, pitch, pace and pause. We worked through the Bear and the Bee dialogue and looked at examples of voice actors, particularly in video games, demonstrating how they change their voices. We did not introduce the different categories of dialogue today."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Mia",
+              "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-06&student=mia"
+            },
+            {
+              "name": "Charlotte",
+              "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-06&student=charlotte"
             }
           ]
         }
