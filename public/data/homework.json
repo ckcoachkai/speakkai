@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-06T07:57:51.189609+00:00",
+  "updatedAt": "2026-10-06T08:52:52.570295+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1445,6 +1445,35 @@
             {
               "name": "Simon",
               "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-05&student=simon"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-06-holiday-competition-camp",
+          "date": "2026-10-06",
+          "time": "16:00–18:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Haley",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-06&student=haley"
+            },
+            {
+              "name": "Ivy",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-06&student=ivy"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-06&student=william"
+            },
+            {
+              "name": "Robinson",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-06&student=robinson"
+            },
+            {
+              "name": "Simon",
+              "feedbackUrl": "/fb/?class=national-holiday-competition-camp&date=2026-10-06&student=simon"
             }
           ]
         }
