@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T09:43:01.546636+00:00",
+  "updatedAt": "2026-10-06T10:54:00.240324+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1779,8 +1779,14 @@
           "id": "2026-10-06-holiday-competition-camp",
           "date": "2026-10-06",
           "time": "16:00–18:30",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "We worked on power, pitch, pace, and pauses; emotional expression; and 20 hand gestures. Students reviewed their speeches and practised memorization techniques:\n\n1. Read the speech aloud 10 times.\n2. Record it.\n3. Listen to the recording and visualize the speech.\n4. Practise with exaggerated emotions.\n5. Practise with hand gestures.\n6. Practise in a presentation setting.\n\nI also demonstrated how I memorize my own competition speeches. Students then completed peer editing and gave one another feedback.",
+            "zh": "我们练习了声音的力度、音高、语速和停顿，以及情绪表达和20种手势。学生们回顾了自己的演讲，并练习了以下记忆方法：\n\n1. 大声朗读演讲稿10遍。\n2. 录下自己的演讲。\n3. 听录音，并在脑海中想象演讲。\n4. 用夸张的情绪练习。\n5. 配合手势练习。\n6. 在演讲情境中练习。\n\n我也用自己的比赛演讲示范了记忆演讲稿的过程。随后，学生们互相修改演讲稿，并给彼此反馈。"
+          },
+          "homework": {
+            "en": "Memorize the speech.\n\nChoosing a version: Robinson, Haley, and Ivy may use their original speeches, reviewing the polished versions for ideas and refining their own structure, logic, audience engagement, and conversational language. They should also adjust the length to their individual targets. Alternatively, they may use the teacher-polished versions, which contain some changes to their original wording and content.\n\nTomorrow, October 7: We will work on managing distractions, maintaining focus, stage time, and stage presence.",
+            "zh": "背熟演讲稿。\n\n版本选择：Robinson、Haley 和 Ivy 可以使用自己的原稿，参考润色版中的想法，进一步调整结构、逻辑、听众互动和口语化表达，同时根据各自的目标调整篇幅。他们也可以选择使用老师润色后的版本，其中对原来的措辞和内容作了一些调整。\n\n明天（10月7日）：我们将练习应对干扰、保持专注、舞台时间和舞台表现。"
+          },
           "students": [
             {
               "id": "haley",

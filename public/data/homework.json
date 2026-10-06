@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-06T09:43:01.564900+00:00",
+  "updatedAt": "2026-10-06T10:54:00.253916+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1452,8 +1452,17 @@
           "id": "2026-10-06-holiday-competition-camp",
           "date": "2026-10-06",
           "time": "16:00–18:30",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "We worked on power, pitch, pace, and pauses; emotional expression; and 20 hand gestures. Students reviewed their speeches and practised memorization techniques:\n\n1. Read the speech aloud 10 times.\n2. Record it.\n3. Listen to the recording and visualize the speech.\n4. Practise with exaggerated emotions.\n5. Practise with hand gestures.\n6. Practise in a presentation setting.\n\nI also demonstrated how I memorize my own competition speeches. Students then completed peer editing and gave one another feedback."
+          ],
+          "homework": {
+            "title": "Memorize the speech",
+            "steps": [
+              "Memorize your speech."
+            ],
+            "prepareFor": "Tomorrow, October 7: managing distractions, maintaining focus, stage time, and stage presence.",
+            "note": "Choosing a version: Robinson, Haley, and Ivy may use their original speeches, reviewing the polished versions for ideas and refining their own structure, logic, audience engagement, and conversational language. They should also adjust the length to their individual targets. Alternatively, they may use the teacher-polished versions, which contain some changes to their original wording and content."
+          },
           "students": [
             {
               "name": "Haley",
