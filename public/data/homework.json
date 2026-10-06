@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-06T08:52:52.570295+00:00",
+  "updatedAt": "2026-10-06T09:43:01.564900+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1568,7 +1568,14 @@
           "classContent": [
             "◆ Homework presentations and concentration\n\nWe began with presentations of the homework speeches. Both Mia and Charlotte came on stage confidently and used hand gestures during their first attempt.\n\nOn the second attempt, we introduced distractions so they could practise maintaining concentration while speaking. Both managed reasonably well, although neither particularly enjoyed the distractions. Charlotte’s pace became a little fast during this attempt.\n\n◆ Vocal variety and body language\n\nToday’s main focus was vocal variety and body language. We started with articulation practice, then explored power, pitch, pace and pause. We worked through the Bear and the Bee dialogue and looked at examples of voice actors, particularly in video games, demonstrating how they change their voices. We did not introduce the different categories of dialogue today."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Hand gestures and speech memorization",
+            "steps": [
+              "Practise with the hand-gesture video.",
+              "Try saying your speech at least once every hour, or at least a couple of times."
+            ],
+            "prepareFor": "Have at least half of your speech memorized by tomorrow, October 7."
+          },
           "students": [
             {
               "name": "Mia",

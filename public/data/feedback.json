@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T09:16:20.058448+00:00",
+  "updatedAt": "2026-10-06T09:43:01.546636+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1916,7 +1916,10 @@
             "en": "◆ Homework presentations and concentration\n\nWe began with presentations of the homework speeches. Both Mia and Charlotte came on stage confidently and used hand gestures during their first attempt.\n\nOn the second attempt, we introduced distractions so they could practise maintaining concentration while speaking. Both managed reasonably well, although neither particularly enjoyed the distractions. Charlotte’s pace became a little fast during this attempt.\n\n◆ Vocal variety and body language\n\nToday’s main focus was vocal variety and body language. We started with articulation practice, then explored power, pitch, pace and pause. We worked through the Bear and the Bee dialogue and looked at examples of voice actors, particularly in video games, demonstrating how they change their voices. We did not introduce the different categories of dialogue today.",
             "zh": "◆ 【作业展示与专注】\n\n我们先进行了作业演讲展示。Mia 和 Charlotte 都自信地上台，并在第一次展示中运用了手势。\n\n第二次展示时，我们加入了一些干扰，让她们练习在说话时保持专注。两人都应对得还不错，不过都不太喜欢这些干扰。Charlotte 在这次展示中的语速有些快。\n\n◆ 【声音变化与肢体语言】\n\n今天的主要重点是声音变化和肢体语言。我们从发音练习开始，随后学习了力度、音高、语速和停顿。我们练习了《Bear and the Bee》的对话，并观看了配音演员的示例，特别是电子游戏配音，观察他们如何改变声音。今天没有介绍不同的对话类别。"
           },
-          "homework": null,
+          "homework": {
+            "en": "Practise with the hand-gesture video and work on memorizing your speech. Try saying your speech at least once every hour, or at least a couple of times. Aim to have at least half of your speech memorized by tomorrow, October 7.",
+            "zh": "跟着手势视频练习，并练习背诵自己的演讲稿。尽量每小时至少练习说一遍演讲，或者至少练习几遍。目标是到明天（10月7日）至少能背出一半的演讲内容。"
+          },
           "students": [
             {
               "id": "mia",
