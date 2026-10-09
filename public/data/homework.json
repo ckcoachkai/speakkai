@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-09T15:17:33.211Z",
+  "updatedAt": "2026-10-09T15:38:39.903Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -398,6 +398,41 @@
               "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-09-17&student=elsa"
             }
           ]
+        },
+        {
+          "id": "2026-10-08-thu-afternoon",
+          "date": "2026-10-08",
+          "time": "15:30–17:30",
+          "classContent": [
+            "◆ Student presentations and feedback:\nStudents presented their prepared speeches or personal experiences. The main coaching points were:\n→ Organize ideas so the audience can follow the story.\n→ Connect an experience to a clear message, rather than only describing what happened.\n→ Finish with a meaningful takeaway or an appropriate call to action.\n→ Remove repeated words and unnecessary details.\n→ Use pauses instead of filling every silence.\n→ Give classmates attention and keep the recording area still while they speak.\nJarvis and Owen spoke about their National Day holidays. Elsa shared her LEGOLAND experience. Remy’s topic wasn’t specified in the recovered notes.\n◆ Articulation: making each sound clear:\nThe lesson focused on opening the mouth and finishing sounds so words are easy to understand. The tongue twisters were:\n→ Sixty silly skeletons.\n→ Which witch is which?\n→ Sandy sells seashells by the seashore.\n→ Truly rural, truly rural, truly rural, truly rural.\nThe practice sequence was to start slowly, repeat each line three times, then increase speed without losing clarity.\n◆ The four Ps of vocal variety:\n   - Pitch: a high or low voice, such as a squeaky bee and a deep bear.\n   - Power: a louder or softer voice, such as “STOP!” compared with “Psst…”\n   - Pace: speaking quickly or slowly to suit the meaning.\n   - Pause: stopping deliberately to give listeners time or create anticipation, such as “I have… a surprise!”\n◆ Character voices and role-play:\nThe Bear and the Bee dialogue gave students two contrasting characters: a hungry bear trying to get honey and a bee reluctant to share it. The aim was to make their voices and intentions sound different, then switch roles.\nTwo additional scenes were:\n→ The banana robber: a robber brings a banana instead of a gun. The guard says, “Hey, hands up!” and the robber replies, “But do you want a banana?”\n→ The watermelon seller: a buyer wants juice, but the seller only sells whole watermelons. Students use their voices to show the characters’ different attitudes.\n◆ Emphasis and expression:\nUsing “I want watermelon juice,” students explored how stressing a different word changes the meaning:\n→ I: who wants it?\n→ Want: how strongly do I want it?\n→ Watermelon: which kind?\n→ Juice: a drink rather than the whole fruit?\nAnother exercise used “I’m so hungry!” with four different deliveries: excited, secretive, angry and exhausted.\nThe performance checklist was clear sounds, a distinct character voice, an emphasized word, and purposeful use of the four Ps.\n◆ Robot faces, voices and emotions:\nThe extension asked whether a robot can show a feeling and what we notice in its face, voice and body.\nStudents distinguished observations from guesses:\n→ “I notice…” describes something visible or audible.\n→ “My guess is…” explains an interpretation.\nA robot can use cameras and microphones to collect information, software to choose actions, motors to move its face and speakers to produce a voice. The lesson included a real robot lip-sync demonstration.\nThe central discussion point is that a smile or cheerful voice can communicate an emotion, but does not by itself establish what is felt inside.\nThe final creative prompt was to perform a kind robot greeting—“Hello. Would you like help?”—using one facial movement and one voice change."
+          ],
+          "homework": {
+            "title": "AI, emotions and our lives",
+            "steps": [
+              "Write out a speech presenting your personal opinions and thoughts on whether AI can have emotions and why emotions are important in our lives.",
+              "Include an opening, body and conclusion.",
+              "Use “first,” “second” and “finally” to organize your ideas."
+            ],
+            "prepareFor": "A written speech explaining your personal opinions on AI and emotions."
+          },
+          "students": [
+            {
+              "name": "Remy",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-08&student=remy"
+            },
+            {
+              "name": "Jarvis",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-08&student=jarvis"
+            },
+            {
+              "name": "Owen",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-08&student=owen"
+            },
+            {
+              "name": "Elsa",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-08&student=elsa"
+            }
+          ]
         }
       ]
     },
@@ -768,15 +803,15 @@
             },
             {
               "name": "Peter",
-              "feedbackUrl": null
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-09&student=peter"
             },
             {
               "name": "Oliver",
-              "feedbackUrl": null
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-09&student=oliver"
             },
             {
               "name": "Lucas",
-              "feedbackUrl": null
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-09&student=lucas"
             }
           ]
         }
