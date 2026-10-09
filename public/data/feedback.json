@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T10:54:00.240324+00:00",
+  "updatedAt": "2026-10-09T15:17:33.211Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -750,9 +750,76 @@
             },
             {
               "id": "everleigh",
-              "name": "Everleigh",
-              "en": "✓ 𝑽𝒐𝒊𝒄𝒆 𝒂𝒏𝒅 𝑬𝒙𝒑𝒓𝒆𝒔𝒔𝒊𝒐𝒏:\nEverleigh spoke with a loud voice and showed a good level of English. Her vocabulary helped her express her ideas, giving her a useful foundation for participating in the class.\n\n✓ 𝑺𝒑𝒆𝒆𝒄𝒉 𝒔𝒕𝒓𝒖𝒄𝒕𝒖𝒓𝒆:\nShe independently used “first” and “second” to organize her points, despite not having attended this class before. This showed an initial ability to put her ideas into a sequence that listeners could follow.\n\n✓ 𝑪𝒍𝒂𝒔𝒔 𝒔𝒖𝒊𝒕𝒂𝒃𝒊𝒍𝒊𝒕𝒚:\nBased on this trial, she appears ready to participate in the class. Her audible voice, vocabulary, and emerging structure provide a good starting point.\n\n➜ 𝑺𝒖𝒈𝒈𝒆𝒔𝒕𝒆𝒅 𝒑𝒓𝒂𝒄𝒕𝒊𝒄𝒆:\nBuild on “first” and “second” by adding a reason or example after each point.",
-              "zh": "✓【声音与表达】：\nEverleigh 讲话声音响亮，展现了不错的英语水平。她的词汇能够支持她表达自己的想法，为参与课堂提供了有用的基础。\n\n✓【演讲结构】：\n虽然之前没有参加过这门课，她已经能够自主用“first”和“second”组织要点，初步展现了按顺序安排想法、帮助听众理解的能力。\n\n✓【课程适合度】：\n根据这次试听，她看来能够参与这门课。清楚可闻的声音、词汇以及初步结构意识，都是不错的起点。\n\n➜【建议练习】：\n在“first”和“second”的基础上，为每个要点补充一个理由或例子。"
+              "name": "Everlyn",
+              "en": "✓ 𝑽𝒐𝒊𝒄𝒆 𝒂𝒏𝒅 𝑬𝒙𝒑𝒓𝒆𝒔𝒔𝒊𝒐𝒏:\nEverlyn spoke with a loud voice and showed a good level of English. Her vocabulary helped her express her ideas, giving her a useful foundation for participating in the class.\n\n✓ 𝑺𝒑𝒆𝒆𝒄𝒉 𝒔𝒕𝒓𝒖𝒄𝒕𝒖𝒓𝒆:\nShe independently used “first” and “second” to organize her points, despite not having attended this class before. This showed an initial ability to put her ideas into a sequence that listeners could follow.\n\n✓ 𝑪𝒍𝒂𝒔𝒔 𝒔𝒖𝒊𝒕𝒂𝒃𝒊𝒍𝒊𝒕𝒚:\nBased on this trial, she appears ready to participate in the class. Her audible voice, vocabulary, and emerging structure provide a good starting point.\n\n➜ 𝑺𝒖𝒈𝒈𝒆𝒔𝒕𝒆𝒅 𝒑𝒓𝒂𝒄𝒕𝒊𝒄𝒆:\nBuild on “first” and “second” by adding a reason or example after each point.",
+              "zh": "✓【声音与表达】：\nEverlyn 讲话声音响亮，展现了不错的英语水平。她的词汇能够支持她表达自己的想法，为参与课堂提供了有用的基础。\n\n✓【演讲结构】：\n虽然之前没有参加过这门课，她已经能够自主用“first”和“second”组织要点，初步展现了按顺序安排想法、帮助听众理解的能力。\n\n✓【课程适合度】：\n根据这次试听，她看来能够参与这门课。清楚可闻的声音、词汇以及初步结构意识，都是不错的起点。\n\n➜【建议练习】：\n在“first”和“second”的基础上，为每个要点补充一个理由或例子。"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-09-fri-afternoon",
+          "date": "2026-10-09",
+          "time": "15:40–17:40",
+          "status": "held",
+          "classContent": {
+            "en": "◆ Storytelling structures:\n\nWe explored the Hero’s Journey structure, Pixar storytelling structure, and problem–solution storytelling. These provided ways to organize a story around a challenge and develop how it is resolved.\n\n◆ Creating and practising stories:\n\nStudents created their own quick stories using a collection of 30 different problem prompts, followed by light presentation practice. They seemed to need some time to settle back into class after the holidays, so I kept the activities and practice light.",
+            "zh": "◆ 故事结构：\n\n我们介绍了英雄之旅和皮克斯故事结构，并学习了“问题—解决方法”的故事组织方式。这些框架帮助学生围绕一个挑战组织故事，并展开问题如何得到解决。\n\n◆ 创作与练习：\n\n学生从30个问题情境中选择题目，创作自己的短篇故事，随后进行了轻量的表达练习。学生们似乎还需要一些时间适应假期后的课堂节奏，因此本节课的活动和练习安排得比较轻松。"
+          },
+          "homework": {
+            "en": "Practise and prepare the story speech you created in class, ready to present it next class.",
+            "zh": "练习并准备课堂上创作的故事演讲，下节课进行展示。"
+          },
+          "students": [
+            {
+              "id": "wendy",
+              "name": "Wendy",
+              "en": "✓ Sharing her homework:\n\nWendy came to the stage first and shared both pieces of homework. Her voice was very soft, particularly when giving her worksheet answers, which made it difficult for the audience to hear her words and follow what she was saying.\n\n→ Voice and stage presence:\n\nHer main focus is to speak loudly enough for everyone to hear, including during shorter worksheet responses. She could practise delivering one answer towards the back of the room, keeping her volume clear through the end of the sentence. Alongside volume, we will work on more expressive delivery and a more confident stage presence so that her ideas come across clearly.",
+              "zh": "✓ 作业分享：\n\nWendy是第一位上台的学生，分享了两项作业。她的声音比较轻，尤其在回答练习单上的问题时，听众不容易听清楚，也较难理解她想表达的内容。\n\n→ 音量与舞台表现：\n\n接下来重点是提高音量，包括简短的练习单回答，让所有人都能听清楚。她可以尝试向教室后排说出一个回答，并把清晰的音量保持到句子的最后。同时，我们会继续练习更有表现力的表达和更自信的舞台呈现，让她的想法更清楚地传达给听众。"
+            },
+            {
+              "id": "ray",
+              "name": "Ray",
+              "en": "✓ Sharing his holiday experiences:\n\nRay had not completed his homework, so he spoke about his holiday and what he did during that time. He shared plenty of information, but his voice was very soft, making parts of his presentation difficult to hear.\n\n→ Volume, energy and a clear message:\n\nRay’s next focus is to speak louder and bring more energy to his delivery so the audience can hear and stay engaged with his ideas. His presentation also needed a clearer message to connect the information he shared. He could begin by choosing one thing he wants the audience to remember about his holiday, then select details that support it. This would give his presentation a clearer purpose and make it easier to follow.",
+              "zh": "✓ 假期经历分享：\n\nRay没有完成作业，因此分享了假期中的经历。他提供了不少信息，但声音比较轻，有些部分听不清楚。\n\n→ 音量、活力与核心信息：\n\n接下来需要提高音量、增加表达的活力，让听众能听清楚并持续关注他的想法。分享也需要一个更清楚的核心信息，把不同内容联系起来。他可以先想好希望大家记住的一个假期重点，再选择相关细节来支持这个重点，让分享更集中、更有方向，也更容易理解。"
+            },
+            {
+              "id": "evan",
+              "name": "Evan",
+              "en": "✓ Stage presentation:\n\nEvan had not completed his homework, but he came to the stage and spoke. His delivery had limited energy, and he mainly faced me rather than looking towards his classmates. His answer was also brief and needed more development.\n\n→ Preparation, detail and audience connection:\n\nEvan needs to spend more time preparing and organizing his response. He could choose his main point first, then add an explanation and a specific example to develop the answer meaningfully. During delivery, his focus is to bring more energy to his voice and face his classmates, sharing his attention across the audience. These steps would help him give a fuller response and connect more directly with his listeners.",
+              "zh": "✓ 上台分享：\n\nEvan没有完成作业，但仍然上台进行了分享。他的表达活力不足，主要面向老师，没有充分面向同学。回答也比较简短，需要进一步展开。\n\n→ 准备、细节与听众交流：\n\n接下来要花更多时间准备和组织内容。可以先确定主要观点，再补充解释和具体例子，让回答更充分、有意义。上台时，也要增加声音的活力，面向同学，让注意力照顾到不同位置的听众。这些练习能帮助他给出更完整的回答，并与听众建立更直接的交流。"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "✓ Homework and completed presentation:\n\nEthan completed his homework and finished his speech. Preparing the homework gives him a structure to work from when organizing his response. The overall presentation was slightly short, so his next step is to develop his ideas further. He could add a fuller explanation and a specific example to help the audience understand his point.\n\n→ Staying engaged in class:\n\nEthan moved around the room repeatedly during the lesson, interrupting his participation. Alongside developing his speech, his next focus is staying engaged with the activity and limiting unnecessary movement. Preparing the materials he needs before an activity could help him participate more consistently and return his attention to the lesson promptly after an interruption.",
+              "zh": "✓ 作业与完整展示：\n\nEthan完成了作业，也完成了演讲。提前准备作业，可以帮助他在表达时有更清楚的结构。整段演讲稍短，接下来可以进一步展开想法，增加更完整的解释和具体例子，帮助听众理解他的观点。\n\n→ 持续参与课堂：\n\n课堂中，Ethan多次在教室里走动，影响了持续参与活动。除了发展演讲内容，接下来也要练习专注于当前活动，减少不必要的走动。在活动开始前准备好所需物品，可能有助于他更稳定地参与，并在中断后及时把注意力回到课堂上。"
+            },
+            {
+              "id": "mikaela",
+              "name": "Mikaela",
+              "en": "✓ Attitude and staying on topic:\n\nMikaela spoke with a soft, light voice, but I could still hear her. She seemed to stay reasonably focused on her topic without much digression and showed a very good attitude towards participating.\n\n→ Gradually developing projection:\n\nHer next focus is building a stronger voice so her words reach the whole audience more easily. This may take time to develop. She could practise sending one clear sentence towards the back of the room, gradually building volume while keeping her voice natural. Her positive attitude gives us a useful starting point for this practice.",
+              "zh": "✓ 态度与围绕主题表达：\n\nMikaela的声音比较轻，但我仍然能够听清楚。她似乎基本围绕主题表达，没有明显偏离内容，参与时也表现出很好的态度。\n\n→ 逐步增强声音投射：\n\n接下来主要练习逐步增强声音的投射力，让整个教室的听众都能更容易听清楚。这项能力可能需要一些时间和练习。她可以尝试向教室后排清楚说出一个句子，在保持声音自然的同时逐渐增加音量。她积极的态度是这项练习很好的起点。"
+            },
+            {
+              "id": "everleigh",
+              "name": "Everlyn",
+              "attendance": "absent",
+              "en": "Everlyn was absent from this class. No speaking or homework performance evaluation was recorded.",
+              "zh": "Everlyn本节课缺席，因此没有记录本节课的演讲或作业表现评价。"
+            },
+            {
+              "id": "harper",
+              "name": "Harper",
+              "attendance": "absent",
+              "en": "Harper was absent from this class. No speaking or homework performance evaluation was recorded.",
+              "zh": "Harper本节课缺席，因此没有记录本节课的演讲或作业表现评价。"
+            },
+            {
+              "id": "rhea",
+              "name": "Rhea",
+              "attendance": "absent",
+              "en": "Rhea was absent from this class. No speaking or homework performance evaluation was recorded.",
+              "zh": "Rhea本节课缺席，因此没有记录本节课的演讲或作业表现评价。"
             }
           ]
         }
@@ -848,6 +915,65 @@
               "name": "Merlin",
               "en": "✓ 𝑾𝒓𝒊𝒕𝒊𝒏𝒈 𝒂𝒏𝒅 𝒆𝒏𝒈𝒂𝒈𝒆𝒎𝒆𝒏𝒕:\nMerlin wrote very quickly and was already continuing with his writing before the class moved to the next activity. He appeared to enjoy the writing task and showed enthusiasm for getting his ideas onto paper.\n\n✓ 𝑷𝒂𝒓𝒕𝒊𝒄𝒊𝒑𝒂𝒕𝒊𝒐𝒏:\nMerlin has now completed his speaking turn.\n\n➜ 𝑷𝒂𝒄𝒆:\nHe spoke a little quickly. Slowing down and pausing between complete ideas would give listeners more time to follow his message.\n\n➜ 𝑬𝒙𝒑𝒓𝒆𝒔𝒔𝒊𝒐𝒏 𝒂𝒏𝒅 𝒆𝒏𝒆𝒓𝒈𝒚:\nHis delivery had little emotional expression or vocal variation, making it sound mechanical. He communicated the words, but the presentation felt more like ordinary conversation than a speech directed toward an audience. The next focus is adding purposeful emphasis and energy so listeners can hear which ideas matter.\n\n➜ 𝑺𝒖𝒈𝒈𝒆𝒔𝒕𝒆𝒅 𝒑𝒓𝒂𝒄𝒕𝒊𝒄𝒆:\nChoose one sentence, mark an important word, and practise saying it with expression that matches its meaning. Pause at the end before continuing, keeping that deliberate pace and energy through the next sentence.\n\nUse his written work for rehearsal: mark an important word in each sentence, emphasize it with expression that matches the meaning, and pause before the next idea.",
               "zh": "✓【写作与投入】：\nMerlin 写得很快，在全班进入下一个活动之前，他已经继续写了不少内容。他似乎享受这项写作任务，积极地把想法写在纸上。\n\n✓【参与】：\nMerlin 已经完成了自己的发言。\n\n➜【语速】：\n他讲得稍快。放慢速度，并在完整想法之间停顿，可以给听众更多时间理解信息。\n\n➜【表现力与能量】：\n他的表达中情感和声音变化较少，听起来有些机械。他说出了内容，但更像普通交谈，而不是面向听众的演讲。下一步是加入有目的的重音和能量，让听众听出哪些想法最重要。\n\n➜【建议练习】：\n选择一句话，标出一个重要的词，用符合意思的情感说出来。句末停顿后再继续，把这种有意识的节奏和能量保持到下一句。\n\n用自己的书面材料排练：为每句话标出一个重要词语，用符合意思的表现力突出它，再停顿进入下一个想法。"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-09-fri-later",
+          "date": "2026-10-09",
+          "time": "18:00–20:00",
+          "status": "held",
+          "classContent": {
+            "en": "◆ Homework presentations:\n\nStudents were expected to prepare one or two answers and practise presenting them without reading from paper. The purpose was to practise public speaking and communicating ideas from memory. Answers should be developed enough to give the audience a fuller story, rather than stopping after a brief response.\n\n◆ Storytelling structures:\n\nWe explored the Hero’s Journey and Pixar storytelling structures, introducing two popular approaches to organizing a story. We also reviewed problem–solution storytelling and the basics of story structure.\n\n◆ Creating original stories:\n\nStudents chose from 30 different problem prompts and developed a problem and a solution. We worked through a structure they could use independently, and they then created their own stories. The main skill focus was understanding and applying storytelling structure.",
+            "zh": "◆ 作业展示：\n\n学生需要准备一至两个回答，并练习不依赖纸稿完成展示。作业的目的是练习公众表达，以及凭借对内容的熟悉来传达想法。回答应适当展开，让听众听到更完整的故事，而不是停留在简短的回应。\n\n◆ 故事结构：\n\n我们介绍了英雄之旅和皮克斯故事结构这两种常见的故事组织方式，也复习了“问题—解决方法”及故事结构的基础。\n\n◆ 创作自己的故事：\n\n学生从30个问题情境中选择题目，设计问题及解决方法。我们一起练习了学生可以独立使用的组织框架，随后他们创作了自己的故事。本节课的核心技能是理解并运用故事结构。"
+          },
+          "homework": {
+            "en": "→ Practise saying the story you created in class a couple of times.\n→ Prepare to deliver your story speech next class, if possible.",
+            "zh": "→ 把课堂上创作的故事练习讲几遍。\n→ 尽量准备好在下节课进行故事演讲。"
+          },
+          "students": [
+            {
+              "id": "merlin",
+              "name": "Merlin",
+              "en": "✓ Homework and voice:\n\nMerlin was our first speaker. He completed both homework tasks and spoke with a loud voice. This helped make his words easy to hear. His individual answers were short—estimated at around 20–30 seconds each—so there is room to develop his ideas further.\n\n→ Facing the audience:\n\nMerlin was unsure which direction to face and wanted to face the TV. His next focus is to face his listeners so his presentation connects with the audience.\n\n→ Fuller answers and a clear message:\n\nHe could extend each answer with an explanation or a specific example, then finish with something he wants the audience to remember. A useful starting phrase is: “My message to you is…” followed by his own takeaway.\n\n→ Taking turns:\n\nMerlin began speaking when it was a classmate’s turn. He needs to wait for his turn and give others space to speak, helping everyone participate and be heard.",
+              "zh": "✓ 作业与声音：\n\nMerlin是第一位发言的学生。他完成了两项作业，声音响亮，听众能够清楚听到。他的每个回答比较简短，估计大约各为20–30秒，内容还可以进一步展开。\n\n→ 面向听众：\n\n他上台时不太确定应该面向哪里，想要面向电视。接下来要练习面向听众，与大家建立更直接的交流。\n\n→ 更完整的回答与核心信息：\n\n可以增加解释或具体例子，最后用一个希望听众记住的重点收尾。例如，可以从“My message to you is…”（我想传达给大家的信息是……）开始，再说出自己的想法。\n\n→ 轮流发言：\n\nMerlin在同学的发言时间开始讲话。接下来也要练习等待自己的顺序，给其他同学完整的发言空间，让每个人都有参与和被听见的机会。"
+            },
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": "✓ Presentation and content:\n\nArthur was our second speaker. He spoke for approximately two minutes thirty seconds, covering all five impromptu questions. Although the overall presentation had some length, each individual answer was brief—estimated at around 20–30 seconds. Moving through all five questions made it feel more like a Q&A session or a short interview than one developed speech.\n\n→ Develop one answer into a speech:\n\nArthur’s next focus is to choose one question and expand his response so the audience can learn more about his story. He could explain what happened, add specific details, and describe why the experience mattered to him. Developing one answer more fully would give his presentation a clearer focus and help listeners follow and connect with his ideas.",
+              "zh": "✓ 展示与内容：\n\nArthur是第二位发言的学生。他的分享总长约为2分30秒，回答了全部五个即兴问题。虽然总时间有一定长度，但每个回答仍然较短，估计大约为20–30秒。连续回答五个问题，让分享更像问答或简短采访，而不是一篇充分展开的演讲。\n\n→ 把一个回答发展成演讲：\n\n接下来重点是选择一个问题，把回答发展成更完整的演讲，让听众更了解他的故事。可以讲清楚发生了什么，加入具体细节，再说明这段经历为什么对自己有意义。充分展开一个回答，能让演讲有更清楚的重点，也帮助听众理解并与他的想法建立联系。"
+            },
+            {
+              "id": "molly",
+              "name": "Molly",
+              "en": "✓ Speaking without paper:\n\nMolly remembered her prepared content and presented without reading from her paper, meeting the central purpose of the homework. Her presentation lasted 42 seconds. Although it was still fairly short, she gave a more developed individual response and demonstrated preparation by recalling her words independently. Overall, she did a good job preparing and speaking independently.\n\n→ Volume and further development:\n\nMolly’s main delivery focus is to speak louder so everyone can hear her clearly. Her slower pace was not a major concern; stronger volume would help her words reach the audience while keeping that steady pace.\n\nShe could also develop her answer further with an explanation or a specific story detail. This would give listeners more to understand and remember while preserving her ability to speak independently.",
+              "zh": "✓ 不看稿完成分享：\n\nMolly记住了自己准备的内容，能够不看纸稿完成分享，达到了本次作业的核心目标。她的演讲时长为42秒。虽然整体仍然较短，但单个回答展开得较充分，也通过独立回忆内容体现了提前准备。总体来说，她在准备和独立表达方面做得很好。\n\n→ 音量与进一步展开：\n\n接下来表达方面的主要重点是提高音量，让所有人都能听清楚。语速稍慢并不是主要问题；她可以保留稳定的节奏，同时让声音更有力量，使声音更容易传达到听众。\n\n内容方面，也可以增加解释或具体故事细节，让回答更完整。这样能给听众更多可以理解和记住的内容，同时保留她独立表达的能力。"
+            },
+            {
+              "id": "zoey",
+              "name": "Zoey",
+              "attendance": "absent",
+              "en": "Zoey was absent from this class. No speaking or homework performance evaluation was recorded.",
+              "zh": "Zoey本节课缺席，因此没有记录本节课的演讲或作业表现评价。"
+            },
+            {
+              "id": "peter",
+              "name": "Peter",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "oliver",
+              "name": "Oliver",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "lucas",
+              "name": "Lucas",
+              "en": null,
+              "zh": null
             }
           ]
         }

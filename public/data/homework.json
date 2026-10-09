@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-06T10:54:00.253916+00:00",
+  "updatedAt": "2026-10-09T15:17:33.211Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -602,8 +602,57 @@
               "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-18&student=ray"
             },
             {
-              "name": "Everleigh",
+              "name": "Everlyn",
               "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-09-18&student=everleigh"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-09-fri-afternoon",
+          "date": "2026-10-09",
+          "time": "15:40–17:40",
+          "classContent": [
+            "◆ Storytelling structures:\n\nWe explored the Hero’s Journey structure, Pixar storytelling structure, and problem–solution storytelling. These provided ways to organize a story around a challenge and develop how it is resolved.\n\n◆ Creating and practising stories:\n\nStudents created their own quick stories using a collection of 30 different problem prompts, followed by light presentation practice. They seemed to need some time to settle back into class after the holidays, so I kept the activities and practice light."
+          ],
+          "homework": {
+            "title": "Prepare your original story speech",
+            "steps": [
+              "Practise and prepare the story speech you created in class, ready to present it next class."
+            ],
+            "prepareFor": "Present your story speech next class."
+          },
+          "students": [
+            {
+              "name": "Wendy",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-09&student=wendy"
+            },
+            {
+              "name": "Ray",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-09&student=ray"
+            },
+            {
+              "name": "Evan",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-09&student=evan"
+            },
+            {
+              "name": "Ethan",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-09&student=ethan"
+            },
+            {
+              "name": "Mikaela",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-09&student=mikaela"
+            },
+            {
+              "name": "Everlyn",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-09&student=everleigh"
+            },
+            {
+              "name": "Harper",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-09&student=harper"
+            },
+            {
+              "name": "Rhea",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-09&student=rhea"
             }
           ]
         }
@@ -682,6 +731,52 @@
             {
               "name": "Merlin",
               "feedbackUrl": "/fb/?class=fri-later&date=2026-09-18&student=merlin"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-09-fri-later",
+          "date": "2026-10-09",
+          "time": "18:00–20:00",
+          "classContent": [
+            "◆ Homework presentations:\n\nStudents were expected to prepare one or two answers and practise presenting them without reading from paper. The purpose was to practise public speaking and communicating ideas from memory. Answers should be developed enough to give the audience a fuller story, rather than stopping after a brief response.\n\n◆ Storytelling structures:\n\nWe explored the Hero’s Journey and Pixar storytelling structures, introducing two popular approaches to organizing a story. We also reviewed problem–solution storytelling and the basics of story structure.\n\n◆ Creating original stories:\n\nStudents chose from 30 different problem prompts and developed a problem and a solution. We worked through a structure they could use independently, and they then created their own stories. The main skill focus was understanding and applying storytelling structure."
+          ],
+          "homework": {
+            "title": "Prepare your original story speech",
+            "steps": [
+              "Practise saying the story you created in class a couple of times.",
+              "Prepare to deliver your story speech next class, if possible."
+            ],
+            "prepareFor": "Deliver your story speech next class, if possible."
+          },
+          "students": [
+            {
+              "name": "Merlin",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-09&student=merlin"
+            },
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-09&student=arthur"
+            },
+            {
+              "name": "Molly",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-09&student=molly"
+            },
+            {
+              "name": "Zoey",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-09&student=zoey"
+            },
+            {
+              "name": "Peter",
+              "feedbackUrl": null
+            },
+            {
+              "name": "Oliver",
+              "feedbackUrl": null
+            },
+            {
+              "name": "Lucas",
+              "feedbackUrl": null
             }
           ]
         }
