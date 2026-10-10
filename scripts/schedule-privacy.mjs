@@ -6,6 +6,8 @@ const PUBLIC_EVENT_LINE_PATTERN =
 const PUBLIC_TRAVEL_LABEL_PATTERN = /^Travel: Malaysia$/;
 const PUBLIC_IN_PERSON_LABEL = "In-person: Malaysia only";
 const PUBLIC_SCHEDULE_NOTICES = new Set([
+  "Schedule notice: All classes canceled — school day for many students.",
+  "Schedule notice: Later class canceled.",
   "Schedule notice: Classes moved to September 27 - make-up workday for the September 25-27 holiday.",
   "Schedule notice: Make-up classes from September 20.",
 ]);
