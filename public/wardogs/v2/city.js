@@ -1,4 +1,6 @@
 import * as THREE from './three.module.js';
+import {createPhotoMaterials} from './materials.js?v=20261012-textures';
+import {createFoliage} from './foliage.js?v=20261012-textures';
 
 // Shanghai architectural study. Landmark dimensions follow architect / operator
 // sources; OSM footprints and waterways form the selected core, not a surveyed map.
@@ -9,6 +11,7 @@ export function createCity(scene) {
   const batches = new Map();
   const geoData=scene.userData.shanghaiGeo||scene.userData.shanghaiGeoData||null;
   const waterShaders=[];
+  const photographic=createPhotoMaterials();
   const geoWater=(geoData?.water||[]).filter(w=>w.polygon?.length>=3).map(w=>({...w,minX:Math.min(...w.polygon.map(p=>p[0])),maxX:Math.max(...w.polygon.map(p=>p[0])),minZ:Math.min(...w.polygon.map(p=>p[1])),maxZ:Math.max(...w.polygon.map(p=>p[1]))}));
   const geoParks=(geoData?.parks||[]).filter(w=>w.polygon?.length>=3).map(w=>({...w,minX:Math.min(...w.polygon.map(p=>p[0])),maxX:Math.max(...w.polygon.map(p=>p[0])),minZ:Math.min(...w.polygon.map(p=>p[1])),maxZ:Math.max(...w.polygon.map(p=>p[1]))}));
   function insideRing(x,z,points){let inside=false;for(let i=0,j=points.length-1;i<points.length;j=i++){const a=points[i],b=points[j];if((a[1]>z)!==(b[1]>z)&&x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])inside=!inside;}return inside;}
@@ -21,7 +24,8 @@ export function createCity(scene) {
   const black = mat(0x202a30), asphalt = mat(0x3b4449), grass = mat(0x687653), white = mat(0xdfe5de), yellow = mat(0xeab545);
   const warmGlass = facadeMaterial(0x9baeb4, 0); const blueGlass = facadeMaterial(0x789bac, 1);
   const silverGlass = facadeMaterial(0xa5b5bb, 2); const brownGlass = facadeMaterial(0xb5a99a, 3);
-  const residentialFacade=facadeMaterial(0xd5d0c1,4),historicFacade=facadeMaterial(0xd0bfa5,5),towerGlass=facadeMaterial(0xa5b7c0,6);
+  const residentialFacade=facadeMaterial(0xf0f0e9,4),historicFacade=facadeMaterial(0xcec8bb,5),towerGlass=facadeMaterial(0xa5b7c0,6);
+  const residentialVariants=[residentialFacade,facadeMaterial(0xd5dde0,4),facadeMaterial(0xe5decf,4)];
   const red = mat(0x974853, { metalness: .48, roughness: .37 });
   const roof = mat(0x616b6c);
   const urbanGround=mat(0x777d78,{roughness:.93}),roofVariants=[mat(0x626968,{roughness:.78}),mat(0x8f8a7c,{roughness:.82}),mat(0x718176,{roughness:.80})];
@@ -42,8 +46,17 @@ export function createCity(scene) {
   concrete.map=grainTexture([204,204,193],27,3);
   urbanGround.map=grainTexture([188,192,184],41,4);
   for(const m of roofVariants)m.map=roof.map;
+  // Embedded licensed surface photographs; all repeats are measured in metres.
+  photographic.applySurface(concrete,'concrete',1.8,.24);
+  photographic.applySurface(stone,'concrete',1.8,.22);
+  asphalt.color.set(0xc0c1bb);photographic.applySurface(asphalt,'asphalt',3.0,.23);
+  grass.color.set(0xc6d2a9);photographic.applySurface(grass,'grass',2.51,.32);
+  photographic.applySurface(urbanGround,'concrete',1.8,.18);
+  photographic.applySurface(roof,'roof',1.5,.30);
+  for(const m of roofVariants)photographic.applySurface(m,'roof',1.5,.30);
+  for(const m of residentialVariants)photographic.applyMasonry(m,'plaster',1.0,.20);
+  photographic.applyMasonry(historicFacade,'masonry',1.0,.32);
   const unitBox = new THREE.BoxGeometry(1, 1, 1), unitCylinder = new THREE.CylinderGeometry(1, 1, 1, 12);
-  const unitSphere = new THREE.SphereGeometry(1, 10, 7);
   const roundTowerGeometry=new THREE.CylinderGeometry(1,1,1,32);
   const contactGeometry=new THREE.PlaneGeometry(1,1);contactGeometry.rotateX(-Math.PI/2);
   const shadowCanvas=document.createElement('canvas');shadowCanvas.width=shadowCanvas.height=128;
@@ -153,8 +166,14 @@ export function createCity(scene) {
   // Two actual river-bank polygons so the river is recessed instead of painted on land.
   const east = banks.map(b=> b[0].x>b[1].x?b[0]:b[1]);
   const west = banks.map(b=> b[0].x<b[1].x?b[0]:b[1]);
-  mesh(landShape([[16000,-16000],[16000,16000],...east.slice().reverse().map(p=>[p.x,p.z])]), grass);
-  mesh(landShape([[-16000,16000],[-16000,-16000],...west.map(p=>[p.x,p.z])]), grass);
+  let outerGrass=grass;
+  if(geoData){
+    outerGrass=grass.clone();photographic.applySurface(outerGrass,'grass',2.51,.32);const exteriorShader=outerGrass.onBeforeCompile;
+    outerGrass.onBeforeCompile=shader=>{exteriorShader(shader);shader.fragmentShader=shader.fragmentShader.replace('#include <clipping_planes_fragment>',`#include <clipping_planes_fragment>\nif(length(citySurfaceWorld.xz)<${Number(geoData.radius)||4000}.0)discard;`);};
+    outerGrass.customProgramCacheKey=()=> 'photo-grass-exterior-v1';
+  }
+  mesh(landShape([[16000,-16000],[16000,16000],...east.slice().reverse().map(p=>[p.x,p.z])]), outerGrass);
+  mesh(landShape([[-16000,16000],[-16000,-16000],...west.map(p=>[p.x,p.z])]), outerGrass);
   const waterPositions=[], waterUV=[], waterIndices=[];
   banks.forEach((b,i)=>{ b.forEach((p,j)=>{waterPositions.push(p.x,-.24,p.z);waterUV.push(j,i*.8);});if(i<180){const n=i*2;waterIndices.push(n,n+1,n+2,n+1,n+3,n+2);} });
   const waterGeometry=new THREE.BufferGeometry();waterGeometry.setAttribute('position',new THREE.Float32BufferAttribute(waterPositions,3));waterGeometry.setAttribute('uv',new THREE.Float32BufferAttribute(waterUV,2));waterGeometry.setIndex(waterIndices);waterGeometry.computeVertexNormals();
@@ -220,9 +239,11 @@ export function createCity(scene) {
       let h=Number(item.height),wasEstimated=!!item.estimated;
       if(!Number.isFinite(h)||h<=0){h=Number(item.levels)>0?Number(item.levels)*3.25:(x<-1900?18:30);wasEstimated=true;}
       h=Math.max(4,Math.min(400,h));const minHeight=Math.max(0,Number(item.minHeight)||0);
-      const id=Number(String(item.id||built).replace(/\D/g,''))||built;
-      let material=h>65?[warmGlass,blueGlass,silverGlass][id%3]:x<-1900?historicFacade:residentialFacade;
-      if(h<30&&id%4===0)material=historicFacade;
+      const id=Number(String(item.id||built).match(/\d+/)?.[0])||built;
+      // Most residential exteriors use light weathered plaster. Individual
+      // facade materials are inferred; mapped footprints/heights are preserved.
+      let material=h>65?[warmGlass,blueGlass,silverGlass][id%3]:residentialVariants[id%3];
+      if(h<45&&id%10<3)material=historicFacade;
       const shape=polygonShape(points,item.holes||[]);
       const geometry=new THREE.ExtrudeGeometry(shape,{depth:Math.max(2,h-minHeight),bevelEnabled:false,curveSegments:1,steps:1});geometry.rotateX(-Math.PI/2);geometry.translate(0,minHeight,0);
       mergeGeometry(geometry,material,roofVariants[id%roofVariants.length]);
@@ -393,7 +414,7 @@ export function createCity(scene) {
     box(concrete,(a.x+c.x)/2,-.1,(a.z+c.z)/2,9,1,dist+2,yaw);
   }});
   // Trees with individual canopies, roads at ground scale, rooftop mechanical details.
-  const leaves=mat(0x46694b),shadeLeaves=mat(0x365a40), trunks=mat(0x655949);
+  const treePositions=[];
   const cityRoads=(geoData?.roads||[]).filter(r=>['primary','secondary','tertiary','residential','unclassified','service'].includes(r.kind)&&r.points?.length>1);
   for(let i=0;i<1600;i++){
     let x=-4500+rand()*8300,z=-2800+rand()*6700;
@@ -415,8 +436,10 @@ export function createCity(scene) {
     }
     if(Math.abs(x-550)<42&&Math.abs(z-1000)<42)continue;
     if(geoData&&colliders.some(b=>x>b.min.x-3&&x<b.max.x+3&&z>b.min.z-3&&z<b.max.z+3))continue;
-    const growth=.65+rand()*.6;batch(unitCylinder,trunks,x,3*growth,z,.45*growth,6*growth,.45*growth);batch(unitSphere,i%3===0?shadeLeaves:leaves,x,8*growth,z,(3+rand()*2)*growth,5*growth,(3+rand()*2)*growth);
+    const growth=.65+rand()*.6;treePositions.push({x,z,y:0,height:10*growth});
   }
+  const foliage=createFoliage(root,treePositions);root.userData.treeCount=treePositions.length;
+  root.userData.treePositions=treePositions.map(t=>[t.x,t.y,t.z,t.height]);
   const carMats=[mat(0xc6cdd0),mat(0x22364c),mat(0x9e3f36),mat(0xd4b779)];
   for(let i=0;i<160;i++){
     let x=-4900+Math.floor(rand()*36)*220+106,z=-2900+rand()*6200,y=0,yaw=0;
@@ -459,8 +482,17 @@ export function createCity(scene) {
   // Elevated heli pad in a kept-clear landscaped flight park. No opaque bottom HUD.
   const heliX=550,heliZ=1000;
   box(concrete,heliX,.7,heliZ,92,1.4,92);box(asphalt,heliX,1.45,heliZ,74,.1,74);
-  const heliTex=canvasTexture(512,512,ctx=>{ctx.fillStyle='#454f53';ctx.fillRect(0,0,512,512);ctx.strokeStyle='#e5dfb8';ctx.lineWidth=9;ctx.beginPath();ctx.arc(256,256,211,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#f2f0dc';ctx.font='bold 190px sans-serif';ctx.textAlign='center';ctx.fillText('H',256,321);ctx.font='27px sans-serif';ctx.fillText('LUJIAZUI FLIGHT PARK',256,449);});
-  const hp=mesh(new THREE.PlaneGeometry(68,68),mat(0xffffff,{map:heliTex}),new THREE.Vector3(heliX,1.53,heliZ));hp.rotation.x=-Math.PI/2;
+  const heliTex=canvasTexture(1024,1024,ctx=>{
+    ctx.strokeStyle='#e5dfb8';ctx.lineWidth=18;ctx.beginPath();ctx.arc(512,512,422,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#f2f0dc';ctx.font='bold 380px sans-serif';ctx.textAlign='center';ctx.fillText('H',512,642);ctx.font='54px sans-serif';ctx.fillText('LUJIAZUI FLIGHT PARK',512,898);
+    // Thin chipped paint reveals the photographic asphalt below. Wear is
+    // deterministic and affects only existing markings, never covers the pad.
+    let wear=8172;ctx.globalCompositeOperation='destination-out';
+    for(let i=0;i<4500;i++){wear=(Math.imul(wear,1664525)+1013904223)>>>0;const x=wear/4294967296*1024;wear=(Math.imul(wear,1664525)+1013904223)>>>0;const y=wear/4294967296*1024;ctx.fillStyle=i%5?'rgba(0,0,0,.17)':'rgba(0,0,0,.70)';ctx.fillRect(x,y,1+i%3,1+i%4);}
+    ctx.globalCompositeOperation='source-over';
+  });
+  const padPaint=mat(0xffffff,{map:heliTex,transparent:true,alphaTest:.03,depthWrite:false,roughness:.86});
+  photographic.applySurface(padPaint,'asphalt',3.0,.16,{paintMap:heliTex});
+  const hp=mesh(new THREE.PlaneGeometry(68,68),padPaint,new THREE.Vector3(heliX,1.53,heliZ));hp.rotation.x=-Math.PI/2;
   for(let i=0;i<8;i++){const a=i/8*Math.PI*2;box(yellow,heliX+Math.cos(a)*37,2.1,heliZ+Math.sin(a)*37,1,.8,1);}
   landmarks.push({name:'Flight Park · fictional helipad',position:new THREE.Vector3(heliX,3,heliZ)});
   // Dedicated uninhabited target field: no targets on actual city landmarks.
@@ -478,6 +510,8 @@ export function createCity(scene) {
   landmarks.push({name:'Aim Practice Range · fictional / uninhabited',position:new THREE.Vector3(rangeX,14,rangeZ)});
   const rangeSignTex=canvasTexture(1024,256,ctx=>{ctx.fillStyle='#26332f';ctx.fillRect(0,0,1024,256);ctx.fillStyle='#f1c461';ctx.textAlign='center';ctx.font='bold 62px sans-serif';ctx.fillText('AIM PRACTICE RANGE',512,104);ctx.font='33px sans-serif';ctx.fillText('FICTIONAL TRAINING TARGETS ONLY',512,180);});
   mesh(new THREE.PlaneGeometry(120,30),mat(0xffffff,{map:rangeSignTex}),new THREE.Vector3(rangeX,24,rangeZ+890));
+  root.userData.surfaceReady=photographic.ready;
+  root.userData.surfaceReady.then(()=>{root.userData.materialFailures=photographic.failures;});
   // Flush instances after all content is assembled.
   for(const {geometry,material,matrices} of batches.values()){
     const inst=new THREE.InstancedMesh(geometry,material,matrices.length);matrices.forEach((m,i)=>inst.setMatrixAt(i,m));inst.receiveShadow=true;inst.castShadow=false;inst.computeBoundingSphere();root.add(inst);

@@ -21,7 +21,7 @@ Flight Park helipad, Practice Field runway 18/36 and Aim Practice Range are **fi
 
 `shanghai-landmarks.blend` contains editable landmark geometry, named structural components, metre units, materials, lighting and a skyline review camera. `shanghai-landmarks.glb` provides the same four landmarks for import into other 3D tools. The browser scene renders equivalent lightweight geometry in `city.js`; it does not stream the GLB or contain remote map imagery. The export was generated with Blender 5.2.2 LTS in background mode.
 
-Facade and pavement textures are locally generated patterns. The photographic environment sky uses a CC0 Poly Haven photograph, documented separately in `sky-sources.md`. No third-party 3D building models or map imagery are embedded.
+Facade window layouts are locally generated; paving and wall surfaces use the photographic CC0 pack documented below. The photographic environment sky uses a CC0 Poly Haven photograph, documented separately in `sky-sources.md`. No third-party 3D building models or map imagery are embedded.
 
 
 # Photographic environment sky
@@ -76,8 +76,15 @@ The derived database is distributed under **ODbL 1.0** with attribution **© Ope
 
 This is a selected central subset within approximately 4 km of the reference origin. The geometry budget retains 4,270 mapped building footprints/parts, 2,094 street segments, 97 water polygons and a separate budget of mapped park/green-space polygons. All four hand-modelled landmark areas and the fictional helipad are excluded from the generic building layer. The near 1.5 km is prioritised; farther buildings are selected across 500 m cells rather than rendering every mapped object.
 
-Only 192 exported building records have an explicit height tag. Another 616 use recorded floor counts with an estimated 3 m floor spacing and any recorded roof height. The remaining 3,462 use type-based height defaults. Explicit OSM heights are community-recorded values, not independent measurements made for this project. Most road widths are defaults by highway class. Facades are original generated material patterns, not photographs of the mapped buildings. Coordinates are rounded to 0.1 m and nearly collinear vertices simplified; this storage precision does not imply survey accuracy.
+Only 192 exported building records have an explicit height tag. Another 616 use recorded floor counts with an estimated 3 m floor spacing and any recorded roof height. The remaining 3,462 use type-based height defaults. Explicit OSM heights are community-recorded values, not independent measurements made for this project. Most road widths are defaults by highway class. Facades combine original window layouts with generic photographed plaster/brick surfaces; they are not photographs of the mapped buildings. Coordinates are rounded to 0.1 m and nearly collinear vertices simplified; this storage precision does not imply survey accuracy.
 
 The named source outlines used for landmark alignment are Shanghai Tower way165792123 (Wikidata Q18547), World Financial Center way10691100 (Q80852), Jin Mao way376075961 (Q80813), and Oriental Pearl way40778038 (Q223207). Detailed geometry and landmark heights remain the architectural interpretations referenced above.
 
 No bulk download of the OSM public raster tile service was performed; raw geographic data was downloaded instead. No Google/Bing satellite imagery, Shanghai photogrammetric mesh, private API key or paid map account is included. Further source options and their verified coverage/access limitations are recorded in `SCENERY-ROADMAP.md`.
+
+
+# Photographic surface and foliage pack
+
+The simulator embeds seven CC0 PBR surface families and leaf colour/opacity assets from Poly Haven. See TEXTURE-SOURCES.md and assets/textures/manifest.json for official source URLs, authors, licences, checksums, world scales and edits. Generic material photographs add relief/weathering; transparent photographed leaves are arranged on original branching cards. These assets do not imply a photographic reconstruction of Shanghai.
+
+Keyboard Lock follows the official Chrome API documentation: https://developer.chrome.com/docs/capabilities/web-apis/keyboard-lock . Ordinary modifier shortcuts are captured during flight; optional fullscreen lock captures browser-reserved flight-key chords where permitted.
