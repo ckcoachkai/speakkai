@@ -14,3 +14,7 @@ Garden Siege uses the original short Plants vs. Zombies sound effects requested 
 | Zombie defeated | zombie_falling_1.ogg | 0.644s |
 
 All14 files were checked against the source Git blob hashes and successfully decoded by the browser's AudioContext. Total asset size is252,136bytes. The offline HTML embeds the same Ogg samples. Sound remains an optional browser preference, controlled by ♪ in the bottom Controls drawer.
+
+## Opening and selection cues
+
+The opening uses the original short readysetplant.ogg cue (5.255 seconds). Selection plays floop.ogg (0.120 seconds), followed by groan.ogg and winmusic.ogg (4.421 seconds). The Garden result poster stays visible for 5.6 seconds, allowing the outro to finish. These three new cue files were verified against their original source Git blob hashes; see dist/assets/AUDIO.md for the exact sources. Reset, mute, changing games and leaving the page cancel pending and active cues. The battle accompaniment remains synthesized.

@@ -1,3 +1,5 @@
+import { createGardenRenderer } from './garden-rig.js';
+
 /**
  * Garden Siege. Original procedural artwork and a real, symmetric lane battle.
  * These adjustable health values are custom PvZ-inspired rules, not a claim of
@@ -48,6 +50,12 @@ const WEAPONS = [
   { id: 'laser', name: 'Sun Prism', icon: '⚡', multiplier: .48, cooldown: .5, count: 1, pierce: 1, radius: 0 },
   { id: 'thorn', name: 'Thorn Fan', icon: '⋔', multiplier: .60, cooldown: 1.08, count: 3, pierce: 2, radius: 0 },
 ];
+const BLOCKERS = [
+  { id: 'walnut', name: 'Wall-nut', icon: '◉', blocker: true, hp: 1200, contactDamage: 4, multiplier: 0, cooldown: 1, count: 0, pierce: 0, radius: 0 },
+  { id: 'tallnut', name: 'Tall-nut', icon: '▣', blocker: true, hp: 1800, contactDamage: 6, multiplier: 0, cooldown: 1, count: 0, pierce: 0, radius: 0 },
+  { id: 'chestnut', name: 'Chestnut', icon: '✹', blocker: true, hp: 950, contactDamage: 18, multiplier: 0, cooldown: 1, count: 0, pierce: 0, radius: 0 },
+];
+export const PLANT_CATALOG = Object.freeze([...WEAPONS, ...BLOCKERS].map(plant => Object.freeze({ ...plant })));
 const AFFIXES = [
   { name: 'Fierce', damage: 3, description: '+3 damage' },
   { name: 'Rapid', rate: .94, description: 'faster attacks' },
@@ -64,13 +72,15 @@ export const LOOT_CATALOG = Object.freeze(WEAPONS.flatMap((weapon, a) => AFFIXES
   id: 'l' + String(a * 10 + b + 1).padStart(3, '0'), name: affix.name + ' ' + weapon.name,
   weapon: weapon.id, icon: weapon.icon, description: affix.description, effects: Object.freeze({ ...affix }),
 }))));
-const WEAPON_MAP = Object.fromEntries(WEAPONS.map(item => [item.id, item]));
+const WEAPON_MAP = Object.fromEntries(PLANT_CATALOG.map(item => [item.id, item]));
 const STARTERS = ZOMBIE_CATALOG.filter(item => item.armor === 0);
-const DEFENDER_POSITIONS = [.14, .28, .42];
+const DEFENDER_POSITIONS = [.14, .25, .36, .47, .60];
 const STUDENT_HEALTH = 150;
 const TAU = Math.PI * 2;
 const C = { navy: '#101b33', mint: '#7bd8c9', coral: '#ff735e', gold: '#f8c75a', cream: '#fff4df' };
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+export const plantDamageStage = (hp, maxHp) => clamp(Math.floor((1 - clamp(hp / Math.max(1, maxHp), 0, 1)) * 5 + 1e-8), 0, 4);
+const identityHash = value => { let hash = 2166136261; for (const char of String(value)) hash = Math.imul(hash ^ char.codePointAt(0), 16777619) >>> 0; return hash; };
 
 /** A kill can happen once, and always records the owner of the lethal damage. */
 export function damageZombie(mob, shot) {
@@ -97,7 +107,7 @@ export function damageZombie(mob, shot) {
 
 export default function createGame({ container, names = [], onPick, random = Math.random, sound = false, artwork = {} }) {
   const rng = () => clamp(Number(random()) || 0, 0, 1 - Number.EPSILON);
-  const players = names.map((entry, index) => ({ ...entry, avatarIndex: index, name: String(entry.name ?? 'Gardener ' + (index + 1)), color: entry.color || [C.mint, C.coral, C.gold][index % 3] }));
+  const players = names.map((entry, index) => ({ ...entry, avatar: ['boy', 'girl', 'neutral'].includes(entry.avatar) ? entry.avatar : 'neutral', avatarIndex: identityHash(entry.id || entry.name || ''), name: String(entry.name ?? 'Gardener ' + (index + 1)), color: entry.color || [C.mint, C.coral, C.gold][index % 3] }));
   const root = document.createElement('div');
   root.className = 'garden-siege';
   root.innerHTML = '<style>.garden-siege{width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;background:#101b33;color:#fff4df;position:relative}.garden-siege .garden-window{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#7bd8c955 #101b33}.garden-siege canvas{display:block}.garden-siege .garden-note{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}.garden-siege .garden-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}</style><div class="garden-window"><canvas role="img"></canvas></div><div class="garden-note">Sunshine grows your defenders. Protect your student!</div><div class="garden-live" aria-live="polite"></div>';
@@ -105,6 +115,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   const canvas = root.querySelector('canvas'), viewport = root.querySelector('.garden-window');
   const note = root.querySelector('.garden-note'), live = root.querySelector('.garden-live');
   const ctx = canvas.getContext('2d');
+  const renderer = createGardenRenderer({ artwork });
   canvas.setAttribute('aria-label', 'Students sit behind classic plant defenders. Suns recruit shooters and stars enhance the team. Zombies must defeat every defender before reaching a student. The first student out of health speaks next.');
   let alive = true, raf = 0, generation = 0, phase = 'idle', reported = false, winner = null;
   let width = 1000, height = 560, laneHeight = 88, boardHeader = 64, lanes = [];
@@ -112,10 +123,11 @@ export default function createGame({ container, names = [], onPick, random = Mat
   let shots = [], effects = [], drops = [], combatLog = [], soundEnabled = Boolean(sound);
   let audio = null, audioTimer = null, master = null, sfxMaster = null, beat = 0, nextBeat = 0, audioEpoch = 0, audioLoadController = null;
   const sampleBuffers = new Map(), sfxVoices = new Set(), musicVoices = new Set(), lastSfx = new Map(), sfxRotation = new Map();
-  const soundGaps = { shot: .085, hit: .075, armor: .22, growl: 1.65, bite: .16, plant: .28, pickup: .16, death: .25 };
-  const soundGains = { shot: .42, hit: .36, armor: .50, growl: .66, bite: .48, plant: .54, pickup: .52, death: .57 };
+  const soundGaps = { shot: .085, hit: .075, armor: .22, growl: 1.65, bite: .16, plant: .28, pickup: .16, death: .25, intro: 5 };
+  const soundGains = { shot: .42, hit: .36, armor: .50, growl: .66, bite: .48, plant: .54, pickup: .52, death: .57, intro: .68 };
   const sampleURLs = Object.fromEntries(Object.keys(soundGaps).map(key => [key, (Array.isArray(artwork?.gardenSounds?.[key]) ? artwork.gardenSounds[key] : [artwork?.gardenSounds?.[key]]).filter(url => typeof url === 'string' && url.length > 0)]));
   let rewards = [], nextReward = .65;
+  let introPlayed = false;
   const atlases = { plants: null, zombies: null, students: null };
   const plantCells = { pea: 0, twin: 1, burst: 2, frost: 3, fire: 4, pierce: 5, catapult: 6, splash: 7, laser: 8, thorn: 9, sunflower: 10, shield: 11, ...(artwork?.gardenPlantCells || {}) };
   const zombieCells = { walker: 0, cone: 1, bucket: 2, football: 3, runner: 4, newspaper: 5, dancer: 6, construction: 7, bruiser: 8, courier: 9, mender: 10, gargantuar: 11, ...(artwork?.gardenZombieCells || {}) };
@@ -173,15 +185,16 @@ export default function createGame({ container, names = [], onPick, random = Mat
       lane.x = 12; lane.y = boardHeader + lane.index * laneHeight;
       lane.w = width - 24; lane.h = laneHeight; lane.rail = width < 480 ? 75 : 88;
       // Keep the student's portrait beside its quiet name/health tag. The
-      // three defenders occupy separate tiles immediately to the right.
+      // five defenders occupy separate tiles immediately to the right.
       lane.plantX = lane.x + 73; lane.floor = lane.y + lane.h - 5;
       lane.travel = lane.w - 95;
-      lane.spriteScale = Math.min(clamp((lane.h - 8) / 72, .28, 1.2), lane.travel * .14 / 85);
+      lane.spriteScale = Math.min(clamp((lane.h - 8) / 72, .28, 1.2), lane.travel * .11 / 85);
       lane.zombieScale = clamp((lane.h - 4) / 113, .20, 1);
     }
   }
   function newDefender(slot, weapon = 'pea', recruited = false) {
-    return { uid: 'd' + (++serial), slot, position: DEFENDER_POSITIONS[slot], weapon, hp: 300, maxHp: 300, shield: 0,
+    const health = WEAPON_MAP[weapon].hp || 300;
+    return { uid: 'd' + (++serial), slot, position: DEFENDER_POSITIONS[slot], weapon, hp: health, maxHp: health, shield: 0,
       power: 0, nextShot: recruited ? simTime + .30 : .25, bornAt: recruited ? simTime : -1, eaten: false, eatenAt: 0,
       recoil: 0, hurt: 0, shotsFired: 0, kills: 0 };
   }
@@ -194,7 +207,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     lanes = placement.map((entry, index) => ({ entry, index, x: 0, y: 0, w: 0, h: 0, plantX: 0, floor: 0, travel: 0,
       hp: STUDENT_HEALTH, maxHp: STUDENT_HEALTH, damage: 20, cooldown: .42, velocity: 1.9, penetration: 0, splash: 0, crit: 0,
       power: 0, kills: 0, loot: [], suns: 0, stars: 0, shotsFired: 0, nextSpawn: .55, nextGrowl: 3 + index % 5, mobs: [], defenders: [newDefender(0)], eaten: false, hurt: 0, lastLoot: null }));
-    shots = []; effects = []; drops = []; rewards = []; nextReward = .65; combatLog = []; simTime = 0; focused = false;
+    shots = []; effects = []; drops = []; rewards = []; nextReward = .65; combatLog = []; simTime = 0; focused = false; introPlayed = false;
     layout();
   }
   function particle(lane, position, color, number = 7, big = false) {
@@ -210,13 +223,14 @@ export default function createGame({ container, names = [], onPick, random = Mat
     // spring up behind a zombie that has already passed that lawn tile.
     if (lane.eaten) return null;
     const nearest = Math.min(1.2, ...lane.mobs.filter(mob => !mob.dead).map(mob => mob.x));
-    const slot = DEFENDER_POSITIONS.findIndex((position, index) => !lane.defenders.some(defender => defender.slot === index && !defender.eaten) && position + .04 < nearest);
+    const blocker = Boolean(WEAPON_MAP[weapon].blocker);
+    const slot = DEFENDER_POSITIONS.findIndex((position, index) => (blocker ? index === 4 : index < 4) && !lane.defenders.some(defender => defender.slot === index && !defender.eaten) && position + .04 < nearest);
     if (slot < 0) return null;
     const defender = newDefender(slot, weapon, true), old = lane.defenders.findIndex(item => item.slot === slot);
     if (old >= 0) lane.defenders[old] = defender; else lane.defenders.push(defender);
     particle(lane, defender.position, '#e2f98f', 16, true);
     effects.push({ kind: 'text', lane: lane.index, x: defender.position, y: -65, vy: -14, life: .85, color: '#fff3ab', value: '+ ' + WEAPON_MAP[weapon].icon });
-    addLog({ type: 'recruit', source, ownerId: lane.entry.id, defenderId: defender.uid, weapon, slot });
+    addLog({ type: 'recruit', source, ownerId: lane.entry.id, defenderId: defender.uid, weapon, slot, role: blocker ? 'blocker' : 'shooter', health: defender.hp });
     playSfx('plant', lane);
     return defender;
   }
@@ -224,6 +238,17 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const current = new Set(livingDefenders(lane).map(defender => defender.weapon));
     const pool = WEAPONS.filter(weapon => !current.has(weapon.id));
     return (pool.length ? pool : WEAPONS)[Math.floor(rng() * (pool.length || WEAPONS.length))].id;
+  }
+  function nextPlantType(lane, allowBlocker = true) {
+    const living = livingDefenders(lane), blockers = living.filter(defender => WEAPON_MAP[defender.weapon].blocker);
+    if (allowBlocker && living.length - blockers.length >= 2 && rng() < (blockers.length ? .14 : .34)) return BLOCKERS[Math.floor(rng() * BLOCKERS.length)].id;
+    return newShooterType(lane);
+  }
+  function evolveDefender(defender, weapon) {
+    const before = WEAPON_MAP[defender.weapon], after = WEAPON_MAP[weapon];
+    if (Boolean(before.blocker) !== Boolean(after.blocker)) return;
+    const ratio = defender.hp / Math.max(1, defender.maxHp), bonus = Math.max(0, defender.maxHp - (before.hp || 300));
+    defender.weapon = weapon; defender.maxHp = (after.hp || 300) + bonus; defender.hp = Math.min(defender.maxHp, defender.maxHp * ratio);
   }
   function giveLoot(owner, item) {
     const e = item.effects;
@@ -235,11 +260,16 @@ export default function createGame({ container, names = [], onPick, random = Mat
     owner.splash = clamp(owner.splash + (e.splash || 0), 0, .06);
     const living = livingDefenders(owner);
     let target = null, action = 'upgrade';
-    if (living.length < DEFENDER_POSITIONS.length && rng() < .38) { target = recruitDefender(owner, item.weapon, 'loot'); if (target) action = 'recruit'; }
-    target ||= living[Math.floor(rng() * living.length)];
+    const defensiveLoot = Boolean(e.shield || e.maxHp);
+    let weapon = defensiveLoot && living.filter(defender => !WEAPON_MAP[defender.weapon].blocker).length >= 2 && rng() < .45 ? BLOCKERS[Math.floor(rng() * BLOCKERS.length)].id : item.weapon;
+    if (living.length < DEFENDER_POSITIONS.length && rng() < .38) { target = recruitDefender(owner, weapon, 'loot'); if (target) action = 'recruit'; }
+    const eligible = living.filter(defender => Boolean(WEAPON_MAP[defender.weapon].blocker) === Boolean(WEAPON_MAP[weapon].blocker));
+    target ||= eligible[Math.floor(rng() * eligible.length)];
+    if (!target && living.length) { target = living[Math.floor(rng() * living.length)]; weapon = WEAPON_MAP[target.weapon].blocker ? target.weapon : item.weapon; }
     if (target) {
-      target.weapon = item.weapon; target.power = Math.min(10, target.power + 1);
-      target.maxHp = clamp(target.maxHp + (e.maxHp || 0), 300, 450);
+      evolveDefender(target, weapon); target.power = Math.min(10, target.power + 1);
+      const baseHp = WEAPON_MAP[target.weapon].hp || 300;
+      target.maxHp = clamp(target.maxHp + (e.maxHp || 0), baseHp, baseHp + 150);
       target.hp = Math.min(target.maxHp, target.hp + (e.heal || 0) + (e.maxHp || 0));
       target.shield = clamp(target.shield + (e.shield || 0), 0, 40);
       particle(owner, target.position, '#fff2a7', 5);
@@ -247,7 +277,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     }
     owner.power = Math.min(10, owner.power + 1); owner.lastLoot = item;
     owner.loot.push(item.id); if (owner.loot.length > 100) owner.loot.shift();
-    return { action, defenderId: target?.uid ?? null, weapon: item.weapon };
+    return { action, defenderId: target?.uid ?? null, weapon: target?.weapon ?? weapon };
   }
   function killed(lane, mob) {
     mob.deathAt = simTime;
@@ -294,18 +324,26 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const pressure = Math.max(0, simTime - 20);
     // Ordinary variants gradually arrive more often and move a little faster.
     // There is no timed boss, one-hit assault or deadline that selects a name.
-    const factor = 1 + pressure * .016, hp = type.health * factor;
+    const factor = 1 + pressure * .021, hp = type.health * factor;
     const armorHp = type.armorHealth * factor, bodyHp = hp - armorHp;
-    const mob = { uid: ++serial, type, x: 1.02 + rng() * .08,
-      hp, maxHp: hp, armorHp, maxArmorHp: armorHp, bodyHp, maxBodyHp: bodyHp, resistance: type.resistance, speed: type.speed * (1 + pressure * .024),
+    const uid = ++serial;
+    let visualType = type.archetype === 2 ? 'runner' : type.archetype === 1 ? 'newspaper' : type.archetype === 3 ? 'bruiser' : type.archetype === 4 ? 'courier' : 'walker';
+    if (type.ability === 1) visualType = 'mender';
+    if (type.ability === 2) visualType = 'dancer';
+    if (type.ability === 3) visualType = 'construction';
+    if (type.armor > 0) visualType = ['walker', 'cone', 'bucket', 'football'][type.armor];
+    const mob = { uid, type, x: 1.02 + rng() * .08,
+      hp, maxHp: hp, armorHp, maxArmorHp: armorHp, bodyHp, maxBodyHp: bodyHp, resistance: type.resistance, speed: type.speed * (1 + pressure * .030),
       bite: type.bite * 1.08, cadence: type.biteCadence, nextBite: 0,
       stage: 0, hurt: 0, dodgePose: 0, dead: false, deathAt: 0, lastShooter: null, slow: 1, slowUntil: 0, burn: null,
-      lootIndex: Math.floor(rng() * LOOT_CATALOG.length), pose: rng() * TAU };
+      lootIndex: Math.floor(rng() * LOOT_CATALOG.length), pose: rng() * TAU, attacking: false };
+    Object.defineProperties(mob, { visualType: { value: visualType, enumerable: true }, rigIdentity: { value: type.id + '-' + uid, enumerable: true } });
     lane.mobs.push(mob);
-    addLog({ type: 'spawn', zombieId: mob.uid, variant: type.id, health: Math.round(hp), laneId: lane.entry.id });
+    addLog({ type: 'spawn', zombieId: mob.uid, variant: type.id, visualType, rigIdentity: mob.rigIdentity, health: Math.round(hp), damage: mob.bite, speed: mob.speed, laneId: lane.entry.id });
     playSfx('growl', lane);
   }
   function shoot(lane, defender) {
+    if (WEAPON_MAP[defender.weapon].blocker) return;
     const targets = lane.mobs.filter(mob => !mob.dead && mob.x >= defender.position - .035).sort((a, b) => a.x - b.x);
     if (!targets.length) return;
     const weapon = WEAPON_MAP[defender.weapon], target = targets[0];
@@ -335,7 +373,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const slow = simTime < mob.slowUntil ? mob.slow : 1;
     const speed = mob.speed * slow * rush * frenzy;
     mob.x = Math.max(contactPosition, mob.x - speed * dt);
-    if (mob.x > contactPosition + 1e-9) return;
+    mob.attacking = mob.x <= contactPosition + 1e-9;
+    if (!mob.attacking) return;
     const contact = simTime - dt + Math.min(dt, toTouch / speed);
     if (mob.nextBite < contact) mob.nextBite = contact;
     if (simTime + 1e-9 >= mob.nextBite) {
@@ -352,6 +391,12 @@ export default function createGame({ container, names = [], onPick, random = Mat
           defender.eaten = true; defender.eatenAt = simTime;
           particle(lane, defender.position, '#d0e989', 9, true);
           addLog({ type: 'defenderEaten', ownerId: lane.entry.id, defenderId: defender.uid, weapon: defender.weapon });
+        }
+        const blocker = WEAPON_MAP[defender.weapon];
+        if (blocker.blocker && !mob.dead) {
+          const reflected = blocker.contactDamage + defender.power * .6;
+          hit(lane, mob, { ownerId: lane.entry.id, attackerId: defender.uid, damage: reflected, penetration: blocker.id === 'chestnut' ? .12 : 0, weapon: blocker.id });
+          addLog({ type: 'blockerContact', ownerId: lane.entry.id, defenderId: defender.uid, zombieId: mob.uid, weapon: blocker.id, damage: reflected });
         }
       } else {
         lane.hp = Math.max(0, lane.hp - damage); lane.hurt = .25;
@@ -444,11 +489,14 @@ export default function createGame({ container, names = [], onPick, random = Mat
       const living = livingDefenders(lane);
       // The first sun always tries to add a separate shooter. Later suns can
       // recruit a different type or evolve an existing defender.
-      if (lane.suns === 1 || living.length < DEFENDER_POSITIONS.length && rng() < .62) defender = recruitDefender(lane, newShooterType(lane), 'sun');
+      const weapon = nextPlantType(lane, lane.suns > 1);
+      if (lane.suns === 1 || living.length < DEFENDER_POSITIONS.length && rng() < .62) defender = recruitDefender(lane, weapon, 'sun');
       if (defender) action = 'recruit';
       else {
-        defender = living[Math.floor(rng() * living.length)];
-        if (defender) { defender.weapon = newShooterType(lane); defender.hp = Math.min(defender.maxHp, defender.hp + 15); }
+        const matching = living.filter(member => Boolean(WEAPON_MAP[member.weapon].blocker) === Boolean(WEAPON_MAP[weapon].blocker));
+        const eligible = matching.length ? matching : living;
+        defender = eligible[Math.floor(rng() * eligible.length)];
+        if (defender) { evolveDefender(defender, weapon); defender.hp = Math.min(defender.maxHp, defender.hp + 15); }
       }
     } else {
       lane.stars++; lane.crit = Math.min(.30, lane.crit + .025);
@@ -456,7 +504,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       const living = livingDefenders(lane);
       for (const member of living) { member.shield = Math.min(40, member.shield + 4); member.power = Math.min(10, member.power + 1); }
       defender = living[Math.floor(rng() * living.length)];
-      if (defender) defender.weapon = newShooterType(lane);
+      if (defender) evolveDefender(defender, WEAPON_MAP[defender.weapon].blocker ? BLOCKERS[Math.floor(rng() * BLOCKERS.length)].id : newShooterType(lane));
     }
     if (defender && reward.kind === 'sun') defender.power = Math.min(10, defender.power + 1);
     const position = defender?.position ?? .14;
@@ -498,19 +546,22 @@ export default function createGame({ container, names = [], onPick, random = Mat
     else if (defender.bornAt >= 0) { const p = clamp((simTime - defender.bornAt) / .6, 0, 1); ctx.translate(0, (1 - p) * 16); ctx.scale(.2 + .8 * p, .2 + .8 * p); }
     if (defender.hurt) ctx.translate(Math.sin(time * 60) * 2, 0);
     ctx.fillStyle = '#315e3180'; ctx.beginPath(); ctx.ellipse(0, 0, 22, 5, 0, 0, TAU); ctx.fill();
-    if (!atlases.plants?.ready) {
-    ctx.strokeStyle = '#3d9040'; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(0, -3); ctx.lineTo(0, -32); ctx.stroke();
-    ctx.fillStyle = '#42a846'; ctx.beginPath(); ctx.ellipse(-13, -8, 15, 6, -.45, 0, TAU); ctx.fill();
-    ctx.fillStyle = '#69c251'; ctx.beginPath(); ctx.ellipse(13, -8, 15, 6, .45, 0, TAU); ctx.fill();
-    }
     const weapon = WEAPON_MAP[defender.weapon], recoil = defender.recoil / .12 * 3;
-    ctx.translate(-recoil, bob);
-    const illustrated = atlasSprite('plants', plantCells[weapon.id], -40, -75, 84, 76);
+    defender.damageStage = plantDamageStage(defender.hp, defender.maxHp);
+    const rigged = renderer.drawPlant(ctx, { weapon: weapon.id, time, simTime, hp: defender.hp, maxHp: defender.maxHp, recoil: defender.recoil, seed: identityHash(defender.uid), defender });
+    if (!rigged) ctx.translate(-recoil, bob);
+    const illustrated = rigged || (!weapon.blocker && atlasSprite('plants', plantCells[weapon.id], -40, -75, 84, 76));
     if (!illustrated) {
+      const stage = defender.damageStage;
+      if (!weapon.blocker) {
+        ctx.strokeStyle = '#3d9040'; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(0, -3); ctx.quadraticCurveTo(-stage * 2, -19, stage * 2, -32); ctx.stroke();
+        if (stage < 4) { ctx.fillStyle = '#42a846'; ctx.beginPath(); ctx.ellipse(-13, -8 + stage, 15 - stage * 2, 6, -.45 + stage * .2, 0, TAU); ctx.fill(); }
+        if (stage < 3) { ctx.fillStyle = '#69c251'; ctx.beginPath(); ctx.ellipse(13, -8 + stage, 15 - stage * 2, 6, .45 - stage * .2, 0, TAU); ctx.fill(); }
+      }
       // Classic bulb, large side eyes, tubular snout and leafy feet. Names,
       // rather than human faces or hairstyles, identify the students.
       const peaHead = (hx, hy, color = '#79c944', mouth = '#245d27', scale = 1) => {
-        ctx.save(); ctx.translate(hx, hy); ctx.scale(scale, scale);
+        ctx.save(); ctx.translate(hx + stage * 1.2, hy + stage * 1.5); ctx.rotate(stage * .055); ctx.scale(scale, scale);
         ctx.fillStyle = color; ctx.beginPath(); ctx.ellipse(0, 0, 22, 18, -.10, 0, TAU); ctx.fill();
         rr(9, -6, 25, 15, 5, color); ctx.beginPath(); ctx.ellipse(33, 1, 10, 11, 0, 0, TAU); ctx.fillStyle = color; ctx.fill();
         ctx.beginPath(); ctx.ellipse(35, 1, 5.6, 7.3, 0, 0, TAU); ctx.fillStyle = mouth; ctx.fill();
@@ -520,7 +571,16 @@ export default function createGame({ container, names = [], onPick, random = Mat
         ctx.fillStyle = '#6ab747'; ctx.beginPath(); ctx.ellipse(-13, -29, 6, 3, .6, 0, TAU); ctx.fill();
         ctx.restore();
       };
-      if (weapon.id === 'twin') { peaHead(-5, -51, '#6ec245', '#245d27', .86); peaHead(3, -29, '#83ce4d', '#245d27', .86); }
+      if (weapon.blocker) {
+        const tall = weapon.id === 'tallnut', chestnut = weapon.id === 'chestnut';
+        const nutHeight = tall ? 70 : 47, nutWidth = tall ? 39 : 47;
+        if (chestnut) { ctx.strokeStyle = '#638138'; ctx.lineWidth = 3; for (let n = 0; n < 14; n++) { const a = n * TAU / 14; ctx.beginPath(); ctx.moveTo(Math.cos(a) * 24, -26 + Math.sin(a) * 25); ctx.lineTo(Math.cos(a) * 31, -26 + Math.sin(a) * 31); ctx.stroke(); } }
+        rr(-nutWidth / 2, -nutHeight, nutWidth, nutHeight, tall ? 13 : 21, chestnut ? '#9cac48' : '#c89658', '#816035');
+        ctx.strokeStyle = chestnut ? '#667d35' : '#ae7845'; ctx.lineWidth = 1;
+        for (let n = 0; n < 7; n++) { ctx.beginPath(); ctx.moveTo(-15 + n * 5, -nutHeight + 7); ctx.quadraticCurveTo(-23 + n * 6, -nutHeight / 2, -14 + n * 5, -6); ctx.stroke(); }
+        const eyeY = -nutHeight * .61; dot(-8, eyeY, 5.6, '#fff0c4'); dot(8, eyeY, 5.6, '#fff0c4'); dot(-7, eyeY + stage * .35, 2.3, '#3b3928'); dot(7, eyeY + stage * .35, 2.3, '#3b3928');
+        ctx.strokeStyle = '#60472d'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(-6, eyeY + 13); ctx.quadraticCurveTo(0, eyeY + (stage > 2 ? 7 : 18), 6, eyeY + 13); ctx.stroke();
+      } else if (weapon.id === 'twin') { peaHead(-5, -51, '#6ec245', '#245d27', .86); peaHead(3, -29, '#83ce4d', '#245d27', .86); }
       else if (weapon.id === 'burst') { peaHead(-5, -53, '#65b93f', '#245d27', .72); peaHead(5, -37, '#81cc46', '#245d27', .75); peaHead(-4, -21, '#96d25c', '#245d27', .72); }
       else if (weapon.id === 'frost') { peaHead(0, -39, '#98d8ee', '#2b657b'); ctx.strokeStyle = '#d5f6ff'; ctx.lineWidth = 3; for (let n = 0; n < 5; n++) { ctx.beginPath(); ctx.moveTo(-17 + n * 7, -56); ctx.lineTo(-19 + n * 7, -64); ctx.stroke(); } }
       else if (weapon.id === 'fire') { for (let n = 0; n < 7; n++) { const a = n * TAU / 7; ctx.fillStyle = '#f2a735'; ctx.beginPath(); ctx.moveTo(Math.cos(a) * 17, -39 + Math.sin(a) * 17); ctx.lineTo(Math.cos(a + .15) * 29, -39 + Math.sin(a + .15) * 28); ctx.lineTo(Math.cos(a + .35) * 18, -39 + Math.sin(a + .35) * 18); ctx.fill(); } peaHead(0, -39, '#eeae40', '#994622'); }
@@ -540,9 +600,20 @@ export default function createGame({ container, names = [], onPick, random = Mat
         ctx.strokeStyle = '#e1eea2'; ctx.lineWidth = 3; for (let n = 0; n < 5; n++) { ctx.beginPath(); ctx.moveTo(12, -54 + n * 11); ctx.lineTo(29, -58 + n * 12); ctx.stroke(); } dot(-4, -38, 4, '#1f4329');
       } else { peaHead(0, -39, weapon.id === 'pierce' ? '#589e48' : '#7dcc48'); if (weapon.id === 'pierce') { ctx.fillStyle = '#deedb5'; ctx.beginPath(); ctx.moveTo(30, -45); ctx.lineTo(48, -39); ctx.lineTo(31, -32); ctx.fill(); } }
     }
+    if (!rigged && defender.damageStage > 0) {
+      // Five visible fallback damage states also cover missing/failed art.
+      ctx.strokeStyle = weapon.blocker ? '#725136' : '#6d793d'; ctx.lineWidth = 1.8;
+      for (let n = 0; n < defender.damageStage; n++) { const x = -14 + n * 8, y = -55 + n % 2 * 17; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 4, y + 6); ctx.lineTo(x + 1, y + 10); ctx.lineTo(x + 5, y + 15); ctx.stroke(); }
+      if (defender.damageStage >= 3 && !weapon.blocker) { ctx.fillStyle = '#9ca55c'; ctx.beginPath(); ctx.ellipse(23, -2, 10, 3, -.2, 0, TAU); ctx.fill(); }
+    }
     if (defender.shield > 0) { ctx.strokeStyle = '#d3eaff99'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0, -34, 28, Math.PI * .8, Math.PI * 2.2); ctx.stroke(); }
     ctx.restore();
     if (!defender.eaten) hpBar(x - 19 * lane.spriteScale, floor - 72 * lane.spriteScale, 38 * lane.spriteScale, defender.hp, defender.maxHp, defender.hp < 90 ? '#ffd082' : '#d1ed86', 2.5);
+  }
+  function studentCell(entry) {
+    const configured = artwork?.studentCells?.[entry.avatar] ?? artwork?.studentCells?.neutral;
+    const cells = (Array.isArray(configured) ? configured : [configured]).filter(cell => Number.isInteger(Number(cell)) && Number(cell) >= 0 && Number(cell) <= 11).map(Number);
+    return cells.length ? cells[entry.avatarIndex % cells.length] : entry.avatarIndex % 12;
   }
   function student(lane, time, resultAge) {
     const x = lane.plantX, scale = clamp((lane.h - 28) / 73, .18, .76), floor = lane.floor;
@@ -551,10 +622,19 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (lane.hurt && !lane.eaten) ctx.translate(Math.sin(time * 32) * 2, 0);
     if (lane.eaten) { ctx.rotate(-p * .15); ctx.translate(0, p * 5); ctx.globalAlpha = 1 - p * .55; }
     dot(0, 0, 22, '#2e573933');
-    if (!atlasSprite('students', lane.entry.avatarIndex % 12, -38, -75, 76, 76)) {
-      const skins = ['#f4c692', '#ad754e', '#dfab7a', '#78513d', '#ebcba2', '#bd906d'];
+    const skins = ['#f4c692', '#ad754e', '#dfab7a', '#78513d', '#ebcba2', '#bd906d'];
+    const skin = skins[studentCell(lane.entry) % skins.length], sway = Math.sin(time * 2 + lane.entry.avatarIndex % 23);
+    // Arms bend at connected shoulder/elbow anchors; the portrait sways at
+    // its neck above the shirt instead of floating separately from the body.
+    rr(-16, -25, 32, 26, 9, lane.entry.color);
+    for (const side of [-1, 1]) {
+      const elbowX = side * 25, elbowY = -14 + sway * side * 2, handX = side * 25, handY = -4 + sway * side * 4;
+      ctx.strokeStyle = lane.entry.color; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(side * 13, -21); ctx.lineTo(elbowX, elbowY); ctx.stroke();
+      ctx.strokeStyle = skin; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(elbowX, elbowY); ctx.lineTo(handX, handY); ctx.stroke(); dot(handX, handY, 3.1, skin);
+    }
+    ctx.save(); ctx.translate(0, -25); ctx.rotate(sway * .024); ctx.translate(0, 25);
+    if (!atlasSprite('students', studentCell(lane.entry), -38, -75, 76, 76)) {
       const hair = ['#543323', '#241e24', '#b17739', '#6e442c'][lane.entry.avatarIndex % 4];
-      const skin = skins[lane.entry.avatarIndex % skins.length];
       rr(-19, -32, 38, 34, 10, lane.entry.color);
       dot(0, -48, 22, skin, '#735d4280');
       ctx.fillStyle = hair; ctx.beginPath(); ctx.ellipse(0, -62, 23, 11, 0, Math.PI, TAU); ctx.fill();
@@ -562,6 +642,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       dot(-7, -49, 2.2, '#292c30'); dot(8, -49, 2.2, '#292c30');
       ctx.strokeStyle = '#875347'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(1, -43, 7, .1, Math.PI - .1); ctx.stroke();
     }
+    ctx.restore();
     if (lane.eaten || lane.hurt) {
       for (let n = 0; n < 3; n++) { const a = time * 4 + n * TAU / 3; text('★', Math.cos(a) * 28, -78 + Math.sin(a) * 6, 12, 12, '#fff0a0', 900, 'center'); }
     }
@@ -577,27 +658,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
     else if (mob.hurt) ctx.translate(3, 0);
     const walk = Math.sin(time * (mob.stage ? 5 : 7) + mob.pose), bob = Math.abs(walk) * 2;
     ctx.fillStyle = '#24482655'; ctx.beginPath(); ctx.ellipse(0, 0, 21, 5, 0, 0, TAU); ctx.fill();
-    let illustrationKey = type.archetype === 2 ? 'runner' : type.archetype === 1 ? 'newspaper' : type.archetype === 3 ? 'bruiser' : type.archetype === 4 ? 'courier' : 'walker';
-    if (type.ability === 1) illustrationKey = 'mender';
-    if (type.ability === 2) illustrationKey = 'dancer';
-    if (type.ability === 3) illustrationKey = 'construction';
-    if (mob.armorHp > 0 && type.armor > 0) illustrationKey = ['walker', 'cone', 'bucket', 'football'][type.armor];
-    let illustrated = false;
-    if (atlases.zombies?.ready) {
-      ctx.save(); ctx.translate(Math.sin(time * 6 + mob.pose) * .8, -bob);
-      const cell = zombieCells[illustrationKey], w = 78, h = 112;
-      if (mob.stage >= 2) {
-        ctx.save(); ctx.beginPath(); ctx.rect(-w / 2, -h * .52, w, h * .55); ctx.clip();
-        illustrated = atlasSprite('zombies', cell, -w / 2, -h, w, h); ctx.restore();
-        const fall = clamp((simTime - (mob.headDropAt ?? simTime)) / .55, 0, 1);
-        ctx.save(); ctx.translate(24 * fall, 64 * fall); ctx.beginPath(); ctx.rect(-w / 2, -h, w, h * .49); ctx.clip();
-        atlasSprite('zombies', cell, -w / 2, -h, w, h); ctx.restore();
-      } else {
-        if (mob.stage >= 1) { ctx.beginPath(); ctx.rect(-w / 2, -h, w, h + 3); ctx.rect(-w / 2, -65, 17, 27); ctx.clip('evenodd'); }
-        illustrated = atlasSprite('zombies', cell, -w / 2, -h, w, h);
-      }
-      ctx.restore();
-    }
+    // The rig chosen at spawn remains the same zombie through every wound.
+    // Armor is an independent layer; damage never selects another body atlas.
+    const illustrated = renderer.drawZombie(ctx, { mob, time, simTime });
     if (!illustrated) {
     ctx.strokeStyle = '#6c7666'; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(-6, -22); ctx.lineTo(-10 + walk * 4, -5); ctx.moveTo(6, -21); ctx.lineTo(8 - walk * 4, -5); ctx.stroke();
     rr(-17 + walk * 4, -7, 15, 7, 3, '#383b2d'); rr(2 - walk * 4, -7, 16, 7, 3, '#383b2d');
@@ -646,7 +709,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   }
   function scene(time, resultAge) {
     const top = viewport.scrollTop || 0, bottom = top + (viewport.clientHeight || height);
-    const visible = lane => lane.y + lane.h >= top - 24 && lane.y <= bottom + 24;
+    const visible = lane => lane.y + lane.h >= top - 64 && lane.y <= bottom + 64;
     ctx.fillStyle = '#5f853b'; ctx.fillRect(0, 0, width, height);
     const sky = ctx.createLinearGradient(0, 0, 0, boardHeader); sky.addColorStop(0, '#8dc9dc'); sky.addColorStop(1, '#c1e4c8');
     ctx.fillStyle = sky; ctx.fillRect(0, 0, width, boardHeader);
@@ -664,13 +727,19 @@ export default function createGame({ container, names = [], onPick, random = Mat
     for (const lane of lanes) {
       if (!visible(lane)) continue;
       const won = phase === 'result' && winner === lane;
-      ctx.save(); ctx.beginPath(); ctx.rect(lane.x, lane.y, lane.w, lane.h); ctx.clip();
       const tileStart = lane.x, tileWidth = lane.w / 9;
       for (let col = 0; col < 9; col++) {
         ctx.fillStyle = (col + lane.index) % 2 ? '#75b347' : '#88c058'; ctx.fillRect(tileStart + col * tileWidth, lane.y, tileWidth + .5, lane.h);
       }
       if (won) { ctx.fillStyle = '#fff6b32e'; ctx.fillRect(tileStart, lane.y, lane.w, lane.h); }
       ctx.strokeStyle = '#446b2b28'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(lane.x, lane.y + lane.h -.5); ctx.lineTo(lane.x + lane.w, lane.y + lane.h -.5); ctx.stroke();
+    }
+    // All lawn tiles are painted before actors. Original joint motions can
+    // extend above a row without a later row background erasing their parts.
+    ctx.save(); ctx.beginPath(); ctx.rect(7, 0, width - 14, height); ctx.clip();
+    for (const lane of lanes) {
+      if (!visible(lane)) continue;
+      const won = phase === 'result' && winner === lane;
       const tiny = lane.h < 36, chipHeight = tiny ? 11 : 15;
       rr(lane.x + 29, lane.y + 4, lane.rail - 8, chipHeight, 4, '#264d2eaa');
       text(lane.entry.name, lane.x + 34, lane.y + 4 + chipHeight / 2, lane.rail - 19, tiny ? 8 : 10, won ? '#ffe2a0' : C.cream, 750);
@@ -685,8 +754,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
       lane.defenders.forEach(defender => plant(lane, defender, time));
       [...lane.mobs].sort((a, b) => b.x - a.x).forEach(mob => zombie(lane, mob, time));
       if (won && resultAge > .4) { const badgeX = Math.min(lane.x + lane.w - 121, lane.plantX + 36); rr(badgeX, lane.y + lane.h / 2 - 12, 114, 25, 12, '#ffda72'); text('NEXT SPEAKER', badgeX + 57, lane.y + lane.h / 2 + 1, 107, 10, '#3d492f', 900, 'center'); }
-      ctx.restore();
     }
+    ctx.restore();
     for (const shot of shots) {
       const lane = lanes[shot.lane], x = lane.plantX + shot.x * lane.travel;
       if (!visible(lane)) continue;
@@ -787,7 +856,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       source.buffer = sampleBuffers.get(url); source.playbackRate.value = 1;
       gain.gain.value = soundGains[key]; source.connect(gain); gain.connect(sfxMaster);
       source.onended = () => { sfxVoices.delete(voice); source.disconnect(); gain.disconnect(); };
-      sfxVoices.add(voice); source.start(at); lastSfx.set(key, at); sfxRotation.set(key, rotation + 1);
+      sfxVoices.add(voice); source.start(at); lastSfx.set(key, at); sfxRotation.set(key, rotation + 1); return true;
     } catch {
       if (voice) { sfxVoices.delete(voice); try { voice.source.disconnect(); voice.gain.disconnect(); } catch {} }
     }
@@ -801,8 +870,11 @@ export default function createGame({ container, names = [], onPick, random = Mat
       sfxMaster = audio.createGain(); sfxMaster.gain.value = .58; sfxMaster.connect(audio.destination);
       nextBeat = audio.currentTime + .04; beat = 0;
       const current = audio, epoch = ++audioEpoch;
-      loadSamples(current, epoch).catch(() => {});
-      current.resume().then(() => { if (audio === current && audioEpoch === epoch && alive && soundEnabled) scheduleMusic(); }).catch(() => {});
+      const loaded = loadSamples(current, epoch);
+      const resumed = current.resume().then(() => { if (audio === current && audioEpoch === epoch && alive && soundEnabled) scheduleMusic(); });
+      Promise.allSettled([loaded, resumed]).then(() => {
+        if (audio === current && audioEpoch === epoch && alive && soundEnabled && phase === 'running' && simTime < 3 && !introPlayed) introPlayed = Boolean(playSfx('intro', lanes[0]));
+      }).catch(() => {});
       audioTimer = setInterval(scheduleMusic, 100);
     } catch { stopAudio(); }
   }
@@ -861,16 +933,17 @@ export default function createGame({ container, names = [], onPick, random = Mat
     alive = false; generation++; cancelAnimationFrame(raf); observer?.disconnect(); stopAudio();
     if (!observer) window.removeEventListener('resize', layout);
     for (const key of Object.keys(atlases)) { if (atlases[key]) { atlases[key].image.onload = null; atlases[key].image.onerror = null; } atlases[key] = null; }
-    shots = []; effects = []; drops = []; rewards = []; lanes = []; sampleBuffers.clear(); root.remove();
+    shots = []; effects = []; drops = []; rewards = []; lanes = []; sampleBuffers.clear(); renderer.destroy(); root.remove();
   }
   function getState() {
     return { phase, time: simTime, winnerId: winner?.entry.id ?? null, soundEnabled,
       audioEffects: { loadedSamples: sampleBuffers.size, activeVoices: sfxVoices.size, contextActive: Boolean(audio), loading: Boolean(audioLoadController) },
+      renderer: renderer.getState(), plantCatalogCount: PLANT_CATALOG.length,
       zombieCatalogCount: ZOMBIE_CATALOG.length, lootCatalogCount: LOOT_CATALOG.length, healthModel: HEALTH_MODEL,
       artworkLoaded: { plants: Boolean(atlases.plants?.ready), zombies: Boolean(atlases.zombies?.ready), students: Boolean(atlases.students?.ready) }, fallingResources: rewards.map(reward => ({ kind: reward.kind, lane: reward.lane, landed: reward.landed, x: reward.x, y: reward.y })),
-      lanes: lanes.map(lane => ({ id: lane.entry.id, hp: lane.hp, maxHp: lane.maxHp, studentHp: lane.hp, studentMaxHp: lane.maxHp, damage: lane.damage, cooldown: lane.cooldown, weapon: livingDefenders(lane)[0]?.weapon ?? null, power: lane.power, kills: lane.kills, loot: [...lane.loot], suns: lane.suns, stars: lane.stars, eaten: lane.eaten, shotsFired: lane.shotsFired, shield: livingDefenders(lane).reduce((total, defender) => total + defender.shield, 0),
-        defenders: lane.defenders.map(defender => ({ id: defender.uid, slot: defender.slot, position: defender.position, weapon: defender.weapon, hp: defender.hp, maxHp: defender.maxHp, shield: defender.shield, power: defender.power, eaten: defender.eaten, bornAt: defender.bornAt, shotsFired: defender.shotsFired, kills: defender.kills })),
-        mobs: lane.mobs.map(mob => ({ id: mob.uid, variant: mob.type.id, hp: mob.hp, maxHp: mob.maxHp, bodyHp: mob.bodyHp, armorHp: mob.armorHp, dead: mob.dead, stage: mob.stage, x: mob.x, lastShooter: mob.lastShooter })) })),
+      lanes: lanes.map(lane => ({ id: lane.entry.id, avatar: lane.entry.avatar, avatarCell: studentCell(lane.entry), hp: lane.hp, maxHp: lane.maxHp, studentHp: lane.hp, studentMaxHp: lane.maxHp, damage: lane.damage, cooldown: lane.cooldown, weapon: livingDefenders(lane)[0]?.weapon ?? null, power: lane.power, kills: lane.kills, loot: [...lane.loot], suns: lane.suns, stars: lane.stars, eaten: lane.eaten, shotsFired: lane.shotsFired, shield: livingDefenders(lane).reduce((total, defender) => total + defender.shield, 0),
+        defenders: lane.defenders.map(defender => ({ id: defender.uid, slot: defender.slot, position: defender.position, weapon: defender.weapon, role: WEAPON_MAP[defender.weapon].blocker ? 'blocker' : 'shooter', hp: defender.hp, maxHp: defender.maxHp, damageStage: plantDamageStage(defender.hp, defender.maxHp), damage: WEAPON_MAP[defender.weapon].blocker ? WEAPON_MAP[defender.weapon].contactDamage + defender.power * .6 : lane.damage * WEAPON_MAP[defender.weapon].multiplier, attackPattern: WEAPON_MAP[defender.weapon].blocker ? 'contact' : defender.weapon, shield: defender.shield, power: defender.power, eaten: defender.eaten, bornAt: defender.bornAt, shotsFired: defender.shotsFired, kills: defender.kills })),
+        mobs: lane.mobs.map(mob => ({ id: mob.uid, variant: mob.type.id, visualType: mob.visualType, rigIdentity: mob.rigIdentity, hp: mob.hp, maxHp: mob.maxHp, bodyHp: mob.bodyHp, maxBodyHp: mob.maxBodyHp, armorHp: mob.armorHp, maxArmorHp: mob.maxArmorHp, damage: mob.bite, speed: mob.speed, baseDamage: mob.type.bite, baseSpeed: mob.type.speed, dead: mob.dead, stage: mob.stage, attacking: mob.attacking, x: mob.x, lastShooter: mob.lastShooter })) })),
       combatLog: combatLog.map(entry => ({ ...entry })) };
   }
   const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(layout) : null;
