@@ -20,16 +20,33 @@ const UP=new THREE.Vector3(0,1,0), TAU=Math.PI*2;
 // An elliptical/superelliptical ring loft gives every fuselage its own profile.
 function loftGeometry(rings,segments=28) {
   const p=[],uv=[],idx=[];
+  const startZ=rings[0][0],length=rings[rings.length-1][0]-startZ;
   for(let k=0;k<rings.length;k++){
     const [z,y,w,h,exponent=1]=rings[k];
     for(let j=0;j<=segments;j++){
       const a=j/segments*TAU, c=Math.cos(a),s=Math.sin(a);
       p.push(Math.sign(c)*Math.pow(Math.abs(c),exponent)*w,y+Math.sign(s)*Math.pow(Math.abs(s),exponent)*h,z);
-      uv.push(j/segments,k/(rings.length-1));
+      uv.push(j/segments,(z-startZ)/Math.max(.001,length));
       if(k<rings.length-1&&j<segments){ const i=k*(segments+1)+j;idx.push(i,i+1,i+segments+1,i+1,i+segments+2,i+segments+1); }
     }
   }
   const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));g.setIndex(idx);g.computeVertexNormals();return g;
+}
+
+// Paint texture is generated locally: panel fasteners, restrained dirt around
+// access covers and subtle finish variation survive the rear chase distance.
+// Its grayscale color multiplies each aircraft's own paint rather than sharing
+// one identical camouflage or livery across all ten aircraft.
+function aircraftSkinTexture(){
+  const canvas=document.createElement('canvas');canvas.width=canvas.height=1024;
+  const ctx=canvas.getContext('2d');ctx.fillStyle='#f3f3f3';ctx.fillRect(0,0,1024,1024);
+  let seed=4193;const rand=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
+  for(let i=0;i<7000;i++){const shade=210+Math.floor(rand()*36);ctx.fillStyle=`rgba(${shade},${shade},${shade},.15)`;ctx.fillRect(rand()*1024,rand()*1024,1+rand()*3,1+rand()*3);}
+  ctx.lineWidth=1.1;ctx.strokeStyle='rgba(65,73,75,.25)';
+  for(const u of [68,184,326,447,586,703,840,971]){ctx.beginPath();ctx.moveTo(u,0);ctx.lineTo(u,1024);ctx.stroke();for(let y=9;y<1024;y+=24){ctx.fillStyle='rgba(73,80,83,.40)';ctx.fillRect(u-4,y,1.6,1.6);ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillRect(u-3,y+1,1.4,1.4);}}
+  for(const v of [117,250,416,609,780,931]){ctx.beginPath();ctx.moveTo(0,v);ctx.lineTo(1024,v);ctx.stroke();for(let x=10;x<1024;x+=24){ctx.fillStyle='rgba(66,74,76,.32)';ctx.fillRect(x,v-4,1.7,1.7);}}
+  for(let i=0;i<18;i++){const x=rand()*850+24,y=rand()*880+30,w=28+rand()*70,h=30+rand()*67;ctx.strokeStyle='rgba(61,67,70,.27)';ctx.strokeRect(x,y,w,h);ctx.strokeStyle='rgba(255,255,255,.55)';ctx.strokeRect(x+1,y+1,w-2,h-2);ctx.fillStyle='rgba(61,67,70,.30)';for(const px of [x+4,x+w-4])for(const py of [y+4,y+h-4])ctx.fillRect(px,py,2,2);}
+  const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=8;return texture;
 }
 
 // Prism faces may form horizontal wings or vertical stabilizers. Points are 3D.
@@ -115,6 +132,12 @@ export function createAircraft(def){
     red:new THREE.MeshBasicMaterial({color:0xef4d43}),green:new THREE.MeshBasicMaterial({color:0x53f795}),
   };
   const rotors=[],props=[],gears=[],lights=[];let rpm=1,panelTimer=0;
+  const skin=aircraftSkinTexture();mats.body.map=skin;mats.secondary.map=skin;
+  // Polished civil paint, matte military finish and clear canopy highlights.
+  mats.body.roughness=jet?.56:def.id==='h125'||def.kind==='prop'||airliner?.36:.69;
+  mats.body.metalness=jet?.42:isHeli?.20:.30;
+  mats.secondary.roughness=isHeli?.72:.46;
+  mats.glass.roughness=.065;mats.glass.opacity=.88;
   const V=(x,y,z)=>new THREE.Vector3(x,y,z);
   function mesh(geo,mat,parent=exterior){const m=new THREE.Mesh(geo,mat);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;}
   function box(w,h,l,x,y,z,mat=mats.body,parent=exterior){const m=mesh(new THREE.BoxGeometry(w,h,l),mat,parent);m.position.set(x,y,z);return m;}
@@ -132,9 +155,10 @@ export function createAircraft(def){
     const assembly=new THREE.Group();assembly.position.set(x,y,z);assembly.userData.dynamic=true;exterior.add(assembly);if(tail)assembly.rotation.z=Math.PI/2;
     cyl(.12,.52,0,0,0,mats.metal,assembly,'y');cyl(.30,.12,0,.19,0,mats.dark,assembly,'y');
     const blades=new THREE.Group();blades.position.y=.21;assembly.add(blades);
-    for(let i=0;i<count;i++){const b=new THREE.Group();b.rotation.y=i*TAU/count;blades.add(b);const root=Math.min(.6,r*.14),chord=tail?.18:.36;
+    for(let i=0;i<count;i++){const b=new THREE.Group();b.rotation.y=i*TAU/count;b.rotation.x=tail?.0:.055;blades.add(b);const root=Math.min(.6,r*.14),chord=tail?.18:.36;
       plate([[root,.0,-chord*.4],[r*.85,.0,-chord*.4],[r,.0,-chord*.72],[r,.0,chord*.36],[root,.0,chord*.5]],tail?.025:.045,mats.dark,'y',b);
       box(r*.08,.018,chord*.9,r*.94,.024,0,mats.white,b);rod([.12,0,0],[root,.0,0],tail?.018:.047,mats.metal,b);
+      if(!tail){rod([.17,-.12,0],[root,.02,-chord*.27],.018,mats.metal,b);}
     }
     const disk=mesh(new THREE.RingGeometry(r*.12,r,80),new THREE.MeshBasicMaterial({color:0x9da8ad,transparent:true,opacity:.12,side:THREE.DoubleSide,depthWrite:false}),assembly);disk.rotation.x=-Math.PI/2;disk.position.y=.22;
     const line=mesh(new THREE.RingGeometry(r*.985,r,80),new THREE.MeshBasicMaterial({color:0xd3dcdf,transparent:true,opacity:.14,side:THREE.DoubleSide,depthWrite:false}),assembly);line.rotation.x=-Math.PI/2;line.position.y=.23;
@@ -162,7 +186,9 @@ export function createAircraft(def){
       cyl(.17,.5,.36,.89,1.1,mats.dark);label('B-SHA',-.99,.0,.12,1.1,.2,exterior,-Math.PI/2);cockpitOffset=V(-.40,.92,-1.82);
     }else if(def.id==='mh6'){
       // OH-6/AH-6 teardrop cabin, raised engine fairing and slender boom.
-      loft([[-2.42,-.12,.015,.03],[-2.12,-.05,.58,.60],[-1.43,.05,.88,.94],[-.35,.07,.92,1.02],[.7,.13,.73,.82],[1.25,.19,.42,.52],[1.75,.3,.17,.22],[5.8,.59,.072,.12],[6.0,.59,.015,.02]],mats.body);
+      // The forward opaque shell is only the belly: a full solid egg here
+      // would bury the curved windshield behind the fuselage surface.
+      loft([[-2.42,-.40,.015,.03],[-2.12,-.43,.58,.22],[-1.43,-.44,.88,.32],[-.35,-.22,.92,.73],[.7,.13,.73,.82],[1.25,.19,.42,.52],[1.75,.3,.17,.22],[5.8,.59,.072,.12],[6.0,.59,.015,.02]],mats.body);
       // Separate bubble made from a curved ring loft, with framing following
       // the canopy's curvature instead of planar windshield rectangles.
       loft([[-2.40,.05,.015,.03],[-2.20,.19,.51,.51],[-1.80,.32,.78,.73],[-1.36,.39,.85,.77],[-.94,.41,.86,.75]],mats.glass);
@@ -288,6 +314,62 @@ export function createAircraft(def){
     label(f22?'FF 022':'AF 016',f22?-1.52:-.065,2.1,n-1.9,1.2,.24,exterior,-Math.PI/2);
   }
 
+  // Small exterior detail layers share existing materials and are merged, so
+  // the useful mechanical detail does not cost a draw call per grille/rivet.
+  if(isHeli){
+    const little=def.id==='mh6',heavy=def.id==='ch47',utility=def.id==='uh60';
+    const ventX=little?.62:heavy?1.10:utility?1.06:def.id==='h125'?.49:1.02;
+    const ventY=little?.62:heavy?1.94:utility?1.23:def.id==='h125'?1.04:1.03;
+    const ventZ=little?.44:heavy?5.24:utility?.12:def.id==='h125'?.40:.26;
+    for(const s of [-1,1]){
+      for(let i=0;i<9;i++)box(.018,.11,.032,s*ventX,ventY,ventZ+(i-4)*.087,mats.dark);
+      for(let i=0;i<8;i++)cyl(.012,.016,s*(little?.94:heavy?1.49:utility?1.13:.65),little?-.30:-.43,(little?-.5:heavy?-3.0:utility?-2.1:-2.3)+i*.17,mats.metal,exterior,'x');
+    }
+    if(!heavy){
+      const tailZ=little?5.18:def.id==='h125'?5.07:7.5,tailY=little?.94:def.id==='h125'?1.18:2.0;
+      label('DANGER',-.064,tailY,tailZ,.47,.08,exterior,-Math.PI/2);
+      rod([0,little?.53:utility?.91:.62,1.40],[0,little?.72:utility?1.44:1.24,tailZ-.30],.016,mats.secondary);
+      const mastZ=utility?-.4:little?-.06:def.id==='h125'?0:-.07,mastY=utility?1.63:little?1.16:def.id==='h125'?1.27:1.41;
+      cyl(.32,.08,0,mastY,mastZ,mats.metal,exterior,'y');
+      for(let i=0;i<3;i++){const a=i*TAU/3;rod([Math.cos(a)*.22,mastY+.06,mastZ+Math.sin(a)*.22],[Math.cos(a)*.16,mastY+.37,mastZ+Math.sin(a)*.16],.024,mats.metal);}
+    }
+  }else if(def.id==='c172'){
+    for(const s of [-1,1]){
+      seam([[s*.70,1.126,.28],[s*5.15,1.126,.30]]);
+      seam([[s*.25,.329,3.40],[s*1.85,.329,3.51]]);
+      box(.07,.035,.80,s*.445,-.04,-3.07,mats.dark);
+      for(let i=0;i<6;i++)box(.028,.04,.019,s*.505,.06,-3.2+i*.13,mats.metal);
+    }
+  }else if(def.id==='kingair'){
+    for(const s of [-1,1]){
+      seam([[s*1.10,-.233,1.33],[s*8.44,-.005,1.12]]);
+      cyl(.085,.64,s*3.14,-.30,-1.98,mats.metal);
+      label('EXIT',s*.864,.77,-3.02,.21,.067,exterior,s*Math.PI/2);
+    }
+  }else if(airliner){
+    for(const s of [-1,1]){
+      seam([[s*2.22,-.671,4.49],[s*9.2,-.213,4.36],[s*16.86,.243,4.45]]);
+      for(const x of [6.4,10.1,13.0]){
+        const fairing=loft([[1.7,-.62,.015,.02],[2.5,-.74,.15,.17],[5.65,-.52,.17,.18],[6.12,-.40,.015,.02]],mats.body);fairing.position.x=s*x;
+      }
+      rod([s*6.04,-2.20,-4.89],[s*6.09,-2.20,-1.54],.017,mats.metal);
+    }
+  }else if(jet){
+    const stealth=def.id==='f22';
+    for(const s of [-1,1]){
+      const x=s*(stealth?1.98:.90),z=stealth?-3.6:-3.80;
+      label('DANGER',x,.22,z,.61,.09,exterior,s*Math.PI/2);
+      const n=def.length*.5;
+      if(stealth){
+        for(let i=0;i<7;i++)box(.11,.06,.042,s*.82+(i-3)*.115,.40,n+.28,mats.metal);
+        seam([[s*1.30,.729,1.3],[s*1.39,.723,4.3],[s*.81,.728,5.8]]);
+      }else{
+        for(let i=0;i<12;i++){const a=i/12*TAU;rod([Math.cos(a)*.53,Math.sin(a)*.53,n-.60],[Math.cos(a)*.48,Math.sin(a)*.48,n+.24],.016,mats.metal);}
+        plate([[s*.46,-.61,3.10],[s*.82,-1.15,5.23],[s*.65,-1.13,5.80],[s*.41,-.54,5.42]],.055,mats.secondary,'x');
+      }
+    }
+  }
+
   // Full-size interior surrounding the eye point; not a flat HUD overlay.
   // Geometry intentionally leaves the central forward sightline unobstructed.
   const eye=cockpitOffset,wide=airliner?1.63:attack||jet?.73:def.id==='ch47'?1.50:isHeli?1.08:.88;
@@ -353,4 +435,3 @@ export function createAircraft(def){
     dispose(){const geometries=new Set(),materials=new Set(),textures=new Set();group.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material){for(const m of Array.isArray(o.material)?o.material:[o.material]){materials.add(m);if(m.map)textures.add(m.map);}}});for(const g of geometries)g.dispose();for(const m of materials)m.dispose();for(const t of textures)t.dispose();group.removeFromParent();}
   };
 }
-

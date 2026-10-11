@@ -2,16 +2,16 @@
 
 # Shanghai architectural study
 
-The browser scene uses metre-scale procedural geometry, derived from the same parameters as the editable Blender landmark source and interchange GLB. The four primary landmarks use source-backed heights and characteristic forms. The rest of the streets, buildings and river banks approximate Shanghai's urban context: this is **not surveyed geometry, photogrammetry or a navigation database**.
+The browser scene uses metre-scale landmark geometry, derived from the same parameters as the editable Blender landmark source and interchange GLB. The four primary landmarks use source-backed heights and characteristic forms. The central scenery now also uses a selected OpenStreetMap subset for real mapped building footprints, street lines, water and green-space outlines. Generic facades, most building heights and the outer context remain approximations: this is **not surveyed geometry, photogrammetry or a navigation database**.
 
-Coordinates are east-positive x and north-negative z, relative to approximately 121.5055 E, 31.2336 N (Shanghai Tower). Heights are metres above local ground. Landmark placement is approximate, based on their relative positions in Lujiazui. The ground is flat; no terrain elevation dataset was used.
+Coordinates are east-positive x and north-negative z, relative to the WGS84 reference 121.5055 E, 31.2336 N. This origin is east of Shanghai Tower, not its actual position. The landmark centres are aligned to named OSM outlines; the tower model is around x=-404.6 m, z=-216.8 m. Heights are metres above local ground. The ground is flat; no terrain elevation dataset was used.
 
 - Shanghai Tower: **632 m**, rounded tri-lobed form tapering to 55% of base scale and rotating **120 degrees**. Architect Gensler: https://www.gensler.com/projects/shanghai-tower and facade design paper https://www.gensler.com/uploads/document/242/file/Shanghai_Tower_Facade_Design_Process_11_10_2011.pdf . Tower operator: https://en.shanghaitower.com/ProjectIntroduction.html .
 - Shanghai World Financial Center: **492 m**, tapered trapezoidal form, actual open crown aperture. Operator project outline: https://www.swfc-shanghai.com/about_intro.php?l=en .
 - Jin Mao Tower: **420.5 m**, eightfold pagoda-like setbacks. Architect SOM: https://www.som.com/projects/jin-mao-tower/ and https://www.som.com/news/som-and-jin-mao-tower-part-1/ .
 - Oriental Pearl Tower: **468 m**, tripod, major spheres and slender mast. Shanghai municipality: https://english.shanghai.gov.cn/en-ScenicSpots/20231205/19a5f5184eca45728fd57a4d4c8efc61.html .
 
-The Pearl sphere dimensions, facade patterns, mechanical decks, Bund frontage, streets and surrounding buildings are visual approximations. The complete city does not reproduce real footprints or interiors.
+The Pearl sphere dimensions, facade patterns, mechanical decks, Bund frontage and surrounding architecture are visual approximations. The selected core includes real mapped footprints; the simulator does not contain every Shanghai building or reproduce interiors.
 
 ## Flight facilities
 
@@ -62,3 +62,22 @@ CC0 legal code: https://creativecommons.org/publicdomain/zero/1.0/
 Three.js 0.170.0 is distributed under the MIT license (https://github.com/mrdoob/three.js/blob/r170/LICENSE).
 
 
+# Shanghai OpenStreetMap scenery data
+
+Source: OpenStreetMap contributors, downloaded from the official Geofabrik regional extract on October 11, 2026:
+
+- Regional download page: https://download.geofabrik.de/asia/china/shanghai.html
+- Raw PBF download: https://download.geofabrik.de/asia/china/shanghai-latest.osm.pbf
+- Downloaded PBF SHA-256: `77cdeada205c3480086a6f1bbb3c693f6b8f506be78e74f9abad8334c6453381`
+- Data copyright and licence: https://www.openstreetmap.org/copyright
+- Licence legal text: https://opendatacommons.org/licenses/odbl/1-0/
+
+The derived database is distributed under **ODbL 1.0** with attribution **© OpenStreetMap contributors**. `assets/shanghai-core.json` is a machine-readable local-metre equivalent. `shanghai-buildings.js` also contains the entire selected database as a gzip/base64 payload, delta-coded in decimetres; its exported `loadShanghaiGeography()` function restores the usable coordinate arrays. The module requests no remote map API. Preserve the attribution and licence/source metadata when redistributing the scenery data.
+
+This is a selected central subset within approximately 4 km of the reference origin. The geometry budget retains 4,270 mapped building footprints/parts, 2,094 street segments, 97 water polygons and a separate budget of mapped park/green-space polygons. All four hand-modelled landmark areas and the fictional helipad are excluded from the generic building layer. The near 1.5 km is prioritised; farther buildings are selected across 500 m cells rather than rendering every mapped object.
+
+Only 192 exported building records have an explicit height tag. Another 616 use recorded floor counts with an estimated 3 m floor spacing and any recorded roof height. The remaining 3,462 use type-based height defaults. Explicit OSM heights are community-recorded values, not independent measurements made for this project. Most road widths are defaults by highway class. Facades are original generated material patterns, not photographs of the mapped buildings. Coordinates are rounded to 0.1 m and nearly collinear vertices simplified; this storage precision does not imply survey accuracy.
+
+The named source outlines used for landmark alignment are Shanghai Tower way165792123 (Wikidata Q18547), World Financial Center way10691100 (Q80852), Jin Mao way376075961 (Q80813), and Oriental Pearl way40778038 (Q223207). Detailed geometry and landmark heights remain the architectural interpretations referenced above.
+
+No bulk download of the OSM public raster tile service was performed; raw geographic data was downloaded instead. No Google/Bing satellite imagery, Shanghai photogrammetric mesh, private API key or paid map account is included. Further source options and their verified coverage/access limitations are recorded in `SCENERY-ROADMAP.md`.

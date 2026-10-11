@@ -20,7 +20,7 @@ export function createCombat(scene,world,effects,audio){
   const bullets=[],rockets=[],missiles=[],flares=[],targetFlashes=new Map(),hitTargets=new Set();
   const targets=world.targets||[];
   let gunCooldown=0,rocketCooldown=0,flareCooldown=0,flareCount=24,threatCooldown=4,aaCooldown=8,lockTime=0;
-  let clock=0,previousThreats=false;
+  let clock=0,previousThreats=false,flareProgramRemaining=0,flarePulseTimer=0;
   const bright=new THREE.MeshBasicMaterial({color:0xffe3a1,toneMapped:false});
   const hostile=new THREE.MeshBasicMaterial({color:0xff6d42,toneMapped:false});
   const rocketPaint=new THREE.MeshStandardMaterial({color:0x8f9994,metalness:.5,roughness:.48});
@@ -74,9 +74,9 @@ export function createCombat(scene,world,effects,audio){
     rockets.push({position,previous:position.clone(),velocity:dir.clone().multiplyScalar(125).add(flight.velocity),direction:dir,age:0,visual});
     audio?.rocket?.();return true;
   }
-  function deployFlares(flight){
-    if(flight.crashed||flareCooldown>0||flareCount<2)return false;
-    flareCount-=2;flareCooldown=1.5;
+  function emitFlarePair(flight){
+    if(flight.crashed||flareCount<2)return false;
+    flareCount-=2;
     for(const side of [-1,1]){
       const position=new THREE.Vector3(side*.8,-.3,1.1).applyQuaternion(flight.quaternion).add(flight.position);
       const velocity=new THREE.Vector3(side*(8+Math.random()*5),-4,8).applyQuaternion(flight.quaternion).add(flight.velocity);
@@ -86,6 +86,11 @@ export function createCombat(scene,world,effects,audio){
       flares.push(flare?{object:flare,fallback:false}:{object:{position,velocity,life:5},fallback:true});
     }
     audio?.flare?.();return true;
+  }
+  function deployFlares(flight){
+    if(flight.crashed||flareCooldown>0||flareCount<2)return false;
+    flareProgramRemaining=5;flarePulseTimer=.5;flareCooldown=7;
+    return emitFlarePair(flight);
   }
 
   function hitTarget(target,position,rocket=false){
@@ -128,6 +133,7 @@ export function createCombat(scene,world,effects,audio){
 
   function update(dt,time,flight,def,controls={},options={}){
     dt=clamp(dt,0,.1);clock=time??clock+dt;gunCooldown=Math.max(0,gunCooldown-dt);rocketCooldown=Math.max(0,rocketCooldown-dt);flareCooldown=Math.max(0,flareCooldown-dt);
+    if(flareProgramRemaining>0){flareProgramRemaining=Math.max(0,flareProgramRemaining-dt);if(flareProgramRemaining<1e-8)flareProgramRemaining=0;flarePulseTimer-=dt;while(flarePulseTimer<=0&&flareProgramRemaining>0){if(!emitFlarePair(flight)){flareProgramRemaining=0;break;}flarePulseTimer+=.5;}}
     if(controls.gun||controls.fireGun)fireGun(flight,def);if(controls.rocket||controls.fireRocket)fireRocket(flight,def);
     const threats=Boolean(options.threats&&def.weapon&&inRange(flight.position)&&!flight.crashed);
     launcherGroup.visible=Boolean(options.threats);
@@ -188,10 +194,8 @@ export function createCombat(scene,world,effects,audio){
   function reset(){
     for(const p of [...rockets,...missiles])p.visual.group.removeFromParent();bullets.length=rockets.length=missiles.length=flares.length=0;
     for(const target of targetFlashes.keys())target.mesh?.scale.setScalar(1);targetFlashes.clear();hitTargets.clear();for(const k of Object.keys(stats))stats[k]=0;
-    gunCooldown=rocketCooldown=flareCooldown=lockTime=0;flareCount=24;threatCooldown=4;aaCooldown=8;previousThreats=false;
+    gunCooldown=rocketCooldown=flareCooldown=lockTime=flareProgramRemaining=flarePulseTimer=0;flareCount=24;threatCooldown=4;aaCooldown=8;previousThreats=false;
     Object.assign(threatState,{locked:false,missileDistance:Infinity,missiles:0,warning:''});tracerInstances.count=enemyInstances.count=0;
   }
-  return {update,fireGun,fireRocket,deployFlares,reset,stats,threatState,get flareCount(){return flareCount;},rearm(){flareCount=24;}};
+  return {update,fireGun,fireRocket,deployFlares,reset,stats,threatState,get flareCount(){return flareCount;},get flareActive(){return flareProgramRemaining>0;},rearm(){flareCount=24;flareProgramRemaining=flarePulseTimer=flareCooldown=0;}};
 }
-
-
