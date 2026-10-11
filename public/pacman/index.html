@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080a10">
+  <meta name="description" content="Turn picking a student into an arcade chase. Enter your class, control Pac-Man, and catch a name.">
+  <title>Pac-Man Classroom · SpeakKai</title>
+  <link rel="canonical" href="https://speakkai.com/pacman/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23ffe500' d='M29 7A15 15 0 1 0 29 25L16 16Z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="engine.js" defer></script><script src="game.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Pac-Man Classroom home"><span class="pac-icon"></span><span>PAC-MAN<span class="brand-sub">CLASSROOM</span></span></a>
+    <span class="tag">THE NAME PICKER</span>
+    <div class="toolbar"><button id="sound" class="icon-button" aria-pressed="true" title="Toggle arcade sounds">♫ <span>Sound on</span></button><button id="fullscreen" class="icon-button" title="Enter full screen">⛶ <span>Full screen</span></button></div>
+  </header>
+  <main>
+    <section class="intro"><div><p class="eyebrow"><span></span> A CLASSROOM CLASSIC</p><h1>Catch a ghost.<br>Pick a <em>student.</em></h1><p class="intro-copy">You’re Kai, the Pac-Man. Your students are the ghosts. <br>Power up. The first blue ghost you catch is up next.</p></div><div class="intro-art" aria-hidden="true"><span class="big-pac"></span><i></i><i></i><i></i><svg viewBox="0 0 14 14"><path fill="#ff4242" d="M0 14V7C0-2 14-2 14 7V14L11 12L9 14L7 12L5 14L3 12Z"/><path fill="white" d="M3 4h3v5H3zM9 4h3v5H9z"/><path fill="#2424ff" d="M4 6h2v2H4zM10 6h2v2h-2z"/></svg></div></section>
+    <div class="play-layout">
+      <section class="arcade" aria-label="Pac-Man game">
+        <div class="arcade-top"><span class="machine-label">1UP <b id="score">00</b></span><span class="machine-title">CLASSROOM CHASE</span><span class="machine-label right">ROUND <b id="round">01</b></span><button id="exitFullscreen" class="fullscreen-exit" aria-label="Exit full screen" title="Exit full screen">×</button></div>
+        <div class="screen" id="screen"><canvas id="maze" width="672" height="744" tabindex="0" aria-label="Pac-Man maze. Use arrow keys or W A S D to move."></canvas>
+          <div class="game-overlay" id="overlay"><div class="overlay-card"><span class="mini-ghosts" aria-hidden="true">● ● ● ●</span><p class="pixel" id="overlayTitle">READY!</p><p id="overlayText">Add your students to start the chase.</p><button class="primary" id="overlayAction" hidden>Continue</button></div></div>
+          <div class="boost" id="boost" hidden>POWER UP! <span id="boostTime">6s</span></div>
+        </div>
+        <div class="arcade-bottom"><span class="pac-lives" aria-hidden="true"><i></i><i></i><i></i></span><span id="gameStatus">YOUR CLASS. YOUR ARCADE.</span><button id="pause" class="pause-button" disabled aria-label="Pause game">Ⅱ</button></div>
+        <div class="controls"><div><p class="control-label">YOU’RE IN CONTROL</p><p><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> <span>or</span> <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></p><p class="control-note">Space to pause · Power pellets give you a speed boost</p></div><div class="dpad" aria-label="Direction controls"><button data-dir="up" aria-label="Move up">▲</button><button data-dir="left" aria-label="Move left">◀</button><span class="dpad-center"></span><button data-dir="right" aria-label="Move right">▶</button><button data-dir="down" aria-label="Move down">▼</button></div></div>
+      </section>
+      <aside class="class-panel">
+        <section class="panel" id="setupPanel"><div class="section-heading"><span class="step">01</span><div><h2>Meet the ghosts</h2><p>Give every ghost a student’s name.</p></div></div>
+          <label for="names">YOUR STUDENTS <span id="nameCount">0 students</span></label><textarea id="names" spellcheck="false" placeholder="One name per line…&#10;&#10;Alex&#10;Emma&#10;Oliver&#10;Sofia" aria-describedby="rosterHint rosterError"></textarea>
+          <div class="input-footer"><span id="rosterHint">One name per line · Up to 60 students</span><button id="demo" class="text-button">Try a demo</button></div>
+          <p id="rosterError" class="error" role="alert" hidden></p>
+          <button id="start" class="primary wide" disabled><span class="small-pac"></span> LET’S PLAY <span>→</span></button>
+          <p class="save-note">Names stay in this browser. Ready when you are.</p>
+        </section>
+        <section class="panel" id="rosterPanel" hidden><div class="section-heading"><span class="step">01</span><div><h2>In the maze</h2><p><span id="remainingCount">0</span> students waiting for their turn</p></div><button class="text-button" id="edit">Edit</button></div><div id="students" class="students"></div><button id="next" class="primary wide" hidden>NEXT CHASE <span>→</span></button><div class="roster-actions"><button id="restart" class="text-button">Restart chase</button><button id="reset" class="text-button">Reset turns</button></div></section>
+        <section class="panel turn-panel"><div class="section-heading"><span class="step">02</span><div><h2>The turn list</h2><p>First caught, first up. No repeat picks.</p></div><span class="count-badge" id="pickedCount">0</span></div><div id="historyEmpty" class="empty-history"><svg viewBox="0 0 14 14" aria-hidden="true"><path fill="none" stroke="currentColor" d="M1 13V7C1-1 13-1 13 7V13L10 11L8 13L6 11L4 13L2 11Z"/><path fill="currentColor" d="M4 5h2v3H4zM9 5h2v3H9z"/></svg><p>A little suspense…</p><span>Your first pick will appear here.</span></div><ol id="history" aria-live="polite"></ol><button id="copy" class="text-button copy-button" hidden>Copy turn list ↗</button></section>
+        <div class="howto"><span class="yellow-dot"></span><p><strong>How it works</strong><br>Eat a large power pellet to turn the ghosts blue. Catch a blue ghost to pick a student. Touch a colored ghost and Kai dies — no student is picked.</p></div>
+      </aside>
+    </div>
+  </main>
+  <footer><span>MADE FOR A LITTLE CLASSROOM FUN</span><button id="creditsButton" class="text-button">Arcade credits & sounds</button></footer>
+  <dialog id="credits"><button class="dialog-close" id="closeCredits" aria-label="Close credits">×</button><h2>Arcade credits</h2><p>A classroom adaptation of Pac-Man’s maze and characters. Colored ghosts chase Kai. Power pellets turn them blue, and catching a blue ghost adds a student to the turn list. This is a fan-made name picker.</p><p>Original Pac-Man characters, maze, and audio: Namco / Bandai Namco. Intro, chomp, power cue, ghost capture, and death recordings from the <a href="https://www.classicgaming.cc/classics/pac-man/sounds" target="_blank" rel="noopener">ClassicGaming sound archive</a>.</p><p>Arcade reference: <a href="https://www.pacman.com/en/history/" target="_blank" rel="noopener">Official Pac-Man history</a>. Sprites and maze outlines are drawn in code. Press Start 2P font by CodeMan38, under the SIL Open Font License.</p><p>Sound begins after you press Play. Roster and turns are saved only in this browser.</p></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body></html>
