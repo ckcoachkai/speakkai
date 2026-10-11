@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 :root{color-scheme:dark;--bg:#101b33;--ink:#fff4df;--muted:#a8b0c4;--coral:#ff735e;--teal:#7bd8c9;--gold:#f8c75a;--line:rgba(255,244,223,.13);font-family:'DM Sans',system-ui,sans-serif;color:var(--ink);background:var(--bg)}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}button,input,textarea{font:inherit}button,a,input,textarea{-webkit-tap-highlight-color:transparent}button{color:inherit;cursor:pointer;border:0}button:disabled{cursor:default;opacity:.45}button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--teal);outline-offset:4px}a{color:inherit}h2,p{margin:0}h2{font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:24px;letter-spacing:-.7px}button{transition:background .18s,opacity .18s,transform .18s}button:not(:disabled):active{transform:scale(.97)}[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .arcade-shell{position:relative;width:100%;height:100%;height:100dvh;isolation:isolate}.stage-wrap,.game-stage{position:absolute;inset:0;width:100%;height:100%;overflow:hidden}.game-stage{background:var(--bg)}.game-stage>canvas{display:block}.loading{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg);color:var(--muted)}
@@ -26,3 +25,17 @@ html,body,.arcade-shell{overflow:clip}
 
 
 .game-tabs{grid-template-columns:repeat(7,1fr)}a.game-tab{text-decoration:none}.game-tab[aria-disabled="true"]{opacity:.5;pointer-events:none}@media(max-width:1100px){.game-tabs{grid-template-columns:repeat(4,1fr)}}@media(max-width:700px){.game-tabs{grid-template-columns:repeat(4,1fr)}a.game-tab strong{font-size:10px}}
+
+/* Quiet controls keep the artwork as the focus. */
+:root{--bg:#111216;--ink:#f5f5f7;--muted:#9c9da5;--coral:#0a84ff;--teal:#64d2ff;--gold:#ffd60a;--line:rgba(255,255,255,.12);font-family:'SF Pro Display','Segoe UI',system-ui,sans-serif}
+h2,.brand,.corner-status>strong,.game-tab strong,#winnerName{font-family:'SF Pro Display','Segoe UI',system-ui,sans-serif}
+.edge-handle{background:#16171bd9;backdrop-filter:blur(20px);font-weight:500;border-color:#ffffff16;box-shadow:none}
+.edge-handle:hover,.edge-handle[aria-expanded=true]{background:#26272c;color:#fff}
+.edge-panel{background:linear-gradient(145deg,#202126f7,#101115f7)}
+.eyebrow{color:var(--muted);letter-spacing:1.3px}.panel-heading h2{font-weight:500}.game-tab.active{border-color:#0a84ff;background:#0a84ff12}.game-tab.active svg{color:#0a84ff}
+.brand-mark{color:#fff}.game-tab{border-radius:14px}.game-tab small{line-height:1.4}.game-tabs{gap:9px}
+.primary-button{background:#f5f5f7;color:#111216;border-radius:28px;gap:12px;padding:14px 22px;box-shadow:0 4px 25px #0004;font-weight:600}.primary-button:hover:not(:disabled){background:#fff}.play-icon{color:#0a84ff}.play-key{border-color:#11121628}
+.quick-play{bottom:max(43px,calc(env(safe-area-inset-bottom) + 31px))}.round-running .quick-play{opacity:.35;pointer-events:none}
+.edge-hint{color:#b5b5bd;background:#111216a0;font-size:10px;bottom:109px;padding:7px 13px}.game-info .eyebrow,.round-note{display:none}.game-info h2{font-weight:500}.winner-card{background:#15161bf2;border-color:#ffffff21;border-radius:24px}.winner-eyebrow{color:#64d2ff}
+.toggle input:checked+i{background:#0a84ff}.toggle input:checked+i:after{background:#fff}.edit-button{background:#0a84ff;color:#fff}.edit-button:hover{background:#2996ff}.bear-modes button[aria-pressed=true]{background:#f5f5f7;color:#111216}.keycap{display:none}
+@media(max-width:700px){.game-tabs{gap:6px}.primary-button{padding:13px 19px}.quick-play{bottom:41px}.edge-hint{bottom:101px}}

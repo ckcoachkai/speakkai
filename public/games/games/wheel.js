@@ -76,57 +76,16 @@ export default function createGame({ container, names = [], onPick, random }) {
     canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const compact = width < 710;
-    const radius = compact
-      ? Math.max(70, Math.min(width * .37, (height - 172) * .45))
-      : Math.min(height * .373, width * .273);
-    layout = {
-      compact,
-      radius,
-      cx: compact ? width / 2 : width * .335,
-      cy: compact ? 60 + radius : height * .53,
-      infoX: compact ? width / 2 : width * .662,
-      infoY: compact ? 91 + radius * 2 : Math.min(height * .38, height - 215),
-      infoW: compact ? width - 36 : width * .295,
-    };
+    const radius = Math.max(55, Math.min(width * .415, (height - 138) * .45));
+    layout = { compact, radius, cx: width / 2, cy: Math.max(radius + 38, (height - 65) / 2) };
     draw(performance.now());
   }
-  function background(time) {
+  function background() {
     ctx.clearRect(0, 0, width, height);
-    const wash = ctx.createRadialGradient(layout.cx, layout.cy, 10, layout.cx, layout.cy, width * .73);
-    wash.addColorStop(0, '#243853');
-    wash.addColorStop(.58, '#14223c');
-    wash.addColorStop(1, '#0d172c');
-    ctx.fillStyle = wash;
-    ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = 'rgba(123,216,201,.1)';
-    for (let y = 18; y < height; y += 26) {
-      for (let x = 18; x < width; x += 26) {
-        if (Math.hypot(x - layout.cx, y - layout.cy) > layout.radius + 27) {
-          ctx.beginPath(); ctx.arc(x, y, .85, 0, TAU); ctx.fill();
-        }
-      }
-    }
-    ctx.save();
-    ctx.strokeStyle = 'rgba(123,216,201,.07)';
-    ctx.lineWidth = 1;
-    for (const extra of [37, 65]) {
-      ctx.beginPath(); ctx.arc(layout.cx, layout.cy, layout.radius + extra, 0, TAU); ctx.stroke();
-    }
-    ctx.restore();
-    text('CHANCE, WITH A LITTLE DRAMA.', 24, 28, width < 410 ? 9 : 10, '#7bd8c9', 800);
-    if (!layout.compact) {
-      roundRect(width - 126, 17, 102, 26, 13, 'rgba(123,216,201,.09)', 'rgba(123,216,201,.25)');
-      text(`${players.length} NAMES`, width - 75, 30, 10, '#bceee5', 800, 'center');
-    }
-    const stars = [[.11,.2],[.52,.15],[.075,.79],[.59,.84]];
-    for (let i = 0; i < stars.length; i++) {
-      const [x, y] = stars[i];
-      const sx = width * x, sy = height * y;
-      const scale = phase === 'idle' ? 1 : 1 + .16 * Math.sin(time / 400 + i);
-      ctx.strokeStyle = i % 2 ? '#f8c75a' : '#7bd8c9'; ctx.globalAlpha = .65;
-      ctx.beginPath(); ctx.moveTo(sx - 4 * scale, sy); ctx.lineTo(sx + 4 * scale, sy); ctx.moveTo(sx, sy - 4 * scale); ctx.lineTo(sx, sy + 4 * scale); ctx.stroke();
-    }
-    ctx.globalAlpha = 1;
+    const wash = ctx.createRadialGradient(layout.cx, layout.cy, 0, layout.cx, layout.cy, Math.max(width, height) * .62);
+    wash.addColorStop(0, '#23252b'); wash.addColorStop(1, '#0e0f12');
+    ctx.fillStyle = wash; ctx.fillRect(0, 0, width, height);
+    if (!players.length) text('Add names to begin', width / 2, layout.cy + layout.radius + 30, 12, '#a1a1aa', 500, 'center');
   }
   function wheel(time) {
     const { cx, cy, radius: r } = layout;
@@ -136,13 +95,13 @@ export default function createGame({ container, names = [], onPick, random }) {
     ctx.shadowColor = 'rgba(0,0,0,.4)'; ctx.shadowBlur = 22; ctx.shadowOffsetY = 13;
     ctx.beginPath(); ctx.arc(cx, cy, r + 15, 0, TAU); ctx.fillStyle = '#091426'; ctx.fill();
     ctx.restore();
-    ctx.beginPath(); ctx.arc(cx, cy, r + 11, 0, TAU); ctx.strokeStyle = '#7bd8c9'; ctx.lineWidth = 2; ctx.stroke();
-    ctx.beginPath(); ctx.arc(cx, cy, r + 6, 0, TAU); ctx.strokeStyle = '#25364e'; ctx.lineWidth = 8; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, r + 11, 0, TAU); ctx.strokeStyle = '#8e9099'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, r + 6, 0, TAU); ctx.strokeStyle = '#303137'; ctx.lineWidth = 8; ctx.stroke();
     for (let dot = 0; dot < 36; dot++) {
       const angle = dot * TAU / 36 - Math.PI / 2;
       const active = phase === 'spin' ? ((dot + Math.floor(time / 65)) % 5 < 2) : dot % 3 === 0;
       ctx.beginPath(); ctx.arc(cx + Math.cos(angle) * (r + 11), cy + Math.sin(angle) * (r + 11), Math.max(1.5, r * .008), 0, TAU);
-      ctx.fillStyle = active ? '#fff1d5' : '#36516b'; ctx.fill();
+      ctx.fillStyle = active ? '#f5f5f7' : '#55565e'; ctx.fill();
     }
     ctx.save();
     ctx.translate(cx, cy); ctx.rotate(rotation - Math.PI / 2);
@@ -185,56 +144,7 @@ export default function createGame({ container, names = [], onPick, random }) {
     ctx.beginPath(); ctx.moveTo(-13, -22); ctx.lineTo(13, -22); ctx.lineTo(0, 12); ctx.closePath();
     ctx.fillStyle = '#f8c75a'; ctx.fill(); ctx.shadowBlur = 0;
     ctx.strokeStyle = '#fff1d5'; ctx.lineWidth = 2; ctx.stroke(); ctx.restore();
-    if (!layout.compact) text('ONE EQUAL SLICE. ONE SURPRISE.', cx, Math.min(height - 21, cy + r + 47), 10, '#a0b4ce', 700, 'center');
-  }
-  function wrapName(value, x, y, available, fontSize, align) {
-    const chars = graphemes ? Array.from(graphemes.segment(value), item => item.segment) : Array.from(value);
-    ctx.font = font(fontSize, 900);
-    const lines = [];
-    let line = '';
-    for (const char of chars) {
-      if (ctx.measureText(line + char).width > available && line) { lines.push(line.trim()); line = char; }
-      else line += char;
-    }
-    if (line) lines.push(line.trim());
-    const drawn = lines.slice(0, 3);
-    if (lines.length > 3) drawn[2] = fit(`${drawn[2]}…`, available);
-    drawn.forEach((lineValue, index) => text(lineValue, x, y + index * fontSize * 1.15, fontSize, '#fff1d5', 900, align));
-    return drawn.length * fontSize * 1.15;
-  }
-  function info(time) {
-    const { compact, infoX: x, infoY: y, infoW: w } = layout;
-    const align = compact ? 'center' : 'left';
-    const won = phase === 'burst' || phase === 'done';
-    if (won) {
-      text('NEXT SPEAKER', x, y - (compact ? 8 : 26), 11, '#7bd8c9', 900, align);
-      const big = compact ? 23 : Math.min(40, w * .142, height * .071);
-      const nameHeight = wrapName(players[chosen].name, x, y + (compact ? 17 : 15), w, big, align);
-      if (!compact) {
-        const lowerY = y + nameHeight + 48;
-        roundRect(x, lowerY, 151, 32, 16, 'rgba(248,199,90,.1)', 'rgba(248,199,90,.25)');
-        text('CHOSEN BY CHANCE', x + 75.5, lowerY + 16, 9, '#f8c75a', 800, 'center');
-        text('A spectacular entrance.', x, lowerY + 69, 14, '#a0b4ce', 500);
-      }
-    } else {
-      text(phase === 'spin' ? 'ROUND IN MOTION' : 'WHO SPEAKS NEXT?', x, y - (compact ? 8 : 26), 11, '#7bd8c9', 900, align);
-      if (compact) {
-        text(players.length ? (phase === 'spin' ? 'Round and round we go…' : 'Give the wheel a spin.') : 'Add names to play.', x, y + 18, 21, '#fff1d5', 800, align);
-      } else {
-        text(phase === 'spin' ? 'Here comes' : 'Let chance', x, y + 14, Math.min(40, w * .136), '#fff1d5', 900);
-        text(phase === 'spin' ? 'the surprise.' : 'take a turn.', x, y + 60, Math.min(40, w * .136), '#fff1d5', 900);
-        text(players.length ? (phase === 'spin' ? 'Watch the golden pointer.' : 'Spin. Land. Boom.') : 'Add names to play.', x, y + 117, 15, '#a0b4ce', 500);
-        text(`${players.length} equal ${players.length === 1 ? 'chance' : 'chances'} to be first.`, x, y + 143, 13, '#a0b4ce', 500);
-        if (phase === 'spin') {
-          const progress = Math.min(1, (time - startAt) / spinTime);
-          roundRect(x, y + 185, w * .75, 5, 2.5, '#273852');
-          if (progress > 0) roundRect(x, y + 185, w * .75 * progress, 5, 2.5, '#7bd8c9');
-        } else {
-          roundRect(x, y + 177, 120, 30, 15, 'rgba(255,115,94,.1)', 'rgba(255,115,94,.25)');
-          text('SLICE EXPLOSION', x + 60, y + 192, 9, '#ff9b8b', 800, 'center');
-        }
-      }
-    }
+
   }
   function makeBurst() {
     particles = [];
@@ -277,7 +187,7 @@ export default function createGame({ container, names = [], onPick, random }) {
   }
   function draw(time) {
     if (!layout || destroyed) return;
-    background(time); wheel(time); burst(time); info(time);
+    background(time); wheel(time); burst(time);
   }
   function tick(time) {
     if (destroyed || phase === 'idle' || phase === 'done') return;
@@ -325,6 +235,20 @@ export default function createGame({ container, names = [], onPick, random }) {
     canvas.setAttribute('aria-label', `Ready to spin. ${players.length} equal name slices.`);
     draw(performance.now());
   }
+  function clickHub(event) {
+    const bounds = canvas.getBoundingClientRect();
+    const x = event.clientX - bounds.left, y = event.clientY - bounds.top;
+    if (Math.hypot(x - layout.cx, y - layout.cy) < Math.max(26, layout.radius * .2)) start();
+  }
+  // Starting through the shared Play button preserves the roster and round state.
+  function sharedStart(event) {
+    const bounds = canvas.getBoundingClientRect();
+    if (Math.hypot(event.clientX - bounds.left - layout.cx, event.clientY - bounds.top - layout.cy) < Math.max(26, layout.radius * .2)) {
+      const play = document.getElementById('playButton');
+      if (play) play.click(); else clickHub(event);
+    }
+  }
+  canvas.addEventListener('click', sharedStart);
   const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(size) : null;
   observer?.observe(root);
   if (!observer) window.addEventListener('resize', size);
@@ -338,6 +262,7 @@ export default function createGame({ container, names = [], onPick, random }) {
       cancelAnimationFrame(frame);
       observer?.disconnect();
       window.removeEventListener('resize', size);
+      canvas.removeEventListener('click', sharedStart);
       particles = [];
       root.remove();
     },
