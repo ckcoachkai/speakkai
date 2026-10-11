@@ -1,4 +1,5 @@
-import { createGardenRenderer } from './garden-rig.js';
+import { createGardenRenderer } from './garden-rig.js?v=20261011-classic';
+import { GARDEN_RULES, PLANT_BY_ID, getSplashDamage } from './garden-rules.js?v=20261011-classic';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
@@ -7,11 +8,11 @@ import { createGardenRenderer } from './garden-rig.js';
  */
 export const HEALTH_MODEL = Object.freeze({ label: 'Source-informed baseline; custom combat variants', exactParityVerified: false, plantHealth: 300, studentHealth: 150, normalBodyHealth: 270, coneArmorHealth: 370, bucketArmorHealth: 1100, footballArmorHealth: 1400, peaDamage: 20 });
 const ARCHETYPES = [
-  { name: 'Walker', hp: 270, speed: .036, bite: 50, cadence: .50 },
-  { name: 'Stumbler', hp: 270, speed: .041, bite: 45, cadence: .50 },
-  { name: 'Runner', hp: 160, speed: .050, bite: 36, cadence: .40 },
-  { name: 'Bruiser', hp: 300, speed: .031, bite: 65, cadence: .60 },
-  { name: 'Courier', hp: 220, speed: .044, bite: 48, cadence: .45 },
+  { name: 'Walker', hp: 270, speed: .018, bite: 50, cadence: .50 },
+  { name: 'Stumbler', hp: 270, speed: .0205, bite: 45, cadence: .50 },
+  { name: 'Runner', hp: 160, speed: .025, bite: 36, cadence: .40 },
+  { name: 'Bruiser', hp: 300, speed: .0155, bite: 65, cadence: .60 },
+  { name: 'Courier', hp: 220, speed: .022, bite: 48, cadence: .45 },
 ];
 const ARMORS = [
   { name: 'Barehead', hp: 0, resistance: 0 },
@@ -38,31 +39,32 @@ export const ZOMBIE_CATALOG = Object.freeze(ARCHETYPES.flatMap((base, a) => ARMO
   brow: c, nose: a, buttons: b + 1,
 })))));
 
+const BASE_CADENCE = PLANT_BY_ID.pea.interval;
+export const PICKER_PACING = Object.freeze({ peaInterval: BASE_CADENCE, upgradeMinimumInterval: PLANT_BY_ID.pea.intervalMin, projectileTilesPerSecond: 4.16, firstZombie: 3, spawnMinimum: 6.4, spawnMaximum: 8.4, pressureStarts: 90, melonSplashTileRadius: 1.5, geometry: 'Readable 3-by-3 tile splash adaptation; original damage and crowded-target cap' });
+const classicWeapon = (id, icon) => ({ ...PLANT_BY_ID[id], icon, classification: 'classic', sourceHealth: PLANT_BY_ID[id].hp, sourceDamage: PLANT_BY_ID[id].damage, multiplier: PLANT_BY_ID[id].damage / 20, cooldown: PLANT_BY_ID[id].interval / BASE_CADENCE, slow: PLANT_BY_ID[id].slow < 1 ? PLANT_BY_ID[id].slow : undefined, pierce: 1, radius: 0 });
+// Keep these ten legacy IDs in order so every existing loot ID remains valid.
 const WEAPONS = [
-  { id: 'pea', name: 'Pea Charm', icon: '●', multiplier: 1, cooldown: 1, count: 1, pierce: 1, radius: 0 },
-  { id: 'twin', name: 'Twinbud', icon: '●●', multiplier: .78, cooldown: 1, count: 2, pierce: 1, radius: 0 },
-  { id: 'burst', name: 'Threeleaf', icon: '•••', multiplier: .56, cooldown: 1.08, count: 3, pierce: 1, radius: 0 },
-  { id: 'frost', name: 'Snowbud', icon: '❄', multiplier: .85, cooldown: 1, count: 1, pierce: 1, radius: 0, slow: .52 },
-  { id: 'fire', name: 'Emberpetal', icon: '✦', multiplier: 1, cooldown: 1.05, count: 1, pierce: 1, radius: 0, burn: 6 },
-  { id: 'pierce', name: 'Needleleaf', icon: '➤', multiplier: .92, cooldown: 1.03, count: 1, pierce: 3, radius: 0 },
-  { id: 'catapult', name: 'Melonpod', icon: '◒', multiplier: 1.7, cooldown: 1.55, count: 1, pierce: 1, radius: .16 },
-  { id: 'splash', name: 'Popcorn Pod', icon: '✺', multiplier: 1.13, cooldown: 1.15, count: 1, pierce: 1, radius: .12 },
-  { id: 'laser', name: 'Sun Prism', icon: '⚡', multiplier: .48, cooldown: .5, count: 1, pierce: 1, radius: 0 },
-  { id: 'thorn', name: 'Thorn Fan', icon: '⋔', multiplier: .60, cooldown: 1.08, count: 3, pierce: 2, radius: 0 },
+  classicWeapon('pea', '●'), classicWeapon('twin', '●●'), classicWeapon('burst', '•••'), classicWeapon('frost', '❄'),
+  { id: 'fire', name: 'Custom Emberpetal', classification: 'custom', icon: '✦', damage: 20, interval: 1.50, intervalMin: 1.42, multiplier: 1, cooldown: 1.50 / BASE_CADENCE, count: 1, pierce: 1, radius: 0, burn: 6 },
+  classicWeapon('pierce', '➤'), classicWeapon('catapult', '◒'), classicWeapon('splash', '✺'),
+  { id: 'laser', name: 'Custom Sun Prism', classification: 'custom', icon: '⚡', damage: 12, interval: 1.50, intervalMin: 1.42, multiplier: .6, cooldown: 1.50 / BASE_CADENCE, count: 1, pierce: 1, radius: 0 },
+  { id: 'thorn', name: 'Custom Thorn Fan', classification: 'custom', icon: '⋔', damage: 12, interval: 1.65, intervalMin: 1.55, multiplier: .6, cooldown: 1.65 / BASE_CADENCE, count: 3, burstGap: .12, pierce: 2, radius: 0 },
 ];
+const EXTRA_WEAPONS = [classicWeapon('gatling', '••••'), classicWeapon('wintermelon', '◒❄')];
+const SHOOTERS = [...WEAPONS, ...EXTRA_WEAPONS];
 const BLOCKERS = [
-  { id: 'walnut', name: 'Wall-nut', icon: '◉', blocker: true, hp: 1200, contactDamage: 4, multiplier: 0, cooldown: 1, count: 0, pierce: 0, radius: 0 },
-  { id: 'tallnut', name: 'Tall-nut', icon: '▣', blocker: true, hp: 1800, contactDamage: 6, multiplier: 0, cooldown: 1, count: 0, pierce: 0, radius: 0 },
-  { id: 'chestnut', name: 'Chestnut', icon: '✹', blocker: true, hp: 950, contactDamage: 18, multiplier: 0, cooldown: 1, count: 0, pierce: 0, radius: 0 },
+  { ...PLANT_BY_ID.walnut, classification: 'classic', sourceHealth: PLANT_BY_ID.walnut.hp, modeScaling: 1200 / PLANT_BY_ID.walnut.hp, icon: '◉', blocker: true, hp: 1200, contactDamage: 0, multiplier: 0, cooldown: 1, count: 0, pierce: 0, radius: 0 },
+  { ...PLANT_BY_ID.tallnut, classification: 'classic', sourceHealth: PLANT_BY_ID.tallnut.hp, modeScaling: 1800 / PLANT_BY_ID.tallnut.hp, icon: '▣', blocker: true, hp: 1800, contactDamage: 0, multiplier: 0, cooldown: 1, count: 0, pierce: 0, radius: 0 },
+  { id: 'chestnut', name: 'Custom Chestnut', classification: 'custom', icon: '✹', blocker: true, hp: 950, contactDamage: 18, multiplier: 0, cooldown: 1, count: 0, pierce: 0, radius: 0 },
 ];
-export const PLANT_CATALOG = Object.freeze([...WEAPONS, ...BLOCKERS].map(plant => Object.freeze({ ...plant })));
+export const PLANT_CATALOG = Object.freeze([...SHOOTERS, ...BLOCKERS].map(plant => Object.freeze({ ...plant })));
 const AFFIXES = [
-  { name: 'Fierce', damage: 3, description: '+3 damage' },
-  { name: 'Rapid', rate: .94, description: 'faster attacks' },
+  { name: 'Fierce', damage: 1, description: '+1 base pea damage' },
+  { name: 'Rapid', rate: .99, description: 'slightly faster attacks' },
   { name: 'Vital', maxHp: 3, heal: 16, description: '+16 health' },
   { name: 'Guarded', shield: 9, description: '+9 shield' },
   { name: 'Lucky', crit: .04, description: 'more critical hits' },
-  { name: 'Swift', velocity: .15, rate: .98, description: 'faster shots' },
+  { name: 'Swift', velocity: .10, rate: .995, description: 'slightly faster shots' },
   { name: 'Serrated', penetration: .05, description: 'pierce armor' },
   { name: 'Kind', damage: 1, heal: 7, description: '+damage and health' },
   { name: 'Blooming', splash: .012, description: 'wider splash damage' },
@@ -126,13 +128,13 @@ export default function createGame({ container, names = [], onPick, random = Mat
   let alive = true, raf = 0, generation = 0, phase = 'idle', reported = false, winner = null;
   let width = 1000, height = 560, laneHeight = 88, boardHeader = 64, lanes = [];
   let simTime = 0, startedAt = 0, resultAt = 0, visualResultAt = null, previous = null, focused = false, serial = 0;
-  let shots = [], effects = [], drops = [], combatLog = [], soundEnabled = Boolean(sound);
+  let shots = [], pendingShots = [], effects = [], drops = [], combatLog = [], soundEnabled = Boolean(sound);
   let audio = null, audioTimer = null, master = null, sfxMaster = null, beat = 0, nextBeat = 0, audioEpoch = 0, audioLoadController = null;
   const sampleBuffers = new Map(), sfxVoices = new Set(), musicVoices = new Set(), lastSfx = new Map(), sfxRotation = new Map();
   const soundGaps = { shot: .085, hit: .075, armor: .22, growl: 1.65, bite: .16, plant: .28, pickup: .16, death: .25, intro: 5, mower: .45 };
   const soundGains = { shot: .42, hit: .36, armor: .50, growl: .66, bite: .48, plant: .54, pickup: .52, death: .57, intro: .68, mower: .60 };
   const sampleURLs = Object.fromEntries(Object.keys(soundGaps).map(key => [key, (Array.isArray(artwork?.gardenSounds?.[key]) ? artwork.gardenSounds[key] : [artwork?.gardenSounds?.[key]]).filter(url => typeof url === 'string' && url.length > 0)]));
-  let rewards = [], nextReward = .65;
+  let rewards = [], nextReward = 1.30;
   let introPlayed = false;
   let mowerArt = null, mowerLoadController = null;
   const atlases = { plants: null, zombies: null, students: null };
@@ -227,7 +229,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   function newDefender(slot, weapon = 'pea', recruited = false) {
     const health = WEAPON_MAP[weapon].hp || 300;
     return { uid: 'd' + (++serial), slot, position: DEFENDER_POSITIONS[slot], weapon, hp: health, maxHp: health, shield: 0,
-      power: 0, nextShot: recruited ? simTime + .30 : .25, bornAt: recruited ? simTime : -1, eaten: false, eatenAt: 0,
+      power: 0, nextShot: recruited ? simTime + .50 : .50, bornAt: recruited ? simTime : -1, eaten: false, eatenAt: 0,
       recoil: 0, hurt: 0, shotsFired: 0, kills: 0 };
   }
   function fresh() {
@@ -237,11 +239,11 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const placement = [...players];
     for (let i = placement.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [placement[i], placement[j]] = [placement[j], placement[i]]; }
     lanes = placement.map((entry, index) => ({ entry, index, x: 0, y: 0, w: 0, h: 0, plantX: 0, floor: 0, travel: 0,
-      hp: STUDENT_HEALTH, maxHp: STUDENT_HEALTH, damage: 20, cooldown: .42, velocity: 1.9, penetration: 0, splash: 0, crit: 0,
-      power: 0, kills: 0, loot: [], suns: 0, stars: 0, shotsFired: 0, nextSpawn: .55, nextGrowl: 3 + index % 5, mobs: [], defenders: [newDefender(0)],
+      hp: STUDENT_HEALTH, maxHp: STUDENT_HEALTH, damage: 20, cooldown: BASE_CADENCE, velocity: PICKER_PACING.projectileTilesPerSecond, penetration: 0, splash: 0, crit: 0,
+      power: 0, kills: 0, loot: [], suns: 0, stars: 0, shotsFired: 0, nextSpawn: PICKER_PACING.firstZombie, nextGrowl: 5 + index % 5, mobs: [], defenders: [newDefender(0)],
       mower: { uid: 'mower-' + index, status: 'ready', x: LAWNMOWER_RULES.home, previousX: LAWNMOWER_RULES.home, activations: 0, kills: 0, killIds: [], activatedAt: null, spentAt: null, triggeredBy: null },
       eaten: false, hurt: 0, lastLoot: null }));
-    shots = []; effects = []; drops = []; rewards = []; nextReward = .65; combatLog = []; simTime = 0; focused = false; introPlayed = false;
+    shots = []; pendingShots = []; effects = []; drops = []; rewards = []; nextReward = 1.30; combatLog = []; simTime = 0; focused = false; introPlayed = false;
     layout();
   }
   function particle(lane, position, color, number = 7, big = false) {
@@ -270,8 +272,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
   }
   function newShooterType(lane) {
     const current = new Set(livingDefenders(lane).map(defender => defender.weapon));
-    const pool = WEAPONS.filter(weapon => !current.has(weapon.id));
-    return (pool.length ? pool : WEAPONS)[Math.floor(rng() * (pool.length || WEAPONS.length))].id;
+    const pool = SHOOTERS.filter(weapon => !current.has(weapon.id));
+    return (pool.length ? pool : SHOOTERS)[Math.floor(rng() * (pool.length || SHOOTERS.length))].id;
   }
   function nextPlantType(lane, allowBlocker = true) {
     const living = livingDefenders(lane), blockers = living.filter(defender => WEAPON_MAP[defender.weapon].blocker);
@@ -286,12 +288,12 @@ export default function createGame({ container, names = [], onPick, random = Mat
   }
   function giveLoot(owner, item) {
     const e = item.effects;
-    owner.damage = clamp(owner.damage + (e.damage || 0), 20, 36);
-    owner.cooldown = clamp(owner.cooldown * (e.rate || 1), .29, .42);
-    owner.crit = clamp(owner.crit + (e.crit || 0), 0, .30);
-    owner.velocity = clamp(owner.velocity + (e.velocity || 0), 1.9, 2.8);
-    owner.penetration = clamp(owner.penetration + (e.penetration || 0), 0, .35);
-    owner.splash = clamp(owner.splash + (e.splash || 0), 0, .06);
+    owner.damage = clamp(owner.damage + (e.damage || 0), 20, 24);
+    owner.cooldown = clamp(owner.cooldown * (e.rate || 1), PICKER_PACING.upgradeMinimumInterval, BASE_CADENCE);
+    owner.crit = clamp(owner.crit + (e.crit || 0), 0, .12);
+    owner.velocity = clamp(owner.velocity + (e.velocity || 0), PICKER_PACING.projectileTilesPerSecond, 4.8);
+    owner.penetration = clamp(owner.penetration + (e.penetration || 0), 0, .15);
+    owner.splash = clamp(owner.splash + (e.splash || 0), 0, .025);
     const living = livingDefenders(owner);
     let target = null, action = 'upgrade';
     const defensiveLoot = Boolean(e.shield || e.maxHp);
@@ -345,21 +347,29 @@ export default function createGame({ container, names = [], onPick, random = Mat
       playSfx('armor', lane);
     }
     if (result.damage <= 0) return;
+    addLog({ type: 'damage', weapon: shot.weapon ?? 'damage-over-time', ownerId: shot.ownerId, attackerId: shot.attackerId, zombieId: mob.uid, laneId: lane.entry.id, damage: result.damage, remainingHp: mob.hp });
     if (!dotDamage) {
       playSfx('hit', lane);
       float(lane, mob, Math.round(result.damage), shot.critical ? C.gold : '#fff5cd');
-      particle(lane, mob.x, shot.weapon === 'frost' ? '#b3edff' : shot.weapon === 'fire' ? '#ffb875' : '#d4f3a4', 3);
-      if (shot.slow) { mob.slow = shot.slow; mob.slowUntil = simTime + 1.75; }
+      particle(lane, mob.x, ['frost', 'wintermelon'].includes(shot.weapon) ? '#b3edff' : shot.stunDuration ? '#fff19c' : shot.weapon === 'fire' ? '#ffb875' : '#d4f3a4', 3);
+      if (shot.slow && shot.slow < 1) {
+        const previousSlow = simTime < mob.slowUntil ? mob.slow : 1;
+        mob.slow = Math.min(previousSlow, shot.slow); mob.slowUntil = Math.max(mob.slowUntil, simTime + (shot.slowDuration || 10));
+        if (mob.nextBite > simTime && previousSlow !== mob.slow) mob.nextBite = simTime + (mob.nextBite - simTime) * previousSlow / mob.slow;
+        mob.chewSlow = mob.slow;
+        addLog({ type: 'chill', zombieId: mob.uid, laneId: lane.entry.id, ownerId: shot.ownerId, walkMultiplier: mob.slow, biteMultiplier: mob.slow, expires: mob.slowUntil });
+      }
+      if (shot.stunDuration) { mob.stunnedUntil = Math.max(mob.stunnedUntil || 0, simTime + shot.stunDuration); mob.nextBite = Math.max(mob.nextBite, mob.stunnedUntil); float(lane, mob, 'BUTTER!', '#fff3a3'); addLog({ type: 'butterStun', zombieId: mob.uid, laneId: lane.entry.id, ownerId: shot.ownerId, expires: mob.stunnedUntil }); }
       if (shot.burn) mob.burn = { until: simTime + 2, damage: shot.burn, ownerId: shot.ownerId, attackerId: shot.attackerId };
     }
     if (result.killed) killed(lane, mob);
   }
   function spawn(lane, starter = false) {
     const pool = starter ? STARTERS : ZOMBIE_CATALOG, type = pool[Math.floor(rng() * pool.length)];
-    const pressure = Math.max(0, simTime - 20);
+    const pressure = Math.max(0, simTime - PICKER_PACING.pressureStarts);
     // Ordinary variants gradually arrive more often and move a little faster.
     // There is no timed boss, one-hit assault or deadline that selects a name.
-    const factor = 1 + pressure * .021, hp = type.health * factor;
+    const factor = 1 + pressure * .008, hp = type.health * factor;
     const armorHp = type.armorHealth * factor, bodyHp = hp - armorHp;
     const uid = ++serial;
     let visualType = type.archetype === 2 ? 'runner' : type.archetype === 1 ? 'newspaper' : type.archetype === 3 ? 'bruiser' : type.archetype === 4 ? 'courier' : 'walker';
@@ -368,35 +378,70 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (type.ability === 3) visualType = 'construction';
     if (type.armor > 0) visualType = ['walker', 'cone', 'bucket', 'football'][type.armor];
     const mob = { uid, type, x: 1.02 + rng() * .08,
-      hp, maxHp: hp, armorHp, maxArmorHp: armorHp, bodyHp, maxBodyHp: bodyHp, resistance: type.resistance, speed: type.speed * (1 + pressure * .030),
+      hp, maxHp: hp, armorHp, maxArmorHp: armorHp, bodyHp, maxBodyHp: bodyHp, resistance: type.resistance, speed: type.speed * (1 + pressure * .006),
       bite: type.bite * 1.08, cadence: type.biteCadence, nextBite: 0,
-      stage: 0, hurt: 0, dodgePose: 0, dead: false, deathAt: 0, lastShooter: null, slow: 1, slowUntil: 0, burn: null,
-      lootIndex: Math.floor(rng() * LOOT_CATALOG.length), pose: rng() * TAU, attacking: false };
+      stage: 0, hurt: 0, dodgePose: 0, dead: false, deathAt: 0, lastShooter: null, slow: 1, slowUntil: 0, chewSlow: 1, stunnedUntil: 0, burn: null,
+      lootIndex: Math.floor(rng() * LOOT_CATALOG.length), pose: rng() * TAU, animationTime: simTime, attacking: false };
     Object.defineProperties(mob, { visualType: { value: visualType, enumerable: true }, rigIdentity: { value: type.id + '-' + uid, enumerable: true } });
     lane.mobs.push(mob);
     addLog({ type: 'spawn', zombieId: mob.uid, variant: type.id, visualType, rigIdentity: mob.rigIdentity, health: Math.round(hp), damage: mob.bite, speed: mob.speed, laneId: lane.entry.id });
     playSfx('growl', lane);
   }
   function shoot(lane, defender) {
-    if (WEAPON_MAP[defender.weapon].blocker) return;
-    const targets = lane.mobs.filter(mob => !mob.dead && mob.x >= defender.position - .035).sort((a, b) => a.x - b.x);
-    if (!targets.length) return;
-    const weapon = WEAPON_MAP[defender.weapon], target = targets[0];
-    const critical = rng() < lane.crit;
-    const damage = lane.damage * weapon.multiplier * (critical ? 1.7 : 1);
-    defender.recoil = .12; defender.shotsFired += weapon.id === 'laser' ? 1 : weapon.count; lane.shotsFired += weapon.id === 'laser' ? 1 : weapon.count;
-    defender.nextShot = simTime + lane.cooldown * weapon.cooldown;
-    const source = { ownerId: lane.entry.id, attackerId: defender.uid, origin: defender.position, damage, penetration: lane.penetration, weapon: weapon.id, slow: weapon.slow, burn: weapon.burn, critical };
-    playSfx('shot', lane);
+    const weapon = WEAPON_MAP[defender.weapon];
+    if (weapon.blocker) return;
+    const rows = (weapon.id === 'burst' ? [-1, 0, 1] : [0]).map(offset => lane.index + offset).filter(index => index >= 0 && index < lanes.length);
+    const rowTargets = rows.map(index => ({ lane: lanes[index], targets: lanes[index].mobs.filter(mob => !mob.dead && mob.x >= defender.position - .035).sort((a, b) => a.x - b.x) }));
+    if (!rowTargets.some(row => row.targets.length)) return;
+    const critical = lane.crit > 0 && rng() < lane.crit;
+    const damage = weapon.damage * lane.damage / 20 * (critical ? 1.7 : 1);
+    defender.nextShot = simTime + Math.max(weapon.intervalMin || weapon.interval * .95, weapon.interval * lane.cooldown / BASE_CADENCE);
+    const source = { ownerId: lane.entry.id, ownerLane: lane.index, attackerId: defender.uid, origin: defender.position, damage, penetration: lane.penetration, weapon: weapon.id, slow: weapon.slow, slowDuration: weapon.slowDuration, burn: weapon.burn, critical };
     if (weapon.id === 'laser') {
+      const target = rowTargets[0].targets[0];
+      defender.recoil = .12; defender.shotsFired++; lane.shotsFired++; playSfx('shot', lane);
       effects.push({ kind: 'beam', lane: lane.index, x: target.x, origin: defender.position, life: .13, color: '#fff7ad' });
       hit(lane, target, source);
-      if (lane.splash) for (const mob of targets.slice(1)) if (Math.abs(mob.x - target.x) < lane.splash) hit(lane, mob, { ...source, damage: damage * .55 });
+      addLog({ type: 'shot', weapon: weapon.id, ownerId: lane.entry.id, attackerId: defender.uid, targetLaneId: lane.entry.id, damage, projectileStyle: 'laser' });
     } else {
-      for (let n = 0; n < weapon.count; n++) shots.push({ ...source, uid: ++serial, lane: lane.index, x: defender.position + .025 - n * .025,
-        velocity: lane.velocity * (weapon.id === 'catapult' ? .78 : 1), pierce: weapon.pierce,
-        radius: weapon.radius + lane.splash, hitIds: new Set(), arc: weapon.id === 'catapult', rotation: n, life: 2.4 });
+      const count = weapon.id === 'burst' ? 1 : weapon.count || 1;
+      const offsets = weapon.id === 'gatling' ? weapon.shootingOffsets || [.32, .49, .65, .82] : Array.from({ length: count }, (_, index) => (weapon.shootingDelay || 0) + index * (weapon.burstGap || 0));
+      for (const row of rowTargets) for (let index = 0; index < count; index++) {
+        const butter = weapon.id === 'splash' && rng() < (weapon.stunChance ?? .25);
+        pendingShots.push({ ...source, lane: row.lane.index, fireAt: simTime + offsets[index], rotation: weapon.id === 'burst' ? row.lane.index - lane.index + 1 : index,
+          damage: butter ? (weapon.butterDamage || 40) * lane.damage / 20 * (critical ? 1.7 : 1) : damage,
+          stunDuration: butter ? weapon.stunDuration || 4 : 0, projectileStyle: butter ? 'butter' : weapon.id === 'splash' ? 'kernel' : ['catapult', 'wintermelon'].includes(weapon.id) ? 'melon' : weapon.id === 'frost' ? 'ice' : weapon.id === 'fire' ? 'fire' : ['pierce', 'thorn'].includes(weapon.id) ? 'thorn' : 'pea',
+          splashDamage: weapon.splashDamage ? weapon.splashDamage * lane.damage / 20 * (critical ? 1.7 : 1) : 0,
+          splashTiles: weapon.splashDamage ? PICKER_PACING.melonSplashTileRadius : 0, bonusRadius: lane.splash,
+          velocity: lane.velocity / 9 * (['catapult', 'wintermelon', 'splash'].includes(weapon.id) ? .88 : 1), pierce: weapon.pierce,
+          arc: ['catapult', 'wintermelon', 'splash'].includes(weapon.id) });
+      }
     }
+  }
+  function emitPendingShots() {
+    const waiting = [];
+    for (const event of pendingShots) {
+      const owner = lanes[event.ownerLane], defender = owner.defenders.find(item => item.uid === event.attackerId);
+      if (!defender || defender.eaten || owner.eaten || lanes[event.lane].eaten) continue;
+      if (event.fireAt > simTime + 1e-9) { waiting.push(event); continue; }
+      defender.recoil = .12; defender.shotsFired++; owner.shotsFired++; playSfx('shot', owner);
+      shots.push({ ...event, uid: ++serial, x: event.origin + .025, hitIds: new Set(), life: 4.2 });
+      addLog({ type: 'shot', weapon: event.weapon, ownerId: event.ownerId, attackerId: event.attackerId, targetLaneId: lanes[event.lane].entry.id, damage: event.damage, projectileStyle: event.projectileStyle, fireAt: Number(event.fireAt.toFixed(3)) });
+    }
+    pendingShots = waiting;
+  }
+  function splashImpact(shot, primaryLane, primary) {
+    const hitRows = [primaryLane.index - 1, primaryLane.index, primaryLane.index + 1].filter(index => index >= 0 && index < lanes.length);
+    const radius = shot.splashTiles / 9;
+    const nearby = [];
+    for (const index of hitRows) {
+      const lane = lanes[index];
+      effects.push({ kind: 'splash', lane: index, x: primary.x, y: -20, radius, life: .55, color: shot.weapon === 'wintermelon' ? '#b6edff' : '#d6ee92' });
+      for (const mob of lane.mobs) if (!mob.dead && mob.uid !== primary.uid && !shot.hitIds.has(mob.uid) && Math.abs(mob.x - primary.x) <= radius + 1e-9) nearby.push({ lane, mob });
+    }
+    const amount = getSplashDamage(shot.damage, nearby.length);
+    for (const { lane, mob } of nearby) { shot.hitIds.add(mob.uid); hit(lane, mob, { ...shot, damage: amount, stunDuration: 0 }); }
+    addLog({ type: 'melonSplash', ownerId: shot.ownerId, attackerId: shot.attackerId, primaryId: primary.uid, targetLaneId: primaryLane.entry.id, directDamage: shot.damage, splashDamage: amount, additionalTargets: nearby.length, hitIds: nearby.map(entry => entry.mob.uid), tileRadius: shot.splashTiles, rows: hitRows });
   }
   function activateMower(lane, mob) {
     const mower = lane.mower;
@@ -433,21 +478,26 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const rush = mob.type.rush > 1 && (simTime + mob.pose) % 4 < .9 ? mob.type.rush : 1;
     const frenzy = wounded ? mob.type.frenzy : 1;
     const slow = simTime < mob.slowUntil ? mob.slow : 1;
-    const speed = mob.speed * slow * rush * frenzy;
+    const stunned = simTime < (mob.stunnedUntil || 0);
+    const speed = stunned ? 0 : mob.speed * slow * rush * frenzy;
     mob.x = Math.max(contactPosition, mob.x - speed * dt);
     if (!defender && mower.status === 'ready' && mob.x <= contactPosition + 1e-9) activateMower(lane, mob);
     if (crushWithMower(lane, mob, previousMobX)) { mob.attacking = false; return; }
     // An active first-breach sweep always finishes before student bites. The
     // spent mower provides no protection when the next wave breaks through.
     if (!defender && mower.status === 'sweeping') { mob.attacking = false; return; }
+    if (stunned) { mob.attacking = false; return; }
     mob.attacking = mob.x <= contactPosition + 1e-9;
     if (!mob.attacking) return;
+    const previousChew = mob.chewSlow || 1;
+    if (previousChew !== slow && mob.nextBite > simTime) mob.nextBite = simTime + (mob.nextBite - simTime) * previousChew / slow;
+    mob.chewSlow = slow;
     const contact = simTime - dt + Math.min(dt, toTouch / speed);
     if (mob.nextBite < contact) mob.nextBite = contact;
     if (simTime + 1e-9 >= mob.nextBite) {
       const at = mob.nextBite;
       let damage = mob.bite * (wounded ? mob.type.frenzy : 1);
-      mob.nextBite += mob.cadence;
+      mob.nextBite += mob.cadence / slow;
       playSfx('bite', lane);
       if (defender) {
         const absorbed = Math.min(defender.shield, damage); defender.shield -= absorbed; damage -= absorbed;
@@ -460,7 +510,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
           addLog({ type: 'defenderEaten', ownerId: lane.entry.id, defenderId: defender.uid, weapon: defender.weapon });
         }
         const blocker = WEAPON_MAP[defender.weapon];
-        if (blocker.blocker && !mob.dead) {
+        if (blocker.blocker && blocker.contactDamage > 0 && !mob.dead) {
           const reflected = blocker.contactDamage + defender.power * .6;
           hit(lane, mob, { ownerId: lane.entry.id, attackerId: defender.uid, damage: reflected, penetration: blocker.id === 'chestnut' ? .12 : 0, weapon: blocker.id });
           addLog({ type: 'blockerContact', ownerId: lane.entry.id, defenderId: defender.uid, zombieId: mob.uid, weapon: blocker.id, damage: reflected });
@@ -507,11 +557,12 @@ export default function createGame({ container, names = [], onPick, random = Mat
       if (simTime >= lane.nextSpawn && lane.mobs.filter(mob => !mob.dead).length < 6) {
         const starter = lane.mobs.length === 0 && lane.kills === 0;
         spawn(lane, starter);
-        lane.nextSpawn = simTime + Math.max(1.05, 2.6 + rng() * .9 - Math.max(0, simTime - 20) * .034);
+        lane.nextSpawn = simTime + Math.max(2.8, PICKER_PACING.spawnMinimum + rng() * (PICKER_PACING.spawnMaximum - PICKER_PACING.spawnMinimum) - Math.max(0, simTime - PICKER_PACING.pressureStarts) * .018);
       }
       for (const mob of lane.mobs) {
         mob.hurt = Math.max(0, mob.hurt - dt); mob.dodgePose = Math.max(0, mob.dodgePose - dt);
         if (mob.dead) continue;
+        if (simTime >= (mob.stunnedUntil || 0)) mob.animationTime += dt * (simTime < mob.slowUntil ? mob.slow : 1);
         if (mob.burn && simTime < mob.burn.until) hit(lane, mob, { ownerId: mob.burn.ownerId, attackerId: mob.burn.attackerId, damage: mob.burn.damage * dt, penetration: .05 }, true);
         if (mob.dead) continue;
         if (mob.type.regeneration) { mob.bodyHp = Math.min(mob.maxBodyHp, mob.bodyHp + mob.type.regeneration * dt); mob.hp = mob.bodyHp + mob.armorHp; }
@@ -526,6 +577,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       if (simTime >= lane.nextGrowl && lane.mobs.some(mob => !mob.dead)) { playSfx('growl', lane); lane.nextGrowl = simTime + 7 + lane.index % 4; }
       if (!lane.eaten) for (const defender of livingDefenders(lane)) if (simTime >= defender.nextShot) shoot(lane, defender);
     }
+    emitPendingShots();
     for (const shot of shots) {
       const lane = lanes[shot.lane]; shot.x += shot.velocity * dt; shot.life -= dt;
       if (lane.eaten || shot.life <= 0) continue;
@@ -534,9 +586,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
         if (shot.pierce <= 0) break;
         shot.hitIds.add(mob.uid); shot.pierce--;
         hit(lane, mob, shot);
-        if (shot.radius > 0) for (const other of lane.mobs) if (other.uid !== mob.uid && !other.dead && Math.abs(other.x - mob.x) < shot.radius) {
-          hit(lane, other, { ...shot, damage: shot.damage * .55 }); shot.hitIds.add(other.uid);
-        }
+        if (shot.splashDamage > 0) splashImpact(shot, lane, mob);
+        else if (shot.bonusRadius > 0) for (const other of lane.mobs) if (other.uid !== mob.uid && !other.dead && !shot.hitIds.has(other.uid) && Math.abs(other.x - mob.x) < shot.bonusRadius) { hit(lane, other, { ...shot, damage: shot.damage * .30, stunDuration: 0 }); shot.hitIds.add(other.uid); }
       }
     }
     shots = shots.filter(shot => shot.life > 0 && shot.x < 1.15 && shot.pierce > 0 && !lanes[shot.lane].eaten);
@@ -559,8 +610,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
     lane.power = Math.min(10, lane.power + 1);
     let action = 'upgrade', defender = null;
     if (reward.kind === 'sun') {
-      lane.suns++; lane.damage = Math.min(36, lane.damage + 1.4);
-      lane.cooldown = Math.max(.29, lane.cooldown * .988);
+      lane.suns++; lane.damage = Math.min(24, lane.damage + .35);
+      lane.cooldown = Math.max(PICKER_PACING.upgradeMinimumInterval, lane.cooldown * .997);
       const living = livingDefenders(lane);
       // The first sun always tries to add a separate shooter. Later suns can
       // recruit a different type or evolve an existing defender.
@@ -574,8 +625,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
         if (defender) { evolveDefender(defender, weapon); defender.hp = Math.min(defender.maxHp, defender.hp + 15); }
       }
     } else {
-      lane.stars++; lane.crit = Math.min(.30, lane.crit + .025);
-      lane.splash = Math.min(.06, lane.splash + .008);
+      lane.stars++; lane.crit = Math.min(.12, lane.crit + .01);
+      lane.splash = Math.min(.025, lane.splash + .004);
       const living = livingDefenders(lane);
       for (const member of living) { member.shield = Math.min(40, member.shield + 4); member.power = Math.min(10, member.power + 1); }
       defender = living[Math.floor(rng() * living.length)];
@@ -596,7 +647,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
         rewards.push({ kind: rng() < .62 ? 'sun' : 'star', lane: lane.index, x: .18 + rng() * .73,
           y: -Math.max(78, lane.h + 14), velocity: 38 + rng() * 20, age: 0, landed: false, collectAge: 0, phase: rng() * TAU, collected: false });
       }
-      nextReward = simTime + Math.max(.25, 1.75 / Math.sqrt(lanes.length)) + rng() * .24;
+      nextReward = simTime + Math.max(.40, 2.8 / Math.sqrt(lanes.length)) + rng() * .24;
     }
     for (const reward of rewards) {
       const lane = lanes[reward.lane];
@@ -625,7 +676,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     defender.damageStage = plantDamageStage(defender.hp, defender.maxHp);
     const rigged = renderer.drawPlant(ctx, { weapon: weapon.id, time, simTime, hp: defender.hp, maxHp: defender.maxHp, recoil: defender.recoil, seed: identityHash(defender.uid), defender });
     if (!rigged) ctx.translate(-recoil, bob);
-    const illustrated = rigged || (!weapon.blocker && atlasSprite('plants', plantCells[weapon.id], -40, -75, 84, 76));
+    const illustrated = rigged || (!weapon.blocker && Number.isInteger(plantCells[weapon.id]) && atlasSprite('plants', plantCells[weapon.id], -40, -75, 84, 76));
     if (!illustrated) {
       const stage = defender.damageStage;
       if (!weapon.blocker) {
@@ -659,11 +710,14 @@ export default function createGame({ container, names = [], onPick, random = Mat
       else if (weapon.id === 'burst') { peaHead(-5, -53, '#65b93f', '#245d27', .72); peaHead(5, -37, '#81cc46', '#245d27', .75); peaHead(-4, -21, '#96d25c', '#245d27', .72); }
       else if (weapon.id === 'frost') { peaHead(0, -39, '#98d8ee', '#2b657b'); ctx.strokeStyle = '#d5f6ff'; ctx.lineWidth = 3; for (let n = 0; n < 5; n++) { ctx.beginPath(); ctx.moveTo(-17 + n * 7, -56); ctx.lineTo(-19 + n * 7, -64); ctx.stroke(); } }
       else if (weapon.id === 'fire') { for (let n = 0; n < 7; n++) { const a = n * TAU / 7; ctx.fillStyle = '#f2a735'; ctx.beginPath(); ctx.moveTo(Math.cos(a) * 17, -39 + Math.sin(a) * 17); ctx.lineTo(Math.cos(a + .15) * 29, -39 + Math.sin(a + .15) * 28); ctx.lineTo(Math.cos(a + .35) * 18, -39 + Math.sin(a + .35) * 18); ctx.fill(); } peaHead(0, -39, '#eeae40', '#994622'); }
-      else if (weapon.id === 'catapult') {
-        ctx.fillStyle = '#529944'; ctx.beginPath(); ctx.ellipse(0, -24, 27, 19, 0, 0, TAU); ctx.fill();
+      else if (['catapult', 'wintermelon'].includes(weapon.id)) {
+        ctx.fillStyle = weapon.id === 'wintermelon' ? '#77bcce' : '#529944'; ctx.beginPath(); ctx.ellipse(0, -24, 27, 19, 0, 0, TAU); ctx.fill();
         ctx.strokeStyle = '#8ec751'; ctx.lineWidth = 3; for (let n = -14; n < 20; n += 8) { ctx.beginPath(); ctx.moveTo(n, -39); ctx.quadraticCurveTo(n - 7, -20, n + 2, -7); ctx.stroke(); }
         ctx.strokeStyle = '#477b34'; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(10, -21); ctx.lineTo(27, -56 + recoil * 3); ctx.stroke();
-        dot(26, -57 + recoil * 3, 11, '#9bcf57', '#3a7333'); dot(-9, -28, 3.5, '#1d4025');
+        dot(26, -57 + recoil * 3, 11, weapon.id === 'wintermelon' ? '#b1e5f3' : '#9bcf57', '#3a7333'); dot(-9, -28, 3.5, '#1d4025');
+      } else if (weapon.id === 'gatling') {
+        peaHead(0, -39, '#6a9c55'); rr(-21, -63, 41, 13, 5, '#596c44', '#31452f');
+        for (let n = 0; n < 4; n++) { rr(16 + n % 2 * 8, -46 + Math.floor(n / 2) * 10, 21, 7, 3, '#a0b56c'); dot(37 + n % 2 * 8, -42.5 + Math.floor(n / 2) * 10, 3.5, '#243f2c'); }
       } else if (weapon.id === 'laser') {
         for (let n = 0; n < 6; n++) { const a = n * TAU / 6; ctx.fillStyle = '#edca54'; ctx.beginPath(); ctx.ellipse(Math.cos(a) * 17, -38 + Math.sin(a) * 17, 11, 5, a, 0, TAU); ctx.fill(); }
         dot(0, -38, 16, '#fff3b8', '#d8ba4b'); dot(22, -38, 8, '#ffffdc', '#e7d672'); dot(-4, -42, 3, '#574a29'); dot(5, -42, 3, '#574a29');
@@ -774,11 +828,12 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (mob.dead) { ctx.rotate(-Math.min(1, deadAge / .45) * 1.5); ctx.globalAlpha = Math.max(0, 1 - deadAge / .7); ctx.translate(0, 5); }
     else if (mob.dodgePose) ctx.rotate(.22);
     else if (mob.hurt) ctx.translate(3, 0);
-    const walk = Math.sin(time * (mob.stage ? 5 : 7) + mob.pose), bob = Math.abs(walk) * 2;
+    const animationTime = mob.animationTime ?? simTime;
+    const walk = Math.sin(animationTime * (mob.stage ? 5 : 7) + mob.pose), bob = Math.abs(walk) * 2;
     ctx.fillStyle = '#24482655'; ctx.beginPath(); ctx.ellipse(0, 0, 21, 5, 0, 0, TAU); ctx.fill();
     // The rig chosen at spawn remains the same zombie through every wound.
     // Armor is an independent layer; damage never selects another body atlas.
-    const illustrated = renderer.drawZombie(ctx, { mob, time, simTime });
+    const illustrated = renderer.drawZombie(ctx, { mob, time: animationTime, simTime: animationTime });
     if (!illustrated) {
     ctx.strokeStyle = '#6c7666'; ctx.lineWidth = 7; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(-6, -22); ctx.lineTo(-10 + walk * 4, -5); ctx.moveTo(6, -21); ctx.lineTo(8 - walk * 4, -5); ctx.stroke();
     rr(-17 + walk * 4, -7, 15, 7, 3, '#383b2d'); rr(2 - walk * 4, -7, 16, 7, 3, '#383b2d');
@@ -818,7 +873,11 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (type.ability === 3) { dot(-21, -51, 2, '#e3d6fc'); dot(-25, -45, 1.5, '#e3d6fc'); }
     if (type.ability === 4) text('!', 20, -49, 10, 11, '#ffe4a0', 900);
     if (mob.burn && simTime < mob.burn.until && !mob.dead) { dot(-8, -20, 5 + Math.sin(time * 15), '#ffb04a99'); dot(5, -24, 4, '#ffdf6999'); }
-    if (simTime < mob.slowUntil && !mob.dead) { ctx.strokeStyle = '#b3e9fa88'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0, -42, 24, .4, 4); ctx.stroke(); }
+    if (simTime < mob.slowUntil && !mob.dead) {
+      rr(-24, -91, 49, 89, 9, '#b5edff28'); ctx.strokeStyle = '#b3e9fabb'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(0, -42, 26, .4, 4); ctx.stroke();
+      for (let n = 0; n < 4; n++) { ctx.fillStyle = '#d5f4ffd9'; ctx.beginPath(); ctx.moveTo(-18 + n * 12, -4); ctx.lineTo(-15 + n * 12, -14 - n % 2 * 4); ctx.lineTo(-12 + n * 12, -4); ctx.fill(); } text('❄', 22, -81, 15, 14, '#e1f8ff', 900);
+    }
+    if (simTime < (mob.stunnedUntil || 0) && !mob.dead) { rr(-14, -86, 26, 12, 3, '#ffe373', '#c7a746'); dot(-8, -83, 2, '#fff5c0'); text('★', 21, -73, 15, 12, '#fff3a7', 900); }
     ctx.restore();
     if (!mob.dead) {
       hpBar(x - 19, floor - 85 * scale, 38, mob.hp, mob.maxHp, mob.stage ? '#ebbc59' : '#8dce64', 4);
@@ -878,12 +937,16 @@ export default function createGame({ container, names = [], onPick, random = Mat
     for (const shot of shots) {
       const lane = lanes[shot.lane], x = lane.plantX + shot.x * lane.travel;
       if (!visible(lane)) continue;
-      const headOffset = shot.weapon === 'twin' ? (shot.rotation % 2 ? 28 : 50) : shot.weapon === 'burst' ? 51 - shot.rotation % 3 * 16 : 38;
+      const headOffset = shot.weapon === 'burst' ? 51 - shot.rotation % 3 * 16 : 38;
       const progress = clamp((shot.x - shot.origin) / Math.max(.01, 1 - shot.origin), 0, 1);
-      const y = lane.floor - headOffset * lane.spriteScale - (shot.arc ? Math.sin(progress * Math.PI) * 47 * lane.spriteScale : Math.sin(shot.x * 9 + shot.rotation) * 1.5);
-      const color = shot.weapon === 'frost' ? '#b6edff' : shot.weapon === 'fire' ? '#ffcc6b' : '#a9e56e';
+      const originLane = lanes[shot.ownerLane], rowProgress = clamp((shot.x - shot.origin) / .12, 0, 1);
+      const rowFloor = originLane.floor + (lane.floor - originLane.floor) * rowProgress;
+      const y = rowFloor - headOffset * lane.spriteScale - (shot.arc ? Math.sin(progress * Math.PI) * 47 * lane.spriteScale : Math.sin(shot.x * 9 + shot.rotation) * 1.5);
+      const color = ['frost', 'wintermelon'].includes(shot.weapon) ? '#b6edff' : shot.weapon === 'fire' ? '#ffcc6b' : '#a9e56e';
       if (shot.weapon === 'thorn' || shot.weapon === 'pierce') { ctx.fillStyle = '#dfef9a'; ctx.beginPath(); ctx.moveTo(x + 5, y); ctx.lineTo(x - 5, y - 3); ctx.lineTo(x - 5, y + 3); ctx.fill(); }
-      else { dot(x - 6, y, 3, color + '55'); dot(x, y, shot.arc ? 7 : 4.6, color, '#598d3f'); dot(x - 1.5, y - 1.5, 1.4, '#f5ffd9'); }
+      else if (shot.projectileStyle === 'butter') { ctx.save(); ctx.translate(x, y); ctx.rotate(shot.x * 7); rr(-6, -4, 12, 8, 2, '#ffe887', '#bca145'); rr(-4, -3, 8, 2, 1, '#fff5be'); ctx.restore(); }
+      else if (shot.projectileStyle === 'kernel') { dot(x, y, 4, '#ffe277', '#bca145'); dot(x - 1, y - 1, 1, '#fff3bb'); }
+      else { dot(x - 6, y, 3, color + '55'); dot(x, y, shot.arc ? 8 : 4.6, color, '#598d3f'); if (shot.arc) { ctx.strokeStyle = '#598d3f'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x - 2, y - 7); ctx.quadraticCurveTo(x - 6, y, x - 2, y + 7); ctx.moveTo(x + 3, y - 7); ctx.quadraticCurveTo(x - 1, y, x + 3, y + 7); ctx.stroke(); } dot(x - 1.5, y - 1.5, 1.4, '#f5ffd9'); }
     }
     for (const effect of effects) {
       const lane = lanes[effect.lane], x = lane.plantX + effect.x * lane.travel, y = lane.floor + (effect.y || 0) * lane.spriteScale;
@@ -892,6 +955,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       if (effect.kind === 'particle') dot(x, y, effect.radius, effect.color);
       else if (effect.kind === 'text') text(effect.value, x, y, 78, 10, effect.color, 900, 'center');
       else if (effect.kind === 'beam') { ctx.strokeStyle = '#fffad7'; ctx.shadowColor = '#ffde6a'; ctx.shadowBlur = 10; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(lane.plantX + (effect.origin || 0) * lane.travel + 25 * lane.spriteScale, lane.floor - 38 * lane.spriteScale); ctx.lineTo(x, lane.floor - 41 * lane.zombieScale); ctx.stroke(); }
+      else if (effect.kind === 'splash') { const growth = .65 + (1 - effect.life / .55) * .35; ctx.fillStyle = effect.color + '22'; ctx.strokeStyle = effect.color; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(x, lane.floor - 8, effect.radius * lane.travel * growth, Math.max(8, lane.h * .38), 0, 0, TAU); ctx.fill(); ctx.stroke(); }
       ctx.restore();
     }
     for (const drop of drops) {
@@ -1055,18 +1119,20 @@ export default function createGame({ container, names = [], onPick, random = Mat
     mowerLoadController?.abort(); mowerLoadController = null;
     if (mowerArt) for (const image of mowerArt.images.values()) { image.onload = null; image.onerror = null; }
     mowerArt = null;
-    shots = []; effects = []; drops = []; rewards = []; lanes = []; sampleBuffers.clear(); renderer.destroy(); root.remove();
+    shots = []; pendingShots = []; effects = []; drops = []; rewards = []; lanes = []; sampleBuffers.clear(); renderer.destroy(); root.remove();
   }
   function getState() {
     return { phase, time: simTime, winnerId: winner?.entry.id ?? null, soundEnabled,
       audioEffects: { loadedSamples: sampleBuffers.size, activeVoices: sfxVoices.size, contextActive: Boolean(audio), loading: Boolean(audioLoadController) },
-      renderer: renderer.getState(), plantCatalogCount: PLANT_CATALOG.length,
+      renderer: renderer.getState(), plantCatalogCount: PLANT_CATALOG.length, ruleVersion: GARDEN_RULES.version, pickerPacing: PICKER_PACING,
       zombieCatalogCount: ZOMBIE_CATALOG.length, lootCatalogCount: LOOT_CATALOG.length, healthModel: HEALTH_MODEL,
       artworkLoaded: { plants: Boolean(atlases.plants?.ready), zombies: Boolean(atlases.zombies?.ready), students: Boolean(atlases.students?.ready), mower: Boolean(mowerArt?.ready) }, fallingResources: rewards.map(reward => ({ kind: reward.kind, lane: reward.lane, landed: reward.landed, x: reward.x, y: reward.y })),
       lanes: lanes.map(lane => ({ id: lane.entry.id, avatar: lane.entry.avatar, avatarCell: studentCell(lane.entry), hp: lane.hp, maxHp: lane.maxHp, studentHp: lane.hp, studentMaxHp: lane.maxHp, damage: lane.damage, cooldown: lane.cooldown, weapon: livingDefenders(lane)[0]?.weapon ?? null, power: lane.power, kills: lane.kills, loot: [...lane.loot], suns: lane.suns, stars: lane.stars, eaten: lane.eaten, shotsFired: lane.shotsFired, shield: livingDefenders(lane).reduce((total, defender) => total + defender.shield, 0),
         mower: { id: lane.mower.uid, status: lane.mower.status, x: lane.mower.x, previousX: lane.mower.previousX, home: LAWNMOWER_RULES.home, speed: LAWNMOWER_RULES.speed, activations: lane.mower.activations, activationKills: lane.mower.kills, kills: lane.mower.kills, killIds: [...lane.mower.killIds], activatedAt: lane.mower.activatedAt, spentAt: lane.mower.spentAt, triggeredBy: lane.mower.triggeredBy },
-        defenders: lane.defenders.map(defender => ({ id: defender.uid, slot: defender.slot, position: defender.position, weapon: defender.weapon, role: WEAPON_MAP[defender.weapon].blocker ? 'blocker' : 'shooter', hp: defender.hp, maxHp: defender.maxHp, damageStage: plantDamageStage(defender.hp, defender.maxHp), damage: WEAPON_MAP[defender.weapon].blocker ? WEAPON_MAP[defender.weapon].contactDamage + defender.power * .6 : lane.damage * WEAPON_MAP[defender.weapon].multiplier, attackPattern: WEAPON_MAP[defender.weapon].blocker ? 'contact' : defender.weapon, shield: defender.shield, power: defender.power, eaten: defender.eaten, bornAt: defender.bornAt, shotsFired: defender.shotsFired, kills: defender.kills })),
-        mobs: lane.mobs.map(mob => ({ id: mob.uid, variant: mob.type.id, visualType: mob.visualType, rigIdentity: mob.rigIdentity, hp: mob.hp, maxHp: mob.maxHp, bodyHp: mob.bodyHp, maxBodyHp: mob.maxBodyHp, armorHp: mob.armorHp, maxArmorHp: mob.maxArmorHp, damage: mob.bite, speed: mob.speed, baseDamage: mob.type.bite, baseSpeed: mob.type.speed, dead: mob.dead, stage: mob.stage, attacking: mob.attacking, x: mob.x, lastShooter: mob.lastShooter })) })),
+        defenders: lane.defenders.map(defender => ({ id: defender.uid, slot: defender.slot, position: defender.position, weapon: defender.weapon, name: WEAPON_MAP[defender.weapon].name, classification: WEAPON_MAP[defender.weapon].classification, sourceHealth: WEAPON_MAP[defender.weapon].sourceHealth ?? null, modeScaling: WEAPON_MAP[defender.weapon].modeScaling ?? 1, sourceDamage: WEAPON_MAP[defender.weapon].sourceDamage ?? null, role: WEAPON_MAP[defender.weapon].blocker ? 'blocker' : 'shooter', hp: defender.hp, maxHp: defender.maxHp, damageStage: plantDamageStage(defender.hp, defender.maxHp), damage: WEAPON_MAP[defender.weapon].blocker ? WEAPON_MAP[defender.weapon].contactDamage > 0 ? WEAPON_MAP[defender.weapon].contactDamage + defender.power * .6 : 0 : lane.damage * WEAPON_MAP[defender.weapon].multiplier, interval: WEAPON_MAP[defender.weapon].blocker ? null : Math.max(WEAPON_MAP[defender.weapon].intervalMin || 0, WEAPON_MAP[defender.weapon].interval * lane.cooldown / BASE_CADENCE), attackPattern: WEAPON_MAP[defender.weapon].blocker ? WEAPON_MAP[defender.weapon].contactDamage > 0 ? 'contact' : 'block' : defender.weapon, shield: defender.shield, power: defender.power, eaten: defender.eaten, bornAt: defender.bornAt, shotsFired: defender.shotsFired, kills: defender.kills })),
+        mobs: lane.mobs.map(mob => ({ id: mob.uid, variant: mob.type.id, visualType: mob.visualType, rigIdentity: mob.rigIdentity, hp: mob.hp, maxHp: mob.maxHp, bodyHp: mob.bodyHp, maxBodyHp: mob.maxBodyHp, armorHp: mob.armorHp, maxArmorHp: mob.maxArmorHp, damage: mob.bite, speed: mob.speed, baseDamage: mob.type.bite, baseSpeed: mob.type.speed, dead: mob.dead, stage: mob.stage, attacking: mob.attacking, x: mob.x, lastShooter: mob.lastShooter, slowMultiplier: simTime < mob.slowUntil ? mob.slow : 1, slowUntil: mob.slowUntil, biteMultiplier: simTime < mob.slowUntil ? mob.slow : 1, stunnedUntil: mob.stunnedUntil, nextBite: mob.nextBite, animationTime: mob.animationTime })) })),
+      pendingProjectiles: pendingShots.map(shot => ({ ownerId: shot.ownerId, attackerId: shot.attackerId, weapon: shot.weapon, targetLane: shot.lane, fireAt: shot.fireAt, damage: shot.damage, style: shot.projectileStyle })),
+      projectiles: shots.map(shot => ({ id: shot.uid, ownerId: shot.ownerId, attackerId: shot.attackerId, weapon: shot.weapon, targetLane: shot.lane, sourceLane: shot.ownerLane, x: shot.x, damage: shot.damage, style: shot.projectileStyle, splashDamage: shot.splashDamage, splashTiles: shot.splashTiles, slow: shot.slow, slowDuration: shot.slowDuration, stunDuration: shot.stunDuration })),
       combatLog: combatLog.map(entry => ({ ...entry })) };
   }
   const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(layout) : null;

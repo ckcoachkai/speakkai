@@ -6,7 +6,7 @@
 const finite = (v, fallback = 0) => Number.isFinite(Number(v)) ? Number(v) : fallback;
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, finite(v, lo)));
 const TAU = Math.PI * 2, RAD = Math.PI / 180;
-const PLANT_RIG = {pea:'pea',twin:'twin',burst:'burst',frost:'frost',fire:'pea',pierce:'cactus',catapult:'catapult',splash:'splash',laser:'gatling',thorn:'cactus',walnut:'walnut',tallnut:'tallnut',chestnut:'walnut',gatling:'gatling',sunflower:'sunflower'};
+const PLANT_RIG = {pea:'pea',twin:'twin',burst:'burst',frost:'frost',fire:'pea',pierce:'cactus',catapult:'catapult',splash:'splash',laser:'gatling',thorn:'cactus',walnut:'walnut',tallnut:'tallnut',chestnut:'walnut',gatling:'gatling',sunflower:'sunflower',cactus:'cactus',wintermelon:'catapult'};
 
 export function createGardenRenderer({artwork = {}} = {}) {
   let manifest = null, closed = false, loading = true, error = null;
@@ -91,6 +91,8 @@ export function createGardenRenderer({artwork = {}} = {}) {
   }
   function visibleZombie(track, mob, key) {
     const name = track.name.toLowerCase();
+    if(mob.headless&&/head|hair|helmet|cone|bucket|glasses/.test(name))return false;
+    if(key==='newspaper'&&name==='zombie_paper_paper'&&mob.enraged)return false;
     const visual = String(mob.visualType || '').toLowerCase();
     const armor = finite(mob.type?.armor);
     const hasArmor = finite(mob.armorHp,finite(mob.type?.armorHealth,1)) > 0;
@@ -160,6 +162,7 @@ export function createGardenRenderer({artwork = {}} = {}) {
     ctx.save();
     if (weapon==='fire') ctx.filter='sepia(.34) saturate(1.45) hue-rotate(320deg)';
     if (weapon==='laser') ctx.filter='hue-rotate(110deg) saturate(1.1)';
+    if (weapon==='wintermelon') ctx.filter='hue-rotate(115deg) saturate(.9)';
     if (weapon==='chestnut') ctx.filter='sepia(.28) saturate(1.2)';
     drawTracks(ctx,key,clip,frame,{stage});
     ctx.filter='none';
