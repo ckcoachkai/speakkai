@@ -1,6 +1,6 @@
 # Garden sound effects
 
-Garden Siege uses the original short Plants vs. Zombies sound effects requested for this update. The files were obtained from the publicly accessible [PvZ_Assets sound directory](https://github.com/FregD156/PvZ_Assets/tree/main/sounds), which documents extracted game assets. Plants vs. Zombies and its original audio belong to their respective owners; this source is recorded as provenance, not as a license grant. The music remains an original synthesized loop.
+Plants vs. Zombies uses the original short Plants vs. Zombies sound effects requested for this update. The files were obtained from the publicly accessible [PvZ_Assets sound directory](https://github.com/FregD156/PvZ_Assets/tree/main/sounds), which documents extracted game assets. Plants vs. Zombies and its original audio belong to their respective owners; this source is recorded as provenance, not as a license grant. The music remains an original synthesized loop.
 
 | Event | Original file | Duration |
 | --- | --- | --- |
@@ -18,3 +18,7 @@ All14 files were checked against the source Git blob hashes and successfully dec
 ## Opening and selection cues
 
 The opening uses the original short readysetplant.ogg cue (5.255 seconds). Selection plays floop.ogg (0.120 seconds), followed by groan.ogg and winmusic.ogg (4.421 seconds). The Garden result poster stays visible for 5.6 seconds, allowing the outro to finish. These three new cue files were verified against their original source Git blob hashes; see dist/assets/AUDIO.md for the exact sources. Reset, mute, changing games and leaving the page cancel pending and active cues. The battle accompaniment remains synthesized.
+
+## Lawn mower rescue
+
+The single-use rescue uses the original lawnmower.ogg sound (56,925 bytes), pinned to source commit 8ba94e95cfe7d0de5682f8258d3b932dbdac885c and verified against Git blob SHA c03440559796168d8b4242be09fde35ab13b5aa7. It plays on mower activation when sound is enabled. See [connected mower provenance](dist/assets/GARDEN-MOWER.md).

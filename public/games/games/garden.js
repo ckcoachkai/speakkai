@@ -1,7 +1,7 @@
 import { createGardenRenderer } from './garden-rig.js';
 
 /**
- * Garden Siege. Original procedural artwork and a real, symmetric lane battle.
+ * Plants vs. Zombies. A real, symmetric classroom lane battle.
  * These adjustable health values are custom PvZ-inspired rules, not a claim of
  * exact parity with any edition of Plants vs. Zombies.
  */
@@ -75,6 +75,12 @@ export const LOOT_CATALOG = Object.freeze(WEAPONS.flatMap((weapon, a) => AFFIXES
 const WEAPON_MAP = Object.fromEntries(PLANT_CATALOG.map(item => [item.id, item]));
 const STARTERS = ZOMBIE_CATALOG.filter(item => item.armor === 0);
 const DEFENDER_POSITIONS = [.14, .25, .36, .47, .60];
+export const LAWNMOWER_RULES = Object.freeze({ home: .05, radius: .026, speed: .88, exit: 1.16 });
+/** Continuous relative motion prevents a fast sweep from skipping a zombie. */
+export function mowerIntersects(fromX, toX, oldMobX, newMobX, radius = LAWNMOWER_RULES.radius) {
+  const from = oldMobX - fromX, to = newMobX - toX;
+  return Math.min(from, to) <= radius + 1e-9 && Math.max(from, to) >= -radius - 1e-9;
+}
 const STUDENT_HEALTH = 150;
 const TAU = Math.PI * 2;
 const C = { navy: '#101b33', mint: '#7bd8c9', coral: '#ff735e', gold: '#f8c75a', cream: '#fff4df' };
@@ -110,24 +116,25 @@ export default function createGame({ container, names = [], onPick, random = Mat
   const players = names.map((entry, index) => ({ ...entry, avatar: ['boy', 'girl', 'neutral'].includes(entry.avatar) ? entry.avatar : 'neutral', avatarIndex: identityHash(entry.id || entry.name || ''), name: String(entry.name ?? 'Gardener ' + (index + 1)), color: entry.color || [C.mint, C.coral, C.gold][index % 3] }));
   const root = document.createElement('div');
   root.className = 'garden-siege';
-  root.innerHTML = '<style>.garden-siege{width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;background:#101b33;color:#fff4df;position:relative}.garden-siege .garden-window{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#7bd8c955 #101b33}.garden-siege canvas{display:block}.garden-siege .garden-note{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}.garden-siege .garden-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}</style><div class="garden-window"><canvas role="img"></canvas></div><div class="garden-note">Sunshine grows your defenders. Protect your student!</div><div class="garden-live" aria-live="polite"></div>';
+  root.innerHTML = '<style>.garden-siege{width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;background:#101b33;color:#fff4df;position:relative}.garden-siege .garden-window{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#7bd8c955 #101b33}.garden-siege canvas{display:block}.garden-siege .garden-note{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}.garden-siege .garden-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}</style><div class="garden-window"><canvas role="img"></canvas></div><div class="garden-note">Plants vs. Zombies: sunshine grows your defenders. Each student has one single-use lawnmower.</div><div class="garden-live" aria-live="polite"></div>';
   container.appendChild(root);
   const canvas = root.querySelector('canvas'), viewport = root.querySelector('.garden-window');
   const note = root.querySelector('.garden-note'), live = root.querySelector('.garden-live');
   const ctx = canvas.getContext('2d');
   const renderer = createGardenRenderer({ artwork });
-  canvas.setAttribute('aria-label', 'Students sit behind classic plant defenders. Suns recruit shooters and stars enhance the team. Zombies must defeat every defender before reaching a student. The first student out of health speaks next.');
+  canvas.setAttribute('aria-label', 'Plants vs. Zombies. Students sit behind classic plant defenders and one single-use lawnmower per lane. Suns recruit shooters and stars enhance the team. The mower sweeps after the first breach; later zombies can reach the student. The first student out of health speaks next.');
   let alive = true, raf = 0, generation = 0, phase = 'idle', reported = false, winner = null;
   let width = 1000, height = 560, laneHeight = 88, boardHeader = 64, lanes = [];
   let simTime = 0, startedAt = 0, resultAt = 0, visualResultAt = null, previous = null, focused = false, serial = 0;
   let shots = [], effects = [], drops = [], combatLog = [], soundEnabled = Boolean(sound);
   let audio = null, audioTimer = null, master = null, sfxMaster = null, beat = 0, nextBeat = 0, audioEpoch = 0, audioLoadController = null;
   const sampleBuffers = new Map(), sfxVoices = new Set(), musicVoices = new Set(), lastSfx = new Map(), sfxRotation = new Map();
-  const soundGaps = { shot: .085, hit: .075, armor: .22, growl: 1.65, bite: .16, plant: .28, pickup: .16, death: .25, intro: 5 };
-  const soundGains = { shot: .42, hit: .36, armor: .50, growl: .66, bite: .48, plant: .54, pickup: .52, death: .57, intro: .68 };
+  const soundGaps = { shot: .085, hit: .075, armor: .22, growl: 1.65, bite: .16, plant: .28, pickup: .16, death: .25, intro: 5, mower: .45 };
+  const soundGains = { shot: .42, hit: .36, armor: .50, growl: .66, bite: .48, plant: .54, pickup: .52, death: .57, intro: .68, mower: .60 };
   const sampleURLs = Object.fromEntries(Object.keys(soundGaps).map(key => [key, (Array.isArray(artwork?.gardenSounds?.[key]) ? artwork.gardenSounds[key] : [artwork?.gardenSounds?.[key]]).filter(url => typeof url === 'string' && url.length > 0)]));
   let rewards = [], nextReward = .65;
   let introPlayed = false;
+  let mowerArt = null, mowerLoadController = null;
   const atlases = { plants: null, zombies: null, students: null };
   const plantCells = { pea: 0, twin: 1, burst: 2, frost: 3, fire: 4, pierce: 5, catapult: 6, splash: 7, laser: 8, thorn: 9, sunflower: 10, shield: 11, ...(artwork?.gardenPlantCells || {}) };
   const zombieCells = { walker: 0, cone: 1, bucket: 2, football: 3, runner: 4, newspaper: 5, dancer: 6, construction: 7, bruiser: 8, courier: 9, mender: 10, gargantuar: 11, ...(artwork?.gardenZombieCells || {}) };
@@ -140,6 +147,31 @@ export default function createGame({ container, names = [], onPick, random = Mat
     record.image.onerror = () => { if (alive && atlases[key] === record) { record.failed = true; record.ready = false; } };
     record.image.src = source;
   };
+  function loadMowerArtwork() {
+    const ImageType = window.Image || globalThis.Image;
+    if (typeof ImageType !== 'function') return;
+    const accept = manifest => {
+      if (!alive || !manifest?.assets || !Array.isArray(manifest.tracks) || !Array.isArray(manifest.origin)) return;
+      const filenames = [...new Set(manifest.tracks.map(track => track.image).filter(name => manifest.assets[name]?.url))];
+      if (!filenames.length) return;
+      const record = { manifest, images: new Map(), ready: false, failed: false }; mowerArt = record;
+      let loaded = 0;
+      for (const name of filenames) {
+        const image = new ImageType(); record.images.set(name, image);
+        image.onload = () => {
+          if (!alive || mowerArt !== record) return;
+          if (!image.naturalWidth || !image.naturalHeight) record.failed = true;
+          if (++loaded === filenames.length) record.ready = !record.failed;
+        };
+        image.onerror = () => { if (alive && mowerArt === record) record.failed = true; };
+        image.src = manifest.assets[name].url;
+      }
+    };
+    if (artwork?.gardenMowerManifest) { accept(artwork.gardenMowerManifest); return; }
+    if (!artwork?.gardenMower || typeof fetch !== 'function') return;
+    const controller = typeof AbortController === 'function' ? new AbortController() : null; mowerLoadController = controller;
+    fetch(artwork.gardenMower, controller ? { signal: controller.signal } : undefined).then(response => response.ok ? response.json() : null).then(accept).catch(() => {}).finally(() => { if (mowerLoadController === controller) mowerLoadController = null; });
+  }
   function atlasSprite(key, cell, x, y, w, h) {
     const atlas = atlases[key];
     if (!atlas?.ready) return false;
@@ -206,7 +238,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
     for (let i = placement.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [placement[i], placement[j]] = [placement[j], placement[i]]; }
     lanes = placement.map((entry, index) => ({ entry, index, x: 0, y: 0, w: 0, h: 0, plantX: 0, floor: 0, travel: 0,
       hp: STUDENT_HEALTH, maxHp: STUDENT_HEALTH, damage: 20, cooldown: .42, velocity: 1.9, penetration: 0, splash: 0, crit: 0,
-      power: 0, kills: 0, loot: [], suns: 0, stars: 0, shotsFired: 0, nextSpawn: .55, nextGrowl: 3 + index % 5, mobs: [], defenders: [newDefender(0)], eaten: false, hurt: 0, lastLoot: null }));
+      power: 0, kills: 0, loot: [], suns: 0, stars: 0, shotsFired: 0, nextSpawn: .55, nextGrowl: 3 + index % 5, mobs: [], defenders: [newDefender(0)],
+      mower: { uid: 'mower-' + index, status: 'ready', x: LAWNMOWER_RULES.home, previousX: LAWNMOWER_RULES.home, activations: 0, kills: 0, killIds: [], activatedAt: null, spentAt: null, triggeredBy: null },
+      eaten: false, hurt: 0, lastLoot: null }));
     shots = []; effects = []; drops = []; rewards = []; nextReward = .65; combatLog = []; simTime = 0; focused = false; introPlayed = false;
     layout();
   }
@@ -279,19 +313,20 @@ export default function createGame({ container, names = [], onPick, random = Mat
     owner.loot.push(item.id); if (owner.loot.length > 100) owner.loot.shift();
     return { action, defenderId: target?.uid ?? null, weapon: target?.weapon ?? weapon };
   }
-  function killed(lane, mob) {
+  function killed(lane, mob, method = 'plant') {
     mob.deathAt = simTime;
-    const owner = lanes.find(player => player.entry.id === mob.lastShooter);
+    const owner = method === 'mower' ? null : lanes.find(player => player.entry.id === mob.lastShooter);
     const item = LOOT_CATALOG[mob.lootIndex];
     let upgrade = null;
     if (owner && !owner.eaten) {
       owner.kills++; const attacker = owner.defenders.find(defender => defender.uid === mob.lastAttacker); if (attacker) attacker.kills++;
       upgrade = giveLoot(owner, item);
     }
-    drops.push({ lane: lane.index, ownerLane: owner?.index ?? lane.index, x: mob.x, age: 0, life: .8, item });
+    if (method === 'mower') lane.kills++;
+    else drops.push({ lane: lane.index, ownerLane: owner?.index ?? lane.index, x: mob.x, age: 0, life: .8, item });
     particle(lane, mob.x, '#c3e19b', 12, true);
-    addLog({ type: 'kill', zombieId: mob.uid, variant: mob.type.id, ownerId: mob.lastShooter, attackerId: mob.lastAttacker, lootId: item.id });
-    addLog({ type: 'loot', lootId: item.id, ownerId: mob.lastShooter, attackerId: mob.lastAttacker, ...upgrade });
+    addLog({ type: 'kill', zombieId: mob.uid, variant: mob.type.id, ownerId: mob.lastShooter, attackerId: mob.lastAttacker, method, lootId: method === 'mower' ? null : item.id });
+    if (method !== 'mower') addLog({ type: 'loot', lootId: item.id, ownerId: mob.lastShooter, attackerId: mob.lastAttacker, ...upgrade });
     playSfx('death', lane); if (owner) playSfx('pickup', owner);
   }
   function hit(lane, mob, shot, dotDamage = false) {
@@ -363,9 +398,36 @@ export default function createGame({ container, names = [], onPick, random = Mat
         radius: weapon.radius + lane.splash, hitIds: new Set(), arc: weapon.id === 'catapult', rotation: n, life: 2.4 });
     }
   }
+  function activateMower(lane, mob) {
+    const mower = lane.mower;
+    if (mower.status !== 'ready') return;
+    mower.status = 'sweeping'; mower.activations++; mower.activatedAt = simTime; mower.triggeredBy = mob.uid; mower.previousX = mower.x;
+    addLog({ type: 'mowerActivate', laneId: lane.entry.id, mowerId: mower.uid, zombieId: mob.uid, x: mower.x, studentHp: lane.hp, defendersRemaining: livingDefenders(lane).length });
+    particle(lane, mower.x, '#e9f2b5', 12, true);
+    float(lane, { x: mower.x }, 'SECOND CHANCE!', '#fff1a2');
+    live.textContent = lane.entry.name + "'s single-use lawnmower is sweeping the lane.";
+    playSfx('mower', lane);
+  }
+  function crushWithMower(lane, mob, previousMobX) {
+    const mower = lane.mower;
+    if (mower.status !== 'sweeping' || mob.dead || !mowerIntersects(mower.previousX, mower.x, previousMobX, mob.x)) return false;
+    // A mower is a lethal contact hazard, not a projectile that can be dodged.
+    // Damage armor and body together, retaining the frozen zombie identity.
+    // The mower is the final killer and grants no shooter loot or plant credit.
+    const resistance = Math.max(0, (mob.resistance || 0) - (mob.stage >= 2 ? .05 : 0));
+    const result = damageZombie(mob, { damage: mob.hp / Math.max(.001, 1 - resistance) + 1, ownerId: lane.entry.id, attackerId: mower.uid, penetration: 0 });
+    if (!result.killed) return false;
+    mower.kills++; mower.killIds.push(mob.uid);
+    mob.armDropAt ??= simTime; mob.headDropAt ??= simTime;
+    addLog({ type: 'mowerKill', laneId: lane.entry.id, mowerId: mower.uid, zombieId: mob.uid, variant: mob.type.id, visualType: mob.visualType, rigIdentity: mob.rigIdentity, x: mob.x, damage: result.damage, armorHp: mob.armorHp, bodyHp: mob.bodyHp });
+    killed(lane, mob, 'mower');
+    return true;
+  }
   function attackTeam(lane, mob, events, dt) {
     const defender = livingDefenders(lane).sort((a, b) => b.position - a.position)[0];
-    const contactPosition = defender ? defender.position + .036 : .025;
+    const mower = lane.mower;
+    const contactPosition = defender ? defender.position + .036 : mower.status === 'ready' ? mower.x + LAWNMOWER_RULES.radius : .025;
+    const previousMobX = mob.x;
     const toTouch = Math.max(0, mob.x - contactPosition);
     const wounded = mob.hp < mob.maxHp * .5;
     const rush = mob.type.rush > 1 && (simTime + mob.pose) % 4 < .9 ? mob.type.rush : 1;
@@ -373,6 +435,11 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const slow = simTime < mob.slowUntil ? mob.slow : 1;
     const speed = mob.speed * slow * rush * frenzy;
     mob.x = Math.max(contactPosition, mob.x - speed * dt);
+    if (!defender && mower.status === 'ready' && mob.x <= contactPosition + 1e-9) activateMower(lane, mob);
+    if (crushWithMower(lane, mob, previousMobX)) { mob.attacking = false; return; }
+    // An active first-breach sweep always finishes before student bites. The
+    // spent mower provides no protection when the next wave breaks through.
+    if (!defender && mower.status === 'sweeping') { mob.attacking = false; return; }
     mob.attacking = mob.x <= contactPosition + 1e-9;
     if (!mob.attacking) return;
     const contact = simTime - dt + Math.min(dt, toTouch / speed);
@@ -401,7 +468,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       } else {
         lane.hp = Math.max(0, lane.hp - damage); lane.hurt = .25;
         float(lane, { x: 0 }, '-' + Math.round(damage), C.coral);
-        addLog({ type: 'bite', target: 'student', zombieId: mob.uid, laneId: lane.entry.id, damage, remainingHp: lane.hp, defendersRemaining: 0 });
+        addLog({ type: 'bite', target: 'student', zombieId: mob.uid, laneId: lane.entry.id, damage, remainingHp: lane.hp, defendersRemaining: 0, mowerStatus: mower.status });
         if (lane.hp <= 0 && !lane.eaten) { lane.eaten = true; events.push({ lane, time: at }); }
       }
     }
@@ -421,7 +488,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     particle(winner, 0, C.gold, 28, true);
     note.textContent = winner.entry.name + "'s defenses fell. They speak next!";
     live.textContent = winner.entry.name + ' is the next speaker.';
-    canvas.setAttribute('aria-label', winner.entry.name + "'s student ran out of health after every defender was defeated, and is the next speaker.");
+    canvas.setAttribute('aria-label', 'Plants vs. Zombies. ' + winner.entry.name + "'s student ran out of health after the defenders fell and the single-use lawnmower was spent, and is the next speaker.");
     addLog({ type: 'winner', ownerId: winner.entry.id, at: resultAt });
     follow(winner, true);
     stopMusic();
@@ -434,6 +501,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
       lane.hurt = Math.max(0, lane.hurt - dt);
       for (const defender of lane.defenders) { defender.recoil = Math.max(0, defender.recoil - dt); defender.hurt = Math.max(0, defender.hurt - dt); }
       if (lane.eaten) continue;
+      const mower = lane.mower;
+      mower.previousX = mower.x;
+      if (mower.status === 'sweeping') mower.x += LAWNMOWER_RULES.speed * dt;
       if (simTime >= lane.nextSpawn && lane.mobs.filter(mob => !mob.dead).length < 6) {
         const starter = lane.mobs.length === 0 && lane.kills === 0;
         spawn(lane, starter);
@@ -446,6 +516,11 @@ export default function createGame({ container, names = [], onPick, random = Mat
         if (mob.dead) continue;
         if (mob.type.regeneration) { mob.bodyHp = Math.min(mob.maxBodyHp, mob.bodyHp + mob.type.regeneration * dt); mob.hp = mob.bodyHp + mob.armorHp; }
         attackTeam(lane, mob, deaths, dt);
+      }
+      if (mower.status === 'sweeping' && mower.x >= LAWNMOWER_RULES.exit) {
+        mower.status = 'spent'; mower.spentAt = simTime;
+        addLog({ type: 'mowerSpent', laneId: lane.entry.id, mowerId: mower.uid, x: mower.x, activationKills: mower.kills, studentHp: lane.hp });
+        live.textContent = lane.entry.name + "'s lawnmower rescue is spent. " + (livingDefenders(lane).length ? 'Remaining plants protect the student.' : 'Later zombies can now reach the student.');
       }
       lane.mobs = lane.mobs.filter(mob => !mob.dead || simTime - mob.deathAt < .7);
       if (simTime >= lane.nextGrowl && lane.mobs.some(mob => !mob.dead)) { playSfx('growl', lane); lane.nextGrowl = simTime + 7 + lane.index % 4; }
@@ -648,6 +723,49 @@ export default function createGame({ container, names = [], onPick, random = Mat
     }
     ctx.restore();
   }
+  function lawnmower(lane, time) {
+    const mower = lane.mower;
+    if (mower.status === 'spent') return;
+    const running = mower.status === 'sweeping', x = lane.plantX + mower.x * lane.travel;
+    const naturalWidth = mowerArt?.ready ? Number(mowerArt.manifest.naturalWidth) || 82.8 : 82.8;
+    const size = Math.min(lane.spriteScale * .60 * 82.8, lane.travel * .06);
+    ctx.save(); ctx.translate(x, lane.floor); ctx.scale(size / naturalWidth, size / naturalWidth);
+    ctx.fillStyle = '#26482755'; ctx.beginPath(); ctx.ellipse(0, -2, 37, 7, 0, 0, TAU); ctx.fill();
+    if (mowerArt?.ready) {
+      const manifest = mowerArt.manifest;
+      ctx.save(); ctx.translate(-manifest.origin[0], -manifest.origin[1]);
+      for (const track of manifest.tracks) {
+        const image = mowerArt.images.get(track.image);
+        if (!image) continue;
+        const kx = (track.kx || 0) * Math.PI / 180, ky = (track.ky || 0) * Math.PI / 180;
+        ctx.save(); ctx.transform(Math.cos(kx) * track.sx, Math.sin(kx) * track.sx, -Math.sin(ky) * track.sy, Math.cos(ky) * track.sy, track.x, track.y);
+        if (running && track.shakeEngine) ctx.translate(Math.sin(time * 71) * .45, Math.cos(time * 67) * .3);
+        if (running && track.rotateWheel) { const pivot = track.pivot || manifest.assets[track.image].pivot || [image.naturalWidth / 2, image.naturalHeight / 2]; ctx.translate(pivot[0], pivot[1]); ctx.rotate(time * 26); ctx.translate(-pivot[0], -pivot[1]); }
+        ctx.drawImage(image, 0, 0); ctx.restore();
+      }
+      ctx.restore();
+    } else {
+      // Connected handle, engine, metal deck and rotating wheels remain fully
+      // usable while the optional original multipart artwork is loading.
+      ctx.strokeStyle = '#364143'; ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(-21, -21); ctx.lineTo(-33, -60); ctx.lineTo(-16, -63); ctx.stroke();
+      ctx.strokeStyle = '#9ba8a0'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(-22, -23); ctx.lineTo(-31, -59); ctx.stroke();
+      rr(-37, -27, 75, 22, 8, '#c72f29', '#713d32'); rr(-32, -29, 66, 8, 4, '#e74e37');
+      ctx.save(); if (running) ctx.translate(Math.sin(time * 71) * .45, Math.cos(time * 67) * .3);
+      rr(-19, -44, 36, 21, 6, '#364444', '#263233'); rr(-15, -44, 27, 7, 3, '#77827b');
+      for (let n = 0; n < 5; n++) rr(-13 + n * 5, -33, 2, 6, 1, '#adb2a0');
+      dot(22, -32, 5, '#efcc77', '#a97237'); ctx.restore();
+      for (const wheelX of [-27, 27]) {
+        dot(wheelX, -8, 12, '#253032', '#131e22'); dot(wheelX, -8, 7, '#818b7f', '#bec5af');
+        const angle = running ? time * 26 : 0;
+        ctx.strokeStyle = '#ced3bd'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(wheelX + Math.cos(angle) * 6, -8 + Math.sin(angle) * 6); ctx.lineTo(wheelX - Math.cos(angle) * 6, -8 - Math.sin(angle) * 6); ctx.stroke(); dot(wheelX, -8, 2.4, '#34413a');
+      }
+    }
+    if (running) {
+      ctx.strokeStyle = '#dbec92'; ctx.lineWidth = 2;
+      for (let n = 0; n < 7; n++) { const phase = (time * 6 + n * .23) % 1, grassX = -25 - phase * 32, grassY = -6 - Math.sin(phase * Math.PI) * (8 + n % 3 * 6); ctx.beginPath(); ctx.moveTo(grassX, grassY); ctx.lineTo(grassX - 4, grassY - 4); ctx.stroke(); }
+    }
+    ctx.restore();
+  }
   function zombie(lane, mob, time) {
     const deadAge = mob.dead ? simTime - mob.deathAt : 0;
     const x = lane.plantX + mob.x * lane.travel, floor = lane.floor;
@@ -753,6 +871,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       student(lane, time, won ? resultAge : 0);
       lane.defenders.forEach(defender => plant(lane, defender, time));
       [...lane.mobs].sort((a, b) => b.x - a.x).forEach(mob => zombie(lane, mob, time));
+      lawnmower(lane, time);
       if (won && resultAge > .4) { const badgeX = Math.min(lane.x + lane.w - 121, lane.plantX + 36); rr(badgeX, lane.y + lane.h / 2 - 12, 114, 25, 12, '#ffda72'); text('NEXT SPEAKER', badgeX + 57, lane.y + lane.h / 2 + 1, 107, 10, '#3d492f', 900, 'center'); }
     }
     ctx.restore();
@@ -800,7 +919,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       else { ctx.fillStyle = '#effbff'; ctx.beginPath(); ctx.moveTo(-3, -5); ctx.lineTo(1, -6); ctx.lineTo(-2, 0); ctx.closePath(); ctx.fill(); }
       ctx.restore();
     }
-    if (!lanes.length) text('Add names to plant your garden.', 24, 125, width - 48, 17, C.cream, 800);
+    if (!lanes.length) text('Add names to play Plants vs. Zombies.', 24, 125, width - 48, 17, C.cream, 800);
   }
   function scheduleMusic() {
     if (!audio || audio.state !== 'running' || phase !== 'running' || !master) return;
@@ -915,8 +1034,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
   function start() {
     if (!alive || phase !== 'idle' || !lanes.length) return;
     startedAt = performance.now(); phase = 'running'; reported = false; winner = null; visualResultAt = null;
-    note.textContent = 'Collect sunshine to grow your defenders. Stars boost the team!';
-    live.textContent = 'The garden battle is starting.';
+    note.textContent = 'Plants vs. Zombies: collect sunshine to grow defenders. Each student has one single-use lawnmower.';
+    live.textContent = 'Plants vs. Zombies is starting. Each student has one single-use lawnmower for a second chance.';
     startMusic();
   }
   function reset() {
@@ -924,8 +1043,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
     generation++; cancelAnimationFrame(raf); previous = null; stopAudio();
     phase = 'idle'; reported = false; winner = null; resultAt = 0; visualResultAt = null;
     fresh(); viewport.scrollTop = 0;
-    note.textContent = 'Sunshine grows your defenders. Protect your student!';
-    live.textContent = ''; canvas.setAttribute('aria-label', 'Fresh garden ready. Every student starts with 150 health behind a pea shooter with 300 health.');
+    note.textContent = 'Plants vs. Zombies: sunshine grows your defenders. Protect your student with one single-use lawnmower.';
+    live.textContent = ''; canvas.setAttribute('aria-label', 'Fresh Plants vs. Zombies round ready. Every student starts with 150 health behind a pea shooter with 300 health and one ready single-use lawnmower.');
     raf = requestAnimationFrame(frame);
   }
   function destroy() {
@@ -933,6 +1052,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
     alive = false; generation++; cancelAnimationFrame(raf); observer?.disconnect(); stopAudio();
     if (!observer) window.removeEventListener('resize', layout);
     for (const key of Object.keys(atlases)) { if (atlases[key]) { atlases[key].image.onload = null; atlases[key].image.onerror = null; } atlases[key] = null; }
+    mowerLoadController?.abort(); mowerLoadController = null;
+    if (mowerArt) for (const image of mowerArt.images.values()) { image.onload = null; image.onerror = null; }
+    mowerArt = null;
     shots = []; effects = []; drops = []; rewards = []; lanes = []; sampleBuffers.clear(); renderer.destroy(); root.remove();
   }
   function getState() {
@@ -940,8 +1062,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
       audioEffects: { loadedSamples: sampleBuffers.size, activeVoices: sfxVoices.size, contextActive: Boolean(audio), loading: Boolean(audioLoadController) },
       renderer: renderer.getState(), plantCatalogCount: PLANT_CATALOG.length,
       zombieCatalogCount: ZOMBIE_CATALOG.length, lootCatalogCount: LOOT_CATALOG.length, healthModel: HEALTH_MODEL,
-      artworkLoaded: { plants: Boolean(atlases.plants?.ready), zombies: Boolean(atlases.zombies?.ready), students: Boolean(atlases.students?.ready) }, fallingResources: rewards.map(reward => ({ kind: reward.kind, lane: reward.lane, landed: reward.landed, x: reward.x, y: reward.y })),
+      artworkLoaded: { plants: Boolean(atlases.plants?.ready), zombies: Boolean(atlases.zombies?.ready), students: Boolean(atlases.students?.ready), mower: Boolean(mowerArt?.ready) }, fallingResources: rewards.map(reward => ({ kind: reward.kind, lane: reward.lane, landed: reward.landed, x: reward.x, y: reward.y })),
       lanes: lanes.map(lane => ({ id: lane.entry.id, avatar: lane.entry.avatar, avatarCell: studentCell(lane.entry), hp: lane.hp, maxHp: lane.maxHp, studentHp: lane.hp, studentMaxHp: lane.maxHp, damage: lane.damage, cooldown: lane.cooldown, weapon: livingDefenders(lane)[0]?.weapon ?? null, power: lane.power, kills: lane.kills, loot: [...lane.loot], suns: lane.suns, stars: lane.stars, eaten: lane.eaten, shotsFired: lane.shotsFired, shield: livingDefenders(lane).reduce((total, defender) => total + defender.shield, 0),
+        mower: { id: lane.mower.uid, status: lane.mower.status, x: lane.mower.x, previousX: lane.mower.previousX, home: LAWNMOWER_RULES.home, speed: LAWNMOWER_RULES.speed, activations: lane.mower.activations, activationKills: lane.mower.kills, kills: lane.mower.kills, killIds: [...lane.mower.killIds], activatedAt: lane.mower.activatedAt, spentAt: lane.mower.spentAt, triggeredBy: lane.mower.triggeredBy },
         defenders: lane.defenders.map(defender => ({ id: defender.uid, slot: defender.slot, position: defender.position, weapon: defender.weapon, role: WEAPON_MAP[defender.weapon].blocker ? 'blocker' : 'shooter', hp: defender.hp, maxHp: defender.maxHp, damageStage: plantDamageStage(defender.hp, defender.maxHp), damage: WEAPON_MAP[defender.weapon].blocker ? WEAPON_MAP[defender.weapon].contactDamage + defender.power * .6 : lane.damage * WEAPON_MAP[defender.weapon].multiplier, attackPattern: WEAPON_MAP[defender.weapon].blocker ? 'contact' : defender.weapon, shield: defender.shield, power: defender.power, eaten: defender.eaten, bornAt: defender.bornAt, shotsFired: defender.shotsFired, kills: defender.kills })),
         mobs: lane.mobs.map(mob => ({ id: mob.uid, variant: mob.type.id, visualType: mob.visualType, rigIdentity: mob.rigIdentity, hp: mob.hp, maxHp: mob.maxHp, bodyHp: mob.bodyHp, maxBodyHp: mob.maxBodyHp, armorHp: mob.armorHp, maxArmorHp: mob.maxArmorHp, damage: mob.bite, speed: mob.speed, baseDamage: mob.type.bite, baseSpeed: mob.type.speed, dead: mob.dead, stage: mob.stage, attacking: mob.attacking, x: mob.x, lastShooter: mob.lastShooter })) })),
       combatLog: combatLog.map(entry => ({ ...entry })) };
@@ -950,6 +1073,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   loadAtlas('plants', artwork?.gardenPlants);
   loadAtlas('zombies', artwork?.gardenZombies);
   loadAtlas('students', artwork?.students);
+  loadMowerArtwork();
   fresh(); observer?.observe(root); if (!observer) window.addEventListener('resize', layout);
   raf = requestAnimationFrame(frame);
   return { start, reset, destroy, setSound, getState };

@@ -9,3 +9,7 @@ All three Ogg Vorbis files were read through GitHub's base64 file endpoint. Thei
 | readysetplant.ogg | 90,706 | bb2b882b0391ee79aa0a56bb13b5c460908f747c |
 | winmusic.ogg | 69,403 | edfafa766d0f6494b07257fe9df03c5fccce31c8 |
 | floop.ogg | 3,387 | 30fb0e7a7419cf563298f344b26c95e1fe7ed098 |
+
+## Lawn mower rescue
+
+The original lawnmower.ogg was added for the automatic, single-use lane rescue. The 56,925-byte file is preserved unchanged from pinned source commit 8ba94e95cfe7d0de5682f8258d3b932dbdac885c, with Git blob SHA c03440559796168d8b4242be09fde35ab13b5aa7. See [connected mower provenance](GARDEN-MOWER.md) for the exact source.
