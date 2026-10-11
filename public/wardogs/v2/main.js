@@ -1,12 +1,12 @@
 import * as T from './three.module.js';
-import {createCity} from './city.js';
-import {AIRCRAFT,createAircraft} from './aircraft.js';
+import {createCity} from './city.js?v=20261011-mapped';
+import {AIRCRAFT,createAircraft} from './aircraft.js?v=20261011-mapped';
 import {createFlight,stepFlight} from './physics.js';
 import {createEffects} from './effects.js';
-import {createCombat} from './combat.js';
+import {createCombat} from './combat.js?v=20261011-mapped';
 import {createAudio} from './audio.js';
 import {SKY_URL} from './sky.js';
-import {loadShanghaiGeography} from './shanghai-buildings.js';
+import {loadShanghaiGeography} from './shanghai-buildings.js?v=20261011-mapped';
 
 const $=id=>document.getElementById(id),clamp=T.MathUtils.clamp;
 let renderer,scene,camera,city,model,flight,combat,effects,sound;
