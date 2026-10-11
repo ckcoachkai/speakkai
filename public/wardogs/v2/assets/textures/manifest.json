@@ -1,0 +1,520 @@
+{
+  "license": "CC0-1.0",
+  "licenseUrl": "https://polyhaven.com/license",
+  "retrieved": "2026-10-11",
+  "assets": [
+    {
+      "family": "concrete",
+      "role": "albedo",
+      "asset": "concrete_pavement",
+      "author": {
+        "Charlotte Baglioni": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_pavement/concrete_pavement_diff_1k.jpg",
+      "sourceMd5": "b7a0d071a3406d55a1c3e9a73a06df03",
+      "sourceBytes": 926197,
+      "local": "assets/textures/concrete-albedo.jpg",
+      "tileMetres": [
+        1.8,
+        1.8
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "bytes": 176770,
+      "sha256": "012756326ce5ae37b57aa04e8a06b55bd61e07984af3db9af72f19564142ae8f"
+    },
+    {
+      "family": "concrete",
+      "role": "normal",
+      "asset": "concrete_pavement",
+      "author": {
+        "Charlotte Baglioni": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_pavement/concrete_pavement_nor_gl_1k.jpg",
+      "sourceMd5": "025a1d4e910cf3e5b3d63ada43a791d8",
+      "sourceBytes": 1184345,
+      "local": "assets/textures/concrete-normal.jpg",
+      "tileMetres": [
+        1.8,
+        1.8
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 39186,
+      "sha256": "afedc006142c52efd1e330a135a9ce88e2798ec9f3018b23db8feb40c2cfe30a"
+    },
+    {
+      "family": "concrete",
+      "role": "roughness",
+      "asset": "concrete_pavement",
+      "author": {
+        "Charlotte Baglioni": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_pavement/concrete_pavement_rough_1k.jpg",
+      "sourceMd5": "e5a0fc9831bad12c7b3779179aa706f7",
+      "sourceBytes": 475799,
+      "local": "assets/textures/concrete-roughness.jpg",
+      "tileMetres": [
+        1.8,
+        1.8
+      ],
+      "dimensions": [
+        256,
+        256
+      ],
+      "bytes": 2156,
+      "sha256": "c546c0349c6f4ddedb8150e6724329b1b201c9b83aa1a0325eb788bd7730762d"
+    },
+    {
+      "family": "masonry",
+      "role": "albedo",
+      "asset": "red_brick_03",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/red_brick_03/red_brick_03_diff_1k.jpg",
+      "sourceMd5": "d157c6d6dd774762b4269927a87fe9b5",
+      "sourceBytes": 694500,
+      "local": "assets/textures/masonry-albedo.jpg",
+      "tileMetres": [
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "bytes": 222355,
+      "sha256": "ba8bd9915c160e9f1d989826af87d64a6767292bce942344bfa649db64b4c562"
+    },
+    {
+      "family": "masonry",
+      "role": "normal",
+      "asset": "red_brick_03",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/red_brick_03/red_brick_03_nor_gl_1k.jpg",
+      "sourceMd5": "e89ce432d9160edb7c902f901756865f",
+      "sourceBytes": 955430,
+      "local": "assets/textures/masonry-normal.jpg",
+      "tileMetres": [
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 60383,
+      "sha256": "addbfdbda3762bf4f36d389e75a21bdb0f0abf89b22113d5101d071a1ddc7e01"
+    },
+    {
+      "family": "masonry",
+      "role": "roughness",
+      "asset": "red_brick_03",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/red_brick_03/red_brick_03_rough_1k.jpg",
+      "sourceMd5": "8f16439361c5fe27f9df03be279ce8c9",
+      "sourceBytes": 286623,
+      "local": "assets/textures/masonry-roughness.jpg",
+      "tileMetres": [
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        256,
+        256
+      ],
+      "bytes": 11635,
+      "sha256": "64d67a6aa2591419916c58de2fa09940b26f864dd087b75e71c20d840b7679cb"
+    },
+    {
+      "family": "asphalt",
+      "role": "albedo",
+      "asset": "asphalt_02",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/asphalt_02/asphalt_02_diff_1k.jpg",
+      "sourceMd5": "fa19772d4817754c3efab708c651f5a8",
+      "sourceBytes": 731707,
+      "local": "assets/textures/asphalt-albedo.jpg",
+      "tileMetres": [
+        3.0,
+        3.0
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 62476,
+      "sha256": "f2f93610cf849b8f3b6efe6174162bea8b0b6d441af2b7358ad7bc7a25a070a7"
+    },
+    {
+      "family": "asphalt",
+      "role": "normal",
+      "asset": "asphalt_02",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/asphalt_02/asphalt_02_nor_gl_1k.jpg",
+      "sourceMd5": "338da8de636ea36133170578cac82e8e",
+      "sourceBytes": 1240122,
+      "local": "assets/textures/asphalt-normal.jpg",
+      "tileMetres": [
+        3.0,
+        3.0
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 51739,
+      "sha256": "b476791e21ecc2c8c071afc5a3b4a255256b5a3d0873630fca5a32ecc6913c32"
+    },
+    {
+      "family": "asphalt",
+      "role": "roughness",
+      "asset": "asphalt_02",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/asphalt_02/asphalt_02_rough_1k.jpg",
+      "sourceMd5": "ec80a2929797c1b3ffc121c4f665585a",
+      "sourceBytes": 544032,
+      "local": "assets/textures/asphalt-roughness.jpg",
+      "tileMetres": [
+        3.0,
+        3.0
+      ],
+      "dimensions": [
+        256,
+        256
+      ],
+      "bytes": 15016,
+      "sha256": "459f42555ad22d99201941957455bd034c5aee0eb610edb6822133de51d42edf"
+    },
+    {
+      "family": "roof",
+      "role": "albedo",
+      "asset": "grey_roof_tiles_02",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grey_roof_tiles_02/grey_roof_tiles_02_diff_1k.jpg",
+      "sourceMd5": "1c0ba5a73f832ae3e47921f083a38163",
+      "sourceBytes": 402212,
+      "local": "assets/textures/roof-albedo.jpg",
+      "tileMetres": [
+        1.5,
+        1.5
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "bytes": 121989,
+      "sha256": "73c9964c2c5db70259458eedff503059ecb85717f579bfa79a9d484869b653a9"
+    },
+    {
+      "family": "roof",
+      "role": "normal",
+      "asset": "grey_roof_tiles_02",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grey_roof_tiles_02/grey_roof_tiles_02_nor_gl_1k.jpg",
+      "sourceMd5": "7aaab6831321d2afad5b1d86fbf6420f",
+      "sourceBytes": 570336,
+      "local": "assets/textures/roof-normal.jpg",
+      "tileMetres": [
+        1.5,
+        1.5
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 46769,
+      "sha256": "06da538f9b81e3e3411e9bca1f32b5302b8d06abeaa90011049b51dac3198d6e"
+    },
+    {
+      "family": "roof",
+      "role": "roughness",
+      "asset": "grey_roof_tiles_02",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grey_roof_tiles_02/grey_roof_tiles_02_rough_1k.jpg",
+      "sourceMd5": "7527fc78bd6f9ade635b7d86c7ebcec0",
+      "sourceBytes": 346538,
+      "local": "assets/textures/roof-roughness.jpg",
+      "tileMetres": [
+        1.5,
+        1.5
+      ],
+      "dimensions": [
+        256,
+        256
+      ],
+      "bytes": 15539,
+      "sha256": "0e6381663b572a5226a9c50ef74048480cd71ddb7475f816136b37690a5c36b8"
+    },
+    {
+      "family": "bark",
+      "role": "albedo",
+      "asset": "bark_platanus",
+      "author": {
+        "Dimitrios Savva": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/bark_platanus/bark_platanus_diff_1k.jpg",
+      "sourceMd5": "2824272c2b693b7784bc2515d0728a8a",
+      "sourceBytes": 906704,
+      "local": "assets/textures/bark-albedo.jpg",
+      "tileMetres": [
+        1.5,
+        1.5
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 50024,
+      "sha256": "1faa5d91af72d48b5bd43b0fb297b53bac138e283e39e1f9a99daf078d826901"
+    },
+    {
+      "family": "bark",
+      "role": "normal",
+      "asset": "bark_platanus",
+      "author": {
+        "Dimitrios Savva": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/bark_platanus/bark_platanus_nor_gl_1k.jpg",
+      "sourceMd5": "850c131308d165e0ed3daa617a9a057f",
+      "sourceBytes": 1290168,
+      "local": "assets/textures/bark-normal.jpg",
+      "tileMetres": [
+        1.5,
+        1.5
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 98221,
+      "sha256": "d575366f774d7c29dacd3ef76c287d95d22404db94b2cc74f8d48a69d4289eac"
+    },
+    {
+      "family": "bark",
+      "role": "roughness",
+      "asset": "bark_platanus",
+      "author": {
+        "Dimitrios Savva": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/bark_platanus/bark_platanus_rough_1k.jpg",
+      "sourceMd5": "9354f1dd3df3b8b8bf4439307496841c",
+      "sourceBytes": 382604,
+      "local": "assets/textures/bark-roughness.jpg",
+      "tileMetres": [
+        1.5,
+        1.5
+      ],
+      "dimensions": [
+        256,
+        256
+      ],
+      "bytes": 5399,
+      "sha256": "d223017a0f5b7f02643b6acb179f1694491c40197307677c03d617e27263aa5c"
+    },
+    {
+      "family": "grass",
+      "role": "albedo",
+      "asset": "grass_ground",
+      "author": {
+        "Charlotte Baglioni": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grass_ground/grass_ground_diff_1k.jpg",
+      "sourceMd5": "299047258586c762735b7284d3c662c3",
+      "sourceBytes": 876584,
+      "local": "assets/textures/grass-albedo.webp",
+      "tileMetres": [
+        2.51,
+        2.51
+      ],
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "bytes": 59148,
+      "sha256": "b1c33310f016911166853595306231acad6b43136114f5e1d0e642c7de77dd56"
+    },
+    {
+      "family": "grass",
+      "role": "normal",
+      "asset": "grass_ground",
+      "author": {
+        "Charlotte Baglioni": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grass_ground/grass_ground_nor_gl_1k.jpg",
+      "sourceMd5": "d518c5b2af6f2c0297bc807b351f511f",
+      "sourceBytes": 1310516,
+      "local": "assets/textures/grass-normal.webp",
+      "tileMetres": [
+        2.51,
+        2.51
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 27652,
+      "sha256": "0ea74f0a2fac1894a78ffbddeeeedb0ff91c7c78e39a77ffe7008c109e6abe56"
+    },
+    {
+      "family": "grass",
+      "role": "roughness",
+      "asset": "grass_ground",
+      "author": {
+        "Charlotte Baglioni": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/grass_ground/grass_ground_rough_1k.jpg",
+      "sourceMd5": "2e6afca246cf6b80bdb53f46fe7e5ce5",
+      "sourceBytes": 328190,
+      "local": "assets/textures/grass-roughness.webp",
+      "tileMetres": [
+        2.51,
+        2.51
+      ],
+      "dimensions": [
+        256,
+        256
+      ],
+      "bytes": 190,
+      "sha256": "0afe222145341de43bf75f97391297fb6c21bc4d6908a0d6bbee5da018bc8f4f"
+    },
+    {
+      "family": "plaster",
+      "role": "albedo",
+      "asset": "white_plaster_rough_01",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_rough_01/white_plaster_rough_01_diff_1k.jpg",
+      "sourceMd5": "c0964b0628920619f0364f19f2d9973d",
+      "sourceBytes": 628421,
+      "local": "assets/textures/plaster-albedo.webp",
+      "tileMetres": [
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 19296,
+      "sha256": "f85f9447d12111abfade7534d0961b1a196145d7047daaa7fdb66b9246de60e3"
+    },
+    {
+      "family": "plaster",
+      "role": "normal",
+      "asset": "white_plaster_rough_01",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_rough_01/white_plaster_rough_01_nor_gl_1k.jpg",
+      "sourceMd5": "a45f7354cab5014e5167e63ddbf9c571",
+      "sourceBytes": 384190,
+      "local": "assets/textures/plaster-normal.webp",
+      "tileMetres": [
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 1682,
+      "sha256": "fbb8de23fd2a3bc6068f32edf8bf3c217cfbd3fc9867ceea7aa869401aa39309"
+    },
+    {
+      "family": "plaster",
+      "role": "roughness",
+      "asset": "white_plaster_rough_01",
+      "author": {
+        "Rob Tuytel": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_rough_01/white_plaster_rough_01_rough_1k.jpg",
+      "sourceMd5": "6a4f00696f958e42ad7bf3b1d48794d5",
+      "sourceBytes": 594450,
+      "local": "assets/textures/plaster-roughness.webp",
+      "tileMetres": [
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        256,
+        256
+      ],
+      "bytes": 9084,
+      "sha256": "708ef7eaebb8e564483e6b6a1de48d694751f85d64e2ddbede733c806f2c3f5d"
+    },
+    {
+      "family": "leaves",
+      "role": "albedo",
+      "asset": "tree_small_02",
+      "author": {
+        "Rico Cilliers": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/tree_small_02/tree_small_02_leaves_diff_1k.jpg",
+      "sourceMd5": "315cbc2cebfb399e649ccd39112c109a",
+      "sourceBytes": 340003,
+      "local": "assets/textures/leaves-albedo.jpg",
+      "processing": "Isolate one oval broadleaf from source atlas crop [244,285,367,372]; trim alpha to leaf contour to remove unrelated UV islands; resize256 square. No new leaf photograph synthesized.",
+      "dimensions": [
+        256,
+        256
+      ],
+      "bytes": 5232,
+      "sha256": "7ecbd07c6daf7e55442fa8d43eded19b7965f42f5b3a055120e79337a7f7887c"
+    },
+    {
+      "family": "leaves",
+      "role": "alpha",
+      "asset": "tree_small_02",
+      "author": {
+        "Rico Cilliers": "All"
+      },
+      "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/tree_small_02/tree_small_02_leaves_alpha_1k.png",
+      "sourceMd5": "63199ba87a9e8928424bd8c3b8017bd0",
+      "sourceBytes": 264711,
+      "local": "assets/textures/leaves-alpha.png",
+      "processing": "Isolate one oval broadleaf from source atlas crop [244,285,367,372]; trim alpha to leaf contour to remove unrelated UV islands; resize256 square. No new leaf photograph synthesized.",
+      "dimensions": [
+        256,
+        256
+      ],
+      "bytes": 5758,
+      "sha256": "bc222d1334adc72bb746edffee7826d37091f03cff797b89729315bb63faf664"
+    },
+    {
+      "family": "leaves",
+      "role": "combined",
+      "asset": "tree_small_02",
+      "local": "assets/textures/leaves-albedo.png",
+      "dimensions": [
+        256,
+        256
+      ],
+      "bytes": 58594,
+      "sha256": "376b494d7da399819698baf2f750d392cd1b3bbe9ac5e2cc4498d151ada50a80",
+      "processing": "Isolated official leaf diffuse and trimmed leaf alpha combined, no newly invented leaf photograph."
+    }
+  ]
+}
