@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-12T08:24:57.892348+00:00",
+  "updatedAt": "2026-10-12T10:24:12.659051+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1317,8 +1317,20 @@
               "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-12&student=kieran"
             }
           ],
-          "classContent": [],
-          "homework": null
+          "classContent": [
+            "◆ Eye control: We briefly discussed home practice for eye control, especially for online competitions. Coach Kai recommended looking steadily at a dot or one specific point for approximately two to three minutes each day. Two or three pictures can also be used to practise eye control. The first focus is to hold the gaze on a specific point; stronger control can support more expressive use of the eyes.\n\n◆ Connecting everyday observations to a speech: We introduced a structure that starts with a situation noticed in daily life and a rhetorical question: “Don’t you find it funny, weird or annoying when…?” Then develop the response: “How does it make you feel?” → “Why does it make you feel this way?” → “And that’s important because…” Link the observation and its significance to the speech topic.\n\n◆ Why this structure helps: A recognizable everyday situation can prompt listeners to think, “Yes, I’ve noticed that too.” Shared experiences and feelings can help a speaker build credibility, establish a connection and convey the emotion behind the topic. The aim is to be connected, relatable and authentic. Choose observations the audience can recognize rather than assuming every personal experience is universal.\n\n◆ Developing personally meaningful topics: In coaching Ariel, we discussed starting with something the speaker genuinely cares about or finds frustrating. Swimming was offered as a possible starting point for exploring competition, fairness and performance-enhancing technology. Examples included sneakers, clothing and a hypothetical swimming outfit that reduces water drag. Coach Kai contrasted these with concerns about steroids or other enhancers, using the comparison to raise questions about where fair competition begins and ends.\n\n◆ Exploring the underlying ethical question: Is competition only about winning, whatever someone can do or afford, or should ethics also shape it? A speaker could explore this question through sport and potentially connect it to the ethics of what AI can do. These were possible directions for further thought, not a confirmed final topic. The emphasis was on finding a concern that matters personally rather than choosing a topic only because a speech is required.\n\n◆ Teacher follow-up: Coach Kai plans to review the speeches after class and hopes to offer edits, polishing or suggestions for the next presentation where possible."
+          ],
+          "homework": {
+            "title": "Add an authentic audience-connection passage to your speech",
+            "steps": [
+              "Choose an everyday observation related to your speech topic.",
+              "Introduce the situation with a rhetorical question: “Don’t you find it funny, weird or annoying when…?”",
+              "Explain how it makes you feel, why you feel that way, and why it matters.",
+              "Connect the observation, emotion and significance back to your topic and central message."
+            ],
+            "prepareFor": "your next speech presentation",
+            "note": "Additional home practice discussed: approximately two to three minutes of daily eye-control practice at a dot or fixed point, or with two or three pictures. No new word count, deadline or submission method was supplied."
+          }
         }
       ]
     },
