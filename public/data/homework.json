@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-11T09:31:03.249618+00:00",
+  "updatedAt": "2026-10-12T08:24:57.892348+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1286,6 +1286,39 @@
               "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-09-21&student=sean"
             }
           ]
+        },
+        {
+          "id": "mon-afternoon-2026-10-12",
+          "date": "2026-10-12",
+          "time": "15:30–17:30",
+          "students": [
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-12&student=william"
+            },
+            {
+              "name": "Ariel",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-12&student=ariel"
+            },
+            {
+              "name": "Royce",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-12&student=royce"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-12&student=sean"
+            },
+            {
+              "name": "Cynthia",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-12&student=cynthia"
+            },
+            {
+              "name": "Kiran",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-12&student=kieran"
+            }
+          ],
+          "classContent": [],
+          "homework": null
         }
       ]
     },
