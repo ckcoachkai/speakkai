@@ -134,8 +134,8 @@ export const CLASSIC_PLANTS = freeze([
   shooter('wintermelon', 'Winter Melon', 200, 80, 300, {
     ...melon, recharge: 50, rechargeTicks: 5000, initialRecharge: 35,
     upgradeFrom: 'catapult', slow: .5, slowBite: .5, slowDuration: 10,
-    renderer: 'catapult', rendererTint: 'blue',
-    artworkNote: 'This browser adaptation reuses the original Melon-pult rig with a blue tint, rather than the original Winter Melon asset.'
+    renderer: 'wintermelon', rendererTint: null,
+    artworkNote: 'The October13 browser update uses the original extracted Winter Melon rig and projectile in garden-extra.json.'
   }),
   shooter('splash', 'Kernel-pult', 100, 20, 300, {
     motion: 'lobbed', projectileSpeed: null, bypassesShield: true,
@@ -150,7 +150,24 @@ export const CLASSIC_PLANTS = freeze([
     note: 'Legacy ID pierce refers to Cactus. Its original spike stops at one target; this is not a multi-target piercing weapon.'
   }),
   blocker('walnut', 'Wall-nut', 50, 4000),
-  blocker('tallnut', 'Tall-nut', 125, 8000, { blocksVault: true })
+  blocker('tallnut', 'Tall-nut', 125, 8000, { blocksVault: true }),
+  {
+    ...blocker('potato', 'Potato Mine', 25, 300),
+    role:'mine', armDelay:15, armDelayTicks:1500, riseDuration:19/18,
+    explosionDamage:1800, blastRadius:60, rowRadius:0,
+    note:'Original1500-tick buried countdown, followed by the original19-frame rise clip at18fps before becoming armed.'
+  },
+  {
+    ...blocker('cherrybomb', 'Cherry Bomb', 150, 300),
+    role:'bomb', recharge:50, rechargeTicks:5000, initialRecharge:35,
+    fuse:1, fuseTicks:100, explosionDamage:1800, blastRadius:115, rowRadius:1
+  },
+  {
+    ...blocker('torchwood', 'Torchwood', 175, 300),
+    role:'support', recharge:7.5, rechargeTicks:750, initialRecharge:0,
+    fireDamage:40, fireSplashDamage:13, fireSplashRows:[0],
+    note:'Converts ordinary peas to fire. A snow pea becomes an ordinary pea at one torch; a second distinct torch can then ignite it. No independent attack.'
+  }
 ]);
 export const PLANT_BY_ID = freeze(Object.fromEntries(CLASSIC_PLANTS.map(plant => [plant.id, plant])));
 

@@ -1,14 +1,18 @@
-import { createGardenRenderer } from './garden-rig.js?v=20261011-classic';
-import { CLASSIC_PLANTS, PLANT_BY_ID, CLASSIC_ZOMBIES, ZOMBIE_BY_ID, GARDEN_RULES, getSplashDamage } from './garden-rules.js?v=20261011-classic';
+import { createGardenRenderer } from './garden-rig.js?v=20261013-garden';
+import { createGardenFX } from './garden-fx.js?v=20261013-garden';
+import { CLASSIC_PLANTS, PLANT_BY_ID, CLASSIC_ZOMBIES, ZOMBIE_BY_ID, GARDEN_RULES, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 
 // A playable daytime lawn using the shared source-backed combat rules.
 // The three-wave level is authored for this browser game; it is not a ROM.
 const ROWS = 5, COLS = 9, STEP = .04, TAU = Math.PI * 2;
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 const damageStage = (hp, maximum) => clamp(Math.floor((1 - hp / maximum) * 5 + 1e-8), 0, 4);
-const SEED_ORDER = ['sunflower','pea','walnut','frost','twin','burst','splash','pierce','catapult','tallnut','gatling','wintermelon'];
-const SOUND_GAP = {shot:.10,hit:.10,armor:.22,bite:.22,growl:3,plant:.15,pickup:.12,death:.2,mower:.45,intro:5,outro:5};
-const SOUND_GAIN = {shot:.32,hit:.3,armor:.4,bite:.35,growl:.56,plant:.48,pickup:.5,death:.45,mower:.55,intro:.6,outro:.62};
+const SEED_ORDER = ['sunflower','pea','walnut','potato','frost','twin','burst','splash','pierce','catapult','tallnut','gatling','wintermelon','cherrybomb','torchwood'];
+const SOUND_GAP = {shot:.08,hit:.10,armor:.22,bite:.22,growl:3,plant:.15,death:.2,intro:5,outro:5};
+const SOUND_GAIN = {shot:.32,hit:.3,armor:.4,bite:.35,growl:.56,plant:.48,death:.45,intro:.6,outro:.62};
+const MAX_LIVE_ZOMBIES=120;
+export const getEndlessWaveCount = number => number<=1?5:Math.min(Number.MAX_SAFE_INTEGER,50*2**(Math.max(2,Math.floor(number))-2));
+const projectileKind = shot => ({pea:'pea',twin:'pea',burst:'pea',gatling:'pea',frost:'snow',splash:'kernel',catapult:'melon',wintermelon:'wintermelon',pierce:'spike'}[shot.kind]||shot.kind);
 
 /** Armor damage changes equipment health, never a zombie's identity. */
 export function damageClassicZombie(mob, damage, options={}) {
@@ -33,7 +37,7 @@ export function classicSplashTargets(mobs, impact, directId) {
   return mobs.filter(mob => !mob.dead && mob.id !== directId && Math.abs(mob.row-impact.row)<=1 && Math.abs(mob.x-impact.x)<=1.5);
 }
 
-export default function createGame({container, artwork={}, random=Math.random, sound=false, onFinish, onStart}={}) {
+export default function createGame({container, artwork={}, random=Math.random, sound=false, speed=1, onFinish, onStart}={}) {
   const rng = () => clamp(Number(random()) || 0, 0, 1-Number.EPSILON);
   const root = document.createElement('div');
   root.className = 'garden-classic';
@@ -43,21 +47,29 @@ export default function createGame({container, artwork={}, random=Math.random, s
   const stage=q('.gc-stage'),canvas=q('.gc-lawn-canvas'),ctx=canvas.getContext('2d'),grid=q('.gc-grid'),tray=q('.gc-seeds'),sunLayer=q('.gc-suns');
   const balance=q('.gc-sun-count'),message=q('.gc-message'),progress=q('.gc-progress'),waveLabel=q('.gc-wave'),shovel=q('.gc-shovel'),pauseButton=q('.gc-pause');
   const overlay=q('.gc-overlay'),title=q('.gc-panel h2'),description=q('.gc-panel p'),begin=q('.gc-begin'),live=q('.gc-live');
+  const levelControl=document.createElement('select');
+  levelControl.className='gc-level';levelControl.setAttribute('aria-label','Level mode');
+  for(const [value,label] of [['finite','Three waves'],['endless','Endless Survival']]){const option=document.createElement('option');option.value=value;option.textContent=label;levelControl.appendChild(option);}
+  levelControl.value='finite';
+  Object.assign(levelControl.style,{width:'112px',maxWidth:'28vw',border:'1px solid #e5eabd44',borderRadius:'8px',background:'#40513a',color:'#fff9e4',padding:'7px 4px',font:'12px system-ui'});
+  q('.gc-toolbar').style.flexWrap='wrap';q('.gc-toolbar').appendChild(levelControl);
   const renderer=createGardenRenderer({artwork});
+  const fx=createGardenFX({artwork});
   const listeners=[],seedButtons=new Map(),cells=[],sunButtons=new Map();
   let alive=true,phase='idle',time=0,sun=50,selected=null,hover=null,plants=[],mobs=[],shots=[],suns=[],effects=[],scheduledShots=[];
   let mowers=[],wavePlan=[],spawnIndex=0,kills=0,serial=0,nextSky=6,skyCount=0,frameId=null,lastFrame=null,accumulator=0,finished=false,wave=1;
+  let endless=false,waveTarget=48,totalSpawned=0,nextGroupAt=30,pendingGroup=0,groupSize=5,groupGap=4,simulationSpeed=Number.isFinite(Number(speed))?clamp(Number(speed),.5,8):1;
   let width=1000,height=500,lawn={x:60,y:20,w:890,h:445,cw:98.89,rh:89},soundEnabled=Boolean(sound),mowerArt=null,mowerAbort=null;
   const cooldowns=new Map(),events=[];
   let audio=null,audioEpoch=0,audioAbort=null,introPlayed=false;
   const buffers=new Map(),voices=new Set(),lastSfx=new Map(),rotations=new Map();
-  const sounds={...artwork.gardenSounds,intro:artwork.gardenCues?.intro,outro:artwork.gardenCues?.outro};
+  const sounds={...artwork.gardenSounds,intro:artwork.gardenCues?.intro,outro:artwork.gardenCues?.outro};delete sounds.mower;delete sounds.pickup;
   function listen(element,event,callback,options){element.addEventListener(event,callback,options);listeners.push(()=>element.removeEventListener(event,callback,options));}
   function log(type,data={}){events.push({type,time:Number(time.toFixed(3)),...data});if(events.length>1200)events.shift();}
   function announce(text){message.textContent=text;live.textContent=text;}
   function newPlant(id,row,col){
     const rule=PLANT_BY_ID[id];
-    return {id:'plant-'+(++serial),seedId:id,rule,row,col,x:col+.5,hp:rule.hp,maxHp:rule.hp,recoil:0,nextAttack:time+.3,
+    return {id:'plant-'+(++serial),seedId:id,rule,row,col,x:col+.5,hp:rule.hp,maxHp:rule.hp,recoil:0,nextAttack:time+.3,bornAt:time,armed:false,
       nextSun:time+(rule.firstSunMin??3)+rng()*((rule.firstSunMax??12.5)-(rule.firstSunMin??3))};
   }
   function buildPlan(){
@@ -74,13 +86,16 @@ export default function createGame({container, artwork={}, random=Math.random, s
     addWave(1,30,9,11,[basic,basic,basic,basic,cone],5);
     addWave(2,155,15,7.5,[basic,basic,basic,cone,cone,paper,runner,bucket],5);
     addWave(3,295,24,5.4,[basic,basic,basic,cone,cone,cone,bucket,bucket,paper,runner,football]);
+    // Real row-wide groups raise the final wave's pressure without changing HP.
+    for(const item of plan)if(item.wave===3)item.at=295+Math.floor((item.at-295+1e-7)/5.4/5)*27;
     return plan.sort((a,b)=>a.at-b.at);
   }
   function fresh(){
     time=0;sun=GARDEN_RULES.initialSun;selected=null;hover=null;plants=[];mobs=[];shots=[];suns=[];effects=[];scheduledShots=[];
     mowers=Array.from({length:ROWS},(_,row)=>({row,status:'ready',x:-.35,previousX:-.35,kills:0,activations:0}));
     spawnIndex=0;kills=0;serial=0;skyCount=0;finished=false;wave=1;introPlayed=false;events.length=0;cooldowns.clear();
-    wavePlan=buildPlan();nextSky=GARDEN_RULES.sun.firstSkyMin+rng()*(GARDEN_RULES.sun.firstSkyMax-GARDEN_RULES.sun.firstSkyMin);
+    wavePlan=endless?[]:buildPlan();waveTarget=endless?getEndlessWaveCount(1):wavePlan.length;totalSpawned=0;pendingGroup=0;groupSize=5;groupGap=4;nextGroupAt=30;
+    nextSky=GARDEN_RULES.sun.firstSkyMin+rng()*(GARDEN_RULES.sun.firstSkyMax-GARDEN_RULES.sun.firstSkyMin);
     for(const id of SEED_ORDER)if(PLANT_BY_ID[id].initialRecharge)cooldowns.set(id,PLANT_BY_ID[id].initialRecharge);
     for(const button of sunButtons.values())button.remove();sunButtons.clear();accumulator=0;lastFrame=null;
   }
@@ -114,7 +129,7 @@ export default function createGame({container, artwork={}, random=Math.random, s
     if(phase!=='running')return false;
     const index=suns.findIndex(item=>item.id===id);if(index<0)return false;
     const item=suns.splice(index,1)[0];sun+=item.value;sunButtons.get(id)?.remove();sunButtons.delete(id);
-    log('sunCollect',{sunId:id,value:item.value,sun});playSfx('pickup');announce('+'+item.value+' sun');syncUI(true);return true;
+    log('sunCollect',{sunId:id,value:item.value,sun});playPickupChime();announce('+'+item.value+' sun');syncUI(true);return true;
   }
   function spawn(id,row,x=9.35){
     const rule=ZOMBIE_BY_ID[id]||CLASSIC_ZOMBIES[0],body=rule.bodyHp??rule.bodyHealth??270,armor=rule.armorHp??rule.armorHealth??0;
@@ -126,11 +141,12 @@ export default function createGame({container, artwork={}, random=Math.random, s
   }
   function kill(mob,method){
     if(mob.counted)return;
-    mob.dead=true;mob.hp=mob.bodyHp=mob.armorHp=mob.shieldHp=0;mob.deathAt=time;mob.counted=true;kills++;log('kill',{zombieId:mob.id,type:mob.type.id,row:mob.row,method});playSfx('death');
+    mob.dead=true;mob.hp=mob.bodyHp=mob.armorHp=mob.shieldHp=0;mob.deathAt=time;mob.counted=true;kills++;log('kill',{zombieId:mob.id,type:mob.type.id,row:mob.row,method});if(method!=='mower')playSfx('death');
   }
   function hit(mob,damage,options={}){
     const wasEnraged=mob.enraged,result=damageClassicZombie(mob,damage,options);
     if(result.damage>0){
+      if(options.kind==='fire'&&options.clearCold!==false&&mob.slowUntil>time){mob.slowUntil=0;if(mob.biteAt>time)mob.biteAt=time+(mob.biteAt-time)*.5;}
       if(options.slow&&result.chillEligible){const newlyChilled=mob.slowUntil<=time;mob.slowUntil=Math.max(mob.slowUntil,time+(options.slowDuration||10));if(newlyChilled&&mob.biteAt>time)mob.biteAt=time+(mob.biteAt-time)*2;}
       if(options.stun){mob.stunUntil=Math.max(mob.stunUntil,time+options.stun);}
       if(!wasEnraged&&mob.enraged)mob.frenzyAt=time+(mob.type.frenzyWindup||0);
@@ -145,10 +161,11 @@ export default function createGame({container, artwork={}, random=Math.random, s
     const point={x:primary?.x??shot.targetX,row:shot.row};
     if(primary)hit(primary,shot.damage,shot);
     if(shot.splashDamage){
-      const targets=classicSplashTargets(mobs,point,primary?.id);
-      const amount=getSplashDamage(shot.damage,targets.length);
-      for(const mob of targets)hit(mob,amount,shot);
-      effects.push({kind:'splash',row:point.row,x:point.x,age:0,color:shot.slow?'#a3e6f2':'#d95f55'});
+      const targets=classicSplashTargets(mobs,point,primary?.id).filter(mob=>shot.kind!=='fire'||mob.row===point.row);
+      const amount=getSplashDamage(shot.damage,targets.length,shot.kind==='fire');
+      for(const mob of targets)hit(mob,amount,shot.kind==='fire'?{...shot,clearCold:false}:shot);
+      if(['catapult','wintermelon'].includes(shot.kind))effects.push({kind:'melonImpact',row:point.row,x:point.x,age:0,impact:fx.createMelonImpact({x:point.x,y:0,row:point.row,kind:projectileKind(shot),seed:shot.id})});
+      else effects.push({kind:'splash',row:point.row,x:point.x,age:0,color:'#f4bc58'});
     }
   }
   function launch(plant,row,target){
@@ -157,35 +174,82 @@ export default function createGame({container, artwork={}, random=Math.random, s
     const shot={id:'shot-'+(++serial),row,x:plant.x+.32,startX:plant.x+.32,targetX:target.x,targetId:target.id,age:0,duration:.9,damage:butter?(rule.butterDamage??40):rule.damage,
       splashDamage:rule.splashDamage||0,slow:rule.slow<1,slowDuration:rule.slowDuration||10,stun:butter?(rule.stunDuration??4):0,kind:butter?'butter':plant.seedId,lob:isLob,
       velocity:(rule.projectileSpeed||GARDEN_RULES.peaSpeed)/GARDEN_RULES.tileWidth,bypassesShield:rule.bypassesShield,hitsShieldAndBody:rule.hitsShieldAndBody};
-    shots.push(shot);plant.recoil=.12;playSfx('shot');log('shot',{plantId:plant.id,seedId:plant.seedId,row,damage:shot.damage,kind:shot.kind});
+    shots.push(shot);plant.recoil=.12;if(plant.seedId!=='gatling')playSfx('shot');log('shot',{plantId:plant.id,seedId:plant.seedId,row,damage:shot.damage,kind:shot.kind});
   }
   function targetFor(plant,row){
     return mobs.filter(m=>!m.dead&&m.row===row&&m.x>=plant.x-.15&&m.x<=9.55).sort((a,b)=>a.x-b.x)[0];
   }
+  function explodePlant(plant){
+    if(plant.hp<=0)return false;
+    const rule=plant.rule,radius=rule.blastRadius/GARDEN_RULES.tileWidth;
+    for(const mob of mobs)if(!mob.dead&&Math.abs(mob.row-plant.row)<=rule.rowRadius&&Math.abs(mob.x-plant.x)<=radius){
+      const result=damageClassicZombie(mob,rule.explosionDamage,{bypassesShield:true});
+      log('blastHit',{plantId:plant.id,seedId:plant.seedId,zombieId:mob.id,damage:result.damage});
+      if(result.killed)kill(mob,plant.seedId==='potato'?'mine':'bomb');
+    }
+    plant.hp=0;log('plantExplode',{plantId:plant.id,seedId:plant.seedId,row:plant.row,x:plant.x});
+    effects.push({kind:'blast',row:plant.row,x:plant.x,age:0,radius});
+    return true;
+  }
+  function convertTorchwood(shot,before){
+    if(shot.lob||!['pea','twin','burst','gatling','frost','snow'].includes(shot.kind))return;
+    const torches=plants.filter(p=>p.hp>0&&p.seedId==='torchwood'&&p.row===shot.row&&p.x>=before-.12&&p.x<=shot.x+.12).sort((a,b)=>a.x-b.x);
+    for(const torch of torches){
+      if(shot.lastTorch===torch.id)continue;shot.lastTorch=torch.id;
+      if(shot.slow){shot.slow=false;shot.slowDuration=0;shot.kind='pea';shot.damage=20;shot.splashDamage=0;}
+      else{shot.kind='fire';shot.damage=torch.rule.fireDamage;shot.splashDamage=torch.rule.fireSplashDamage;shot.hitsShieldAndBody=true;}
+      log('torchConvert',{shotId:shot.id,torchId:torch.id,kind:shot.kind,damage:shot.damage});
+      if(shot.kind==='fire')break;
+    }
+  }
+  function advanceEndlessWave(){
+    wave++;waveTarget=getEndlessWaveCount(wave);spawnIndex=0;pendingGroup=0;
+    groupSize=Math.min(25,5+Math.max(0,wave-2)*5);groupGap=Math.max(1.6,4-(wave-2)*.35);nextGroupAt=time+18;
+    log('wave',{wave,target:waveTarget});announce('Wave '+wave+' · '+waveTarget.toLocaleString()+' zombies');
+  }
+  function spawnEndless(){
+    let count=mobs.filter(m=>!m.dead).length;
+    while(spawnIndex<waveTarget&&time+1e-8>=nextGroupAt){
+      if(!pendingGroup)pendingGroup=Math.min(groupSize,waveTarget-spawnIndex);
+      if(count>=MAX_LIVE_ZOMBIES)break;
+      const pool=wave===1?['walker']:wave===2?['walker','walker','cone','cone','newspaper']:wave===3?['walker','cone','cone','bucket','newspaper','pole']:['cone','bucket','bucket','football','football','newspaper','pole'];
+      spawn(pool[Math.floor(rng()*pool.length)],spawnIndex%ROWS,9.35+(spawnIndex%groupSize)*.025);
+      spawnIndex++;totalSpawned++;count++;pendingGroup--;
+      if(!pendingGroup)nextGroupAt+=groupGap;
+    }
+  }
   function fire(plant){
-    const rule=plant.rule;if(!rule.damage)return false;
+    const rule=plant.rule;if(!rule.damage||['mine','bomb','support'].includes(rule.role))return false;
     const rows=plant.seedId==='burst'?[plant.row-1,plant.row,plant.row+1].filter(row=>row>=0&&row<ROWS):[plant.row];
     if(!rows.some(row=>targetFor(plant,row)))return false;
     const count=plant.seedId==='burst'?1:(rule.count||1),gap=rule.burstGap??.12;
     for(const row of rows){const target=targetFor(plant,row);if(!target)continue;for(let i=0;i<count;i++)scheduledShots.push({at:time+(rule.shootingDelay||0)+(rule.burstOffsets?.[i]??i*gap),plantId:plant.id,row,targetId:target.id});}
     plant.nextAttack=time+(rule.intervalMin??rule.interval??1.43)+rng()*Math.max(0,(rule.intervalMax??rule.interval??1.43)-(rule.intervalMin??rule.interval??1.43));
+    if(plant.seedId==='gatling')playGatlingRattle();
     return true;
   }
   function finish(outcome){
-    if(finished||phase!=='running')return;
+    if(finished||phase!=='running'||endless&&outcome==='won')return;
     finished=true;phase='result';selected=null;log('finish',{outcome,kills,spawns:spawnIndex});playSfx(outcome==='won'?'outro':'growl',true);
     title.textContent=outcome==='won'?'Garden protected':'The zombies got through';
-    description.textContent=outcome==='won'?'All three waves defeated.':'Build more sunflowers and protect your shooters with nuts.';
+    description.textContent=outcome==='won'?'All three waves defeated.':endless?'Survived to wave '+wave+'. Try a stronger defense.':'Build more sunflowers and protect your shooters with nuts.';
     begin.textContent='Play again';overlay.hidden=false;announce(outcome==='won'?'You won! The garden is safe.':'The zombies reached the house.');
-    syncUI(true);onFinish?.({outcome,time,kills,waves:wave,spawned:spawnIndex,totalZombies:wavePlan.length});
+    syncUI(true);onFinish?.({outcome,time,kills,waves:wave,endless,spawned:totalSpawned,totalZombies:endless?waveTarget:wavePlan.length});
   }
   function step(dt){
     if(phase!=='running')return;
     time+=dt;
-    while(spawnIndex<wavePlan.length&&time+1e-8>=wavePlan[spawnIndex].at){const item=wavePlan[spawnIndex++];wave=item.wave;spawn(item.type,item.row);}
+    if(endless)spawnEndless();
+    else while(spawnIndex<wavePlan.length&&time+1e-8>=wavePlan[spawnIndex].at){const item=wavePlan[spawnIndex++];wave=item.wave;spawn(item.type,item.row);totalSpawned++;}
     if(time>=nextSky){addSun(.5+rng()*8,.5+rng()*4);skyCount++;nextSky=time+(Math.min(GARDEN_RULES.sun.skyBaseMaxTicks,GARDEN_RULES.sun.skyBaseTicks+skyCount*GARDEN_RULES.sun.skyIncrementTicks)+rng()*GARDEN_RULES.sun.skyJitterTicks)/GARDEN_RULES.ticksPerSecond;}
     for(const plant of plants){
       if(plant.hp<=0)continue;plant.recoil=Math.max(0,plant.recoil-dt);
+      if(plant.seedId==='potato'){
+        plant.armed=time-plant.bornAt>=plant.rule.armDelay+plant.rule.riseDuration;
+        if(plant.armed&&mobs.some(m=>!m.dead&&m.row===plant.row&&Math.abs(m.x-plant.x)<=.65))explodePlant(plant);
+        continue;
+      }
+      if(plant.seedId==='cherrybomb'){if(time-plant.bornAt+1e-8>=plant.rule.fuse)explodePlant(plant);continue;}
       if(plant.seedId==='sunflower'&&time>=plant.nextSun){addSun(plant.x,plant.row+.40,'sunflower');plant.nextSun=time+(plant.rule.sunIntervalMin??23.5)+rng()*((plant.rule.sunIntervalMax??25)-(plant.rule.sunIntervalMin??23.5));}
       if(time>=plant.nextAttack)fire(plant);
     }
@@ -219,7 +283,7 @@ export default function createGame({container, artwork={}, random=Math.random, s
           }
         }
       }
-      if(mower.status==='ready'&&mob.x<=.02){mower.status='sweeping';mower.activations++;log('mowerActivate',{row:mob.row,zombieId:mob.id});playSfx('mower');}
+      if(mower.status==='ready'&&mob.x<=.02){mower.status='sweeping';mower.activations++;log('mowerActivate',{row:mob.row,zombieId:mob.id});}
       if(mower.status==='sweeping'){
         const previous=oldX-mower.previousX,current=mob.x-mower.x;
         if(Math.min(previous,current)<=.38&&Math.max(previous,current)>=-.38){kill(mob,'mower');mower.kills++;continue;}
@@ -233,14 +297,18 @@ export default function createGame({container, artwork={}, random=Math.random, s
       if(shot.lob){shot.x=shot.startX+(shot.targetX-shot.startX)*clamp(shot.age/shot.duration,0,1);if(shot.age>=shot.duration){impact(shot);shots.splice(i,1);}}
       else{
         const before=shot.x;shot.x+=shot.velocity*dt;
+        convertTorchwood(shot,before);
         const target=mobs.filter(m=>!m.dead&&m.row===shot.row&&m.x>=before-.18&&m.x<=shot.x+.18).sort((a,b)=>a.x-b.x)[0];
-        if(target){hit(target,shot.damage,shot);shots.splice(i,1);}else if(shot.x>10)shots.splice(i,1);
+        if(target){if(shot.kind==='fire')impact({...shot,targetId:target.id,targetX:target.x});else hit(target,shot.damage,shot);shots.splice(i,1);}else if(shot.x>10)shots.splice(i,1);
       }
     }
     for(let i=suns.length-1;i>=0;i--){const item=suns[i];if(!item.landed){item.y=Math.min(item.targetY,item.y+dt*.7);if(item.y>=item.targetY)item.landed=true;}else item.age+=dt;if(item.age>10){sunButtons.get(item.id)?.remove();sunButtons.delete(item.id);suns.splice(i,1);}}
     for(const effect of effects)effect.age+=dt;
-    effects=effects.filter(e=>e.age<.5);mobs=mobs.filter(m=>!m.dead||time-m.deathAt<.65);plants=plants.filter(p=>p.hp>0);
-    if(phase==='running'&&spawnIndex===wavePlan.length&&!mobs.some(m=>!m.dead))finish('won');
+    effects=effects.filter(e=>e.age<(e.kind==='melonImpact'?3:e.kind==='blast'?.8:.5)).slice(-360);mobs=mobs.filter(m=>!m.dead||time-m.deathAt<.65);plants=plants.filter(p=>p.hp>0);
+    if(phase==='running'&&!mobs.some(m=>!m.dead)){
+      if(endless&&spawnIndex===waveTarget)advanceEndlessWave();
+      else if(!endless&&spawnIndex===wavePlan.length)finish('won');
+    }
   }
   function makeButton(className,label){const button=document.createElement('button');button.className=className;button.type='button';button.setAttribute('aria-label',label);return button;}
   for(const id of SEED_ORDER){
@@ -266,6 +334,7 @@ export default function createGame({container, artwork={}, random=Math.random, s
   listen(shovel,'click',()=>{if(phase!=='running')return;selected=selected==='shovel'?null:'shovel';announce(selected?'Choose a plant to remove.':'Choose a seed, then a lawn square.');syncUI(true);});
   listen(pauseButton,'click',()=>phase==='paused'?resume():pause());
   listen(begin,'click',()=>phase==='paused'?resume():start());
+  listen(levelControl,'change',()=>{if(phase==='running'||phase==='paused')return;endless=levelControl.value==='endless';reset();});
   listen(root,'contextmenu',event=>{event.preventDefault();selected=null;syncUI(true);});
   listen(root,'keydown',event=>{if(event.key==='Escape'){event.preventDefault();selected=null;syncUI(true);}});
   if(typeof document.addEventListener==='function')listen(document,'visibilitychange',()=>{if(document.hidden&&phase==='running')pause();});
@@ -278,7 +347,8 @@ export default function createGame({container, artwork={}, random=Math.random, s
     }
   }
   function syncUI(force=false){
-    balance.textContent=String(sun);progress.value=spawnIndex/Math.max(1,wavePlan.length);waveLabel.textContent='Wave '+wave+' / 3';
+    balance.textContent=String(sun);progress.value=spawnIndex/Math.max(1,endless?waveTarget:wavePlan.length);waveLabel.textContent=endless?'Wave '+wave+' · '+waveTarget.toLocaleString():'Wave '+wave+' / 3';
+    levelControl.disabled=phase==='running'||phase==='paused';
     shovel.disabled=phase!=='running';shovel.setAttribute('aria-pressed',String(selected==='shovel'));pauseButton.disabled=phase==='idle'||phase==='result';pauseButton.textContent=phase==='paused'?'Resume':'Pause';
     grid.classList.toggle('is-placing',Boolean(selected));overlay.hidden=phase==='running';
     for(const [id,item] of seedButtons){
@@ -309,7 +379,7 @@ export default function createGame({container, artwork={}, random=Math.random, s
     ellipse(0,-44,24,22,id==='frost'?'#97ced3':id==='sunflower'?'#edc65d':'#7fbc52');ellipse(22,-43,13,13,'#537b33');ellipse(-7,-50,3,5,'#233c24');
   }
   function drawSeedIcons(){
-    for(const [id,item] of seedButtons){const c=item.icon.getContext('2d');c.clearRect(0,0,60,50);c.save();c.translate(28,48);c.scale(.49,.49);if(!renderer.drawPlant(c,{weapon:id,time,hp:1,maxHp:1,seed:0})){if(id==='sunflower'){c.fillStyle='#e4bc54';c.beginPath();c.arc(0,-45,23,0,TAU);c.fill();}else{c.fillStyle='#7eab49';c.beginPath();c.ellipse(0,-37,22,27,0,0,TAU);c.fill();}}c.restore();}
+    for(const [id,item] of seedButtons){const c=item.icon.getContext('2d');c.clearRect(0,0,60,50);c.save();c.translate(28,48);c.scale(.49,.49);if(!renderer.drawPlant(c,{weapon:id,time,hp:1,maxHp:1,seed:0,defender:{armed:true,fuseAge:.15}})){if(id==='sunflower'){c.fillStyle='#e4bc54';c.beginPath();c.arc(0,-45,23,0,TAU);c.fill();}else{c.fillStyle='#7eab49';c.beginPath();c.ellipse(0,-37,22,27,0,0,TAU);c.fill();}}c.restore();}
   }
   function drawMower(mower){
     if(mower.status==='spent')return;
@@ -336,7 +406,7 @@ export default function createGame({container, artwork={}, random=Math.random, s
     for(let row=0;row<ROWS;row++){
       for(const plant of plants.filter(p=>p.row===row&&p.hp>0)){
         const x=lawn.x+plant.x*lawn.cw,y=lawn.y+(row+.92)*lawn.rh;ellipse(x,y-2,24*plantScale,6*plantScale,'#335b2a44');ctx.save();ctx.translate(x,y);ctx.scale(plantScale,plantScale);
-        if(!renderer.drawPlant(ctx,{weapon:plant.seedId,simTime:time,hp:plant.hp,maxHp:plant.maxHp,recoil:plant.recoil,seed:plant.col+plant.row*3,defender:{damageStage:damageStage(plant.hp,plant.maxHp)}}))fallbackPlant(plant.seedId);ctx.restore();
+        if(!renderer.drawPlant(ctx,{weapon:plant.seedId,simTime:time,hp:plant.hp,maxHp:plant.maxHp,recoil:plant.recoil,seed:plant.col+plant.row*3,defender:{damageStage:damageStage(plant.hp,plant.maxHp),armed:plant.armed,armingAge:time-plant.bornAt,armDelay:plant.rule.armDelay,riseDuration:plant.rule.riseDuration,fuseAge:time-plant.bornAt}}))fallbackPlant(plant.seedId);ctx.restore();
         if(plant.hp<plant.maxHp){roundRect(x-17*plantScale,y+2,34*plantScale,3,2,'#32492b77');roundRect(x-17*plantScale,y+2,34*plantScale*plant.hp/plant.maxHp,3,2,plant.hp>plant.maxHp*.4?'#daeb95':'#d6b35c');}
       }
       for(const mob of mobs.filter(m=>m.row===row)){
@@ -350,13 +420,22 @@ export default function createGame({container, artwork={}, random=Math.random, s
     for(const shot of shots){
       let x=lawn.x+shot.x*lawn.cw,y=lawn.y+(shot.row+.49)*lawn.rh;
       if(shot.lob)y-=Math.sin(clamp(shot.age/shot.duration,0,1)*Math.PI)*lawn.rh*1.18;
+      const kind=projectileKind(shot),scale=Math.min(lawn.cw*.9/90,lawn.rh*.86/80);
+      if(fx.drawProjectile(ctx,{kind,x,y,scale,time,progress:clamp(shot.age/shot.duration,0,1),rotation:shot.lob?shot.age*3:0})!==false)continue;
       if(shot.kind==='butter'){roundRect(x-5,y-4,10,8,2,'#ffe088');}
       else if(['catapult','wintermelon'].includes(shot.kind)){ellipse(x,y,10,8,shot.slow?'#89cbd5':'#629c43');ctx.strokeStyle='#cbe69a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x-4,y-6);ctx.lineTo(x-4,y+6);ctx.moveTo(x+3,y-6);ctx.lineTo(x+3,y+6);ctx.stroke();}
       else if(shot.kind==='splash')ellipse(x,y,4,4,'#f6db83');
       else if(shot.kind==='pierce'){ctx.fillStyle='#49733b';ctx.beginPath();ctx.moveTo(x+7,y);ctx.lineTo(x-6,y-3);ctx.lineTo(x-6,y+3);ctx.closePath();ctx.fill();}
       else{ellipse(x,y,5,5,shot.slow?'#aee2e8':'#a8d657');ellipse(x-1,y-1,1.4,1.4,'#e9f7c4');}
     }
-    for(const effect of effects){ctx.save();ctx.globalAlpha=1-effect.age/.5;const x=lawn.x+effect.x*lawn.cw,y=lawn.y+(effect.row+.52)*lawn.rh;for(let i=0;i<7;i++){const a=i*TAU/7;ellipse(x+Math.cos(a)*effect.age*60,y+Math.sin(a)*effect.age*30,2.5,2.5,effect.color);}ctx.restore();}
+    for(const effect of effects){
+      const x=lawn.x+effect.x*lawn.cw,y=lawn.y+(effect.row+.94)*lawn.rh;
+      if(effect.kind==='melonImpact'){fx.drawImpact(ctx,effect.impact,{x,y,scale:plantScale,age:effect.age});continue;}
+      ctx.save();ctx.globalAlpha=clamp(1-effect.age/(effect.kind==='blast'?.8:.5),0,1);
+      if(effect.kind==='blast'){ellipse(x,y-lawn.rh*.28,(.1+effect.age)*effect.radius*lawn.cw,(.1+effect.age)*lawn.rh*.65,'#ffc364aa');}
+      else for(let i=0;i<7;i++){const a=i*TAU/7;ellipse(x+Math.cos(a)*effect.age*60,y-lawn.rh*.4+Math.sin(a)*effect.age*30,2.5,2.5,effect.color);}
+      ctx.restore();
+    }
     if(selected&&selected!=='shovel'&&hover){ctx.save();ctx.globalAlpha=.38;ctx.translate(lawn.x+(hover.col+.5)*lawn.cw,lawn.y+(hover.row+.92)*lawn.rh);ctx.scale(plantScale,plantScale);if(!renderer.drawPlant(ctx,{weapon:selected,time,hp:1,maxHp:1}))fallbackPlant(selected);ctx.restore();}
     drawSeedIcons();
   }
@@ -383,6 +462,7 @@ export default function createGame({container, artwork={}, random=Math.random, s
     }catch{stopAudio();}
   }
   function playSfx(key,force=false){
+    if(key==='mower'||key==='pickup')return false;
     if(!soundEnabled||!audio||audio.state!=='running'||voices.size>=12)return false;
     const at=audio.currentTime;if(!force&&at-(lastSfx.get(key)??-Infinity)<(SOUND_GAP[key]||.15))return false;
     const raw=sounds[key],urls=(Array.isArray(raw)?raw:[raw]).filter(url=>buffers.has(url));if(!urls.length)return false;
@@ -390,12 +470,25 @@ export default function createGame({container, artwork={}, random=Math.random, s
     source.buffer=buffers.get(url);gain.gain.value=SOUND_GAIN[key]||.4;source.connect(gain);gain.connect(audio.destination);
     source.onended=()=>{voices.delete(voice);source.disconnect();gain.disconnect();};voices.add(voice);source.start(at);lastSfx.set(key,at);rotations.set(key,index+1);return true;
   }
+  function playTones(key,frequencies,gap,duration,gainValue,type='sine'){
+    if(!soundEnabled||!audio||audio.state!=='running'||voices.size+frequencies.length>12)return false;
+    const at=audio.currentTime;if(at-(lastSfx.get(key)??-Infinity)<.12)return false;lastSfx.set(key,at);
+    for(let index=0;index<frequencies.length;index++){
+      const start=at+index*gap,source=audio.createOscillator(),gain=audio.createGain(),voice={source,gain};
+      source.type=type;source.frequency.setValueAtTime(frequencies[index],start);gain.gain.setValueAtTime(.0001,start);gain.gain.linearRampToValueAtTime(gainValue,start+.006);gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
+      source.connect(gain);gain.connect(audio.destination);source.onended=()=>{voices.delete(voice);source.disconnect();gain.disconnect();};voices.add(voice);source.start(start);source.stop(start+duration+.01);
+    }
+    return true;
+  }
+  function playPickupChime(){return playTones('sunChime',[880,1174.66,1567.98],.065,.12,.10);}
+  function playGatlingRattle(){return playTones('gatling',[190,210,185,200],.038,.028,.095,'triangle');}
   function stopAudio(){
     audioEpoch++;audioAbort?.abort();audioAbort=null;
     for(const voice of voices){voice.source.onended=null;try{voice.source.stop();voice.source.disconnect();voice.gain.disconnect();}catch{}}voices.clear();lastSfx.clear();
     if(audio){const old=audio;audio=null;try{old.close().catch(()=>{});}catch{}}
   }
   function setSound(enabled){soundEnabled=Boolean(enabled);if(soundEnabled&&phase==='running')startAudio();else if(!soundEnabled)stopAudio();}
+  function setSpeed(value){const next=Number(value);if(Number.isFinite(next))simulationSpeed=clamp(next,.5,8);return simulationSpeed;}
   function pause(){
     if(phase!=='running')return false;phase='paused';lastFrame=null;accumulator=0;stopAudio();
     title.textContent='Paused';description.textContent='Your garden will wait.';begin.textContent='Resume';announce('Game paused.');syncUI(true);return true;
@@ -406,29 +499,29 @@ export default function createGame({container, artwork={}, random=Math.random, s
     stopAudio();fresh();phase='running';announce('Collect sun. Choose a seed, then a lawn square.');syncUI(true);startAudio();onStart?.();return true;
   }
   function reset(){
-    if(!alive)return;stopAudio();fresh();phase='idle';title.textContent='Protect the garden';description.textContent='Collect sunshine and build your defense. Survive three waves.';begin.textContent='Start game';
+    if(!alive)return;stopAudio();fresh();phase='idle';title.textContent=endless?'Endless Survival':'Protect the garden';description.textContent=endless?'Build your defense. Each cleared wave brings a larger horde.':'Collect sunshine and build your defense. Survive three waves.';begin.textContent='Start game';
     announce('Collect sun. Choose a seed, then a lawn square.');syncUI(true);draw();
   }
   function frame(timestamp){
     frameId=null;if(!alive)return;
     if(phase==='running'){
-      const elapsed=lastFrame===null?0:clamp((timestamp-lastFrame)/1000,0,.16);accumulator+=elapsed;
+      const elapsed=lastFrame===null?0:clamp((timestamp-lastFrame)/1000,0,.16);accumulator+=elapsed*simulationSpeed;
       while(accumulator+1e-8>=STEP&&phase==='running'){step(STEP);accumulator-=STEP;}
     }
     lastFrame=timestamp;syncUI();draw();frameId=requestAnimationFrame(frame);
   }
   function getState(){
-    return {mode:'classic',phase,time,sun,selectedSeed:selected,wave,totalWaves:3,spawned:spawnIndex,totalZombies:wavePlan.length,kills,soundEnabled,finished,
-      grid:plants.filter(p=>p.hp>0).map(p=>({id:p.id,seedId:p.seedId,row:p.row,col:p.col,hp:p.hp,maxHp:p.maxHp,damageStage:damageStage(p.hp,p.maxHp),nextAttack:p.nextAttack})),
+    return {mode:'classic',phase,time,sun,selectedSeed:selected,wave,endless,speed:simulationSpeed,totalWaves:endless?null:3,spawned:spawnIndex,spawnedTotal:totalSpawned,totalZombies:endless?waveTarget:wavePlan.length,waveTarget,queued:endless?waveTarget-spawnIndex:wavePlan.length-spawnIndex,liveZombies:mobs.filter(m=>!m.dead).length,maxLiveZombies:MAX_LIVE_ZOMBIES,kills,soundEnabled,finished,
+      grid:plants.filter(p=>p.hp>0).map(p=>({id:p.id,seedId:p.seedId,row:p.row,col:p.col,hp:p.hp,maxHp:p.maxHp,damageStage:damageStage(p.hp,p.maxHp),nextAttack:p.nextAttack,armed:p.armed,armingAge:time-p.bornAt})),
       suns:suns.map(s=>({id:s.id,value:s.value,x:s.x,y:s.y,source:s.source,landed:s.landed})),
       seeds:SEED_ORDER.filter(id=>PLANT_BY_ID[id]).map(id=>({id,name:PLANT_BY_ID[id].name,cost:PLANT_BY_ID[id].cost,recharge:PLANT_BY_ID[id].recharge,remaining:Math.max(0,(cooldowns.get(id)||0)-time),upgradeFrom:PLANT_BY_ID[id].upgradeFrom||null})),
       zombies:mobs.map(m=>({id:m.id,type:m.type.id,visualType:m.visualType,rigIdentity:m.rigIdentity,row:m.row,x:m.x,hp:m.hp,armorHp:m.armorHp,shieldHp:m.shieldHp,bodyHp:m.bodyHp,speed:m.speed,bite:m.bite,slowUntil:m.slowUntil,stunUntil:m.stunUntil,enraged:m.enraged,vaulted:m.vaulted,headless:m.headless,dead:m.dead})),
-      mowers:mowers.map(m=>({...m})),combatLog:events.map(event=>({...event})),renderer:renderer.getState(),audio:{voices:voices.size,decoded:buffers.size,active:Boolean(audio)},layout:{...lawn,width,height}};
+      mowers:mowers.map(m=>({...m})),combatLog:events.map(event=>({...event})),renderer:renderer.getState(),fx:fx.getState(),audio:{voices:voices.size,decoded:buffers.size,active:Boolean(audio)},layout:{...lawn,width,height}};
   }
   function destroy(){
-    if(!alive)return;alive=false;if(frameId!==null)cancelAnimationFrame(frameId);frameId=null;observer?.disconnect();for(const remove of listeners)remove();listeners.length=0;renderer.destroy();mowerAbort?.abort();stopAudio();buffers.clear();
+    if(!alive)return;alive=false;if(frameId!==null)cancelAnimationFrame(frameId);frameId=null;observer?.disconnect();for(const remove of listeners)remove();listeners.length=0;renderer.destroy();fx.destroy();mowerAbort?.abort();stopAudio();buffers.clear();
     if(mowerArt)for(const image of mowerArt.images.values()){image.onload=image.onerror=null;try{image.src='';}catch{}}mowerArt=null;root.remove();
   }
   fresh();syncUI(true);resize();loadMower();frameId=requestAnimationFrame(frame);
-  return { start, reset, destroy, setSound, getState, pause, resume };
+  return { start, reset, destroy, setSound, setSpeed, getState, pause, resume };
 }

@@ -33,8 +33,19 @@ Costs below are **sun costs**, not the shop's coin purchase prices. Recharge is 
 | `pierce` | Cactus | 125 | 7.5 s | 300 | 20-damage single-target spike; can target balloons |
 | `walnut` | Wall-nut | 50 | 30 s | 4,000 | Blocks movement; does not shoot or hurt on contact |
 | `tallnut` | Tall-nut | 125 | 30 s | 8,000 | Blocks movement and vaulting; no contact damage |
+| `potato` | Potato Mine | 25 | 30 s | 300 | 15 s buried countdown plus original19-frame rise at18fps; armed contact blast1800 in the same row |
+| `cherrybomb` | Cherry Bomb | 150 | 50 s | 300 | 1 s source special counter, then1800 area damage |
+| `torchwood` | Torchwood | 175 | 7.5 s | 300 | Support plant: ordinary pea→40-damage fire pea; snow pea→ordinary pea |
 
-The old IDs `splash` and `pierce` are retained for compatibility; their names do not describe the original Kernel-pult/Cactus mechanics. Cactus is not a projectile that pierces a series of grounded zombies. Winter Melon currently reuses the original Melon-pult rig with a blue tint; it is not presented as the separately extracted original Winter Melon asset.
+The old IDs `splash` and `pierce` are retained for compatibility; their names do not describe the original Kernel-pult/Cactus mechanics. Cactus is not a projectile that pierces a series of grounded zombies. The October13 update uses the separately extracted original Winter Melon basket, stalk, and blue fruit, as well as original Potato Mine, Cherry Bomb, and Torchwood parts. See `garden-extra.json` for that artwork's pinned provenance.
+
+### Mines, bombs and Torchwood
+
+Pinned [Plant.cpp definitions and initialization](https://github.com/Patoke/re-plants-vs-zombies/blob/c4692036c5e11d227c8fb7c593b734dac96da028/Lawn/Plant.cpp#L28) correct common rounded recollections: Torchwood costs175sun; Potato Mine's buried counter is1500ticks; Cherry Bomb's special counter is100ticks. [UpdatePotato](https://github.com/Patoke/re-plants-vs-zombies/blob/c4692036c5e11d227c8fb7c593b734dac96da028/Lawn/Plant.cpp#L1143) waits for the original rise animation to finish after the buried counter. The extracted rise has19frames at18fps, giving an adapted armed time of about16.056seconds. An unarmed mine can be eaten and cannot explode.
+
+[DoSpecial](https://github.com/Patoke/re-plants-vs-zombies/blob/c4692036c5e11d227c8fb7c593b734dac96da028/Lawn/Plant.cpp#L4374) gives the mine a60px same-row blast and Cherry Bomb a115px blast permitting adjacent rows; the explosion routine inflicts1800damage. Browser targeting scales those source radii horizontally and uses the source row limits; it simplifies the original rectangle-distance geometry.
+
+[Torchwood conversion](https://github.com/Patoke/re-plants-vs-zombies/blob/c4692036c5e11d227c8fb7c593b734dac96da028/Lawn/Plant.cpp#L1378) converts normal peas to fire and snow peas to ordinary peas, once per distinct Torchwood. A second torch can ignite the thawed pea. Fire does40direct damage plus13same-row secondary splash; its reduced crowd pool is40 rather than the melon's560. A direct fire hit removes existing chill; secondary splash leaves its targets' cold intact. [Projectile.cpp](https://github.com/Patoke/re-plants-vs-zombies/blob/c4692036c5e11d227c8fb7c593b734dac96da028/Lawn/Projectile.cpp#L15).
 
 The original packet logic gives 30-second plants a **20-second initial recharge** and upgrade/50-second plants a **35-second initial recharge** outside Survival. Repeat recharge ends when the counter exceeds the threshold, introducing a possible 10 ms boundary difference. The shared catalog records nominal counter durations, with `initialRecharge` separately available. [SeedPacket::SetPacketType / Update](https://github.com/Patoke/re-plants-vs-zombies/blob/c4692036c5e11d227c8fb7c593b734dac96da028/Lawn/SeedPacket.cpp#L1105).
 
@@ -95,7 +106,15 @@ Sun tokens are **25 units**. Original normal starting sun is50; tutorial/challen
 
 Reference wave counters normally start at18s, then25–30.99s; later waves may accelerate after more than4s when remaining wave HP falls below a selected50–65% threshold, leaving2s. Flag waves add a7.5s warning sequence. The shared file supplies these reference counters, not a full campaign wave list. [GameConstants.h](https://github.com/Patoke/re-plants-vs-zombies/blob/c4692036c5e11d227c8fb7c593b734dac96da028/GameConstants.h), [Board::UpdateZombieSpawning](https://github.com/Patoke/re-plants-vs-zombies/blob/c4692036c5e11d227c8fb7c593b734dac96da028/Lawn/Board.cpp#L5558).
 
-Each row has one single-use mower as its last defense. The browser mower uses the connected original parts and original audio described in `garden-mower.json` and the asset provenance. Picker activation timing, normalized travel speed, and eligibility are application rules. A subsequent breach after that row's mower is spent can reach the protected person or home.
+Each row has one single-use mower as its last defense. The browser mower uses the connected original parts in `garden-mower.json`. Mower activation, sweeping, and mower kills are silent in the October13 browser update. Picker activation timing, normalized travel speed, and eligibility are application rules. A subsequent breach after that row's mower is spent can reach the protected person or home.
+
+### Browser level schedules and playback
+
+The default playable mode retains48 zombies in three authored waves: nine starting at30seconds, fifteen starting at155seconds, and twenty-four starting at295seconds. The first two waves introduce one ordinary walker per row before stronger equipment. The final wave arrives in groups of five (last group four),27seconds apart, so every row faces simultaneous pressure. These compositions are application choices; original unit HP, damage, firing cadence and source-derived movement averages are retained.
+
+The toolbar also offers Endless Survival. Wave targets are5,50,100,200,400,800 and continue doubling. A new wave begins only after the previous target has entirely spawned and all surviving zombies are defeated. Groups grow from5 to25; stronger mixtures add cones, buckets, newspapers, pole vaulters and football zombies. There are at most120 living zombies at once. Excess zombies remain in an implicit queue, so a full arena delays spawning without discarding any of the wave's target. This mode ends on a breach and has no victory condition or classroom-speaker history.
+
+Playback speed0.5ז8× scales elapsed simulation time. It does not multiply HP, damage, cadence, costs, or movement constants, and it does not draw extra combat randomness. Paused and hidden games do not catch up old wall time. Sun collection uses a bounded original synthesized ascending chime instead of the coin-pickup sample; Gatling emits a short four-pulse rattle accompanying its original four-pea burst. Both sounds obey mute, pause, reset and destruction.
 
 ## Explicit application extensions
 

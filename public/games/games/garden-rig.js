@@ -6,13 +6,14 @@
 const finite = (v, fallback = 0) => Number.isFinite(Number(v)) ? Number(v) : fallback;
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, finite(v, lo)));
 const TAU = Math.PI * 2, RAD = Math.PI / 180;
-const PLANT_RIG = {pea:'pea',twin:'twin',burst:'burst',frost:'frost',fire:'pea',pierce:'cactus',catapult:'catapult',splash:'splash',laser:'gatling',thorn:'cactus',walnut:'walnut',tallnut:'tallnut',chestnut:'walnut',gatling:'gatling',sunflower:'sunflower',cactus:'cactus',wintermelon:'catapult'};
+const PLANT_RIG = {pea:'pea',twin:'twin',burst:'burst',frost:'frost',fire:'twin',pierce:'cactus',catapult:'catapult',splash:'splash',laser:'gatling',thorn:'cactus',walnut:'walnut',tallnut:'tallnut',chestnut:'walnut',gatling:'gatling',sunflower:'sunflower',cactus:'cactus',wintermelon:'wintermelon',potato:'potato',potatomine:'potato',cherrybomb:'cherrybomb',cherry:'cherrybomb',torchwood:'torchwood'};
 
 export function createGardenRenderer({artwork = {}} = {}) {
-  let manifest = null, closed = false, loading = true, error = null;
+  let manifest = null, closed = false, loading = true, error = null, extraError = null, extraLoaded = false;
   const images = new Map(), failed = new Set(), ready = new Set(), required = new Map(), pending = new Set();
   const controller = typeof AbortController === 'function' ? new AbortController() : null;
   const manifestURL = artwork.gardenRig || 'assets/garden-rig/manifest.json';
+  const extraURL = artwork.gardenExtra || 'assets/garden-extra.json';
   const embedded = artwork.gardenRigImages || {};
   const base = typeof document !== 'undefined' ? document.baseURI : 'http://localhost/';
   let drawnPlants = 0, drawnZombies = 0;
@@ -42,7 +43,8 @@ export function createGardenRenderer({artwork = {}} = {}) {
   async function load() {
     try {
       if (typeof Image !== 'function') {loading = false; return;}
-      manifest = artwork.gardenRigManifest || await (await fetch(manifestURL, controller ? {signal:controller.signal} : {})).json();
+      const initial = artwork.gardenRigManifest || await (await fetch(manifestURL, controller ? {signal:controller.signal} : {})).json();
+      manifest = {...initial,assets:{...initial.assets},rigs:{...initial.rigs}};
       if (closed) return;
       if (manifest.version !== 1 || !manifest.assets || !manifest.rigs) throw new Error('Invalid Garden rig manifest');
       for (const [key,rig] of Object.entries(manifest.rigs)) {
@@ -55,6 +57,27 @@ export function createGardenRenderer({artwork = {}} = {}) {
       await Promise.all(Array.from({length:Math.min(10,queue.length)}, async () => {
         while (!closed && index < queue.length) await loadImage(queue[index++]);
       }));
+      if (closed) return;
+      // The optional extra pack never rewrites the original base manifest.
+      // Failure leaves all existing rigs usable and reports a separate error.
+      try {
+        const extra = artwork.gardenExtraManifest || await (await fetch(extraURL, controller ? {signal:controller.signal} : {})).json();
+        if (closed) return;
+        if(!artwork.gardenExtraManifest&&extra.assetPacks?.length){const packs=await Promise.all(extra.assetPacks.map(async file=>(await fetch(new URL(file,new URL(extraURL,base)),controller?{signal:controller.signal}:{})).json()));extra.assets=Object.assign({},extra.assets,...packs.map(pack=>pack.assets));}
+        if (extra.version !== 1 || !extra.assets || !extra.rigs) throw new Error('Invalid Garden extra manifest');
+        Object.assign(manifest.rigs,extra.rigs);
+        for(const [name,asset]of Object.entries(extra.assets)) if(!manifest.assets[name]) {
+          manifest.assets[name]={...asset,url:new URL(asset.url||name,new URL(extraURL,base)).href};
+        }
+        for(const [key,rig]of Object.entries(extra.rigs)) {
+          const set=new Set();
+          for(const tracks of Object.values(rig.clips)) for(const track of tracks) for(const f of track.frames) if(f[8]&&f[6]>=0&&f[7]>0)set.add(f[8]);
+          required.set(key,set);
+        }
+        const newParts=Object.keys(extra.assets).filter(name=>!images.has(name));let next=0;
+        await Promise.all(Array.from({length:Math.min(8,newParts.length)},async()=>{while(!closed&&next<newParts.length)await loadImage(newParts[next++]);}));
+        extraLoaded=true;
+      } catch(e) {if(!closed)extraError=String(e.message||e);}
     } catch (e) {if (!closed) error = String(e.message || e);}
     finally {loading = false;}
   }
@@ -151,27 +174,40 @@ export function createGardenRenderer({artwork = {}} = {}) {
     ctx.restore();
   }
   function drawPlant(ctx,{weapon='pea',time=0,simTime=time,hp=1,maxHp=1,recoil=0,seed=0,defender={}}={}) {
-    const key=PLANT_RIG[typeof weapon === 'string' ? weapon : weapon.id] || 'pea';
+    const weaponId=typeof weapon==='string'?weapon:weapon.id;
+    const key=PLANT_RIG[weaponId] || 'pea';
     if (!available(key)) return false;
     const rig=manifest.rigs[key],t=finite(simTime,finite(time)),ratio=clamp(hp/Math.max(1,finite(maxHp,1)),0,1);
     const stage=Number.isInteger(defender.damageStage)?clamp(defender.damageStage,0,4):ratio>.8?0:ratio>.6?1:ratio>.4?2:ratio>.2?3:4;
     const attack=clamp(recoil,0,.16),shooting=attack>0&&rig.clips.shoot;
-    const clip=shooting?'shoot':'idle';
+    let clip=shooting?'shoot':'idle';
+    const armDelay=finite(defender.armDelay,finite(rig.armDelay,15));
+    const riseDuration=Math.max(.001,finite(defender.riseDuration,finite(rig.riseDuration,19/18)));
+    const armingAge=defender.armingAge==null?clamp(defender.armProgress,0,1)*(armDelay+riseDuration):finite(defender.armingAge);
+    if(key==='potato') {
+      clip=defender.armed?'armed':armingAge>=armDelay?'rise':'unarmed';
+      if(defender.exploding)clip='mashed';
+    }
+    if(key==='cherrybomb'&&defender.exploding)return true;
     const frames=Math.max(...rig.clips[clip].map(track=>track.frames.length),1);
-    const frame=shooting?(1-clamp(attack/.12,0,1))*(frames-1):t*12+finite(seed)*1.137;
+    let frame=shooting?(1-clamp(attack/.12,0,1))*(frames-1):t*finite(rig.fps,12)+finite(seed)*1.137;
+    // Wallnut's original anim_face track makes a complete360° roll. A planted
+    // blocker holds the upright first frame, as does Tall-nut and Chestnut.
+    if(key==='walnut'||key==='tallnut')frame=0;
+    if(key==='potato'&&clip==='rise') {
+      frame=clamp((armingAge-armDelay)/riseDuration,0,1)*(frames-1);
+    }
+    if(key==='potato'&&(clip==='unarmed'||clip==='mashed'))frame=0;
+    if(key==='cherrybomb')frame=clamp(finite(defender.fuseAge)/Math.max(.001,finite(defender.fuseDuration,1)),0,1)*(frames-1);
     ctx.save();
-    if (weapon==='fire') ctx.filter='sepia(.34) saturate(1.45) hue-rotate(320deg)';
-    if (weapon==='laser') ctx.filter='hue-rotate(110deg) saturate(1.1)';
-    if (weapon==='wintermelon') ctx.filter='hue-rotate(115deg) saturate(.9)';
-    if (weapon==='chestnut') ctx.filter='sepia(.28) saturate(1.2)';
+    if (weaponId==='chestnut') ctx.filter='sepia(.28) saturate(1.2)';
     drawTracks(ctx,key,clip,frame,{stage});
     ctx.filter='none';
-    botanicalDamage(ctx,rig,stage,seed);
-    if(weapon==='chestnut') {
+    if(key!=='potato'&&key!=='cherrybomb')botanicalDamage(ctx,rig,stage,seed);
+    if(weaponId==='chestnut') {
       ctx.strokeStyle='#59401e';ctx.lineWidth=2.8;ctx.lineCap='round';
       for(let i=0;i<9;i++){const a=Math.PI+(i/8)*Math.PI;const x=Math.cos(a)*27,y=-35+Math.sin(a)*30;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+Math.cos(a)*7,y+Math.sin(a)*7);ctx.stroke();}
     }
-    if(weapon==='fire') {ctx.fillStyle='#ffb245';ctx.globalAlpha*=.7;ctx.beginPath();ctx.moveTo(-12,-61);ctx.lineTo(-9+Math.sin(t*10)*2,-75);ctx.lineTo(-5,-64);ctx.lineTo(-2,-71);ctx.lineTo(1,-58);ctx.closePath();ctx.fill();}
     ctx.restore();
     drawnPlants++;
     return true;
@@ -204,5 +240,5 @@ export function createGardenRenderer({artwork = {}} = {}) {
     for(const finish of pending)finish();
     images.clear();ready.clear();failed.clear();required.clear();manifest=null;
   }
-  return {drawPlant,drawZombie,destroy,getState(){return {ready:!closed&&!!manifest&&!loading&&failed.size===0,loading:!closed&&loading,closed,parts:ready.size,totalParts:manifest?Object.keys(manifest.assets).length:0,failed:[...failed],error,rigs:manifest?Object.keys(manifest.rigs).filter(available):[],drawnPlants,drawnZombies};}};
+  return {drawPlant,drawZombie,destroy,getState(){return {ready:!closed&&!!manifest&&!loading&&failed.size===0,loading:!closed&&loading,closed,parts:ready.size,totalParts:manifest?Object.keys(manifest.assets).length:0,failed:[...failed],error,extraError,extraLoaded,rigs:manifest?Object.keys(manifest.rigs).filter(available):[],drawnPlants,drawnZombies};}};
 }

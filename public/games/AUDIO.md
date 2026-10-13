@@ -10,7 +10,7 @@ Plants vs. Zombies uses the original short Plants vs. Zombies sound effects requ
 | Zombie growls | groan.ogg, groan2.ogg, groan3.ogg, groan4.ogg, lowgroan.ogg | 1.022–2.101s |
 | Zombie chewing | chomp.ogg, chomp2.ogg | 0.993s, 1.165s |
 | Plant recruited | plant.ogg | 0.755s |
-| Sun, star or loot pickup | points.ogg | 1.132s |
+| Star or loot pickup | points.ogg | 1.132s |
 | Zombie defeated | zombie_falling_1.ogg | 0.644s |
 
 All14 files were checked against the source Git blob hashes and successfully decoded by the browser's AudioContext. Total asset size is252,136bytes. The offline HTML embeds the same Ogg samples. Sound remains an optional browser preference, controlled by ♪ in the bottom Controls drawer.
@@ -21,4 +21,6 @@ The opening uses the original short readysetplant.ogg cue (5.255 seconds). Selec
 
 ## Lawn mower rescue
 
-The single-use rescue uses the original lawnmower.ogg sound (56,925 bytes), pinned to source commit 8ba94e95cfe7d0de5682f8258d3b932dbdac885c and verified against Git blob SHA c03440559796168d8b4242be09fde35ab13b5aa7. It plays on mower activation when sound is enabled. See [connected mower provenance](dist/assets/GARDEN-MOWER.md).
+The single-use rescue is silent. The unused lawnmower.ogg recording (56,925 bytes) remains an archived asset, pinned to source commit 8ba94e95cfe7d0de5682f8258d3b932dbdac885c and verified against Git blob SHA c03440559796168d8b4242be09fde35ab13b5aa7. See [connected mower provenance](dist/assets/GARDEN-MOWER.md).
+
+October13 update: suns use a quiet ascending synthesized chime. Gatling attacks play one short pea-shot rattle for each visible pea in the four-shot burst, with bounded voices. Every lawnmower sound path is disabled, including fallback audio; the old lawnmower file is retained only as an unused source asset. Mute, reset, game changes and disposal stop the chimes and all active voices.
