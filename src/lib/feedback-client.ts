@@ -1,3 +1,4 @@
+import {renderHomeworkTracker} from './homework-tracker.mjs';
 import {feedbackLabelParts} from './feedback-formatting.mjs';
 // Show recorded lessons only until Kai confirms aligned course curricula.
 import {validateFeedback,weekWindows,sessionsInWindow,formatDate,feedbackText,classSectionText,shanghaiDate,sessionCompleteness,addDays} from './feedback.mjs';
@@ -36,6 +37,7 @@ function windowChoices(){return weekWindows(data);}
 function render(){
   const today=shanghaiDate();
   lastRenderedDate=today;
+  renderHomeworkTracker(document.querySelector('#fb-tracker'),data,today,selectedClass,language);
   const text=words[language], windows=weekWindows(data,today);
   if(selectedDate){const datedWindow=windows.find(w=>selectedDate>=w.start&&selectedDate<=w.end);if(datedWindow)selectedWeek=datedWindow.id;}
   if(selectedClass!=='all'&&!data.classes.some(g=>g.id===selectedClass))selectedClass='all';
