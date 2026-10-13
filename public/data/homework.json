@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-13T08:04:03.436664+00:00",
+  "updatedAt": "2026-10-13T10:15:22.454243+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1453,7 +1453,16 @@
           "date": "2026-10-13",
           "time": "15:30–17:30",
           "classContent": [],
-          "homework": null,
+          "homework": {
+            "title": "Patrick — additional impromptu video practice",
+            "steps": [
+              "Record video practice: What would you do if assigned the task or project of planting 10,000 trees?",
+              "What would you do if you had the power of electricity and could shoot electricity out of your hands?",
+              "Give an “I Have a Dream” speech: if any dreams you mentioned would come true, what would you dream of or wish could become reality?"
+            ],
+            "prepareFor": "Practise expressing ideas clearly.",
+            "note": "Assigned specifically to Patrick. No video length, deadline or submission method was supplied; no new classwide homework has been recorded."
+          },
           "students": [
             {
               "name": "Alyssa",
@@ -1580,6 +1589,31 @@
             {
               "name": "Sean",
               "feedbackUrl": "/fb/?class=tue-later&date=2026-09-22&student=sean"
+            }
+          ]
+        },
+        {
+          "id": "tue-later-2026-10-13",
+          "date": "2026-10-13",
+          "time": "17:30–19:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Lyon",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-10-13&student=lyon"
+            },
+            {
+              "name": "Nelson",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-10-13&student=nelson"
+            },
+            {
+              "name": "Jayden",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-10-13&student=jayden"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-10-13&student=sean"
             }
           ]
         }
