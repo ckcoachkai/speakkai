@@ -12,7 +12,7 @@ async function visit(dir) {
     else if (entry.name.endsWith('.html')) {
       const html = await readFile(file, 'utf8');
       if (!html.includes('</head>') || html.includes('editorial-theme.css')) continue;
-      await writeFile(file, html.replace('</head>', '<link rel="stylesheet" href="/editorial-theme.css?v=20261014"></head>'));
+      await writeFile(file, html.replaceAll('href="/favicon.svg"', 'href="/favicon.svg?v=signature20261014"').replace('</head>', '<link rel="stylesheet" href="/editorial-theme.css?v=20261014"></head>'));
       themed++;
     }
   }
