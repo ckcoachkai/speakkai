@@ -8,7 +8,12 @@ import { Script } from 'node:vm';
 const base = fileURLToPath(new URL(process.argv.includes('--dist') ? '../dist/maze/' : '../public/maze/', import.meta.url));
 const hash = data => createHash('sha256').update(data).digest('hex');
 const manifest = JSON.parse(await readFile(resolve(base, 'manifest.json'), 'utf8'));
-const html = await readFile(resolve(base, 'index.html'), 'utf8');
+const publishedHtml = await readFile(resolve(base, 'index.html'), 'utf8');
+// The site-wide stylesheet is the only permitted packaging change. Continue
+// checking every byte of the approved game, scripts, and media against its manifest.
+const themeLink = '<link rel="stylesheet" href="/editorial-theme.css?v=20261014">';
+if (process.argv.includes('--dist')) assert.equal(publishedHtml.split(themeLink).length, 2, 'Expected exactly one shared theme link');
+const html = publishedHtml.replace(themeLink, '');
 assert.equal(hash(html), manifest.pageSha256);
 assert.equal(manifest.mouseOutfits, 30);
 assert.equal(manifest.catOutfits, 6);
