@@ -9,7 +9,10 @@ const context = vm.createContext({});
 vm.runInContext(source, context);
 const { Game } = context.MouseMazeEngine;
 const names = Array.from({ length: 8 }, (_, i) => `Mouse ${i + 1}`);
-const game = new Game({ names, seed: 6304, liceEnabled: false, floorBombsEnabled: false });
+assert.equal(new Game({ names, seed: 6304 }).bombInterval, 60, 'The gentler default carried fuse is 60 seconds');
+const game = new Game({ names, seed: 6304, liceEnabled: false, floorBombsEnabled: false, bombInterval: 30 });
+// Isolate carried-fuse ownership from the independently earlier cat arrival.
+game._updateCat = () => {};
 assert.equal(game.bombInterval, 30);
 assert.equal(game.mice.filter(m => m.hasBomb).length, 1);
 assert(game.mice.some(m => m.hasBomb && m.id === game.bombCarrierId));

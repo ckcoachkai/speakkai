@@ -1,7 +1,7 @@
 {
-  "version": 10,
-  "sourceSha256": "04b0d1408f5fa91c8a649334945968dfcbda44f71c10a4ce4c71eb06645e5a5a",
-  "pageSha256": "2969e4290a616b26e5067cad8435640a4a09240b6a9113d7c4e4be9895e05b56",
+  "version": 11,
+  "sourceSha256": "f6ddbf5e53a003c8ca91fbbd206cb4dd30528c336b1f8b2f644e5cf115ab94f6",
+  "pageSha256": "bd139273db372084e6e0d289c410765f75558f7cb69bfe78278886ffac1a9871",
   "mouseOutfits": 30,
   "catOutfits": 6,
   "files": [
@@ -143,5 +143,6 @@
       "bytes": 5863304,
       "sha256": "7a5e617bd89d4c7355b14ea2ed01d140006233813dea512e2965276b35a4a06a"
     }
-  ]
+  ],
+  "logoCatalog": "assets/maze-logos/manifest.json"
 }

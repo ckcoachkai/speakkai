@@ -1,7 +1,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-// CAT owns its presentation. Never inject the SpeakKai theme into its output.
-const protectedRoute = route => /(^|\/)(cat[^/]*|logopitch|logo-pitch)(\/|$)/i.test(route);
+// CAT and the interactive games own their presentation. Keep their colors intact.
+const protectedRoute = route => /(^|\/)(cat[^/]*|logopitch|logo-pitch)(\/|$)/i.test(route) || /^(games|maze|wardogs)(\/|$)/i.test(route);
 let themed = 0, protectedCount = 0;
 async function visit(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -18,4 +18,5 @@ async function visit(dir) {
   }
 }
 await visit('dist');
-console.log(`Editorial theme: ${themed} pages; ${protectedCount} CAT paths excluded.`);
+console.log(`Editorial theme: ${themed} pages; ${protectedCount} CAT/game paths excluded.`);
+

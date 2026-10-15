@@ -11,7 +11,7 @@ Published at https://speakkai.com/games/ with five full-screen name pickers and 
 
 The entire viewport is the arena. Reveal edge drawers: games above, names right, speaking order left, controls below. Click a tab to pin it; close with × or Escape. Space starts a round; F toggles browser fullscreen. Sound is optional and initially muted.
 
-Edit up to60 names. Give everyone a turn removes picked names; Undo restores the last speaker. The popup dismisses and resets the game after3.2seconds; Garden uses5.6seconds to let its outro cue finish. Names and order are saved only in this browser.
+Edit up to60 names. Every result automatically removes the chosen player from all name pickers, including a defeated garden student. Names shows only remaining players and its count falls each round. Old repeat-enabled preferences are overridden. Undo restores the last speaker; Reset Order restores the class. The popup dismisses and resets the game after3.2seconds; Garden uses5.6seconds to let its outro cue finish. Names and order are saved only in this browser.
 
 Wheel, maze and bear reveal a uniform crypto-random speaker. Garden and race use symmetric starting specifications, shuffled assignments and actual simulation results. Garden rounds progress through ordinary zombie waves, with8%stronger bites and gentle increases in wave pressure; there is no timed giant-zombie wipe or selection deadline. Race rounds finish around10–12seconds. Greater than10 garden players scroll vertically; narrow screens scroll the620px lawn horizontally.
 

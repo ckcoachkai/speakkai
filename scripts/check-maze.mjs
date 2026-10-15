@@ -9,10 +9,9 @@ const base = fileURLToPath(new URL(process.argv.includes('--dist') ? '../dist/ma
 const hash = data => createHash('sha256').update(data).digest('hex');
 const manifest = JSON.parse(await readFile(resolve(base, 'manifest.json'), 'utf8'));
 const publishedHtml = await readFile(resolve(base, 'index.html'), 'utf8');
-// The site-wide stylesheet is the only permitted packaging change. Continue
-// checking every byte of the approved game, scripts, and media against its manifest.
+// Keep the game's own palette intact while checking its source and media.
 const themeLink = '<link rel="stylesheet" href="/editorial-theme.css?v=20261014">';
-if (process.argv.includes('--dist')) assert.equal(publishedHtml.split(themeLink).length, 2, 'Expected exactly one shared theme link');
+assert(!publishedHtml.includes(themeLink), 'The site editorial theme must not override the game palette');
 const html = publishedHtml.replace(themeLink, '');
 assert.equal(hash(html), manifest.pageSha256);
 assert.equal(manifest.mouseOutfits, 30);
@@ -49,3 +48,4 @@ const restored = html.replace(images[0], `window.MOUSE_MAZE_ASSETS=${JSON.string
 assert.equal(hash(restored), manifest.sourceSha256, 'Game logic and presentation must match the approved standalone version');
 for (const script of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) new Script(script[1]);
 console.log('Maze verified: exact source parity, 30 mice, 6 cats, 22 images, song, and canonical route.');
+

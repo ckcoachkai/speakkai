@@ -54,42 +54,44 @@ defaultMouse.dragging = true;
 const safeDefaultCell = defaults._floorCells.at(-1);
 assert(safeDefaultCell, 'Default fixture has a safe floor cell');
 const safeDefaultPoint = { x: safeDefaultCell.x + 0.5, y: safeDefaultCell.y + 0.5 };
-defaults.update(5);
-const spawnAtFive = eventsOf(defaults, 'floor-bomb-spawned');
-assert.equal(defaults.time, 5);
-assert.equal(spawnAtFive.length, 1, 'A floor bomb spawns at five seconds');
-assert.equal(spawnAtFive[0].spawnedAt, 5);
-assert.equal(spawnAtFive[0].explodeAt, 15, 'Floor bomb fuse is ten seconds');
+defaults.update(15);
+const spawnAtFifteen = eventsOf(defaults, 'floor-bomb-spawned');
+assert.equal(defaults.time, 15);
+assert.equal(spawnAtFifteen.length, 1, 'A floor bomb spawns at fifteen seconds');
+assert.equal(spawnAtFifteen[0].spawnedAt, 15);
+assert.equal(spawnAtFifteen[0].explodeAt, 30, 'Floor bomb fuse is fifteen seconds');
 for (const bomb of defaults.floorBombs) { bomb.x = safeDefaultPoint.x; bomb.y = safeDefaultPoint.y; }
-defaults.update(5);
-assert.equal(eventsOf(defaults, 'floor-bomb-spawned').length, 1, 'A second bomb spawns at ten seconds');
+defaults.update(14);
+assert.equal(eventsOf(defaults, 'floor-bomb-spawned').length, 0, 'No second bomb arrives before the fifteen-second cadence');
 for (const bomb of defaults.floorBombs) { bomb.x = safeDefaultPoint.x; bomb.y = safeDefaultPoint.y; }
-defaults.update(5);
-const default15Events = defaults.drainEvents();
-assert(default15Events.some(event => event.type === 'floor-bomb-exploded'), 'The first floor bomb detonates at fifteen seconds');
+defaults.update(1);
+const default30Events = defaults.drainEvents();
+assert(default30Events.some(event => event.type === 'floor-bomb-spawned'), 'The second floor bomb arrives at thirty seconds');
+assert(default30Events.some(event => event.type === 'floor-bomb-exploded'), 'The first floor bomb detonates at thirty seconds');
+assert(defaults.floorBombs.length <= 2, 'At most two floor bombs can remain active');
 
 // Fuse ticks are emitted once at exactly 3, 2, and 1 seconds remaining.
 const ticksGame = makeGame(1, { bombInterval: 120 });
 const tickPoint = holdMice(ticksGame);
-ticksGame.update(5);
+ticksGame.update(15);
 const spawnedTickBomb = ticksGame.floorBombs[0];
 assert(spawnedTickBomb, 'Tick fixture receives a floor bomb');
 spawnedTickBomb.x = tickPoint.x;
 spawnedTickBomb.y = tickPoint.y;
 ticksGame.drainEvents();
-ticksGame.update(7);
-assert.equal(ticksGame.time, 12);
+ticksGame.update(12);
+assert.equal(ticksGame.time, 27);
 assert.deepEqual(Array.from(eventsOf(ticksGame, 'floor-bomb-tick'), event => event.secondsLeft), [3]);
 ticksGame.update(1);
 assert.deepEqual(Array.from(eventsOf(ticksGame, 'floor-bomb-tick'), event => event.secondsLeft), [2]);
 ticksGame.update(1);
 assert.deepEqual(Array.from(eventsOf(ticksGame, 'floor-bomb-tick'), event => event.secondsLeft), [1]);
-assert.equal(ticksGame.time, 14);
+assert.equal(ticksGame.time, 29);
 
 // Explicit pause and the speaker hold must freeze both simulation time and
 // floor-bomb state. Continue is the only release from a selection hold.
 const pauseGame = makeGame(2, { bombInterval: 120 });
-pauseGame.update(5);
+pauseGame.update(15);
 pauseGame.drainEvents();
 pauseGame.pause();
 const pausedAt = pauseGame.time;
@@ -98,8 +100,8 @@ pauseGame.update(20);
 assert.equal(pauseGame.time, pausedAt);
 assert.equal(pauseGame.floorBombs.length, pausedBombCount);
 pauseGame.resume();
-pauseGame.update(7);
-assert.equal(pauseGame.time, 12);
+pauseGame.update(12);
+assert.equal(pauseGame.time, 27);
 assert.equal(eventsOf(pauseGame, 'floor-bomb-tick').length, 1);
 
 // A blast can hit several mice but presents one speaker at a time. The clock
@@ -148,6 +150,7 @@ assert.equal(catGame.cat._route.length, 0);
 // bombs are disabled for an isolated fixture. Continue advances the deadline
 // once and does not reset it for the new carrier.
 const carried = makeGame(2, { floorBombsEnabled: false, bombInterval: 30 });
+carried._updateCat = () => {}; // Independently earlier cat is covered by the dedicated cat fixture.
 for (const mouse of carried.mice) mouse.dragging = true;
 carried.update(30);
 assert.equal(carried.status, 'awaiting');
@@ -190,4 +193,4 @@ for (const marker of ['floor-bomb-spawned', 'floor-bomb-tick', 'floor-bomb-explo
   assert.match(html, new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), `v10 UI/event marker: ${marker}`);
 }
 
-console.log('Maze v10 packaged checks pass: default 5s floor-bomb spawn/10s fuse, exact 3/2/1 ticks, pause and queued speaker holds, cat reset, retained 30s carrier fuse, crawler atlas frames, and 3.4s impact freeze contract.');
+console.log('Maze v10 packaged checks pass: sparse 15s floor-bomb spawn/15s fuse, exact 3/2/1 ticks, pause and queued speaker holds, cat reset, configurable 30s carrier fuse, crawler atlas frames, and 3.4s impact freeze contract.');

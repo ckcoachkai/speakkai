@@ -302,7 +302,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
             <div class="hud-stat"><span class="hud-label">ELAPSED</span><strong id="elapsedValue">00:00</strong></div>
             <div class="hud-stat danger"><span class="hud-label">FUSE</span><strong id="boomValue">30s</strong></div>
             <div class="hud-stat bomb-carrier"><span class="hud-label">BOMB</span><strong id="bombCarrierValue">—</strong></div>
-            <div class="hud-stat"><span class="hud-label">CAT</span><strong id="catValue">01:00</strong></div>
+            <div class="hud-stat"><span class="hud-label">CAT</span><strong id="catValue">00:40</strong></div>
             <div class="hud-stat turbo" title="First cheese boost; later pickups add progressively less speed"><span class="hud-label">CHEESE +</span><strong id="turboValue">+1%</strong></div>
             <div class="hud-stat lice"><span class="hud-label">LICE</span><strong id="liceValue">0</strong></div>
           </div>
@@ -311,7 +311,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
             <button class="camera-button" id="followBtn" type="button">FOLLOW</button>
             <label class="zoom-control" for="zoomInput"><span>ZOOM</span><input id="zoomInput" type="range" min="1" max="8" step=".1" value="1"><output id="zoomValue">×1.0</output></label>
           </div>
-          <canvas id="mazeCanvas" aria-label="Animated mouse maze. Names are represented by mice trying to reach the exit. Hold a mouse to move it; drag empty floor to pan when zoomed." title="Hold a mouse to move · drag empty floor to pan" tabindex="0"></canvas>
+          <canvas id="mazeCanvas" aria-label="Animated mouse maze. Left and right arrows follow living mice. Drag a mouse to move it; drag empty floor to pan when zoomed. Scroll to zoom." title="← → follow mice · drag a mouse to move · drag floor to pan · scroll to zoom" tabindex="0"></canvas>
           <div class="selection-callout" id="selectionCallout" role="dialog" aria-labelledby="calloutName" aria-describedby="calloutReason speakerNote" hidden>
             <span class="callout-kicker" id="calloutKicker">NAME PICKED</span>
             <strong id="calloutName">—</strong>
@@ -336,7 +336,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
           <button class="button button-primary" id="startBtn" type="button"><span class="button-glyph" aria-hidden="true">▶</span><span id="startBtnText">START RUN</span></button>
           <button class="button button-ghost" id="pauseBtn" type="button" disabled><span class="button-glyph" aria-hidden="true">Ⅱ</span><span id="pauseBtnText">PAUSE</span></button>
           <button class="button button-ghost" id="newMazeBtn" type="button"><span class="button-glyph" aria-hidden="true">↻</span>NEW MAZE</button>
-          <p class="control-hint"><span class="camera-hint">Click to follow · hold to move · drag floor to pan · Scroll to zoom</span> <kbd>SPACE</kbd> start / pause / continue <kbd>F</kbd> fullscreen <kbd>M</kbd> mute</p>
+          <p class="control-hint"><span class="camera-hint">← → follow mice · drag a mouse to move · drag floor to pan · scroll to zoom</span> <kbd>SPACE</kbd> start / pause / continue <kbd>F</kbd> fullscreen <kbd>M</kbd> mute</p>
         </div>
 
         <div class="mobile-results-anchor" id="mobileResultsAnchor"></div>
@@ -359,7 +359,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
           <div class="setting-row" id="vibrationRow"><div><strong>VIBRATION</strong><small>Haptic feedback</small></div><label class="toggle"><input id="vibrationToggle" type="checkbox"><span></span><b class="sr-only">Enable vibration</b></label></div>
           <div class="setting-row sound-row"><div><strong>SOUNDTRACK</strong><small id="trackLabel">Built-in maze score</small></div><label class="volume-wrap" aria-label="Sound volume"><span>VOL</span><input id="volumeInput" type="range" min="0" max="1" value="0.25" step="0.01"></label></div>
           <div class="setting-row boost-row"><div><strong>CHEESE BOOST</strong><small>First bite · smaller gains after</small></div><label class="boost-wrap"><input id="cheeseBoostInput" aria-label="First cheese speed boost, percent; later bites add less" type="range" min="1" max="100" value="1" step="1"><output id="cheeseBoostValue">+1%</output></label></div>
-          <div class="setting-row bomb-row"><div><strong>CARRIED FUSE</strong><small id="bombIntervalNote">Next fuse · 30 seconds</small></div><label class="boost-wrap" aria-label="Seconds until the next carried bomb explosion"><input id="bombIntervalInput" type="range" min="10" max="120" value="30" step="5"><output id="bombIntervalValue">30s</output></label></div>
+          <div class="setting-row bomb-row"><div><strong>CARRIED FUSE</strong><small id="bombIntervalNote">Next fuse · 60 seconds</small></div><label class="boost-wrap" aria-label="Seconds until the next carried bomb explosion"><input id="bombIntervalInput" type="range" min="10" max="120" value="60" step="5"><output id="bombIntervalValue">60s</output></label></div>
           <p class="suno-note lice-note" id="liceNote">LICE PRESSURE · AFTER 00:10 · −0.01% SPEED EACH</p>
           <div class="setting-row"><div><strong>CAT OUTFIT</strong><small>Choose the cat's look</small></div><label class="select-wrap"><select id="catStyleInput" aria-label="Cat outfit"><option value="random">RANDOM</option><option value="0">ADMIRAL</option><option value="1">CHEF</option><option value="2">DETECTIVE</option><option value="3">PIRATE</option><option value="4">ROYAL</option><option value="5">RACER</option></select></label></div>
           <div class="setting-row"><div><strong>CHATTER</strong><small>Speech bubbles from mice and cat</small></div><label class="toggle"><input id="chatterToggle" type="checkbox" checked><span></span><b class="sr-only">Enable character chatter</b></label></div>
@@ -371,7 +371,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
 
         <section class="panel rules-panel">
           <div class="rules-top"><strong class="rules-title">RULES</strong><span class="timer-glyph" aria-hidden="true">◷</span></div>
-          <p>Pass the bomb before its fuse runs out. The carrier gets <strong>+25% speed</strong>; passing keeps the countdown. Floor bombs appear every <strong>5 seconds</strong> and explode <strong>10 seconds</strong> later. Nearby mice are chosen; a blasted cat returns to the entrance. Cat at <strong>01:00</strong>, stalking then sprinting. Cheese gains taper toward <strong>3×</strong>. Bugs crunch underfoot or cling on and feed. Faster mice pass their bugs to slower mice. <strong>Continue</strong> after each speaker.</p>
+          <p>Pass the bomb before its fuse runs out. The carrier gets <strong>+25% speed</strong>; passing keeps the countdown. Floor bombs appear every <strong>15 seconds</strong> and explode <strong>15 seconds</strong> later. Nearby mice are chosen; a blasted cat returns to the entrance. Cat at <strong>00:40</strong>, stalking then sprinting. Cheese gains taper toward <strong>3×</strong>. Bugs crunch underfoot or cling on and feed. Faster mice pass their bugs to slower mice. <strong>Continue</strong> after each speaker.</p>
         </section>
 
         <section class="panel export-panel">
@@ -562,6 +562,7 @@ const INSECT_ROAMING_TARGET = 240;
 const INSECT_MAX_TOTAL = 320;
 const INSECT_MAX_ATTACHED = 12;
 const INSECT_ATTACH_CHANCE = 0.18;
+const CAT_START_TIME = 40;
 const MOUSE_STUCK_LIMIT = 2.4;
 const MOUSE_LOOP_WINDOW = 14;
 const MOUSE_LOOP_UNIQUE_LIMIT = 4;
@@ -571,14 +572,14 @@ const BUG_TRANSFER_COOLDOWN = 1.1;
 // Floor bombs are independent hazards. The carried bomb continues to use the
 // speaker-friendly adjustable fuse below; these bombs create a second,
 // spatially readable source of suspense.
-const FLOOR_BOMB_SPAWN_INTERVAL = 5;
-const FLOOR_BOMB_FUSE = 10;
-const FLOOR_BOMB_MAX_ACTIVE = 4;
+const FLOOR_BOMB_SPAWN_INTERVAL = 15;
+const FLOOR_BOMB_FUSE = 15;
+const FLOOR_BOMB_MAX_ACTIVE = 2;
 const FLOOR_BOMB_BLAST_RADIUS = 2.4;
-const FLOOR_BOMB_NEAR_CHANCE = 0.62;
+const FLOOR_BOMB_NEAR_CHANCE = 0.35;
 const CAT_BOMB_SPEED = 1.3;
 
-function normalizeBombInterval(value, fallback = 30) {
+function normalizeBombInterval(value, fallback = 60) {
   const numeric = Number(value);
   const source = Number.isFinite(numeric) ? numeric : fallback;
   const stepped = Math.round(source / BOMB_INTERVAL_STEP) * BOMB_INTERVAL_STEP;
@@ -621,10 +622,10 @@ class Game {
     // The bomb fuse is a speaker-friendly, adjustable cadence. `nextExplosion`
     // is the active fuse deadline; changing `bombInterval` never rewrites a
     // fuse that is already counting down.
-    this.bombInterval = normalizeBombInterval(options.bombInterval, 30);
+    this.bombInterval = normalizeBombInterval(options.bombInterval, 60);
     this.nextExplosion = this.bombInterval;
-    // Independent floor bombs begin appearing at 5s and are armed for a
-    // separate ten-second fuse. `floorBombs` is the live public list used by
+    // Sparse floor bombs begin at 15s and have a separate 15-second fuse.
+    // `floorBombs` is the live public list used by
     // the renderer; detonated bombs are removed after their event is emitted.
     this.floorBombsEnabled = options.floorBombsEnabled !== false;
     this.floorBombs = [];
@@ -798,6 +799,7 @@ class Game {
     // wall corner. A two-cell radius is the normal drag affordance; the full
     // fallback handles a pointer just outside the visible maze edge.
     for (const cell of this._floorCells) {
+      if (!this._exitDistances.has(key(cell.x, cell.y))) continue;
       const position = center(cell);
       const distance = Math.hypot(position.x - px, position.y - py);
       if (distance < bestDistance
@@ -2082,10 +2084,10 @@ class Game {
       this._setMouseDamageStage(mouse);
       return false;
     }
-    // A single bug takes roughly two minutes to consume a mouse; a full
-    // cluster reaches the terminal state in about one minute. The bounded
+    // A single bug takes two and a half minutes to consume a mouse; a full
+    // cluster takes at least ninety seconds. The bounded
     // curve keeps early visual damage readable instead of spiking on contact.
-    const duration = clamp(126 - Math.max(0, damageCount - 1) * 6, 60, 126);
+    const duration = clamp(150 - Math.max(0, damageCount - 1) * 6, 90, 150);
     const previousStage = Number(mouse.damageStage) || 0;
     mouse.insectDamage = clamp((Number(mouse.insectDamage) || 0) + dt / duration, 0, 1);
     const stage = this._setMouseDamageStage(mouse);
@@ -2577,7 +2579,7 @@ class Game {
     };
     this._effectiveSpeed(this.cat);
     this._catEntered = true;
-    this._emit({ type: 'cat-enter', x: this.cat.x, y: this.cat.y, time: 60 });
+    this._emit({ type: 'cat-enter', x: this.cat.x, y: this.cat.y, time: this.time });
   }
 
   _updateCat(dt) {
@@ -2754,7 +2756,8 @@ class Game {
       this._explodeOne();
       if (this.status === 'awaiting') return;
     }
-    if (!this._catEntered && this.time + 1e-8 >= 60) {
+    if (!this._catEntered && this.time + 1e-8 >= CAT_START_TIME) {
+      if (this.time < CAT_START_TIME) this.time = CAT_START_TIME;
       this._spawnCat();
     }
     // An empty roster has no selection to await. Preserve the old immediate
@@ -2777,7 +2780,7 @@ class Game {
         || this.time + 1e-8 >= this._nextFloorBombSpawn
         || this.time + 1e-8 >= nextFloorBombExplosion
         || this.time + 1e-8 >= nextFloorBombTick
-        || (!this._catEntered && this.time + 1e-8 >= 60)) {
+        || (!this._catEntered && this.time + 1e-8 >= CAT_START_TIME)) {
         this._checkTimedEvents();
         if (this.status !== 'running') break;
         continue;
@@ -2788,7 +2791,7 @@ class Game {
       const untilFloorSpawn = this._nextFloorBombSpawn - this.time;
       const untilFloorExplosion = nextFloorBombExplosion - this.time;
       const untilFloorTick = nextFloorBombTick - this.time;
-      const untilCat = !this._catEntered ? 60 - this.time : Infinity;
+      const untilCat = !this._catEntered ? CAT_START_TIME - this.time : Infinity;
       const untilFixed = Math.min(
         untilExplosion > 1e-9 ? untilExplosion : Infinity,
         untilFloorSpawn > 1e-9 ? untilFloorSpawn : Infinity,
@@ -2881,7 +2884,7 @@ class Game {
       bombInterval: this.bombInterval,
       bombCarrierId: this.bombCarrierId,
       bombCarrierName: this.mice.find((mouse) => mouse.id === this.bombCarrierId)?.name || null,
-      catInSeconds: Math.max(0, 60 - this.time),
+      catInSeconds: Math.max(0, CAT_START_TIME - this.time),
       time: this.time,
     };
   }
@@ -3125,6 +3128,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   function expressionState(actor, game, kind) {
     const state = situation(actor, game, kind);
     if (kind !== 'mouse') return state;
+    if (actor.bloodReaction) return actor.bloodReaction;
     const time = Number(game.time) || 0;
     const fuse = Number(game.nextExplosion) - time;
     if (state === 'panic') return 'panic';
@@ -3176,7 +3180,23 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     ctx.lineWidth = clamp(w * .012, .012, .022);
     ctx.fillStyle = state === 'poop' ? 'rgba(125,156,88,.95)' : '#8f3940';
     ctx.lineWidth = clamp(w * .011, .011, .020);
-    if (state === 'panic' || state === 'alarm') {
+    if (state === 'disgust' || state === 'shock' || state === 'horror') {
+      const horror = state === 'horror', disgust = state === 'disgust';
+      const eyeY = cheekY - h * .04, eyeSize = w * (horror ? .034 : .028);
+      ctx.globalAlpha = .97;
+      ctx.fillStyle = disgust ? '#d4df96' : '#fff7dc';
+      for (const side of [-1, 1]) {
+        const eyeX = cheekX + side * w * .035;
+        ctx.beginPath(); ctx.ellipse(eyeX, eyeY, eyeSize, eyeSize * (disgust ? .55 : 1.2), 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#201c25'; ctx.beginPath(); ctx.arc(eyeX + w * .005, eyeY, eyeSize * (horror ? .22 : .36), 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = disgust ? '#d4df96' : '#fff7dc';
+      }
+      ctx.strokeStyle = '#43262d'; ctx.beginPath();
+      ctx.moveTo(cheekX - w * .08, eyeY - h * (disgust ? .025 : .07)); ctx.lineTo(cheekX - w * .01, eyeY - h * .045);
+      ctx.moveTo(cheekX + w * .01, eyeY - h * .045); ctx.lineTo(cheekX + w * .08, eyeY - h * (disgust ? .025 : .07)); ctx.stroke();
+      ctx.fillStyle = disgust ? '#698b45' : '#793343'; ctx.beginPath(); ctx.ellipse(mouthX, mouthY + h * .015, mouthW * (horror ? 1.05 : .8), mouthH * (disgust ? .45 : 1.3), 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      if (disgust) { ctx.strokeStyle = '#7eb450'; ctx.lineWidth *= 1.8; ctx.beginPath(); ctx.moveTo(mouthX, mouthY + h * .035); ctx.quadraticCurveTo(mouthX + w * .045, mouthY + h * .10, mouthX + w * .01, mouthY + h * .14); ctx.stroke(); }
+    } else if (state === 'panic' || state === 'alarm') {
       ctx.beginPath(); ctx.ellipse(mouthX, mouthY, mouthW, mouthH * 1.08, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       ctx.fillStyle = '#fff0d8'; ctx.fillRect(mouthX - mouthW * .55, mouthY - mouthH * .7, mouthW * 1.1, mouthH * .22);
     } else if (state === 'cheese' || state === 'exit' || state === 'carrier' || state === 'crunch') {
@@ -3494,7 +3514,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       drawDamage(ctx, actor, now, w, h, reducedMotion, gore, damageStage, meta.name);
       drawAttachedInsects(ctx, actor, now, w, h, reducedMotion, damageStage);
       drawBiteSignals(ctx, actor, now, w, h, reducedMotion, damageStage, gore);
-      if (!skipFaceAccents) {
+      if (!skipFaceAccents || actor.bloodReaction) {
         drawFaceExpression(ctx, actor, game, now, expressionState(actor, game, kind), w, h, reducedMotion, meta.name);
         drawRedTears(ctx, actor, now, w, h, reducedMotion, meta.name, gore);
       }
@@ -3580,6 +3600,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
 }(typeof window !== 'undefined' ? window : globalThis));
 
 </script>
+  <script src="maze-logos.js?v=20261015"></script>
   <script>
 /*
  * Dynamite Mice renderer
@@ -3672,6 +3693,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       // validated point to paint as a ghost while the pointer is held.
       this.dragPreview = { mouseId: null, point: null };
       this.spriteCache = Object.create(null);
+      this.destroyed = false;
+      this.bloodBuckets = new Map();
+      this.bloodIndexKey = null;
+      this.logos = typeof root.createMazeLogos === 'function' ? root.createMazeLogos({
+        artwork: root.MOUSE_MAZE_ASSETS,
+        onReady: () => { if (!this.destroyed) { this.terrain = null; this.terrainKey = ''; this.invalidate(); } }
+      }) : null;
+      if (this.logos) root.MouseMazeLogos = this.logos;
       this.resize();
     }
 
@@ -3715,6 +3744,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       }
       this.game = game || null;
       if (!game) return;
+      if (previousGame !== game && this.logos) this.logos.setRound(game.seed, game.cols * game.rows);
       if (previousGame !== game && Array.isArray(game.mice)) {
         const first = game.mice.find(mouse => mouse.alive) || game.mice[0];
         if (first) { this.focusId = first.id || null; this.focusPoint = { x: first.x, y: first.y }; }
@@ -3729,6 +3759,14 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     }
 
     setGore(enabled) { this.gore = !!enabled; this.invalidate(); }
+    destroy() {
+      if (this.destroyed) return;
+      this.destroyed = true; this.assetLoadVersion += 1;
+      if (this.logos) this.logos.destroy();
+      if (root.MouseMazeLogos === this.logos) root.MouseMazeLogos = null;
+      this.logos = null; this.terrain = null; this.staticFrame = null;
+      this.bloodBuckets.clear(); this.dragPreview = { mouseId: null, point: null };
+    }
     setReducedMotion(enabled) { this.reducedMotion = !!enabled; this.invalidate(); }
     invalidate() { this.dirty = true; this.staticFrame = null; this.staticFrameCtx = null; }
     setZoom(value) {
@@ -3958,7 +3996,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         const target = game.mice.find(mouse => mouse.id === this.focusId);
         if (target && target.alive) focus = { x: target.x, y: target.y };
         else if (game.status === 'running') {
-          const next = game.mice.find(mouse => mouse.alive);
+          const index = game.mice.findIndex(mouse => mouse.id === this.focusId);
+          let next = null;
+          for (let step = 1; step <= game.mice.length; step += 1) {
+            const candidate = game.mice[(index + step + game.mice.length) % game.mice.length];
+            if (candidate.alive) { next = candidate; break; }
+          }
           if (next) { this.focusId = next.id || null; focus = { x: next.x, y: next.y }; }
         }
       }
@@ -4105,6 +4148,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
 
     drawWallTile(ctx, px, py, x, y, seed) {
       const t = this.tile;
+      if (this.logos) { this.logos.drawTile(ctx, { x: px, y: py, size: t, index: y * this.game.cols + x, wall: true }); return; }
       if (this.drawAtlasTile(ctx, px, py, x, y, 'wall', seed)) return;
       const v = hash(x, y, seed);
       ctx.fillStyle = '#262029';
@@ -4577,8 +4621,38 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       }
     }
 
+    updateBloodReactions(game, now) {
+      // Blood is presentation state, so reactions never change movement, odds or speaker selection.
+      const first = this.splats[0], last = this.splats[this.splats.length - 1];
+      if (this.bloodIndexLength !== this.splats.length || this.bloodIndexFirst !== first || this.bloodIndexLast !== last) {
+        this.bloodBuckets.clear();
+        for (const stain of this.splats) {
+          if (!stain || !['blood', 'puddle', 'spray'].includes(stain.kind) || !Number.isFinite(stain.x) || !Number.isFinite(stain.y)) continue;
+          const id = Math.floor(stain.x / 2) + ':' + Math.floor(stain.y / 2);
+          if (!this.bloodBuckets.has(id)) this.bloodBuckets.set(id, []);
+          this.bloodBuckets.get(id).push(stain);
+        }
+        this.bloodIndexLength = this.splats.length; this.bloodIndexFirst = first; this.bloodIndexLast = last;
+      }
+      for (const mouse of game.mice || []) {
+        if (!mouse.alive) continue;
+        let distance = Infinity;
+        if (this.gore) {
+          const bx = Math.floor(mouse.x / 2), by = Math.floor(mouse.y / 2);
+          for (let y = by - 2; y <= by + 2; y += 1) for (let x = bx - 2; x <= bx + 2; x += 1) {
+            for (const stain of this.bloodBuckets.get(x + ':' + y) || []) distance = Math.min(distance, Math.hypot(mouse.x - stain.x, mouse.y - stain.y) - clamp((Number(stain.r) || .08) * 2, .08, 1.5));
+          }
+        }
+        const reaction = distance < .25 ? 'horror' : distance < .85 ? 'shock' : distance < 2.1 ? 'disgust' : null;
+        const previous = mouse.bloodReaction || null;
+        if (reaction) { mouse.bloodReaction = reaction; mouse._bloodReactionUntil = now + .85; }
+        else if (!this.gore || now >= (mouse._bloodReactionUntil || 0)) mouse.bloodReaction = null;
+        if (previous !== (mouse.bloodReaction || null)) this.invalidate();
+      }
+    }
+
     render(game, visualTime) {
-      if (!this.ctx || !game) return;
+      if (this.destroyed || !this.ctx || !game) return;
       if (game !== this.game) this.setGame(game);
       const wallNow = Number.isFinite(visualTime) ? visualTime : (Number.isFinite(root.performance?.now?.()) ? root.performance.now() / 1000 : Date.now() / 1000);
       if (this.lastVisualTime == null) this.lastVisualTime = wallNow;
@@ -4624,6 +4698,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       }
       this.lastTime = this.presentationTime;
       const tNow = this.presentationTime;
+      this.updateBloodReactions(game, tNow);
       const frozen = status === 'paused' || status === 'awaiting' || status === 'finished';
       if (frozen && !this.dirty && this.lastRenderedStatus === status && this.lastRenderedTime === this.presentationTime && this.staticFrame) {
         const ctx = this.ctx;
@@ -5406,7 +5481,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
 
     drawMice(ctx, mice, now, game) {
       const groups = new Map();
-      for (const m of mice) if (m.alive && this.inView(m.x, m.y, 2)) {
+      for (const m of mice) if (m.alive && !m.dragging && this.inView(m.x, m.y, 2)) {
         const key = Math.floor(m.x) + ':' + Math.floor(m.y);
         if (!groups.has(key)) groups.set(key, []);
         groups.get(key).push(m);
@@ -5419,7 +5494,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         if (group.length > 2 && !this.overview && !group.some(m => m.hasBomb)) this.drawNameLabel(ctx, {x:group[0].x,y:group[0].y,name:group.length + ' MICE'}, game);
       }
       // Draw the carrier marker last so a crowded corridor cannot hide it.
-      const carrier = mice.find(m => m.alive && m.hasBomb);
+      const carrier = mice.find(m => m.alive && m.hasBomb && !m.dragging);
       if (carrier && this.inView(carrier.x, carrier.y, 1)) {
         this.drawBombMarker(carrier, now, game);
         this.drawNameLabel(ctx, carrier, game);
@@ -5468,7 +5543,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       }
       // Translucent silhouette at the legal floor point. It deliberately has
       // no name, bomb, or authoritative state attached to it.
-      ctx.translate(x, y + .02); ctx.rotate(Number(mouse.angle) || 0); ctx.globalAlpha = .42;
+      ctx.translate(x, y + .02); ctx.rotate(Number(mouse.angle) || 0); ctx.globalAlpha = .9;
       const ghost = Object.assign({}, mouse, {
         id: 'drag-preview-' + String(mouse.id), x, y, hasBomb: false, dragging: false,
         damageStage: 0, insectCount: 0, insectDamage: 0, liceCount: 0,
@@ -5511,6 +5586,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
         try { customDrawn = root.MouseMazeCast.drawMouse(ctx, m, now, this.assets, game, this.reducedMotion, this.gore) === true; } catch (error) { customDrawn = false; }
       }
       if (customDrawn) {
+        this.drawBloodReaction(ctx, m, now);
         if (m.hasBomb) this.drawDynamite(ctx, m, now, game);
         ctx.restore();
         if (!hideLabel) this.drawNameLabel(ctx, m, game);
@@ -5518,6 +5594,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       }
       if (this.assets && (this.assets.mouse || this.assets.expressions)) {
         this.drawMouseSprite(ctx, m, now);
+        this.drawBloodReaction(ctx, m, now);
         if (m.hasBomb) this.drawDynamite(ctx, m, now, game);
         ctx.restore();
         if (!hideLabel) this.drawNameLabel(ctx, m, game);
@@ -5553,9 +5630,30 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       for (let i = -1; i <= 1; i++) { ctx.beginPath(); ctx.moveTo(.20, .04); ctx.lineTo(.39, .04 + i * .07); ctx.stroke(); }
       ctx.strokeStyle = '#583440'; ctx.lineWidth = .018; ctx.beginPath(); ctx.arc(.16, .09, .055, .1, 1.55); ctx.stroke();
       // Dynamite strapped at the back, with a readable countdown display.
+      this.drawBloodReaction(ctx, m, now);
       if (m.hasBomb) this.drawDynamite(ctx, m, now, game);
       ctx.restore();
       if (!hideLabel) this.drawNameLabel(ctx, m, game);
+    }
+
+    drawBloodReaction(ctx, mouse, now) {
+      const state = mouse.bloodReaction;
+      if (!state) return;
+      const scale = Math.max(1, this.view.sx || 1), radius = clamp(7.5 / scale, .19, .4);
+      const flip = Math.cos(Number(mouse.angle) || 0) < 0 ? -1 : 1;
+      const disgust = state === 'disgust', horror = state === 'horror';
+      ctx.save(); ctx.translate(.45 * flip, -.25); ctx.scale(radius, radius);
+      ctx.fillStyle = disgust ? '#d4df93' : horror ? '#fff0dc' : '#ffe8aa'; ctx.strokeStyle = '#38232e'; ctx.lineWidth = .11;
+      ctx.beginPath(); ctx.ellipse(0, 0, .93, 1.02, 0, 0, TAU); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#fffcef';
+      for (const side of [-1, 1]) { ctx.beginPath(); ctx.ellipse(side * .35, -.22, .26, disgust ? .12 : .34, 0, 0, TAU); ctx.fill(); ctx.stroke(); }
+      ctx.fillStyle = '#252130';
+      for (const side of [-1, 1]) { ctx.beginPath(); ctx.arc(side * .35, -.18, horror ? .065 : .11, 0, TAU); ctx.fill(); }
+      ctx.beginPath(); ctx.moveTo(-.66, disgust ? -.62 : -.76); ctx.lineTo(-.15, -.62); ctx.moveTo(.15, -.62); ctx.lineTo(.66, disgust ? -.62 : -.76); ctx.stroke();
+      ctx.fillStyle = disgust ? '#68833b' : '#753544'; ctx.beginPath(); ctx.ellipse(0, .48, disgust ? .36 : .25, disgust ? .10 : horror ? .35 : .26, 0, 0, TAU); ctx.fill();
+      if (disgust) { ctx.strokeStyle = '#7bb550'; ctx.lineWidth = .15; ctx.beginPath(); ctx.moveTo(.05, .55); ctx.quadraticCurveTo(.32, .95, .05, 1.18); ctx.stroke(); }
+      if (horror) { ctx.fillStyle = '#83d4ef'; for (const side of [-1, 1]) { ctx.beginPath(); ctx.ellipse(side * .64, .29 + Math.sin(now * 8) * .04, .09, .24, side * -.25, 0, TAU); ctx.fill(); } }
+      ctx.restore();
     }
 
     drawCarrierGlow(ctx, mouse, now) {
@@ -7303,11 +7401,10 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   var dom = {};
   var CHEESE_BOOST_STORE_KEY = 'dynamite-mice-cheese-boost-percent-v1';
   var BOMB_INTERVAL_STORE_KEY = 'dynamite-mice-bomb-interval-v1';
-  var state = { running: false, awaiting: false, muted: false, volume: 0.25, reducedMotion: false, gore: true, cheeseBoost: 1, bombInterval: 30, catStyle: 'random', chatter: true, focusMode: false };
+  var state = { running: false, awaiting: false, muted: false, volume: 0.25, reducedMotion: false, gore: true, cheeseBoost: 1, bombInterval: 60, catStyle: 'random', chatter: true, focusMode: false };
   var pointerDrag = null;
   var suppressCanvasClick = false;
   var focusHideTimer = 0;
-  var MOUSE_HOLD_MS = 180;
 
   function byId(id) { return document.getElementById(id); }
   function cacheDom() {
@@ -7418,6 +7515,22 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     dom.followBtn.title = mouse ? 'Following ' + mouse.name + ' · click for next mouse' : 'Follow next mouse';
     syncCameraControls();
   }
+  function cycleMouseFocus(direction) {
+    if (!game || !renderer || !game.mice.length || !game.mice.some(function (mouse) { return mouse.alive; })) return null;
+    cancelPointerInteraction('keyboard-follow');
+    var id = renderer.getFocusId ? renderer.getFocusId() : followedMouseId;
+    var index = game.mice.findIndex(function (mouse) { return mouse.id === id; });
+    var step = direction < 0 ? -1 : 1;
+    if (index < 0) index = step > 0 ? -1 : 0;
+    for (var offset = 1; offset <= game.mice.length; offset += 1) {
+      var mouse = game.mice[(index + step * offset + game.mice.length * 2) % game.mice.length];
+      if (!mouse.alive) continue;
+      if (renderer.getOverview && renderer.getOverview() && renderer.setZoom) renderer.setZoom(3);
+      followMouse(mouse.id);
+      return mouse.id;
+    }
+    return null;
+  }
   function sameRoster(a, b) { return a.length === b.length && a.every(function (name, i) { return name === b[i]; }); }
   function runAudio(method) { if (audio && typeof audio[method] === 'function') { try { return audio[method](); } catch (_) {} } }
   function start() {
@@ -7457,7 +7570,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   }
   function updateStatus(text, mode) { dom.stageStatusText.textContent = text; dom.stageStatus.className = 'stage-status is-' + mode; renderBombControl(); }
   function formatTime(seconds) { var total = Math.max(0, Math.floor(Number(seconds) || 0)); var min = Math.floor(total / 60); var sec = total % 60; return String(min).padStart(2, '0') + ':' + String(sec).padStart(2, '0'); }
-  function stats() { return game && typeof game.getStats === 'function' ? game.getStats() : { alive: currentNames.length, chosen: results.length, cheese: 400, lice: 0, time: 0, nextExplosionIn: state.bombInterval, bombInterval: state.bombInterval, bombCarrierId: null, catInSeconds: 60 }; }
+  function stats() { return game && typeof game.getStats === 'function' ? game.getStats() : { alive: currentNames.length, chosen: results.length, cheese: 400, lice: 0, time: 0, nextExplosionIn: state.bombInterval, bombInterval: state.bombInterval, bombCarrierId: null, catInSeconds: 40 }; }
   function bombCarrier() {
     if (!game || !Array.isArray(game.mice)) return null;
     var s = stats(), id = game.bombCarrierId || s.bombCarrierId;
@@ -7635,6 +7748,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       if (dom.mazeCanvas.hasPointerCapture && dom.mazeCanvas.hasPointerCapture(pointer.id)) dom.mazeCanvas.releasePointerCapture(pointer.id);
     } catch (_) {}
   }
+  function restorePointerCamera(pointer) {
+    if (!pointer || !pointer.camera || !renderer) return;
+    renderer.manualCamera = pointer.camera.manualCamera;
+    renderer.followFocus = pointer.camera.followFocus;
+    if (typeof renderer.invalidate === 'function') renderer.invalidate();
+  }
   function cancelPointerInteraction(reason) {
     var pointer = pointerDrag;
     if (!pointer) { clearMouseDragPreview(); return; }
@@ -7646,6 +7765,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       try { game.cancelMouseDrag(pointer.mouseId, reason || 'cancelled'); } catch (_) {}
     }
     clearMouseDragPreview();
+    restorePointerCamera(pointer);
     pointerDrag = null;
     releasePointer(pointer);
     if (dom.mazeCanvas) dom.mazeCanvas.classList.remove('is-panning', 'is-dragging-mouse', 'is-pressing-mouse');
@@ -7668,7 +7788,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     pointer.dropPoint = point && point.valid !== false ? point : null;
     renderer.setMouseDragPreview(pointer.mouseId, pointer.dropPoint);
   }
-  function beginHeldMouse(pointer) {
+  function beginMouseInteraction(pointer) {
     if (!pointerDrag || pointerDrag !== pointer || pointer.mouseId == null || !dragStatusAllowed()) return;
     pointer.holdTimer = 0;
     if (!game || typeof game.beginMouseDrag !== 'function') return;
@@ -7676,6 +7796,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     try { began = game.beginMouseDrag(pointer.mouseId) !== false; } catch (_) { began = false; }
     if (!began) { cancelPointerInteraction('begin-rejected'); return; }
     pointer.started = true;
+    pointer.camera = { manualCamera: renderer.manualCamera, followFocus: renderer.followFocus };
+    renderer.manualCamera = true; renderer.followFocus = false;
     dom.mazeCanvas.classList.remove('is-pressing-mouse');
     dom.mazeCanvas.classList.add('is-dragging-mouse');
     updateMouseDragPreview(pointer, pointer.lastX, pointer.lastY);
@@ -7685,11 +7807,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (!pointer || pointer.id !== event.pointerId) return;
     if (pointer.holdTimer) window.clearTimeout(pointer.holdTimer);
     var wasDrag = pointer.mouseId != null && pointer.started;
-    // A short click keeps the mouse selected at pointerdown. This avoids a
-    // moving mouse escaping the click hit-test before the browser dispatches
-    // click, while still reserving held pointers for relocation.
+    // An immediate grab with no movement remains a click-to-follow gesture.
     var shouldFollowCandidate = pointer.mouseId != null
-      && !pointer.started
       && !pointer.moved
       && !cancelled
       && dragStatusAllowed()
@@ -7697,14 +7816,15 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       && game
       && game.mice
       && game.mice.some(function (mouse) { return mouse.id === pointer.mouseId && mouse.alive; });
-    if (pointer.mouseId != null && pointer.started && !cancelled && dragStatusAllowed()) {
+    var relocated = false;
+    if (pointer.mouseId != null && pointer.started && pointer.moved && !cancelled && dragStatusAllowed()) {
       // Always resolve against the release position. The pointer may have
       // moved from a valid preview cell to outside the canvas between the last
       // move event and pointerup; in that case the drop must cancel rather than
       // silently using the stale preview cell.
       var point = dropPointAt(event.clientX, event.clientY);
       if (point && point.valid !== false && game && typeof game.endMouseDrag === 'function') {
-        try { game.endMouseDrag(pointer.mouseId, Number(point.x), Number(point.y)); } catch (_) { try { game.cancelMouseDrag(pointer.mouseId, 'drop-error'); } catch (_) {} }
+        try { relocated = !!game.endMouseDrag(pointer.mouseId, Number(point.x), Number(point.y)); } catch (_) { try { game.cancelMouseDrag(pointer.mouseId, 'drop-error'); } catch (_) {} }
       } else if (game && typeof game.cancelMouseDrag === 'function') {
         try { game.cancelMouseDrag(pointer.mouseId, 'invalid-drop'); } catch (_) {}
       }
@@ -7712,11 +7832,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
       try { game.cancelMouseDrag(pointer.mouseId, cancelled ? 'pointer-cancelled' : 'released'); } catch (_) {}
     }
     clearMouseDragPreview();
+    restorePointerCamera(pointer);
     suppressCanvasClick = !!(cancelled || wasDrag || pointer.moved || shouldFollowCandidate);
     pointerDrag = null;
     releasePointer(pointer);
     dom.mazeCanvas.classList.remove('is-panning', 'is-dragging-mouse', 'is-pressing-mouse');
-    if (shouldFollowCandidate) followMouse(pointer.mouseId);
+    if (shouldFollowCandidate || relocated) followMouse(pointer.mouseId);
     window.setTimeout(function () { suppressCanvasClick = false; }, 0);
   }
   function bindCanvasCamera() {
@@ -7734,26 +7855,27 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     }, { passive: false });
     canvas.addEventListener('pointerdown', function (event) {
       if (event.button !== 0 || !renderer) return;
+      if (canvas.focus) canvas.focus({ preventScroll: true });
       cancelPointerInteraction('replaced');
       suppressCanvasClick = false;
       if (!dragStatusAllowed()) return;
       var hit = typeof renderer.pickMouse === 'function' ? renderer.pickMouse(event.clientX, event.clientY) : null;
       if (hit && hit.alive && typeof game.beginMouseDrag === 'function') {
-        pointerDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, lastX: event.clientX, lastY: event.clientY, moved: false, mouseId: hit.id, started: false, dropPoint: null, holdTimer: 0 };
-        pointerDrag.holdTimer = window.setTimeout(function () { beginHeldMouse(pointerDrag); }, MOUSE_HOLD_MS);
-        canvas.setPointerCapture(event.pointerId);
-        canvas.classList.add('is-pressing-mouse');
+        pointerDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, originX: event.clientX, originY: event.clientY, lastX: event.clientX, lastY: event.clientY, moved: false, mouseId: hit.id, started: false, dropPoint: null, holdTimer: 0 };
+        try { canvas.setPointerCapture(event.pointerId); } catch (_) {}
+        beginMouseInteraction(pointerDrag);
+        event.preventDefault();
         return;
       }
       if (!renderer.getZoom || Number(renderer.getZoom()) <= 1) return;
-      pointerDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, lastX: event.clientX, lastY: event.clientY, moved: false, mouseId: null, started: false, holdTimer: 0 };
-      canvas.setPointerCapture(event.pointerId);
+      pointerDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, originX: event.clientX, originY: event.clientY, lastX: event.clientX, lastY: event.clientY, moved: false, mouseId: null, started: false, holdTimer: 0 };
+      try { canvas.setPointerCapture(event.pointerId); } catch (_) {}
       canvas.classList.add('is-panning');
     });
     canvas.addEventListener('pointermove', function (event) {
       if (!pointerDrag || pointerDrag.id !== event.pointerId) return;
       var dx = event.clientX - pointerDrag.x, dy = event.clientY - pointerDrag.y;
-      if (Math.abs(dx) + Math.abs(dy) > 3) pointerDrag.moved = true;
+      if (Math.abs(event.clientX - pointerDrag.originX) + Math.abs(event.clientY - pointerDrag.originY) > 3) pointerDrag.moved = true;
       if (pointerDrag.mouseId != null) {
         if (pointerDrag.started) { event.preventDefault(); updateMouseDragPreview(pointerDrag, event.clientX, event.clientY); }
       } else if (pointerDrag.moved && renderer && typeof renderer.panBy === 'function') {
@@ -7770,7 +7892,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   function bind() {
     dom.zoomInput.addEventListener('input', function () { cameraZoomAt(Number(dom.zoomInput.value), null, null); });
     dom.overviewBtn.addEventListener('click', function () { if (renderer) { if (renderer.setZoom) renderer.setZoom(1); if (renderer.setOverview) renderer.setOverview(true); syncCameraControls(); } });
-    dom.followBtn.addEventListener('click', function () { if (!game) return; var alive = game.mice.filter(function (mouse) { return mouse.alive; }); if (!alive.length) return; var index = alive.findIndex(function (mouse) { return mouse.id === followedMouseId; }); followMouse(alive[(index + 1) % alive.length].id); });
+    dom.followBtn.addEventListener('click', function () { cycleMouseFocus(1); });
     dom.mazeCanvas.addEventListener('click', function (event) { if (suppressCanvasClick) return; if (renderer && renderer.pickMouse) { var mouse = renderer.pickMouse(event.clientX, event.clientY); if (mouse && mouse.alive) followMouse(mouse.id); } });
     bindCanvasCamera();
     dom.continueBtn.addEventListener('click', continueSelection);
@@ -7795,11 +7917,30 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     dom.musicInput.addEventListener('change', function () { var file = dom.musicInput.files && dom.musicInput.files[0]; if (!file) return; dom.trackLabel.textContent = file.name.slice(0, 26); dom.sunoNote.textContent = 'Loading track…'; dom.restoreTrackBtn.hidden = !window.BACKGROUND_TRACK_DATA; if (audio && typeof audio.setTrack === 'function') { try { var loadedTrack = audio.setTrack(file); if (loadedTrack && typeof loadedTrack.catch === 'function') loadedTrack.catch(function () {}); } catch (_) {} } showToast('LOADING PERSONAL TRACK'); });
     dom.clearTrackBtn.addEventListener('click', function () { if (audio && typeof audio.setTrack === 'function') { try { var resetTrack = audio.setTrack(null); if (resetTrack && typeof resetTrack.catch === 'function') resetTrack.catch(function () {}); } catch (_) {} } dom.trackLabel.textContent = 'Original chase score'; dom.sunoNote.textContent = 'Instrumental chase score'; dom.restoreTrackBtn.hidden = !window.BACKGROUND_TRACK_DATA; showToast('BUILT-IN SCORE RESTORED'); });
     dom.restoreTrackBtn.addEventListener('click', function () { if (!window.BACKGROUND_TRACK_DATA) return; if (audio) audio.setTrack(window.BACKGROUND_TRACK_DATA); dom.trackLabel.textContent = window.BACKGROUND_TRACK_TITLE || 'Mouse Maze Mayhem'; dom.sunoNote.textContent = 'Loops during play'; dom.restoreTrackBtn.hidden = true; dom.musicInput.value = ''; showToast('BACKGROUND SONG RESTORED'); });
-    document.addEventListener('keydown', function (event) { var tag = event.target && event.target.tagName; if (event.key === 'Escape') { if (pointerDrag) { cancelPointerInteraction('escape'); event.preventDefault(); return; } if (state.focusMode) { event.preventDefault(); if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {}); else setFocusMode(false); return; } } if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || event.target.isContentEditable) return; if (event.key === ' ') { if (tag === 'BUTTON') return; event.preventDefault(); if (!event.repeat) { if (state.awaiting) continueSelection(); else if (game && game.status === 'running' || game && game.status === 'paused') pause(); else start(); } } else if (event.key.toLowerCase() === 'f') { event.preventDefault(); toggleFullscreen(); } else if (event.key.toLowerCase() === 'm') toggleMute(); if (state.focusMode) revealFocusControls(); });
+    document.addEventListener('keydown', function (event) {
+      var target = event.target || {}, tag = target.tagName;
+      if (event.key === 'Escape') {
+        if (pointerDrag) { cancelPointerInteraction('escape'); event.preventDefault(); return; }
+        if (state.focusMode) { event.preventDefault(); if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {}); else setFocusMode(false); return; }
+      }
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable) return;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault(); if (!event.repeat) cycleMouseFocus(event.key === 'ArrowLeft' ? -1 : 1);
+      } else if (event.key === ' ') {
+        if (tag === 'BUTTON') return; event.preventDefault();
+        if (!event.repeat) { if (state.awaiting) continueSelection(); else if (game && game.status === 'running' || game && game.status === 'paused') pause(); else start(); }
+      } else if (event.key.toLowerCase() === 'f') { event.preventDefault(); toggleFullscreen(); }
+      else if (event.key.toLowerCase() === 'm') toggleMute();
+      if (state.focusMode) revealFocusControls();
+    });
     window.addEventListener('resize', function () { if (renderer) renderer.resize(); });
     document.addEventListener('fullscreenchange', function () { setFocusMode(!!document.fullscreenElement); });
     document.addEventListener('visibilitychange', function () { if (document.hidden && game && game.status === 'running') pause(); });
     window.addEventListener('blur', function () { cancelPointerInteraction('window-blur'); });
+    window.addEventListener('pagehide', function (event) {
+      cancelPointerInteraction('pagehide');
+      if (!event.persisted) { cancelAnimationFrame(raf); if (renderer && typeof renderer.destroy === 'function') renderer.destroy(); }
+    });
     document.addEventListener('visibilitychange', function () { if (document.hidden) cancelPointerInteraction('hidden'); });
   }
   function init() {
@@ -7811,7 +7952,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (dom.chatterToggle) dom.chatterToggle.checked = true;
     // Keep the chosen percentage; v7 applies it to diminishing future gains.
     state.cheeseBoost = Math.max(1, Math.min(100, Math.round(Number(safeStorageGet(CHEESE_BOOST_STORE_KEY)) || 1))); dom.cheeseBoostInput.value = state.cheeseBoost; dom.cheeseBoostValue.textContent = '+' + state.cheeseBoost + '%';
-    state.bombInterval = Math.max(10, Math.min(120, Math.round((Number(safeStorageGet(BOMB_INTERVAL_STORE_KEY)) || 30) / 5) * 5)); renderBombControl();
+    state.bombInterval = Math.max(10, Math.min(120, Math.round((Number(safeStorageGet(BOMB_INTERVAL_STORE_KEY)) || 60) / 5) * 5)); renderBombControl();
     audio = window.MouseMazeAudio ? new window.MouseMazeAudio() : null; window.mouseAudio = audio; if (audio && typeof audio.setVolume === 'function') audio.setVolume(state.volume);
     if (audio) audio.onTrackStatus = function (status) {
       if (status === 'error') {
@@ -7826,7 +7967,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (embeddedTrack) { dom.trackLabel.textContent = window.BACKGROUND_TRACK_TITLE || 'Suno original track'; dom.sunoNote.textContent = 'Loops during play'; if (audio && typeof audio.setTrack === 'function') audio.setTrack(embeddedTrack); }
     bind(); createGame(initial);
     if (renderer && window.MOUSE_MAZE_ASSETS) renderer.setAssets(window.MOUSE_MAZE_ASSETS);
-    window.mouseApp = { newRun: newRun, start: start, pause: pause, resume: resume, continueSelection: continueSelection, step: step };
+    window.mouseApp = { newRun: newRun, start: start, pause: pause, resume: resume, continueSelection: continueSelection, step: step, cycleMouseFocus: cycleMouseFocus };
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 }());

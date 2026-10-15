@@ -94,40 +94,39 @@ assert.equal(fatalGame.selections.length, 1);
 assert(fatalGame.drainEvents().some(event => event.type === 'selected' && event.outcome === 'devoured'));
 assert.equal(fatalGame.continueSelection(), 'finished');
 
-// Preserve the prior timed-game contract: the default carried fuse remains 30
-// seconds and Continue is the only way out of its speaker hold. Cat entry is
-// checked in a separate no-carrier fixture below so a simultaneous 60-second
-// carried detonation cannot hide the independent cat-entry contract.
+// The gentler default carried fuse is 60 seconds. Continue remains the only
+// release from a speaker hold. Isolate its ownership from the 40-second cat.
 const timed = new Game({ names: ['A', 'B', 'C'], seed: 8132, liceEnabled: false, insectsEnabled: false, floorBombsEnabled: false });
-assert.equal(timed.bombInterval, 30);
+assert.equal(timed.bombInterval, 60);
+timed._updateCat = () => {};
 for (const mouse of timed.mice) mouse.speed = 0;
 timed.start();
-timed.update(30);
+timed.update(60);
 assert.equal(timed.status, 'awaiting');
 assert.equal(timed.pendingSelection?.outcome, 'exploded');
-assert.equal(timed.time, 30);
+assert.equal(timed.time, 60);
 assert.equal(timed.continueSelection(), 'running');
 const catTimed = new Game({ names: ['Cat target', 'Cat decoy'], seed: 8133, liceEnabled: false, insectsEnabled: false, floorBombsEnabled: false, bombInterval: 120 });
 for (const mouse of catTimed.mice) mouse.speed = 0;
 catTimed.start();
-catTimed.update(60);
-assert(Math.abs(catTimed.time - 60) < 1e-8, 'Cat-entry fixture reaches the 60-second boundary');
+catTimed.update(40);
+assert(Math.abs(catTimed.time - 40) < 1e-8, 'Cat-entry fixture reaches the 40-second boundary');
 assert.equal(catTimed.status, 'running');
-assert(catTimed.cat, 'Cat enters at 60 seconds when no carried fuse competes at the same boundary');
+assert(catTimed.cat, 'Cat enters at 40 seconds when no carried fuse competes at the same boundary');
 assert.equal(catTimed.cat.speed, 1.3, 'Cat uses the v10 30% speed increase');
 
 // UI and accessibility/report contracts for the new interactions and preserved
 // controls. These strings are intentionally cheap smoke checks; browser QA
 // remains responsible for pointer, touch, visual, and audio behavior.
-assert.match(html, /Hold a mouse to move/);
+assert.match(html, /Drag a mouse to move/);
 assert.match(html, /mouse-unstuck/);
 assert.match(html, /insect-attached/);
 assert.match(html, /insect-bite/);
 assert.match(html, /devoured/);
 assert.match(html, /id="bombIntervalInput"/);
-assert.match(html, /Cat at <strong>01:00<\/strong>/);
+assert.match(html, /Cat at <strong>00:40<\/strong>/);
 assert.match(html, /focus-mode/);
 assert.match(html, /Scroll to zoom/);
 assert.match(html, /BACKGROUND_TRACK_DATA/);
 
-console.log('Maze v8 packaged checks pass: relocation/cancel, unstuck recovery, insect attachment and progressive damage, devoured selection hold, preserved 30s fuse/60s cat, and UI smoke contracts.');
+console.log('Maze v8 packaged checks pass: immediate relocation/cancel, unstuck recovery, insect attachment and progressive damage, devoured selection hold, default 60s fuse/40s cat, and UI smoke contracts.');
