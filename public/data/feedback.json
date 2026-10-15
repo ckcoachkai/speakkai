@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T10:15:22.454243+00:00",
+  "updatedAt": "2026-10-15T10:42:01.435345+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -520,6 +520,43 @@
               "name": "Elsa",
               "en": "✓ Storytelling and pace:\n\nElsa gave a detailed account of her LEGOLAND experience. Her pacing was good, and her content flowed naturally, making the story easy to follow.\n\n→ Structure and purpose:\n\nHer next step is strengthening the structure and purpose of the speech. Before adding more detail, she should decide what she wants the audience to remember. She can then select the parts of the experience that support that message and explain the connection clearly.\n\n→ Conclusion:\n\nHer personal experience gives her useful material to speak about. A clearer conclusion, with a meaningful takeaway or an appropriate call to action, will help turn that experience into a speech with a stronger purpose.",
               "zh": "✓ 故事与节奏：\n\nElsa详细分享了自己的LEGOLAND经历。她的语速节奏很好，内容衔接自然，让故事容易理解。\n\n→ 结构与目的：\n\n下一步是加强演讲的结构与目的。在加入更多细节之前，应先确定希望听众记住什么，再选择支持这个核心信息的经历，并把它们之间的联系解释清楚。\n\n→ 结论：\n\n个人经历为她提供了有用的演讲素材。用更清楚的结论、有意义的重点或适当的行动建议收尾，能帮助她把经历转化为目的更明确的演讲。"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-15-thu-afternoon",
+          "date": "2026-10-15",
+          "time": "15:30–17:30",
+          "status": "held",
+          "classContent": {
+            "en": "We started with presentations on the homework topic. Remy presented his prepared speech; Elsa shared her schedule; Owen and Jarvis spoke without the same preparation. We discussed the difference between prepared speeches and impromptu speaking. Preparation gives us time to research, get more input and knowledge, and understand our topic better, so we can add depth, specific details and support for our ideas rather than only recalling from memory. That gives the audience more reason to believe us. We also discussed using at least one personal example or vivid illustration to bring us closer to the audience.\n\nHomework is one of the basic things we need to do. Coming up to present it lets us practise both prepared speeches and impromptu speaking. If students cannot do their homework, they cannot attend competitions. How can we prepare for a competition if we do not prepare? If the goal is simply to practise skills in class, that is one thing. If students want to achieve awards or other competition goals, they have to put in the preparation as well. I want parents to be aware of this.",
+            "zh": "我们从作业主题的展示开始。Remy展示了准备好的演讲；Elsa讲了自己的日程；Owen和Jarvis在没有同样准备的情况下进行了表达。我们讨论了准备演讲与即兴表达的区别。提前准备让我们有时间做研究、获取更多信息和知识，并更深入地理解主题，从而增加深度、具体细节和支持观点的内容，而不只是凭记忆回想。这样，听众才更有理由相信我们。我们也讨论了加入至少一个个人例子或生动、能让人想象出画面的例子，让演讲者与听众建立更近的联系。\n\n完成作业是最基本的要求之一。把准备好的内容带到台上展示，才能让我们同时练习准备演讲和即兴表达。如果学生不能完成作业，就不能参加比赛。不做准备，又怎么为比赛做好准备？如果只是想在课堂上练习技能，那是一回事；如果想获得奖项或实现其他比赛目标，就还需要投入准备工作。我希望家长了解这一点。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "remy",
+              "name": "Remy",
+              "en": "Remy completed his homework. Overall, his speech was well put together. I would have liked some more personal examples, if possible. Sharing at least one personal example or vivid illustration would help bring him closer to the audience.\n\nHomework is one of the basic things we need to do. Coming up to present it lets us practise both prepared speeches and impromptu speaking. If students cannot do their homework, they cannot attend competitions. How can we prepare for a competition if we do not prepare? If the goal is simply to practise skills in class, that is one thing. If students want to achieve awards or other competition goals, they have to put in the preparation as well. I want parents to be aware of this.",
+              "zh": "Remy完成了作业。整体来看，他的演讲组织得很好。如果可以，我希望他加入更多个人例子。至少分享一个个人经历的例子，或者用一个生动、能让人想象出画面的例子，会帮助他与听众建立更近的联系。\n\n完成作业是最基本的要求之一。把准备好的内容带到台上展示，才能让我们同时练习准备演讲和即兴表达。如果学生不能完成作业，就不能参加比赛。不做准备，又怎么为比赛做好准备？如果只是想在课堂上练习技能，那是一回事；如果想获得奖项或实现其他比赛目标，就还需要投入准备工作。我希望家长了解这一点。"
+            },
+            {
+              "id": "elsa",
+              "name": "Elsa",
+              "en": "Elsa said she had not completed her homework.\n\nElsa was a bit confused and speechless at the beginning of her presentation. She began speaking in the middle, but Jarvis took her book without her permission and played with it, which affected her performance. She mainly described her schedule. Her speech did not have a clear structure or a message at the end. She left before concluding because she was trying to retrieve her book.\n\nElsa also tends to start over. She needs a little more belief in herself and to keep going with her speech.\n\nHomework is one of the basic things we need to do. Coming up to present it lets us practise both prepared speeches and impromptu speaking. If students cannot do their homework, they cannot attend competitions. How can we prepare for a competition if we do not prepare? If the goal is simply to practise skills in class, that is one thing. If students want to achieve awards or other competition goals, they have to put in the preparation as well. I want parents to be aware of this.",
+              "zh": "Elsa表示自己没有完成作业。\n\nElsa在展示开始时有些困惑，一时说不出话。之后她开始讲话，但Jarvis未经她同意拿走了她的书，并拿着玩，影响了她的表现。她主要讲了自己的日程，演讲没有清楚的结构，结尾也没有传达一个核心信息。她为了拿回自己的书，在完成结尾之前就离开了。\n\nElsa也容易重新开始。她需要对自己多一点信心，继续把演讲讲下去。\n\n完成作业是最基本的要求之一。把准备好的内容带到台上展示，才能让我们同时练习准备演讲和即兴表达。如果学生不能完成作业，就不能参加比赛。不做准备，又怎么为比赛做好准备？如果只是想在课堂上练习技能，那是一回事；如果想获得奖项或实现其他比赛目标，就还需要投入准备工作。我希望家长了解这一点。"
+            },
+            {
+              "id": "owen",
+              "name": "Owen",
+              "en": "Owen said he had not completed his homework.\n\nOwen is pretty strong in impromptu speaking. Even without preparation, he can still talk about things with confidence. One of the differences between an impromptu speech and a prepared speech is that preparation gives him the chance to do research, get more input and knowledge, and understand the subject better. That allows him to add depth and more detail to his speech, rather than only recalling what he already knows from memory. Sometimes we need to support our ideas and what we are talking about so that the audience has more reason to believe us.\n\nHomework is one of the basic things we need to do. Coming up to present it lets us practise both prepared speeches and impromptu speaking. If students cannot do their homework, they cannot attend competitions. How can we prepare for a competition if we do not prepare? If the goal is simply to practise skills in class, that is one thing. If students want to achieve awards or other competition goals, they have to put in the preparation as well. I want parents to be aware of this.",
+              "zh": "Owen表示自己没有完成作业。\n\nOwen的即兴表达能力比较强。即使没有准备，他仍然能够自信地谈论一些内容。即兴演讲与准备演讲的一个区别是：提前准备让他有机会做研究、获取更多信息和知识，并更深入地理解主题。这样，他就能为演讲增加深度和细节，而不只是凭记忆回想自己已经知道的内容。有时，我们需要为自己的观点和所讲的内容提供支持，让听众更有理由相信我们。\n\n完成作业是最基本的要求之一。把准备好的内容带到台上展示，才能让我们同时练习准备演讲和即兴表达。如果学生不能完成作业，就不能参加比赛。不做准备，又怎么为比赛做好准备？如果只是想在课堂上练习技能，那是一回事；如果想获得奖项或实现其他比赛目标，就还需要投入准备工作。我希望家长了解这一点。"
+            },
+            {
+              "id": "jarvis",
+              "name": "Jarvis",
+              "en": "Jarvis gave an okay impromptu speech on the homework topic. However, his reasoning and the content he shared were a bit simple and did not go into much depth. This is the problem I mentioned with not really practising at home: there are fewer specific details and not enough new input. When there is less input, the output is less detailed, which makes the speech less credible and less believable. We want to address this so he can give a better speech.\n\nWhile Elsa was presenting, Jarvis took her book without her permission and played with it. This affected Elsa’s performance, and she left before concluding her speech to get her book back.\n\nHomework is one of the basic things we need to do. Coming up to present it lets us practise both prepared speeches and impromptu speaking. If students cannot do their homework, they cannot attend competitions. How can we prepare for a competition if we do not prepare? If the goal is simply to practise skills in class, that is one thing. If students want to achieve awards or other competition goals, they have to put in the preparation as well. I want parents to be aware of this.",
+              "zh": "Jarvis围绕作业主题做了一次尚可的即兴演讲。不过，他的推理和所讲的内容有些简单，没有深入展开。这也是我之前提到的、在家没有充分练习所带来的问题：缺少更具体的细节，也没有足够的新信息输入。输入少，输出的内容就不够详细，演讲的可信度和说服力也会受到影响。我们需要改善这一点，帮助他把演讲讲得更好。\n\nElsa展示时，Jarvis未经她同意拿走了她的书，并拿着玩。这影响了Elsa的表现，她为了拿回自己的书，在完成演讲结尾之前就离开了。\n\n完成作业是最基本的要求之一。把准备好的内容带到台上展示，才能让我们同时练习准备演讲和即兴表达。如果学生不能完成作业，就不能参加比赛。不做准备，又怎么为比赛做好准备？如果只是想在课堂上练习技能，那是一回事；如果想获得奖项或实现其他比赛目标，就还需要投入准备工作。我希望家长了解这一点。"
             }
           ]
         }

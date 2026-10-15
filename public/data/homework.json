@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-13T10:15:22.454243+00:00",
+  "updatedAt": "2026-10-15T10:42:01.462552+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -431,6 +431,33 @@
             {
               "name": "Elsa",
               "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-08&student=elsa"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-15-thu-afternoon",
+          "date": "2026-10-15",
+          "time": "15:30–17:30",
+          "classContent": [
+            "We started with presentations on the homework topic. Remy presented his prepared speech; Elsa shared her schedule; Owen and Jarvis spoke without the same preparation. We discussed the difference between prepared speeches and impromptu speaking. Preparation gives us time to research, get more input and knowledge, and understand our topic better, so we can add depth, specific details and support for our ideas rather than only recalling from memory. That gives the audience more reason to believe us. We also discussed using at least one personal example or vivid illustration to bring us closer to the audience.\n\nHomework is one of the basic things we need to do. Coming up to present it lets us practise both prepared speeches and impromptu speaking. If students cannot do their homework, they cannot attend competitions. How can we prepare for a competition if we do not prepare? If the goal is simply to practise skills in class, that is one thing. If students want to achieve awards or other competition goals, they have to put in the preparation as well. I want parents to be aware of this."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Remy",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-15&student=remy"
+            },
+            {
+              "name": "Elsa",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-15&student=elsa"
+            },
+            {
+              "name": "Owen",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-15&student=owen"
+            },
+            {
+              "name": "Jarvis",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-15&student=jarvis"
             }
           ]
         }
