@@ -9,3 +9,6 @@ for(const [s,c] of [[0,1],[0,3],[1,0],[2,0]]){assert.ok(!output[s].rows[0].cells
 for(const [s,c] of [[0,0],[0,2],[3,0]])assert.equal(output[s].rows[0].cells[c].value,input[s].rows[0].cells[c].value);
 assert.deepEqual(applyFallScheduleOverrides(output),output);
 console.log('Fall cancellation boundaries, history, other classes and idempotence passed.');
+
+const raw=applyFallScheduleOverrides([sheet('October 2026',['15\nLimited availability\n15:30–17:30 · SAS - 三年级\n18:15–20:15 · 井亭大厦 - 一年级'])]);
+assert.equal(raw[0].rows[0].cells[0].value,'15\nLimited availability\n15:30–17:30 · SAS - 三年级');

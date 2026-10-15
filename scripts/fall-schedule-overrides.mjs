@@ -13,7 +13,7 @@ export function applyFallScheduleOverrides(sheets) {
       const day = Number(lines[0]);
       const date = new Date(Date.UTC(2026,month,day));
       if (date.getUTCMonth() !== month || date.getUTCDay() !== 4 || (month === 9 && day < 15)) return cell;
-      return {...cell,value:lines.filter(line=>!/^18:15–20:15 · Class booked(?: · 龙柏)?$/.test(line)).join('\n')};
+      return {...cell,value:lines.filter(line=>!/^18:15–20:15 · (?:Class booked(?: · 龙柏)?|井亭大厦[^\n]*|龙柏[^\n]*)$/.test(line)).join('\n')};
     })}))};
   });
 }
