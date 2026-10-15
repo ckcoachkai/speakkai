@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-15T10:42:01.462552+00:00",
+  "updatedAt": "2026-10-15T11:19:25.357034+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -439,9 +439,15 @@
           "date": "2026-10-15",
           "time": "15:30–17:30",
           "classContent": [
-            "We started with presentations on the homework topic. Remy presented his prepared speech; Elsa shared her schedule; Owen and Jarvis spoke without the same preparation. We discussed the difference between prepared speeches and impromptu speaking. Preparation gives us time to research, get more input and knowledge, and understand our topic better, so we can add depth, specific details and support for our ideas rather than only recalling from memory. That gives the audience more reason to believe us. We also discussed using at least one personal example or vivid illustration to bring us closer to the audience.\n\nHomework is one of the basic things we need to do. Coming up to present it lets us practise both prepared speeches and impromptu speaking. If students cannot do their homework, they cannot attend competitions. How can we prepare for a competition if we do not prepare? If the goal is simply to practise skills in class, that is one thing. If students want to achieve awards or other competition goals, they have to put in the preparation as well. I want parents to be aware of this."
+            "We started with homework presentations and then moved into the main class topic: why do we do things that are dangerous even though we know they may be bad for us? We mainly talked about roller coasters, using the recent situation discussed around Six Flags in the U.S. as the starting point. Students then tried to express their ideas, using a simple speech structure and relating the question to their own lives: describe one situation you saw or something you did; ask why people do it; explain how it affects themselves or others; and consider what we can do. The aim was to identify one aspect of our own lives where we do this ourselves and go deeper into the question, rather than only talking about roller coasters. This discussion and expression practice was the main activity.\n\nI also raised a question about the direction of the class: if only one student completes the homework, could we consider moving toward impromptu speaking instead, with less emphasis on homework? For prepared speaking, students need to practise preparing a speech and then presenting it. Without that preparation, it will be very hard for them to learn those skills. This is a possible direction to consider, not a confirmed change.\n\nRoller-coaster discussion: people like the crazy speed and quick turns. They want to go again and again, and want faster and faster rides. Why? The experience is exciting and unique, and some people want to show off. We used the recent Six Flags situation mentioned in class as a news starting point. The slide raised concerns about rides breaking apart, derailments, brain problems, broken bones, vomiting and dizziness; these were discussion and research points, not independently verified claims about a particular incident. The question was: do you want more dangerous rides because they are fun, even if they increase the chance of injury or death? What should we do?\n\nPersonal connection and structure: choose one situation you saw or something you did. Why do people do this? How does it affect themselves or others? What can we do? The aim is to connect the outside-world example with a personal instance, ask ourselves the deeper question, and offer a solution."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Combine and polish the two in-class speech parts",
+            "steps": [
+              "Combine the two parts we worked on in class into one speech, then think about how to polish it. Would you change any words? Would you add more description to your stories? The first part is the roller-coaster situation—the input we got from world news. The second part is the output and the audience connection: a personal instance that has happened, leading us deeper into the question, “Why do we do this?”, and then offering a solution. You already have the basis for both parts. Bring them together and polish them, like working from a rough draft, so you can present in the next class. You do not need to memorize the speech at this point, but I expect everyone to finish the homework."
+            ],
+            "prepareFor": "Present in the next class. Memorization is not required at this stage; completing the homework is expected."
+          },
           "students": [
             {
               "name": "Remy",

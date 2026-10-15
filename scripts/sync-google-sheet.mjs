@@ -1,3 +1,4 @@
+import {applyFallScheduleOverrides} from './fall-schedule-overrides.mjs';
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { publicScheduleCell } from "../src/lib/schedulePresentation.ts";
@@ -321,7 +322,8 @@ async function main() {
   const publicEndMonth = process.env.GOOGLE_PUBLIC_SCHEDULE_END_MONTH?.trim() || "2026-12";
   const publicEndMonthKey = parseStartMonth(publicEndMonth);
   if (publicEndMonthKey < publicMonthKey) throw new Error("Public schedule end month precedes its start month.");
-  const publicSheets = sheets.filter((sheet) => toMonthKey(sheet.title) >= publicMonthKey && toMonthKey(sheet.title) <= publicEndMonthKey)
+  const effectiveSheets = applyFallScheduleOverrides(sheets);
+  const publicSheets = effectiveSheets.filter((sheet) => toMonthKey(sheet.title) >= publicMonthKey && toMonthKey(sheet.title) <= publicEndMonthKey)
     .map(sheet => ({...sheet, rows: sheet.rows.map(row => ({...row,
       cells: row.cells.map(cell => ({...cell, value: publicScheduleCell(cell.value)})),
     }))}));
@@ -338,7 +340,7 @@ async function main() {
     privacyMode: PUBLIC_PRIVACY_MODE,
   };
   const publicOutput = { ...common, sheets: publicSheets };
-  const internalOutput = { ...common, sheets };
+  const internalOutput = { ...common, sheets: effectiveSheets };
 
   assertCalendarDisplayPublicSchedule(publicOutput);
   assertCalendarDisplayPublicSchedule(internalOutput);

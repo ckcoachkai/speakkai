@@ -1,3 +1,4 @@
+import './check-fall-schedule-overrides.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { calendarDisplayEventKind, publicBookingPresentation, scheduleStartMinutes, bookingGrade, publicScheduleCell, internalBookingLabel } from '../src/lib/schedulePresentation.ts';
