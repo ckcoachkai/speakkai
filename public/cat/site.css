@@ -13,3 +13,20 @@
 .main-content>.event-plan:first-child{margin-top:0;margin-bottom:30px}.visit .info-row p.location-address{font-size:16px;font-weight:600;line-height:1.75;color:var(--ink)}
 
 .event-details{min-width:0;flex:1}.sharing-master{margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}.sharing-master>span{display:block;color:var(--wine);font-size:10px;font-weight:700;letter-spacing:.03em}.event-entry .sharing-master p{color:var(--ink);font-size:12px;line-height:1.5;margin:3px 0 0}
+
+/* Month focus: tabbed meeting plan with all dates available when scripting is off. */
+.main-content>.latest-updates:first-child{margin-top:0;margin-bottom:30px}
+.month-tabs{display:flex;gap:10px;margin:18px 0 14px}
+.month-tabs[hidden]{display:none}
+.month-tab{display:flex;flex:1;align-items:center;justify-content:space-between;gap:12px;text-align:left;padding:16px 20px;border:1px solid #c9d7e2;border-radius:6px;background:#fff;color:var(--navy);cursor:pointer;transition:background-color .15s,color .15s}
+.month-tab>span{font-size:16px;font-weight:700}
+.month-tab>small{font-size:11px;font-weight:600}
+.month-tab:hover{background:#eaf1f6}
+.month-tab[aria-selected=true]{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:inset 0 -3px 0 var(--gold)}
+.month-tab[aria-selected=true]>small{color:var(--gold)}
+.event-plan[data-month-tabs=ready] .event-months{grid-template-columns:minmax(0,1fr)}
+.event-month[hidden]{display:none}
+.event-month[role=tabpanel]:focus-visible{outline:3px solid #c58a00;outline-offset:4px}
+@media(max-width:540px){.month-tabs{gap:7px}.month-tab{flex-direction:column;align-items:flex-start;gap:3px;padding:13px 11px}.month-tab>span{font-size:14px}.month-tab>small{font-size:10px}.hero h1{font-size:clamp(28px,7.6vw,37px);letter-spacing:-.7px}.brand strong{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.month-tab{transition:none}}
+@media print{.month-tabs{display:none}.event-month[hidden]{display:block!important}.event-plan[data-month-tabs=ready] .event-months{display:block}.event-month{margin-bottom:20px}}
