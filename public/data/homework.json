@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-15T11:19:25.357034+00:00",
+  "updatedAt": "2026-10-16T08:40:38.530310+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -721,6 +721,41 @@
             {
               "name": "Rhea",
               "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-09&student=rhea"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-16-fri-afternoon",
+          "date": "2026-10-16",
+          "time": "15:40–17:40",
+          "classContent": [
+            "Students are trying to create their own stories using a problem–solution structure: a story with a problem and a solution.\n\nFor the homework presentations, the aim was for students to remember the stories they had created so they could present them. Most read their stories aloud instead. I wondered whether the content was too hard for them to remember, but I am not sure whether they had tried to remember it."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Harper",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-16&student=harper"
+            },
+            {
+              "name": "Wendy",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-16&student=wendy"
+            },
+            {
+              "name": "Ray",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-16&student=ray"
+            },
+            {
+              "name": "Evan",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-16&student=evan"
+            },
+            {
+              "name": "Ethan",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-16&student=ethan"
+            },
+            {
+              "name": "Michaela",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-16&student=mikaela"
             }
           ]
         }

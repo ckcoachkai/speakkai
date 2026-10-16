@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-15T11:19:25.350926+00:00",
+  "updatedAt": "2026-10-16T08:40:38.520877+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -900,6 +900,55 @@
               "attendance": "absent",
               "en": "Rhea was absent from this class. No speaking or homework performance evaluation was recorded.",
               "zh": "Rhea本节课缺席，因此没有记录本节课的演讲或作业表现评价。"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-16-fri-afternoon",
+          "date": "2026-10-16",
+          "time": "15:40–17:40",
+          "status": "held",
+          "classContent": {
+            "en": "Students are trying to create their own stories using a problem–solution structure: a story with a problem and a solution.\n\nFor the homework presentations, the aim was for students to remember the stories they had created so they could present them. Most read their stories aloud instead. I wondered whether the content was too hard for them to remember, but I am not sure whether they had tried to remember it.",
+            "zh": "学生正在尝试运用“问题—解决方法”的结构，创作自己的故事，也就是在故事中呈现一个问题及其解决方法。\n\n作业展示的目的是让学生记住自己创作的故事，以便进行展示。不过，大多数学生还是把故事读了出来。我在想，内容会不会太难记住；但我并不确定他们是否尝试过记忆。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "harper",
+              "name": "Harper",
+              "en": "Harper had not been in class for a while, but she was able to answer the prompt. She added the transition words I gave her—“first,” “second,” and “finally”—and completed everything required in the activity. There was no problem with that.",
+              "zh": "Harper有一段时间没有来上课，不过她能够回答题目，也加入了我给她的过渡词：“first”（首先）、“second”（其次）和“finally”（最后）。她完成了这项活动中要求的全部内容，这方面没有问题。"
+            },
+            {
+              "id": "wendy",
+              "name": "Wendy",
+              "en": "Wendy read her story aloud. The main purpose of the homework was for students to remember the stories they had created so they could present them. Most students read their stories aloud instead. I wondered whether the content was too hard for them to remember, but I am not sure whether they had tried to remember it. For Wendy, there is not much else I can comment on from this attempt, as she read the story rather than presenting it from memory.",
+              "zh": "Wendy把自己的故事读了出来。这次作业的主要目的是让学生记住自己创作的故事，以便进行展示。但大多数学生还是把故事读了出来。我在想，内容会不会太难记住；不过，我并不确定他们是否尝试过记忆。就Wendy这次的表现而言，没有太多其他可以评价的地方，因为她是在读故事，而不是凭记忆进行展示。"
+            },
+            {
+              "id": "ray",
+              "name": "Ray",
+              "en": "Ray spoke with a lot of power in his voice. His voice was strong, and everyone could hear him clearly, which was good. That is the first step: having a clear voice. However, there was not much emotion in his delivery. It felt as though he was speaking very loudly, rather than expressing the emotion behind the words. The next step is to bring emotion into his voice, not just volume.",
+              "zh": "Ray讲话时声音很有力量，声音强，大家都能清楚听见，这一点很好。这是第一步：先有清楚的声音。不过，他的表达中没有太多情绪，听起来更多是在大声讲话，而没有把话语背后的情绪表达出来。下一步是让声音带上情绪，而不只是提高音量。"
+            },
+            {
+              "id": "evan",
+              "name": "Evan",
+              "en": "Evan read his story aloud, without a lot of enthusiasm or energy. Still, it was good that he came up to speak.",
+              "zh": "Evan把自己的故事读了出来，表达中没有太多热情或活力。不过，他能够上台开口讲话，这一点是好的。"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "Ethan had not done or practised his homework. He simply read the text, and he did not speak very clearly. At most, this was reading a text rather than presenting it. There is very little further feedback I can give him unless he puts in the effort to do his homework and actually presents. My main feedback at this point is: do your homework.\n\nTo Ethan’s parents: if you want me to give him more feedback, he needs to actually do the work and present it. Presentation is what we are practising in this class. If he is not presenting, I cannot give him the same feedback on his presentation skills.",
+              "zh": "Ethan没有完成作业，也没有练习。他只是读出了文字，而且说得不够清楚。这最多是在读一篇文字，而不是进行展示。如果他不投入精力完成作业，并真正进行展示，我就很难给出更多反馈。目前我最主要的反馈就是：完成作业。\n\n给Ethan的爸爸妈妈：如果希望我给他更多反馈，就需要让他真正完成准备工作，并把内容展示出来。我们这门课练习的就是展示与演讲。如果他没有进行展示，我就无法针对他的展示能力给出相应的反馈。"
+            },
+            {
+              "id": "mikaela",
+              "name": "Michaela",
+              "en": "Michaela’s voice was a bit louder today, and it was easier for me to hear her than before. I think she seemed a little more confident as well. Michaela, just keep going and keep getting better at this.",
+              "zh": "Michaela今天的声音比之前响亮了一些，我也更容易听清楚她的表达。我觉得她看起来也比之前多了一点自信。Michaela，继续保持，继续练习，让自己在这方面越来越好。"
             }
           ]
         }
