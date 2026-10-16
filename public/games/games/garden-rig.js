@@ -8,6 +8,76 @@ const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, finite(v, lo)));
 const TAU = Math.PI * 2, RAD = Math.PI / 180;
 const PLANT_RIG = {pea:'pea',twin:'twin',burst:'burst',frost:'frost',fire:'twin',pierce:'cactus',catapult:'catapult',splash:'splash',laser:'gatling',thorn:'cactus',walnut:'walnut',tallnut:'tallnut',chestnut:'walnut',gatling:'gatling',sunflower:'sunflower',cactus:'cactus',wintermelon:'wintermelon',potato:'potato',potatomine:'potato',cherrybomb:'cherrybomb',cherry:'cherrybomb',torchwood:'torchwood'};
 
+// Picker evolutions are connected parts of the plant, rather than floating
+// badges. Classic never calls this custom-upgrade renderer.
+export function drawGardenPlantUpgrade(ctx,{weapon='pea',defender={},time=0}={}) {
+  const power=clamp(defender.power,0,10),tier=power>=9?4:power>=6?3:power>=3?2:power>0?1:0;
+  if(!tier||defender.eaten)return;
+  const id=typeof weapon==='string'?weapon:weapon.id,key=PLANT_RIG[id]||'pea';
+  const ice=key==='frost'||key==='wintermelon',nut=key==='walnut'||key==='tallnut';
+  const leaf=ice?'#82cfe0':'#64aa43',dark=ice?'#33798e':nut?'#79552f':'#346332';
+  const edge=ice?'#ddfaff':nut?'#d7b780':'#b7d77a';
+  const oval=(x,y,rx,ry,color,angle=0)=>{ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(x,y,rx,ry,angle,0,TAU);ctx.fill();};
+  const line=(points,color,width)=>{ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();};
+  ctx.save();ctx.lineJoin='round';ctx.lineCap='round';
+  if(nut) {
+    // Upright shell plates get wider, heavier and ribbed. No spinning tracks.
+    const top=key==='tallnut'?-66:-51;
+    for(const side of[-1,1]) {
+      ctx.fillStyle=tier<3?'#a87c46':'#8b663c';ctx.strokeStyle=dark;ctx.lineWidth=1.8;
+      ctx.beginPath();ctx.moveTo(side*17,top+8);ctx.lineTo(side*(24+tier*2),top+14);ctx.lineTo(side*(25+tier*2),-12);ctx.lineTo(side*15,-5);ctx.closePath();ctx.fill();ctx.stroke();
+      if(tier>=2)line([[side*23,top+17],[side*24,-15]],edge,2.5);
+    }
+    if(tier>=3){line([[-22,-11],[22,-11]],'#705333',7);line([[-23,top+7],[23,top+7]],edge,5);}
+    if(tier===4)for(const side of[-1,1])for(let n=0;n<3;n++) {
+      ctx.fillStyle='#e6cf9b';ctx.beginPath();ctx.moveTo(side*27,top+17+n*12);ctx.lineTo(side*37,top+12+n*12);ctx.lineTo(side*29,top+24+n*12);ctx.fill();
+    }
+  } else if(key==='catapult'||key==='wintermelon'||key==='splash') {
+    // A substantial wicker cradle and braced throwing arm develop together.
+    oval(0,-7,25+tier*2,8,dark);oval(0,-9,22+tier*2,6,leaf);
+    line([[-24,-9],[-18,-28],[12,-28],[24,-9]],dark,4+tier);
+    if(tier>=2)for(let n=-18;n<=18;n+=9)line([[n,-24],[n+4,-10]],edge,2.5);
+    if(tier>=3){line([[-17,-11],[12,-43],[19,-50]],dark,5);line([[-14,-12],[13,-40]],edge,2);}
+    if(tier===4){oval(-25,-10,9,13,leaf,-.5);oval(26,-10,9,13,leaf,.5);line([[-20,-6],[20,-6]],edge,3);}
+  } else if(key==='cactus') {
+    // Successive real cactus arms enlarge the silhouette without fake icons.
+    for(const side of[-1,1]) {
+      line([[side*12,-13],[side*(22+tier*2),-20],[side*(22+tier*2),-29-tier*5]],dark,10);
+      line([[side*12,-14],[side*(22+tier*2),-21],[side*(22+tier*2),-29-tier*5]],leaf,6);
+      for(let n=0;n<tier;n++)line([[side*(24+tier*2),-25-n*6],[side*(31+tier*2),-28-n*6]],edge,2);
+    }
+    if(tier>=3)oval(0,-6,17,7,'#a5bf62');
+  } else if(['pea','twin','burst','frost','gatling'].includes(key)) {
+    // Broad roots and a thick connected stem are visible even on compact rows.
+    for(const side of[-1,1])oval(side*(16+tier),-5,15+tier*2,6+tier*.8,leaf,side*.32);
+    line([[0,-8],[0,-26]],dark,6+tier);line([[-2,-9],[-2,-25]],leaf,3+tier*.5);
+    const heads=key==='burst'?[[-1,-56],[10,-38],[-1,-22]]:key==='twin'?[[0,-46]]:[[0,key==='gatling'?-42:-46]];
+    for(const [hx,hy]of heads) {
+      // Reinforce the existing snout, retaining the original number of guns.
+      line([[hx+16,hy+5],[hx+34+tier,hy+5]],dark,8+tier*1.5);
+      line([[hx+18,hy+2],[hx+34+tier,hy+2]],ice?'#b6edfa':'#8eb75c',4+tier*.7);
+      if(tier>=2)for(const x of[hx+19,hx+30])line([[x,hy-2],[x,hy+11]],edge,3);
+      if(tier>=3) {
+        oval(hx-19,hy+12,9,13,leaf,-.65);
+        line([[hx-18,hy+13],[hx-5,hy+20]],dark,4);
+      }
+      if(tier===4) {
+        if(ice)for(let i=0;i<4;i++) {
+          const x=hx-16+i*9;ctx.fillStyle=i%2?'#a3e5f7':'#e2fcff';ctx.beginPath();ctx.moveTo(x-4,hy-15);ctx.lineTo(x,hy-25-(i%2)*6);ctx.lineTo(x+5,hy-14);ctx.fill();
+        } else {
+          // Leaf armor wraps the cheek; the eye stays uncovered.
+          line([[hx-22,hy+2],[hx-25,hy+14],[hx-8,hy+22],[hx+12,hy+16]],'#416d35',6);
+          line([[hx-24,hy+14],[hx-7,hy+20],[hx+10,hy+15]],edge,2);
+        }
+      }
+    }
+    if(key==='gatling'&&tier>=2){oval(-19,-24,10+tier,13,'#516348');line([[-27,-26],[-12,-26]],'#b8cd85',3);}
+  }
+  // A shield is real fitted armor, large enough to read without a HUD symbol.
+  if(defender.shield>0&&!nut){line([[-18,-10],[-21,-24],[-10,-29]],'#c7eaff',5);line([[-17,-11],[-19,-22],[-10,-26]],'#4c8592',2);}
+  ctx.restore();
+}
+
 export function createGardenRenderer({artwork = {}} = {}) {
   let manifest = null, closed = false, loading = true, error = null, extraError = null, extraLoaded = false;
   const images = new Map(), failed = new Set(), ready = new Set(), required = new Map(), pending = new Set();

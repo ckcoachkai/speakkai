@@ -1,6 +1,7 @@
-import { createGardenRenderer } from './garden-rig.js?v=20261013-garden';
+import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261016-garden';
 import { GARDEN_RULES, PLANT_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
+import { createGardenMonsters } from './garden-monsters.js?v=20261016-garden';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
@@ -40,6 +41,14 @@ export const ZOMBIE_CATALOG = Object.freeze(ARCHETYPES.flatMap((base, a) => ARMO
   brow: c, nose: a, buttons: b + 1,
 })))));
 
+// Original classroom monsters use ordinary health, armor and bite mechanics.
+// They are rare members of later waves, never a timed selection shortcut.
+export const GIANT_CATALOG = Object.freeze([
+  { id: 'mossbell', name: 'Mossbell', health: 1800, bodyHealth: 1800, armorHealth: 0, speed: .012, bite: 80, biteCadence: .75 },
+  { id: 'bramblecrab', name: 'Bramblecrab', health: 2200, bodyHealth: 1600, armorHealth: 600, speed: .010, bite: 90, biteCadence: .90 },
+  { id: 'scrapjaw', name: 'Scrapjaw', health: 2400, bodyHealth: 1700, armorHealth: 700, speed: .0115, bite: 100, biteCadence: 1 },
+].map(monster => Object.freeze({ ...monster, giant: true, monsterId: monster.id, classification: 'original', archetype: 0, armor: 0, ability: 0, resistance: 0, regeneration: 0, dodge: 0, rush: 1, frenzy: 1 })));
+export const PICKER_VISUAL_TIMING = Object.freeze({ cherryFuse: 3, cherryMaximumTempo: 2.5, cherryBurstWallSeconds: .95, melonVelocityFactor: .53, melonImpactTimeScale: .65 });
 const BASE_CADENCE = PLANT_BY_ID.pea.interval;
 export const PICKER_PACING = Object.freeze({ peaInterval: BASE_CADENCE, upgradeMinimumInterval: PLANT_BY_ID.pea.intervalMin, projectileTilesPerSecond: 4.16, firstZombie: 3, spawnMinimum: 6.4, spawnMaximum: 8.4, pressureStarts: 90, melonSplashTileRadius: 1.5, geometry: 'Readable 3-by-3 tile splash adaptation; original damage and crowded-target cap' });
 const classicWeapon = (id, icon) => ({ ...PLANT_BY_ID[id], icon, classification: 'classic', sourceHealth: PLANT_BY_ID[id].hp, sourceDamage: PLANT_BY_ID[id].damage, multiplier: PLANT_BY_ID[id].damage / 20, cooldown: PLANT_BY_ID[id].interval / BASE_CADENCE, slow: PLANT_BY_ID[id].slow < 1 ? PLANT_BY_ID[id].slow : undefined, pierce: 1, radius: 0 });
@@ -127,21 +136,22 @@ export default function createGame({ container, names = [], onPick, random = Mat
   const players = names.map((entry, index) => ({ ...entry, avatar: ['boy', 'girl', 'neutral'].includes(entry.avatar) ? entry.avatar : 'neutral', avatarIndex: identityHash(entry.id || entry.name || ''), name: String(entry.name ?? 'Gardener ' + (index + 1)), color: entry.color || [C.mint, C.coral, C.gold][index % 3] }));
   const root = document.createElement('div');
   root.className = 'garden-siege';
-  root.innerHTML = '<style>.garden-siege{width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;background:#101b33;color:#fff4df;position:relative}.garden-siege .garden-window{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#7bd8c955 #101b33}.garden-siege canvas{display:block}.garden-siege .garden-note{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}.garden-siege .garden-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}</style><div class="garden-window"><canvas role="img"></canvas></div><div class="garden-note">Plants vs. Zombies: sunshine grows your defenders. Each student has one single-use lawnmower.</div><div class="garden-live" aria-live="polite"></div>';
+  root.innerHTML = '<style>.garden-siege{width:100%;height:100%;min-height:0;overflow:hidden;background:#101b33;color:#fff4df;position:relative}.garden-siege .garden-window{position:absolute;inset:0;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#7bd8c955 #101b33}.garden-siege canvas{display:block;outline:none}.garden-siege .garden-note{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}.garden-siege .garden-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}</style><div class="garden-window"><canvas role="img" tabindex="0"></canvas></div><div class="garden-note">Plants vs. Zombies: sunshine grows your defenders. Each student has one single-use lawnmower.</div><div class="garden-live" aria-live="polite"></div>';
   container.appendChild(root);
   const canvas = root.querySelector('canvas'), viewport = root.querySelector('.garden-window');
   const note = root.querySelector('.garden-note'), live = root.querySelector('.garden-live');
   const ctx = canvas.getContext('2d');
   const renderer = createGardenRenderer({ artwork });
   const fx = createGardenFX({ artwork });
+  const monsters = createGardenMonsters({ artwork });
   canvas.setAttribute('aria-label', 'Plants vs. Zombies name picker. Each student starts behind a pea shooter, a front Tall-nut, and one single-use lawnmower. Suns recruit shooters, Potato Mines, Torchwood, and Cherry Bombs. Every lane faces 5, then 50, 100, 200, and doubling zombie quotas; excess zombies wait behind the live limit. The first student out of health speaks next.');
-  let alive = true, raf = 0, generation = 0, phase = 'idle', reported = false, winner = null;
-  let width = 1000, height = 560, laneHeight = 88, boardHeader = 64, lanes = [];
+  let alive = true, raf = 0, generation = 0, phase = 'idle', reported = false, winner = null, winnerSnapshot = null;
+  let width = 1000, height = 560, laneHeight = 88, boardHeader = 64, boardFooter = 12, viewportHeight = 560, lanes = [];
   let simTime = 0, startedAt = 0, resultAt = 0, visualResultAt = null, previous = null, focused = false, serial = 0;
   const validSpeed = value => clamp(Number.isFinite(Number(value)) ? Number(value) : 1, .5, 8);
-  let playbackRate = validSpeed(speed), clockAt = null, simulationBudget = 0;
+  let playbackRate = validSpeed(speed), clockRate = playbackRate, clockAt = null, simulationBudget = 0;
   let waveIndex = 0, nextWaveAt = PICKER_PACING.firstZombie;
-  let impacts = [];
+  let impacts = [], pickupFlights = [], wallTime = 0;
   let shots = [], pendingShots = [], effects = [], drops = [], combatLog = [], soundEnabled = Boolean(sound);
   let audio = null, audioTimer = null, master = null, sfxMaster = null, beat = 0, nextBeat = 0, audioEpoch = 0, audioLoadController = null;
   const sampleBuffers = new Map(), sfxVoices = new Set(), musicVoices = new Set(), lastSfx = new Map(), sfxRotation = new Map();
@@ -220,25 +230,36 @@ export default function createGame({ container, names = [], onPick, random = Mat
   }
   function layout() {
     if (!alive) return;
-    width = Math.max(620, Math.round(root.clientWidth || container.clientWidth || 1000));
-    const available = Math.max(260, viewport.clientHeight || root.clientHeight || 560);
+    // Measure the host, rather than a canvas-inflated scroll area. Observing
+    // all three boxes also corrects the first frame when flex layout settles.
+    const hostRect = container.getBoundingClientRect?.();
+    width = Math.max(620, Math.round(container.clientWidth || hostRect?.width || root.clientWidth || 1000));
+    const measured = [container.clientHeight, hostRect?.height, root.clientHeight, viewport.clientHeight].filter(value => Number.isFinite(value) && value > 0);
+    const available = Math.max(1, Math.floor(measured.length ? Math.min(...measured) : 560));
+    viewportHeight = available;
     const rows = Math.max(1, players.length);
     // One board and one horizontal lane per player. Large rosters scroll down
     // the same lawn rather than becoming a collection of separate mini-games.
-    laneHeight = players.length <= 10 ? Math.max(18, Math.floor((available - boardHeader - 12) / Math.max(5, rows))) : 88;
-    height = Math.max(available, boardHeader + rows * laneHeight + 12);
+    boardHeader = available >= 650 ? 64 : available >= 580 ? 36 : 24;
+    const desiredFooter = available >= 650 ? 88 : available >= 580 ? 56 : 24;
+    boardFooter = players.length <= 10 ? Math.min(desiredFooter, Math.max(0, available - boardHeader - rows * 80)) : 12;
+    laneHeight = players.length <= 10 ? Math.max(1, (available - boardHeader - boardFooter) / Math.max(2, rows)) : 100;
+    height = players.length <= 10 ? available : Math.max(available, boardHeader + rows * laneHeight + boardFooter);
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr);
     canvas.style.width = width + 'px'; canvas.style.height = height + 'px'; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     for (const lane of lanes) {
       lane.x = 12; lane.y = boardHeader + lane.index * laneHeight;
-      lane.w = width - 24; lane.h = laneHeight; lane.rail = width < 480 ? 75 : 88;
+      lane.w = width - 24; lane.h = laneHeight; lane.rail = 88;
       // Keep the student's portrait beside its quiet name/health tag. The
       // five defenders occupy separate tiles immediately to the right.
       lane.plantX = lane.x + 73; lane.floor = lane.y + lane.h - 5;
       lane.travel = lane.w - 95;
-      lane.spriteScale = Math.min(clamp((lane.h - 8) / 72, .28, 1.2), lane.travel * .11 / 85);
-      lane.zombieScale = clamp((lane.h - 4) / 113, .20, 1);
+      lane.spriteScale = Math.min(clamp((lane.h - 12) / 110, .12, 1.2), lane.travel * .11 / 85);
+      // A giant is truly 370/112 times a normal enemy, while both remain
+      // entirely inside their own lane. Student/defender geometry is separate.
+      lane.zombieScale = Math.max(.035, Math.min((lane.h - 4) / 370, .60));
+      lane.nameWidth = Math.max(76, Math.min(174, .14 * lane.travel - 7));
     }
   }
   function newDefender(slot, weapon = 'pea', recruited = false) {
@@ -257,8 +278,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
       hp: STUDENT_HEALTH, maxHp: STUDENT_HEALTH, damage: 20, cooldown: BASE_CADENCE, velocity: PICKER_PACING.projectileTilesPerSecond, penetration: 0, splash: 0, crit: 0,
       power: 0, kills: 0, loot: [], suns: 0, stars: 0, shotsFired: 0, nextSpawn: PICKER_PACING.firstZombie, nextWave: PICKER_PACING.firstZombie, wave: 0, waveSize: 0, waveTarget: 0, waveSpawned: 0, deferredSpawns: 0, queuedSpawns: 0, nextGrowl: 5 + index % 5, mobs: [], defenders: [newDefender(0), newDefender(4, 'tallnut')], emotionStage: 0, bruiseStage: 0,
       mower: { uid: 'mower-' + index, status: 'ready', x: LAWNMOWER_RULES.home, previousX: LAWNMOWER_RULES.home, activations: 0, kills: 0, killIds: [], activatedAt: null, spentAt: null, triggeredBy: null },
-      trap: null, torchwood: null, bomb: null, eaten: false, hurt: 0, lastLoot: null }));
-    shots = []; pendingShots = []; effects = []; impacts = []; drops = []; rewards = []; nextReward = 1.30; combatLog = []; simTime = 0; focused = false; introPlayed = false;
+      trap: null, torchwood: null, bomb: null, collectionAt: -Infinity, collectedKind: null, eaten: false, hurt: 0, lastLoot: null }));
+    shots = []; pendingShots = []; effects = []; impacts = []; pickupFlights = []; drops = []; rewards = []; nextReward = 1.30; combatLog = []; simTime = 0; focused = false; introPlayed = false;
     waveIndex = 0; nextWaveAt = PICKER_PACING.firstZombie;
     layout();
   }
@@ -270,6 +291,10 @@ export default function createGame({ container, names = [], onPick, random = Mat
   }
   function float(lane, mob, value, color) { effects.push({ kind: 'text', lane: lane.index, x: mob.x, y: -69, vy: -22, life: .7, color, value: String(value) }); }
   function livingDefenders(lane) { return lane.defenders.filter(defender => !defender.eaten); }
+  function pickupFlight(lane, owner, source) {
+    pickupFlights.push({ ...source, lane: lane.index, ownerLane: owner.index, startedWall: performance.now(), duration: Math.max(.6, 1.1 / playbackRate), completed: false });
+    pickupFlights = pickupFlights.slice(-180);
+  }
   function recruitDefender(lane, weapon, source) {
     // A new plant grows between the student and approaching zombies. It cannot
     // spring up behind a zombie that has already passed that lawn tile.
@@ -324,8 +349,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       target.maxHp = clamp(target.maxHp + (e.maxHp || 0), baseHp, baseHp + 150);
       target.hp = Math.min(target.maxHp, target.hp + (e.heal || 0) + (e.maxHp || 0));
       target.shield = clamp(target.shield + (e.shield || 0), 0, 40);
-      particle(owner, target.position, '#fff2a7', 5);
-      effects.push({ kind: 'text', lane: owner.index, x: target.position, y: -65, vy: -15, life: .8, color: '#fff2ac', value: item.name });
+      effects.push({ kind: 'text', lane: owner.index, x: 0, y: -65, vy: -15, life: .8, color: '#fff2ac', value: item.name });
     }
     owner.power = Math.min(10, owner.power + 1); owner.lastLoot = item;
     owner.loot.push(item.id); if (owner.loot.length > 100) owner.loot.shift();
@@ -335,17 +359,17 @@ export default function createGame({ container, names = [], onPick, random = Mat
     mob.deathAt = simTime;
     const owner = method !== 'plant' ? null : lanes.find(player => player.entry.id === mob.lastShooter);
     const item = LOOT_CATALOG[mob.lootIndex];
-    let upgrade = null;
     if (owner && !owner.eaten) {
       owner.kills++; const attacker = owner.defenders.find(defender => defender.uid === mob.lastAttacker); if (attacker) attacker.kills++;
-      upgrade = giveLoot(owner, item);
     }
     if (method !== 'plant') (lanes.find(player => player.entry.id === mob.lastShooter) || lane).kills++;
-    else drops.push({ lane: lane.index, ownerLane: owner?.index ?? lane.index, x: mob.x, age: 0, life: .8, item });
+    else if (owner && !owner.eaten) {
+      drops.push({ lane: lane.index, ownerLane: owner.index, ownerId: owner.entry.id, attackerId: mob.lastAttacker, zombieId: mob.uid, x: mob.x, age: 0, life: 1.1, item });
+      pickupFlight(lane, owner, { kind: 'loot', x: mob.x, y: -30 * lane.spriteScale, item });
+    }
     particle(lane, mob.x, '#c3e19b', 12, true);
     addLog({ type: 'kill', zombieId: mob.uid, variant: mob.type.id, ownerId: mob.lastShooter, attackerId: mob.lastAttacker, method, lootId: method !== 'plant' ? null : item.id });
-    if (method === 'plant') addLog({ type: 'loot', lootId: item.id, ownerId: mob.lastShooter, attackerId: mob.lastAttacker, ...upgrade });
-    playSfx('death', lane); if (owner) playSfx('pickup', owner);
+    playSfx('death', lane);
   }
   function hit(lane, mob, shot, dotDamage = false) {
     if (mob.dead) return;
@@ -381,7 +405,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (result.killed) killed(lane, mob);
   }
   function spawn(lane, starter = false) {
-    const pool = starter ? [ZOMBIE_CATALOG[0]] : ZOMBIE_CATALOG, type = pool[Math.floor(rng() * pool.length)];
+    const giantEligible = !starter && lane.wave >= 2 && !lane.mobs.some(mob => !mob.dead && mob.type.giant);
+    const pool = giantEligible && rng() < .03 ? GIANT_CATALOG : starter ? [ZOMBIE_CATALOG[0]] : ZOMBIE_CATALOG;
+    const type = pool[Math.floor(rng() * pool.length)];
     const pressure = Math.max(0, simTime - PICKER_PACING.pressureStarts);
     // Ordinary variants gradually arrive more often and move a little faster.
     // There is no timed boss, one-hit assault or deadline that selects a name.
@@ -393,14 +419,15 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (type.ability === 2) visualType = 'dancer';
     if (type.ability === 3) visualType = 'construction';
     if (type.armor > 0) visualType = ['walker', 'cone', 'bucket', 'football'][type.armor];
+    if (type.giant) visualType = type.monsterId;
     const mob = { uid, type, x: 1.02 + rng() * .08,
       hp, maxHp: hp, armorHp, maxArmorHp: armorHp, bodyHp, maxBodyHp: bodyHp, resistance: type.resistance, speed: type.speed * (1 + pressure * .006),
       bite: type.bite * 1.08, cadence: type.biteCadence, nextBite: 0,
       stage: 0, hurt: 0, dodgePose: 0, dead: false, deathAt: 0, lastShooter: null, slow: 1, slowUntil: 0, chewSlow: 1, stunnedUntil: 0, burn: null,
       lootIndex: Math.floor(rng() * LOOT_CATALOG.length), pose: rng() * TAU, animationTime: simTime, attacking: false };
-    Object.defineProperties(mob, { visualType: { value: visualType, enumerable: true }, rigIdentity: { value: type.id + '-' + uid, enumerable: true } });
+    Object.defineProperties(mob, { visualType: { value: visualType, enumerable: true }, monsterId: { value: type.monsterId || null, enumerable: true }, rigIdentity: { value: type.id + '-' + uid, enumerable: true } });
     lane.mobs.push(mob);
-    addLog({ type: 'spawn', zombieId: mob.uid, variant: type.id, visualType, rigIdentity: mob.rigIdentity, health: Math.round(hp), damage: mob.bite, speed: mob.speed, laneId: lane.entry.id });
+    addLog({ type: 'spawn', zombieId: mob.uid, variant: type.id, visualType, giant: Boolean(type.giant), rigIdentity: mob.rigIdentity, health: Math.round(hp), damage: mob.bite, speed: mob.speed, laneId: lane.entry.id });
     playSfx('growl', lane);
   }
   function shoot(lane, defender) {
@@ -424,7 +451,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
           stunDuration: butter ? weapon.stunDuration || 4 : 0, projectileStyle: butter ? 'butter' : attackType === 'splash' ? 'kernel' : ['catapult', 'wintermelon'].includes(attackType) ? 'melon' : attackType === 'frost' ? 'ice' : attackType === 'pierce' ? 'thorn' : 'pea',
           splashDamage: weapon.splashDamage ? weapon.splashDamage * lane.damage / 20 * (critical ? 1.7 : 1) : 0,
           splashTiles: weapon.splashDamage ? PICKER_PACING.melonSplashTileRadius : 0, bonusRadius: lane.splash,
-          velocity: lane.velocity / 9 * (['catapult', 'wintermelon', 'splash'].includes(weapon.id) ? .88 : 1), pierce: weapon.pierce,
+          velocity: lane.velocity / 9 * (['catapult', 'wintermelon'].includes(weapon.id) ? PICKER_VISUAL_TIMING.melonVelocityFactor : weapon.id === 'splash' ? .88 : 1), pierce: weapon.pierce,
           arc: ['catapult', 'wintermelon', 'splash'].includes(weapon.id) });
       }
     }
@@ -436,13 +463,13 @@ export default function createGame({ container, names = [], onPick, random = Mat
       if (!defender || defender.eaten || owner.eaten || lanes[event.lane].eaten) continue;
       if (event.fireAt > simTime + 1e-9) { waiting.push(event); continue; }
       defender.recoil = .12; defender.shotsFired++; owner.shotsFired++; playSfx(event.attackType === 'gatling' ? 'gatling' : 'shot', owner);
-      shots.push({ ...event, uid: ++serial, x: event.origin + .025, hitIds: new Set(), life: 4.2 });
+      shots.push({ ...event, uid: ++serial, x: event.origin + .025, hitIds: new Set(), life: event.projectileStyle === 'melon' ? 6 : 4.2 });
       addLog({ type: 'shot', weapon: event.weapon, ownerId: event.ownerId, attackerId: event.attackerId, targetLaneId: lanes[event.lane].entry.id, damage: event.damage, projectileStyle: event.projectileStyle, fireAt: Number(event.fireAt.toFixed(3)) });
     }
     pendingShots = waiting;
   }
   function splashImpact(shot, primaryLane, primary) {
-    impacts.push({ ...fx.createMelonImpact({ x: primary.x, y: 0, row: primaryLane.index, lane: primaryLane.index, kind: shot.weapon === 'wintermelon' ? 'wintermelon' : 'melon', seed: shot.uid }), lane: primaryLane.index, position: primary.x, age: 0 });
+    impacts.push({ ...fx.createMelonImpact({ x: primary.x, y: 0, row: primaryLane.index, lane: primaryLane.index, kind: shot.weapon === 'wintermelon' ? 'wintermelon' : 'melon', seed: shot.uid }), lane: primaryLane.index, position: primary.x, createdWall: performance.now(), firstSeenWall: null, age: 0 });
     const hitRows = [primaryLane.index - 1, primaryLane.index, primaryLane.index + 1].filter(index => index >= 0 && index < lanes.length);
     const radius = shot.splashTiles / 9;
     const nearby = [];
@@ -539,15 +566,25 @@ export default function createGame({ container, names = [], onPick, random = Mat
     }
   }
   function advanceEffects(dt) {
-    for (const impact of impacts) impact.age += dt;
-    impacts = impacts.filter(impact => impact.age <= 3).slice(-120);
     for (const effect of effects) {
       effect.life -= dt;
       if (effect.kind === 'particle') { effect.x += effect.vx * dt; effect.y += effect.vy * dt; effect.vy += 100 * dt; }
       if (effect.kind === 'text') effect.y += effect.vy * dt;
     }
     effects = effects.filter(effect => effect.life > 0).slice(-1800);
-    for (const drop of drops) { drop.age += dt; drop.life -= dt; }
+    for (const drop of drops) {
+      drop.age += dt; drop.life -= dt;
+      if (drop.life <= 0 && !drop.collected) {
+        drop.collected = true;
+        const owner = lanes[drop.ownerLane];
+        if (owner && owner.entry.id === drop.ownerId && !owner.eaten) {
+          const upgrade = giveLoot(owner, drop.item);
+          particle(owner, 0, '#fff2a7', 12, true);
+          addLog({ type: 'loot', lootId: drop.item.id, ownerId: drop.ownerId, attackerId: drop.attackerId, zombieId: drop.zombieId, collectedBy: 'student', ...upgrade });
+          playSfx('pickup', owner);
+        }
+      }
+    }
     drops = drops.filter(drop => drop.life > 0);
   }
   function recruitMine(lane) {
@@ -611,7 +648,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   function recruitCherry(lane) {
     if (lane.eaten || (lane.bomb && !lane.bomb.spent)) return;
     const nearest = lane.mobs.filter(mob => !mob.dead).sort((a, b) => a.x - b.x)[0];
-    lane.bomb = { uid: 'cherry-' + (++serial), position: clamp(nearest?.x ?? .76, .54, .94), bornAt: simTime, fuseAt: simTime + PLANT_BY_ID.cherrybomb.fuse, spent: false, explodedAt: null, kills: 0 };
+    lane.bomb = { uid: 'cherry-' + (++serial), position: clamp(nearest?.x ?? .76, .54, .94), bornAt: simTime, fuseAt: simTime + PICKER_VISUAL_TIMING.cherryFuse, fuseFirstSeenWall: null, spent: false, explodedAt: null, burstFirstSeenWall: null, kills: 0 };
     addLog({ type: 'cherryPlanted', ownerId: lane.entry.id, bombId: lane.bomb.uid, fuseAt: lane.bomb.fuseAt }); playSfx('plant', lane);
   }
   function updateCherry(lane) {
@@ -631,18 +668,22 @@ export default function createGame({ container, names = [], onPick, random = Mat
     addLog({ type: 'cherryExploded', ownerId: lane.entry.id, bombId: bomb.uid, kills: bomb.kills });
   }
   function endRound(event) {
+    if (phase !== 'running' || !event?.lane?.eaten || event.lane.hp > 0) return;
     winner = event.lane; resultAt = event.time; phase = 'result';
+    winnerSnapshot = Object.freeze({ id: winner.entry.id, name: winner.entry.name, laneIndex: winner.index, studentHp: winner.hp, at: resultAt });
     particle(winner, 0, C.gold, 28, true);
     note.textContent = winner.entry.name + "'s defenses fell. They speak next!";
     live.textContent = winner.entry.name + ' is the next speaker.';
     canvas.setAttribute('aria-label', 'Plants vs. Zombies. ' + winner.entry.name + "'s student ran out of health after the defenders fell and the single-use lawnmower was spent, and is the next speaker.");
     addLog({ type: 'winner', ownerId: winner.entry.id, at: resultAt });
     follow(winner, true);
+    try { canvas.focus?.({ preventScroll: true }); } catch {}
     stopMusic();
   }
   function step(dt) {
     simTime += dt;
     const deaths = [];
+    const studentBefore = new Map(lanes.map(lane => [lane, { hp: lane.hp, hurt: lane.hurt, emotionStage: lane.emotionStage }]));
     updateRewards(dt);
     updateWaveClock();
     for (const lane of lanes) {
@@ -701,7 +742,18 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (deaths.length) {
       const firstTime = Math.min(...deaths.map(event => event.time));
       const tied = deaths.filter(event => Math.abs(event.time - firstTime) < 1e-8);
-      endRound(tied[Math.floor(rng() * tied.length)]);
+      const chosen = tied[Math.floor(rng() * tied.length)];
+      // End this tiny physics interval at its first lethal contact. Other
+      // students retain their pre-contact state instead of looking selected.
+      const frozen = new Set();
+      for (const event of deaths) if (event !== chosen) {
+        const before = studentBefore.get(event.lane);
+        event.lane.hp = before.hp; event.lane.hurt = before.hurt; event.lane.eaten = false;
+        event.lane.emotionStage = before.emotionStage; event.lane.bruiseStage = studentEmotionState(event.lane).bruiseStage;
+        frozen.add(event.lane.entry.id);
+      }
+      combatLog = combatLog.filter(entry => !(entry.time === Number(simTime.toFixed(3)) && entry.type === 'bite' && entry.target === 'student' && entry.remainingHp === 0 && frozen.has(entry.laneId)));
+      endRound(chosen);
     } else if (!focused && simTime > 12) {
       const weakest = [...lanes].sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
       if (weakest && weakest.hp < weakest.maxHp * .6) { follow(weakest); focused = true; }
@@ -742,10 +794,10 @@ export default function createGame({ container, names = [], onPick, random = Mat
       if (defender) evolveDefender(defender, WEAPON_MAP[defender.weapon].blocker ? BLOCKERS[Math.floor(rng() * BLOCKERS.length)].id : newShooterType(lane));
     }
     if (defender && reward.kind === 'sun') defender.power = Math.min(10, defender.power + 1);
-    const position = defender?.position ?? .14;
-    particle(lane, position, reward.kind === 'sun' ? '#ffe982' : '#caf0ff', 12, true);
-    if (action !== 'recruit') effects.push({ kind: 'text', lane: lane.index, x: position, y: -65, vy: -16, life: .65, color: reward.kind === 'sun' ? '#fff2a2' : '#d8f2ff', value: reward.kind === 'sun' ? 'SUN +' : 'TEAM +' });
-    addLog({ type: 'resource', kind: reward.kind, ownerId: lane.entry.id, weapon: defender?.weapon ?? null, defenderId: defender?.uid ?? null, action, power: lane.power });
+    if (reward.kind === 'sun') for (const member of livingDefenders(lane)) if (member !== defender) member.power = Math.min(10, member.power + 1);
+    particle(lane, 0, reward.kind === 'sun' ? '#ffe982' : '#caf0ff', 12, true);
+    if (action !== 'recruit') effects.push({ kind: 'text', lane: lane.index, x: 0, y: -65, vy: -16, life: .65, color: reward.kind === 'sun' ? '#fff2a2' : '#d8f2ff', value: reward.kind === 'sun' ? 'SUN +' : 'TEAM +' });
+    addLog({ type: 'resource', kind: reward.kind, ownerId: lane.entry.id, collectedBy: 'student', weapon: defender?.weapon ?? null, defenderId: defender?.uid ?? null, action, power: lane.power });
     playSfx(reward.kind === 'sun' ? 'sun' : 'pickup', lane);
   }
   function updateRewards(dt) {
@@ -767,6 +819,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
         if (reward.y >= -7) reward.landed = true;
       } else {
         reward.collectAge += dt;
+        if (reward.collectAge >= .32 && !reward.flightStarted) { reward.flightStarted = true; pickupFlight(lane, lane, { kind: reward.kind, x: reward.x, y: reward.y, phase: reward.phase }); }
         if (reward.collectAge >= 1.10) { reward.collected = true; collectReward(lane, reward); }
       }
     }
@@ -783,7 +836,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     ctx.fillStyle = '#315e3180'; ctx.beginPath(); ctx.ellipse(0, 0, 22, 5, 0, 0, TAU); ctx.fill();
     const spec = WEAPON_MAP[defender.weapon], weapon = spec.aliasOf ? { ...spec, id: spec.aliasOf } : spec, recoil = defender.recoil / .12 * 3;
     defender.damageStage = plantDamageStage(defender.hp, defender.maxHp);
-    const rigged = renderer.drawPlant(ctx, { weapon: weapon.id, time, simTime, hp: defender.hp, maxHp: defender.maxHp, recoil: defender.recoil, seed: identityHash(defender.uid), defender });
+    const rigged = renderer.drawPlant(ctx, { weapon: weapon.id, time, simTime, hp: defender.hp, maxHp: defender.maxHp, recoil: defender.recoil, seed: identityHash(defender.uid), rank: defender.power, level: defender.power + 1, upgrades: defender.power, defender });
     if (!rigged) ctx.translate(-recoil, bob);
     const illustrated = rigged || (!weapon.blocker && Number.isInteger(plantCells[weapon.id]) && atlasSprite('plants', plantCells[weapon.id], -40, -75, 84, 76));
     if (!illustrated) {
@@ -844,6 +897,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       for (let n = 0; n < defender.damageStage; n++) { const x = -14 + n * 8, y = -55 + n % 2 * 17; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 4, y + 6); ctx.lineTo(x + 1, y + 10); ctx.lineTo(x + 5, y + 15); ctx.stroke(); }
       if (defender.damageStage >= 3 && !weapon.blocker) { ctx.fillStyle = '#9ca55c'; ctx.beginPath(); ctx.ellipse(23, -2, 10, 3, -.2, 0, TAU); ctx.fill(); }
     }
+    drawGardenPlantUpgrade(ctx, { weapon: weapon.id, defender, time });
     if (defender.shield > 0) { ctx.strokeStyle = '#d3eaff99'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0, -34, 28, Math.PI * .8, Math.PI * 2.2); ctx.stroke(); }
     ctx.restore();
     if (!defender.eaten) hpBar(x - 19 * lane.spriteScale, floor - 72 * lane.spriteScale, 38 * lane.spriteScale, defender.hp, defender.maxHp, defender.hp < 90 ? '#ffd082' : '#d1ed86', 2.5);
@@ -854,7 +908,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     return cells.length ? cells[entry.avatarIndex % cells.length] : entry.avatarIndex % 12;
   }
   function student(lane, time, resultAge) {
-    const x = lane.plantX, scale = clamp((lane.h - 28) / 73, .18, .76), floor = lane.floor;
+    const x = lane.plantX, scale = clamp((lane.h - 29) / 84, .12, .76), floor = lane.floor;
     const p = lane.eaten ? clamp(resultAge / .7, 0, 1) : 0;
     ctx.save(); ctx.translate(x, floor); ctx.scale(scale, scale);
     if (lane.hurt && !lane.eaten) ctx.translate(Math.sin(time * 32) * 2, 0);
@@ -989,20 +1043,45 @@ export default function createGame({ container, names = [], onPick, random = Mat
       ctx.restore();
     }
     const bomb = lane.bomb;
-    if (bomb && (!bomb.spent || simTime - bomb.explodedAt < .6)) {
+    if (bomb && !bomb.spent && bomb.fuseFirstSeenWall === null) bomb.fuseFirstSeenWall = wallTime;
+    if (bomb?.spent && bomb.burstFirstSeenWall === null) bomb.burstFirstSeenWall = wallTime;
+    const burstAge = bomb?.spent ? Math.max(0, (wallTime - bomb.burstFirstSeenWall) / 1000) : 0;
+    if (bomb && (!bomb.spent || burstAge < PICKER_VISUAL_TIMING.cherryBurstWallSeconds)) {
       ctx.save(); ctx.translate(lane.plantX + bomb.position * lane.travel, lane.floor); ctx.scale(lane.spriteScale, lane.spriteScale);
-      if (bomb.spent) ctx.globalAlpha = Math.max(0, 1 - (simTime - bomb.explodedAt) / .6);
-      if (!renderer.drawPlant(ctx, { weapon: 'cherrybomb', time: simTime, simTime, hp: 300, maxHp: 300, seed: identityHash(bomb.uid), defender: { exploding: bomb.spent, fuseAge: simTime - bomb.bornAt } })) {
+      if (bomb.spent) {
+        const p = clamp(burstAge / PICKER_VISUAL_TIMING.cherryBurstWallSeconds, 0, 1);
+        ctx.globalAlpha = 1 - p; ctx.fillStyle = '#fff2b4aa'; ctx.strokeStyle = '#fff2bf'; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.ellipse(0, -17, 24 + p * 65, 19 + p * 35, 0, 0, TAU); ctx.fill(); ctx.stroke();
+        for (let n = 0; n < 9; n++) { const a = n * TAU / 9; dot(Math.cos(a) * p * 76, -20 + Math.sin(a) * p * 39, 5 * (1 - p) + 1, n % 2 ? '#ffbd68' : '#fff5ba'); }
+      }
+      const fuseAge = Math.max(0, simTime - bomb.bornAt) * PLANT_BY_ID.cherrybomb.fuse / PICKER_VISUAL_TIMING.cherryFuse;
+      if (!renderer.drawPlant(ctx, { weapon: 'cherrybomb', time: simTime, simTime, hp: 300, maxHp: 300, seed: identityHash(bomb.uid), defender: { exploding: bomb.spent, fuseAge } })) {
         dot(-10, -16, 15, '#d64b3d', '#8b4938'); dot(13, -15, 14, '#e25842', '#8b4938');
         ctx.strokeStyle = '#6f9e46'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(-10, -30); ctx.quadraticCurveTo(-4, -48, 12, -29); ctx.stroke(); dot(-12, -18, 2.5, '#ffeac8'); dot(10, -17, 2.5, '#ffeac8');
       }
       ctx.restore();
+      if (!bomb.spent) {
+        const x = lane.plantX + bomb.position * lane.travel, remaining = Math.max(1, Math.ceil(bomb.fuseAt - simTime - 1e-8));
+        const pulse = 1 + Math.sin((simTime - bomb.bornAt) * TAU * 2) * .10;
+        ctx.save(); ctx.strokeStyle = '#fff2ae'; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(x, lane.floor - 4, 24 * lane.spriteScale * pulse, 7 * lane.spriteScale, 0, 0, TAU); ctx.stroke();
+        rr(x - 12, lane.floor - 69 * lane.spriteScale - 10, 24, 22, 11, '#9d4939', '#ffe2a0');
+        text(remaining, x, lane.floor - 69 * lane.spriteScale + 1, 20, 14, '#fff2b4', 900, 'center'); ctx.restore();
+      }
     }
   }
   function zombie(lane, mob, time) {
     const deadAge = mob.dead ? simTime - mob.deathAt : 0;
     const x = lane.plantX + mob.x * lane.travel, floor = lane.floor;
     const scale = lane.zombieScale, type = mob.type;
+    if (type.giant) {
+      const clip = { x: lane.plantX + 28, y: lane.y + 1, width: lane.x + lane.w - lane.plantX - 28, height: lane.h - 2 };
+      const drawX = clamp(x, clip.x + 160 * scale, clip.x + clip.width - 160 * scale);
+      ctx.save(); if (mob.dead) ctx.globalAlpha = Math.max(0, 1 - deadAge / .7);
+      monsters.draw(ctx, { id: mob.monsterId, x: drawX, y: floor, scale, time: mob.animationTime, hp: mob.hp, maxHp: mob.maxHp, hit: mob.hurt, bite: mob.attacking ? .7 : 0, clip });
+      ctx.restore();
+      if (!mob.dead) { hpBar(drawX - 28, lane.y + 4, 56, mob.hp, mob.maxHp, '#dfb66c', 4); text(type.name + ' · ' + Math.ceil(mob.hp), drawX, lane.y + 15, 110, 9, '#fff5cf', 850, 'center'); }
+      return;
+    }
     ctx.save(); ctx.translate(x, floor); ctx.scale(scale, scale);
     if (mob.dead) { ctx.rotate(-Math.min(1, deadAge / .45) * 1.5); ctx.globalAlpha = Math.max(0, 1 - deadAge / .7); ctx.translate(0, 5); }
     else if (mob.dodgePose) ctx.rotate(.22);
@@ -1059,8 +1138,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (simTime < (mob.stunnedUntil || 0) && !mob.dead) { rr(-14, -86, 26, 12, 3, '#ffe373', '#c7a746'); dot(-8, -83, 2, '#fff5c0'); text('★', 21, -73, 15, 12, '#fff3a7', 900); }
     ctx.restore();
     if (!mob.dead) {
-      hpBar(x - 19, floor - 85 * scale, 38, mob.hp, mob.maxHp, mob.stage ? '#ebbc59' : '#8dce64', 4);
-      text(Math.ceil(mob.hp), x, floor - 92 * scale, 48, 8, '#f8ffe8', 800, 'center');
+      hpBar(x - 19, floor - 130 * scale, 38, mob.hp, mob.maxHp, mob.stage ? '#ebbc59' : '#8dce64', 3);
+      text(Math.ceil(mob.hp), x, floor - 130 * scale - 6, 48, 8, '#f8ffe8', 800, 'center');
     }
   }
   function scene(time, resultAge) {
@@ -1069,6 +1148,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     ctx.fillStyle = '#5f853b'; ctx.fillRect(0, 0, width, height);
     const sky = ctx.createLinearGradient(0, 0, 0, boardHeader); sky.addColorStop(0, '#8dc9dc'); sky.addColorStop(1, '#c1e4c8');
     ctx.fillStyle = sky; ctx.fillRect(0, 0, width, boardHeader);
+    ctx.save(); ctx.scale(1, boardHeader / 64);
     dot(width - 43, 28, 18, '#ffd46e'); dot(width - 43, 28, 27, '#ffe69833');
     for (let i = 0; i < 4; i++) { const x = (i * 270 + time * 3) % (width + 80) - 45; dot(x, 21, 13, '#fffaf299'); dot(x + 17, 18, 18, '#fffaf299'); dot(x + 37, 24, 12, '#fffaf299'); }
     // A little house, fence, sun and one soil border make this a single garden.
@@ -1077,6 +1157,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     rr(25, 36, 15, 13, 1, '#92c8d1', '#c9b079'); rr(44, 42, 19, 25, 2, '#9c7857'); dot(59, 55, 1.2, '#e9d498');
     for (let x = 0; x < width; x += 26) { rr(x + 3, 58, 17, 14, 2, '#e2dda9'); ctx.fillStyle = '#f4edc2'; ctx.beginPath(); ctx.moveTo(x + 3, 58); ctx.lineTo(x + 11.5, 51); ctx.lineTo(x + 20, 58); ctx.fill(); }
     rr(0, 63, width, 5, 0, '#cbc493');
+    ctx.restore();
     const lawnBottom = boardHeader + Math.max(1, lanes.length) * laneHeight;
     rr(7, boardHeader - 2, width - 14, lawnBottom - boardHeader + 11, 7, '#8c7147');
     ctx.fillStyle = '#78b447'; ctx.fillRect(12, boardHeader, width - 24, lawnBottom - boardHeader);
@@ -1096,11 +1177,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     for (const lane of lanes) {
       if (!visible(lane)) continue;
       const won = phase === 'result' && winner === lane;
-      const tiny = lane.h < 36, chipHeight = tiny ? 11 : 15;
-      rr(lane.x + 29, lane.y + 4, lane.rail - 8, chipHeight, 4, '#264d2eaa');
-      text(lane.entry.name, lane.x + 34, lane.y + 4 + chipHeight / 2, lane.rail - 19, tiny ? 8 : 10, won ? '#ffe2a0' : C.cream, 750);
-      hpBar(lane.x + 32, lane.y + (tiny ? 17 : 24), 24, lane.hp, lane.maxHp, lane.hp < 70 ? '#ff947d' : '#c1e689', tiny ? 2 : 3);
-      if (!tiny) text(Math.ceil(lane.hp), lane.x + 32, lane.y + 35, 24, 8, '#244c2c', 700);
+      const tiny = lane.h < 36;
       const team = livingDefenders(lane), teamIcons = team.map(defender => WEAPON_MAP[defender.weapon].icon).join(' ') + (lane.power ? ' · ' + lane.power : '');
       if (lane.h >= 50) text(teamIcons, lane.plantX + .09 * lane.travel, lane.y + 10, Math.max(60, lane.travel * .36), 9, '#355b30', 850);
       for (let g = lane.rail + 8; g < lane.w; g += 53) {
@@ -1112,6 +1189,19 @@ export default function createGame({ container, names = [], onPick, random = Mat
       potatoMine(lane);
       extraPlants(lane);
       lawnmower(lane, time);
+      // Tags paint above large enemies and never shrink with the character rig.
+      const chipHeight = tiny ? 11 : 18, nameSize = tiny ? 8 : width < 800 ? 11 : 12;
+      rr(lane.x + 29, lane.y + 3, lane.nameWidth, chipHeight, 4, won ? '#745b25' : '#264d2ed9');
+      text(lane.entry.name, lane.x + 34, lane.y + 3 + chipHeight / 2, lane.nameWidth - 10, nameSize, won ? '#ffe2a0' : C.cream, 750);
+      hpBar(lane.x + 32, lane.y + (tiny ? 17 : 25), 30, lane.hp, lane.maxHp, lane.hp < 70 ? '#ff947d' : '#c1e689', tiny ? 2 : 3);
+      if (!tiny) text(Math.ceil(lane.hp), lane.x + 32, lane.y + 36, 30, 9, '#244c2c', 800);
+      const collectionAge = Math.max(0, (wallTime - lane.collectionAt) / 1000);
+      if (collectionAge < .65) {
+        ctx.save(); ctx.globalAlpha = 1 - collectionAge / .65;
+        const color = lane.collectedKind === 'star' ? '#c5edff' : '#ffec88';
+        ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(lane.plantX, lane.floor - 30 * Math.min(.76, (lane.h - 29) / 84), 14 + collectionAge * 28, 20 + collectionAge * 15, 0, 0, TAU); ctx.stroke();
+        text(lane.collectedKind === 'star' ? '★' : lane.collectedKind === 'sun' ? '☀' : '+', lane.plantX, lane.floor - 40, 26, 21, color, 900, 'center'); ctx.restore();
+      }
       if (won && resultAge > .4) { const badgeX = Math.min(lane.x + lane.w - 121, lane.plantX + 36); rr(badgeX, lane.y + lane.h / 2 - 12, 114, 25, 12, '#ffda72'); text('NEXT SPEAKER', badgeX + 57, lane.y + lane.h / 2 + 1, 107, 10, '#3d492f', 900, 'center'); }
     }
     ctx.restore();
@@ -1133,8 +1223,11 @@ export default function createGame({ container, names = [], onPick, random = Mat
     }
     for (const impact of impacts) {
       const lane = lanes[impact.lane]; if (!visible(lane)) continue;
+      impact.firstSeenWall ??= wallTime;
+      impact.age = Math.max(0, (wallTime - impact.firstSeenWall) / 1000) * PICKER_VISUAL_TIMING.melonImpactTimeScale;
       fx.drawImpact(ctx, impact, { x: lane.plantX + impact.position * lane.travel, y: lane.floor, scale: lane.spriteScale, age: impact.age });
     }
+    impacts = impacts.filter(impact => impact.age <= 3 && wallTime - impact.createdWall < 15000).slice(-120);
     for (const effect of effects) {
       const lane = lanes[effect.lane], x = lane.plantX + effect.x * lane.travel, y = lane.floor + (effect.y || 0) * lane.spriteScale;
       if (!visible(lane)) continue;
@@ -1146,19 +1239,24 @@ export default function createGame({ container, names = [], onPick, random = Mat
       else if (effect.kind === 'mineBlast') { const p = 1 - effect.life / .6; ctx.fillStyle = '#fff1b144'; ctx.strokeStyle = '#fff1b1'; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(x, lane.floor - 7, (14 + p * 37) * lane.spriteScale, (10 + p * 15) * lane.spriteScale, 0, 0, TAU); ctx.fill(); ctx.stroke(); }
       ctx.restore();
     }
-    for (const drop of drops) {
-      const lane = lanes[drop.lane], owner = lanes[drop.ownerLane], p = clamp(drop.age / .8, 0, 1);
+    for (const drop of pickupFlights) {
+      const lane = lanes[drop.lane], owner = lanes[drop.ownerLane], p = clamp((wallTime - drop.startedWall) / 1000 / drop.duration, 0, 1);
       if (!visible(lane) && !visible(owner)) continue;
-      const fromX = lane.plantX + drop.x * lane.travel, toX = owner.plantX + .14 * owner.travel, x = fromX + (toX - fromX) * p;
-      const y = lane.floor - 30 * lane.spriteScale + (owner.floor - lane.floor) * p - Math.sin(p * Math.PI) * 45 * lane.spriteScale;
-      ctx.save(); ctx.globalAlpha = 1 - p * .5; dot(x, y, 10, '#fff5b9', '#d29334'); text(drop.item.icon, x, y, 19, 12, '#84632c', 900, 'center'); ctx.restore();
+      const fromX = lane.plantX + drop.x * lane.travel, toX = owner.plantX, x = fromX + (toX - fromX) * p;
+      const targetY = owner.floor - 32 * clamp((owner.h - 29) / 84, .12, .76);
+      const fromY = lane.floor + drop.y, y = fromY + (targetY - fromY) * p - Math.sin(p * Math.PI) * 40;
+      ctx.save(); ctx.shadowBlur = 12; ctx.shadowColor = drop.kind === 'star' ? '#b9e5ff' : '#ffdf74';
+      dot(x, y, drop.kind === 'loot' ? 10 : 12, drop.kind === 'star' ? '#c8eaff' : '#ffe486', '#d29334');
+      text(drop.item?.icon || (drop.kind === 'sun' ? '☀' : '★'), x, y, 24, drop.kind === 'loot' ? 12 : 17, '#84632c', 900, 'center'); ctx.restore();
+      if (p >= 1 && !drop.completed) { drop.completed = true; owner.collectionAt = wallTime; owner.collectedKind = drop.kind; }
     }
+    pickupFlights = pickupFlights.filter(drop => !drop.completed && wallTime - drop.startedWall < 10000);
     for (const reward of rewards) {
+      if (reward.flightStarted) continue;
       const lane = lanes[reward.lane], drift = reward.landed ? clamp((reward.collectAge - .32) / .78, 0, 1) : 0;
       const eased = drift * drift * (3 - 2 * drift);
-      const target = livingDefenders(lane)[0]?.position ?? .14;
-      const startX = lane.plantX + reward.x * lane.travel, toX = lane.plantX + target * lane.travel, x = startX + (toX - startX) * eased + Math.sin(time * 2 + reward.phase) * (1 - eased) * 3;
-      const y = lane.floor + reward.y - eased * 34 * lane.spriteScale - Math.sin(drift * Math.PI) * 22;
+      const startX = lane.plantX + reward.x * lane.travel, toX = lane.plantX, x = startX + (toX - startX) * eased + Math.sin(time * 2 + reward.phase) * (1 - eased) * 3;
+      const y = lane.floor + reward.y - eased * 25 * clamp((lane.h - 29) / 84, .12, .76) - Math.sin(drift * Math.PI) * 22;
       if (y < top - 24 || y > bottom + 24) continue;
       const r = (reward.kind === 'sun' ? 12 : 11) * (1 - eased * .35);
       ctx.save(); ctx.translate(x, y); ctx.rotate(time * .35 + reward.phase);
@@ -1282,18 +1380,30 @@ export default function createGame({ container, names = [], onPick, random = Mat
   function setSpeed(rate) {
     if (!alive) return;
     const at = performance.now();
-    if (phase === 'running' && clockAt !== null) simulationBudget += Math.max(0, (at - clockAt) / 1000) * playbackRate;
-    clockAt = at; playbackRate = validSpeed(rate);
+    if (phase === 'running' && clockAt !== null) simulationBudget += Math.max(0, (at - clockAt) / 1000) * Math.min(clockRate, effectiveTempo());
+    clockAt = at; playbackRate = validSpeed(rate); clockRate = effectiveTempo();
   }
+  function visibleFuseLanes() {
+    const top = viewport.scrollTop || 0, bottom = top + viewportHeight;
+    return lanes.filter(lane => lane.bomb && !lane.bomb.spent && lane.y < bottom && lane.y + lane.h > top);
+  }
+  function effectiveTempo() { return visibleFuseLanes().length ? Math.min(playbackRate, PICKER_VISUAL_TIMING.cherryMaximumTempo) : playbackRate; }
   function frame(timestamp) {
     if (!alive) return;
+    wallTime = timestamp;
     const token = generation;
     const visualDt = previous === null ? 0 : Math.min(.08, Math.max(0, (timestamp - previous) / 1000)); previous = timestamp;
     if (phase === 'running') {
-      simulationBudget += Math.max(0, (timestamp - (clockAt ?? timestamp)) / 1000) * playbackRate; clockAt = timestamp;
+      simulationBudget += Math.max(0, (timestamp - (clockAt ?? timestamp)) / 1000) * Math.min(clockRate, effectiveTempo()); clockAt = timestamp;
       // Rate only changes the clock, never attack statistics or RNG. Hot speed
       // changes preserve the previous interval and cannot jump past old time.
-      while (phase === 'running' && simulationBudget + 1e-8 >= .04) { simulationBudget -= .04; step(.04); }
+      while (phase === 'running' && simulationBudget + 1e-8 >= .04) {
+        simulationBudget -= .04; step(.04);
+        // A long/background frame must first show a newly earned countdown.
+        // Remaining time is intentionally paused for this short cinematic.
+        if (visibleFuseLanes().some(lane => lane.bomb.fuseFirstSeenWall === null)) { simulationBudget = 0; break; }
+      }
+      clockRate = effectiveTempo();
       if (phase !== 'running') simulationBudget = 0;
     } else if (phase === 'result') advanceEffects(visualDt);
     if (phase === 'result' && visualResultAt === null) visualResultAt = timestamp;
@@ -1302,14 +1412,14 @@ export default function createGame({ container, names = [], onPick, random = Mat
     // A returning background tab still shows the student's gentle stun/fade
     // for 700 ms before asking the host to show its pick popup.
     if (phase === 'result' && !reported && resultAge >= .7) {
-      reported = true; stopAudio(); onPick?.(winner.entry.id);
+      reported = true; stopAudio(); onPick?.(winnerSnapshot.id);
     }
     if (alive && token === generation) raf = requestAnimationFrame(frame);
   }
   function start() {
     if (!alive || phase !== 'idle' || !lanes.length) return;
-    startedAt = performance.now(); phase = 'running'; reported = false; winner = null; visualResultAt = null;
-    clockAt = startedAt; simulationBudget = 0;
+    startedAt = performance.now(); phase = 'running'; reported = false; winner = null; winnerSnapshot = null; visualResultAt = null;
+    clockAt = startedAt; clockRate = effectiveTempo(); simulationBudget = 0;
     note.textContent = 'Plants vs. Zombies: collect sunshine to grow defenders. Each student has one single-use lawnmower.';
     live.textContent = 'Plants vs. Zombies is starting. Each student has one single-use lawnmower for a second chance.';
     startMusic();
@@ -1317,7 +1427,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   function reset() {
     if (!alive) return;
     generation++; cancelAnimationFrame(raf); previous = null; stopAudio();
-    phase = 'idle'; reported = false; winner = null; resultAt = 0; visualResultAt = null; clockAt = null; simulationBudget = 0;
+    phase = 'idle'; reported = false; winner = null; winnerSnapshot = null; resultAt = 0; visualResultAt = null; clockAt = null; clockRate = playbackRate; simulationBudget = 0;
     fresh(); viewport.scrollTop = 0;
     note.textContent = 'Plants vs. Zombies: sunshine grows your defenders. Protect your student with one single-use lawnmower.';
     live.textContent = ''; canvas.setAttribute('aria-label', 'Fresh Plants vs. Zombies round ready. Every student starts with 150 health behind a pea shooter with 300 health, a front Tall-nut with 1800 picker health, and one ready single-use lawnmower.');
@@ -1333,19 +1443,23 @@ export default function createGame({ container, names = [], onPick, random = Mat
     mowerArt = null;
     for (const lane of lanes) { lane.queuedSpawns = lane.deferredSpawns = lane.waveTarget = lane.waveSpawned = 0; lane.trap = lane.torchwood = lane.bomb = null; lane.mobs = []; }
     waveIndex = 0; nextWaveAt = Infinity;
-    shots = []; pendingShots = []; effects = []; impacts = []; drops = []; rewards = []; lanes = []; sampleBuffers.clear(); renderer.destroy(); fx.destroy(); root.remove();
+    shots = []; pendingShots = []; effects = []; impacts = []; pickupFlights = []; drops = []; rewards = []; lanes = []; sampleBuffers.clear(); renderer.destroy(); fx.destroy(); monsters.destroy(); root.remove();
   }
   function getState() {
-    return { phase, time: simTime, winnerId: winner?.entry.id ?? null, soundEnabled, speed: playbackRate, wave: waveIndex, nextWaveAt,
+    return { phase, time: simTime, winnerId: winnerSnapshot?.id ?? null, winner: winnerSnapshot ? { ...winnerSnapshot } : null, soundEnabled, speed: playbackRate, effectiveSpeed: effectiveTempo(), wave: waveIndex, nextWaveAt,
+      sizing: { width, height, viewportHeight, laneHeight, boardHeader, boardFooter, fitsAllRows: players.length <= 10 && boardHeader + lanes.length * laneHeight <= viewportHeight + .01 },
+      visualTiming: PICKER_VISUAL_TIMING, monsters: monsters.getState(), giantCatalogCount: GIANT_CATALOG.length,
+      pickupFlights: pickupFlights.map(flight => ({ kind: flight.kind, sourceLane: flight.lane, ownerId: lanes[flight.ownerLane]?.entry.id, target: 'student', targetX: lanes[flight.ownerLane]?.plantX, duration: flight.duration, progress: clamp((performance.now() - flight.startedWall) / 1000 / flight.duration, 0, 1) })),
       audioEffects: { loadedSamples: sampleBuffers.size, activeVoices: sfxVoices.size, contextActive: Boolean(audio), loading: Boolean(audioLoadController) },
       renderer: renderer.getState(), fx: fx.getState(), melonImpacts: impacts.map(impact => ({ lane: impact.lane, x: impact.position, age: impact.age, kind: impact.kind })), plantCatalogCount: PLANT_CATALOG.length, ruleVersion: GARDEN_RULES.version, pickerPacing: PICKER_PACING,
       zombieCatalogCount: ZOMBIE_CATALOG.length, lootCatalogCount: LOOT_CATALOG.length, healthModel: HEALTH_MODEL,
-      artworkLoaded: { plants: Boolean(atlases.plants?.ready), zombies: Boolean(atlases.zombies?.ready), students: Boolean(atlases.students?.ready), mower: Boolean(mowerArt?.ready) }, fallingResources: rewards.map(reward => ({ kind: reward.kind, lane: reward.lane, landed: reward.landed, x: reward.x, y: reward.y })),
+      artworkLoaded: { plants: Boolean(atlases.plants?.ready), zombies: Boolean(atlases.zombies?.ready), students: Boolean(atlases.students?.ready), mower: Boolean(mowerArt?.ready), monsters: monsters.getState().ready }, fallingResources: rewards.map(reward => ({ kind: reward.kind, lane: reward.lane, landed: reward.landed, x: reward.x, y: reward.y, target: 'student' })),
       lanes: lanes.map(lane => ({ id: lane.entry.id, avatar: lane.entry.avatar, avatarCell: studentCell(lane.entry), hp: lane.hp, maxHp: lane.maxHp, studentHp: lane.hp, studentMaxHp: lane.maxHp, emotionStage: lane.emotionStage, emotionLabel: STUDENT_EMOTIONS[lane.emotionStage], bruiseStage: lane.bruiseStage, wave: lane.wave, waveSize: lane.waveSize, waveTarget: lane.waveTarget, waveSpawned: lane.waveSpawned, spawned: lane.waveSpawned, deferredSpawns: lane.deferredSpawns, deferred: lane.deferredSpawns, queuedSpawns: lane.queuedSpawns, pendingCount: lane.queuedSpawns + lane.deferredSpawns, nextWave: lane.nextWave, liveZombieCount: lane.mobs.filter(mob => !mob.dead).length, damage: lane.damage, cooldown: lane.cooldown, weapon: livingDefenders(lane)[0]?.weapon ?? null, power: lane.power, kills: lane.kills, loot: [...lane.loot], suns: lane.suns, stars: lane.stars, eaten: lane.eaten, shotsFired: lane.shotsFired, shield: livingDefenders(lane).reduce((total, defender) => total + defender.shield, 0),
         mower: { id: lane.mower.uid, status: lane.mower.status, x: lane.mower.x, previousX: lane.mower.previousX, home: LAWNMOWER_RULES.home, speed: LAWNMOWER_RULES.speed, activations: lane.mower.activations, activationKills: lane.mower.kills, kills: lane.mower.kills, killIds: [...lane.mower.killIds], activatedAt: lane.mower.activatedAt, spentAt: lane.mower.spentAt, triggeredBy: lane.mower.triggeredBy },
         trap: lane.trap ? { id: lane.trap.uid, type: 'potato', position: lane.trap.position, armAt: lane.trap.armAt, armRemaining: Math.max(0, lane.trap.armAt - simTime), armed: lane.trap.armed, spent: lane.trap.spent, kills: lane.trap.kills, damage: PLANT_BY_ID.potato.explosionDamage, explodedAt: lane.trap.explodedAt } : null,
         torchwood: lane.torchwood ? { id: lane.torchwood.uid, position: lane.torchwood.position, hp: lane.torchwood.hp, maxHp: lane.torchwood.maxHp, eaten: lane.torchwood.eaten, fireDamage: PLANT_BY_ID.torchwood.fireDamage, fireSplashDamage: PLANT_BY_ID.torchwood.fireSplashDamage } : null,
-        cherryBomb: lane.bomb ? { id: lane.bomb.uid, position: lane.bomb.position, fuseAt: lane.bomb.fuseAt, spent: lane.bomb.spent, kills: lane.bomb.kills, damage: PLANT_BY_ID.cherrybomb.explosionDamage } : null,
+        geometry: { y: lane.y, height: lane.h, floor: lane.floor, studentX: lane.plantX, nameWidth: lane.nameWidth, nameFontSize: lane.h < 36 ? 8 : width < 800 ? 11 : 12, plantScale: lane.spriteScale, zombieScale: lane.zombieScale, normalZombieHeight: 112 * lane.zombieScale, giantHeight: 370 * lane.zombieScale },
+        cherryBomb: lane.bomb ? { id: lane.bomb.uid, position: lane.bomb.position, fuseAt: lane.bomb.fuseAt, fuseSeconds: PICKER_VISUAL_TIMING.cherryFuse, remaining: Math.max(0, lane.bomb.fuseAt - simTime), countdown: lane.bomb.spent ? 0 : Math.max(1, Math.ceil(lane.bomb.fuseAt - simTime - 1e-8)), spent: lane.bomb.spent, kills: lane.bomb.kills, damage: PLANT_BY_ID.cherrybomb.explosionDamage, burstAge: lane.bomb.burstFirstSeenWall === null ? null : Math.max(0, (wallTime - lane.bomb.burstFirstSeenWall) / 1000) } : null,
         defenders: lane.defenders.map(defender => ({ id: defender.uid, slot: defender.slot, position: defender.position, weapon: defender.weapon, name: WEAPON_MAP[defender.weapon].name, classification: WEAPON_MAP[defender.weapon].classification, sourceHealth: WEAPON_MAP[defender.weapon].sourceHealth ?? null, modeScaling: WEAPON_MAP[defender.weapon].modeScaling ?? 1, sourceDamage: WEAPON_MAP[defender.weapon].sourceDamage ?? null, role: WEAPON_MAP[defender.weapon].blocker ? 'blocker' : 'shooter', hp: defender.hp, maxHp: defender.maxHp, damageStage: plantDamageStage(defender.hp, defender.maxHp), damage: WEAPON_MAP[defender.weapon].blocker ? WEAPON_MAP[defender.weapon].contactDamage > 0 ? WEAPON_MAP[defender.weapon].contactDamage + defender.power * .6 : 0 : lane.damage * WEAPON_MAP[defender.weapon].multiplier, interval: WEAPON_MAP[defender.weapon].blocker ? null : Math.max(WEAPON_MAP[defender.weapon].intervalMin || 0, WEAPON_MAP[defender.weapon].interval * lane.cooldown / BASE_CADENCE), attackPattern: WEAPON_MAP[defender.weapon].blocker ? WEAPON_MAP[defender.weapon].contactDamage > 0 ? 'contact' : 'block' : defender.weapon, shield: defender.shield, power: defender.power, eaten: defender.eaten, bornAt: defender.bornAt, shotsFired: defender.shotsFired, kills: defender.kills })),
         mobs: lane.mobs.map(mob => ({ id: mob.uid, variant: mob.type.id, visualType: mob.visualType, rigIdentity: mob.rigIdentity, hp: mob.hp, maxHp: mob.maxHp, bodyHp: mob.bodyHp, maxBodyHp: mob.maxBodyHp, armorHp: mob.armorHp, maxArmorHp: mob.maxArmorHp, damage: mob.bite, speed: mob.speed, baseDamage: mob.type.bite, baseSpeed: mob.type.speed, dead: mob.dead, stage: mob.stage, attacking: mob.attacking, x: mob.x, lastShooter: mob.lastShooter, slowMultiplier: simTime < mob.slowUntil ? mob.slow : 1, slowUntil: mob.slowUntil, biteMultiplier: simTime < mob.slowUntil ? mob.slow : 1, stunnedUntil: mob.stunnedUntil, nextBite: mob.nextBite, animationTime: mob.animationTime })) })),
       pendingProjectiles: pendingShots.map(shot => ({ ownerId: shot.ownerId, attackerId: shot.attackerId, weapon: shot.weapon, targetLane: shot.lane, fireAt: shot.fireAt, damage: shot.damage, style: shot.projectileStyle })),
@@ -1357,7 +1471,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   loadAtlas('zombies', artwork?.gardenZombies);
   loadAtlas('students', artwork?.students);
   loadMowerArtwork();
-  fresh(); observer?.observe(root); if (!observer) window.addEventListener('resize', layout);
+  fresh(); for (const target of [container, root, viewport]) observer?.observe(target); if (!observer) window.addEventListener('resize', layout);
   raf = requestAnimationFrame(frame);
   return { start, reset, destroy, setSound, setSpeed, getState };
 }
