@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-16T09:35:51.987858+00:00",
+  "updatedAt": "2026-10-16T10:46:02.170820+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1106,6 +1106,43 @@
               "en": "Lucas was absent from this class. No speaking or homework performance evaluation was recorded.",
               "zh": "Lucas本节课缺席，因此没有记录本节课的演讲或作业表现评价。",
               "attendance": "absent"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-16-fri-later",
+          "date": "2026-10-16",
+          "time": "18:00–20:00",
+          "status": "held",
+          "classContent": {
+            "en": "We began with a warm-up in which students called out things they could see, such as hair or a table leg. Homework speeches were planned to follow the warm-up, and Merlin, Arthur, and Molly then presented their short speeches. They had created these speeches for the hero-story practice from last time. Zoe was not there last time when the homework was assigned.\n\nThe presentation coaching was to remember that a speech involves presenting as well as reading: changing your voice and using facial expressions and hand gestures. For words that are less familiar, the advice was to read the speech aloud at least five to ten times, whether it feels easy or difficult, until it feels smooth and fluid. Easier content was planned next.",
+            "zh": "我们先做了热身，学生大声说出自己看到的东西，例如头发或桌腿。原计划在热身后进行作业演讲，随后 Merlin、Arthur 和 Molly 展示了他们的小演讲。这些演讲是为上次的英雄故事练习创作的。上次布置作业时，Zoe 没有来。\n\n展示方面的指导是：演讲除了读出内容，还需要呈现，包括让声音有变化、运用表情和手势。对于不太熟悉的词，建议无论演讲内容感觉简单还是困难，都要大声读至少五到十遍，练到顺畅、流利。接下来计划练习更容易一些的内容。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "merlin",
+              "name": "Merlin",
+              "en": "You spoke with a loud, clear voice, and you confirmed that you had practised at home. Overall, your speech was quite clear. Your voice also sounded a little calmer overall. You could project your voice a little more and add hand gestures. Remember that a speech involves presenting as well as reading: try changing your voice and using facial expressions and gestures to bring your speech to life.",
+              "zh": "你讲话的声音洪亮、清晰，也确认了自己在家练习过。整体来说，这次演讲表达得很清楚，你的声音也显得稍微更平稳一些。你可以再稍微放开一点声音，并加入手势。要记住，演讲除了读出内容，还需要呈现：试着让声音有变化，配合表情和手势，把演讲表现出来。"
+            },
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": "Your voice sounded a little raspy today. Some words also seemed less familiar to you. The next step is to become more comfortable with those words. Whether a speech feels easy or difficult, read it aloud at least five to ten times, until the words and sentences feel smooth and fluid.",
+              "zh": "今天你的声音听起来有一点沙哑，有些词似乎也还不太熟悉。接下来需要多熟悉这些词。无论演讲内容感觉简单还是困难，都要大声读至少五到十遍，一直练到词句读起来顺畅、流利。"
+            },
+            {
+              "id": "molly",
+              "name": "Molly",
+              "en": "Your voice was a little soft, and you seemed a little shy today, but overall you did okay. Last time, the aim was to practise the hero story. We’ll work with easier content next. Good job.",
+              "zh": "今天你的声音有一点轻，似乎也有一点害羞，不过整体表现还可以。上次的目的是练习英雄故事。接下来我们会练习更容易一些的内容。做得不错。"
+            },
+            {
+              "id": "zoey",
+              "name": "Zoe",
+              "en": null,
+              "zh": null
             }
           ]
         }

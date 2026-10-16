@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-16T08:40:38.530310+00:00",
+  "updatedAt": "2026-10-16T10:46:02.185822+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -880,6 +880,33 @@
             {
               "name": "Lucas",
               "feedbackUrl": "/fb/?class=fri-later&date=2026-10-09&student=lucas"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-16-fri-later",
+          "date": "2026-10-16",
+          "time": "18:00–20:00",
+          "classContent": [
+            "We began with a warm-up in which students called out things they could see, such as hair or a table leg. Homework speeches were planned to follow the warm-up, and Merlin, Arthur, and Molly then presented their short speeches. They had created these speeches for the hero-story practice from last time. Zoe was not there last time when the homework was assigned.\n\nThe presentation coaching was to remember that a speech involves presenting as well as reading: changing your voice and using facial expressions and hand gestures. For words that are less familiar, the advice was to read the speech aloud at least five to ten times, whether it feels easy or difficult, until it feels smooth and fluid. Easier content was planned next."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Merlin",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-16&student=merlin"
+            },
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-16&student=arthur"
+            },
+            {
+              "name": "Molly",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-16&student=molly"
+            },
+            {
+              "name": "Zoe",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-16&student=zoey"
             }
           ]
         }
