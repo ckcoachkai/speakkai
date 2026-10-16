@@ -1,7 +1,7 @@
 import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261016-garden';
 import { GARDEN_RULES, PLANT_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
-import { createGardenMonsters } from './garden-monsters.js?v=20261016-garden';
+import { createGardenMonsters, GARDEN_MONSTER_TYPES } from './garden-monsters.js?v=20261016-cameos';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
@@ -41,13 +41,19 @@ export const ZOMBIE_CATALOG = Object.freeze(ARCHETYPES.flatMap((base, a) => ARMO
   brow: c, nose: a, buttons: b + 1,
 })))));
 
-// Original classroom monsters use ordinary health, armor and bite mechanics.
+// Classroom cameos use ordinary health, armor and bite mechanics.
 // They are rare members of later waves, never a timed selection shortcut.
 export const GIANT_CATALOG = Object.freeze([
-  { id: 'mossbell', name: 'Mossbell', health: 1800, bodyHealth: 1800, armorHealth: 0, speed: .012, bite: 80, biteCadence: .75 },
-  { id: 'bramblecrab', name: 'Bramblecrab', health: 2200, bodyHealth: 1600, armorHealth: 600, speed: .010, bite: 90, biteCadence: .90 },
-  { id: 'scrapjaw', name: 'Scrapjaw', health: 2400, bodyHealth: 1700, armorHealth: 700, speed: .0115, bite: 100, biteCadence: 1 },
-].map(monster => Object.freeze({ ...monster, giant: true, monsterId: monster.id, classification: 'original', archetype: 0, armor: 0, ability: 0, resistance: 0, regeneration: 0, dodge: 0, rush: 1, frenzy: 1 })));
+  { id: 'labubu', name: 'Labubu', health: 1700, bodyHealth: 1700, armorHealth: 0, speed: .015, bite: 62, biteCadence: .58 },
+  { id: 'niulai', name: 'Niulai', health: 2100, bodyHealth: 1800, armorHealth: 300, speed: .011, bite: 105, biteCadence: 1.02 },
+  { id: 'duck', name: 'Giant Duck', health: 1550, bodyHealth: 1550, armorHealth: 0, speed: .017, bite: 48, biteCadence: .44 },
+  { id: 'mummy', name: 'Mummy', health: 2250, bodyHealth: 1900, armorHealth: 350, speed: .010, bite: 90, biteCadence: .86 },
+  { id: 'hellokitty', name: 'Hello Kitty', health: 1650, bodyHealth: 1650, armorHealth: 0, speed: .0145, bite: 55, biteCadence: .52 },
+  { id: 'ultraman', name: 'Ultraman', health: 2400, bodyHealth: 1700, armorHealth: 700, speed: .0115, bite: 100, biteCadence: 1 },
+  { id: 'teamrocket', name: 'Team Rocket', health: 1950, bodyHealth: 1600, armorHealth: 350, speed: .0125, bite: 75, biteCadence: .70 },
+  { id: 'pikachu', name: 'Pikachu', health: 1500, bodyHealth: 1500, armorHealth: 0, speed: .018, bite: 45, biteCadence: .40 },
+  { id: 'dogman', name: 'Dog Man', health: 2050, bodyHealth: 1800, armorHealth: 250, speed: .0135, bite: 82, biteCadence: .78 },
+].map(monster => Object.freeze({ ...monster, giant: true, monsterId: monster.id, classification: 'cameo', archetype: 0, armor: 0, ability: 0, resistance: 0, regeneration: 0, dodge: 0, rush: 1, frenzy: 1 })));
 export const PICKER_VISUAL_TIMING = Object.freeze({ cherryFuse: 3, cherryMaximumTempo: 2.5, cherryBurstWallSeconds: .95, melonVelocityFactor: .53, melonImpactTimeScale: .65 });
 const BASE_CADENCE = PLANT_BY_ID.pea.interval;
 export const PICKER_PACING = Object.freeze({ peaInterval: BASE_CADENCE, upgradeMinimumInterval: PLANT_BY_ID.pea.intervalMin, projectileTilesPerSecond: 4.16, firstZombie: 3, spawnMinimum: 6.4, spawnMaximum: 8.4, pressureStarts: 90, melonSplashTileRadius: 1.5, geometry: 'Readable 3-by-3 tile splash adaptation; original damage and crowded-target cap' });
@@ -256,9 +262,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
       lane.plantX = lane.x + 73; lane.floor = lane.y + lane.h - 5;
       lane.travel = lane.w - 95;
       lane.spriteScale = Math.min(clamp((lane.h - 12) / 110, .12, 1.2), lane.travel * .11 / 85);
-      // A giant is truly 370/112 times a normal enemy, while both remain
-      // entirely inside their own lane. Student/defender geometry is separate.
-      lane.zombieScale = Math.max(.035, Math.min((lane.h - 4) / 370, .60));
+      // Ordinary enemies retain their original size. Giants share this scale
+      // and extend across the lawn behind foreground students and defenders.
+      lane.zombieScale = clamp((lane.h - 4) / 113, .20, 1);
       lane.nameWidth = Math.max(76, Math.min(174, .14 * lane.travel - 7));
     }
   }
@@ -428,6 +434,10 @@ export default function createGame({ container, names = [], onPick, random = Mat
     Object.defineProperties(mob, { visualType: { value: visualType, enumerable: true }, monsterId: { value: type.monsterId || null, enumerable: true }, rigIdentity: { value: type.id + '-' + uid, enumerable: true } });
     lane.mobs.push(mob);
     addLog({ type: 'spawn', zombieId: mob.uid, variant: type.id, visualType, giant: Boolean(type.giant), rigIdentity: mob.rigIdentity, health: Math.round(hp), damage: mob.bite, speed: mob.speed, laneId: lane.entry.id });
+    if (type.giant) {
+      live.textContent = type.name + ' has appeared in ' + lane.entry.name + "'s lane.";
+      addLog({ type: 'giantAppeared', zombieId: mob.uid, monsterId: mob.monsterId, ownerId: lane.entry.id, name: type.name, health: hp, armorHealth: armorHp, speed: mob.speed, bite: mob.bite, biteCadence: mob.cadence });
+    }
     playSfx('growl', lane);
   }
   function shoot(lane, defender) {
@@ -1069,17 +1079,42 @@ export default function createGame({ container, names = [], onPick, random = Mat
       }
     }
   }
+  function giantGeometry(lane, mob = { x: .75 }) {
+    const top = Math.max(boardHeader, viewport.scrollTop || 0);
+    const bottom = Math.min(height - boardFooter, (viewport.scrollTop || 0) + viewportHeight);
+    const clip = { x: lane.plantX + 42, y: top, width: width - lane.plantX - 54, height: Math.max(1, bottom - top) };
+    // Only an arena physically shorter than a full giant can limit its size;
+    // lane height never does. The foot may move down while its lane stays fixed.
+    const scale = Math.min(lane.zombieScale, Math.max(.02, (clip.height - 16) / 370));
+    const typeWidth = GARDEN_MONSTER_TYPES.find(type => type.id === mob.monsterId)?.width || 390;
+    const halfWidth = (typeWidth / 2 + 28) * scale;
+    const x = clamp(lane.plantX + mob.x * lane.travel, clip.x + halfWidth, clip.x + clip.width - halfWidth);
+    const y = clamp(lane.floor, clip.y + 370 * scale + 8, clip.y + clip.height - 8);
+    return { x, y, scale, height: 370 * scale, clip, laneFloor: lane.floor, laneX: lane.plantX + mob.x * lane.travel };
+  }
+  function giantLaneMarker(lane, mob) {
+    if (mob.dead) return;
+    const giant = giantGeometry(lane, mob), anchorX = clamp(giant.laneX, giant.clip.x + 20, width - 28);
+    ctx.save(); ctx.strokeStyle = '#fff1a9b0'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]);
+    ctx.beginPath(); ctx.moveTo(giant.x, giant.y - 3); ctx.lineTo(anchorX, lane.floor - 3); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#ffe18a40'; ctx.strokeStyle = '#ffe89f'; ctx.beginPath(); ctx.ellipse(anchorX, lane.floor - 3, 24, 7, 0, 0, TAU); ctx.fill(); ctx.stroke();
+    const label = mob.type.name + ' → ' + lane.entry.name, labelWidth = Math.min(205, Math.max(125, label.length * 6 + 14));
+    const labelX = clamp(anchorX - labelWidth / 2, giant.clip.x + 4, width - labelWidth - 16);
+    rr(labelX, lane.floor - 25, labelWidth, 18, 8, '#35452ee6', '#e9ce85');
+    text(label, labelX + labelWidth / 2, lane.floor - 16, labelWidth - 12, 10, '#fff0bb', 850, 'center'); ctx.restore();
+  }
   function zombie(lane, mob, time) {
     const deadAge = mob.dead ? simTime - mob.deathAt : 0;
     const x = lane.plantX + mob.x * lane.travel, floor = lane.floor;
     const scale = lane.zombieScale, type = mob.type;
     if (type.giant) {
-      const clip = { x: lane.plantX + 28, y: lane.y + 1, width: lane.x + lane.w - lane.plantX - 28, height: lane.h - 2 };
-      const drawX = clamp(x, clip.x + 160 * scale, clip.x + clip.width - 160 * scale);
+      const giant = giantGeometry(lane, mob), animationTime = mob.animationTime ?? simTime;
+      const biteInterval = mob.cadence / (simTime < mob.slowUntil ? mob.slow : 1);
+      const bite = mob.attacking ? .5 + .5 * Math.cos((simTime - mob.nextBite) / Math.max(.1, biteInterval) * TAU) : 0;
       ctx.save(); if (mob.dead) ctx.globalAlpha = Math.max(0, 1 - deadAge / .7);
-      monsters.draw(ctx, { id: mob.monsterId, x: drawX, y: floor, scale, time: mob.animationTime, hp: mob.hp, maxHp: mob.maxHp, hit: mob.hurt, bite: mob.attacking ? .7 : 0, clip });
+      monsters.draw(ctx, { id: mob.monsterId, x: giant.x, y: giant.y, scale: giant.scale, time: animationTime, hp: mob.hp, maxHp: mob.maxHp, hit: mob.hurt, bite, walk: !mob.dead && !mob.attacking && simTime >= mob.stunnedUntil, death: mob.dead ? clamp(deadAge / .7, 0, 1) : 0, clip: giant.clip });
       ctx.restore();
-      if (!mob.dead) { hpBar(drawX - 28, lane.y + 4, 56, mob.hp, mob.maxHp, '#dfb66c', 4); text(type.name + ' · ' + Math.ceil(mob.hp), drawX, lane.y + 15, 110, 9, '#fff5cf', 850, 'center'); }
+      if (!mob.dead) { const barY = giant.y - giant.height + 5; hpBar(giant.x - 35, barY, 70, mob.hp, mob.maxHp, '#dfb66c', 5); text(type.name + ' · ' + Math.ceil(mob.hp), giant.x, barY + 14, 145, 10, '#fff5cf', 850, 'center'); }
       return;
     }
     ctx.save(); ctx.translate(x, floor); ctx.scale(scale, scale);
@@ -1158,7 +1193,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     for (let x = 0; x < width; x += 26) { rr(x + 3, 58, 17, 14, 2, '#e2dda9'); ctx.fillStyle = '#f4edc2'; ctx.beginPath(); ctx.moveTo(x + 3, 58); ctx.lineTo(x + 11.5, 51); ctx.lineTo(x + 20, 58); ctx.fill(); }
     rr(0, 63, width, 5, 0, '#cbc493');
     ctx.restore();
-    const lawnBottom = boardHeader + Math.max(1, lanes.length) * laneHeight;
+    const lawnBottom = Math.max(boardHeader + Math.max(1, lanes.length) * laneHeight, height - boardFooter);
     rr(7, boardHeader - 2, width - 14, lawnBottom - boardHeader + 11, 7, '#8c7147');
     ctx.fillStyle = '#78b447'; ctx.fillRect(12, boardHeader, width - 24, lawnBottom - boardHeader);
     for (const lane of lanes) {
@@ -1174,6 +1209,12 @@ export default function createGame({ container, names = [], onPick, random = Mat
     // All lawn tiles are painted before actors. Original joint motions can
     // extend above a row without a later row background erasing their parts.
     ctx.save(); ctx.beginPath(); ctx.rect(7, 0, width - 14, height); ctx.clip();
+    // Giants occupy the shared lawn behind every lane's foreground actors.
+    // Their own global arena clip protects the student column, not a tiny row.
+    for (const lane of lanes) {
+      if (!visible(lane)) continue;
+      [...lane.mobs].filter(mob => mob.type.giant).sort((a, b) => b.x - a.x).forEach(mob => zombie(lane, mob, time));
+    }
     for (const lane of lanes) {
       if (!visible(lane)) continue;
       const won = phase === 'result' && winner === lane;
@@ -1183,12 +1224,13 @@ export default function createGame({ container, names = [], onPick, random = Mat
       for (let g = lane.rail + 8; g < lane.w; g += 53) {
         ctx.strokeStyle = '#47792e77'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(lane.x + g + 9, lane.floor + 3); ctx.lineTo(lane.x + g + 7, lane.floor - 2); ctx.lineTo(lane.x + g + 9, lane.floor + 1); ctx.lineTo(lane.x + g + 13, lane.floor - 2); ctx.stroke();
       }
-      student(lane, time, won ? resultAge : 0);
+      [...lane.mobs].filter(mob => !mob.type.giant).sort((a, b) => b.x - a.x).forEach(mob => zombie(lane, mob, time));
       lane.defenders.forEach(defender => plant(lane, defender, time));
-      [...lane.mobs].sort((a, b) => b.x - a.x).forEach(mob => zombie(lane, mob, time));
+      student(lane, time, won ? resultAge : 0);
       potatoMine(lane);
       extraPlants(lane);
       lawnmower(lane, time);
+      lane.mobs.filter(mob => mob.type.giant).forEach(mob => giantLaneMarker(lane, mob));
       // Tags paint above large enemies and never shrink with the character rig.
       const chipHeight = tiny ? 11 : 18, nameSize = tiny ? 8 : width < 800 ? 11 : 12;
       rr(lane.x + 29, lane.y + 3, lane.nameWidth, chipHeight, 4, won ? '#745b25' : '#264d2ed9');
@@ -1458,10 +1500,10 @@ export default function createGame({ container, names = [], onPick, random = Mat
         mower: { id: lane.mower.uid, status: lane.mower.status, x: lane.mower.x, previousX: lane.mower.previousX, home: LAWNMOWER_RULES.home, speed: LAWNMOWER_RULES.speed, activations: lane.mower.activations, activationKills: lane.mower.kills, kills: lane.mower.kills, killIds: [...lane.mower.killIds], activatedAt: lane.mower.activatedAt, spentAt: lane.mower.spentAt, triggeredBy: lane.mower.triggeredBy },
         trap: lane.trap ? { id: lane.trap.uid, type: 'potato', position: lane.trap.position, armAt: lane.trap.armAt, armRemaining: Math.max(0, lane.trap.armAt - simTime), armed: lane.trap.armed, spent: lane.trap.spent, kills: lane.trap.kills, damage: PLANT_BY_ID.potato.explosionDamage, explodedAt: lane.trap.explodedAt } : null,
         torchwood: lane.torchwood ? { id: lane.torchwood.uid, position: lane.torchwood.position, hp: lane.torchwood.hp, maxHp: lane.torchwood.maxHp, eaten: lane.torchwood.eaten, fireDamage: PLANT_BY_ID.torchwood.fireDamage, fireSplashDamage: PLANT_BY_ID.torchwood.fireSplashDamage } : null,
-        geometry: { y: lane.y, height: lane.h, floor: lane.floor, studentX: lane.plantX, nameWidth: lane.nameWidth, nameFontSize: lane.h < 36 ? 8 : width < 800 ? 11 : 12, plantScale: lane.spriteScale, zombieScale: lane.zombieScale, normalZombieHeight: 112 * lane.zombieScale, giantHeight: 370 * lane.zombieScale },
+        geometry: { y: lane.y, height: lane.h, floor: lane.floor, studentX: lane.plantX, nameWidth: lane.nameWidth, nameFontSize: lane.h < 36 ? 8 : width < 800 ? 11 : 12, plantScale: lane.spriteScale, zombieScale: lane.zombieScale, normalZombieHeight: 112 * lane.zombieScale, normalHeight: 112 * lane.zombieScale, giantScale: giantGeometry(lane).scale, giantHeight: giantGeometry(lane).height, giantFootY: giantGeometry(lane).y, giantClip: giantGeometry(lane).clip },
         cherryBomb: lane.bomb ? { id: lane.bomb.uid, position: lane.bomb.position, fuseAt: lane.bomb.fuseAt, fuseSeconds: PICKER_VISUAL_TIMING.cherryFuse, remaining: Math.max(0, lane.bomb.fuseAt - simTime), countdown: lane.bomb.spent ? 0 : Math.max(1, Math.ceil(lane.bomb.fuseAt - simTime - 1e-8)), spent: lane.bomb.spent, kills: lane.bomb.kills, damage: PLANT_BY_ID.cherrybomb.explosionDamage, burstAge: lane.bomb.burstFirstSeenWall === null ? null : Math.max(0, (wallTime - lane.bomb.burstFirstSeenWall) / 1000) } : null,
         defenders: lane.defenders.map(defender => ({ id: defender.uid, slot: defender.slot, position: defender.position, weapon: defender.weapon, name: WEAPON_MAP[defender.weapon].name, classification: WEAPON_MAP[defender.weapon].classification, sourceHealth: WEAPON_MAP[defender.weapon].sourceHealth ?? null, modeScaling: WEAPON_MAP[defender.weapon].modeScaling ?? 1, sourceDamage: WEAPON_MAP[defender.weapon].sourceDamage ?? null, role: WEAPON_MAP[defender.weapon].blocker ? 'blocker' : 'shooter', hp: defender.hp, maxHp: defender.maxHp, damageStage: plantDamageStage(defender.hp, defender.maxHp), damage: WEAPON_MAP[defender.weapon].blocker ? WEAPON_MAP[defender.weapon].contactDamage > 0 ? WEAPON_MAP[defender.weapon].contactDamage + defender.power * .6 : 0 : lane.damage * WEAPON_MAP[defender.weapon].multiplier, interval: WEAPON_MAP[defender.weapon].blocker ? null : Math.max(WEAPON_MAP[defender.weapon].intervalMin || 0, WEAPON_MAP[defender.weapon].interval * lane.cooldown / BASE_CADENCE), attackPattern: WEAPON_MAP[defender.weapon].blocker ? WEAPON_MAP[defender.weapon].contactDamage > 0 ? 'contact' : 'block' : defender.weapon, shield: defender.shield, power: defender.power, eaten: defender.eaten, bornAt: defender.bornAt, shotsFired: defender.shotsFired, kills: defender.kills })),
-        mobs: lane.mobs.map(mob => ({ id: mob.uid, variant: mob.type.id, visualType: mob.visualType, rigIdentity: mob.rigIdentity, hp: mob.hp, maxHp: mob.maxHp, bodyHp: mob.bodyHp, maxBodyHp: mob.maxBodyHp, armorHp: mob.armorHp, maxArmorHp: mob.maxArmorHp, damage: mob.bite, speed: mob.speed, baseDamage: mob.type.bite, baseSpeed: mob.type.speed, dead: mob.dead, stage: mob.stage, attacking: mob.attacking, x: mob.x, lastShooter: mob.lastShooter, slowMultiplier: simTime < mob.slowUntil ? mob.slow : 1, slowUntil: mob.slowUntil, biteMultiplier: simTime < mob.slowUntil ? mob.slow : 1, stunnedUntil: mob.stunnedUntil, nextBite: mob.nextBite, animationTime: mob.animationTime })) })),
+        mobs: lane.mobs.map(mob => ({ id: mob.uid, variant: mob.type.id, giant: Boolean(mob.type.giant), monsterId: mob.monsterId, name: mob.type.name, biteCadence: mob.cadence, visualType: mob.visualType, rigIdentity: mob.rigIdentity, hp: mob.hp, maxHp: mob.maxHp, bodyHp: mob.bodyHp, maxBodyHp: mob.maxBodyHp, armorHp: mob.armorHp, maxArmorHp: mob.maxArmorHp, damage: mob.bite, speed: mob.speed, baseDamage: mob.type.bite, baseSpeed: mob.type.speed, dead: mob.dead, stage: mob.stage, attacking: mob.attacking, x: mob.x, lastShooter: mob.lastShooter, slowMultiplier: simTime < mob.slowUntil ? mob.slow : 1, slowUntil: mob.slowUntil, biteMultiplier: simTime < mob.slowUntil ? mob.slow : 1, stunnedUntil: mob.stunnedUntil, nextBite: mob.nextBite, animationTime: mob.animationTime })) })),
       pendingProjectiles: pendingShots.map(shot => ({ ownerId: shot.ownerId, attackerId: shot.attackerId, weapon: shot.weapon, targetLane: shot.lane, fireAt: shot.fireAt, damage: shot.damage, style: shot.projectileStyle })),
       projectiles: shots.map(shot => ({ id: shot.uid, ownerId: shot.ownerId, attackerId: shot.attackerId, weapon: shot.weapon, targetLane: shot.lane, sourceLane: shot.ownerLane, x: shot.x, damage: shot.damage, style: shot.projectileStyle, splashDamage: shot.splashDamage, splashTiles: shot.splashTiles, slow: shot.slow, slowDuration: shot.slowDuration, stunDuration: shot.stunDuration })),
       combatLog: combatLog.map(entry => ({ ...entry })) };
