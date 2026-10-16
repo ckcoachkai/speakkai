@@ -36,3 +36,5 @@
 .poster-gallery a{display:block;overflow:hidden;border:1px solid var(--line);border-radius:5px;background:#fff}
 .poster-gallery img{display:block;width:100%;height:auto}
 @media(max-width:540px){.poster-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.welcome-audio{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:50px;margin:0 0 18px;padding:8px 0 12px;border-bottom:1px solid var(--line);color:var(--muted)}.welcome-audio-copy{display:flex;align-items:center;gap:9px;font-size:12px;white-space:nowrap}.welcome-audio-copy strong{display:block;color:var(--ink);font-size:12px}.welcome-audio-copy small{display:block;color:var(--muted);font-size:10px}.welcome-audio-note{color:var(--gold);font-size:18px}.welcome-audio audio{width:min(300px,42vw);height:32px;opacity:.76}@media(max-width:600px){.welcome-audio{gap:12px;align-items:flex-start}.welcome-audio-copy{white-space:normal;gap:7px}.welcome-audio audio{width:155px;max-width:50vw;margin-top:3px}}
