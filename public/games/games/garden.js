@@ -1,45 +1,32 @@
 import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261016-garden';
-import { GARDEN_RULES, PLANT_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
+import { GARDEN_RULES, PLANT_BY_ID, ZOMBIE_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
-import { createGardenMonsters, GARDEN_MONSTER_TYPES } from './garden-monsters.js?v=20261016-cameos';
+import { createGardenMonsters, GARDEN_MONSTER_TYPES } from './garden-monsters.js?v=20261016-sourced';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
  * These adjustable health values are custom PvZ-inspired rules, not a claim of
  * exact parity with any edition of Plants vs. Zombies.
  */
-export const HEALTH_MODEL = Object.freeze({ label: 'Source-informed baseline; custom combat variants', exactParityVerified: false, plantHealth: 300, studentHealth: 150, normalBodyHealth: 270, coneArmorHealth: 370, bucketArmorHealth: 1100, footballArmorHealth: 1400, peaDamage: 20 });
-const ARCHETYPES = [
-  { name: 'Walker', hp: 270, speed: .018, bite: 50, cadence: .50 },
-  { name: 'Stumbler', hp: 270, speed: .0205, bite: 45, cadence: .50 },
-  { name: 'Runner', hp: 160, speed: .025, bite: 36, cadence: .40 },
-  { name: 'Bruiser', hp: 300, speed: .0155, bite: 65, cadence: .60 },
-  { name: 'Courier', hp: 220, speed: .022, bite: 48, cadence: .45 },
-];
-const ARMORS = [
-  { name: 'Barehead', hp: 0, resistance: 0 },
-  { name: 'Cone', hp: 370, resistance: 0 },
-  { name: 'Bucket', hp: 1100, resistance: 0 },
-  { name: 'Football', hp: 1400, resistance: 0 },
-];
-const ABILITIES = [
-  { name: 'Steady', regen: 0, dodge: 0, rush: 1, frenzy: 1 },
-  { name: 'Mender', regen: 7, dodge: 0, rush: 1, frenzy: 1 },
-  { name: 'Rusher', regen: 0, dodge: 0, rush: 1.7, frenzy: 1 },
-  { name: 'Dodger', regen: 0, dodge: .18, rush: 1, frenzy: 1 },
-  { name: 'Hungry', regen: 0, dodge: 0, rush: 1, frenzy: 1.5 },
-];
-export const ZOMBIE_CATALOG = Object.freeze(ARCHETYPES.flatMap((base, a) => ARMORS.flatMap((armor, b) => ABILITIES.map((ability, c) => Object.freeze({
-  id: 'z' + String(a * 20 + b * 5 + c + 1).padStart(3, '0'),
-  name: ability.name + ' ' + armor.name + ' ' + base.name,
-  archetype: a, armor: b, ability: c,
-  health: base.hp + armor.hp, bodyHealth: base.hp, armorHealth: armor.hp, speed: b === 3 ? ARCHETYPES[0].speed * 2.26 : a === 2 ? ARCHETYPES[0].speed * 2.245 : a === 1 ? ARCHETYPES[0].speed : base.speed, bite: base.bite, biteCadence: base.cadence,
-  resistance: armor.resistance, regeneration: ability.regen, dodge: ability.dodge, rush: ability.rush, frenzy: ability.frenzy,
-  face: ['#a9ca79', '#94bd7e', '#b8ce87', '#86b68a', '#a1c18a'][a],
-  jacket: ['#836045', '#9b6b48', '#755640', '#946a51', '#806749'][b === 0 ? a : (a + b) % 5],
-  tie: ['#b94136', '#d27238', '#964944', '#d9a447', '#803f48'][c],
-  brow: c, nose: a, buttons: b + 1,
-})))));
+export const HEALTH_MODEL = Object.freeze({ label: 'Fixed source-family zombie statistics; larger waves supply difficulty', exactParityVerified: false, plantHealth: 300, studentHealth: 150, normalBodyHealth: 270, coneArmorHealth: 370, bucketArmorHealth: 1100, footballArmorHealth: 1400, peaDamage: 20 });
+// One hundred stable roster IDs retain cosmetic identity. Combat statistics
+// come from six fixed source families; costumes never add durability or dodge.
+const REGULAR_FAMILIES = ['walker', 'cone', 'bucket', 'football', 'pole', 'newspaper'];
+export const ZOMBIE_CATALOG = Object.freeze(Array.from({ length: 100 }, (_, index) => {
+  const rule = ZOMBIE_BY_ID[REGULAR_FAMILIES[index % REGULAR_FAMILIES.length]];
+  return Object.freeze({
+    id: 'z' + String(index + 1).padStart(3, '0'), family: rule.id, name: rule.name,
+    visualType: rule.visualType || rule.id, archetype: rule.id === 'pole' ? 2 : rule.id === 'newspaper' ? 1 : 0, armor: rule.armor || 0, ability: 0,
+    health: rule.hp, bodyHealth: rule.bodyHp, armorHealth: rule.armorHp || 0, shieldHealth: rule.shieldHp || 0,
+    speed: rule.speed / (GARDEN_RULES.tileWidth * GARDEN_RULES.columns), bite: rule.biteDamage, biteCadence: rule.biteInterval,
+    enragedSpeed: (rule.enragedSpeed || rule.speed) / (GARDEN_RULES.tileWidth * GARDEN_RULES.columns), rageWindup: rule.frenzyWindup || 0,
+    resistance: 0, regeneration: 0, dodge: 0, rush: 1, frenzy: 1,
+    face: ['#a9ca79', '#94bd7e', '#b8ce87', '#86b68a', '#a1c18a'][index % 5],
+    jacket: ['#836045', '#9b6b48', '#755640', '#946a51', '#806749'][index % 5],
+    tie: ['#b94136', '#d27238', '#964944', '#d9a447', '#803f48'][Math.floor(index / 5) % 5],
+    brow: index % 5, nose: index % 5, buttons: index % 4 + 1,
+  });
+}));
 
 // Classroom cameos use ordinary health, armor and bite mechanics.
 // They are rare members of later waves, never a timed selection shortcut.
@@ -56,7 +43,7 @@ export const GIANT_CATALOG = Object.freeze([
 ].map(monster => Object.freeze({ ...monster, giant: true, monsterId: monster.id, classification: 'cameo', archetype: 0, armor: 0, ability: 0, resistance: 0, regeneration: 0, dodge: 0, rush: 1, frenzy: 1 })));
 export const PICKER_VISUAL_TIMING = Object.freeze({ cherryFuse: 3, cherryMaximumTempo: 2.5, cherryBurstWallSeconds: .95, melonVelocityFactor: .53, melonImpactTimeScale: .65 });
 const BASE_CADENCE = PLANT_BY_ID.pea.interval;
-export const PICKER_PACING = Object.freeze({ peaInterval: BASE_CADENCE, upgradeMinimumInterval: PLANT_BY_ID.pea.intervalMin, projectileTilesPerSecond: 4.16, firstZombie: 3, spawnMinimum: 6.4, spawnMaximum: 8.4, pressureStarts: 90, melonSplashTileRadius: 1.5, geometry: 'Readable 3-by-3 tile splash adaptation; original damage and crowded-target cap' });
+export const PICKER_PACING = Object.freeze({ peaInterval: BASE_CADENCE, upgradeMinimumInterval: PLANT_BY_ID.pea.intervalMin, projectileTilesPerSecond: 4.16, firstZombie: 3, spawnMinimum: 6.4, spawnMaximum: 8.4, zombieStatScaling: false, melonSplashTileRadius: 1.5, geometry: 'Readable 3-by-3 tile splash adaptation; original damage and crowded-target cap' });
 const classicWeapon = (id, icon) => ({ ...PLANT_BY_ID[id], icon, classification: 'classic', sourceHealth: PLANT_BY_ID[id].hp, sourceDamage: PLANT_BY_ID[id].damage, multiplier: PLANT_BY_ID[id].damage / 20, cooldown: PLANT_BY_ID[id].interval / BASE_CADENCE, slow: PLANT_BY_ID[id].slow < 1 ? PLANT_BY_ID[id].slow : undefined, pierce: 1, radius: 0 });
 // Keep these ten legacy IDs in order so every existing loot ID remains valid.
 const WEAPONS = [
@@ -119,19 +106,28 @@ export function damageZombie(mob, shot) {
   if (mob.dead || mob.hp <= 0) return { damage: 0, killed: false };
   const armor = Math.max(0, (mob.resistance || 0) - (mob.stage >= 2 ? .05 : 0));
   const damage = Math.max(0, shot.damage || 0) * (1 - armor);
-  const actual = Math.min(mob.hp, damage);
+  let actual = Math.min(mob.hp, damage);
   if (typeof mob.armorHp === 'number' && typeof mob.bodyHp === 'number') {
     // Serrated loot really bypasses armor; it can wound/defeat the body while
     // an outer armor piece is still intact. Ordinary peas hit armor first.
-    const bypass = damage * clamp(shot.penetration || 0, 0, 1);
-    const absorbed = Math.min(mob.armorHp, damage - bypass);
+    const before = mob.hp;
+    let remaining = damage;
+    if (mob.shieldHp > 0 && !shot.bypassesShield) {
+      const shieldDamage = Math.min(mob.shieldHp, remaining);
+      mob.shieldHp = Math.max(0, mob.shieldHp - shieldDamage);
+      if (!shot.hitsShieldAndBody) remaining -= shieldDamage;
+    }
+    const bypass = remaining * clamp(shot.penetration || 0, 0, 1);
+    const absorbed = Math.min(mob.armorHp, remaining - bypass);
     mob.armorHp = Math.max(0, mob.armorHp - absorbed);
-    mob.bodyHp = Math.max(0, mob.bodyHp - (damage - absorbed));
-    mob.hp = mob.bodyHp <= 0 ? 0 : mob.armorHp + mob.bodyHp;
+    mob.bodyHp = Math.max(0, mob.bodyHp - (remaining - absorbed));
+    mob.hp = mob.bodyHp <= 0 ? 0 : mob.armorHp + mob.bodyHp + (mob.shieldHp || 0);
+    actual = Math.max(0, before - mob.hp);
   } else mob.hp = Math.max(0, mob.hp - damage);
   if (actual > 0) { mob.lastShooter = shot.ownerId; mob.lastAttacker = shot.attackerId ?? mob.lastAttacker ?? null; }
   const body = mob.bodyHp ?? mob.hp, maximum = mob.maxBodyHp ?? mob.maxHp;
-  mob.stage = Math.max(mob.stage || 0, body <= maximum * .25 ? 2 : body <= maximum * .5 ? 1 : 0);
+  mob.stage = Math.max(mob.stage || 0, body < maximum * GARDEN_RULES.zombie.headLossRatio ? 2 : body < maximum * GARDEN_RULES.zombie.armLossRatio ? 1 : 0);
+  if (!mob.type?.giant && body < maximum * GARDEN_RULES.zombie.headLossRatio) mob.headless = true;
   mob.hurt = .14;
   if (mob.hp <= 0) { mob.dead = true; return { damage: actual, killed: true }; }
   return { damage: actual, killed: false };
@@ -379,11 +375,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
   }
   function hit(lane, mob, shot, dotDamage = false) {
     if (mob.dead) return;
-    if (!dotDamage && mob.type.dodge && rng() < mob.type.dodge * (shot.weapon === 'laser' ? .5 : 1)) {
-      float(lane, mob, 'DODGE', '#e8edc8'); mob.dodgePose = .22; return;
-    }
-    const hadArmor = mob.armorHp > 0, previousStage = mob.stage;
+    const hadArmor = mob.armorHp > 0, hadShield = mob.shieldHp > 0, previousStage = mob.stage;
     const result = damageZombie(mob, shot);
+    if (hadShield && mob.shieldHp <= 0 && mob.type.family === 'newspaper') { mob.enragedAt = simTime + mob.type.rageWindup; addLog({ type: 'newspaperLost', zombieId: mob.uid, rageAt: mob.enragedAt }); }
     if (previousStage < 1 && mob.stage >= 1) mob.armDropAt = simTime;
     if (previousStage < 2 && mob.stage >= 2) mob.headDropAt = simTime;
     if (hadArmor && mob.armorHp <= 0) {
@@ -411,25 +405,24 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (result.killed) killed(lane, mob);
   }
   function spawn(lane, starter = false) {
-    const giantEligible = !starter && lane.wave >= 2 && !lane.mobs.some(mob => !mob.dead && mob.type.giant);
-    const pool = giantEligible && rng() < .03 ? GIANT_CATALOG : starter ? [ZOMBIE_CATALOG[0]] : ZOMBIE_CATALOG;
+    const availableGiants = GIANT_CATALOG.filter(type => monsters.has(type.id));
+    const giantEligible = !starter && lane.wave >= 2 && availableGiants.length > 0 && !lane.mobs.some(mob => !mob.dead && mob.type.giant);
+    const pool = giantEligible && rng() < .03 ? availableGiants : starter ? [ZOMBIE_CATALOG[0]] : ZOMBIE_CATALOG;
     const type = pool[Math.floor(rng() * pool.length)];
-    const pressure = Math.max(0, simTime - PICKER_PACING.pressureStarts);
-    // Ordinary variants gradually arrive more often and move a little faster.
-    // There is no timed boss, one-hit assault or deadline that selects a name.
-    const factor = 1 + pressure * .008, hp = type.health * factor;
-    const armorHp = type.armorHealth * factor, bodyHp = hp - armorHp;
+    // More zombies increase difficulty; elapsed time never changes their stats.
+    const hp = type.health, armorHp = type.armorHealth || 0, shieldHp = type.shieldHealth || 0, bodyHp = type.bodyHealth;
     const uid = ++serial;
     let visualType = type.archetype === 2 ? 'runner' : type.archetype === 1 ? 'newspaper' : type.archetype === 3 ? 'bruiser' : type.archetype === 4 ? 'courier' : 'walker';
     if (type.ability === 1) visualType = 'mender';
     if (type.ability === 2) visualType = 'dancer';
     if (type.ability === 3) visualType = 'construction';
     if (type.armor > 0) visualType = ['walker', 'cone', 'bucket', 'football'][type.armor];
+    if (type.visualType) visualType = type.visualType;
     if (type.giant) visualType = type.monsterId;
     const mob = { uid, type, x: 1.02 + rng() * .08,
-      hp, maxHp: hp, armorHp, maxArmorHp: armorHp, bodyHp, maxBodyHp: bodyHp, resistance: type.resistance, speed: type.speed * (1 + pressure * .006),
-      bite: type.bite * 1.08, cadence: type.biteCadence, nextBite: 0,
-      stage: 0, hurt: 0, dodgePose: 0, dead: false, deathAt: 0, lastShooter: null, slow: 1, slowUntil: 0, chewSlow: 1, stunnedUntil: 0, burn: null,
+      hp, maxHp: hp, armorHp, maxArmorHp: armorHp, shieldHp, maxShieldHp: shieldHp, bodyHp, maxBodyHp: bodyHp, resistance: type.resistance, speed: type.speed, enragedAt: null,
+      bite: type.bite, cadence: type.biteCadence, nextBite: 0,
+      stage: 0, hurt: 0, dodgePose: 0, dead: false, deathAt: 0, headless: false, bleedAccumulator: 0, lastShooter: null, slow: 1, slowUntil: 0, chewSlow: 1, stunnedUntil: 0, burn: null,
       lootIndex: Math.floor(rng() * LOOT_CATALOG.length), pose: rng() * TAU, animationTime: simTime, attacking: false };
     Object.defineProperties(mob, { visualType: { value: visualType, enumerable: true }, monsterId: { value: type.monsterId || null, enumerable: true }, rigIdentity: { value: type.id + '-' + uid, enumerable: true } });
     lane.mobs.push(mob);
@@ -450,7 +443,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const critical = lane.crit > 0 && rng() < lane.crit;
     const damage = weapon.damage * lane.damage / 20 * (critical ? 1.7 : 1);
     defender.nextShot = simTime + Math.max(weapon.intervalMin || weapon.interval * .95, weapon.interval * lane.cooldown / BASE_CADENCE);
-    const source = { ownerId: lane.entry.id, ownerLane: lane.index, attackerId: defender.uid, origin: defender.position, damage, penetration: lane.penetration, weapon: weapon.id, attackType, slow: weapon.slow, slowDuration: weapon.slowDuration, critical };
+    const source = { ownerId: lane.entry.id, ownerLane: lane.index, attackerId: defender.uid, origin: defender.position, damage, penetration: lane.penetration, weapon: weapon.id, attackType, bypassesShield: Boolean(weapon.bypassesShield), hitsShieldAndBody: Boolean(weapon.hitsShieldAndBody), slow: weapon.slow, slowDuration: weapon.slowDuration, critical };
     {
       const count = weapon.id === 'burst' ? 1 : weapon.count || 1;
       const offsets = attackType === 'gatling' ? weapon.shootingOffsets || [.32, .49, .65, .82] : Array.from({ length: count }, (_, index) => (weapon.shootingDelay || 0) + index * (weapon.burstGap || 0));
@@ -525,20 +518,17 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const previousMobX = mob.x;
     mob.previousX = mob.x;
     const toTouch = Math.max(0, mob.x - contactPosition);
-    const wounded = mob.hp < mob.maxHp * .5;
-    const rush = mob.type.rush > 1 && (simTime + mob.pose) % 4 < .9 ? mob.type.rush : 1;
-    const frenzy = wounded ? mob.type.frenzy : 1;
     const slow = simTime < mob.slowUntil ? mob.slow : 1;
-    const stunned = simTime < (mob.stunnedUntil || 0);
-    const rage = mob.visualType === 'newspaper' && mob.stage >= 1 ? 3 : 1;
-    const speed = stunned ? 0 : mob.speed * slow * rush * frenzy * rage;
+    const stunned = simTime < (mob.stunnedUntil || 0) || mob.enragedAt !== null && simTime < mob.enragedAt;
+    const movement = mob.type.family === 'newspaper' && mob.enragedAt !== null && simTime >= mob.enragedAt ? mob.type.enragedSpeed : mob.speed;
+    const speed = stunned ? 0 : movement * slow;
     mob.x = Math.max(contactPosition, mob.x - speed * dt);
     if (!defender && mower.status === 'ready' && mob.x <= contactPosition + 1e-9) activateMower(lane, mob);
     if (crushWithMower(lane, mob, previousMobX)) { mob.attacking = false; return; }
     // An active first-breach sweep always finishes before student bites. The
     // spent mower provides no protection when the next wave breaks through.
     if (!defender && mower.status === 'sweeping') { mob.attacking = false; return; }
-    if (stunned) { mob.attacking = false; return; }
+    if (stunned || mob.headless) { mob.attacking = false; return; }
     mob.attacking = mob.x <= contactPosition + 1e-9;
     if (!mob.attacking) return;
     const previousChew = mob.chewSlow || 1;
@@ -548,7 +538,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (mob.nextBite < contact) mob.nextBite = contact;
     if (simTime + 1e-9 >= mob.nextBite) {
       const at = mob.nextBite;
-      let damage = mob.bite * (wounded ? mob.type.frenzy : 1);
+      let damage = mob.bite;
       mob.nextBite += mob.cadence / slow;
       playSfx('bite', lane);
       if (defender) {
@@ -714,10 +704,18 @@ export default function createGame({ container, names = [], onPick, random = Mat
       for (const mob of lane.mobs) {
         mob.hurt = Math.max(0, mob.hurt - dt); mob.dodgePose = Math.max(0, mob.dodgePose - dt);
         if (mob.dead) continue;
-        if (simTime >= (mob.stunnedUntil || 0)) mob.animationTime += dt * (simTime < mob.slowUntil ? mob.slow : 1);
+        if (simTime >= (mob.stunnedUntil || 0) && (mob.enragedAt === null || simTime >= mob.enragedAt)) mob.animationTime += dt * (simTime < mob.slowUntil ? mob.slow : 1);
         if (mob.burn && simTime < mob.burn.until) hit(lane, mob, { ownerId: mob.burn.ownerId, attackerId: mob.burn.attackerId, damage: mob.burn.damage * dt, penetration: .05 }, true);
         if (mob.dead) continue;
-        if (mob.type.regeneration) { mob.bodyHp = Math.min(mob.maxBodyHp, mob.bodyHp + mob.type.regeneration * dt); mob.hp = mob.bodyHp + mob.armorHp; }
+        if (mob.headless && !mob.type.giant) {
+          mob.bleedAccumulator += dt;
+          while (mob.bleedAccumulator + 1e-8 >= GARDEN_RULES.secondsPerTick) {
+            mob.bleedAccumulator -= GARDEN_RULES.secondsPerTick;
+            if (rng() < GARDEN_RULES.zombie.headlessDecayChancePerTick) mob.bodyHp = Math.max(0, mob.bodyHp - (mob.maxBodyHp >= 500 ? GARDEN_RULES.zombie.headlessLargeDecayDamage : GARDEN_RULES.zombie.headlessDecayDamage));
+          }
+          mob.hp = mob.bodyHp <= 0 ? 0 : mob.bodyHp + mob.armorHp + mob.shieldHp;
+          if (mob.bodyHp <= 0) { mob.dead = true; killed(lane, mob); continue; }
+        }
         attackTeam(lane, mob, deaths, dt);
       }
       updateMine(lane);
@@ -1086,7 +1084,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     // Only an arena physically shorter than a full giant can limit its size;
     // lane height never does. The foot may move down while its lane stays fixed.
     const scale = Math.min(lane.zombieScale, Math.max(.02, (clip.height - 16) / 370));
-    const typeWidth = GARDEN_MONSTER_TYPES.find(type => type.id === mob.monsterId)?.width || 390;
+    const typeWidth = monsters.dimensions(mob.monsterId)?.width || GARDEN_MONSTER_TYPES.find(type => type.id === mob.monsterId)?.width || 470;
     const halfWidth = (typeWidth / 2 + 28) * scale;
     const x = clamp(lane.plantX + mob.x * lane.travel, clip.x + halfWidth, clip.x + clip.width - halfWidth);
     const y = clamp(lane.floor, clip.y + 370 * scale + 8, clip.y + clip.height - 8);
@@ -1503,7 +1501,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
         geometry: { y: lane.y, height: lane.h, floor: lane.floor, studentX: lane.plantX, nameWidth: lane.nameWidth, nameFontSize: lane.h < 36 ? 8 : width < 800 ? 11 : 12, plantScale: lane.spriteScale, zombieScale: lane.zombieScale, normalZombieHeight: 112 * lane.zombieScale, normalHeight: 112 * lane.zombieScale, giantScale: giantGeometry(lane).scale, giantHeight: giantGeometry(lane).height, giantFootY: giantGeometry(lane).y, giantClip: giantGeometry(lane).clip },
         cherryBomb: lane.bomb ? { id: lane.bomb.uid, position: lane.bomb.position, fuseAt: lane.bomb.fuseAt, fuseSeconds: PICKER_VISUAL_TIMING.cherryFuse, remaining: Math.max(0, lane.bomb.fuseAt - simTime), countdown: lane.bomb.spent ? 0 : Math.max(1, Math.ceil(lane.bomb.fuseAt - simTime - 1e-8)), spent: lane.bomb.spent, kills: lane.bomb.kills, damage: PLANT_BY_ID.cherrybomb.explosionDamage, burstAge: lane.bomb.burstFirstSeenWall === null ? null : Math.max(0, (wallTime - lane.bomb.burstFirstSeenWall) / 1000) } : null,
         defenders: lane.defenders.map(defender => ({ id: defender.uid, slot: defender.slot, position: defender.position, weapon: defender.weapon, name: WEAPON_MAP[defender.weapon].name, classification: WEAPON_MAP[defender.weapon].classification, sourceHealth: WEAPON_MAP[defender.weapon].sourceHealth ?? null, modeScaling: WEAPON_MAP[defender.weapon].modeScaling ?? 1, sourceDamage: WEAPON_MAP[defender.weapon].sourceDamage ?? null, role: WEAPON_MAP[defender.weapon].blocker ? 'blocker' : 'shooter', hp: defender.hp, maxHp: defender.maxHp, damageStage: plantDamageStage(defender.hp, defender.maxHp), damage: WEAPON_MAP[defender.weapon].blocker ? WEAPON_MAP[defender.weapon].contactDamage > 0 ? WEAPON_MAP[defender.weapon].contactDamage + defender.power * .6 : 0 : lane.damage * WEAPON_MAP[defender.weapon].multiplier, interval: WEAPON_MAP[defender.weapon].blocker ? null : Math.max(WEAPON_MAP[defender.weapon].intervalMin || 0, WEAPON_MAP[defender.weapon].interval * lane.cooldown / BASE_CADENCE), attackPattern: WEAPON_MAP[defender.weapon].blocker ? WEAPON_MAP[defender.weapon].contactDamage > 0 ? 'contact' : 'block' : defender.weapon, shield: defender.shield, power: defender.power, eaten: defender.eaten, bornAt: defender.bornAt, shotsFired: defender.shotsFired, kills: defender.kills })),
-        mobs: lane.mobs.map(mob => ({ id: mob.uid, variant: mob.type.id, giant: Boolean(mob.type.giant), monsterId: mob.monsterId, name: mob.type.name, biteCadence: mob.cadence, visualType: mob.visualType, rigIdentity: mob.rigIdentity, hp: mob.hp, maxHp: mob.maxHp, bodyHp: mob.bodyHp, maxBodyHp: mob.maxBodyHp, armorHp: mob.armorHp, maxArmorHp: mob.maxArmorHp, damage: mob.bite, speed: mob.speed, baseDamage: mob.type.bite, baseSpeed: mob.type.speed, dead: mob.dead, stage: mob.stage, attacking: mob.attacking, x: mob.x, lastShooter: mob.lastShooter, slowMultiplier: simTime < mob.slowUntil ? mob.slow : 1, slowUntil: mob.slowUntil, biteMultiplier: simTime < mob.slowUntil ? mob.slow : 1, stunnedUntil: mob.stunnedUntil, nextBite: mob.nextBite, animationTime: mob.animationTime })) })),
+        mobs: lane.mobs.map(mob => ({ id: mob.uid, variant: mob.type.id, family: mob.type.family || null, giant: Boolean(mob.type.giant), monsterId: mob.monsterId, name: mob.type.name, biteCadence: mob.cadence, visualType: mob.visualType, rigIdentity: mob.rigIdentity, hp: mob.hp, maxHp: mob.maxHp, bodyHp: mob.bodyHp, maxBodyHp: mob.maxBodyHp, shieldHp: mob.shieldHp, maxShieldHp: mob.maxShieldHp, armorHp: mob.armorHp, maxArmorHp: mob.maxArmorHp, damage: mob.bite, speed: mob.speed, baseDamage: mob.type.bite, baseSpeed: mob.type.speed, dead: mob.dead, headless: mob.headless, stage: mob.stage, attacking: mob.attacking, x: mob.x, lastShooter: mob.lastShooter, slowMultiplier: simTime < mob.slowUntil ? mob.slow : 1, slowUntil: mob.slowUntil, biteMultiplier: simTime < mob.slowUntil ? mob.slow : 1, stunnedUntil: mob.stunnedUntil, nextBite: mob.nextBite, animationTime: mob.animationTime })) })),
       pendingProjectiles: pendingShots.map(shot => ({ ownerId: shot.ownerId, attackerId: shot.attackerId, weapon: shot.weapon, targetLane: shot.lane, fireAt: shot.fireAt, damage: shot.damage, style: shot.projectileStyle })),
       projectiles: shots.map(shot => ({ id: shot.uid, ownerId: shot.ownerId, attackerId: shot.attackerId, weapon: shot.weapon, targetLane: shot.lane, sourceLane: shot.ownerLane, x: shot.x, damage: shot.damage, style: shot.projectileStyle, splashDamage: shot.splashDamage, splashTiles: shot.splashTiles, slow: shot.slow, slowDuration: shot.slowDuration, stunDuration: shot.stunDuration })),
       combatLog: combatLog.map(entry => ({ ...entry })) };

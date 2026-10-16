@@ -1,25 +1,21 @@
-# Animated garden cameos
+# Sourced garden creatures
 
-The picker includes the user's requested Labubu, Niu Lai (牛来), Rubber Duck, Mummy, Hello Kitty, Ultraman, Team Rocket, Pikachu and Dog Man lineup. These are custom Canvas illustrations of the characters, not official game sprites or extracted animation clips. Niu Lai refers to the calf from the 2026 film, as clarified by the user and checked against its [film listing](https://www.imdb.com/title/tt44146991/).
+The game draws original downloaded image pixels through `games/garden-monsters.js`. No AI generation or procedural character redraw is loaded. The manifest stores every original URL, frame rectangle, timing, processing note, rights statement and source/output SHA-256.
 
-## Size and visibility
+Ordinary zombies retain `clamp((laneHeight-4)/113,0.20,1)` size. Cameos use370logical pixels versus112for an ordinary body (3.30times taller). They span multiple rows, behind the foreground actors and names, with arena bounds and a target-lane marker. Combat remains in the target lane. Only successfully loaded source assets can spawn.
 
-Ordinary zombie size is restored to `clamp((laneHeight-4)/113,0.20,1)`. Students and plants do not shrink to make room for a giant. Normal bodies use112logical pixels; the cameos use370, about3.30times taller at the same scale. Giants span multiple lawn rows in a shared enemy layer. The game may limit a giant only when the entire visible arena is shorter than its full body, never to fit one row.
+Six character groups have genuine source animation frames. Niu Lai, Rubber Duck and Dog Man are sourced stills with hit feedback and a defeat transform. The Niu Lai press frame cuts off its feet; missing limbs were not invented. Team Rocket combines original Jessie/James renders with animated Meowth; the trainers themselves are posed stills. Ultraman has separate walking, attack, hurt and collapse clips. The other animated groups retain their available source cycles rather than fabricated joint motion.
 
-Giants render before ordinary enemies, students, defenders and name tags, so foreground actors remain readable. The topmost rows shift a giant's visual foot downward when needed to keep its head onscreen. A ground marker and tether preserve the actual target lane. Combat continues in that lane and does not turn the giant into a multi-row automatic wipe.
+- **Labubu**: 4 source frames. [Source page](https://giphy.com/stickers/popmartglobal-transparent-popmart-labubu-RstRI22cBJ6HXRmJ7r). Four original frames from the official POP MART sticker. Rights: Character artwork remains with its original rights holders; no standalone reuse license established.
+- **Niu Lai (牛来)**: 1 source frames. [Source page](https://dushi.singtao.ca/toronto/%E6%96%B0%E9%97%BB/%E5%8D%B3%E6%97%B6%E4%B8%AD%E5%9B%BD/%E3%80%8A%E7%89%9B%E6%9D%A5%E3%80%8B%EF%B8%B1%E5%9B%BD%E4%BA%A7%E5%8A%A8%E7%94%BB10%E6%97%A5%E7%A5%A8%E6%88%BF%E4%BB%85%C2%A57705-%E7%BD%91%E6%B0%91%E8%AE%BD%E5%90%AC%E8%BF%87%E7%9A%84/). Genuine film still, left golden bull. Source cuts off feet; no missing limbs are invented. The silhouette is masked from existing pixels. Rights: Character artwork remains with its original rights holders; no standalone reuse license established.
+- **Rubber Duck**: 1 source frames. [Source page](https://commons.wikimedia.org/wiki/File:Rubber_duck.svg). Original transparent yellow rubber-duck illustration. Static source artwork. Rights: CC0-1.0; gnokii / OpenClipart, via Wikimedia Commons.
+- **Mummy**: 18 source frames. [Source page](https://samme.github.io/phaser-examples-mirror/animation/sprite%20sheet.html). 18 original Metal Slug mummy walking frames. Rights: SNK Metal Slug art. Phaser explicitly supplies its example media without a reuse license; its code license does not cover this art.
+- **Hello Kitty**: 10 source frames. [Source page](https://giphy.com/stickers/hellokitty-pusheen-hello-kitty-hellokittyxpusheen-UW1PqDNlTyNTVfiq3j). Ten original frames from the official Hello Kitty account; fixed crop isolates Kitty from Pusheen. Rights: Character artwork remains with its original rights holders; no standalone reuse license established.
+- **Ultraman**: 18 source frames. [Source page](https://www.spritedatabase.net/file/31432/Ultraman). Actual GBA Taiketsu! Ultra Hero walking, punch, hurt and collapse sprites; exact green sprite-sheet background removed. Rights: Character artwork remains with its original rights holders; no standalone reuse license established.
+- **Team Rocket**: 18 source frames. [Source page](['https://www.wikidex.net/wiki/Archivo:Jessie_Masters.png', 'https://www.wikidex.net/wiki/Archivo:James_Masters.png', 'https://play.pokemonshowdown.com/sprites/ani/']). Original transparent Pokemon Masters trainer poses with original animated Meowth frames. Jessie and James are posed stills; their limbs are not redrawn or falsely described as source walking animation. Rights: Character artwork remains with its original rights holders; no standalone reuse license established.
+- **Pikachu**: 33 source frames. [Source page](https://play.pokemonshowdown.com/sprites/ani/). 33 original animated transparent Pokemon sprite frames,40ms each. Rights: Character artwork remains with its original rights holders; no standalone reuse license established.
+- **Dog Man**: 1 source frames. [Source page](https://www.dreamworks.com/movies/dog-man). Full-body DreamWorks film promotional artwork; source pixels isolated from poster background with an outline mask. Static official pose, no invented walk frames. Rights: Character artwork remains with its original rights holders; no standalone reuse license established.
 
-## Connected animation
+Source processing only decodes frames, crops or masks existing pixels, preserves frame alignment, optionally flips direction, and compresses transparent WebP atlases. Native pixel art uses nearest-neighbor display. The duck is CC0; other character ownership and source-specific reuse limits are retained in the manifest and are not presented as public-domain art.
 
-`games/garden-cameos-a.js` draws Labubu, Niu Lai, Rubber Duck and Mummy. `games/garden-cameos-b.js` draws Hello Kitty, Ultraman, Team Rocket, Pikachu and Dog Man. `games/garden-monsters.js` coordinates the rigs and maintains presentation-only draw counts.
-
-Each rig draws connected body parts separately, with independent knees, elbows, feet, ears, tail, wings or clothing as appropriate. Deterministic time drives walking, blinking and attacks; damage gives flinches and five non-graphic wear stages, and defeat folds the joints into a collapse. The renderer never consumes combat randomness, changes health, selects a player or modifies spawn timing.
-
-The cast retains recognizable shapes and colors: Labubu's long ears and toothy cream face; the golden calf's horns and muzzle; the duck's bill, webbed feet and wings; trailing mummy bandages; Hello Kitty's red bow; Ultraman's crest and chest timer; Team Rocket's uniforms and trio; Pikachu's cheeks and lightning tail; Dog Man's dog head and police uniform.
-
-## Combat
-
-All nine appear uniformly within rare later-wave giant spawns, under the existing one-live-giant-per-lane limit. Each has fixed health, armor, speed, bite strength and cadence. Identity stays constant through damage and armor loss. No deadline or scripted giant determines the next speaker. The actual first student whose HP reaches zero still supplies the exact stable ID to speaking history.
-
-## Archived artwork
-
-The prior three generated silhouettes are preserved in `garden-monsters.webp` and `garden-monsters.json`, with the high-resolution source in `outputs/artwork/garden-giants-original.png`. They are no longer loaded by the game or embedded in the offline build. The current cameo animation is implemented in code rather than by wobbling those static images.
+Regular zombie HP/armor/speed/damage never scale with battle time or wave. Difficulty rises through additional queued zombies. Giants have separate fixed higher HP values, with no scripted wipe. The first actual student HP reaching zero supplies the exact stable ID to the result and shared removal.

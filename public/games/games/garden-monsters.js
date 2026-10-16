@@ -1,52 +1,77 @@
-import { drawGardenCameoA } from './garden-cameos-a.js?v=20261016-cameos';
-import { drawGardenCameoB } from './garden-cameos-b.js?v=20261016-cameos';
-
-/** Articulated cameo rigs. Rendering never chooses a target, changes combat
- * state or consumes combat RNG. Their370px bodies are3.3x normal112px bodies. */
+/** Internet-sourced character artwork. This module draws downloaded pixels;
+ * it does not recreate a character with procedural shapes or generated art. */
 const GM_FINITE=(value,fallback=0)=>Number.isFinite(Number(value))?Number(value):fallback;
 const GM_LIMIT=(value,min,max)=>Math.max(min,Math.min(max,GM_FINITE(value,min)));
 export const GARDEN_MONSTER_TYPES=Object.freeze([
-  {id:'labubu',name:'Labubu',color:'#c29564',width:268,rigHeight:393,rigFoot:10},
-  {id:'niulai',name:'Niu Lai',color:'#deb04b',width:300,rigHeight:390,rigFoot:10},
-  {id:'duck',name:'Rubber Duck',color:'#ffdf48',width:330,rigHeight:383,rigFoot:10},
-  {id:'mummy',name:'Mummy',color:'#d7cbab',width:260,rigHeight:386,rigFoot:10},
-  {id:'hellokitty',name:'Hello Kitty',color:'#f2c3d5',width:312,rigHeight:369,rigFoot:3},
-  {id:'ultraman',name:'Ultraman',color:'#da4c43',width:246,rigHeight:376,rigFoot:1},
-  {id:'teamrocket',name:'Team Rocket',color:'#b176bc',width:390,rigHeight:371,rigFoot:3},
-  {id:'pikachu',name:'Pikachu',color:'#f8d142',width:350,rigHeight:421,rigFoot:3},
-  {id:'dogman',name:'Dog Man',color:'#468bc6',width:260,rigHeight:382,rigFoot:5},
-].map(type=>Object.freeze({...type,height:370,normalHeight:112,articulated:true})));
+ {id:'labubu',name:'Labubu',width:330},{id:'niulai',name:'Niu Lai',width:380},
+ {id:'duck',name:'Rubber Duck',width:430},{id:'mummy',name:'Mummy',width:300},
+ {id:'hellokitty',name:'Hello Kitty',width:380},{id:'ultraman',name:'Ultraman',width:350},
+ {id:'teamrocket',name:'Team Rocket',width:470},{id:'pikachu',name:'Pikachu',width:470},
+ {id:'dogman',name:'Dog Man',width:330}
+].map(type=>Object.freeze({...type,height:370,normalHeight:112,sourced:true})));
 
-export function createGardenMonsters() {
-  let GM_closed=false,GM_draws=0,GM_lastPose=null;
-  const GM_counts=Object.fromEntries(GARDEN_MONSTER_TYPES.map(type=>[type.id,0]));
-  function draw(ctx,{id,type,monsterId,x=0,y=0,scale=1,time=0,hp=1,maxHp=1,hit=0,bite=0,walk,death=0,clip}={}) {
-    if(GM_closed||!ctx)return false;
-    const key=monsterId||type?.monsterId||type?.id||(typeof type==='string'?type:null)||id;
-    const kind=GARDEN_MONSTER_TYPES.find(item=>item.id===key);
-    if(!kind)return false;
-    const t=GM_FINITE(time),s=GM_LIMIT(scale,.005,8),hurt=GM_LIMIT(hit,0,1),fall=GM_LIMIT(death,0,1);
-    const ratio=GM_LIMIT(GM_FINITE(hp)/Math.max(.001,GM_FINITE(maxHp,1)),0,1);
-    const damageStage=ratio>.8?0:ratio>.6?1:ratio>.4?2:ratio>.2?3:4;
-    const attack=GM_LIMIT(bite,0,1),walking=walk==null?(attack>0?0:1):GM_LIMIT(walk,0,1);
-    const region=clip&&[clip.x,clip.y,clip.width,clip.height].every(Number.isFinite)&&clip.width>0&&clip.height>0?clip:null;
-    ctx.save();
-    if(region){ctx.beginPath();ctx.rect(region.x,region.y,region.width,region.height);ctx.clip();}
-    ctx.translate(GM_FINITE(x),GM_FINITE(y));ctx.scale(s,s);
-    ctx.fillStyle='rgba(23,44,26,.24)';ctx.beginPath();ctx.ellipse(0,-1,kind.width*.31,13,0,0,Math.PI*2);ctx.fill();
-    if(hurt>0)ctx.translate(Math.sin(t*61)*hurt*8,-hurt*3);
-    if(fall>0){ctx.translate(fall*24,fall*9);ctx.rotate(fall*.95);ctx.scale(1,1-fall*.32);}
-    const pose={id:kind.id,time:t,walk:walking,attack,hit:hurt,damageStage,death:fall};
-    // Normalize the complete authored head/ears-to-foot silhouette to370px;
-    // ordinary zombies retain their independent original renderer scale.
-    const rigScale=370/kind.rigHeight;
-    ctx.save();ctx.translate(0,-kind.rigFoot*rigScale);ctx.scale(rigScale,rigScale);
-    const rendered=drawGardenCameoA(ctx,pose)||drawGardenCameoB(ctx,pose);
-    ctx.restore();
-    if(rendered&&hurt>.02){ctx.save();ctx.globalAlpha*=hurt*.65;ctx.strokeStyle='#fff4b1';ctx.lineWidth=5;for(let i=0;i<5;i++){const a=i*Math.PI*2/5+t*.3;ctx.beginPath();ctx.moveTo(Math.cos(a)*55,-200+Math.sin(a)*46);ctx.lineTo(Math.cos(a)*78,-200+Math.sin(a)*64);ctx.stroke();}ctx.restore();}
-    ctx.restore();
-    if(rendered){GM_draws++;GM_counts[kind.id]++;GM_lastPose={...pose,x:GM_FINITE(x),y:GM_FINITE(y),scale:s,height:370*s};}
-    return rendered;
-  }
-  return {draw,destroy(){GM_closed=true;GM_lastPose=null;},getState(){return {ready:!GM_closed,loading:false,closed:GM_closed,error:null,types:GARDEN_MONSTER_TYPES.map(type=>type.id),articulated:true,vectorDraws:GM_draws,bitmapDraws:0,fallbackDraws:0,drawCounts:{...GM_counts},lastPose:GM_lastPose};}};
+export function createGardenMonsters({artwork={}}={}) {
+ let GM_closed=false,GM_loading=true,GM_manifest=null,GM_draws=0,GM_lastPose=null;
+ const GM_sprites=new Map(),GM_errors=[],GM_images=new Set(),GM_pending=new Set();
+ const GM_controller=typeof AbortController==='function'?new AbortController():null;
+ const GM_url=artwork.gardenMonsters||'assets/garden-sourced/manifest.json';
+ const GM_base=typeof document!=='undefined'?document.baseURI:'http://localhost/';
+ const GM_counts=Object.fromEntries(GARDEN_MONSTER_TYPES.map(type=>[type.id,0]));
+ function loadSprite(record){return new Promise(resolve=>{
+  if(GM_closed||typeof Image!=='function'){resolve();return;}
+  const img=new Image();GM_images.add(img);let settled=false;
+  const finish=()=>{if(settled)return;settled=true;GM_pending.delete(finish);img.onload=img.onerror=null;resolve();};GM_pending.add(finish);
+  img.onload=()=>{
+   if(!GM_closed&&img.naturalWidth&&img.naturalHeight){
+    const frames=record.frames||[];
+    if(frames.length&&frames.every(f=>f.rect?.length===4&&f.rect.every(Number.isFinite)&&f.rect[2]>0&&f.rect[3]>0)){
+     const durations=frames.map(f=>Math.max(20,GM_FINITE(f.duration,100)));
+     GM_sprites.set(record.id,{...record,img,frames,durations,total:durations.reduce((a,b)=>a+b,0)});
+    }else GM_errors.push(record.id+': invalid source frames');
+   }
+   finish();
+  };
+  img.onerror=()=>{if(!GM_closed)GM_errors.push(record.id+': source image unavailable');finish();};
+  try{img.src=artwork.gardenMonsterImages?.[record.id]||new URL(record.image,new URL(GM_url,GM_base)).href;}catch(e){GM_errors.push(record.id+': '+e.message);finish();}
+ });}
+ (async()=>{try{
+  if(typeof Image!=='function')return;
+  const manifest=artwork.gardenMonstersManifest||await(await fetch(GM_url,GM_controller?{signal:GM_controller.signal}:{})).json();
+  if(GM_closed)return;
+  if(manifest.version!==2||!Array.isArray(manifest.characters))throw Error('Invalid sourced character manifest');
+  GM_manifest=manifest;
+  await Promise.all(manifest.characters.map(loadSprite));
+ }catch(e){if(!GM_closed)GM_errors.push(String(e.message||e));}finally{GM_loading=false;}})();
+ function frameAt(sprite,time,mode){
+  const clip=sprite.clips?.[mode]||sprite.clips?.walk||sprite.frames.map((_,i)=>i);
+  const total=clip.reduce((sum,i)=>sum+sprite.durations[i],0);
+  let at=((Math.max(0,time)*1000)%Math.max(1,total));
+  for(const index of clip){if(at<sprite.durations[index])return{frame:sprite.frames[index],index};at-=sprite.durations[index];}
+  return{frame:sprite.frames[clip[0]],index:clip[0]};
+ }
+ function draw(ctx,{id,type,monsterId,x=0,y=0,scale=1,time=0,hp=1,maxHp=1,hit=0,bite=0,walk,death=0,clip}={}){
+  if(GM_closed||!ctx)return false;
+  const key=monsterId||type?.monsterId||type?.id||(typeof type==='string'?type:null)||id,sprite=GM_sprites.get(key);
+  if(!sprite)return false;
+  const mode=death>0?'death':hit>0?'hurt':bite>0?'attack':walk===false||walk===0?'idle':'walk';
+  let selected=frameAt(sprite,GM_FINITE(time),mode);
+  if(death>0&&sprite.clips?.death?.length){const clip=sprite.clips.death,index=clip[Math.min(clip.length-1,Math.floor(GM_LIMIT(death,0,1)*clip.length))];selected={frame:sprite.frames[index],index};}
+  const frame=selected.frame;
+  const s=GM_LIMIT(scale,.005,8),hurt=GM_LIMIT(hit,0,1),fall=GM_LIMIT(death,0,1);
+  const ratio=GM_LIMIT(GM_FINITE(hp)/Math.max(.001,GM_FINITE(maxHp,1)),0,1),stage=ratio>.8?0:ratio>.6?1:ratio>.4?2:ratio>.2?3:4;
+  const factor=370/sprite.bodyHeight,foot=sprite.foot||[sprite.frameWidth/2,sprite.frameHeight];
+  ctx.save();
+  if(clip&&[clip.x,clip.y,clip.width,clip.height].every(Number.isFinite)&&clip.width>0&&clip.height>0){ctx.beginPath();ctx.rect(clip.x,clip.y,clip.width,clip.height);ctx.clip();}
+  ctx.translate(GM_FINITE(x),GM_FINITE(y));ctx.scale(s,s);
+  if(sprite.flipX)ctx.scale(-1,1);
+  if(hurt>0)ctx.translate(Math.sin(GM_FINITE(time)*61)*hurt*6,-hurt*2);
+  if(fall>0&&!sprite.clips?.death){ctx.rotate(fall*.9);ctx.globalAlpha*=1-fall*.75;}
+  ctx.filter='saturate('+(1-stage*.07)+') brightness('+(1+hurt*.45-stage*.015)+')';
+  ctx.imageSmoothingEnabled=!sprite.pixelArt;
+  ctx.drawImage(sprite.img,...frame.rect,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
+  ctx.restore();GM_draws++;GM_counts[key]++;
+  GM_lastPose={id:key,time:GM_FINITE(time),mode,sourceFrame:selected.index,sourceFrameCount:sprite.frames.length,scale:s,height:370*s};return true;
+ }
+ function destroy(){if(GM_closed)return;GM_closed=true;GM_controller?.abort();for(const img of GM_images){img.onload=img.onerror=null;try{img.src='';}catch{}}for(const done of GM_pending)done();GM_images.clear();GM_sprites.clear();GM_lastPose=null;}
+ return{draw,destroy,has:id=>!GM_closed&&GM_sprites.has(id),dimensions(id){const s=GM_sprites.get(id);return s?{height:370,width:s.frameWidth*370/s.bodyHeight}:null;},getState(){return{ready:!GM_closed&&!GM_loading&&GM_sprites.size===9,loading:!GM_closed&&GM_loading,closed:GM_closed,errors:[...GM_errors],types:[...GM_sprites.keys()],sourceAssets:true,animatedTypes:[...GM_sprites.values()].filter(s=>s.frames.length>1).map(s=>s.id),staticTypes:[...GM_sprites.values()].filter(s=>s.frames.length===1).map(s=>s.id),bitmapDraws:GM_draws,vectorDraws:0,drawCounts:{...GM_counts},lastPose:GM_lastPose};}};
 }
