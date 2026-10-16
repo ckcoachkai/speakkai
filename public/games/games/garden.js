@@ -44,6 +44,14 @@ export const GIANT_CATALOG = Object.freeze([
 export const PICKER_VISUAL_TIMING = Object.freeze({ cherryFuse: 3, cherryMaximumTempo: 2.5, cherryBurstWallSeconds: .95, melonVelocityFactor: .53, melonImpactTimeScale: .65 });
 const BASE_CADENCE = PLANT_BY_ID.pea.interval;
 export const PICKER_PACING = Object.freeze({ peaInterval: BASE_CADENCE, upgradeMinimumInterval: PLANT_BY_ID.pea.intervalMin, projectileTilesPerSecond: 4.16, firstZombie: 3, spawnMinimum: 6.4, spawnMaximum: 8.4, zombieStatScaling: false, melonSplashTileRadius: 1.5, geometry: 'Readable 3-by-3 tile splash adaptation; original damage and crowded-target cap' });
+export const PICKER_HORDE = Object.freeze({ firstWindow: 24, minimumWindow: 12, windowStep: 2, initialLive: 12, liveStep: 12, maximumLive: 96, initialBurst: 3, burstStep: 2, maximumBurst: 12, queueBuffer: 64 });
+export function getPickerHordePressure(wave) {
+  const level = Math.max(0, Math.floor(wave) - 1), cadence = 1 + level * .5;
+  return { waveSeconds: Math.max(PICKER_HORDE.minimumWindow, PICKER_HORDE.firstWindow - level * PICKER_HORDE.windowStep),
+    liveLimit: Math.min(PICKER_HORDE.maximumLive, PICKER_HORDE.initialLive + level * PICKER_HORDE.liveStep),
+    burst: Math.min(PICKER_HORDE.maximumBurst, PICKER_HORDE.initialBurst + level * PICKER_HORDE.burstStep),
+    spawnMinimum: Math.max(.12, .45 / cadence), spawnJitter: .25 / cadence };
+}
 const classicWeapon = (id, icon) => ({ ...PLANT_BY_ID[id], icon, classification: 'classic', sourceHealth: PLANT_BY_ID[id].hp, sourceDamage: PLANT_BY_ID[id].damage, multiplier: PLANT_BY_ID[id].damage / 20, cooldown: PLANT_BY_ID[id].interval / BASE_CADENCE, slow: PLANT_BY_ID[id].slow < 1 ? PLANT_BY_ID[id].slow : undefined, pierce: 1, radius: 0 });
 // Keep these ten legacy IDs in order so every existing loot ID remains valid.
 const WEAPONS = [
@@ -633,19 +641,24 @@ export default function createGame({ container, names = [], onPick, random = Mat
     addLog({ type: 'mineExploded', ownerId: lane.entry.id, mineId: mine.uid, kills: mine.kills, radiusTiles: radius * 9 });
   }
   function beginWave() {
-    waveIndex++; const target = waveIndex === 1 ? 5 : 50 * 2 ** (waveIndex - 2);
-    nextWaveAt = Infinity;
+    waveIndex++; const target = waveIndex === 1 ? 5 : 50 * 2 ** Math.min(waveIndex - 2, 30);
+    const pressure = getPickerHordePressure(waveIndex);
+    nextWaveAt = simTime + pressure.waveSeconds;
     for (const lane of lanes) {
-      lane.wave = waveIndex; lane.waveSize = lane.waveTarget = target; lane.waveSpawned = 0;
-      lane.queuedSpawns = Math.min(16, target); lane.deferredSpawns = target - lane.queuedSpawns; lane.nextSpawn = simTime; lane.nextWave = Infinity;
-      addLog({ type: 'wave', laneId: lane.entry.id, wave: waveIndex, count: target, queued: lane.queuedSpawns, deferred: lane.deferredSpawns });
+      // Reinforcements overlap living enemies and retain every unreleased
+      // zombie from earlier waves. Large quotas stay as numeric backlog.
+      const carried = lane.queuedSpawns + lane.deferredSpawns;
+      lane.wave = waveIndex; lane.waveSize = target; lane.waveTarget = target + carried; lane.waveSpawned = 0;
+      lane.queuedSpawns = Math.min(PICKER_HORDE.queueBuffer, lane.waveTarget); lane.deferredSpawns = lane.waveTarget - lane.queuedSpawns; lane.nextSpawn = simTime; lane.nextWave = nextWaveAt;
+      addLog({ type: 'wave', laneId: lane.entry.id, wave: waveIndex, count: target, carried, queued: lane.queuedSpawns, deferred: lane.deferredSpawns, liveLimit: pressure.liveLimit, burst: pressure.burst, nextWaveAt });
     }
   }
   function updateWaveClock() {
     if (!lanes.length) return;
     const clear = waveIndex === 0 || lanes.every(lane => !lane.eaten && lane.waveSpawned === lane.waveTarget && lane.queuedSpawns === 0 && lane.deferredSpawns === 0 && !lane.mobs.some(mob => !mob.dead));
-    if (!clear) return;
-    if (waveIndex > 0 && nextWaveAt === Infinity) { nextWaveAt = simTime + 3; lanes.forEach(lane => lane.nextWave = nextWaveAt); }
+    // Clearing early earns a short pause; surviving enemies cannot hold the
+    // next wave back while plants keep collecting upgrades.
+    if (clear && waveIndex > 0) { nextWaveAt = Math.min(nextWaveAt, simTime + 3); lanes.forEach(lane => lane.nextWave = nextWaveAt); }
     if (simTime >= nextWaveAt) beginWave();
   }
   function recruitTorchwood(lane) {
@@ -718,12 +731,14 @@ export default function createGame({ container, names = [], onPick, random = Mat
       const mower = lane.mower;
       mower.previousX = mower.x;
       if (mower.status === 'sweeping') mower.x += LAWNMOWER_RULES.speed * dt;
-      const refill = Math.min(16 - lane.queuedSpawns, lane.deferredSpawns);
+      const pressure = getPickerHordePressure(lane.wave);
+      const refill = Math.min(PICKER_HORDE.queueBuffer - lane.queuedSpawns, lane.deferredSpawns);
       lane.queuedSpawns += refill; lane.deferredSpawns -= refill;
-      if (lane.queuedSpawns > 0 && simTime >= lane.nextSpawn && lane.mobs.filter(mob => !mob.dead).length < 12) {
-        const release = Math.min(3, lane.queuedSpawns, 12 - lane.mobs.filter(mob => !mob.dead).length);
+      const liveCount = lane.mobs.filter(mob => !mob.dead).length;
+      if (lane.queuedSpawns > 0 && simTime >= lane.nextSpawn && liveCount < pressure.liveLimit) {
+        const release = Math.min(pressure.burst, lane.queuedSpawns, pressure.liveLimit - liveCount);
         for (let index = 0; index < release; index++) { spawn(lane, lane.wave === 1); lane.queuedSpawns--; lane.waveSpawned++; }
-        lane.nextSpawn = simTime + .45 + rng() * .25;
+        lane.nextSpawn = simTime + pressure.spawnMinimum + rng() * pressure.spawnJitter;
       }
       for (const mob of lane.mobs) {
         mob.hurt = Math.max(0, mob.hurt - dt); mob.dodgePose = Math.max(0, mob.dodgePose - dt);
