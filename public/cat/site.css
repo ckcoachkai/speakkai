@@ -30,3 +30,9 @@
 @media(max-width:540px){.month-tabs{gap:7px}.month-tab{flex-direction:column;align-items:flex-start;gap:3px;padding:13px 11px}.month-tab>span{font-size:14px}.month-tab>small{font-size:10px}.hero h1{font-size:clamp(28px,7.6vw,37px);letter-spacing:-.7px}.brand strong{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.month-tab{transition:none}}
 @media print{.month-tabs{display:none}.event-month[hidden]{display:block!important}.event-plan[data-month-tabs=ready] .event-months{display:block}.event-month{margin-bottom:20px}}
+.poster-options{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.poster-options summary{cursor:pointer;color:var(--navy);font-size:12px;font-weight:700}
+.poster-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:11px}
+.poster-gallery a{display:block;overflow:hidden;border:1px solid var(--line);border-radius:5px;background:#fff}
+.poster-gallery img{display:block;width:100%;height:auto}
+@media(max-width:540px){.poster-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
