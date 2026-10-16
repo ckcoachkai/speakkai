@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-16T10:46:02.170820+00:00",
+  "updatedAt": "2026-10-16T11:43:35.563339+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1135,8 +1135,8 @@
             {
               "id": "molly",
               "name": "Molly",
-              "en": "Your voice was a little soft, and you seemed a little shy today, but overall you did okay. Last time, the aim was to practise the hero story. We’ll work with easier content next. Good job.",
-              "zh": "今天你的声音有一点轻，似乎也有一点害羞，不过整体表现还可以。上次的目的是练习英雄故事。接下来我们会练习更容易一些的内容。做得不错。"
+              "en": "Your voice was a little soft, and you seemed a little shy today, but overall you did okay. Last time, the aim was to practise the hero story. We’ll work with easier content next. Good job.\n\nYou seemed very sleepy today and were lying down on your chair. I reminded you to sit properly. If you feel sleepy, it’s okay to rest your head while staying seated, rather than lying down on the chair.",
+              "zh": "今天你的声音有一点轻，似乎也有一点害羞，不过整体表现还可以。上次的目的是练习英雄故事。接下来我们会练习更容易一些的内容。做得不错。\n\n今天你看起来很困，并躺在椅子上。我提醒你要坐好。如果觉得困，可以在保持坐姿的情况下让头靠着休息，而不是躺在椅子上。"
             },
             {
               "id": "zoey",
