@@ -1,7 +1,7 @@
 import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261016-garden';
 import { GARDEN_RULES, PLANT_BY_ID, ZOMBIE_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
-import { createGardenMonsters, GARDEN_MONSTER_TYPES } from './garden-monsters.js?v=20261016-sourced';
+import { createGardenMonsters, GARDEN_MONSTER_TYPES } from './garden-monsters.js?v=20261016-fluid';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
@@ -150,6 +150,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
   let alive = true, raf = 0, generation = 0, phase = 'idle', reported = false, winner = null, winnerSnapshot = null;
   let width = 1000, height = 560, laneHeight = 88, boardHeader = 64, boardFooter = 12, viewportHeight = 560, lanes = [];
   let simTime = 0, startedAt = 0, resultAt = 0, visualResultAt = null, previous = null, focused = false, serial = 0;
+  let renderFraction = 1, renderTime = 0;
+  const visualBetween = (before, value) => Number.isFinite(before) ? before + (value - before) * renderFraction : value;
+  const visualMob = mob => renderFraction < 1 ? { ...mob, x: visualBetween(mob.renderPreviousX, mob.x), animationTime: visualBetween(mob.renderPreviousAnimation, mob.animationTime) } : mob;
   const validSpeed = value => clamp(Number.isFinite(Number(value)) ? Number(value) : 1, .5, 8);
   let playbackRate = validSpeed(speed), clockRate = playbackRate, clockAt = null, simulationBudget = 0;
   let waveIndex = 0, nextWaveAt = PICKER_PACING.firstZombie;
@@ -681,6 +684,10 @@ export default function createGame({ container, names = [], onPick, random = Mat
     stopMusic();
   }
   function step(dt) {
+    // Keep combat deterministic at 25 Hz, and interpolate presentation at the
+    // display's refresh rate. Render copies never feed back into collisions.
+    for (const lane of lanes) for (const mob of lane.mobs) { mob.renderPreviousX = mob.x; mob.renderPreviousAnimation = mob.animationTime; }
+    for (const shot of shots) shot.renderPreviousX = shot.x;
     simTime += dt;
     const deaths = [];
     const studentBefore = new Map(lanes.map(lane => [lane, { hp: lane.hp, hurt: lane.hurt, emotionStage: lane.emotionStage }]));
@@ -844,7 +851,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     ctx.fillStyle = '#315e3180'; ctx.beginPath(); ctx.ellipse(0, 0, 22, 5, 0, 0, TAU); ctx.fill();
     const spec = WEAPON_MAP[defender.weapon], weapon = spec.aliasOf ? { ...spec, id: spec.aliasOf } : spec, recoil = defender.recoil / .12 * 3;
     defender.damageStage = plantDamageStage(defender.hp, defender.maxHp);
-    const rigged = renderer.drawPlant(ctx, { weapon: weapon.id, time, simTime, hp: defender.hp, maxHp: defender.maxHp, recoil: defender.recoil, seed: identityHash(defender.uid), rank: defender.power, level: defender.power + 1, upgrades: defender.power, defender });
+    const rigged = renderer.drawPlant(ctx, { weapon: weapon.id, time, simTime: time, hp: defender.hp, maxHp: defender.maxHp, recoil: defender.recoil, seed: identityHash(defender.uid), rank: defender.power, level: defender.power + 1, upgrades: defender.power, defender });
     if (!rigged) ctx.translate(-recoil, bob);
     const illustrated = rigged || (!weapon.blocker && Number.isInteger(plantCells[weapon.id]) && atlasSprite('plants', plantCells[weapon.id], -40, -75, 84, 76));
     if (!illustrated) {
@@ -983,7 +990,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   function lawnmower(lane, time) {
     const mower = lane.mower;
     if (mower.status === 'spent') return;
-    const running = mower.status === 'sweeping', x = lane.plantX + mower.x * lane.travel;
+    const running = mower.status === 'sweeping', x = lane.plantX + visualBetween(mower.previousX, mower.x) * lane.travel;
     const naturalWidth = mowerArt?.ready ? Number(mowerArt.manifest.naturalWidth) || 82.8 : 82.8;
     const size = Math.min(lane.spriteScale * .60 * 82.8, lane.travel * .06);
     ctx.save(); ctx.translate(x, lane.floor); ctx.scale(size / naturalWidth, size / naturalWidth);
@@ -1110,7 +1117,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       const biteInterval = mob.cadence / (simTime < mob.slowUntil ? mob.slow : 1);
       const bite = mob.attacking ? .5 + .5 * Math.cos((simTime - mob.nextBite) / Math.max(.1, biteInterval) * TAU) : 0;
       ctx.save(); if (mob.dead) ctx.globalAlpha = Math.max(0, 1 - deadAge / .7);
-      monsters.draw(ctx, { id: mob.monsterId, x: giant.x, y: giant.y, scale: giant.scale, time: animationTime, hp: mob.hp, maxHp: mob.maxHp, hit: mob.hurt, bite, walk: !mob.dead && !mob.attacking && simTime >= mob.stunnedUntil, death: mob.dead ? clamp(deadAge / .7, 0, 1) : 0, clip: giant.clip });
+      monsters.draw(ctx, { id: mob.monsterId, instanceId: mob.uid, x: giant.x, y: giant.y, scale: giant.scale, time: animationTime, hp: mob.hp, maxHp: mob.maxHp, hit: mob.hurt, bite, walk: !mob.dead && !mob.attacking && simTime >= mob.stunnedUntil, death: mob.dead ? clamp(deadAge / .7, 0, 1) : 0, clip: giant.clip });
       ctx.restore();
       if (!mob.dead) { const barY = giant.y - giant.height + 5; hpBar(giant.x - 35, barY, 70, mob.hp, mob.maxHp, '#dfb66c', 5); text(type.name + ' · ' + Math.ceil(mob.hp), giant.x, barY + 14, 145, 10, '#fff5cf', 850, 'center'); }
       return;
@@ -1211,7 +1218,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     // Their own global arena clip protects the student column, not a tiny row.
     for (const lane of lanes) {
       if (!visible(lane)) continue;
-      [...lane.mobs].filter(mob => mob.type.giant).sort((a, b) => b.x - a.x).forEach(mob => zombie(lane, mob, time));
+      [...lane.mobs].filter(mob => mob.type.giant).sort((a, b) => b.x - a.x).forEach(mob => zombie(lane, visualMob(mob), time));
     }
     for (const lane of lanes) {
       if (!visible(lane)) continue;
@@ -1222,13 +1229,13 @@ export default function createGame({ container, names = [], onPick, random = Mat
       for (let g = lane.rail + 8; g < lane.w; g += 53) {
         ctx.strokeStyle = '#47792e77'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(lane.x + g + 9, lane.floor + 3); ctx.lineTo(lane.x + g + 7, lane.floor - 2); ctx.lineTo(lane.x + g + 9, lane.floor + 1); ctx.lineTo(lane.x + g + 13, lane.floor - 2); ctx.stroke();
       }
-      [...lane.mobs].filter(mob => !mob.type.giant).sort((a, b) => b.x - a.x).forEach(mob => zombie(lane, mob, time));
+      [...lane.mobs].filter(mob => !mob.type.giant).sort((a, b) => b.x - a.x).forEach(mob => zombie(lane, visualMob(mob), time));
       lane.defenders.forEach(defender => plant(lane, defender, time));
       student(lane, time, won ? resultAge : 0);
       potatoMine(lane);
       extraPlants(lane);
       lawnmower(lane, time);
-      lane.mobs.filter(mob => mob.type.giant).forEach(mob => giantLaneMarker(lane, mob));
+      lane.mobs.filter(mob => mob.type.giant).forEach(mob => giantLaneMarker(lane, visualMob(mob)));
       // Tags paint above large enemies and never shrink with the character rig.
       const chipHeight = tiny ? 11 : 18, nameSize = tiny ? 8 : width < 800 ? 11 : 12;
       rr(lane.x + 29, lane.y + 3, lane.nameWidth, chipHeight, 4, won ? '#745b25' : '#264d2ed9');
@@ -1245,7 +1252,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
       if (won && resultAge > .4) { const badgeX = Math.min(lane.x + lane.w - 121, lane.plantX + 36); rr(badgeX, lane.y + lane.h / 2 - 12, 114, 25, 12, '#ffda72'); text('NEXT SPEAKER', badgeX + 57, lane.y + lane.h / 2 + 1, 107, 10, '#3d492f', 900, 'center'); }
     }
     ctx.restore();
-    for (const shot of shots) {
+    for (const originalShot of shots) {
+      const shot = { ...originalShot, x: visualBetween(originalShot.renderPreviousX, originalShot.x) };
       const lane = lanes[shot.lane], x = lane.plantX + shot.x * lane.travel;
       if (!visible(lane)) continue;
       const headOffset = shot.weapon === 'burst' ? 51 - shot.rotation % 3 * 16 : 38;
@@ -1448,7 +1456,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
     } else if (phase === 'result') advanceEffects(visualDt);
     if (phase === 'result' && visualResultAt === null) visualResultAt = timestamp;
     const resultAge = phase === 'result' ? Math.max(0, (timestamp - visualResultAt) / 1000) : 0;
-    scene(phase === 'idle' ? timestamp / 1000 : simTime + resultAge, resultAge);
+    renderFraction = phase === 'running' ? clamp(simulationBudget / .04, 0, 1) : 1;
+    renderTime = phase === 'idle' ? timestamp / 1000 : phase === 'running' ? Math.max(0, simTime - .04 + renderFraction * .04) : simTime + resultAge;
+    scene(renderTime, resultAge);
     // A returning background tab still shows the student's gentle stun/fade
     // for 700 ms before asking the host to show its pick popup.
     if (phase === 'result' && !reported && resultAge >= .7) {
@@ -1488,6 +1498,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   function getState() {
     return { phase, time: simTime, winnerId: winnerSnapshot?.id ?? null, winner: winnerSnapshot ? { ...winnerSnapshot } : null, soundEnabled, speed: playbackRate, effectiveSpeed: effectiveTempo(), wave: waveIndex, nextWaveAt,
       sizing: { width, height, viewportHeight, laneHeight, boardHeader, boardFooter, fitsAllRows: players.length <= 10 && boardHeader + lanes.length * laneHeight <= viewportHeight + .01 },
+      presentation: { interpolated: true, combatStep: .04, time: renderTime, fraction: renderFraction },
       visualTiming: PICKER_VISUAL_TIMING, monsters: monsters.getState(), giantCatalogCount: GIANT_CATALOG.length,
       pickupFlights: pickupFlights.map(flight => ({ kind: flight.kind, sourceLane: flight.lane, ownerId: lanes[flight.ownerLane]?.entry.id, target: 'student', targetX: lanes[flight.ownerLane]?.plantX, duration: flight.duration, progress: clamp((performance.now() - flight.startedWall) / 1000 / flight.duration, 0, 1) })),
       audioEffects: { loadedSamples: sampleBuffers.size, activeVoices: sfxVoices.size, contextActive: Boolean(audio), loading: Boolean(audioLoadController) },
