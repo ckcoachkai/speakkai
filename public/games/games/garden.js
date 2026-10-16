@@ -1,7 +1,7 @@
-import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261016-garden';
+import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261016-lanes';
 import { GARDEN_RULES, PLANT_BY_ID, ZOMBIE_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
-import { createGardenMonsters, GARDEN_MONSTER_TYPES } from './garden-monsters.js?v=20261016-fluid';
+import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261016-lanes';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
@@ -332,6 +332,20 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const ratio = defender.hp / Math.max(1, defender.maxHp), bonus = Math.max(0, defender.maxHp - (before.hp || 300));
     defender.weapon = weapon; defender.maxHp = (after.hp || 300) + bonus; defender.hp = Math.min(defender.maxHp, defender.maxHp * ratio);
   }
+  function promoteDefender(lane, defender, source) {
+    if (!defender || defender.eaten) return false;
+    const before = defender.weapon, rank = defender.power;
+    const next = before === 'pea' ? rank >= 6 ? 'gatling' : rank >= 3 ? 'twin' : before
+      : ['twin', 'fire'].includes(before) && rank >= 6 ? 'gatling'
+      : before === 'catapult' && rank >= 6 ? 'wintermelon'
+      : ['walnut', 'chestnut'].includes(before) && rank >= 3 ? 'tallnut' : before;
+    if (next === before) return false;
+    // A complete source model changes only when its actual attack/defense
+    // changes too. Health fraction and earned health bonuses survive growth.
+    evolveDefender(defender, next);
+    addLog({ type: 'plantEvolution', ownerId: lane.entry.id, defenderId: defender.uid, from: before, to: next, power: rank, source });
+    return true;
+  }
   function giveLoot(owner, item) {
     const e = item.effects;
     owner.damage = clamp(owner.damage + (e.damage || 0), 20, 24);
@@ -350,6 +364,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (!target && living.length) { target = living[Math.floor(rng() * living.length)]; weapon = WEAPON_MAP[target.weapon].blocker ? target.weapon : item.weapon; }
     if (target) {
       evolveDefender(target, weapon); target.power = Math.min(10, target.power + 1);
+      if (promoteDefender(owner, target, 'loot') && action !== 'recruit') action = 'evolve';
       const baseHp = WEAPON_MAP[target.weapon].hp || 300;
       target.maxHp = clamp(target.maxHp + (e.maxHp || 0), baseHp, baseHp + 150);
       target.hp = Math.min(target.maxHp, target.hp + (e.heal || 0) + (e.maxHp || 0));
@@ -440,7 +455,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const weapon = WEAPON_MAP[defender.weapon];
     const attackType = weapon.aliasOf || weapon.id;
     if (weapon.blocker) return;
-    const rows = (weapon.id === 'burst' ? [-1, 0, 1] : [0]).map(offset => lane.index + offset).filter(index => index >= 0 && index < lanes.length);
+    // Picker defenders protect only the student who owns this lane. The
+    // three-headed shooter fires three muzzles into this same lane.
+    const rows = [lane.index];
     const rowTargets = rows.map(index => ({ lane: lanes[index], targets: lanes[index].mobs.filter(mob => !mob.dead && mob.x >= defender.position - .035).sort((a, b) => a.x - b.x) }));
     if (!rowTargets.some(row => row.targets.length)) return;
     const critical = lane.crit > 0 && rng() < lane.crit;
@@ -448,11 +465,11 @@ export default function createGame({ container, names = [], onPick, random = Mat
     defender.nextShot = simTime + Math.max(weapon.intervalMin || weapon.interval * .95, weapon.interval * lane.cooldown / BASE_CADENCE);
     const source = { ownerId: lane.entry.id, ownerLane: lane.index, attackerId: defender.uid, origin: defender.position, damage, penetration: lane.penetration, weapon: weapon.id, attackType, bypassesShield: Boolean(weapon.bypassesShield), hitsShieldAndBody: Boolean(weapon.hitsShieldAndBody), slow: weapon.slow, slowDuration: weapon.slowDuration, critical };
     {
-      const count = weapon.id === 'burst' ? 1 : weapon.count || 1;
+      const count = weapon.id === 'burst' ? 3 : weapon.count || 1;
       const offsets = attackType === 'gatling' ? weapon.shootingOffsets || [.32, .49, .65, .82] : Array.from({ length: count }, (_, index) => (weapon.shootingDelay || 0) + index * (weapon.burstGap || 0));
       for (const row of rowTargets) for (let index = 0; index < count; index++) {
         const butter = weapon.id === 'splash' && rng() < (weapon.stunChance ?? .25);
-        pendingShots.push({ ...source, lane: row.lane.index, fireAt: simTime + offsets[index], rotation: weapon.id === 'burst' ? row.lane.index - lane.index + 1 : index,
+        pendingShots.push({ ...source, lane: row.lane.index, fireAt: simTime + offsets[index], rotation: index,
           damage: butter ? (weapon.butterDamage || 40) * lane.damage / 20 * (critical ? 1.7 : 1) : damage,
           stunDuration: butter ? weapon.stunDuration || 4 : 0, projectileStyle: butter ? 'butter' : attackType === 'splash' ? 'kernel' : ['catapult', 'wintermelon'].includes(attackType) ? 'melon' : attackType === 'frost' ? 'ice' : attackType === 'pierce' ? 'thorn' : 'pea',
           splashDamage: weapon.splashDamage ? weapon.splashDamage * lane.damage / 20 * (critical ? 1.7 : 1) : 0,
@@ -810,6 +827,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     }
     if (defender && reward.kind === 'sun') defender.power = Math.min(10, defender.power + 1);
     if (reward.kind === 'sun') for (const member of livingDefenders(lane)) if (member !== defender) member.power = Math.min(10, member.power + 1);
+    for (const member of livingDefenders(lane)) if (promoteDefender(lane, member, reward.kind) && member === defender && action !== 'recruit') action = 'evolve';
     particle(lane, 0, reward.kind === 'sun' ? '#ffe982' : '#caf0ff', 12, true);
     if (action !== 'recruit') effects.push({ kind: 'text', lane: lane.index, x: 0, y: -65, vy: -16, life: .65, color: reward.kind === 'sun' ? '#fff2a2' : '#d8f2ff', value: reward.kind === 'sun' ? 'SUN +' : 'TEAM +' });
     addLog({ type: 'resource', kind: reward.kind, ownerId: lane.entry.id, collectedBy: 'student', weapon: defender?.weapon ?? null, defenderId: defender?.uid ?? null, action, power: lane.power });
@@ -1090,12 +1108,12 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const clip = { x: lane.plantX + 42, y: top, width: width - lane.plantX - 54, height: Math.max(1, bottom - top) };
     // Only an arena physically shorter than a full giant can limit its size;
     // lane height never does. The foot may move down while its lane stays fixed.
-    const scale = Math.min(lane.zombieScale, Math.max(.02, (clip.height - 16) / 370));
-    const typeWidth = monsters.dimensions(mob.monsterId)?.width || GARDEN_MONSTER_TYPES.find(type => type.id === mob.monsterId)?.width || 470;
+    const scale = Math.min(lane.zombieScale, Math.max(.02, (clip.height - 16) / GARDEN_MONSTER_HEIGHT));
+    const typeWidth = monsters.dimensions(mob.monsterId)?.width || GARDEN_MONSTER_TYPES.find(type => type.id === mob.monsterId)?.width || GARDEN_MONSTER_HEIGHT * 470 / 370;
     const halfWidth = (typeWidth / 2 + 28) * scale;
     const x = clamp(lane.plantX + mob.x * lane.travel, clip.x + halfWidth, clip.x + clip.width - halfWidth);
-    const y = clamp(lane.floor, clip.y + 370 * scale + 8, clip.y + clip.height - 8);
-    return { x, y, scale, height: 370 * scale, clip, laneFloor: lane.floor, laneX: lane.plantX + mob.x * lane.travel };
+    const y = clamp(lane.floor, clip.y + GARDEN_MONSTER_HEIGHT * scale + 8, clip.y + clip.height - 8);
+    return { x, y, scale, height: GARDEN_MONSTER_HEIGHT * scale, clip, laneFloor: lane.floor, laneX: lane.plantX + mob.x * lane.travel };
   }
   function giantLaneMarker(lane, mob) {
     if (mob.dead) return;

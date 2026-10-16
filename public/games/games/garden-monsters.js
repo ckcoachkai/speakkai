@@ -2,13 +2,14 @@
  * it does not recreate a character with procedural shapes or generated art. */
 const GM_FINITE=(value,fallback=0)=>Number.isFinite(Number(value))?Number(value):fallback;
 const GM_LIMIT=(value,min,max)=>Math.max(min,Math.min(max,GM_FINITE(value,min)));
+export const GARDEN_MONSTER_HEIGHT=224;
 export const GARDEN_MONSTER_TYPES=Object.freeze([
  {id:'labubu',name:'Labubu',width:330},{id:'niulai',name:'Niu Lai',width:380},
  {id:'duck',name:'Rubber Duck',width:430},{id:'mummy',name:'Mummy',width:300},
  {id:'hellokitty',name:'Hello Kitty',width:380},{id:'ultraman',name:'Ultraman',width:350},
  {id:'teamrocket',name:'Team Rocket',width:470},{id:'pikachu',name:'Pikachu',width:470},
  {id:'dogman',name:'Dog Man',width:330}
-].map(type=>Object.freeze({...type,height:370,normalHeight:112,sourced:true})));
+].map(type=>Object.freeze({...type,width:type.width*GARDEN_MONSTER_HEIGHT/370,height:GARDEN_MONSTER_HEIGHT,normalHeight:112,sourced:true})));
 
 export function createGardenMonsters({artwork={}}={}) {
  let GM_closed=false,GM_loading=true,GM_manifest=null,GM_draws=0,GM_lastPose=null;
@@ -68,7 +69,7 @@ export function createGardenMonsters({artwork={}}={}) {
   const frame=selected.frame;
   const s=GM_LIMIT(scale,.005,8),hurt=GM_LIMIT(hit,0,1),fall=GM_LIMIT(death,0,1);
   const ratio=GM_LIMIT(GM_FINITE(hp)/Math.max(.001,GM_FINITE(maxHp,1)),0,1),stage=ratio>.8?0:ratio>.6?1:ratio>.4?2:ratio>.2?3:4;
-  const factor=370/sprite.bodyHeight,foot=sprite.foot||[sprite.frameWidth/2,sprite.frameHeight];
+  const factor=GARDEN_MONSTER_HEIGHT/sprite.bodyHeight,foot=sprite.foot||[sprite.frameWidth/2,sprite.frameHeight];
   ctx.save();
   if(clip&&[clip.x,clip.y,clip.width,clip.height].every(Number.isFinite)&&clip.width>0&&clip.height>0){ctx.beginPath();ctx.rect(clip.x,clip.y,clip.width,clip.height);ctx.clip();}
   ctx.translate(GM_FINITE(x),GM_FINITE(y));ctx.scale(s,s);
@@ -88,8 +89,8 @@ export function createGardenMonsters({artwork={}}={}) {
   }else paint(frame);
   playhead.selected=selected;
   ctx.restore();GM_draws++;GM_counts[key]++;
-  GM_lastPose={id:key,time:GM_FINITE(time),mode,sourceFrame:selected.index,sourceFrameCount:sprite.frames.length,scale:s,height:370*s};return true;
+  GM_lastPose={id:key,time:GM_FINITE(time),mode,sourceFrame:selected.index,sourceFrameCount:sprite.frames.length,scale:s,height:GARDEN_MONSTER_HEIGHT*s};return true;
  }
  function destroy(){if(GM_closed)return;GM_closed=true;GM_controller?.abort();for(const img of GM_images){img.onload=img.onerror=null;try{img.src='';}catch{}}for(const done of GM_pending)done();GM_images.clear();GM_sprites.clear();GM_playheads.clear();GM_lastPose=null;}
- return{draw,destroy,has:id=>!GM_closed&&GM_sprites.has(id),dimensions(id){const s=GM_sprites.get(id);return s?{height:370,width:s.frameWidth*370/s.bodyHeight}:null;},getState(){return{ready:!GM_closed&&!GM_loading&&GM_sprites.size===9,loading:!GM_closed&&GM_loading,closed:GM_closed,errors:[...GM_errors],types:[...GM_sprites.keys()],sourceAssets:true,animatedTypes:[...GM_sprites.values()].filter(s=>s.frames.length>1).map(s=>s.id),staticTypes:[...GM_sprites.values()].filter(s=>s.frames.length===1).map(s=>s.id),interpolatedTypes:[...GM_sprites.values()].filter(s=>s.interpolation).map(s=>s.id),frameCounts:Object.fromEntries([...GM_sprites.values()].map(s=>[s.id,s.frames.length])),bitmapDraws:GM_draws,vectorDraws:0,drawCounts:{...GM_counts},lastPose:GM_lastPose};}};
+ return{draw,destroy,has:id=>!GM_closed&&GM_sprites.has(id),dimensions(id){const s=GM_sprites.get(id);return s?{height:GARDEN_MONSTER_HEIGHT,width:s.frameWidth*GARDEN_MONSTER_HEIGHT/s.bodyHeight}:null;},getState(){return{ready:!GM_closed&&!GM_loading&&GM_sprites.size===9,loading:!GM_closed&&GM_loading,closed:GM_closed,errors:[...GM_errors],types:[...GM_sprites.keys()],sourceAssets:true,animatedTypes:[...GM_sprites.values()].filter(s=>s.frames.length>1).map(s=>s.id),staticTypes:[...GM_sprites.values()].filter(s=>s.frames.length===1).map(s=>s.id),interpolatedTypes:[...GM_sprites.values()].filter(s=>s.interpolation).map(s=>s.id),frameCounts:Object.fromEntries([...GM_sprites.values()].map(s=>[s.id,s.frames.length])),bitmapDraws:GM_draws,vectorDraws:0,drawCounts:{...GM_counts},lastPose:GM_lastPose};}};
 }

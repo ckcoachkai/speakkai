@@ -79,3 +79,9 @@ Standalone named `drawGardenProjectile`, `createMelonImpact` and `drawMelonImpac
 - Root browser review reported235original parts/nine FX images loaded without errors; nuts remained upright after18s, original new rigs were connected and full projectiles looked correct. `work/garden-vfx-review.html` provides live and held impact phases for screenshot inspection; it is QA-only and excluded from production publication.
 
 The source is reconstructed/original-asset reference material; the browser remains a classroom/playable adaptation with its own UI, scene scaling, effects choreography and wave rules. This update makes no assertion of retail binary parity.
+
+## Picker lane ownership and coherent evolution (October16)
+
+Picker Threepeater fires three simultaneous peas only in its student's lane, with separate muzzle heights. It does not acquire targets from adjacent lanes. Classic retains the original three-row attack. Every active lane can independently receive a loaded giant; the one-live-giant limit is per lane.
+
+Complete original rigs replace the removed rank accessories. Actual upgrades are Peashooter→Repeater at rank3, Repeater→Gatling at rank6, Melon-pult→Winter Melon at rank6, and Wall-nut/Chestnut→Tall-nut at rank3. The actual weapon/defense changes with the artwork, retaining health fraction and health bonuses. Snow Pea, Threepeater, Kernel-pult and Cactus remain visually consistent specialists. No hand-drawn upgrade barrels, roots, crystals, braces, shell plates or Chestnut spikes/tint are added.
