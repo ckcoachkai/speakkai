@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-16T10:46:02.185822+00:00",
+  "updatedAt": "2026-10-16T13:21:38.896163+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -729,9 +729,15 @@
           "date": "2026-10-16",
           "time": "15:40–17:40",
           "classContent": [
-            "Students are trying to create their own stories using a problem–solution structure: a story with a problem and a solution.\n\nFor the homework presentations, the aim was for students to remember the stories they had created so they could present them. Most read their stories aloud instead. I wondered whether the content was too hard for them to remember, but I am not sure whether they had tried to remember it."
+            "Students are trying to create their own stories using a problem–solution structure: a story with a problem and a solution.\n\nFor the homework presentations, the aim was for students to remember the stories they had created so they could present them. Most read their stories aloud instead. I wondered whether the content was too hard for them to remember, but I am not sure whether they had tried to remember it.\n\nWe reviewed the homework, then had a small discussion about flying cars. The class example introduced Tesla’s new Roadster as a car that could fly and come out in two years. This was the starting context for the speech topic, “Should we have flying cars?”, before students moved into their own personal opinions.\n\nToday we practised going deeper into a topic: using “first, second, finally” to organize ideas, adding reasons with “because,” and then explaining the impact—why the point is important. We did not go very deeply into what “impact” means; the aim was to practise the skill of explaining in this way.\n\nAt the end of class, students finished an approximately one-minute speech on flying cars. It began with a little Roadster context, moved into their own opinions and ideas, and ended with a simple message. The words and ideas were their own, and the word choice and grammar were intended to be manageable to remember and say."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Should we have flying cars? — approximately one-minute speech",
+            "steps": [
+              "Practise and try to memorize the approximately one-minute speech that we finished at the end of class: “Should we have flying cars?”\n\nThe first part gives a little background about the Tesla Roadster example we discussed in class. Then move into your personal opinion. These are your own words and your own ideas. The word choice and grammar should not be too difficult to remember and say.\n\nRemember to use “first, second, finally” to organize your points. Add your reasons with “because,” explain the impact—why your points matter—and finish with the simple closing message from your speech.\n\nAt home, memorize the speech and record a video of your presentation. Next class, you will present in class without the paper, whether or not you have fully remembered the speech."
+            ],
+            "prepareFor": "Present next class without the paper, whether or not the speech is fully memorized."
+          },
           "students": [
             {
               "name": "Harper",
@@ -888,9 +894,15 @@
           "date": "2026-10-16",
           "time": "18:00–20:00",
           "classContent": [
-            "We began with a warm-up in which students called out things they could see, such as hair or a table leg. Homework speeches were planned to follow the warm-up, and Merlin, Arthur, and Molly then presented their short speeches. They had created these speeches for the hero-story practice from last time. Zoe was not there last time when the homework was assigned.\n\nThe presentation coaching was to remember that a speech involves presenting as well as reading: changing your voice and using facial expressions and hand gestures. For words that are less familiar, the advice was to read the speech aloud at least five to ten times, whether it feels easy or difficult, until it feels smooth and fluid. Easier content was planned next."
+            "We began with a warm-up in which students called out things they could see, such as hair or a table leg. Homework speeches were planned to follow the warm-up, and Merlin, Arthur, and Molly then presented their short speeches. They had created these speeches for the hero-story practice from last time. Zoe was not there last time when the homework was assigned.\n\nThe presentation coaching was to remember that a speech involves presenting as well as reading: changing your voice and using facial expressions and hand gestures. For words that are less familiar, the advice was to read the speech aloud at least five to ten times, whether it feels easy or difficult, until it feels smooth and fluid. Easier content was planned next.\n\nWe reviewed the homework, then had a small discussion about flying cars. The class example introduced Tesla’s new Roadster as a car that could fly and come out in two years. This was the starting context for the speech topic, “Should we have flying cars?”, before students moved into their own personal opinions.\n\nToday we practised going deeper into a topic: using “first, second, finally” to organize ideas, adding reasons with “because,” and then explaining the impact—why the point is important. We did not go very deeply into what “impact” means; the aim was to practise the skill of explaining in this way.\n\nAt the end of class, students finished an approximately one-minute speech on flying cars. It began with a little Roadster context, moved into their own opinions and ideas, and ended with a simple message. The words and ideas were their own, and the word choice and grammar were intended to be manageable to remember and say."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Should we have flying cars? — approximately one-minute speech",
+            "steps": [
+              "Practise and try to memorize the approximately one-minute speech that we finished at the end of class: “Should we have flying cars?”\n\nThe first part gives a little background about the Tesla Roadster example we discussed in class. Then move into your personal opinion. These are your own words and your own ideas. The word choice and grammar should not be too difficult to remember and say.\n\nRemember to use “first, second, finally” to organize your points. Add your reasons with “because,” explain the impact—why your points matter—and finish with the simple closing message from your speech.\n\nAt home, memorize the speech and record a video of your presentation. Next class, you will present in class without the paper, whether or not you have fully remembered the speech."
+            ],
+            "prepareFor": "Present next class without the paper, whether or not the speech is fully memorized."
+          },
           "students": [
             {
               "name": "Merlin",
