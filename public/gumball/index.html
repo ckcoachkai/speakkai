@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-motion-version="3">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -327,6 +327,34 @@
       .has-hints .prompt-text:not(.word){font-size:15px;line-height:1.13}.has-hints .slime-mark{width:40px;height:34px;top:3px;right:7px}
       .hints-panel p,.hint-directions ul{font-size:9px}.hints-panel p+p{margin-top:4px}.hint-directions ul{gap:2px;margin-top:3px}
     }
+
+    /* Essential game motion is driven by a single RAF, independent of OS animation settings. */
+    .candy {transform-box:view-box;transform-origin:0 0;}
+    .machine-art {touch-action:manipulation;cursor:pointer}
+    .capsule-stage {background:transparent;backdrop-filter:none;perspective:1600px;overflow:hidden;}
+    .reveal-dim {position:absolute;inset:0;background:radial-gradient(ellipse at center,#173349b8,#020b19f2);opacity:0;will-change:opacity;}
+    .capsule-orb {left:0;top:0;width:300px;height:300px;transform-origin:50% 50%;filter:drop-shadow(0 12px 15px #0005);will-change:transform,opacity;}
+    .capsule-half {transition:none!important;transform-origin:50% 50%;}
+    .capsule-slime {transition:none!important;}
+    .reveal-paper {position:fixed;left:0;top:0;z-index:3;width:850px;height:535px;transform-origin:center;transform-style:preserve-3d;will-change:transform,opacity;}
+    .reveal-paper[hidden] {display:none;}
+    .paper-fold {position:absolute;left:0;top:0;width:100%;height:var(--fold-height);transform-origin:50% 0;transform-style:preserve-3d;will-change:transform;}
+    .paper-fold .paper-fold {top:100%;}
+    .paper-face {position:absolute;inset:0;backface-visibility:hidden;border:1px solid #d9d0b9;background:radial-gradient(ellipse at 85% 0%,#fff,transparent 55%),repeating-linear-gradient(3deg,#8d724407 0 1px,transparent 1px 4px),linear-gradient(145deg,#fffef8,#f8f1de);box-shadow:inset 0 -2px 3px #6f5b3614;}
+    .paper-face::after {content:'';position:absolute;inset:0;background:#6f5b36;opacity:var(--fold-shade,0);}
+    .paper-back {transform:rotateX(180deg);background:linear-gradient(150deg,#f8f2df,#e5d8b7);}
+    .paper-fold[data-fold="1"]>.paper-face {border-radius:9px 12px 0 0;}
+    .paper-fold[data-fold="4"]>.paper-face {border-radius:0 0 9px 12px;}
+    .paper-preview-copy {position:absolute;inset:0;z-index:5;padding:7% 8%;display:flex;flex-direction:column;color:#19183c;opacity:0;}
+    .paper-preview-label {font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#716b55;}
+    .paper-preview-text {margin:auto 0;font-size:clamp(24px,3.1vw,44px);line-height:1.16;font-weight:850;letter-spacing:-.035em;overflow-wrap:anywhere;}
+    .paper-preview-category {font-size:10px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:#726d59;padding-top:12px;border-top:1px solid #9b8d6340;}
+    .paper-slime {position:absolute;z-index:6;width:72px;height:62px;top:14px;right:18px;opacity:0;transform:rotate(8deg);filter:drop-shadow(0 2px 2px #397a2533);}
+    .paper-slime::before {content:'';position:absolute;inset:3px 5px 15px;border:1px solid #538b1066;border-radius:53% 47% 60% 40% / 46% 55% 45% 54%;background:radial-gradient(ellipse at 35% 32%,#efffc4 0 13%,#b2ed54 45%,#7fca26);box-shadow:inset 0 1px 5px #fff9;}
+    .paper-slime::after {content:'';position:absolute;left:18px;bottom:2px;width:9px;height:17px;border-radius:3px 3px 8px 8px;background:#98d83b;box-shadow:17px 4px 0 -1px #8bd629,34px -1px 0 -2px #8bd629;}
+    .motion-button:disabled,.hints-button:disabled {opacity:.55;cursor:wait;}
+    @media(max-width:760px) and (orientation:landscape) {.motion-button{padding:0 7px;font-size:8px}.footer-actions{gap:5px}.turn-button{min-width:144px}.paper-preview-text{font-size:clamp(18px,3.3vw,26px)}.paper-preview-label,.paper-preview-category{font-size:8px}.paper-slime{transform:scale(.65);transform-origin:top right}}
+
   </style>
 </head>
 <body>
@@ -418,10 +446,10 @@
           <path d="M106 101c21-34 47-49 70-54" stroke="white" stroke-width="9" stroke-linecap="round" opacity=".67"/>
           <path d="M91 163c1-19 5-34 11-47" stroke="white" stroke-width="5" stroke-linecap="round" opacity=".45"/>
           <!-- tapered collector and spiral chute -->
-          <path d="M80 220h260l-57 74H137L80 220Z" fill="#DDEAFF" stroke="#171638" stroke-width="7" stroke-linejoin="round"/>
+          <path d="M80 220h260l-57 74H137L80 220Z" fill="#DDEAFF" fill-opacity=".35" stroke="#171638" stroke-width="7" stroke-linejoin="round"/>
           <path d="M137 284h146v40H137z" fill="#AFC9FF" stroke="#171638" stroke-width="7"/>
-          <path d="M160 292c0 28 48 25 48 51s-43 27-28 49 70 5 91 26 43 10 68 38" fill="none" stroke="#171638" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M160 292c0 28 48 25 48 51s-43 27-28 49 70 5 91 26 43 10 68 38" fill="none" stroke="#F7FAFF" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M160 292c0 28 48 25 48 51s-43 27-28 49 70 5 91 26 43 10 68 38" fill="none" stroke="#171638" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M160 292c0 28 48 25 48 51s-43 27-28 49 70 5 91 26 43 10 68 38" fill="none" stroke="#DCEFFF" stroke-opacity=".5" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M160 292c0 28 48 25 48 51s-43 27-28 49 70 5 91 26 43 10 68 38" fill="none" stroke="#3A69FF" stroke-width="3" stroke-linecap="round" stroke-dasharray="3 15" opacity=".55"/>
           <!-- sturdy red base -->
           <path d="M93 337c0-16 13-29 29-29h176c16 0 29 13 29 29v101c0 16-13 29-29 29H122c-16 0-29-13-29-29V337Z" fill="url(#machineRed)" fill-opacity=".34" stroke="#171638" stroke-width="8"/>
@@ -494,6 +522,7 @@
           <span id="soundLabel">Sound on</span>
         </button>
         <button class="secondary-button hints-button" id="hintsButton" aria-pressed="false" aria-controls="hintsPanel" title="Show the meaning, Chinese explanation, and starting ideas"><span class="hint-icon" aria-hidden="true">?</span><span id="hintsLabel">Hints off</span></button>
+        <button class="secondary-button motion-button" id="motionButton" aria-pressed="true" title="Choose full or gentle game motion"><span aria-hidden="true">◉</span><span id="motionLabel">Full motion</span></button>
         <button class="secondary-button" id="exportButton" title="Download all 5,000 prompts as JSON">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>
           <span>Prompt bank</span>
@@ -518,14 +547,18 @@
     <div class="sr-only" id="announcer" aria-live="assertive" aria-atomic="true"></div>
   </main>
   <div class="capsule-stage" id="capsuleStage" hidden aria-hidden="true">
+    <div class="reveal-dim" id="revealDim"></div>
     <div class="capsule-orb" id="capsuleOrb">
       <img class="capsule-half capsule-upper" data-candy-src alt="">
-      <div class="capsule-slime"></div>
+      <div class="capsule-slime" id="capsuleSlime"></div>
       <img class="capsule-half capsule-lower" data-candy-src alt="">
-      <div class="capsule-ring"></div>
+    </div>
+    <div class="reveal-paper" id="revealPaper" hidden>
+      <div class="paper-fold" data-fold="1"><div class="paper-face"></div><div class="paper-face paper-back"></div><div class="paper-fold" data-fold="2"><div class="paper-face"></div><div class="paper-face paper-back"></div><div class="paper-fold" data-fold="3"><div class="paper-face"></div><div class="paper-face paper-back"></div><div class="paper-fold" data-fold="4"><div class="paper-face"></div><div class="paper-face paper-back"></div></div></div></div></div>
+      <div class="paper-preview-copy" id="paperPreviewCopy"><span class="paper-preview-label">Gumball prompt</span><p class="paper-preview-text" id="paperPreviewText"></p><span class="paper-preview-category" id="paperPreviewCategory"></span></div>
+      <span class="paper-slime" id="paperSlime"></span>
     </div>
   </div>
-  <div class="slime-flight" id="slimeFlight" aria-hidden="true"></div>
 
   <script>
     'use strict';
@@ -768,7 +801,7 @@
         used.add(item.id);
         return item;
       }
-      function reveal(item) {
+      function reveal(item, keepTimer = false) {
         activePrompt = item;
         $('promptText').textContent = item.text;
         $('promptText').className = `prompt-text${item.category === 'singleWords' ? ' word' : item.category === 'quotes' ? ' quote' : ''}${item.text.length > 82 ? ' long' : ''}`;
@@ -783,7 +816,7 @@
         $('restartButton').disabled = false;
         $('speechDuration').disabled = false;
         announce(`${item.label}. ${item.text}. Seven minutes of preparation starts now.`);
-        startPhase('prep');
+        if (!keepTimer) startPhase('prep');
       }
       function resetRoundBeforeSpin() {
         clearInterval(timerInterval);
@@ -798,202 +831,646 @@
         $machineState.classList.toggle('busy', value);
         $('restartButton').disabled = value || !activePrompt;
       }
-      const reducedMachineMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-      function updateCandyPile(elapsed, crankDuration, idle = false) {
-        const seconds = elapsed / 1000;
-        const releaseElapsed = idle ? -1 : elapsed - crankDuration;
-        const turnFade = idle ? 0 : releaseElapsed < 0 ? 1 : Math.max(0, 1 - releaseElapsed / 260);
-        const reduced = reducedMachineMotion.matches;
-        candyBalls.forEach(candy => {
-          let dx = 0, dy = 0, angle = 0;
-          if (!reduced && idle) {
-            const breathe = Math.sin(seconds * 1.25 + candy.phase * 2.2);
-            const float = Math.sin(seconds * 1.7 + candy.phase * 1.5);
-            dx = breathe * .34;
-            dy = float * .28;
-            angle = breathe * .22;
-          } else if (!reduced) {
-            const sway = Math.sin(seconds * 5.4 + candy.phase * 2.3);
-            const bump = Math.sin(seconds * 6.7 + candy.phase * 3.1);
-            const fade = releaseElapsed < 0 ? 1 : turnFade;
-            dx = sway * 1.05 * fade;
-            dy = bump * .58 * fade;
-            angle = sway * .58 * fade;
+/*
+ * Standalone 2D candy simulation for the current machine-art.svg.
+ * Bowl clip boundary: ellipse(cx=210, cy=166, rx=136, ry=118).
+ * Candy centers come from the existing .candy transforms. The source PNG's
+ * visible sphere is about 78% of its square image, so its collision radius is
+ * 39% of image width rather than half the padded image box.
+ * Each image is a circle; no scale transform is written during simulation.
+ *
+ * Integration:
+ *   const physics = createCandyPhysics(candyBalls);
+ *   function frame(now) { physics.step(now); requestAnimationFrame(frame); }
+ *   requestAnimationFrame(frame);
+ *   turnButton.onclick = () => physics.agitate(1);
+ *   machineSvg.onpointerdown = event => {
+ *     const p = machineSvg.createSVGPoint(); p.x = event.clientX; p.y = event.clientY;
+ *     const q = p.matrixTransform(machineSvg.getScreenCTM().inverse());
+ *     physics.nudge(q.x, q.y); // coordinates are in the 420 x 520 SVG viewBox
+ *   };
+ *   // release() returns the bottommost candy's live position and hue.
+ *   const source = physics.release();
+ */
+function createCandyPhysics(candyBalls) {
+  'use strict';
 
-            if (releaseElapsed >= 0) {
-              const vx = candy.x - 202, vy = candy.y - 215;
-              const distance = Math.max(1, Math.hypot(vx, vy));
-              const delay = Math.max(0, distance - 18) * 2.25;
-              const contactTime = releaseElapsed - delay;
-              if (contactTime > 0) {
-                const rebound = Math.sin(contactTime * .024 + candy.phase * .7) * Math.exp(-contactTime / 390);
-                const weight = Math.exp(-distance / 155);
-                dx += vx / distance * rebound * 5.1 * weight;
-                dy += vy / distance * rebound * 4.2 * weight;
-                angle += rebound * 1.05 * weight;
-              }
-            }
-          }
-          candy.node.setAttribute('transform', `translate(${(candy.x + dx).toFixed(2)} ${(candy.y + dy).toFixed(2)}) rotate(${angle.toFixed(2)})`);
+  const CENTER_X = 210;
+  const CENTER_Y = 166;
+  const BOWL_RX = 136;
+  const BOWL_RY = 118;
+  const FIXED_DT = 1 / 120;
+  const GRAVITY = 430;
+  const RESTITUTION = 0.23;
+  const WALL_RESTITUTION = 0.18;
+  const AIR_DRAG = 0.14;
+  const POSITION_SLOP = 0.18;
+  const POSITION_PERCENT = 0.28;
+  const CORRECTION_BUDGET = 1.35;
+  const SOLVER_PASSES = 5;
+  const MIN_RADIUS = 16;
+  const MAX_RADIUS = 27;
+
+  if (!Array.isArray(candyBalls)) throw new TypeError('candyBalls must be an array.');
+
+  const numberOr = (value, fallback) => {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : fallback;
+  };
+  const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+  const readRadius = (node, fallback) => {
+    const image = node && typeof node.querySelector === 'function' ? node.querySelector('image') : null;
+    const width = image ? numberOr(image.getAttribute('width'), NaN) : NaN;
+    const height = image ? numberOr(image.getAttribute('height'), NaN) : NaN;
+    const extent = Math.max(Number.isFinite(width) ? width : 0, Number.isFinite(height) ? height : 0);
+    return clamp(extent > 0 ? extent * 0.39 : numberOr(fallback, 23), MIN_RADIUS, MAX_RADIUS);
+  };
+  const readHue = node => {
+    const image = node && typeof node.querySelector === 'function' ? node.querySelector('image') : null;
+    const style = image ? (image.getAttribute('style') || '') : '';
+    const match = style.match(/hue-rotate\(\s*(-?\d+(?:\.\d+)?)deg\s*\)/i);
+    if (!match) return 0;
+    return (Number(match[1]) % 360 + 360) % 360;
+  };
+  const readTransformPosition = node => {
+    const transform = node && typeof node.getAttribute === 'function' ? node.getAttribute('transform') || '' : '';
+    const match = transform.match(/translate\(\s*(-?\d+(?:\.\d+)?)[ ,]+(-?\d+(?:\.\d+)?)/i);
+    return match ? { x: Number(match[1]), y: Number(match[2]) } : { x: CENTER_X, y: CENTER_Y };
+  };
+
+  const bodies = candyBalls.map((item, index) => {
+    const node = item && item.node ? item.node : item;
+    const fromTransform = readTransformPosition(node);
+    const dataset = node && node.dataset ? node.dataset : {};
+    const x = numberOr(item && item.x, numberOr(dataset.x, fromTransform.x));
+    const y = numberOr(item && item.y, numberOr(dataset.y, fromTransform.y));
+    const phase = numberOr(item && item.phase, numberOr(dataset.phase, index * 2.399963229728653));
+    const radius = readRadius(node, item && item.radius);
+    return {
+      node,
+      index: numberOr(item && item.index, index),
+      x, y, vx: 0, vy: 0,
+      radius,
+      mass: radius * radius,
+      invMass: 1 / (radius * radius),
+      phase,
+      hue: readHue(node),
+      angle: 0,
+      omega: 0,
+      correctionBudget: CORRECTION_BUDGET,
+      lastContact: -Infinity,
+      active: true,
+      originalVisibility: node && typeof node.getAttribute === 'function' ? node.getAttribute('visibility') : null
+    };
+  });
+
+  let lastNow = null;
+  let accumulator = 0;
+  let simTime = 0;
+  let agitationTime = 0;
+  let agitationDuration = 0;
+  let agitationStrength = 0;
+  let agitationPulse = 0;
+  let nextIdlePulse = 0.92;
+  let dispensedBody = null;
+
+  function writeTransforms() {
+    for (const body of bodies) {
+      if (!body.active) continue;
+      if (!body.node || typeof body.node.setAttribute !== 'function') continue;
+      body.node.setAttribute(
+        'transform',
+        `translate(${body.x.toFixed(2)} ${body.y.toFixed(2)}) rotate(${body.angle.toFixed(2)})`
+      );
+    }
+  }
+
+  function keepInsideBowl(body) {
+    // The clip is an ellipse. Eroding its radii by the candy radius keeps the
+    // entire circle inside that exact clipping ellipse, including at the rim.
+    const innerRx = Math.max(1, BOWL_RX - body.radius - 0.35);
+    const innerRy = Math.max(1, BOWL_RY - body.radius - 0.35);
+    const dx = body.x - CENTER_X;
+    const dy = body.y - CENTER_Y;
+    const radial = Math.hypot(dx / innerRx, dy / innerRy);
+    if (radial <= 1) return;
+
+    const scale = 1 / radial;
+    body.x = CENTER_X + dx * scale;
+    body.y = CENTER_Y + dy * scale;
+
+    let nx = (body.x - CENTER_X) / (innerRx * innerRx);
+    let ny = (body.y - CENTER_Y) / (innerRy * innerRy);
+    const normalLength = Math.hypot(nx, ny) || 1;
+    nx /= normalLength;
+    ny /= normalLength;
+
+    const outwardSpeed = body.vx * nx + body.vy * ny;
+    if (outwardSpeed > 0) {
+      const bounce = outwardSpeed < 3 ? 0 : WALL_RESTITUTION;
+      body.vx -= (1 + bounce) * outwardSpeed * nx;
+      body.vy -= (1 + bounce) * outwardSpeed * ny;
+      const tangentX = -ny;
+      const tangentY = nx;
+      const tangentSpeed = body.vx * tangentX + body.vy * tangentY;
+      body.vx -= tangentX * tangentSpeed * 0.055;
+      body.vy -= tangentY * tangentSpeed * 0.055;
+      body.omega += clamp(tangentSpeed / body.radius, -1.4, 1.4) * 14;
+      body.lastContact = simTime;
+    }
+  }
+
+  function solvePair(a, b) {
+    let dx = b.x - a.x;
+    let dy = b.y - a.y;
+    const minimumDistance = a.radius + b.radius;
+    const distanceSquared = dx * dx + dy * dy;
+    if (distanceSquared >= minimumDistance * minimumDistance) return;
+
+    let distance = Math.sqrt(distanceSquared);
+    if (distance < 0.0001) {
+      // The index-based direction makes coincident starts deterministic.
+      const angle = ((a.index + 1) * 2.399963229728653 + b.index * 0.7548776662466927) % (Math.PI * 2);
+      dx = Math.cos(angle);
+      dy = Math.sin(angle);
+      distance = 1;
+    }
+    const nx = dx / distance;
+    const ny = dy / distance;
+    const overlap = minimumDistance - distance;
+    const inverseMassSum = a.invMass + b.invMass;
+
+    // Bounded positional correction removes initial overlap over several fixed
+    // steps, so even densely packed source coordinates never snap on load.
+    const needed = Math.max(0, overlap - POSITION_SLOP) * POSITION_PERCENT;
+    const correction = Math.min(needed, 2.4);
+    const moveA = Math.min(correction * a.invMass / inverseMassSum, a.correctionBudget);
+    const moveB = Math.min(correction * b.invMass / inverseMassSum, b.correctionBudget);
+    a.x -= nx * moveA;
+    a.y -= ny * moveA;
+    b.x += nx * moveB;
+    b.y += ny * moveB;
+    a.correctionBudget -= moveA;
+    b.correctionBudget -= moveB;
+
+    const relativeVx = b.vx - a.vx;
+    const relativeVy = b.vy - a.vy;
+    const normalSpeed = relativeVx * nx + relativeVy * ny;
+    if (normalSpeed < 0) {
+      const impulseMagnitude = -(1 + RESTITUTION) * normalSpeed / inverseMassSum;
+      const impulseX = impulseMagnitude * nx;
+      const impulseY = impulseMagnitude * ny;
+      a.vx -= impulseX * a.invMass;
+      a.vy -= impulseY * a.invMass;
+      b.vx += impulseX * b.invMass;
+      b.vy += impulseY * b.invMass;
+
+      const tangentX = -ny;
+      const tangentY = nx;
+      const tangentSpeed = relativeVx * tangentX + relativeVy * tangentY;
+      const frictionLimit = impulseMagnitude * 0.16;
+      const frictionImpulse = clamp(-tangentSpeed / inverseMassSum, -frictionLimit, frictionLimit);
+      const frictionX = frictionImpulse * tangentX;
+      const frictionY = frictionImpulse * tangentY;
+      a.vx -= frictionX * a.invMass;
+      a.vy -= frictionY * a.invMass;
+      b.vx += frictionX * b.invMass;
+      b.vy += frictionY * b.invMass;
+      const spin = clamp(frictionImpulse / (a.radius + b.radius), -20, 20) * 0.45;
+      a.omega -= spin;
+      b.omega += spin;
+      a.lastContact = simTime;
+      b.lastContact = simTime;
+    }
+  }
+
+  function integrate(dt) {
+    simTime += dt;
+    const drag = Math.exp(-AIR_DRAG * dt);
+    const resting = agitationTime <= 0;
+
+    for (const body of bodies) {
+      if (!body.active) continue;
+      body.correctionBudget = CORRECTION_BUDGET;
+      let ax = 0;
+      let ay = GRAVITY;
+
+      // Tiny deterministic forces create gentle settling contact while idle.
+      // They do not scale sprites or move the whole cluster as a single layer.
+      if (resting && simTime > 0.45) {
+        ax += Math.sin(simTime * 1.65 + body.phase) * 30;
+        ay += Math.cos(simTime * 1.38 + body.phase * 1.7) * 12;
+      }
+
+      if (agitationTime > 0) {
+        const progress = 1 - agitationTime / agitationDuration;
+        const envelope = Math.sin(Math.PI * clamp(progress, 0, 1));
+        const dx = body.x - CENTER_X;
+        const dy = body.y - CENTER_Y;
+        const distance = Math.hypot(dx, dy) || 1;
+        const local = 0.72 + 0.28 * Math.sin(body.phase + agitationPulse * 1.9);
+        const strength = agitationStrength * local * envelope;
+        ax += (-dy / distance) * 80 * strength;
+        ay += (dx / distance) * 80 * strength - 18 * strength;
+      }
+
+      body.vx = (body.vx + ax * dt) * drag;
+      body.vy = (body.vy + ay * dt) * drag;
+      body.omega = clamp(body.omega * Math.exp(-2.2 * dt), -240, 240);
+      body.angle = ((body.angle + body.omega * dt + 180) % 360 + 360) % 360 - 180;
+      body.x += body.vx * dt;
+      body.y += body.vy * dt;
+    }
+
+    for (let pass = 0; pass < SOLVER_PASSES; pass++) {
+      for (let i = 0; i < bodies.length; i++) {
+        if (!bodies[i].active) continue;
+        for (let j = i + 1; j < bodies.length; j++) {
+          if (bodies[j].active) solvePair(bodies[i], bodies[j]);
+        }
+      }
+      for (const body of bodies) if (body.active) keepInsideBowl(body);
+    }
+
+    for (const body of bodies) {
+      if (!body.active) continue;
+      const speed = Math.hypot(body.vx, body.vy);
+      if (speed < 0.55 && simTime - body.lastContact < 0.06) {
+        body.vx *= 0.55;
+        body.vy *= 0.55;
+      }
+      if (Math.abs(body.omega) < 0.12) body.omega = 0;
+      body.omega = clamp(body.omega, -240, 240);
+    }
+
+    if (agitationTime > 0) {
+      agitationTime = Math.max(0, agitationTime - dt);
+      if (agitationTime === 0) agitationStrength = 0;
+    }
+
+    if (resting && simTime >= nextIdlePulse) {
+      // A light pressure ripple travels through one nearby pair. This keeps
+      // the pile tactile without the old broad sine-wave position swapping.
+      const activeBodies = bodies.filter(body => body.active);
+      const sourceIndex = Math.floor(simTime * 1.1) % Math.max(1, activeBodies.length);
+      const source = activeBodies[sourceIndex];
+      if (source && Math.hypot(source.vx, source.vy) < 9) {
+        const sign = Math.sin(source.phase + simTime) >= 0 ? 1 : -1;
+        source.vx += sign * 8;
+        source.vy -= 3.2;
+      }
+      nextIdlePulse += 1.05 + ((sourceIndex % 4) * 0.11);
+    }
+  }
+
+  function step(now) {
+    const timestamp = Number.isFinite(now) ? now : (typeof performance !== 'undefined' ? performance.now() : Date.now());
+    if (lastNow === null) {
+      lastNow = timestamp;
+      writeTransforms();
+      return;
+    }
+    const elapsed = clamp((timestamp - lastNow) / 1000, 0, 0.05);
+    lastNow = timestamp;
+    accumulator = Math.min(accumulator + elapsed, FIXED_DT * 8);
+    let substeps = 0;
+    while (accumulator >= FIXED_DT && substeps < 8) {
+      integrate(FIXED_DT);
+      accumulator -= FIXED_DT;
+      substeps++;
+    }
+    writeTransforms();
+  }
+
+  function agitate(strength = 1) {
+    const amount = clamp(numberOr(strength, 1), 0.25, 1.6);
+    agitationPulse++;
+    agitationDuration = 0.54;
+    agitationTime = agitationDuration;
+    agitationStrength = amount;
+
+    for (const body of bodies) {
+      if (!body.active) continue;
+      const dx = body.x - CENTER_X;
+      const dy = body.y - CENTER_Y;
+      const distance = Math.hypot(dx, dy) || 1;
+      const tangentX = -dy / distance;
+      const tangentY = dx / distance;
+      const local = 0.78 + 0.22 * Math.sin(body.phase + agitationPulse * 1.37);
+      const impulse = 115 * amount * local;
+      // A short crank stroke adds lift and rotation to a real velocity field.
+      body.vx += tangentX * impulse;
+      body.vy += tangentY * impulse - 21 * amount * local;
+      body.omega += Math.sin(body.phase + agitationPulse) * 38 * amount;
+    }
+  }
+
+  function nudge(x, y) {
+    const px = numberOr(x, CENTER_X);
+    const py = numberOr(y, CENTER_Y);
+    const reach = 78;
+    let touched = false;
+    for (const body of bodies) {
+      if (!body.active) continue;
+      const dx = body.x - px;
+      const dy = body.y - py;
+      const distance = Math.hypot(dx, dy);
+      const falloff = clamp(1 - distance / (reach + body.radius), 0, 1);
+      if (falloff <= 0) continue;
+      const angle = distance > 0.001 ? Math.atan2(dy, dx) : body.phase;
+      const nx = Math.cos(angle);
+      const ny = Math.sin(angle);
+      const strength = 142 * falloff;
+      body.vx += nx * strength - ny * 19 * falloff;
+      body.vy += ny * strength - 13 * falloff;
+      body.omega += clamp((nx - ny) * 26 * falloff, -30, 30);
+      touched = true;
+    }
+  }
+
+  function release() {
+    // End the mechanical stroke, leaving each candy at its live physics state.
+    agitationTime = 0;
+    agitationStrength = 0;
+    const available = bodies.filter(body => body.active);
+    if (!available.length) return null;
+    let lowest = available[0];
+    for (let i = 1; i < available.length; i++) {
+      const candidate = available[i];
+      const candidateScore = candidate.y - Math.abs(candidate.x - 202) * 0.08;
+      const lowestScore = lowest.y - Math.abs(lowest.x - 202) * 0.08;
+      if (candidateScore > lowestScore) lowest = candidate;
+    }
+    return {
+      index: lowest.index,
+      node: lowest.node,
+      x: lowest.x,
+      y: lowest.y,
+      radius: lowest.radius,
+      hue: lowest.hue,
+      angle: lowest.angle
+    };
+  }
+
+  function dispense() {
+    // Keep one selected candy out of the bowl until refill() sends it back.
+    if (dispensedBody && !dispensedBody.active) return null;
+    const selected = release();
+    if (!selected) return null;
+    const body = bodies.find(candidate => candidate.active && candidate.node === selected.node);
+    if (!body) return null;
+    body.active = false;
+    dispensedBody = body;
+    if (body.node && typeof body.node.setAttribute === 'function') {
+      body.node.setAttribute('visibility', 'hidden');
+      body.node.setAttribute('opacity', '0');
+    }
+    return {
+      x: body.x,
+      y: body.y,
+      hue: body.hue,
+      radius: body.radius,
+      angle: body.angle,
+      node: body.node
+    };
+  }
+
+  function refill() {
+    const body = dispensedBody;
+    if (!body || body.active) return null;
+    body.x = CENTER_X;
+    body.y = 82;
+    body.vx = body.index % 2 === 0 ? -2.5 : 2.5;
+    body.vy = 0;
+    body.omega = 0;
+    body.correctionBudget = CORRECTION_BUDGET;
+    body.lastContact = -Infinity;
+    body.active = true;
+    if (body.node && typeof body.node.setAttribute === 'function') {
+      if (body.originalVisibility === null && typeof body.node.removeAttribute === 'function') {
+        body.node.removeAttribute('visibility');
+      } else {
+        body.node.setAttribute('visibility', body.originalVisibility || 'visible');
+      }
+      body.node.setAttribute('opacity', '1');
+    }
+    dispensedBody = null;
+    writeTransforms();
+    return {
+      x: body.x,
+      y: body.y,
+      hue: body.hue,
+      radius: body.radius,
+      angle: body.angle,
+      node: body.node
+    };
+  }
+
+  return { step, agitate, nudge, release, dispense, refill };
+}
+
+      // One clock and one render loop keep the ball, shell and paper continuous.
+      let sequence = null, motionLast = 0, gentleMotion = false;
+      try { gentleMotion = localStorage.getItem('gumball-gentle-motion-v3') === 'true'; } catch {}
+      const clamp01 = v => Math.max(0, Math.min(1, v));
+      const mix = (a,b,t) => a + (b-a)*t;
+      const smooth = t => { t=clamp01(t); return t*t*(3-2*t); };
+      const easeOut = t => 1-Math.pow(1-clamp01(t),3);
+      const physics = createCandyPhysics(candyBalls);
+      function updateMotionButton() {
+        $('motionButton').setAttribute('aria-pressed',String(!gentleMotion));
+        $('motionLabel').textContent = gentleMotion ? 'Gentle motion' : 'Full motion';
+      }
+      updateMotionButton();
+      $('motionButton').addEventListener('click',()=>{
+        if (spinning) return;
+        gentleMotion=!gentleMotion; updateMotionButton();
+        try { localStorage.setItem('gumball-gentle-motion-v3',String(gentleMotion)); } catch {}
+      });
+      const machineSvg = document.querySelector('.machine-art');
+      machineSvg.addEventListener('pointerdown', event => {
+        if (event.button !== 0) return;
+        const matrix = machineSvg.getScreenCTM(); if (!matrix) return;
+        const p = new DOMPoint(event.clientX,event.clientY).matrixTransform(matrix.inverse());
+        if (((p.x-210)/144)**2+((p.y-166)/126)**2 < 1) {
+          physics.nudge(p.x,p.y);
+          playSound('clatter',.12,1.05);
+        }
+      });
+      function pointOnMachine(x,y) {
+        const matrix = machineSvg.getScreenCTM();
+        const p = new DOMPoint(x,y).matrixTransform(matrix);
+        return {x:p.x,y:p.y,scale:Math.hypot(matrix.a,matrix.b)};
+      }
+      function drawCapsule(x,y,size,angle=0) {
+        $('capsuleOrb').style.transform=`translate3d(${x-150}px,${y-150}px,0) rotate(${angle}deg) scale(${size/300})`;
+      }
+      function drawPaper(x,y,w,h,scale=1) {
+        const paper=$('revealPaper');
+        paper.style.width=`${w}px`; paper.style.height=`${h}px`;
+        paper.style.setProperty('--fold-height',`${h/4}px`);
+        paper.style.transform=`translate3d(${x-w/2}px,${y-h/2}px,0) scale(${scale})`;
+      }
+      function openPaper(progress) {
+        const panelAngles=[0,.13,.26,.39].map((delay,i)=>[70,-150,150,-150][i]*(1-smooth((progress-delay)/(1-delay))));
+        document.querySelectorAll('.paper-fold').forEach((panel,i)=>{
+          panel.style.transform=`rotateX(${panelAngles[i]}deg)`;
+          panel.style.setProperty('--fold-shade',String(.2*Math.abs(panelAngles[i]/150)));
         });
+        $('revealPaper').style.opacity='1';
+        $('paperSlime').style.opacity=String(smooth((progress-.72)/.28));
       }
-      function animateIdleCandy(now) {
-        if (!spinning) updateCandyPile(now, 0, true);
-        requestAnimationFrame(animateIdleCandy);
-      }
-      function showBlankQuestionSheet() {
-        $('idleCard').hidden = true;
-        $('promptContent').hidden = false;
-        $('promptContent').classList.remove('prompt-content');
-        void $('promptContent').offsetWidth;
-        $('promptContent').classList.add('prompt-content');
+      function prepareQuestionSheet(item) {
+        $('idleCard').hidden=true;
+        $('promptContent').hidden=false;
+        $('promptContent').style.animation='none';
+        $('promptText').textContent=item.text;
+        $('promptText').className=`prompt-text${item.category==='singleWords'?' word':item.category==='quotes'?' quote':''}${item.text.length>82?' long':''}`;
+        $('promptInstruction').textContent=coachLines[item.category];
+        $('promptCategory').textContent=item.label;
+        $('hintMeaning').textContent=item.help.meaning;
+        $('hintChinese').textContent=item.help.zh;
+        $('hintDirections').replaceChildren(...item.help.directions.map(text=>{const li=document.createElement('li');li.textContent=text;return li}));
+        $('hintsPanel').hidden=!hintsOn;
+        $('promptPanel').classList.toggle('has-hints',hintsOn);
         $('questionSlip').classList.remove('printed');
         $('slimeMark').classList.remove('landed');
-        $('sheetCopy').style.opacity = '0';
-        $('promptText').textContent = '';
-        $('promptInstruction').textContent = '';
-        $('promptCategory').textContent = '';
-        playSound('paper', .3);
+        $('questionSlip').style.visibility='hidden';
+        $('questionSlip').style.transform='none';
       }
-      async function flySlimeToQuestion(origin) {
-        const slime = $('slimeFlight'), start = origin || $('heroBall').getBoundingClientRect(), end = $('slimeMark').getBoundingClientRect();
-        const fromX = start.left + start.width / 2 - 27, fromY = start.top + start.height / 2 - 24;
-        const toX = end.left + end.width / 2 - 27, toY = end.top + end.height / 2 - 24;
-        slime.style.left = `${fromX}px`;
-        slime.style.top = `${fromY}px`;
-        slime.classList.add('fly');
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const flight = slime.animate([
-          { left: `${fromX}px`, top: `${fromY}px`, opacity: 0, transform: 'scale(.55) rotate(-18deg)' },
-          { offset: .18, left: `${fromX + (toX - fromX) * .18}px`, top: `${fromY + (toY - fromY) * .18 - 46}px`, opacity: 1, transform: 'scale(1.14) rotate(8deg)' },
-          { offset: .78, left: `${fromX + (toX - fromX) * .78}px`, top: `${fromY + (toY - fromY) * .78 - 21}px`, opacity: 1, transform: 'scale(.9) rotate(-5deg)' },
-          { left: `${toX}px`, top: `${toY}px`, opacity: .96, transform: 'scale(.82) rotate(9deg)' }
-        ], { duration: reduceMotion ? 1 : 690, easing: 'cubic-bezier(.22,.78,.25,1)', fill: 'forwards' });
-        await flight.finished;
-        flight.cancel();
-        slime.classList.remove('fly');
-        slime.style.opacity = '0';
-        $('slimeMark').classList.add('landed');
+      function startSequence(item) {
+        sequence={item,t:0,fired:new Set(),phase:'',gentle:gentleMotion};
+        $('capsuleStage').hidden=false;
+        $('capsuleStage').classList.remove('burst');
+        $('revealDim').style.opacity='0';
+        $('capsuleOrb').style.opacity='0';
+        $('revealPaper').hidden=true;
+        $('paperPreviewText').textContent='';
+        $('paperPreviewCopy').style.opacity='0';
+        document.querySelectorAll('.capsule-half').forEach(el=>{el.style.transform='';el.style.opacity='1'});
+        $('capsuleSlime').style.opacity='0';
+        $('heroBall').style.visibility='hidden';
+        $('motionButton').disabled=true;
+        $('hintsButton').disabled=true;
+        physics.agitate(gentleMotion?.38:1);
+        motionLast=performance.now();
       }
-      async function bringBallForward(item) {
-        const stage = $('capsuleStage'), orb = $('capsuleOrb'), ball = $('heroBall');
-        const origin = ball.getBoundingClientRect();
-        const reduce = reducedMachineMotion.matches;
-        const targetSize = Math.min(innerHeight * 1.05, innerWidth * .78);
-        const fromX = origin.left + origin.width / 2, fromY = origin.top + origin.height / 2;
-        stage.hidden = false;
-        stage.classList.remove('burst');
-        ball.style.opacity = '0';
-        const frame = (x,y,size,angle) => ({left:`${x}px`,top:`${y}px`,width:`${size}px`,height:`${size}px`,transform:`translate(-50%,-50%) rotate(${angle}deg)`});
-        const flightFrames = reduce ? [
-          {...frame(innerWidth*.5,innerHeight*.5,targetSize,0),opacity:0},
-          {...frame(innerWidth*.5,innerHeight*.5,targetSize,0),opacity:1}
-        ] : [
-          frame(fromX,fromY,origin.width,0),
-          {...frame(fromX+(innerWidth*.5-fromX)*.4,fromY+(innerHeight*.5-fromY)*.4,targetSize*.23,-12),offset:.5},
-          frame(innerWidth*.5,innerHeight*.5,targetSize,8)
-        ];
-        const flight = orb.animate(flightFrames, {duration:reduce?220:1050,easing:'cubic-bezier(.4,.02,.72,.5)',fill:'forwards'});
-        playSound('whoosh-front', .17);
-        await flight.finished;
-        const center = orb.getBoundingClientRect();
-        await new Promise(resolve => setTimeout(resolve, reduce?450:120));
-        stage.classList.add('burst');
-        $('machineStateText').textContent = 'Opening…';
-        playSound('shell-pop', .24);
-        setTimeout(() => playSound('gum-pop', .2),100);
-        await new Promise(resolve => setTimeout(resolve, reduce?180:340));
-        showBlankQuestionSheet();
-        stage.hidden = true;
-        flight.cancel();
-        await flySlimeToQuestion(center);
-        playSound('gum-pop', .2, 1.05);
-        setBusy(false);
-        reveal(item);
-      }
-      function animateGumballSequence(item) {
-        const ball = $('heroBall'), crank = $('crankMotion'), route = $('ballMotionPath');
-        const reduceMotion = reducedMachineMotion.matches;
-        const panel = document.querySelector('.machine-panel');
-        const crankDuration = 2200, fallDuration = 2320, ballStart = crankDuration, finish = ballStart + fallDuration;
-        const routeLength = route.getTotalLength();
-        const start = performance.now(), fired = new Set();
-        let rollingAnnounced = false;
-        const cues = [
-          [0, () => playSound('winding', .5, 1, 2.2)],
-          [140, () => playSound('grind', .25, .88)],
-          [960, () => playSound('clatter', .22, .92)],
-          [1270, () => playSound('grind', .25, .9)],
-          [ballStart, () => playSound('clatter', .22, .9)],
-          [ballStart, () => playSound('whoosh-down', .24)],
-          [ballStart + 580, () => playSound('drop', .13, .94)]
-        ];
-        panel.classList.add('is-turning');
-        ball.classList.remove('pop');
-        ball.classList.add('parked');
-        ball.setAttribute('transform', 'translate(202 215) rotate(0)');
-        function frame(now) {
-          const elapsed = Math.min(finish, now - start);
-          if (!reduceMotion) updateCandyPile(elapsed, crankDuration);
-          const crankProgress = Math.min(1, elapsed / crankDuration);
-          const easedTurns = 1 - Math.pow(1 - crankProgress, 2.45);
-          crank.setAttribute('transform', `rotate(${reduceMotion ? 0 : (easedTurns * 720).toFixed(1)} 337 332)`);
-          if (elapsed >= ballStart) {
-            if (!rollingAnnounced) {
-              rollingAnnounced = true;
-              ball.classList.remove('parked');
-              $('machineStateText').textContent = 'Gumball rolling…';
-            }
-            const raw = Math.min(1, (elapsed - ballStart) / fallDuration);
-            const eased = raw * raw * (3 - 2 * raw);
-            const progress = Math.max(0, Math.min(1, eased));
-            const point = route.getPointAtLength((reduceMotion ? 1 : progress) * routeLength);
-            const angle = reduceMotion ? 0 : progress * routeLength / 18 * (180 / Math.PI);
-            ball.setAttribute('transform', `translate(${point.x.toFixed(2)} ${point.y.toFixed(2)}) rotate(${angle.toFixed(1)})`);
-            if (reduceMotion) ball.style.opacity = String(Math.min(1, raw * 4));
-          }
-          cues.forEach(([at, play], index) => {
-            if (!fired.has(index) && elapsed >= at) { fired.add(index); play(); }
-          });
-          if (elapsed < finish) requestAnimationFrame(frame);
+      function renderSequence(dt) {
+        const s=sequence; if (!s) return;
+        s.t+=dt;
+        const t=s.t;
+        const TURN=2400,ROLL_END=5700,APPROACH_END=7550,OPEN_START=7900,PAPER_START=8600,PAPER_OPEN=10400,DOCK_START=11600,END=12800;
+        const cue=(key,at,fn)=>{if(t>=at&&!s.fired.has(key)){s.fired.add(key);fn();}};
+        cue('wind',0,()=>playSound('winding',.5,1,2.4));
+        cue('grind1',180,()=>playSound('grind',.25,.88));
+        cue('grind2',1250,()=>{playSound('grind',.25,.9);physics.agitate(s.gentle?.25:.7)});
+        cue('release',TURN,()=>{
+          s.source=physics.dispense();
+          const source=s.source||{x:202,y:215,hue:0,radius:18,angle:0};
+          $('ballMotionPath').setAttribute('d',`M${source.x} ${source.y}C${source.x} ${source.y+16} 160 270 160 292C160 320 208 317 208 343S165 370 180 392S250 397 271 418S314 428 339 456`);
+          document.querySelectorAll('.capsule-half').forEach(el=>el.style.filter=`hue-rotate(${source.hue}deg)`);
+          playSound('clatter',.22,.9);playSound('whoosh-down',.24,.85);
+        });
+        cue('drop1',TURN+650,()=>playSound('drop',.13,.94));
+        cue('drop2',TURN+2100,()=>playSound('clatter',.17,1.05));
+        cue('front',ROLL_END,()=>playSound('whoosh-front',.17,.8));
+        cue('pop',OPEN_START,()=>{playSound('shell-pop',.24);playSound('gum-pop',.2)});
+        cue('paper',PAPER_START,()=>{playSound('paper',.3,.82);$('revealPaper').hidden=false;});
+        cue('paper2',PAPER_START+780,()=>playSound('paper',.18,1.04));
+        cue('refill',PAPER_START+1000,()=>physics.refill());
+        cue('print',PAPER_OPEN,()=>{$('paperPreviewText').textContent=s.item.text;$('paperPreviewCategory').textContent=s.item.label;playSound('gum-pop',.13,1.08);startPhase('prep');});
+        cue('dock',DOCK_START,()=>prepareQuestionSheet(s.item));
+        const phase=t<TURN?'Turning twice…':t<ROLL_END?'Rolling down…':t<OPEN_START?'Coming closer…':t<PAPER_START?'Opening…':t<DOCK_START?'Unfolding…':'Your prompt…';
+        if(phase!==s.phase){s.phase=phase;$('machineStateText').textContent=phase;$app.dataset.sequencePhase=phase;}
+        const turns=easeOut(t/TURN)*720;
+        $('crankMotion').setAttribute('transform',`rotate(${turns} 337 332)`);
+        if(t<TURN){$('capsuleOrb').style.opacity='0';return;}
+        const route=$('ballMotionPath'),length=route.getTotalLength();
+        const exit=pointOnMachine(339,456),diameter=(s.source?s.source.radius*2:36)*exit.scale;
+        let x=exit.x,y=exit.y,size=diameter,angle=0;
+        if(t<ROLL_END){
+          const p=clamp01((t-TURN)/(ROLL_END-TURN));
+          // Distance accelerates under gravity but keeps every bend readable.
+          const distance=length*(.14*p+.86*Math.pow(p,1.5));
+          const path=route.getPointAtLength(distance),point=pointOnMachine(path.x,path.y);
+          x=point.x;y=point.y;angle=(s.source?.angle||0)+distance/(s.source?.radius||18)*180/Math.PI;
+          $('capsuleOrb').style.opacity='1';
+        } else {
+          const p=smooth((t-ROLL_END)/(APPROACH_END-ROLL_END));
+          const target=s.gentle?Math.min(innerHeight*.54,innerWidth*.55):Math.min(innerHeight*.9,innerWidth*.8);
+          x=mix(exit.x,innerWidth*.5,p);y=mix(exit.y,innerHeight*.5,p);
+          size=diameter*Math.pow(target/diameter,p);
+          const endAngle=(s.source?.angle||0)+length/(s.source?.radius||18)*180/Math.PI;
+          angle=mix(endAngle,Math.round(endAngle/360)*360+8,p);
+          $('revealDim').style.opacity=String(.88*p);
+        }
+        drawCapsule(x,y,size,angle);
+        if(t>=OPEN_START){
+          const p=smooth((t-OPEN_START)/650);
+          document.querySelector('.capsule-upper').style.transform=`translate3d(${-p*24}%,${-p*48}%,0) rotate(${-p*25}deg)`;
+          document.querySelector('.capsule-lower').style.transform=`translate3d(${p*24}%,${p*48}%,0) rotate(${p*25}deg)`;
+          document.querySelectorAll('.capsule-half').forEach(el=>el.style.opacity=String(1-smooth((p-.5)/.5)));
+          $('capsuleSlime').style.opacity=String(Math.sin(p*Math.PI));
+        }
+        if(t>=PAPER_START){
+          $('capsuleOrb').style.opacity=String(1-smooth((t-PAPER_START)/400));
+          const paperW=Math.min(innerWidth*.76,850),paperH=Math.min(innerHeight*.74,535);
+          const unfold=clamp01((t-PAPER_START)/(PAPER_OPEN-PAPER_START));
+          openPaper(unfold);
+          $('paperPreviewCopy').style.opacity=String(smooth((t-PAPER_OPEN)/300));
+          const grow=.42+.58*easeOut(unfold);
+          if(t<DOCK_START)drawPaper(innerWidth*.5,innerHeight*.5+(1-unfold)*paperH*.375*grow,paperW,paperH,grow);
           else {
-            crank.setAttribute('transform', 'rotate(720 337 332)');
-            panel.classList.remove('is-turning');
-            $('machineStateText').textContent = 'Gumball incoming…';
-            bringBallForward(item);
+            const dest=$('questionSlip').getBoundingClientRect();
+            const target=dest.width>0?dest:document.querySelector('.receipt').getBoundingClientRect();
+            const p=smooth((t-DOCK_START)/(END-DOCK_START));
+            drawPaper(mix(innerWidth*.5,target.left+target.width/2,p),mix(innerHeight*.5,target.top+target.height/2,p),mix(paperW,target.width,p),mix(paperH,target.height,p));
+            $('revealDim').style.opacity=String(.88*(1-p));
           }
         }
-        requestAnimationFrame(frame);
+        if(t>=END){
+          $('capsuleStage').hidden=true;
+          $('revealPaper').hidden=true;
+          $('questionSlip').style.visibility='';
+          $('promptContent').classList.add('prompt-content');
+          $('slimeMark').classList.add('landed');
+          $('motionButton').disabled=false;
+          $('hintsButton').disabled=false;
+          $('sheetCopy').style.animation='none';$('sheetCopy').style.opacity='1';$('sheetCopy').style.transform='none';$('sheetCopy').style.filter='none';
+          delete $app.dataset.sequencePhase;
+          sequence=null;
+          setBusy(false);reveal(s.item,true);
+        }
       }
+      function pumpGame(now) {
+        const dt=motionLast?Math.max(0,Math.min(40,now-motionLast)):16;
+        motionLast=now;
+        physics.step(now);
+        if(sequence)renderSequence(dt);
+      }
+      function animateGame(now) {
+        pumpGame(now);
+        requestAnimationFrame(animateGame);
+      }
+      // Embedded browsers may pause RAF while timers still run. Keep the game clock moving.
+      setInterval(()=>{const now=performance.now();if(now-motionLast>=30)pumpGame(now)},32);
       async function spin() {
-        if (spinning) return;
-        const item = takeRandomPrompt();
-        if (!item) { showToast('Choose at least one prompt type.'); return; }
-        clearTimeout(flashTimeout); $app.classList.remove('prep-flash');
-        resetRoundBeforeSpin();
-        activePrompt = null;
-        $('promptText').textContent = '';
-        updateHints();
-        stopSounds();
-        $('capsuleStage').hidden = true;
-        $('heroBall').style.opacity = '';
-        $('promptContent').hidden = true;
-        $('idleCard').hidden = false;
-        $('promptBadge').hidden = true;
-        $('questionSlip').classList.remove('printed');
-        $('slimeMark').classList.remove('landed');
-        $('slimeFlight').classList.remove('fly');
-        $('slimeFlight').style.opacity = '0';
-        $('sheetCopy').style.opacity = '';
-        $('heroBall').classList.remove('pop');
-        resizeHeroBall();
-        setBusy(true);
-        $('crankMotion').setAttribute('transform', 'rotate(0 337 332)');
-        $('heroBall').setAttribute('transform', 'translate(202 215) rotate(0)');
+        if(spinning)return;
+        const item=takeRandomPrompt();
+        if(!item){showToast('Choose at least one prompt type.');return;}
+        clearTimeout(flashTimeout);$app.classList.remove('prep-flash');
+        resetRoundBeforeSpin();activePrompt=null;
+        $('promptText').textContent='';updateHints();stopSounds();
+        $('capsuleStage').hidden=true;
+        $('promptContent').hidden=true;$('idleCard').hidden=false;$('promptBadge').hidden=true;
+        $('questionSlip').classList.remove('printed');$('questionSlip').style.visibility='';
+        $('slimeMark').classList.remove('landed');$('sheetCopy').style.opacity='';
+        resizeHeroBall();setBusy(true);
         await warmSounds();
-        animateGumballSequence(item);
-        announce('The button starts the wheel. It turns twice, then the gumball drops and pops open.');
+        startSequence(item);
+        announce('The wheel is turning. Watch the ball roll down, open, and unfold your prompt.');
       }
+
       function toggleFilter(force) {
         const open = typeof force === 'boolean' ? force : $filterMenu.hidden;
         $filterMenu.hidden = !open;
@@ -1051,7 +1528,7 @@
         showToast('Downloaded the complete 5,000-prompt bank.');
       });
       updateFilter(); updateTimer(); setBusy(false);
-      requestAnimationFrame(animateIdleCandy);
+      requestAnimationFrame(animateGame);
     })().catch(error => { console.error(error); document.getElementById('turnLabel').textContent = 'Please reload'; });
   </script>
 </body>
