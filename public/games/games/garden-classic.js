@@ -58,7 +58,7 @@ export default function createGame({container, artwork={}, random=Math.random, s
   const listeners=[],seedButtons=new Map(),cells=[],sunButtons=new Map();
   let alive=true,phase='idle',time=0,sun=50,selected=null,hover=null,plants=[],mobs=[],shots=[],suns=[],effects=[],scheduledShots=[];
   let mowers=[],wavePlan=[],spawnIndex=0,kills=0,serial=0,nextSky=6,skyCount=0,frameId=null,lastFrame=null,accumulator=0,finished=false,wave=1;
-  let endless=false,waveTarget=48,totalSpawned=0,nextGroupAt=30,pendingGroup=0,groupSize=5,groupGap=4,simulationSpeed=Number.isFinite(Number(speed))?clamp(Number(speed),.5,8):1;
+  let endless=false,waveTarget=48,totalSpawned=0,nextGroupAt=30,pendingGroup=0,groupSize=5,groupGap=4,simulationSpeed=Number.isFinite(Number(speed))?clamp(Number(speed),1,100):1;
   let width=1000,height=500,lawn={x:60,y:20,w:890,h:445,cw:98.89,rh:89},soundEnabled=Boolean(sound),mowerArt=null,mowerAbort=null;
   const cooldowns=new Map(),events=[];
   let audio=null,audioEpoch=0,audioAbort=null,introPlayed=false;
@@ -488,7 +488,7 @@ export default function createGame({container, artwork={}, random=Math.random, s
     if(audio){const old=audio;audio=null;try{old.close().catch(()=>{});}catch{}}
   }
   function setSound(enabled){soundEnabled=Boolean(enabled);if(soundEnabled&&phase==='running')startAudio();else if(!soundEnabled)stopAudio();}
-  function setSpeed(value){const next=Number(value);if(Number.isFinite(next))simulationSpeed=clamp(next,.5,8);return simulationSpeed;}
+  function setSpeed(value){const next=Number(value);if(Number.isFinite(next))simulationSpeed=clamp(next,1,100);return simulationSpeed;}
   function pause(){
     if(phase!=='running')return false;phase='paused';lastFrame=null;accumulator=0;stopAudio();
     title.textContent='Paused';description.textContent='Your garden will wait.';begin.textContent='Resume';announce('Game paused.');syncUI(true);return true;

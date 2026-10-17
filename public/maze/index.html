@@ -358,6 +358,7 @@ kbd { color: var(--cream); border: 1px solid var(--line); padding: 3px 5px; font
           <div class="setting-row"><div><strong>IMPACT EFFECTS</strong><small>Screen shake and hits</small></div><label class="toggle"><input id="impactToggle" type="checkbox" checked><span></span><b class="sr-only">Enable impact effects</b></label></div>
           <div class="setting-row" id="vibrationRow"><div><strong>VIBRATION</strong><small>Haptic feedback</small></div><label class="toggle"><input id="vibrationToggle" type="checkbox"><span></span><b class="sr-only">Enable vibration</b></label></div>
           <div class="setting-row sound-row"><div><strong>SOUNDTRACK</strong><small id="trackLabel">Built-in maze score</small></div><label class="volume-wrap" aria-label="Sound volume"><span>VOL</span><input id="volumeInput" type="range" min="0" max="1" value="0.25" step="0.01"></label></div>
+          <div class="setting-row boost-row"><div><strong>GAME SPEED</strong><small>Whole game · 1× to 100×</small></div><label class="boost-wrap"><input id="gameSpeedInput" aria-label="Maze game speed" type="range" min="1" max="100" value="1" step="1"><output id="gameSpeedValue">1×</output></label></div>
           <div class="setting-row boost-row"><div><strong>CHEESE BOOST</strong><small>First bite · smaller gains after</small></div><label class="boost-wrap"><input id="cheeseBoostInput" aria-label="First cheese speed boost, percent; later bites add less" type="range" min="1" max="100" value="1" step="1"><output id="cheeseBoostValue">+1%</output></label></div>
           <div class="setting-row bomb-row"><div><strong>CARRIED FUSE</strong><small id="bombIntervalNote">Next fuse · 60 seconds</small></div><label class="boost-wrap" aria-label="Seconds until the next carried bomb explosion"><input id="bombIntervalInput" type="range" min="10" max="120" value="60" step="5"><output id="bombIntervalValue">60s</output></label></div>
           <p class="suno-note lice-note" id="liceNote">LICE PRESSURE · AFTER 00:10 · −0.01% SPEED EACH</p>
@@ -7412,8 +7413,9 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   var followedMouseId = null;
   var dom = {};
   var CHEESE_BOOST_STORE_KEY = 'dynamite-mice-cheese-boost-percent-v1';
+  var GAME_SPEED_STORE_KEY = 'dynamite-mice-game-speed-v1';
   var BOMB_INTERVAL_STORE_KEY = 'dynamite-mice-bomb-interval-v1';
-  var state = { running: false, awaiting: false, muted: false, volume: 0.25, reducedMotion: false, gore: true, cheeseBoost: 1, bombInterval: 60, catStyle: 'random', chatter: true, focusMode: false };
+  var state = { running: false, awaiting: false, muted: false, volume: 0.25, reducedMotion: false, gore: true, cheeseBoost: 1, gameSpeed: 1, bombInterval: 60, catStyle: 'random', chatter: true, focusMode: false };
   var pointerDrag = null;
   var suppressCanvasClick = false;
   var focusHideTimer = 0;
@@ -7422,6 +7424,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
   function cacheDom() {
     dom.restoreTrackBtn = byId('restoreTrackBtn');
     dom.continueBtn = byId('continueBtn'); dom.speakerNote = byId('speakerNote'); dom.turboValue = byId('turboValue');
+    dom.gameSpeedInput = byId('gameSpeedInput'); dom.gameSpeedValue = byId('gameSpeedValue');
     dom.cheeseBoostInput = byId('cheeseBoostInput'); dom.cheeseBoostValue = byId('cheeseBoostValue');
     dom.bombIntervalInput = byId('bombIntervalInput'); dom.bombIntervalValue = byId('bombIntervalValue'); dom.bombIntervalNote = byId('bombIntervalNote');
     dom.bombCarrierValue = byId('bombCarrierValue'); dom.focusControls = byId('focusControls'); dom.focusPauseBtn = byId('focusPauseBtn'); dom.focusPauseText = byId('focusPauseText'); dom.focusExitBtn = byId('focusExitBtn');
@@ -7724,7 +7727,19 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     presentationRAFActive = true;
     raf = requestAnimationFrame(frame);
   }
-  function frame(now) { raf = requestAnimationFrame(frame); if (!lastFrame) lastFrame = now; var dt = Math.min(0.1, Math.max(0, (now - lastFrame) / 1000)); lastFrame = now; if (game && game.status === 'running') { game.update(dt); var events = typeof game.drainEvents === 'function' ? game.drainEvents() : []; events.forEach(handleEvent); } if (renderer && game) renderer.render(game, now / 1000); if (now - lastStatsFrame >= 100) { renderStats(); lastStatsFrame = now; } }
+  function advanceSimulation(seconds) {
+    if (game && game.status === 'running') { game.update(seconds); var events = typeof game.drainEvents === 'function' ? game.drainEvents() : []; events.forEach(handleEvent); }
+  }
+  function setGameSpeed(value) {
+    var next = Number(value); if (!Number.isFinite(next)) return state.gameSpeed;
+    var at = performance.now ? performance.now() : Date.now();
+    if (lastFrame && game && game.status === 'running') advanceSimulation(Math.min(.1, Math.max(0, (at - lastFrame) / 1000)) * state.gameSpeed);
+    lastFrame = at; state.gameSpeed = Math.max(1, Math.min(100, Math.round(next)));
+    if (dom.gameSpeedInput) { dom.gameSpeedInput.value = String(state.gameSpeed); dom.gameSpeedInput.setAttribute('aria-valuetext', state.gameSpeed + ' times game speed'); }
+    if (dom.gameSpeedValue) dom.gameSpeedValue.textContent = state.gameSpeed + '×';
+    safeStorageSet(GAME_SPEED_STORE_KEY, String(state.gameSpeed)); return state.gameSpeed;
+  }
+  function frame(now) { raf = requestAnimationFrame(frame); if (!lastFrame) lastFrame = now; var dt = Math.min(0.1, Math.max(0, (now - lastFrame) / 1000)); lastFrame = now; advanceSimulation(dt * state.gameSpeed); if (renderer && game) renderer.render(game, now / 1000); if (now - lastStatsFrame >= 100) { renderStats(); lastStatsFrame = now; } }
   function step(seconds) { var dt = Math.max(0, Number(seconds) || 0); if (!game) return; if (game.status === 'running') { game.update(dt); var events = typeof game.drainEvents === 'function' ? game.drainEvents() : []; events.forEach(handleEvent); } if (renderer) renderer.render(game, (performance.now ? performance.now() : Date.now()) / 1000); renderStats(); }
   function applyRendererPresentationSettings() {
     if (!renderer) return;
@@ -7924,6 +7939,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     if (dom.catStyleInput) dom.catStyleInput.addEventListener('change', applyRendererPresentationSettings);
     if (dom.chatterToggle) dom.chatterToggle.addEventListener('change', applyRendererPresentationSettings);
     dom.volumeInput.addEventListener('input', function () { state.volume = Number(dom.volumeInput.value); if (audio && typeof audio.setVolume === 'function') audio.setVolume(state.volume); });
+    dom.gameSpeedInput.addEventListener('input', function () { setGameSpeed(dom.gameSpeedInput.value); });
     dom.cheeseBoostInput.addEventListener('input', function () { state.cheeseBoost = Math.max(1, Math.min(100, Math.round(Number(dom.cheeseBoostInput.value) || 1))); dom.cheeseBoostValue.textContent = '+' + state.cheeseBoost + '%'; safeStorageSet(CHEESE_BOOST_STORE_KEY, String(state.cheeseBoost)); if (game && typeof game.setCheeseBoost === 'function') game.setCheeseBoost(state.cheeseBoost); if (renderer && typeof renderer.invalidate === 'function') renderer.invalidate(); renderStats(); });
     dom.bombIntervalInput.addEventListener('input', function () { setBombInterval(dom.bombIntervalInput.value); });
     dom.musicInput.addEventListener('change', function () { var file = dom.musicInput.files && dom.musicInput.files[0]; if (!file) return; dom.trackLabel.textContent = file.name.slice(0, 26); dom.sunoNote.textContent = 'Loading track…'; dom.restoreTrackBtn.hidden = !window.BACKGROUND_TRACK_DATA; if (audio && typeof audio.setTrack === 'function') { try { var loadedTrack = audio.setTrack(file); if (loadedTrack && typeof loadedTrack.catch === 'function') loadedTrack.catch(function () {}); } catch (_) {} } showToast('LOADING PERSONAL TRACK'); });
@@ -7962,6 +7978,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api;
     dom.zoomValue.textContent = '×1.0';
     if (dom.catStyleInput) dom.catStyleInput.value = 'random';
     if (dom.chatterToggle) dom.chatterToggle.checked = true;
+    setGameSpeed(Number(safeStorageGet(GAME_SPEED_STORE_KEY)) || 1);
     // Keep the chosen percentage; v7 applies it to diminishing future gains.
     state.cheeseBoost = Math.max(1, Math.min(100, Math.round(Number(safeStorageGet(CHEESE_BOOST_STORE_KEY)) || 1))); dom.cheeseBoostInput.value = state.cheeseBoost; dom.cheeseBoostValue.textContent = '+' + state.cheeseBoost + '%';
     state.bombInterval = Math.max(10, Math.min(120, Math.round((Number(safeStorageGet(BOMB_INTERVAL_STORE_KEY)) || 60) / 5) * 5)); renderBombControl();

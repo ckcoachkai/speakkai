@@ -41,7 +41,7 @@ export const GIANT_CATALOG = Object.freeze([
   { id: 'pikachu', name: 'Pikachu', health: 1500, bodyHealth: 1500, armorHealth: 0, speed: .018, bite: 45, biteCadence: .40 },
   { id: 'dogman', name: 'Dog Man', health: 2050, bodyHealth: 1800, armorHealth: 250, speed: .0135, bite: 82, biteCadence: .78 },
 ].map(monster => Object.freeze({ ...monster, giant: true, monsterId: monster.id, classification: 'cameo', archetype: 0, armor: 0, ability: 0, resistance: 0, regeneration: 0, dodge: 0, rush: 1, frenzy: 1 })));
-export const PICKER_VISUAL_TIMING = Object.freeze({ cherryFuse: 3, cherryMaximumTempo: 2.5, cherryBurstWallSeconds: .95, melonVelocityFactor: .53, melonImpactTimeScale: .65 });
+export const PICKER_VISUAL_TIMING = Object.freeze({ cherryFuse: 3, cherryBurstWallSeconds: .95, melonVelocityFactor: .53, melonImpactTimeScale: .65 });
 const BASE_CADENCE = PLANT_BY_ID.pea.interval;
 export const PICKER_PACING = Object.freeze({ peaInterval: BASE_CADENCE, upgradeMinimumInterval: PLANT_BY_ID.pea.intervalMin, projectileTilesPerSecond: 4.16, firstZombie: 3, spawnMinimum: 6.4, spawnMaximum: 8.4, zombieStatScaling: false, melonSplashTileRadius: 1.5, geometry: 'Readable 3-by-3 tile splash adaptation; original damage and crowded-target cap' });
 export const PICKER_HORDE = Object.freeze({ firstWindow: 24, minimumWindow: 12, windowStep: 2, initialLive: 12, liveStep: 12, maximumLive: 96, initialBurst: 3, burstStep: 2, maximumBurst: 12, queueBuffer: 64 });
@@ -161,7 +161,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   let renderFraction = 1, renderTime = 0;
   const visualBetween = (before, value) => Number.isFinite(before) ? before + (value - before) * renderFraction : value;
   const visualMob = mob => renderFraction < 1 ? { ...mob, x: visualBetween(mob.renderPreviousX, mob.x), animationTime: visualBetween(mob.renderPreviousAnimation, mob.animationTime) } : mob;
-  const validSpeed = value => clamp(Number.isFinite(Number(value)) ? Number(value) : 1, .5, 8);
+  const validSpeed = value => clamp(Number.isFinite(Number(value)) ? Number(value) : 1, 1, 100);
   let playbackRate = validSpeed(speed), clockRate = playbackRate, clockAt = null, simulationBudget = 0;
   let waveIndex = 0, nextWaveAt = PICKER_PACING.firstZombie;
   let impacts = [], pickupFlights = [], wallTime = 0;
@@ -1464,11 +1464,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (phase === 'running' && clockAt !== null) simulationBudget += Math.max(0, (at - clockAt) / 1000) * Math.min(clockRate, effectiveTempo());
     clockAt = at; playbackRate = validSpeed(rate); clockRate = effectiveTempo();
   }
-  function visibleFuseLanes() {
-    const top = viewport.scrollTop || 0, bottom = top + viewportHeight;
-    return lanes.filter(lane => lane.bomb && !lane.bomb.spent && lane.y < bottom && lane.y + lane.h > top);
-  }
-  function effectiveTempo() { return visibleFuseLanes().length ? Math.min(playbackRate, PICKER_VISUAL_TIMING.cherryMaximumTempo) : playbackRate; }
+  function effectiveTempo() { return playbackRate; }
   function frame(timestamp) {
     if (!alive) return;
     wallTime = timestamp;
@@ -1480,9 +1476,6 @@ export default function createGame({ container, names = [], onPick, random = Mat
       // changes preserve the previous interval and cannot jump past old time.
       while (phase === 'running' && simulationBudget + 1e-8 >= .04) {
         simulationBudget -= .04; step(.04);
-        // A long/background frame must first show a newly earned countdown.
-        // Remaining time is intentionally paused for this short cinematic.
-        if (visibleFuseLanes().some(lane => lane.bomb.fuseFirstSeenWall === null)) { simulationBudget = 0; break; }
       }
       clockRate = effectiveTempo();
       if (phase !== 'running') simulationBudget = 0;
