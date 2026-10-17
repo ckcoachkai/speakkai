@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-17T06:15:13.021517+00:00",
+  "updatedAt": "2026-10-17T07:23:07.353169+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -122,9 +122,15 @@
           "date": "2026-10-17",
           "time": "13:00–15:00",
           "classContent": [
-            "Students shared their opinions about the Tesla Roadster. Feedback focused on a clear opinion, supporting points and detail, and a message at the end."
+            "Students shared their opinions about the Tesla Roadster. Feedback focused on a clear opinion, supporting points and detail, and a message at the end.\n\nToday’s main purpose was to introduce the WSDA impromptu speech competition. We briefly introduced different prompt types: analogies, hypothetical situations, quotations, direct questions, and single words. Students tried several practice activities and received a worksheet with a printed speech structure to practise. We also worked through how to answer a single-word prompt using “blueberry.”"
           ],
-          "homework": null,
+          "homework": {
+            "title": "Quotation prompt worksheet",
+            "steps": [
+              "Complete the worksheet for the quotation prompt beginning “Silence can…”, then prepare to present your response next class."
+            ],
+            "prepareFor": "Present your response next class."
+          },
           "students": [
             {
               "name": "Winston",
@@ -221,6 +227,25 @@
               "feedbackUrl": "/fb/?class=sat-foundations&date=2026-09-19&student=william"
             }
           ]
+        },
+        {
+          "id": "2026-10-17-sat-foundations",
+          "date": "2026-10-17",
+          "time": "15:00–16:30",
+          "students": [
+            {
+              "name": "Kyle",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-17&student=kyle"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-17&student=william"
+            }
+          ],
+          "classContent": [
+            "Students shared their thoughts about the Tesla Roadster and its recently introduced features. Feedback included developing a clear message and practising confident delivery, word emphasis, audience eye contact, steady pacing, and awareness of arm movements."
+          ],
+          "homework": null
         }
       ]
     },
