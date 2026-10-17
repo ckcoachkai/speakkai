@@ -16,7 +16,7 @@ const html = publishedHtml.replace(themeLink, '');
 assert.equal(hash(html), manifest.pageSha256);
 assert.equal(manifest.mouseOutfits, 30);
 assert.equal(manifest.catOutfits, 6);
-assert.equal(manifest.files.length, 23);
+assert.equal(manifest.files.length, 24);
 assert.match(html, /rel="canonical" href="https:\/\/speakkai\.com\/maze\/"/);
 assert(!/data:(image|audio)\//.test(html), 'Media must be cacheable external files');
 assert(!/file:\/\/|C:[\\/]Users[\\/]/i.test(html), 'Published page must not contain machine-local file paths');
@@ -31,7 +31,15 @@ for (const file of manifest.files) {
 const images = html.match(/window\.MOUSE_MAZE_ASSETS=(\{.*?\});(?=window\.MOUSE_MAZE_CHARACTER_ART=)/);
 assert(images);
 const hostedImages = JSON.parse(images[1]);
-assert.equal(Object.keys(hostedImages).length, 22);
+assert.equal(Object.keys(hostedImages).length, 23);
+assert(hostedImages.bugMotion, 'Animated bug artwork is packaged');
+const motion = JSON.parse(html.match(/window\.MOUSE_MAZE_BUG_MOTION=(\{.*?\});window\.MOUSE_MAZE_ASSETS=/)?.[1] || 'null');
+assert.equal(motion?.fps, 24);
+for (const kind of ['centipede', 'millipede', 'bedbug', 'leech', 'louse']) {
+  assert.equal(motion.frames[kind]?.length, 24, kind + ' has a complete stride cycle');
+}
+assert.match(html, /HEALTH /);
+assert.match(html, /LICE /);
 assert(hostedImages.anatomy, 'Detailed anatomy artwork is required');
 assert(hostedImages.alienAnatomy, 'Fictional alien anatomy artwork is required');
 assert(hostedImages.crawlers, 'Detailed crawler artwork is required');
@@ -47,5 +55,5 @@ const restored = html.replace(images[0], `window.MOUSE_MAZE_ASSETS=${JSON.string
   .replace('  <meta name="description" content="Dynamite Mice: a maze name picker with costumed mice, cheese boosts, a chasing cat, and speaker pauses.">\n  <link rel="canonical" href="https://speakkai.com/maze/">\n', '');
 assert.equal(hash(restored), manifest.sourceSha256, 'Game logic and presentation must match the approved standalone version');
 for (const script of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) new Script(script[1]);
-console.log('Maze verified: exact source parity, 30 mice, 6 cats, 22 images, song, and canonical route.');
+console.log('Maze verified: exact source parity, 30 mice, 6 cats, 23 images including 120 bug animation frames, labeled bars, song, and canonical route.');
 

@@ -1,7 +1,7 @@
 {
-  "version": 11,
-  "sourceSha256": "f6ddbf5e53a003c8ca91fbbd206cb4dd30528c336b1f8b2f644e5cf115ab94f6",
-  "pageSha256": "bd139273db372084e6e0d289c410765f75558f7cb69bfe78278886ffac1a9871",
+  "version": 12,
+  "sourceSha256": "a5d2a932944476839c3501af887ae405c32b5fb36f98dd6484879c36e5f9666f",
+  "pageSha256": "ca8dd8f7be739788115fb45f41f03f15cbd20845abce0d40efc4ede7469de0d4",
   "mouseOutfits": 30,
   "catOutfits": 6,
   "files": [
@@ -142,6 +142,12 @@
       "type": "audio/mpeg",
       "bytes": 5863304,
       "sha256": "7a5e617bd89d4c7355b14ea2ed01d140006233813dea512e2965276b35a4a06a"
+    },
+    {
+      "path": "assets/bug-motion.d2ba4788c798.webp",
+      "type": "image/webp",
+      "bytes": 1280316,
+      "sha256": "d2ba4788c79897622b5fc3db0f2deaa2a3fee8725603d3df1e65426f2708501b"
     }
   ],
   "logoCatalog": "assets/maze-logos/manifest.json"
