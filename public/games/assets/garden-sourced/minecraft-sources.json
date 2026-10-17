@@ -1,0 +1,118 @@
+{
+  "modelRepository": "https://github.com/Mojang/bedrock-samples",
+  "commit": "46ba6ea985fb5a92d79a9419198f10dda14c199d",
+  "sources": [
+    {
+      "file": "zombie-texture.png",
+      "sourcePage": "https://github.com/Mojang/bedrock-samples/blob/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/entity/zombie/zombie.png",
+      "originalURL": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/entity/zombie/zombie.png",
+      "sha256": "b172ff1b50c3ce0587cf82a2865bb05b9a22fc54a78d446b7bfcab13ffcea0ab",
+      "bytes": 994
+    },
+    {
+      "file": "farmer-texture.png",
+      "sourcePage": "https://github.com/Mojang/bedrock-samples/blob/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/entity/villager/farmer.png",
+      "originalURL": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/entity/villager/farmer.png",
+      "sha256": "32dc1c89507233fa572dcf9354d47adc7c3768426278903e8195bbbcf5e5c514",
+      "bytes": 1075
+    },
+    {
+      "file": "zombie.geo.json",
+      "sourcePage": "https://github.com/Mojang/bedrock-samples/blob/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/models/entity/zombie.geo.json",
+      "originalURL": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/models/entity/zombie.geo.json",
+      "sha256": "61a8ff5d0443bc29a6946ab165ab144ae87237e19bdd11fdec077e8cf5d9e414",
+      "bytes": 2587
+    },
+    {
+      "file": "villager.geo.json",
+      "sourcePage": "https://github.com/Mojang/bedrock-samples/blob/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/models/entity/villager.geo.json",
+      "originalURL": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/models/entity/villager.geo.json",
+      "sha256": "21e69d8ce3abcdac543362f38e2deb08dd03fc1390954f15350422fa765325df",
+      "bytes": 2129
+    },
+    {
+      "file": "zombie.animation.json",
+      "sourcePage": "https://github.com/Mojang/bedrock-samples/blob/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/animations/zombie.animation.json",
+      "originalURL": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/animations/zombie.animation.json",
+      "sha256": "abec25b15f1a324485a9cf218498739ec95c6bddef10b8aac66fffd63924f0d9",
+      "bytes": 4208
+    },
+    {
+      "file": "villager.animation.json",
+      "sourcePage": "https://github.com/Mojang/bedrock-samples/blob/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/animations/villager.animation.json",
+      "originalURL": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/animations/villager.animation.json",
+      "sha256": "291ee066110528bed721208f204a184a2bc69514c7ed7c1316ba3e4d4cef34d7",
+      "bytes": 1298
+    },
+    {
+      "file": "humanoid.animation.json",
+      "sourcePage": "https://github.com/Mojang/bedrock-samples/blob/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/animations/humanoid.animation.json",
+      "originalURL": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/animations/humanoid.animation.json",
+      "sha256": "4059e76703386ec92b4a66e863507fd17417c7398bad071c2e0e6ffec8363a44",
+      "bytes": 19003
+    },
+    {
+      "file": "zombie.entity.json",
+      "sourcePage": "https://github.com/Mojang/bedrock-samples/blob/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/entity/zombie.entity.json",
+      "originalURL": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/entity/zombie.entity.json",
+      "sha256": "0c9214c106426f9892ccd4d5b18970e663f4bfc8bf7bcb5a6e71e3ee5ed8ddc7",
+      "bytes": 10362
+    },
+    {
+      "file": "LICENSE.md",
+      "sourcePage": "https://github.com/Mojang/bedrock-samples/blob/46ba6ea985fb5a92d79a9419198f10dda14c199d/LICENSE.md",
+      "originalURL": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/LICENSE.md",
+      "sha256": "ca18c0dede68ce24ea1cd6f9df0813579b6f9f979787983a50baec99345f975d",
+      "bytes": 222
+    }
+  ],
+  "sounds": [
+    {
+      "logicalName": "minecraft/sounds/mob/villager/idle1.ogg",
+      "sha1": "a772db3c8ac37dfeb3a761854fb96297257930ab",
+      "originalURL": "https://resources.download.minecraft.net/a7/a772db3c8ac37dfeb3a761854fb96297257930ab",
+      "bytes": 8605
+    },
+    {
+      "logicalName": "minecraft/sounds/mob/villager/idle2.ogg",
+      "sha1": "5df4a02b1ebc550514841fddb7d64b9c497d40b4",
+      "originalURL": "https://resources.download.minecraft.net/5d/5df4a02b1ebc550514841fddb7d64b9c497d40b4",
+      "bytes": 10948
+    },
+    {
+      "logicalName": "minecraft/sounds/mob/villager/idle3.ogg",
+      "sha1": "9a7fe638bb8b3b1060b3830c63c3ce3d03cdbe1f",
+      "originalURL": "https://resources.download.minecraft.net/9a/9a7fe638bb8b3b1060b3830c63c3ce3d03cdbe1f",
+      "bytes": 7106
+    },
+    {
+      "logicalName": "minecraft/sounds/mob/villager/yes1.ogg",
+      "sha1": "be73a79fb1ab966887a8b88bed9aa6b3d9173d71",
+      "originalURL": "https://resources.download.minecraft.net/be/be73a79fb1ab966887a8b88bed9aa6b3d9173d71",
+      "bytes": 9191
+    }
+  ],
+  "license": {
+    "file": "LICENSE.md",
+    "owner": "Mojang AB / Microsoft",
+    "terms": "All rights reserved; supplied under Minecraft EULA. Not CC0/open-licensed art.",
+    "eula": "https://www.minecraft.net/en-us/eula",
+    "usageGuidelines": "https://www.minecraft.net/en-us/usage-guidelines"
+  },
+  "rendering": {
+    "method": "Orthographic projection of the original Mojang cuboid geometry and box UVs; nearest-neighbor RGBA texture lookup. No painted, AI-generated or recolored pixels.",
+    "view": {
+      "yawDegrees": 32,
+      "elevationDegrees": 9
+    },
+    "poseSources": [
+      "animation.humanoid.move",
+      "animation.zombie.attack_bare_hand",
+      "animation.villager.general.v1.0",
+      "animation.villager.move"
+    ],
+    "poseAdaptation": "Locally baked source-model poses, not game-captured GIFs. One whole walk cycle over 32 frames; zombie leg amplitude35deg uses source variable.tcos0=25deg; villager source amplitude40deg. Walking is sampled by distance as source, at a chosen display period1.28s. Whole model translated per frame to align footbaseline308.",
+    "miniatureIntegration": "Draw zombie at~65–75logical pixels tall versus regularPvZ112; retain NEAREST raster sampling. Villager is a brown-robed original classic villager model, not modern biome-overlay model.",
+    "limitations": "Original Minecraft Wiki entity renders were inaccessible403. Baked pose selection simplifies full gameplay animation controllers to walking, unarmed zombie attack and villager hold/walk. Villager idle is the actual folded-arm held pose."
+  }
+}

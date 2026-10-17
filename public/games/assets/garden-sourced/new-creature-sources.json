@@ -1,0 +1,161 @@
+{
+  "sevenDaysToDie": [
+    {
+      "id": "demolisher",
+      "cutout": "demolisher-cutout.png",
+      "masterCutout": "demolisher-cutout-master.png",
+      "sourceCropXYXY": [
+        208,
+        17,
+        1257,
+        1594
+      ],
+      "cutoutSize": [
+        1049,
+        1577
+      ],
+      "atlas": "demolisher-articulated24-atlas.png",
+      "apng": "demolisher-articulated24.png",
+      "frameSize": [
+        474,
+        700
+      ],
+      "durationsMs": [
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67
+      ],
+      "totalDurationMs": 1608,
+      "animationKind": "Gently articulated original still source pixels; NOT native game animation. Independent small head, forearm and shin rotations. Complete original silhouette remains beneath moving parts, preventing open neck/wrist/knee seams; small source-pixel overlap edges can remain.",
+      "gameIdentity": "7 Days to Die 1.0 Demolisher / Demolition Zombie",
+      "sourceOriginalFile": "demolisher-official-reveal.jpg",
+      "sourceNativeSize": [
+        4000,
+        4000
+      ],
+      "workingSize": [
+        1600,
+        1600
+      ],
+      "sourcePage": "https://twitter.com/7DaystoDie/status/1785670222856225044",
+      "originalURL": "https://pbs.twimg.com/media/GMf5hZrWYAAVqqF?format=jpg&name=4096x4096",
+      "view": "Three-quarter front, native gaze to viewer right; original pixels preserved, not flipped.",
+      "rights": "Third-party game imagery, 7 Days to Die / The Fun Pimps. No standalone asset redistribution or commercial game-use license established.",
+      "sourceSHA256": "d373d3ef5434c4a983d89057fed1d50353ba776bcaada6ed65af5dfcbc2786e0"
+    },
+    {
+      "id": "mutated",
+      "cutout": "mutated-cutout.png",
+      "masterCutout": "mutated-cutout-master.png",
+      "sourceCropXYXY": [
+        736,
+        355,
+        1012,
+        1096
+      ],
+      "cutoutSize": [
+        276,
+        741
+      ],
+      "atlas": "mutated-articulated24-atlas.png",
+      "apng": "mutated-articulated24.png",
+      "frameSize": [
+        286,
+        700
+      ],
+      "durationsMs": [
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67,
+        67
+      ],
+      "totalDurationMs": 1608,
+      "animationKind": "Gently articulated original still source pixels; NOT native game animation. Independent small head, forearm and shin rotations. Complete original silhouette remains beneath moving parts, preventing open neck/wrist/knee seams; small source-pixel overlap edges can remain.",
+      "gameIdentity": "7 Days to Die V2.0 Mutated Zombie; normal screenshot, NOT the radiated variant",
+      "sourceOriginalFile": "mutated-official-wasteland.jpg",
+      "sourceNativeSize": [
+        3840,
+        2160
+      ],
+      "workingSize": [
+        2048,
+        1152
+      ],
+      "sourcePage": "https://community.thefunpimps.com/threads/v2-0-2-4-storms-brewing-dev-diary.42281/",
+      "originalURL": "https://pbs.twimg.com/media/GmwdN_sWwAA_kcb?format=jpg&name=4096x4096",
+      "view": "Front-facing fullbody screenshot.",
+      "rights": "Third-party game imagery, 7 Days to Die / The Fun Pimps. No standalone asset redistribution or commercial game-use license established.",
+      "sourceSHA256": "2da822b1442cd2b0f59fcc487707aae9d1c3591d3979d8715f998ce194e59774"
+    },
+    {
+      "id": "radiated-screamer",
+      "cutout": "radiated-screamer-visible-upperbody.png",
+      "sourceCropXYXY": [
+        360,
+        88,
+        530,
+        417
+      ],
+      "cutoutSize": [
+        170,
+        329
+      ],
+      "animationKind": "Genuine still, no fabricated native animation",
+      "fullBodyUsable": false,
+      "limitation": "Source is only 590x451 and cuts legs off at HUD; foreground club overlaps other zombies. This right-hand screamer cutout preserves only visible upper-body pixels and is unsuitable for a fullbody walking enemy without another source.",
+      "gameIdentity": "7 Days to Die Radiated Screamer, genuine green irradiated gameplay variant",
+      "sourceOriginalFile": "radiated-screamer-gameplay.jpg",
+      "sourceNativeSize": [
+        590,
+        451
+      ],
+      "sourcePage": "https://steamcommunity.com/sharedfiles/filedetails/?id=3292387070",
+      "originalURL": "https://images.steamusercontent.com/ugc/2509151546257059844/FCF486CBDE66A3A47E385AC7B46172EF4A882909/",
+      "view": "Front-facing upper body only.",
+      "rights": "Third-party game imagery, 7 Days to Die / The Fun Pimps. No standalone asset redistribution or commercial game-use license established.",
+      "sourceSHA256": "8f0683f131f869d5c45c6ecbf7d8458be08692c5f4b4a481a3a977624ae94383"
+    }
+  ],
+  "irradiatedNote": "Custom radiation aura applied to original full-body Mutated Zombie pixels; genuine cropped Screamer retained only as research, not used as a walker."
+}
