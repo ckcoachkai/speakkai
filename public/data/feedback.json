@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-16T13:21:38.879275+00:00",
+  "updatedAt": "2026-10-17T06:15:13.005517+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -145,6 +145,37 @@
               "name": "Winston",
               "en": "➜ Activity: Impromptu warm-up on reliance on AI.\n\n➜ Content and organization: Winston put his ideas together well and delivered an organized response. His loud, clear voice was a particular strength, helping the audience hear and follow his message.\n\n➜ Finish with energy: Toward the end, his voice tapered off, including when he said “thank you.” Maintain vocal strength through the final sentence and the very last word. A clear, deliberate “thank you” gives the speech a confident finish and helps the message stay with the audience. A sudden drop in volume can make an otherwise strong conclusion sound uncertain.\n\n➜ Prepare for a strong opening: Before beginning, take a deep breath and mentally prepare—just as an athlete would before a race or swimming competition. Then start with a clear, purposeful voice to capture the audience’s attention.\n\n➜ Suggested practice: Rehearse the opening and closing together: breathe, begin confidently, deliver the final message with steady energy, pause, and finish with a strong “thank you.”\n\n➜ Activity: Homework speech, approximately 3–3½ minutes, followed by an additional Q&A for practice.\n\n➜ Presence and voice: Winston delivered a well-prepared, well-organized speech. His strongest feature was his presence: he spoke loudly and projected confidence, helping his ideas reach the audience clearly.\n\n➜ Structure and logic: His ideas followed a logical structure, making the speech easy to follow across the longer presentation.\n\n➜ Fluency and transitions: There were still small hesitations between sentences that interrupted the flow. The next step is to connect ideas more smoothly while keeping purposeful pauses for emphasis. He can practise the end of one sentence together with the beginning of the next, becoming familiar with how the ideas connect.\n\n➜ Continuing focus: Keep the strong voice and organized content, while also applying the earlier warm-up feedback: prepare with a breath before starting and maintain energy through the final “thank you.”",
               "zh": "➜【活动】：关于依赖人工智能的即兴热身。\n\n➜【内容与组织】：Winston 把想法组织得很好，回答有条理。响亮、清楚的声音是他的优势，帮助听众听清并跟上信息。\n\n➜【有力地结束】：接近结尾时，他的声音逐渐减弱，包括说“thank you”的时候。应把声音的力度保持到最后一句、最后一个词。清楚、有意识地说出“thank you”，能让结尾更自信，也帮助听众记住信息。音量突然下降，可能让原本有力的结论听起来不够确定。\n\n➜【准备有力的开场】：开始前深呼吸，做好心理准备，就像运动员在赛跑或游泳比赛前调整状态一样。然后用清楚、有目的的声音开场，吸引大家注意。\n\n➜【建议练习】：把开头和结尾连起来练：呼吸，自信地开始，保持能量说出最后的重点，停顿，再用有力的“thank you”结束。\n\n➜【活动】：作业演讲，约三至三分半钟，之后增加了问答练习。\n\n➜【台风与声音】：Winston 的演讲准备充分、组织良好。突出的优势是台风：声音响亮，表现出自信，让听众清楚接收到他的想法。\n\n➜【结构与逻辑】：各个想法按照逻辑展开，使这段较长的演讲仍然容易跟上。\n\n➜【流畅度与衔接】：句子之间仍有一些小的犹豫，打断了表达的流动。下一步是让想法衔接得更顺畅，同时保留用于强调的有意停顿。可以把前一句的结尾和后一句的开头一起练，熟悉两者如何连接。\n\n➜【继续关注】：保持响亮的声音和有条理的内容，同时应用热身反馈：开始前用一次呼吸做好准备，把能量保持到最后的“thank you”。"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-17-sat-original-oratory",
+          "date": "2026-10-17",
+          "time": "13:00–15:00",
+          "status": "held",
+          "classContent": {
+            "en": "Students shared their opinions about the Tesla Roadster. Feedback focused on a clear opinion, supporting points and detail, and a message at the end.",
+            "zh": "学生分享了自己对特斯拉 Roadster 的看法。反馈重点包括清楚的观点、支持观点的要点和细节，以及结尾的核心信息。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "winston",
+              "name": "Winston",
+              "en": "You gave a clear opinion about the Tesla Roadster and used three points to support your point of view. You also finished with a message at the end. Overall, very good.",
+              "zh": "你清楚地表达了自己对特斯拉 Roadster 的看法，并用三个要点支持自己的观点。你也在结尾传达了一个核心信息。整体表现很好。"
+            },
+            {
+              "id": "kenny",
+              "name": "Kenny",
+              "en": "You spoke second and gave a lot of detail. Just remember to include a message at the end—that was missing from this speech.",
+              "zh": "你是第二位发言的同学，讲了很多细节。要记得在结尾传达一个核心信息，这次演讲缺少了这一部分。"
+            },
+            {
+              "id": "kailyn",
+              "name": "Kailyn",
+              "en": "Your speech was well put together, with good structure and a message at the end. One thing to remember: avoid repeatedly saying “I think.” You’re already sharing your own opinions and thoughts, so you don’t need to introduce each point that way. When you’re trying to persuade people, stating your points directly can make them sound stronger.",
+              "zh": "你的演讲组织得很好，结构清楚，结尾也传达了一个核心信息。有一点要记住：避免反复说“I think”。你本来就在表达自己的观点和想法，所以不需要每个要点都这样开头。想要说服别人时，直接表达观点可以让话语更有力量。"
             }
           ]
         }

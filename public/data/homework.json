@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-16T13:21:38.896163+00:00",
+  "updatedAt": "2026-10-17T06:15:13.021517+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -114,6 +114,29 @@
             {
               "name": "Winston",
               "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-09-19&student=winston"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-17-sat-original-oratory",
+          "date": "2026-10-17",
+          "time": "13:00–15:00",
+          "classContent": [
+            "Students shared their opinions about the Tesla Roadster. Feedback focused on a clear opinion, supporting points and detail, and a message at the end."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Winston",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-10-17&student=winston"
+            },
+            {
+              "name": "Kenny",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-10-17&student=kenny"
+            },
+            {
+              "name": "Kailyn",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-10-17&student=kailyn"
             }
           ]
         }
