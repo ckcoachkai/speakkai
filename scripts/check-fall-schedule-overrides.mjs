@@ -12,3 +12,10 @@ console.log('Fall cancellation boundaries, history, other classes and idempotenc
 
 const raw=applyFallScheduleOverrides([sheet('October 2026',['15\nLimited availability\n15:30–17:30 · SAS - 三年级\n18:15–20:15 · 井亭大厦 - 一年级'])]);
 assert.equal(raw[0].rows[0].cells[0].value,'15\nLimited availability\n15:30–17:30 · SAS - 三年级');
+const saturday='17\nLimited availability\n13:00–15:00 · Class booked · 古北\n15:30–17:30 · Class booked · 古北\n17:30–19:30 · Class booked · 古北';
+const corrected=applyFallScheduleOverrides([sheet('October 2026',[saturday])]);
+assert.ok(corrected[0].rows[0].cells[0].value.includes('15:00–16:30'));
+assert.ok(corrected[0].rows[0].cells[0].value.includes('16:30–18:30'));
+assert.ok(corrected[0].rows[0].cells[0].value.includes('13:00–15:00'));
+assert.deepEqual(applyFallScheduleOverrides(corrected),corrected);
+assert.equal(applyFallScheduleOverrides([sheet('September 2026',[saturday.replace(/^17/,'12')])])[0].rows[0].cells[0].value,saturday.replace(/^17/,'12'));

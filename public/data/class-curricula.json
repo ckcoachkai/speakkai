@@ -1791,8 +1791,8 @@
     {
       "id": "sat-foundations",
       "label": {
-        "en": "Saturday · 15:30–17:30",
-        "zh": "周六 · 15:30–17:30"
+        "en": "Saturday · 15:00–16:30",
+        "zh": "周六 · 15:00–16:30"
       },
       "template": "grades-5-6",
       "extension": null,
@@ -1826,8 +1826,8 @@
     {
       "id": "sat-introductory",
       "label": {
-        "en": "Saturday · 17:30–19:30",
-        "zh": "周六 · 17:30–19:30"
+        "en": "Saturday · 16:30–18:30",
+        "zh": "周六 · 16:30–18:30"
       },
       "template": "grade-1",
       "extension": null,
