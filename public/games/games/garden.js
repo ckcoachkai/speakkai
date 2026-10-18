@@ -186,7 +186,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   let waveIndex = 0, nextWaveAt = PICKER_PACING.firstZombie;
   let impacts = [], pickupFlights = [], wallTime = 0;
   let shots = [], pendingShots = [], effects = [], drops = [], combatLog = [], soundEnabled = Boolean(sound);
-  let audio = null, audioTimer = null, master = null, sfxMaster = null, beat = 0, nextBeat = 0, audioEpoch = 0, audioLoadController = null;
+  let audio = null, audioTimer = null, master = null, sfxMaster = null, sfxLimiter = null, beat = 0, nextBeat = 0, audioEpoch = 0, audioLoadController = null;
   const sampleBuffers = new Map(), sfxVoices = new Set(), musicVoices = new Set(), lastSfx = new Map(), sfxRotation = new Map();
   const soundGaps = { shot: 0, gatling: 0, sun: .10, hit: .075, armor: .22, growl: 1.65, bite: .16, plant: .28, pickup: .16, death: .25, intro: 5, villager: 12, villagerYes: 4 };
   const soundGains = { shot: .42, gatling: .35, hit: .36, armor: .50, growl: .66, bite: .48, plant: .54, pickup: .52, death: .57, intro: .68, villager: .62, villagerYes: .55 };
@@ -1495,7 +1495,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (!Audio) return;
     try {
       audio = new Audio(); master = audio.createGain(); master.gain.value = .065; master.connect(audio.destination);
-      sfxMaster = audio.createGain(); sfxMaster.gain.value = .58; sfxMaster.connect(audio.destination);
+      sfxMaster = audio.createGain(); sfxMaster.gain.value = .58;
+      sfxLimiter=audio.createDynamicsCompressor();sfxLimiter.threshold.value=-12;sfxLimiter.knee.value=6;sfxLimiter.ratio.value=12;sfxLimiter.attack.value=.003;sfxLimiter.release.value=.12;sfxMaster.connect(sfxLimiter);sfxLimiter.connect(audio.destination);
       nextBeat = audio.currentTime + .04; beat = 0;
       const current = audio, epoch = ++audioEpoch;
       const loaded = loadSamples(current, epoch);
@@ -1516,7 +1517,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     stopMusic(); audioEpoch++; audioLoadController?.abort(); audioLoadController = null;
     for (const voice of sfxVoices) { voice.source.onended = null; try { voice.source.stop(); voice.source.disconnect(); voice.gain.disconnect(); } catch {} }
     sfxVoices.clear(); lastSfx.clear(); sfxRotation.clear();
-    try { sfxMaster?.disconnect(); } catch {} sfxMaster = null;
+    try { sfxMaster?.disconnect();sfxLimiter?.disconnect(); } catch {} sfxMaster = null;sfxLimiter=null;
     if (audio) { const current = audio; audio = null; try { current.close().catch(() => {}); } catch {} }
   }
   function setSound(enabled) { soundEnabled = Boolean(enabled); if (soundEnabled) startMusic(); else stopAudio(); }
