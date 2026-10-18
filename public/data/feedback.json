@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-18T10:24:00.464685+00:00",
+  "updatedAt": "2026-10-18T17:50:25.569135+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1224,8 +1224,8 @@
             {
               "id": "zoey",
               "name": "Zoe",
-              "en": null,
-              "zh": null
+              "en": "→ Attitude and participation: During the first half of the lesson, Zoe repeatedly said that she was very tired and did not really want to do anything. She kept returning to complaints of being tired, and she said that it had taken her three hours to get to class. Overall, I felt that her attitude and motivation during that part of the lesson were not very positive. She did, however, go through everything.\n\n→ Suggested next step: She could briefly explain how she is feeling, then focus on attempting the next task rather than repeatedly returning to the complaint. This would help her keep her attention on the practice once she has begun.",
+              "zh": "→【态度与参与】：在这节课的前半段，Zoe 反复说自己很累，不太想做任何事情。她不断回到“很累”这一抱怨上，也说自己花了三个小时才到课堂。整体来看，我觉得她在那一段课堂中的态度和积极性不太理想。不过，她还是把所有内容都做了一遍。\n\n→【下一步建议】：她可以简要说明自己的感受，然后把注意力转向尝试下一个任务，而不是反复回到同一个抱怨上。这样可以帮助她在开始练习后，把注意力继续放在练习本身。"
             }
           ]
         }
@@ -1556,8 +1556,14 @@
           "date": "2026-10-18",
           "time": "13:30–15:00",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "◆ Class content: Students went through the minutes page for the ToC topic. Students had taken pro and con positions. The next step is to use rebuttals to respond to the opposing side’s points: think about what the opponent might say and how to answer it, rather than only explaining our own side.",
+            "zh": "◆ 课堂内容：学生一起看了 ToC 题目的会议记录页面（minutes page）。学生分别持正方和反方立场。下一步是运用反驳来回应对方的论点：思考对方可能会说什么，以及自己要怎样回应，而不只是解释己方的观点。"
+          },
+          "homework": {
+            "en": "◆ Homework: Based on the pro or con position you took in class, think about the points the opponent might make and write out your rebuttals to those points. What might they say, and what would you say against it?\n\n◆ Rebuttal sequence: First quote what the opponent has said or the point you expect them to make. Then use “however” to introduce your response. Use a technique such as minimize, deny, turn or outweigh to establish the opposing viewpoint and explain your response. Where possible, add examples or evidence to support your points.",
+            "zh": "◆ 作业：根据自己在课堂上所持的正方或反方立场，思考对方可能提出哪些论点，并把针对这些论点的反驳写出来。对方可能会说什么？你又会怎样回应？\n\n◆ 反驳顺序：先引用对方说过的话，或你预计对方会提出的论点，再用“however（然而）”引出自己的回应。使用 minimize（弱化）、deny（否定）、turn（反转）或 outweigh（权衡比较）等技巧，建立与对方相反的观点，并解释自己的回应。如果可以，再加入例子或证据来支持自己的论点。"
+          },
           "students": [
             {
               "id": "april",
@@ -2254,8 +2260,14 @@
           "date": "2026-10-13",
           "time": "17:30–19:30",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "◆ Class sequence: Students did not really remember their previous homework. We began with impromptu speeches, then moved into the recent roller-coaster situation discussed in the lesson and the question, “Why do we do things that are dangerous for us?”\n\n◆ Roller-coaster worked example: The slide explored why people like roller coasters: the crazy feeling, speed and quick turns. People want to go again and again, and want faster and faster rides, because the experience is exciting and unique, and people may want to show off. The example then introduced a “however” contrast. Under a reference to Six Flags, the slide listed possible dangers: a ride breaking apart, tracks derailing, “brain problems,” broken bones, throwing up and dizziness. These were points in the classroom example, rather than a verified account of a particular accident or researched medical findings. The example asked: “Do you want more dangerous rides because they are fun, but also increase the chance you will get injured or die?” It ended with “What should we do?” and two unfinished “We should…” response lines.\n\n◆ Speech outline: The second slide moved from the worked example to one situation students had seen or experienced. The questions were: Why? How does it affect the people involved or others? What can we do? The outline provided three numbered spaces for possible actions. This structure helps move a speech from describing a situation to explaining the reasons, effects and possible responses.",
+            "zh": "◆ 课堂顺序：学生没有太记住之前的作业。我们先进行了即兴演讲，随后转入课堂上讨论的近期过山车情况，以及“为什么我们会做对自己有危险的事情？”这一问题。\n\n◆ 过山车示范例子：幻灯片讨论了人们为什么喜欢过山车：疯狂刺激的感觉、速度和快速转弯。人们想一遍又一遍地乘坐，还想体验越来越快的项目，因为这种体验令人兴奋、独特，也有人想炫耀。接着，例子用“however（然而）”引入转折。在提到 Six Flags（六旗乐园）的部分，幻灯片列举了可能的危险：设施散架、轨道脱轨、“脑部问题”、骨折、呕吐和头晕。这些是课堂例子中的讨论点，并非经过核实的某起事故记录，也不是经过研究确认的医学结论。例子提出：“你是否因为这些项目好玩，就想要更危险的项目，但同时也增加自己受伤或死亡的可能性？”最后以“我们应该怎么做？”收尾，并留下两条尚未填写的“We should…（我们应该……）”回答栏。\n\n◆ 演讲提纲：第二张幻灯片从示范例子转向学生自己见过或经历过的一件事。引导问题是：为什么？这会怎样影响当事人或其他人？我们可以做什么？提纲为可能采取的行动留出了三个编号空格。这一结构帮助学生从描述情况，进一步讲清原因、影响和可能的应对方式。"
+          },
+          "homework": {
+            "en": "◆ Homework: Write out the speech, then practise speaking it after preparing it. Use the outline for “Why do we do things that are dangerous for us?”: choose one situation you have seen or experienced; explain why people do it; explain how it affects the people involved or others; and explain what we can do. The general outline has three numbered spaces for possible actions. Use the roller-coaster worked example as a guide to developing the speech, rather than stopping at a list of ideas.",
+            "zh": "◆ 作业：把演讲完整写出来，准备好后再练习讲出来。使用“为什么我们会做对自己有危险的事情？”这一提纲：选择一件自己见过或经历过的事；解释人们为什么这样做；说明它会怎样影响当事人或其他人；再说明我们可以做什么。通用提纲为可能采取的行动留出了三个编号空格。可以参考过山车示范例子来展开演讲，而不只是停留在列出想法。"
+          },
           "students": [
             {
               "id": "lyon",

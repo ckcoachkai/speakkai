@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-18T10:24:00.464685+00:00",
+  "updatedAt": "2026-10-18T17:50:25.569135+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1263,8 +1263,16 @@
           "id": "2026-10-18-sun-1330",
           "date": "2026-10-18",
           "time": "13:30–15:00",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "◆ Class content: Students went through the minutes page for the ToC topic. Students had taken pro and con positions. The next step is to use rebuttals to respond to the opposing side’s points: think about what the opponent might say and how to answer it, rather than only explaining our own side."
+          ],
+          "homework": {
+            "title": "Prepare rebuttals to the opposing side",
+            "steps": [
+              "◆ Homework: Based on the pro or con position you took in class, think about the points the opponent might make and write out your rebuttals to those points. What might they say, and what would you say against it?\n\n◆ Rebuttal sequence: First quote what the opponent has said or the point you expect them to make. Then use “however” to introduce your response. Use a technique such as minimize, deny, turn or outweigh to establish the opposing viewpoint and explain your response. Where possible, add examples or evidence to support your points."
+            ],
+            "prepareFor": "Respond to the opposing side’s points"
+          },
           "students": [
             {
               "name": "April",
@@ -1839,8 +1847,16 @@
           "id": "tue-later-2026-10-13",
           "date": "2026-10-13",
           "time": "17:30–19:30",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "◆ Class sequence: Students did not really remember their previous homework. We began with impromptu speeches, then moved into the recent roller-coaster situation discussed in the lesson and the question, “Why do we do things that are dangerous for us?”\n\n◆ Roller-coaster worked example: The slide explored why people like roller coasters: the crazy feeling, speed and quick turns. People want to go again and again, and want faster and faster rides, because the experience is exciting and unique, and people may want to show off. The example then introduced a “however” contrast. Under a reference to Six Flags, the slide listed possible dangers: a ride breaking apart, tracks derailing, “brain problems,” broken bones, throwing up and dizziness. These were points in the classroom example, rather than a verified account of a particular accident or researched medical findings. The example asked: “Do you want more dangerous rides because they are fun, but also increase the chance you will get injured or die?” It ended with “What should we do?” and two unfinished “We should…” response lines.\n\n◆ Speech outline: The second slide moved from the worked example to one situation students had seen or experienced. The questions were: Why? How does it affect the people involved or others? What can we do? The outline provided three numbered spaces for possible actions. This structure helps move a speech from describing a situation to explaining the reasons, effects and possible responses."
+          ],
+          "homework": {
+            "title": "Speech writing and rehearsal",
+            "steps": [
+              "◆ Homework: Write out the speech, then practise speaking it after preparing it. Use the outline for “Why do we do things that are dangerous for us?”: choose one situation you have seen or experienced; explain why people do it; explain how it affects the people involved or others; and explain what we can do. The general outline has three numbered spaces for possible actions. Use the roller-coaster worked example as a guide to developing the speech, rather than stopping at a list of ideas."
+            ],
+            "prepareFor": "Practise the prepared speech"
+          },
           "students": [
             {
               "name": "Lyon",
