@@ -1,9 +1,9 @@
-import { createGardenAllies } from './garden-allies.js?v=20261018-dance';
-import { GARDEN_ANIMALS, drawGardenAnimal } from './garden-animals.js?v=20261018-dance';
-import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261018-dance';
+import { createGardenAllies } from './garden-allies.js?v=20261018-guards';
+import { GARDEN_ANIMALS, drawGardenAnimal } from './garden-animals.js?v=20261018-guards';
+import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261018-guards';
 import { GARDEN_RULES, PLANT_BY_ID, ZOMBIE_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
-import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261018-dance';
+import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261018-guards';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
@@ -105,7 +105,7 @@ export function laneAttackPower(lane){
 }
 const STARTERS = ZOMBIE_CATALOG.filter(item => item.armor === 0);
 const DEFENDER_POSITIONS = [.14, .25, .36, .47, .60];
-export const LAWNMOWER_RULES = Object.freeze({ home: .05, radius: .026, speed: .88, exit: 1.16 });
+export const LAWNMOWER_RULES = Object.freeze({ home: .09, radius: .026, speed: .88, exit: 1.16 });
 /** Continuous relative motion prevents a fast sweep from skipping a zombie. */
 export function mowerIntersects(fromX, toX, oldMobX, newMobX, radius = LAWNMOWER_RULES.radius) {
   const from = oldMobX - fromX, to = newMobX - toX;
@@ -290,12 +290,13 @@ export default function createGame({ container, names = [], onPick, random = Mat
       // Ordinary enemies retain their original size. Giants share this scale
       // and extend across the lawn behind foreground students and defenders.
       lane.zombieScale = clamp((lane.h - 4) / 113, .20, 1);
+      for(const d of lane.defenders){if(d.weapon==='trooper')d.position=58*lane.spriteScale/lane.travel;if(d.weapon==='clonesword'&&!d.entryPlaced){d.position=(-100-lane.plantX)/lane.travel;d.entryPlaced=true;}}
       lane.nameWidth = Math.max(76, Math.min(174, .14 * lane.travel - 7));
     }
   }
   function newDefender(slot, weapon = 'pea', recruited = false) {
     const health = WEAPON_MAP[weapon].hp || 300;
-    return { uid: 'd' + (++serial), slot, position: DEFENDER_POSITIONS[slot], weapon, hp: health, maxHp: health, shield: 0,
+    return { uid: 'd' + (++serial), slot, position: weapon==='clonesword'?-.24:DEFENDER_POSITIONS[slot], weapon, hp: health, maxHp: health, shield: 0,
       power: 0, nextShot: recruited ? simTime + .50 : .50, bornAt: recruited ? simTime : -1, eaten: false, eatenAt: 0,
       recoil: 0, hurt: 0, shotsFired: 0, kills: 0 };
   }
@@ -353,6 +354,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     return newShooterType(lane);
   }
   function evolveDefender(defender, weapon) {
+    if(['trooper','clonesword'].includes(defender.weapon))return;
     const before = WEAPON_MAP[defender.weapon], after = WEAPON_MAP[weapon];
     if (Boolean(before.blocker) !== Boolean(after.blocker)) return;
     const ratio = defender.hp / Math.max(1, defender.maxHp), bonus = Math.max(0, defender.maxHp - (before.hp || 300));
@@ -484,10 +486,10 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const weapon = WEAPON_MAP[defender.weapon];
     if(weapon.melee){
       const targets=lane.mobs.filter(m=>!m.dead&&m.x>=defender.position-.025&&m.x<=defender.position+.075);
-      if(!targets.length)return;
+      if(!targets.length||wallTime-(defender.swingWall??-Infinity)<1200)return;
       defender.nextShot=simTime+Math.max(weapon.intervalMin||weapon.interval*.95,weapon.interval*lane.cooldown/BASE_CADENCE);defender.shotsFired++;
-      if(wallTime-(defender.swingWall??-Infinity)>.95*1000)defender.swingWall=wallTime;
-      defender.swingHitAt=simTime+.24;defender.swingPending=true;return;
+      defender.swingWall=wallTime;
+      defender.swingHitAt=wallTime+520;defender.swingPending=true;return;
     }
     const attackType = weapon.aliasOf || weapon.id;
     if (weapon.blocker) return;
@@ -594,6 +596,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
           const absorbed = Math.min(target.shield || 0, mob.type.explosionDamage);
           target.shield = Math.max(0, (target.shield || 0) - absorbed);
           target.hp = Math.max(0, target.hp - (mob.type.explosionDamage - absorbed)); target.hurt = .4;
+          if(target.weapon==='clonesword'&&target.hp===0&&(!target.firstSwingComplete||wallTime-(target.swingWall??-Infinity)<1200)){target.hp=1;target.pendingDefeat=true;}
           if (target.hp === 0) { target.eaten = true; target.eatenAt = simTime; }
         }
         effects.push({ kind: 'mineBlast', lane: lane.index, x: mob.x, y: -8, life: .6, color: '#ffe8a2' });
@@ -613,7 +616,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
       playSfx('bite', lane);
       if (defender) {
         const absorbed = Math.min(defender.shield, damage); defender.shield -= absorbed; damage -= absorbed;
-        defender.hp = Math.max(0, defender.hp - damage); defender.hurt = .25;
+        defender.hp = Math.max(0, defender.hp - damage);
+        if(defender.weapon==='clonesword'&&defender.hp===0&&(!defender.firstSwingComplete||wallTime-(defender.swingWall??-Infinity)<1200)){defender.hp=1;defender.pendingDefeat=true;} defender.hurt = .25;
         float(lane, { x: defender.position }, '-' + Math.round(damage), C.coral);
         addLog({ type: 'bite', target: 'defender', defenderId: defender.uid, zombieId: mob.uid, laneId: lane.entry.id, damage, remainingHp: defender.hp });
         if (defender.hp <= 0) {
@@ -782,10 +786,13 @@ export default function createGame({ container, names = [], onPick, random = Mat
         for (let index = 0; index < release; index++) { spawn(lane, lane.wave === 1); lane.queuedSpawns--; lane.waveSpawned++; }
         lane.nextSpawn = simTime + pressure.spawnMinimum + rng() * pressure.spawnJitter;
       }
-      for(const defender of livingDefenders(lane)){if(defender.weapon==='clonesword'){
+      for(const defender of livingDefenders(lane)){if(defender.weapon==='trooper')defender.position=58*lane.spriteScale/lane.travel;if(defender.weapon==='clonesword'){
         const nearest=lane.mobs.filter(m=>!m.dead&&m.x>=defender.position-.025).sort((a,b)=>a.x-b.x)[0];
-        if(!defender.swingPending&&(!nearest||nearest.x-defender.position>.065))defender.position=Math.min(.94,defender.position+dt*.012);
-        if(defender.swingPending&&simTime>=defender.swingHitAt){defender.swingPending=false;for(const mob of lane.mobs){if(!mob.dead&&mob.x>=defender.position-.025&&mob.x<=defender.position+.085)hit(lane,mob,{ownerId:lane.entry.id,attackerId:defender.uid,damage:180*lane.damage/20*(rng()<lane.crit?1.7:1),weapon:'clonesword',penetration:0});}addLog({type:'swordSwing',ownerId:lane.entry.id,attackerId:defender.uid,x:defender.position});}
+        const visualDt=Math.min(.05,Math.max(0,(wallTime-(defender.motionWall??wallTime))/1000));defender.motionWall=wallTime;
+        const swinging=wallTime-(defender.swingWall??-Infinity)<1200;
+        if(!swinging&&(!nearest||nearest.x-defender.position>.065))defender.position=Math.min(.94,defender.position+visualDt*32/lane.travel);
+        if(defender.swingWall!==undefined&&!swinging&&!defender.swingPending){defender.firstSwingComplete=true;if(defender.pendingDefeat){defender.hp=0;defender.eaten=true;defender.eatenAt=simTime;continue;}}
+        if(defender.swingPending&&wallTime>=defender.swingHitAt){defender.swingPending=false;for(const mob of lane.mobs){if(!mob.dead&&mob.x>=defender.position-.025&&mob.x<=defender.position+.085)hit(lane,mob,{ownerId:lane.entry.id,attackerId:defender.uid,damage:180*lane.damage/20*(rng()<lane.crit?1.7:1),weapon:'clonesword',penetration:0});}addLog({type:'swordSwing',ownerId:lane.entry.id,attackerId:defender.uid,x:defender.position});}
       }}
       for (const mob of lane.mobs) {
         mob.hurt = Math.max(0, mob.hurt - dt); mob.dodgePose = Math.max(0, mob.dodgePose - dt);
@@ -934,11 +941,12 @@ export default function createGame({ container, names = [], onPick, random = Mat
     ctx.save(); ctx.translate(x, floor); ctx.scale(lane.spriteScale, lane.spriteScale);
     if (defender.eaten) { const p = clamp(age / .65, 0, 1); ctx.translate(p * 25, -Math.sin(p * Math.PI) * 25); ctx.rotate(p * .8); ctx.scale(Math.max(.001, 1 - p), Math.max(.001, 1 - p)); ctx.globalAlpha = 1 - p; }
     else if (defender.bornAt >= 0) { const p = clamp((simTime - defender.bornAt) / .6, 0, 1); ctx.translate(0, (1 - p) * 16); ctx.scale(.2 + .8 * p, .2 + .8 * p); }
+    if(defender.weapon==='trooper'){ctx.translate(-Math.sin(Math.PI*clamp(defender.recoil/.12,0,1))*2.4,-Math.sin(wallTime*.002+lane.index)*.35);}
     if (defender.hurt) ctx.translate(Math.sin(time * 60) * 2, 0);
     ctx.fillStyle = '#315e3180'; ctx.beginPath(); ctx.ellipse(0, 0, 22, 5, 0, 0, TAU); ctx.fill();
     const spec = WEAPON_MAP[defender.weapon], weapon = spec.aliasOf ? { ...spec, id: spec.aliasOf } : spec, recoil = defender.recoil / .12 * 3;
     defender.damageStage = plantDamageStage(defender.hp, defender.maxHp);
-    const rigged = allies.has(defender.weapon) ? allies.draw(ctx,{id:defender.weapon,time,clip:defender.weapon==='clonesword'?(wallTime-(defender.swingWall??-Infinity)<960?'attack':'walk'):undefined,attacking:defender.recoil>0,attackProgress:defender.weapon==='clonesword'?(wallTime-(defender.swingWall??-Infinity)<960?(wallTime-defender.swingWall)/960:undefined):defender.recoil>0?1-defender.recoil/.12:undefined}) : renderer.drawPlant(ctx, { weapon: weapon.id, time, simTime: time, hp: defender.hp, maxHp: defender.maxHp, recoil: defender.recoil, seed: identityHash(defender.uid), rank: defender.power, level: defender.power + 1, upgrades: defender.power, defender });
+    const rigged = allies.has(defender.weapon) ? allies.draw(ctx,{id:defender.weapon,time:wallTime/1000,clip:defender.weapon==='clonesword'?(wallTime-(defender.swingWall??-Infinity)<1200?'attack':'walk'):undefined,attacking:defender.recoil>0,attackProgress:defender.weapon==='clonesword'?(wallTime-(defender.swingWall??-Infinity)<1200?(wallTime-defender.swingWall)/1200:undefined):defender.recoil>0?1-defender.recoil/.12:undefined}) : renderer.drawPlant(ctx, { weapon: weapon.id, time, simTime: time, hp: defender.hp, maxHp: defender.maxHp, recoil: defender.recoil, seed: identityHash(defender.uid), rank: defender.power, level: defender.power + 1, upgrades: defender.power, defender });
     if (!rigged) ctx.translate(-recoil, bob);
     const illustrated = rigged || (!weapon.blocker && Number.isInteger(plantCells[weapon.id]) && atlasSprite('plants', plantCells[weapon.id], -40, -75, 84, 76));
     if (!illustrated) {
@@ -1011,7 +1019,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const room = beforePlant - right, besideRight = room >= 62;
     const x = besideRight ? right : lane.x + 3;
     const width = besideRight ? Math.min(lane.nameWidth, room) : Math.max(32, lane.plantX - 31 * scale - 8 - x);
-    const y = clamp(lane.floor - 34 * scale - chipHeight / 2, lane.y + 2, lane.floor - chipHeight - 10);
+    const y = clamp(lane.floor - 100 * lane.spriteScale - chipHeight, lane.y + 2, lane.floor - chipHeight - 10);
     return { x, y, width, height: chipHeight, side: besideRight ? 'right' : 'left' };
   }
   function drawStudentTag(lane, won) {
@@ -1028,10 +1036,10 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (lane.eaten) { ctx.rotate(-fade * .12); ctx.globalAlpha = 1 - fade * .55; }
     const power=laneAttackPower(lane);
     if(power.level){
-      ctx.save();const aura=ctx.createRadialGradient(0,-39,8,0,-39,59);aura.addColorStop(0,power.color+'66');aura.addColorStop(.7,power.color+'35');aura.addColorStop(1,power.color+'00');ctx.fillStyle=aura;ctx.fillRect(-66,-108,132,112);
-      ctx.strokeStyle=power.level>=4?'#c7faff':'#fff4a5';ctx.lineWidth=1.5;
-      for(let i=0;i<power.level+2;i++){const a=time*1.8+i*TAU/(power.level+2),x=Math.cos(a)*35;ctx.beginPath();ctx.moveTo(x,-20);ctx.quadraticCurveTo(x+Math.sin(time*4+i)*13,-52,x*.65,-88-(power.level>=3?15:0));ctx.stroke();}
-      if(power.level>=2){ctx.strokeStyle=power.level===5?'#ff425b':'#d9f5ff';for(const side of[-1,1]){ctx.beginPath();ctx.moveTo(side*31,-77);ctx.lineTo(side*40,-59);ctx.lineTo(side*32,-52);ctx.lineTo(side*42,-30);ctx.stroke();}}
+      ctx.save();
+      if(power.level>=4)ctx.filter=`hue-rotate(${power.level===5?155:170}deg)`;
+      ctx.globalAlpha=.78;
+      allies.draw(ctx,{id:'poweraura',x:0,y:5,scale:.88+power.level*.045,time:wallTime/1000+lane.index*.17});
       ctx.restore();
     }
     drawGardenAnimal(ctx, {species: lane.entry.animal, time, emotionStage: lane.emotionStage,
