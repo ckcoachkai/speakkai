@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-18T05:56:40.212615+00:00",
+  "updatedAt": "2026-10-18T06:10:06.631536+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1281,6 +1281,10 @@
             {
               "name": "Teresa",
               "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-18&student=teresa"
+            },
+            {
+              "name": "Audrey",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-18&student=audrey"
             }
           ]
         }
