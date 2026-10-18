@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="A standalone classroom debate timer.">
+<title>Debate timer</title>
+<style>
+:root{color-scheme:light;--canvas:#e9ecf0;--bg:#f5f6f8;--surface:#fff;--text:#182230;--muted:#586477;--faint:#697688;--line:#dde2e9;--track:#e9edf3;--hover:#f1f4f8;--pro:#245ac7;--pro-bg:#edf3ff;--con:#b6412a;--con-bg:#fff1ec;--both:#7252ad;--both-bg:#f2eef9;--amber:#966000;--amber-bg:#fff7e5;--danger:#c82a36;--focus:#245ac7;--shadow:0 12px 48px #14264210}
+:root[data-theme="dark"]{color-scheme:dark;--canvas:#090e17;--bg:#101722;--surface:#17212f;--text:#f0f4fa;--muted:#aebacb;--faint:#8796aa;--line:#344154;--track:#2a3648;--hover:#243144;--pro:#8bb4ff;--pro-bg:#1c3357;--con:#ffa28c;--con-bg:#402b2b;--both:#c4acf3;--both-bg:#332b49;--amber:#f0c267;--amber-bg:#393020;--danger:#ff8990;--focus:#8bb4ff;--shadow:none}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}body{background:var(--canvas);color:var(--text);font-family:"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:disabled{opacity:.35;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:4px}button,dialog{color:var(--text)}svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}svg.icon{display:block}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}button{border:0;background:none}button:hover:not(:disabled){background:var(--hover)}[hidden]{display:none!important}
+#viewport{position:fixed;inset:0;overflow:hidden}#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform:translate(-50%,-50%) scale(var(--fit,.75));transform-origin:center;background:var(--bg);padding:28px 40px;display:grid;grid-template-rows:48px 96px minmax(0,1fr) 76px;gap:20px;overflow:hidden;--accent:var(--pro);--accent-bg:var(--pro-bg)}
+#stage[data-side="con"]{--accent:var(--con);--accent-bg:var(--con-bg)}#stage[data-side="both"]{--accent:var(--both);--accent-bg:var(--both-bg)}#stage[data-phase="transition"]{--accent:var(--amber);--accent-bg:var(--amber-bg)}#stage[data-phase="done"]{--accent:var(--muted);--accent-bg:var(--hover)}
+.page-head{display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px;font-size:24px;font-weight:700;letter-spacing:-.5px}.brand svg{width:26px;height:26px}.head-right{display:flex;align-items:center;gap:30px}.status{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--line);border-radius:100px;height:36px;min-width:94px;padding:0 16px;font-size:15px;font-weight:600;color:var(--muted);background:var(--surface)}.status-dot{height:7px;width:7px;border-radius:50%;background:var(--faint)}#stage[data-running="true"] .status-dot{background:var(--accent)}.total-group{display:flex;align-items:center;gap:16px}.total-label{font-size:13px;color:var(--muted)}.total-time{font-size:24px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.5px}.overall-track{width:130px;height:5px;overflow:hidden;border-radius:5px;background:var(--track)}#overall-fill{height:100%;background:var(--muted);transform-origin:left;transform:scaleX(0)}
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:20px}.team{display:flex;align-items:center;gap:22px;border:1px solid var(--line);border-radius:16px;padding:0 28px;background:var(--surface);min-width:0;position:relative}.team.is-active{border-color:var(--team-color);box-shadow:inset 4px 0 0 var(--team-color)}.team-pro{--team-color:var(--pro);--team-bg:var(--pro-bg)}.team-con{--team-color:var(--con);--team-bg:var(--con-bg)}.team-label{font-size:14px;letter-spacing:1.3px;font-weight:750;color:var(--team-color);background:var(--team-bg);padding:9px 12px;border-radius:7px;flex-shrink:0}.team-name{font-size:29px;line-height:1.2;font-weight:650;letter-spacing:-.6px;max-height:70px;overflow-wrap:anywhere;min-width:0}.team-name.long{font-size:21px}.team-name.very-long{font-size:17px}
+.main-grid{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:24px;min-height:0}.clock-panel{border:1px solid var(--line);border-radius:20px;background:var(--surface);display:flex;flex-direction:column;min-width:0;min-height:0;padding:28px 38px 26px;box-shadow:var(--shadow)}.panel-top{display:flex;align-items:center;justify-content:space-between;height:30px;flex-shrink:0}.side-badge{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-size:15px;font-weight:750;letter-spacing:1.2px}.side-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}.section-count{font-size:16px;color:var(--muted);font-variant-numeric:tabular-nums}.heading{font-size:42px;font-weight:650;line-height:1.12;letter-spacing:-1.2px;margin:13px 0 8px;flex-shrink:0}.speaker{font-size:23px;color:var(--muted);line-height:1.28;min-height:30px;overflow-wrap:anywhere;max-width:100%;flex-shrink:0}.speaker.long{font-size:18px}.countdown-area{display:flex;align-items:center;justify-content:center;flex:1;min-height:0;position:relative}.countdown{font-size:248px;font-weight:700;font-variant-numeric:tabular-nums;font-feature-settings:"tnum";line-height:.98;letter-spacing:-12px;white-space:nowrap;color:var(--text);padding-right:12px}#stage[data-warning="amber"] .countdown{color:var(--amber)}#stage[data-warning="red"] .countdown{color:var(--danger)}#stage[data-phase="transition"] .countdown{color:var(--amber)}#stage[data-phase="done"] .countdown{color:var(--text)}
+.time-track{height:8px;flex-shrink:0;overflow:hidden;background:var(--track);border-radius:8px}.time-fill{height:100%;background:var(--accent);transform-origin:left;transform:scaleX(1)}#stage[data-warning="amber"] .time-fill{background:var(--amber)}#stage[data-warning="red"] .time-fill{background:var(--danger)}.panel-bottom{display:flex;justify-content:space-between;align-items:center;gap:18px;padding-top:21px;min-height:67px;flex-shrink:0}.upnext-label{font-size:12px;letter-spacing:1.4px;font-weight:700;color:var(--muted);margin-bottom:6px}.upnext-text{font-size:20px;font-weight:550;line-height:1.2;letter-spacing:-.2px}.upnext-duration{font-size:24px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}.empty-next{visibility:hidden}
+.agenda{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:19px 16px 16px;display:flex;flex-direction:column;min-height:0}.agenda-head{display:flex;align-items:center;justify-content:space-between;padding:0 9px 13px}.agenda-head h2{font-size:14px;font-weight:700;letter-spacing:1.2px;margin:0}.agenda-head span{font-size:13px;color:var(--muted)}.agenda-list{margin:0;padding:0;list-style:none;flex:1;min-height:0;display:grid;grid-template-rows:repeat(9,minmax(0,1fr));gap:4px}.agenda-list li{min-height:0}.agenda-item{display:flex;align-items:center;gap:12px;padding:5px 10px;width:100%;height:100%;text-align:left;border:1px solid transparent;border-radius:10px;--row-color:var(--pro);--row-bg:var(--pro-bg)}.agenda-item[data-side="con"]{--row-color:var(--con);--row-bg:var(--con-bg)}.agenda-item[data-side="both"]{--row-color:var(--both);--row-bg:var(--both-bg)}.agenda-item[data-state="current"]{background:var(--row-bg);border-color:var(--row-color)}.agenda-item[data-state="next"]{border:1px dashed var(--amber);background:var(--amber-bg)}.agenda-item[data-state="past"] .order-title{color:var(--muted)}.order-number{width:22px;text-align:center;flex-shrink:0;font-size:14px;font-variant-numeric:tabular-nums;color:var(--faint)}.agenda-item[data-state="current"] .order-number{color:var(--row-color);font-weight:700}.order-copy{flex:1;min-width:0}.order-title{display:block;font-size:17px;font-weight:600;line-height:1.2;letter-spacing:-.3px;white-space:nowrap}.order-side{display:block;font-size:11px;letter-spacing:.6px;font-weight:700;color:var(--row-color);line-height:1.1;margin-top:4px}.order-time{font-size:16px;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:20px}.control-left,.control-right{display:flex;gap:10px;align-items:center}.control-btn{display:inline-flex;justify-content:center;align-items:center;gap:10px;min-height:50px;padding:0 17px;border:1px solid var(--line);border-radius:11px;background:var(--surface);font-size:16px;font-weight:600;white-space:nowrap}.control-btn.icon-only{width:50px;padding:0}.control-btn.primary{background:var(--text);color:var(--surface);border-color:var(--text);min-width:172px}.control-btn.primary:hover{opacity:.88;background:var(--text)}.control-divider{height:24px;width:1px;background:var(--line);margin:0 4px}.control-btn[aria-pressed="false"] .sound-waves{display:none}.control-btn[aria-pressed="true"] .sound-slash{display:none}.control-btn.audio-unavailable{color:var(--danger)}.awake-mark{display:inline-flex;gap:6px;align-items:center;color:var(--muted);font-size:12px;margin-right:2px}.awake-mark svg{width:16px;height:16px}.control-btn.exit-fullscreen .expand-icon{display:none}.control-btn:not(.exit-fullscreen) .collapse-icon{display:none}
+dialog{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;max-width:min(640px,calc(100vw - 32px));width:580px;max-height:calc(100dvh - 48px);overflow:auto;box-shadow:0 25px 100px #0004}dialog::backdrop{background:#08132675;backdrop-filter:blur(3px)}dialog h2{font-size:24px;line-height:1.2;margin:0;font-weight:650;letter-spacing:-.5px}.dialog-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}.dialog-close{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;flex-shrink:0}.field{display:block;margin:16px 0}.field>span,.field-title{display:block;font-size:13px;font-weight:650;color:var(--muted);margin-bottom:8px}input[type="text"],input[type="number"],select{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px}input[type="range"]{accent-color:var(--pro);width:100%;min-height:30px}input[type="checkbox"]{width:18px;height:18px;accent-color:var(--pro)}.settings-row{display:flex;align-items:center;gap:18px;margin:19px 0}.settings-row .field{flex:1;margin:0}.check-row{display:flex;align-items:center;gap:10px;font-size:15px}.settings-buttons{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}.dialog-btn{border:1px solid var(--line);background:var(--surface);padding:11px 18px;min-height:44px;border-radius:9px;font-size:15px;font-weight:600}.dialog-btn.primary{background:var(--text);color:var(--surface);border-color:var(--text)}.dialog-btn.primary:hover{background:var(--text);opacity:.88}.speaker-settings{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}summary{cursor:pointer;font-size:15px;font-weight:600}.speaker-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.speaker-grid .field{margin:5px 0}.speaker-grid input{font-size:14px}.confirm-detail{margin:18px 0 24px;font-size:17px;line-height:1.5;color:var(--muted)}#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:11px 18px;border-radius:10px;background:var(--text);color:var(--surface);box-shadow:0 4px 20px #0003;font-size:14px;text-align:center;max-width:90vw;z-index:10}noscript{position:fixed;inset:0;background:var(--surface);display:grid;place-items:center;padding:30px;font-size:24px;z-index:100}
+@media(prefers-reduced-motion:no-preference){.time-fill,#overall-fill{transition:transform .12s linear}}
+@media(max-width:540px){dialog{padding:20px}.speaker-grid{grid-template-columns:1fr}.settings-row{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<svg class="sr-only" aria-hidden="true"><defs>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8.5"/><path d="M12 8v5l3 2M9 1.5h6M12 1.5v3M18.5 5l1.5-1.5"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="3"/></symbol>
+<symbol id="i-next" viewBox="0 0 24 24"><path d="m6 5 10 7-10 7ZM19 5v14"/></symbol>
+<symbol id="i-prev" viewBox="0 0 24 24"><path d="m18 5-10 7 10 7ZM5 5v14"/></symbol>
+<symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></symbol>
+<symbol id="i-full" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5"/></symbol>
+<symbol id="i-exit" viewBox="0 0 24 24"><path d="M3 8h5V3M21 8h-5V3M16 21v-5h5M8 21v-5H3"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="m9 3-.6 2.1-1.6.9-2.1-.6-2 3.4 1.5 1.6v1.8l-1.5 1.6 2 3.4 2.1-.6 1.6.9L9 20h4l.6-2.5 1.6-.9 2.1.6 2-3.4-1.5-1.6v-1.8l1.5-1.6-2-3.4-2.1.6-1.6-.9L13 3Z" transform="translate(1 0)"/><circle cx="12" cy="11.5" r="3"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1 1M18 18l1 1M5 19l1-1M18 6l1-1"/></symbol>
+</defs></svg>
+<div id="viewport">
+<div id="stage" data-side="pro" data-phase="speech" data-running="false" data-warning="none">
+  <header class="page-head">
+    <div class="brand"><svg aria-hidden="true"><use href="#i-clock"/></svg><span>Debate timer</span></div>
+    <div class="head-right">
+      <div class="total-group"><span class="total-label">Total left</span><span class="total-time" id="total-left">17:40</span><div class="overall-track" aria-hidden="true"><div id="overall-fill"></div></div></div>
+      <span class="status"><span class="status-dot" aria-hidden="true"></span><span id="status">Ready</span></span>
+    </div>
+  </header>
+  <section class="teams" aria-label="Debate teams">
+    <div class="team team-pro is-active" id="team-pro"><span class="team-label">PRO</span><span class="team-name" id="pro-name">Pro team</span></div>
+    <div class="team team-con" id="team-con"><span class="team-label">CON</span><span class="team-name" id="con-name">Con team</span></div>
+  </section>
+  <main class="main-grid">
+    <section class="clock-panel" aria-labelledby="section-title">
+      <div class="panel-top"><span class="side-badge" id="side">PRO</span><span class="section-count" id="section-count">01 / 09</span></div>
+      <h1 class="heading" id="section-title">Opening statement</h1>
+      <div class="speaker" id="speaker">Pro team</div>
+      <div class="countdown-area"><div class="countdown" id="clock" role="timer" aria-live="off" aria-label="2 minutes remaining">02:00</div></div>
+      <div class="time-track" aria-hidden="true"><div class="time-fill" id="time-fill"></div></div>
+      <div class="panel-bottom" id="upnext">
+        <div><div class="upnext-label" id="next-label">UP NEXT</div><div class="upnext-text" id="next-title">Con · Cross-examination</div></div>
+        <span class="upnext-duration" id="next-duration">01:00</span>
+      </div>
+    </section>
+    <nav class="agenda" aria-label="Speaking order">
+      <div class="agenda-head"><h2>SPEAKING ORDER</h2><span id="changeover-label">5s changeovers</span></div>
+      <ol class="agenda-list" id="agenda"></ol>
+    </nav>
+  </main>
+  <footer class="controls" aria-label="Timer controls">
+    <div class="control-left">
+      <button class="control-btn primary" id="toggle" title="Start or pause (Space)" aria-keyshortcuts="Space"><svg aria-hidden="true"><use id="toggle-icon" href="#i-play"/></svg><span id="toggle-label">Start debate</span></button>
+      <button class="control-btn icon-only" id="previous" title="Previous section (Left arrow)" aria-label="Previous section" aria-keyshortcuts="ArrowLeft" disabled><svg aria-hidden="true"><use href="#i-prev"/></svg></button>
+      <button class="control-btn" id="next" title="End this section (Right arrow)" aria-keyshortcuts="ArrowRight"><svg aria-hidden="true"><use href="#i-next"/></svg><span id="next-button-label">Next</span></button>
+      <span class="control-divider" aria-hidden="true"></span>
+      <button class="control-btn" id="reset" title="Reset debate (R)" aria-keyshortcuts="R" disabled><svg aria-hidden="true"><use href="#i-reset"/></svg>Reset</button>
+    </div>
+    <div class="control-right">
+      <span class="awake-mark" id="awake-mark" title="Screen kept awake while the timer runs" hidden><svg aria-hidden="true"><use href="#i-sun"/></svg>Awake</span>
+      <button class="control-btn" id="sound" title="Mute or unmute (M)" aria-label="Sound on" aria-pressed="true" aria-keyshortcuts="M"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3Z"/><g class="sound-waves"><path d="M16 8a6 6 0 0 1 0 8M19 5a10 10 0 0 1 0 14"/></g><path class="sound-slash" d="m16 9 6 6M22 9l-6 6"/></svg><span id="sound-label">Sound on</span></button>
+      <button class="control-btn icon-only" id="settings-button" title="Settings" aria-label="Settings"><svg aria-hidden="true"><use href="#i-settings"/></svg></button>
+      <button class="control-btn" id="fullscreen" title="Fullscreen (F)" aria-keyshortcuts="F" aria-pressed="false"><svg class="expand-icon" aria-hidden="true"><use href="#i-full"/></svg><svg class="collapse-icon" aria-hidden="true"><use href="#i-exit"/></svg><span id="fullscreen-label">Fullscreen</span></button>
+    </div>
+  </footer>
+</div>
+</div>
+<div id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+<div id="toast" role="status" hidden></div>
+<dialog id="settings-dialog" aria-labelledby="settings-title">
+  <form id="settings-form">
+    <div class="dialog-head"><h2 id="settings-title">Settings</h2><button class="dialog-close" type="button" id="settings-close" aria-label="Close settings"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div>
+    <label class="field"><span>Pro team</span><input type="text" id="pro-input" placeholder="Pro team" maxlength="64" autocomplete="off"></label>
+    <label class="field"><span>Con team</span><input type="text" id="con-input" placeholder="Con team" maxlength="64" autocomplete="off"></label>
+    <div class="settings-row"><label class="field"><span>Display</span><select id="theme-input"><option value="light">Light</option><option value="dark">Dark</option></select></label><button class="dialog-btn" type="button" id="test-sound">Test sound</button></div>
+    <label class="field"><span>Beep volume <output id="volume-value">100%</output></span><input id="volume-input" type="range" min="0" max="100" step="5" value="100" aria-label="Beep volume"></label>
+    <label class="check-row"><input type="checkbox" id="awake-input" checked>Keep screen awake while running</label>
+    <details class="speaker-settings"><summary>Names for each position</summary><div class="speaker-grid" id="speaker-inputs"></div></details>
+    <details class="speaker-settings"><summary>Timing settings</summary><p>Times are in seconds. Changing timings restarts the debate.</p><div class="speaker-grid" id="timing-inputs"></div></details>
+    <div class="settings-buttons"><button class="dialog-btn" id="settings-cancel" type="button">Cancel</button><button class="dialog-btn primary" type="submit">Save</button></div>
+  </form>
+</dialog>
+<dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-detail">
+  <h2 id="confirm-title">Reset debate?</h2><p class="confirm-detail" id="confirm-detail"></p>
+  <div class="settings-buttons"><button class="dialog-btn" id="confirm-cancel" autofocus>Cancel</button><button class="dialog-btn primary" id="confirm-accept">Reset</button></div>
+</dialog>
+<noscript>Enable JavaScript to use the debate timer.</noscript>
+<script id="timer-core">
+/* Pure timing engine. Durations are milliseconds; displayed seconds never feed back into timekeeping. */
+class DebateEngine {
+  constructor(stages, transitionSeconds, now = () => performance.now()) {
+    if (!Array.isArray(stages) || !stages.length || !Number.isFinite(transitionSeconds) || transitionSeconds <= 0) throw new TypeError('Invalid debate schedule');
+    this.stages = stages;
+    this.now = now;
+    this.phases = [];
+    let offset = 0;
+    stages.forEach((stage, index) => {
+      if (!Number.isFinite(stage.seconds) || stage.seconds <= 0) throw new TypeError('Invalid section duration');
+      const duration = stage.seconds * 1000;
+      this.phases.push({type:'speech', stageIndex:index, start:offset, end:offset + duration, duration});
+      offset += duration;
+      if (index < stages.length - 1) {
+        const changeover = transitionSeconds * 1000;
+        this.phases.push({type:'transition', stageIndex:index + 1, start:offset, end:offset + changeover, duration:changeover});
+        offset += changeover;
+      }
+    });
+    this.total = offset;
+    this.base = 0;
+    this.anchor = this.now();
+    this.running = false;
+  }
+  position() {
+    const elapsed = this.base + (this.running ? Math.max(0, this.now() - this.anchor) : 0);
+    return Math.min(this.total, Math.max(0, elapsed));
+  }
+  snapshot() {
+    const elapsed = this.position();
+    const done = elapsed >= this.total;
+    if (done && this.running) { this.base = this.total; this.running = false; }
+    let phaseIndex = done ? this.phases.length - 1 : this.phases.findIndex(phase => elapsed < phase.end);
+    const phase = this.phases[phaseIndex];
+    return {elapsed, done, running:this.running, phaseIndex, phase, remaining:done ? 0 : Math.max(0, phase.end - elapsed), totalRemaining:this.total - elapsed};
+  }
+  start() {
+    if (this.running) return;
+    if (this.base >= this.total) this.base = 0;
+    this.anchor = this.now();
+    this.running = true;
+  }
+  pause() {
+    this.base = this.position();
+    this.running = false;
+    return this.base;
+  }
+  seek(position, resume = false) {
+    if (!Number.isFinite(position)) throw new TypeError('Invalid position');
+    this.base = Math.max(0, Math.min(this.total, position));
+    this.anchor = this.now();
+    this.running = Boolean(resume && this.base < this.total);
+  }
+  reset() { this.seek(0); }
+  next() {
+    const state = this.snapshot();
+    if (!state.done) this.seek(state.phase.end, state.running);
+  }
+  previous() {
+    const state = this.snapshot();
+    const target = state.done ? this.stages.length - 1 : Math.max(0, state.phase.stageIndex - 1);
+    this.jump(target, state.running);
+  }
+  jump(index, resume = false) {
+    if (!Number.isInteger(index) || index < 0 || index >= this.stages.length) throw new RangeError('Invalid section');
+    this.seek(this.phases[index * 2].start, resume);
+  }
+}
+</script>
+<script>
+(() => {
+'use strict';
+const STAGES = [
+  {side:'pro', title:'Opening statement', short:'Opening statement', seconds:120, speaker:'proOpening'},
+  {side:'con', title:'Cross-examination', short:'Cross-examination', seconds:60, questions:true, speaker:'conQuestions'},
+  {side:'con', title:'Opening statement', short:'Opening statement', seconds:120, speaker:'conOpening'},
+  {side:'pro', title:'Cross-examination', short:'Cross-examination', seconds:60, questions:true, speaker:'proQuestions'},
+  {side:'pro', title:'Rebuttal', short:'Rebuttal', seconds:120, speaker:'proRebuttal'},
+  {side:'con', title:'Rebuttal', short:'Rebuttal', seconds:120, speaker:'conRebuttal'},
+  {side:'both', title:'Crossfire', short:'Crossfire', seconds:180, speaker:'crossfire'},
+  {side:'pro', title:'Final focus', short:'Final focus', seconds:120, speaker:'proFinal'},
+  {side:'con', title:'Final focus', short:'Final focus', seconds:120, speaker:'conFinal'}
+];
+const DEFAULTS = {pro:'Pro team', con:'Con team', sound:true, volume:100, theme:'light', awake:true, speakers:{}, durations:STAGES.map(s=>s.seconds), changeover:5, amber:30, red:10};
+const SETTINGS_KEY = 'speakkai-debate-settings-v3';
+const SESSION_KEY = 'speakkai-debate-session-v3';
+const scheduleSchema = () => JSON.stringify([settings.durations,settings.changeover]);
+const $ = id => document.getElementById(id);
+const ui = Object.fromEntries(['stage','status','clock','section-title','speaker','side','section-count','total-left','overall-fill','time-fill','upnext','next-label','next-title','next-duration','toggle','toggle-icon','toggle-label','previous','next','next-button-label','reset','sound','sound-label','fullscreen','fullscreen-label','team-pro','team-con','pro-name','con-name','announcer','awake-mark'].map(id => [id,$(id)]));
+const safeGet = (store,key) => { try { return JSON.parse(window[store].getItem(key)); } catch (_) { return null; } };
+const safeSet = (store,key,value) => { try { window[store].setItem(key,JSON.stringify(value)); return true; } catch (_) { return false; } };
+const cleanText = (value,fallback='') => typeof value === 'string' && value.trim() ? value.trim().slice(0,64) : fallback;
+function bounded(value,fallback,min,max) { return Number.isFinite(value)?Math.max(min,Math.min(max,Math.round(value))):fallback; }
+function normalizeSettings(value) {
+  const v = value && typeof value === 'object' ? value : {};
+  const speakers = {};
+  STAGES.forEach(stage => { if (stage.speaker) speakers[stage.speaker] = cleanText(v.speakers?.[stage.speaker]); });
+  return {pro:cleanText(v.pro,DEFAULTS.pro), con:cleanText(v.con,DEFAULTS.con), sound:typeof v.sound === 'boolean' ? v.sound : true, volume:Number.isFinite(v.volume) ? Math.max(0,Math.min(100,v.volume)) : 100, theme:v.theme === 'dark' ? 'dark' : 'light', awake:typeof v.awake === 'boolean' ? v.awake : true, speakers, durations:STAGES.map((s,i)=>bounded(v.durations?.[i],DEFAULTS.durations[i],1,3600)), changeover:bounded(v.changeover,5,1,120), amber:bounded(v.amber,30,0,3600), red:bounded(v.red,10,0,3600)};
+}
+let settings = normalizeSettings(safeGet('localStorage',SETTINGS_KEY));
+STAGES.forEach((stage,i)=>stage.seconds=settings.durations[i]);
+let engine = new DebateEngine(STAGES,settings.changeover);
+let restored = false;
+const savedSession = safeGet('sessionStorage',SESSION_KEY);
+if (savedSession?.schema === scheduleSchema() && Number.isFinite(savedSession.elapsed) && savedSession.elapsed > 0 && savedSession.elapsed < engine.total) {
+  engine.seek(savedSession.elapsed);
+  restored = true;
+}
+const format = milliseconds => {
+  const seconds = Math.max(0,Math.ceil(milliseconds / 1000));
+  return `${String(Math.floor(seconds / 60)).padStart(2,'0')}:${String(seconds % 60).padStart(2,'0')}`;
+};
+const titleCase = side => side === 'both' ? 'Both teams' : side === 'pro' ? 'Pro' : 'Con';
+const stageLabel = index => `${titleCase(STAGES[index].side)} · ${STAGES[index].title}`;
+let toastTimer;
+function toast(message) { $('toast').textContent=message; $('toast').hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(() => { $('toast').hidden=true; },4000); }
+function saveSession() { safeSet('sessionStorage',SESSION_KEY,{schema:scheduleSchema(),elapsed:engine.position()}); }
+function setText(element,text) { if (element.textContent !== text) element.textContent=text; }
+function setData(element,key,value) { if (element.dataset[key] !== value) element.dataset[key]=value; }
+function setAttribute(element,name,value) { if (element.getAttribute(name) !== value) element.setAttribute(name,value); }
+
+/* Audio is scheduled against the audio clock, not animation frames. Pause/navigation cancels every future cue. */
+class DebateAudio {
+  constructor() { this.context=null; this.nodes=new Set(); this.version=0; this.blocked=false; this.needsReschedule=false; }
+  async unlock() {
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) throw new Error('No audio');
+      if (!this.context || this.context.state === 'closed') {
+        this.context = new AudioContext();
+        this.context.addEventListener('statechange', () => {
+          if (this.context.state !== 'running' && settings.sound && engine.running) {
+            this.cancel(); this.blocked=true; this.needsReschedule=true; renderSound();
+          } else if (this.context.state === 'running' && this.needsReschedule) {
+            this.needsReschedule=false; this.blocked=false; renderSound();
+            if (engine.running) void this.schedule();
+          }
+        });
+      }
+      if (this.context.state !== 'running') await this.context.resume();
+      this.blocked = this.context.state !== 'running';
+    } catch (_) { this.blocked=true; }
+    renderSound();
+    return !this.blocked;
+  }
+  cancel() {
+    this.version++;
+    this.nodes.forEach(({oscillator,gain}) => { try { oscillator.stop(); } catch (_) {} try { oscillator.disconnect(); gain.disconnect(); } catch (_) {} });
+    this.nodes.clear();
+  }
+  tones(kind, when, volume=settings.volume) {
+    if (!this.context || this.context.state !== 'running' || volume <= 0) return;
+    const patterns = {start:[[0,1047,.3]],end:[[0,784,.3],[.42,784,.3]],finish:[[0,784,.3],[.42,988,.3],[.84,1175,.5]]};
+    const level = .72 * Math.pow(volume / 100,1.3);
+    for (const [offset,frequency,length] of patterns[kind]) {
+      const oscillator=this.context.createOscillator(),gain=this.context.createGain();
+      const at=when+offset;
+      oscillator.type='triangle'; oscillator.frequency.value=frequency;
+      gain.gain.setValueAtTime(0,at);
+      gain.gain.linearRampToValueAtTime(level,at+.015);
+      gain.gain.setValueAtTime(level,at+Math.max(.02,length-.05));
+      gain.gain.linearRampToValueAtTime(0,at+length);
+      oscillator.connect(gain); gain.connect(this.context.destination);
+      const node={oscillator,gain}; this.nodes.add(node);
+      oscillator.onended=() => { this.nodes.delete(node); oscillator.disconnect(); gain.disconnect(); };
+      oscillator.start(at); oscillator.stop(at+length+.01);
+    }
+  }
+  async schedule(startCue=false) {
+    this.cancel();
+    if (!settings.sound || settings.volume <= 0 || !engine.running) return;
+    const version=this.version;
+    if (!await this.unlock() || version !== this.version || !engine.running || !settings.sound) return;
+    const state=engine.snapshot();
+    const now=this.context.currentTime;
+    if (startCue && state.elapsed < 200) this.tones('start',now+.025);
+    engine.phases.forEach((phase,index) => {
+      if (phase.end > state.elapsed) {
+        const cue=index===engine.phases.length-1?'finish':phase.type==='speech'?'end':'start';
+        this.tones(cue,now+(phase.end-state.elapsed)/1000);
+      }
+    });
+  }
+  async test(volume) {
+    this.cancel();
+    const version=this.version;
+    if (await this.unlock() && version === this.version) this.tones('end',this.context.currentTime+.025,volume);
+    else toast('Sound unavailable. Check your browser and speakers.');
+  }
+}
+const audio = new DebateAudio();
+function renderSound() {
+  const enabled=settings.sound && settings.volume>0;
+  const blocked=enabled && audio.blocked;
+  const label=blocked?'Sound blocked':enabled?'Sound on':'Sound off';
+  setText(ui['sound-label'],label); setAttribute(ui.sound,'aria-label',label); setAttribute(ui.sound,'aria-pressed',String(enabled)); ui.sound.classList.toggle('audio-unavailable',blocked);
+}
+let wakeLock=null,wakeRequestPending=false;
+async function syncWakeLock() {
+  const wanted=engine.running && settings.awake && document.visibilityState==='visible';
+  if (!wanted) {
+    ui['awake-mark'].hidden=true;
+    if (wakeLock) { const lock=wakeLock; wakeLock=null; try { await lock.release(); } catch (_) {} }
+    return;
+  }
+  if (wakeLock || wakeRequestPending || !navigator.wakeLock?.request) return;
+  wakeRequestPending=true;
+  try {
+    const lock=await navigator.wakeLock.request('screen');
+    if (!engine.running || !settings.awake || document.visibilityState!=='visible') { await lock.release(); }
+    else {
+      wakeLock=lock; ui['awake-mark'].hidden=false;
+      lock.addEventListener('release',() => { if (wakeLock===lock) { wakeLock=null; ui['awake-mark'].hidden=true; } });
+    }
+  } catch (_) { ui['awake-mark'].hidden=true; }
+  finally { wakeRequestPending=false; }
+}
+
+const agendaRows = STAGES.map((stage,index) => {
+  const li=document.createElement('li'),button=document.createElement('button');
+  button.type='button';button.className='agenda-item';button.dataset.index=String(index);button.dataset.side=stage.side;
+  button.title=`Go to ${stageLabel(index)}`;button.setAttribute('aria-label',`${index+1}. ${stageLabel(index)}, ${stage.seconds/60} ${stage.seconds===60?'minute':'minutes'}`);
+  const number=document.createElement('span');number.className='order-number';number.setAttribute('aria-hidden','true');number.textContent=String(index+1).padStart(2,'0');
+  const copy=document.createElement('span');copy.className='order-copy';const title=document.createElement('span');title.className='order-title';title.textContent=stage.short;const side=document.createElement('span');side.className='order-side';side.textContent=titleCase(stage.side).toUpperCase();copy.append(title,side);
+  const duration=document.createElement('span');duration.className='order-time';duration.textContent=format(stage.seconds*1000);
+  button.append(number,copy,duration);li.append(button);$('agenda').append(li);
+  button.addEventListener('click',() => requestJump(index));
+  return {button,number,side};
+});
+STAGES.filter(stage => stage.speaker).forEach(stage => {
+  const label=document.createElement('label');label.className='field';const caption=document.createElement('span');caption.textContent=`${titleCase(stage.side)} · ${stage.title}`;const input=document.createElement('input');input.type='text';input.id=`speaker-${stage.speaker}`;input.maxLength=64;input.autocomplete='off';input.placeholder='Add name(s) for this position';label.append(caption,input);$('speaker-inputs').append(label);
+});
+const timingFields = STAGES.map((stage,index)=>({id:'duration-'+index,label:stageLabel(index),min:1,max:3600})).concat([{id:'changeover',label:'Changeover',min:1,max:120},{id:'amber',label:'Amber warning: seconds left',min:0,max:3600},{id:'red',label:'Red warning: seconds left',min:0,max:3600}]);
+timingFields.forEach(field=>{const label=document.createElement('label');label.className='field';const caption=document.createElement('span');caption.textContent=field.label;const input=document.createElement('input');input.id=field.id;input.type='number';input.min=field.min;input.max=field.max;input.step=1;input.required=true;label.append(caption,input);$('timing-inputs').append(label);});
+function applySettings() {
+  setText($('changeover-label'),settings.changeover+'s changeovers');
+  agendaRows.forEach((row,i)=>{setText(row.button.querySelector('.order-time'),format(STAGES[i].seconds*1000));row.button.setAttribute('aria-label',(i+1)+'. '+stageLabel(i)+', '+STAGES[i].seconds+' seconds');});
+  document.documentElement.dataset.theme=settings.theme;
+  for (const side of ['pro','con']) {
+    const name=ui[`${side}-name`];setText(name,settings[side]);name.classList.toggle('long',settings[side].length>34);name.classList.toggle('very-long',settings[side].length>49);
+  }
+  renderSound();
+}
+let lastPhaseKey='',lastAnnounce='',interval=null,lastSave=0;
+function render() {
+  const state=engine.snapshot(),stage=STAGES[state.phase.stageIndex];
+  const phase=state.done?'done':state.phase.type;
+  const seconds=Math.ceil(state.remaining/1000);
+  const warning=phase==='speech'?(seconds<=settings.red?'red':seconds<=settings.amber?'amber':'none'):'none';
+  setData(ui.stage,'side',state.done?'both':stage.side);setData(ui.stage,'phase',phase);setData(ui.stage,'running',String(state.running));setData(ui.stage,'warning',warning);
+  const status=state.done?'Finished':state.running?'Running':restored?'Restored · paused':state.elapsed===0?'Ready':'Paused';
+  setText(ui.status,status);
+  setText(ui.clock,format(state.remaining));
+  setAttribute(ui.clock,'aria-label',`${Math.floor(seconds/60)} minutes ${seconds%60} seconds remaining`);
+  setText(ui['total-left'],format(state.totalRemaining));
+  ui['time-fill'].style.transform=`scaleX(${state.done?0:state.remaining/state.phase.duration})`;
+  ui['overall-fill'].style.transform=`scaleX(${state.elapsed/engine.total})`;
+  setText(ui['toggle-label'],state.done?'New debate':state.running?'Pause':state.elapsed===0?'Start debate':'Resume');
+  setAttribute(ui['toggle-icon'],'href',state.running?'#i-pause':'#i-play');
+  ui.previous.disabled=state.elapsed===0;
+  ui.next.disabled=state.done;
+  ui.reset.disabled=state.elapsed===0 && !state.running;
+  setText(ui['next-button-label'],state.phaseIndex===engine.phases.length-1?'Finish':'Next');
+  const phaseKey=`${phase}:${state.phase.stageIndex}`;
+  if (phaseKey!==lastPhaseKey) {
+    lastPhaseKey=phaseKey;
+    setText(ui['section-count'],state.done?'09 / 09':`${String(state.phase.stageIndex+1).padStart(2,'0')} / 09`);
+    setText(ui.side,state.done?'PRO + CON':phase==='transition'?'CHANGEOVER':stage.side==='both'?'BOTH TEAMS':stage.side.toUpperCase());
+    setText(ui['section-title'],state.done?'Debate complete':phase==='transition'?'Changeover':stage.title);
+    let speaker=state.done? '':phase==='transition'?stageLabel(state.phase.stageIndex):stage.questions?`${titleCase(stage.side)} asks · ${titleCase(stage.side==='pro'?'con':'pro')} answers`:stage.side==='both'?'Both teams':(settings.speakers[stage.speaker] || settings[stage.side]);
+    if (!state.done && phase==='speech' && settings.speakers[stage.speaker]) speaker=settings.speakers[stage.speaker];
+    setText(ui.speaker,speaker);ui.speaker.classList.toggle('long',speaker.length>55);
+    const nextIndex=phase==='transition'?state.phase.stageIndex:state.phase.stageIndex+1;
+    const hasNext=!state.done && nextIndex<STAGES.length;
+    ui.upnext.classList.toggle('empty-next',!hasNext);
+    setText(ui['next-label'],hasNext?'UP NEXT':'FINAL SECTION');
+    setText(ui['next-title'],hasNext?stageLabel(nextIndex):'');
+    setText(ui['next-duration'],hasNext?format(STAGES[nextIndex].seconds*1000):'');
+    for (const side of ['pro','con']) ui[`team-${side}`].classList.toggle('is-active',!state.done && phase==='speech' && (stage.side===side || stage.side==='both'));
+    agendaRows.forEach((row,index) => {
+      const rowState=state.done || index<state.phase.stageIndex?'past':index===state.phase.stageIndex?(phase==='transition'?'next':'current'):'future';
+      setData(row.button,'state',rowState);setText(row.number,rowState==='past'?'✓':String(index+1).padStart(2,'0'));
+      setText(row.side,`${titleCase(STAGES[index].side).toUpperCase()}${rowState==='next'?' · NEXT':''}`);
+      if (rowState==='current' || rowState==='next') setAttribute(row.button,'aria-current','step');else row.button.removeAttribute('aria-current');
+    });
+  }
+  const announcement=`${phaseKey}:${status}`;
+  if (announcement!==lastAnnounce) { lastAnnounce=announcement;setText(ui.announcer,`${status}. ${state.done?'Debate complete':phase==='transition'?`Five-second changeover. Next: ${stageLabel(state.phase.stageIndex)}`:stageLabel(state.phase.stageIndex)}`); }
+  if (state.done) { stopLoop();syncWakeLock();saveSession(); }
+  return state;
+}
+function invalidate() { lastPhaseKey=''; }
+function stopLoop() { if (interval!==null) { clearInterval(interval);interval=null; } }
+function startLoop() {
+  if (interval!==null) return;
+  interval=setInterval(() => {
+    render();
+    if (performance.now()-lastSave>=1000) { saveSession();lastSave=performance.now(); }
+  },100);
+}
+function resume(startCue=false) { restored=false;engine.start();render();startLoop();void audio.schedule(startCue);void syncWakeLock();saveSession(); }
+function pause() { engine.pause();stopLoop();audio.cancel();render();void syncWakeLock();saveSession(); }
+function toggle() {
+  if ($('confirm-dialog').open || $('settings-dialog').open) return;
+  const state=engine.snapshot();
+  if (state.running) pause();
+  else { if (state.done) { engine.reset();invalidate(); } resume(state.done || state.elapsed===0); }
+}
+let pendingConfirm=null;
+function confirmAction(title,detail,label,action) {
+  if ($('confirm-dialog').open || $('settings-dialog').open) return;
+  const wasRunning=engine.running;
+  pause();
+  pendingConfirm={wasRunning,action};
+  $('confirm-title').textContent=title;$('confirm-detail').textContent=detail;$('confirm-accept').textContent=label;
+  $('confirm-dialog').showModal();$('confirm-cancel').focus();
+}
+function closeConfirm(accept) {
+  const pending=pendingConfirm;if (!pending) return;pendingConfirm=null;$('confirm-dialog').close();
+  if (accept) pending.action(pending.wasRunning);else if (pending.wasRunning) resume();
+}
+function navigate(action,resumeAfter) {
+  audio.cancel();restored=false;action();invalidate();render();saveSession();
+  if (resumeAfter && engine.position()<engine.total) resume();else { stopLoop();void syncWakeLock(); }
+}
+function requestNext() {
+  const state=engine.snapshot();if (state.done) return;
+  const final=state.phaseIndex===engine.phases.length-1;
+  confirmAction(final?'Finish debate?':state.phase.type==='transition'?'Start next section?':'End this section?',final?'Con · Final focus':state.phase.type==='transition'?stageLabel(state.phase.stageIndex):`Next: ${stageLabel(state.phase.stageIndex+1)}`,
+    final?'Finish':state.phase.type==='transition'?'Start section':'Changeover',wasRunning => navigate(() => engine.next(),wasRunning));
+}
+function requestPrevious() {
+  if (engine.position()===0) return;
+  const state=engine.snapshot();const index=state.done?STAGES.length-1:Math.max(0,state.phase.stageIndex-1);
+  confirmAction('Previous section?',stageLabel(index),'Go back',wasRunning => navigate(() => engine.jump(index),wasRunning));
+}
+function requestReset() {
+  if (engine.position()===0 && !engine.running) return;
+  confirmAction('Reset debate?','Return to Pro · Opening statement.','Reset',() => navigate(() => engine.reset(),false));
+}
+function requestJump(index) {
+  const state=engine.snapshot();
+  if (state.elapsed===engine.phases[index*2].start && !state.running) return;
+  if (!state.running && state.elapsed===0) { navigate(() => engine.jump(index),false);return; }
+  confirmAction('Go to section?',stageLabel(index),'Go to section',() => navigate(() => engine.jump(index),false));
+}
+let settingsWasRunning=false;
+function openSettings() {
+  if ($('confirm-dialog').open || $('settings-dialog').open) return;
+  settingsWasRunning=engine.running;pause();
+  $('pro-input').value=settings.pro;$('con-input').value=settings.con;$('theme-input').value=settings.theme;$('volume-input').value=String(settings.volume);$('volume-value').textContent=`${settings.volume}%`;$('awake-input').checked=settings.awake;
+  STAGES.forEach(stage => { if (stage.speaker) $(`speaker-${stage.speaker}`).value=settings.speakers[stage.speaker] || ''; });
+  STAGES.forEach((stage,i)=>$('duration-'+i).value=settings.durations[i]);
+  for(const key of ['changeover','amber','red']) $(key).value=settings[key];
+  $('settings-dialog').showModal();
+}
+function closeSettings(save) {
+  if (!$('settings-dialog').open) return;
+  if (save) {
+    const speakers={};STAGES.forEach(stage => { if (stage.speaker) speakers[stage.speaker]=$(`speaker-${stage.speaker}`).value; });
+    const oldSchedule=scheduleSchema();
+    settings=normalizeSettings({...settings,durations:STAGES.map((s,i)=>Number($('duration-'+i).value)),changeover:Number($('changeover').value),amber:Number($('amber').value),red:Number($('red').value),pro:$('pro-input').value,con:$('con-input').value,theme:$('theme-input').value,volume:Number($('volume-input').value),awake:$('awake-input').checked,speakers});
+    if(oldSchedule!==scheduleSchema()){STAGES.forEach((stage,i)=>stage.seconds=settings.durations[i]);engine=new DebateEngine(STAGES,settings.changeover);settingsWasRunning=false;restored=false;saveSession();}
+    safeSet('localStorage',SETTINGS_KEY,settings);applySettings();invalidate();
+  }
+  audio.cancel();$('settings-dialog').close();render();
+  if (settingsWasRunning) resume();settingsWasRunning=false;
+}
+async function fullscreen() {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+    else toast('Use your browser’s fullscreen control.');
+  } catch (_) { toast('Use your browser’s fullscreen control.'); }
+}
+function fit() {
+  const width=document.documentElement.clientWidth || window.innerWidth;
+  const height=window.innerHeight;
+  document.documentElement.style.setProperty('--fit',String(Math.min(width/1600,height/900)));
+}
+ui.toggle.addEventListener('click',toggle);ui.next.addEventListener('click',requestNext);ui.previous.addEventListener('click',requestPrevious);ui.reset.addEventListener('click',requestReset);
+ui.sound.addEventListener('click',() => {
+  settings.sound=!(settings.sound && settings.volume>0);
+  if (settings.sound && settings.volume===0) settings.volume=100;
+  safeSet('localStorage',SETTINGS_KEY,settings);renderSound();
+  if (settings.sound) { if (engine.running) void audio.schedule();else void audio.test(settings.volume); } else audio.cancel();
+});
+ui.fullscreen.addEventListener('click',fullscreen);
+$('settings-button').addEventListener('click',openSettings);$('settings-close').addEventListener('click',() => closeSettings(false));$('settings-cancel').addEventListener('click',() => closeSettings(false));
+$('settings-form').addEventListener('submit',event => { event.preventDefault();closeSettings(true); });
+$('settings-dialog').addEventListener('cancel',event => { event.preventDefault();closeSettings(false); });
+$('volume-input').addEventListener('input',() => { $('volume-value').textContent=`${$('volume-input').value}%`; });
+$('test-sound').addEventListener('click',() => void audio.test(Number($('volume-input').value)));
+$('confirm-cancel').addEventListener('click',() => closeConfirm(false));$('confirm-accept').addEventListener('click',() => closeConfirm(true));
+$('confirm-dialog').addEventListener('cancel',event => { event.preventDefault();closeConfirm(false); });
+document.addEventListener('keydown',event => {
+  if (event.ctrlKey || event.metaKey || event.altKey || event.isComposing || $('confirm-dialog').open || $('settings-dialog').open) return;
+  if (event.target instanceof Element && event.target.closest('input,textarea,select,[contenteditable="true"]')) return;
+  const key=event.key.toLowerCase();
+  if (event.repeat) {
+    if (['Space','ArrowRight','ArrowLeft'].includes(event.code) || ['f','r','m'].includes(key)) event.preventDefault();
+    return;
+  }
+  if (event.code==='Space') { event.preventDefault();toggle(); }
+  else if (key==='f') { event.preventDefault();void fullscreen(); }
+  else if (event.code==='ArrowRight') { event.preventDefault();requestNext(); }
+  else if (event.code==='ArrowLeft') { event.preventDefault();requestPrevious(); }
+  else if (key==='r') { event.preventDefault();requestReset(); }
+  else if (key==='m') { event.preventDefault();ui.sound.click(); }
+});
+document.addEventListener('fullscreenchange',() => {
+  const active=Boolean(document.fullscreenElement);setAttribute(ui.fullscreen,'aria-pressed',String(active));ui.fullscreen.classList.toggle('exit-fullscreen',active);setText(ui['fullscreen-label'],active?'Exit fullscreen':'Fullscreen');fit();
+});
+document.addEventListener('visibilitychange',() => {
+  render();saveSession();void syncWakeLock();
+  if (document.visibilityState==='visible' && engine.running) { startLoop();void audio.schedule(); }
+});
+window.addEventListener('resize',fit);window.visualViewport?.addEventListener('resize',fit);
+window.addEventListener('pagehide',saveSession);
+window.addEventListener('pageshow',event => { if (event.persisted) { engine.pause();audio.cancel();stopLoop();restored=true;invalidate();render(); } });
+fit();applySettings();render();
+})();
+</script>
+</body>
+</html>
