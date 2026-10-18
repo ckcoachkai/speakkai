@@ -21,6 +21,7 @@
 dialog{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;max-width:min(640px,calc(100vw - 32px));width:580px;max-height:calc(100dvh - 48px);overflow:auto;box-shadow:0 25px 100px #0004}dialog::backdrop{background:#08132675;backdrop-filter:blur(3px)}dialog h2{font-size:24px;line-height:1.2;margin:0;font-weight:650;letter-spacing:-.5px}.dialog-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}.dialog-close{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;flex-shrink:0}.field{display:block;margin:16px 0}.field>span,.field-title{display:block;font-size:13px;font-weight:650;color:var(--muted);margin-bottom:8px}input[type="text"],input[type="number"],select{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px}input[type="range"]{accent-color:var(--pro);width:100%;min-height:30px}input[type="checkbox"]{width:18px;height:18px;accent-color:var(--pro)}.settings-row{display:flex;align-items:center;gap:18px;margin:19px 0}.settings-row .field{flex:1;margin:0}.check-row{display:flex;align-items:center;gap:10px;font-size:15px}.settings-buttons{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}.dialog-btn{border:1px solid var(--line);background:var(--surface);padding:11px 18px;min-height:44px;border-radius:9px;font-size:15px;font-weight:600}.dialog-btn.primary{background:var(--text);color:var(--surface);border-color:var(--text)}.dialog-btn.primary:hover{background:var(--text);opacity:.88}.speaker-settings{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}summary{cursor:pointer;font-size:15px;font-weight:600}.speaker-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.speaker-grid .field{margin:5px 0}.speaker-grid input{font-size:14px}.confirm-detail{margin:18px 0 24px;font-size:17px;line-height:1.5;color:var(--muted)}#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:11px 18px;border-radius:10px;background:var(--text);color:var(--surface);box-shadow:0 4px 20px #0003;font-size:14px;text-align:center;max-width:90vw;z-index:10}noscript{position:fixed;inset:0;background:var(--surface);display:grid;place-items:center;padding:30px;font-size:24px;z-index:100}
 @media(prefers-reduced-motion:no-preference){.time-fill,#overall-fill{transition:transform .12s linear}}
 @media(max-width:540px){dialog{padding:20px}.speaker-grid{grid-template-columns:1fr}.settings-row{flex-wrap:wrap}}
+.agenda-list{display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}.agenda-list li{min-height:57px;flex-shrink:0}.order-title{white-space:normal;font-size:16px}.teams{grid-template-columns:repeat(var(--team-count,2),minmax(0,1fr))}.teams .team{padding:10px 18px;gap:12px}.teams .team-name{font-size:22px}.teams .team-label{font-size:11px;letter-spacing:.3px}.brand{gap:12px}.brand .control-btn{font-size:15px;min-height:38px;max-width:320px;overflow:hidden;text-overflow:ellipsis}#settings-dialog{width:840px;max-width:min(840px,calc(100vw - 24px))}.segment-card{margin:14px 0;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}.segment-head{display:flex;align-items:center;gap:8px}.segment-head strong{margin-right:auto}.segment-head button{padding:7px 12px;border:1px solid var(--line);border-radius:7px;min-height:38px}.segment-card .speaker-grid{margin-top:6px}.segment-card input,.segment-card select{background:var(--surface)}.format-note{color:var(--muted);line-height:1.5;font-size:14px}#format-source{font-size:14px;color:var(--pro)}.speaker-settings p{color:var(--muted);font-size:14px;line-height:1.5}.heading{font-size:36px}.side-badge{max-width:75%;font-size:13px}.team-name{overflow:auto}#segment-editor:empty{display:none}
 </style>
 </head>
 <body>
@@ -40,7 +41,7 @@ dialog{background:var(--surface);border:1px solid var(--line);border-radius:20px
 <div id="viewport">
 <div id="stage" data-side="pro" data-phase="speech" data-running="false" data-warning="none">
   <header class="page-head">
-    <div class="brand"><svg aria-hidden="true"><use href="#i-clock"/></svg><span>Debate timer</span></div>
+    <div class="brand"><svg aria-hidden="true"><use href="#i-clock"/></svg><span>Debate timer</span><button class="control-btn" id="format-button" type="button" title="Choose a debate format">Current format ▾</button></div>
     <div class="head-right">
       <div class="total-group"><span class="total-label">Total left</span><span class="total-time" id="total-left">17:40</span><div class="overall-track" aria-hidden="true"><div id="overall-fill"></div></div></div>
       <span class="status"><span class="status-dot" aria-hidden="true"></span><span id="status">Ready</span></span>
@@ -89,13 +90,14 @@ dialog{background:var(--surface);border:1px solid var(--line);border-radius:20px
 <dialog id="settings-dialog" aria-labelledby="settings-title">
   <form id="settings-form">
     <div class="dialog-head"><h2 id="settings-title">Settings</h2><button class="dialog-close" type="button" id="settings-close" aria-label="Close settings"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div>
+    <label class="field"><span>Debate type</span><select id="format-input"></select></label><p id="format-note" class="format-note"></p><a id="format-source" target="_blank" rel="noopener">Format reference</a>
     <label class="field"><span>Pro team</span><input type="text" id="pro-input" placeholder="Pro team" maxlength="64" autocomplete="off"></label>
     <label class="field"><span>Con team</span><input type="text" id="con-input" placeholder="Con team" maxlength="64" autocomplete="off"></label>
     <div class="settings-row"><label class="field"><span>Display</span><select id="theme-input"><option value="light">Light</option><option value="dark">Dark</option></select></label><button class="dialog-btn" type="button" id="test-sound">Test sound</button></div>
     <label class="field"><span>Beep volume <output id="volume-value">100%</output></span><input id="volume-input" type="range" min="0" max="100" step="5" value="100" aria-label="Beep volume"></label>
     <label class="check-row"><input type="checkbox" id="awake-input" checked>Keep screen awake while running</label>
-    <details class="speaker-settings"><summary>Names for each position</summary><div class="speaker-grid" id="speaker-inputs"></div></details>
-    <details class="speaker-settings"><summary>Timing settings</summary><p>Times are in seconds. Changing timings restarts the debate.</p><div class="speaker-grid" id="timing-inputs"></div></details>
+    <details class="speaker-settings"><summary>Segments and position names</summary><p>Add, remove or reorder segments. Times are in seconds. Saving schedule changes restarts the timer.</p><div id="segment-editor"></div><button type="button" class="dialog-btn" id="add-segment">+ Add segment</button> <button type="button" class="dialog-btn" id="restore-preset">Restore preset defaults</button></details>
+    <details class="speaker-settings"><summary>Timing settings</summary><p>Changeovers and warnings are in seconds. Set changeover to 0 for consecutive segments. Change each segment’s time above.</p><div class="speaker-grid" id="timing-inputs"></div></details>
     <div class="settings-buttons"><button class="dialog-btn" id="settings-cancel" type="button">Cancel</button><button class="dialog-btn primary" type="submit">Save</button></div>
   </form>
 </dialog>
@@ -108,7 +110,7 @@ dialog{background:var(--surface);border:1px solid var(--line);border-radius:20px
 /* Pure timing engine. Durations are milliseconds; displayed seconds never feed back into timekeeping. */
 class DebateEngine {
   constructor(stages, transitionSeconds, now = () => performance.now()) {
-    if (!Array.isArray(stages) || !stages.length || !Number.isFinite(transitionSeconds) || transitionSeconds <= 0) throw new TypeError('Invalid debate schedule');
+    if (!Array.isArray(stages) || !stages.length || !Number.isFinite(transitionSeconds) || transitionSeconds < 0) throw new TypeError('Invalid debate schedule');
     this.stages = stages;
     this.now = now;
     this.phases = [];
@@ -118,7 +120,7 @@ class DebateEngine {
       const duration = stage.seconds * 1000;
       this.phases.push({type:'speech', stageIndex:index, start:offset, end:offset + duration, duration});
       offset += duration;
-      if (index < stages.length - 1) {
+      if (index < stages.length - 1 && transitionSeconds > 0 && !stage.noChangeover) {
         const changeover = transitionSeconds * 1000;
         this.phases.push({type:'transition', stageIndex:index + 1, start:offset, end:offset + changeover, duration:changeover});
         offset += changeover;
@@ -170,14 +172,14 @@ class DebateEngine {
   }
   jump(index, resume = false) {
     if (!Number.isInteger(index) || index < 0 || index >= this.stages.length) throw new RangeError('Invalid section');
-    this.seek(this.phases[index * 2].start, resume);
+    this.seek(this.phases.find(p=>p.type==='speech' && p.stageIndex===index).start, resume);
   }
 }
 </script>
 <script>
 (() => {
 'use strict';
-const STAGES = [
+let STAGES = [
   {side:'pro', title:'Opening statement', short:'Opening statement', seconds:120, speaker:'proOpening'},
   {side:'con', title:'Cross-examination', short:'Cross-examination', seconds:60, questions:true, speaker:'conQuestions'},
   {side:'con', title:'Opening statement', short:'Opening statement', seconds:120, speaker:'conOpening'},
@@ -188,10 +190,23 @@ const STAGES = [
   {side:'pro', title:'Final focus', short:'Final focus', seconds:120, speaker:'proFinal'},
   {side:'con', title:'Final focus', short:'Final focus', seconds:120, speaker:'conFinal'}
 ];
+const ORIGINAL=structuredClone(STAGES);
+const segment=(title,side,seconds,team='')=>({title,short:title,side,seconds,team,name:''});
+const NSDA_REF='https://s3.amazonaws.com/tabroom-files/tourns/34138/postings/61501/HighSchoolUnifiedManual2024251.pdf';
+const PRESETS={
+ current:{label:'Current classroom format',changeover:5,note:'Your original nine-section classroom format. All names, segments and timings are editable.',source:'',segments:ORIGINAL},
+ extemp:{label:'Extemporaneous debate',changeover:0,note:'NSDA-style one-on-one debate: 30-minute initial preparation, two-minute speeches, one-minute questions and mandatory preparation. Editable defaults based on the NSDA 2024–25 manual.',source:NSDA_REF,segments:[segment('Initial preparation','both',1800),segment('Proposition constructive','pro',120),segment('Cross-examination of Proposition','con',60),segment('Opposition constructive','con',120),segment('Cross-examination of Opposition','pro',60),segment('Mandatory preparation','both',60),segment('Proposition rebuttal 1','pro',120),segment('Opposition rebuttal 1','con',120),segment('Mandatory preparation','both',60),segment('Proposition rebuttal 2','pro',120),segment('Opposition rebuttal 2','con',120)]},
+ pf:{label:'Public Forum',changeover:0,note:'Eleven speech/crossfire segments, with three-minute summaries. Team A speaks first; coin toss determines sides and order. Discretionary preparation is not included in the sequence. You can plan prep segments before starting, within each team’s three-minute allowance. Editable defaults based on the NSDA 2024–25 manual.',source:NSDA_REF,segments:[segment('Constructive · Speaker 1','pro',240,'Team A'),segment('Constructive · Speaker 1','con',240,'Team B'),segment('First crossfire','both',180),segment('Rebuttal · Speaker 2','pro',240,'Team A'),segment('Rebuttal · Speaker 2','con',240,'Team B'),segment('Second crossfire','both',180),segment('Summary · Speaker 1','pro',180,'Team A'),segment('Summary · Speaker 1','con',180,'Team B'),segment('Grand crossfire','both',180),segment('Final focus · Speaker 2','pro',120,'Team A'),segment('Final focus · Speaker 2','con',120,'Team B')]},
+ mun:{label:'Model UN',changeover:0,note:'Customizable committee template, not a universal MUN schedule. Start with four 90-second delegate speeches, then a 10-minute unmoderated caucus. Add/remove delegate turns, rename countries and change times to match the chair’s motions.',source:'https://www.un.org/en/model-united-nations/discussion-phase-general-debate',segments:[...Array.from({length:4},(_,i)=>segment('General speakers’ list · Delegate '+(i+1),'both',90,'Committee')),segment('Unmoderated caucus','both',600,'Committee')]},
+ bp:{label:'BP / Open Schools',changeover:0,note:'British Parliamentary schools template: four teams, eight five-minute speeches in BP order. Tournament rules vary; change speeches to seven minutes or any other length in the segment editor.',source:'https://osdu.org/wp-content/uploads/2024/09/An-introduction-to-British-Parliamentary-Debating-Oxford-Union.pdf',segments:[segment('Prime Minister','pro',300,'Opening Government'),segment('Leader of Opposition','con',300,'Opening Opposition'),segment('Deputy Prime Minister','pro',300,'Opening Government'),segment('Deputy Leader of Opposition','con',300,'Opening Opposition'),segment('Member of Government','pro',300,'Closing Government'),segment('Member of Opposition','con',300,'Closing Opposition'),segment('Government Whip','pro',300,'Closing Government'),segment('Opposition Whip','con',300,'Closing Opposition')]},
+ wsc:{label:'WSC · World Scholar’s Cup',changeover:60,note:'Team Debate template: 15-minute preparation followed by three four-minute speakers per side. One-minute breaks are editable; there is no extra changeover after the initial preparation. Follow your round adjudicator’s instructions.',source:'https://beta.scholarscup.org/events/',segments:[{...segment('Team preparation','both',900),noChangeover:true},...Array.from({length:6},(_,i)=>segment('Speaker '+(Math.floor(i/2)+1),i%2?'con':'pro',240))]}
+};
+function normalizeSegments(items){return items.slice(0,100).map((raw,i)=>{const v=raw&&typeof raw==='object'?raw:{};return {title:cleanText(v.title,'Segment '+(i+1)),short:cleanText(v.title,'Segment '+(i+1)),side:['pro','con','both'].includes(v.side)?v.side:'both',seconds:bounded(v.seconds,120,1,7200),speaker:'position-'+i,team:cleanText(v.team),name:cleanText(v.name),noChangeover:v.noChangeover===true};});}
+
 const DEFAULTS = {pro:'Pro team', con:'Con team', sound:true, volume:100, theme:'light', awake:true, speakers:{}, durations:STAGES.map(s=>s.seconds), changeover:5, amber:30, red:10};
 const SETTINGS_KEY = 'speakkai-debate-settings-v3';
 const SESSION_KEY = 'speakkai-debate-session-v3';
-const scheduleSchema = () => JSON.stringify([settings.durations,settings.changeover]);
+const scheduleSchema = () => JSON.stringify([settings.format,settings.segments,settings.changeover]);
 const $ = id => document.getElementById(id);
 const ui = Object.fromEntries(['stage','status','clock','section-title','speaker','side','section-count','total-left','overall-fill','time-fill','upnext','next-label','next-title','next-duration','toggle','toggle-icon','toggle-label','previous','next','next-button-label','reset','sound','sound-label','fullscreen','fullscreen-label','team-pro','team-con','pro-name','con-name','announcer','awake-mark'].map(id => [id,$(id)]));
 const safeGet = (store,key) => { try { return JSON.parse(window[store].getItem(key)); } catch (_) { return null; } };
@@ -201,11 +216,13 @@ function bounded(value,fallback,min,max) { return Number.isFinite(value)?Math.ma
 function normalizeSettings(value) {
   const v = value && typeof value === 'object' ? value : {};
   const speakers = {};
-  STAGES.forEach(stage => { if (stage.speaker) speakers[stage.speaker] = cleanText(v.speakers?.[stage.speaker]); });
-  return {pro:cleanText(v.pro,DEFAULTS.pro), con:cleanText(v.con,DEFAULTS.con), sound:typeof v.sound === 'boolean' ? v.sound : true, volume:Number.isFinite(v.volume) ? Math.max(0,Math.min(100,v.volume)) : 100, theme:v.theme === 'dark' ? 'dark' : 'light', awake:typeof v.awake === 'boolean' ? v.awake : true, speakers, durations:STAGES.map((s,i)=>bounded(v.durations?.[i],DEFAULTS.durations[i],1,3600)), changeover:bounded(v.changeover,5,1,120), amber:bounded(v.amber,30,0,3600), red:bounded(v.red,10,0,3600)};
+  const format=PRESETS[v.format]?v.format:'current';
+  const segments=normalizeSegments(Array.isArray(v.segments)&&v.segments.length?v.segments:format==='current'?ORIGINAL.map((stage,i)=>({...stage,seconds:v.durations?.[i]??stage.seconds,name:v.speakers?.[stage.speaker]||''})):PRESETS[format].segments);
+  segments.forEach(stage=>{speakers[stage.speaker]=stage.name;});
+  return {pro:cleanText(v.pro,DEFAULTS.pro), con:cleanText(v.con,DEFAULTS.con), sound:typeof v.sound === 'boolean' ? v.sound : true, volume:Number.isFinite(v.volume) ? Math.max(0,Math.min(100,v.volume)) : 100, theme:v.theme === 'dark' ? 'dark' : 'light', awake:typeof v.awake === 'boolean' ? v.awake : true, speakers, format, segments, durations:segments.map(s=>s.seconds), changeover:bounded(v.changeover,PRESETS[format].changeover,0,120), amber:bounded(v.amber,30,0,3600), red:bounded(v.red,10,0,3600)};
 }
 let settings = normalizeSettings(safeGet('localStorage',SETTINGS_KEY));
-STAGES.forEach((stage,i)=>stage.seconds=settings.durations[i]);
+STAGES=settings.segments;
 let engine = new DebateEngine(STAGES,settings.changeover);
 let restored = false;
 const savedSession = safeGet('sessionStorage',SESSION_KEY);
@@ -218,7 +235,7 @@ const format = milliseconds => {
   return `${String(Math.floor(seconds / 60)).padStart(2,'0')}:${String(seconds % 60).padStart(2,'0')}`;
 };
 const titleCase = side => side === 'both' ? 'Both teams' : side === 'pro' ? 'Pro' : 'Con';
-const stageLabel = index => `${titleCase(STAGES[index].side)} · ${STAGES[index].title}`;
+const stageLabel = index => `${STAGES[index].team||titleCase(STAGES[index].side)} · ${STAGES[index].title}`;
 let toastTimer;
 function toast(message) { $('toast').textContent=message; $('toast').hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(() => { $('toast').hidden=true; },4000); }
 function saveSession() { safeSet('sessionStorage',SESSION_KEY,{schema:scheduleSchema(),elapsed:engine.position()}); }
@@ -323,7 +340,10 @@ async function syncWakeLock() {
   finally { wakeRequestPending=false; }
 }
 
-const agendaRows = STAGES.map((stage,index) => {
+let agendaRows=[];
+function rebuildAgenda(){
+$('agenda').replaceChildren();
+agendaRows = STAGES.map((stage,index) => {
   const li=document.createElement('li'),button=document.createElement('button');
   button.type='button';button.className='agenda-item';button.dataset.index=String(index);button.dataset.side=stage.side;
   button.title=`Go to ${stageLabel(index)}`;button.setAttribute('aria-label',`${index+1}. ${stageLabel(index)}, ${stage.seconds/60} ${stage.seconds===60?'minute':'minutes'}`);
@@ -334,18 +354,39 @@ const agendaRows = STAGES.map((stage,index) => {
   button.addEventListener('click',() => requestJump(index));
   return {button,number,side};
 });
-STAGES.filter(stage => stage.speaker).forEach(stage => {
-  const label=document.createElement('label');label.className='field';const caption=document.createElement('span');caption.textContent=`${titleCase(stage.side)} · ${stage.title}`;const input=document.createElement('input');input.type='text';input.id=`speaker-${stage.speaker}`;input.maxLength=64;input.autocomplete='off';input.placeholder='Add name(s) for this position';label.append(caption,input);$('speaker-inputs').append(label);
-});
-const timingFields = STAGES.map((stage,index)=>({id:'duration-'+index,label:stageLabel(index),min:1,max:3600})).concat([{id:'changeover',label:'Changeover',min:1,max:120},{id:'amber',label:'Amber warning: seconds left',min:0,max:3600},{id:'red',label:'Red warning: seconds left',min:0,max:3600}]);
+}
+rebuildAgenda();
+const PROFILES_KEY='speakkai-debate-profiles-v1';
+let profiles=safeGet('localStorage',PROFILES_KEY)||{};
+let draftProfiles=structuredClone(profiles),draftFormat=settings.format,draftSegments=structuredClone(settings.segments);
+for(const [key,preset] of Object.entries(PRESETS)){const option=document.createElement('option');option.value=key;option.textContent=preset.label;$('format-input').append(option);}
+const timingFields=[{id:'changeover',label:'Changeover between segments',min:0,max:120},{id:'amber',label:'Amber warning: seconds left',min:0,max:3600},{id:'red',label:'Red warning: seconds left',min:0,max:3600}];
 timingFields.forEach(field=>{const label=document.createElement('label');label.className='field';const caption=document.createElement('span');caption.textContent=field.label;const input=document.createElement('input');input.id=field.id;input.type='number';input.min=field.min;input.max=field.max;input.step=1;input.required=true;label.append(caption,input);$('timing-inputs').append(label);});
+function collectDraft(){document.querySelectorAll('.segment-card').forEach((card,i)=>{for(const key of ['title','side','name','team'])draftSegments[i][key]=card.querySelector('[data-field='+key+']').value;draftSegments[i].seconds=Number(card.querySelector('[data-field=seconds]').value);});}
+function renderEditor(){
+ const note=$('format-note');note.textContent=PRESETS[draftFormat].note;
+ const source=$('format-source');source.hidden=!PRESETS[draftFormat].source;if(PRESETS[draftFormat].source)source.href=PRESETS[draftFormat].source;
+ const container=$('segment-editor');container.replaceChildren();
+ draftSegments.forEach((stage,index)=>{
+  const card=document.createElement('section');card.className='segment-card';
+  const head=document.createElement('div');head.className='segment-head';const title=document.createElement('strong');title.textContent='Segment '+(index+1);head.append(title);
+  for(const [text,action,disabled] of [['↑',()=>{collectDraft();[draftSegments[index-1],draftSegments[index]]=[draftSegments[index],draftSegments[index-1]];renderEditor();},index===0],['↓',()=>{collectDraft();[draftSegments[index+1],draftSegments[index]]=[draftSegments[index],draftSegments[index+1]];renderEditor();},index===draftSegments.length-1],['Remove',()=>{collectDraft();draftSegments.splice(index,1);renderEditor();},draftSegments.length===1]]){const button=document.createElement('button');button.type='button';button.textContent=text;button.disabled=disabled;button.setAttribute('aria-label',(text==='↑'?'Move up':text==='↓'?'Move down':'Remove')+' segment '+(index+1));button.addEventListener('click',action);head.append(button);}
+  card.append(head);const grid=document.createElement('div');grid.className='speaker-grid';
+  for(const [key,caption] of [['title','Segment / position'],['name','Speaker name(s)'],['team','Team / delegation (optional)'],['side','Side'],['seconds','Duration (seconds)']]){const label=document.createElement('label');label.className='field';const span=document.createElement('span');span.textContent=caption;const input=document.createElement(key==='side'?'select':'input');input.dataset.field=key;if(key==='side'){for(const [value,text] of [['pro','Pro / Government'],['con','Con / Opposition'],['both','Both / Neutral']]){const option=document.createElement('option');option.value=value;option.textContent=text;input.append(option);}}else{input.type=key==='seconds'?'number':'text';if(key==='seconds'){input.min=1;input.max=7200;input.step=1;input.required=true;}else{input.maxLength=64;input.autocomplete='off';input.placeholder=key==='name'?'Add name(s)':key==='team'?'Use side label':'Segment name';if(key==='title')input.required=true;}}input.value=stage[key]??'';label.append(span,input);grid.append(label);}
+  card.append(grid);container.append(card);
+ });$('add-segment').disabled=draftSegments.length>=100;
+}
+$('add-segment').addEventListener('click',()=>{collectDraft();draftSegments.push({...segment('New segment','both',120),speaker:'custom-'+Date.now()+'-'+draftSegments.length});renderEditor();const cards=$('segment-editor').querySelectorAll('.segment-card');cards[cards.length-1].scrollIntoView({block:'nearest'});cards[cards.length-1].querySelector('input').focus();});
+$('format-input').addEventListener('change',()=>{collectDraft();draftProfiles[draftFormat]={...settings,amber:Number($('amber').value),red:Number($('red').value),format:draftFormat,segments:structuredClone(draftSegments),changeover:Number($('changeover').value),pro:$('pro-input').value,con:$('con-input').value};draftFormat=$('format-input').value;const cached=draftProfiles[draftFormat];draftSegments=normalizeSegments(cached?.segments||PRESETS[draftFormat].segments);$('changeover').value=cached?.changeover??PRESETS[draftFormat].changeover;for(const key of ['amber','red'])$(key).value=cached?.[key]??(key==='amber'?30:10);$('pro-input').value=cached?.pro||'Pro team';$('con-input').value=cached?.con||'Con team';renderEditor();});
+$('restore-preset').addEventListener('click',()=>{draftSegments=normalizeSegments(PRESETS[draftFormat].segments);$('changeover').value=PRESETS[draftFormat].changeover;renderEditor();});
+function renderTeams(){const groups=new Map();STAGES.forEach(stage=>{if(stage.side==='both'&&!stage.team)return;const key=stage.team||titleCase(stage.side);if(!groups.has(key))groups.set(key,{side:stage.side,names:[]});if(stage.name&&!groups.get(key).names.includes(stage.name))groups.get(key).names.push(stage.name);});if(!groups.size)groups.set('Committee',{side:'both',names:[]});const section=document.querySelector('.teams');section.replaceChildren();section.style.setProperty('--team-count',Math.min(groups.size,4));section.style.overflowY='auto';for(const [group,{side,names}]of groups){const card=document.createElement('div');card.className='team team-'+(side==='con'?'con':'pro');card.dataset.team=group;const label=document.createElement('span');label.className='team-label';label.textContent=group;const text=document.createElement('span');text.className='team-name';text.textContent=names.join(', ')||(group==='Pro'?settings.pro:group==='Con'?settings.con:'Add names in settings');card.append(label,text);section.append(card);}}
+
 function applySettings() {
-  setText($('changeover-label'),settings.changeover+'s changeovers');
+  setText($('changeover-label'),settings.changeover?settings.changeover+'s changeovers':'No changeovers');
+  setText($('format-button'),PRESETS[settings.format].label+' ▾');
+  renderTeams();
   agendaRows.forEach((row,i)=>{setText(row.button.querySelector('.order-time'),format(STAGES[i].seconds*1000));row.button.setAttribute('aria-label',(i+1)+'. '+stageLabel(i)+', '+STAGES[i].seconds+' seconds');});
   document.documentElement.dataset.theme=settings.theme;
-  for (const side of ['pro','con']) {
-    const name=ui[`${side}-name`];setText(name,settings[side]);name.classList.toggle('long',settings[side].length>34);name.classList.toggle('very-long',settings[side].length>49);
-  }
   renderSound();
 }
 let lastPhaseKey='',lastAnnounce='',interval=null,lastSave=0;
@@ -371,11 +412,12 @@ function render() {
   const phaseKey=`${phase}:${state.phase.stageIndex}`;
   if (phaseKey!==lastPhaseKey) {
     lastPhaseKey=phaseKey;
-    setText(ui['section-count'],state.done?'09 / 09':`${String(state.phase.stageIndex+1).padStart(2,'0')} / 09`);
-    setText(ui.side,state.done?'PRO + CON':phase==='transition'?'CHANGEOVER':stage.side==='both'?'BOTH TEAMS':stage.side.toUpperCase());
+    setText(ui['section-count'],`${String(state.done?STAGES.length:state.phase.stageIndex+1).padStart(2,'0')} / ${String(STAGES.length).padStart(2,'0')}`);
+    setText(ui.side,state.done?'FINISHED':phase==='transition'?'CHANGEOVER':stage.side==='both'?'BOTH TEAMS':(stage.team||stage.side).toUpperCase());
     setText(ui['section-title'],state.done?'Debate complete':phase==='transition'?'Changeover':stage.title);
     let speaker=state.done? '':phase==='transition'?stageLabel(state.phase.stageIndex):stage.questions?`${titleCase(stage.side)} asks · ${titleCase(stage.side==='pro'?'con':'pro')} answers`:stage.side==='both'?'Both teams':(settings.speakers[stage.speaker] || settings[stage.side]);
     if (!state.done && phase==='speech' && settings.speakers[stage.speaker]) speaker=settings.speakers[stage.speaker];
+    document.querySelectorAll('.teams .team').forEach(card=>card.classList.toggle('is-active',!state.done && (stage.side==='both'||card.dataset.team===(stage.team||titleCase(stage.side)))));
     setText(ui.speaker,speaker);ui.speaker.classList.toggle('long',speaker.length>55);
     const nextIndex=phase==='transition'?state.phase.stageIndex:state.phase.stageIndex+1;
     const hasNext=!state.done && nextIndex<STAGES.length;
@@ -383,16 +425,17 @@ function render() {
     setText(ui['next-label'],hasNext?'UP NEXT':'FINAL SECTION');
     setText(ui['next-title'],hasNext?stageLabel(nextIndex):'');
     setText(ui['next-duration'],hasNext?format(STAGES[nextIndex].seconds*1000):'');
-    for (const side of ['pro','con']) ui[`team-${side}`].classList.toggle('is-active',!state.done && phase==='speech' && (stage.side===side || stage.side==='both'));
+
     agendaRows.forEach((row,index) => {
       const rowState=state.done || index<state.phase.stageIndex?'past':index===state.phase.stageIndex?(phase==='transition'?'next':'current'):'future';
       setData(row.button,'state',rowState);setText(row.number,rowState==='past'?'✓':String(index+1).padStart(2,'0'));
-      setText(row.side,`${titleCase(STAGES[index].side).toUpperCase()}${rowState==='next'?' · NEXT':''}`);
+      setText(row.side,`${(STAGES[index].team||titleCase(STAGES[index].side)).toUpperCase()}${rowState==='next'?' · NEXT':''}`);
+      if (rowState==='current' || rowState==='next') row.button.scrollIntoView({block:'nearest'});
       if (rowState==='current' || rowState==='next') setAttribute(row.button,'aria-current','step');else row.button.removeAttribute('aria-current');
     });
   }
   const announcement=`${phaseKey}:${status}`;
-  if (announcement!==lastAnnounce) { lastAnnounce=announcement;setText(ui.announcer,`${status}. ${state.done?'Debate complete':phase==='transition'?`Five-second changeover. Next: ${stageLabel(state.phase.stageIndex)}`:stageLabel(state.phase.stageIndex)}`); }
+  if (announcement!==lastAnnounce) { lastAnnounce=announcement;setText(ui.announcer,`${status}. ${state.done?'Debate complete':phase==='transition'?`${settings.changeover}-second changeover. Next: ${stageLabel(state.phase.stageIndex)}`:stageLabel(state.phase.stageIndex)}`); }
   if (state.done) { stopLoop();syncWakeLock();saveSession(); }
   return state;
 }
@@ -433,7 +476,7 @@ function navigate(action,resumeAfter) {
 function requestNext() {
   const state=engine.snapshot();if (state.done) return;
   const final=state.phaseIndex===engine.phases.length-1;
-  confirmAction(final?'Finish debate?':state.phase.type==='transition'?'Start next section?':'End this section?',final?'Con · Final focus':state.phase.type==='transition'?stageLabel(state.phase.stageIndex):`Next: ${stageLabel(state.phase.stageIndex+1)}`,
+  confirmAction(final?'Finish debate?':state.phase.type==='transition'?'Start next section?':'End this section?',final?stageLabel(STAGES.length-1):state.phase.type==='transition'?stageLabel(state.phase.stageIndex):`Next: ${stageLabel(state.phase.stageIndex+1)}`,
     final?'Finish':state.phase.type==='transition'?'Start section':'Changeover',wasRunning => navigate(() => engine.next(),wasRunning));
 }
 function requestPrevious() {
@@ -443,11 +486,11 @@ function requestPrevious() {
 }
 function requestReset() {
   if (engine.position()===0 && !engine.running) return;
-  confirmAction('Reset debate?','Return to Pro · Opening statement.','Reset',() => navigate(() => engine.reset(),false));
+  confirmAction('Reset debate?','Return to '+stageLabel(0)+'.','Reset',() => navigate(() => engine.reset(),false));
 }
 function requestJump(index) {
   const state=engine.snapshot();
-  if (state.elapsed===engine.phases[index*2].start && !state.running) return;
+  if (state.elapsed===engine.phases.find(p=>p.type==='speech' && p.stageIndex===index).start && !state.running) return;
   if (!state.running && state.elapsed===0) { navigate(() => engine.jump(index),false);return; }
   confirmAction('Go to section?',stageLabel(index),'Go to section',() => navigate(() => engine.jump(index),false));
 }
@@ -456,18 +499,19 @@ function openSettings() {
   if ($('confirm-dialog').open || $('settings-dialog').open) return;
   settingsWasRunning=engine.running;pause();
   $('pro-input').value=settings.pro;$('con-input').value=settings.con;$('theme-input').value=settings.theme;$('volume-input').value=String(settings.volume);$('volume-value').textContent=`${settings.volume}%`;$('awake-input').checked=settings.awake;
-  STAGES.forEach(stage => { if (stage.speaker) $(`speaker-${stage.speaker}`).value=settings.speakers[stage.speaker] || ''; });
-  STAGES.forEach((stage,i)=>$('duration-'+i).value=settings.durations[i]);
+  draftProfiles=structuredClone(profiles);draftFormat=settings.format;draftSegments=structuredClone(settings.segments);$('format-input').value=draftFormat;renderEditor();
   for(const key of ['changeover','amber','red']) $(key).value=settings[key];
   $('settings-dialog').showModal();
 }
 function closeSettings(save) {
   if (!$('settings-dialog').open) return;
   if (save) {
-    const speakers={};STAGES.forEach(stage => { if (stage.speaker) speakers[stage.speaker]=$(`speaker-${stage.speaker}`).value; });
+    collectDraft();
+    const speakers={};draftSegments.forEach(stage=>speakers[stage.speaker]=stage.name);
     const oldSchedule=scheduleSchema();
-    settings=normalizeSettings({...settings,durations:STAGES.map((s,i)=>Number($('duration-'+i).value)),changeover:Number($('changeover').value),amber:Number($('amber').value),red:Number($('red').value),pro:$('pro-input').value,con:$('con-input').value,theme:$('theme-input').value,volume:Number($('volume-input').value),awake:$('awake-input').checked,speakers});
-    if(oldSchedule!==scheduleSchema()){STAGES.forEach((stage,i)=>stage.seconds=settings.durations[i]);engine=new DebateEngine(STAGES,settings.changeover);settingsWasRunning=false;restored=false;saveSession();}
+    settings=normalizeSettings({...settings,format:draftFormat,segments:draftSegments,durations:draftSegments.map(s=>s.seconds),changeover:Number($('changeover').value),amber:Number($('amber').value),red:Number($('red').value),pro:$('pro-input').value,con:$('con-input').value,theme:$('theme-input').value,volume:Number($('volume-input').value),awake:$('awake-input').checked,speakers});
+    if(oldSchedule!==scheduleSchema()){STAGES=settings.segments;rebuildAgenda();engine=new DebateEngine(STAGES,settings.changeover);settingsWasRunning=false;restored=false;saveSession();}
+    profiles=draftProfiles;profiles[settings.format]=structuredClone(settings);safeSet('localStorage',PROFILES_KEY,profiles);
     safeSet('localStorage',SETTINGS_KEY,settings);applySettings();invalidate();
   }
   audio.cancel();$('settings-dialog').close();render();
@@ -493,7 +537,7 @@ ui.sound.addEventListener('click',() => {
   if (settings.sound) { if (engine.running) void audio.schedule();else void audio.test(settings.volume); } else audio.cancel();
 });
 ui.fullscreen.addEventListener('click',fullscreen);
-$('settings-button').addEventListener('click',openSettings);$('settings-close').addEventListener('click',() => closeSettings(false));$('settings-cancel').addEventListener('click',() => closeSettings(false));
+$('format-button').addEventListener('click',openSettings);$('settings-button').addEventListener('click',openSettings);$('settings-close').addEventListener('click',() => closeSettings(false));$('settings-cancel').addEventListener('click',() => closeSettings(false));
 $('settings-form').addEventListener('submit',event => { event.preventDefault();closeSettings(true); });
 $('settings-dialog').addEventListener('cancel',event => { event.preventDefault();closeSettings(false); });
 $('volume-input').addEventListener('input',() => { $('volume-value').textContent=`${$('volume-input').value}%`; });
