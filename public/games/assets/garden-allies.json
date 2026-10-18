@@ -2086,6 +2086,70 @@
       "displayHeight": 48,
       "sourceKind": "generated-character-interpretation",
       "notes": "Transparent generated game interpretation. Floating travel and bob are animated at runtime."
+    },
+    {
+      "id": "crawler-robot",
+      "image": "garden-allies/crawler-robot.webp",
+      "frameWidth": 543,
+      "frameHeight": 724,
+      "bodyHeight": 506.79999999999995,
+      "foot": [
+        271.5,
+        579.2
+      ],
+      "displayHeight": 45,
+      "crossfade": false,
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            543,
+            724
+          ],
+          "duration": 160
+        },
+        {
+          "rect": [
+            543,
+            0,
+            543,
+            724
+          ],
+          "duration": 160
+        },
+        {
+          "rect": [
+            1086,
+            0,
+            543,
+            724
+          ],
+          "duration": 160
+        },
+        {
+          "rect": [
+            1629,
+            0,
+            543,
+            724
+          ],
+          "duration": 160
+        }
+      ],
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "idle": [
+          1
+        ]
+      },
+      "sourceKind": "generated-mechanical-toy",
+      "notes": "Clearly mechanical toy crawler; four generated gait poses, not a human infant."
     }
   ]
 }

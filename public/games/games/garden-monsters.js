@@ -1,3 +1,4 @@
+import {createSkinMotion} from './garden-skin-motion.js';
 /** Sourced cameo artwork plus explicitly labeled generated zombie variants.
  * Cosmetic undead treatment and gait never change combat statistics. */
 const GM_FINITE=(value,fallback=0)=>Number.isFinite(Number(value))?Number(value):fallback;
@@ -15,6 +16,7 @@ export const GARDEN_MONSTER_TYPES=Object.freeze([
 ].map(type=>Object.freeze({...type,width:type.width*(type.height||GARDEN_MONSTER_HEIGHT)/370,height:type.height||GARDEN_MONSTER_HEIGHT,normalHeight:112,sourced:true})));
 
 export function createGardenMonsters({artwork={}}={}) {
+ const GM_skin=createSkinMotion();
  let GM_closed=false,GM_loading=true,GM_manifest=null,GM_draws=0,GM_lastPose=null;
  const GM_sprites=new Map(),GM_errors=[],GM_images=new Set(),GM_pending=new Set(),GM_playheads=new Map();
  const GM_controller=typeof AbortController==='function'?new AbortController():null;
@@ -58,11 +60,11 @@ export function createGardenMonsters({artwork={}}={}) {
   for(let n=0;n<clip.length;n++){const index=clip[n];if(at<sprite.durations[index])return{frame:sprite.frames[index],index};at-=sprite.durations[index];}
   return{frame:sprite.frames[clip[0]],index:clip[0]};
  }
- function draw(ctx,{id,type,monsterId,instanceId,x=0,y=0,scale=1,time=0,hp=1,maxHp=1,hit=0,bite=0,walk,death=0,clip}={}){
+ function draw(ctx,{id,type,monsterId,instanceId,x=0,y=0,scale=1,time=0,hp=1,maxHp=1,hit=0,bite=0,walk,death=0,clip,action}={}){
   if(GM_closed||!ctx)return false;
   const key=monsterId||type?.monsterId||type?.id||(typeof type==='string'?type:null)||id,sprite=GM_sprites.get(key);
   if(!sprite)return false;
-  const mode=death>0?'death':hit>0?'hurt':bite>0?'attack':walk===false||walk===0?'idle':'walk';
+  const mode=death>0?'death':hit>0?'hurt':action&&sprite.clips?.[action]?action:bite>0?'attack':walk===false||walk===0?'idle':'walk';
   const clock=GM_FINITE(time),entity=instanceId||key;
   let playhead=GM_playheads.get(entity);
   if(!playhead||clock<playhead.lastTime){playhead={mode,start:clock,lastTime:clock};GM_playheads.set(entity,playhead);if(GM_playheads.size>2048)GM_playheads.delete(GM_playheads.keys().next().value);}
@@ -99,7 +101,7 @@ export function createGardenMonsters({artwork={}}={}) {
    if(sprite.undead&&!sprite.generatedZombie){
     ctx.transform(1,0,(sprite.flipX?-1:1)*.045,.96,0,0);
    }
-   ctx.drawImage(sprite.img,...source.rect,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
+   if(sprite.radiation||!GM_skin.draw(ctx,sprite.img,source.rect,{id:key,time:clock,x:-foot[0]*factor,y:-foot[1]*factor,width:sprite.frameWidth*factor,height:sprite.frameHeight*factor,mode,action,hit:hurt,nativeFrames:sprite.frames.length,pixelArt:sprite.pixelArt}))ctx.drawImage(sprite.img,...source.rect,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
    ctx.restore();
   };
   // Exactly one silhouette per actor: alpha crossfades produce ghost bodies.
@@ -107,6 +109,8 @@ export function createGardenMonsters({artwork={}}={}) {
   ctx.restore();GM_draws++;GM_counts[key]=(GM_counts[key]||0)+1;
   GM_lastPose={id:key,time:GM_FINITE(time),mode,sourceFrame:selected.index,sourceFrameCount:sprite.frames.length,scale:s,height:displayHeight*s};return true;
  }
- function destroy(){if(GM_closed)return;GM_closed=true;GM_controller?.abort();for(const img of GM_images){img.onload=img.onerror=null;try{img.src='';}catch{}}for(const done of GM_pending)done();GM_images.clear();GM_sprites.clear();GM_playheads.clear();GM_lastPose=null;}
- return{draw,destroy,release(instanceId){GM_playheads.delete(instanceId);},has:id=>!GM_closed&&GM_sprites.has(id),dimensions(id){const s=GM_sprites.get(id);return s?{height:s.displayHeight||GARDEN_MONSTER_HEIGHT,width:s.frameWidth*(s.displayHeight||GARDEN_MONSTER_HEIGHT)/s.bodyHeight}:null;},getState(){return{ready:!GM_closed&&!GM_loading&&GM_sprites.size===(GM_manifest?.characters.length||0)&&GM_errors.length===0,loading:!GM_closed&&GM_loading,closed:GM_closed,errors:[...GM_errors],types:[...GM_sprites.keys()],sourceAssets:true,animatedTypes:[...GM_sprites.values()].filter(s=>s.frames.length>1).map(s=>s.id),staticTypes:[...GM_sprites.values()].filter(s=>s.frames.length===1).map(s=>s.id),interpolatedTypes:[],frameCounts:Object.fromEntries([...GM_sprites.values()].map(s=>[s.id,s.frames.length])),bitmapDraws:GM_draws,vectorDraws:0,drawCounts:{...GM_counts},lastPose:GM_lastPose};}};
+ function destroy(){if(GM_closed)return;GM_closed=true;GM_skin.clear();GM_controller?.abort();for(const img of GM_images){img.onload=img.onerror=null;try{img.src='';}catch{}}for(const done of GM_pending)done();GM_images.clear();GM_sprites.clear();GM_playheads.clear();GM_lastPose=null;}
+ return{draw,destroy,release(instanceId){GM_playheads.delete(instanceId);},has:id=>!GM_closed&&GM_sprites.has(id),dimensions(id){const s=GM_sprites.get(id);return s?{height:s.displayHeight||GARDEN_MONSTER_HEIGHT,width:s.frameWidth*(s.displayHeight||GARDEN_MONSTER_HEIGHT)/s.bodyHeight}:null;},getState(){return{ready:!GM_closed&&!GM_loading&&GM_sprites.size===(GM_manifest?.characters.length||0)&&GM_errors.length===0,loading:!GM_closed&&GM_loading,closed:GM_closed,errors:[...GM_errors],types:[...GM_sprites.keys()],sourceAssets:true,animatedTypes:[...GM_sprites.values()].filter(s=>s.frames.length>1).map(s=>s.id),staticTypes:[...GM_sprites.values()].filter(s=>s.frames.length===1).map(s=>s.id),interpolatedTypes:[],proceduralMotion:GM_skin.getState(),frameCounts:Object.fromEntries([...GM_sprites.values()].map(s=>[s.id,s.frames.length])),bitmapDraws:GM_draws,vectorDraws:0,drawCounts:{...GM_counts},lastPose:GM_lastPose};}};
 }
+
+

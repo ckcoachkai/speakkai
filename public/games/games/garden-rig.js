@@ -21,6 +21,19 @@ export function createGardenRenderer({artwork = {}} = {}) {
   const embedded = artwork.gardenRigImages || {};
   const base = typeof document !== 'undefined' ? document.baseURI : 'http://localhost/';
   let drawnPlants = 0, drawnZombies = 0;
+  // Store joint poses, never raster ghosts. A clip change eases from the last
+  // complete body pose into the new movement without severing or doubling parts.
+  const poseStates = new WeakMap();
+  function poseTransition(entity, key, clip, time) {
+    if (!entity || typeof entity !== 'object') return null;
+    let state = poseStates.get(entity);
+    if (!state || state.key !== key) { state = {key,clip,poses:new Map(),from:null,start:time}; poseStates.set(entity,state); }
+    if (state.clip !== clip) { state.from = state.poses; state.poses = new Map(); state.start = time; state.clip = clip; }
+    const progress = clamp((time - state.start) / .16,0,1);
+    if(progress >= 1)state.from = null;
+    state.mix = progress*progress*(3-2*progress);
+    return state;
+  }
 
   function imageURL(name) {
     if (embedded[name]) return embedded[name];
@@ -140,6 +153,15 @@ export function createGardenRenderer({artwork = {}} = {}) {
       if (opts.mob && !visibleZombie(tr,opts.mob,key)) continue;
       const f = sampled(tr,frame);
       if (!f) continue;
+      const previous = opts.poseState?.from?.get(tr.name);
+      if(previous && previous[8] === f[8]) {
+        for(let j=0;j<6;j++) {
+          let from=previous[j];
+          if(j===2||j===3){while(from-f[j]>180)from-=360;while(from-f[j]<-180)from+=360;}
+          f[j]=from+(f[j]-from)*opts.poseState.mix;
+        }
+      }
+      opts.poseState?.poses.set(tr.name,f.slice());
       let name = f[8];
       if (opts.mob) name = armorImage(name,opts.mob);
       if (key === 'walnut' || key === 'tallnut') {
@@ -204,7 +226,7 @@ export function createGardenRenderer({artwork = {}} = {}) {
     if(key==='potato'&&(clip==='unarmed'||clip==='mashed'))frame=0;
     if(key==='cherrybomb')frame=clamp(finite(defender.fuseAge)/Math.max(.001,finite(defender.fuseDuration,1)),0,1)*(frames-1);
     ctx.save();
-    drawTracks(ctx,key,clip,frame,{stage});
+    drawTracks(ctx,key,clip,frame,{stage,poseState:poseTransition(defender,key,clip,finite(time))});
     ctx.filter='none';
     if(key!=='potato'&&key!=='cherrybomb')botanicalDamage(ctx,rig,stage,seed);
     ctx.restore();
@@ -229,7 +251,7 @@ export function createGardenRenderer({artwork = {}} = {}) {
     const frames=rig.clips[clip][0].frames.length;
     // Original knee, foot, forearm, jaw and head keyframes provide the drag gait.
     const frame=t*rate+finite(mob.pose)*frames/TAU;
-    drawTracks(ctx,key,clip,frame,{mob});
+    drawTracks(ctx,key,clip,frame,{mob,poseState:poseTransition(mob,key,clip,finite(time))});
     drawnZombies++;
     return true;
   }
@@ -240,5 +262,5 @@ export function createGardenRenderer({artwork = {}} = {}) {
     for(const finish of pending)finish();
     images.clear();ready.clear();failed.clear();required.clear();manifest=null;
   }
-  return {drawPlant,drawZombie,destroy,getState(){return {ready:!closed&&!!manifest&&!loading&&failed.size===0,loading:!closed&&loading,closed,parts:ready.size,totalParts:manifest?Object.keys(manifest.assets).length:0,failed:[...failed],error,extraError,extraLoaded,rigs:manifest?Object.keys(manifest.rigs).filter(available):[],drawnPlants,drawnZombies};}};
+  return {drawPlant,drawZombie,destroy,getState(){return {ready:!closed&&!!manifest&&!loading&&failed.size===0,loading:!closed&&loading,closed,parts:ready.size,totalParts:manifest?Object.keys(manifest.assets).length:0,failed:[...failed],error,extraError,extraLoaded,rigs:manifest?Object.keys(manifest.rigs).filter(available):[],drawnPlants,drawnZombies,jointInterpolation:"continuous",clipTransitionMs:160};}};
 }

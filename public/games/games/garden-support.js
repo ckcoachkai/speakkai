@@ -1,6 +1,7 @@
+import { drawGardenMecha, mechaPose, setMechaTexture } from './garden-mecha.js?v=20261018-life';
 // Lane-owned airborne allies and readable, jointed cartoon crawlers.
-export function createGardenSupport({allies,damage,launch,log,cue}) {
- const bursts=[];
+export function createGardenSupport({allies,damage,launch,log,cue,artwork={}}) {
+ const bursts=[];if(artwork.mechaTexture)setMechaTexture(artwork.mechaTexture,artwork.mechaRegions);
  const live=lane=>lane.mobs.filter(m=>!m.dead);
  function blast(lane,x,radius,amount,wall,kind){
   for(const mob of live(lane))if(Math.abs(mob.x-x)<=radius){launch(mob,wall);damage(lane,mob,amount,kind);}
@@ -15,8 +16,9 @@ export function createGardenSupport({allies,damage,launch,log,cue}) {
   if(f){
    f.x=.40+Math.sin((wall-f.born)/2400)*.10;
    const target=live(lane).filter(m=>m.x>f.x+.04).sort((x,y)=>x.x-y.x)[0];
-   if(target&&wall>=f.nextLaser){f.nextLaser=wall+650;a.beams.push({id:f.id,x:f.x,target:target.x,wall});damage(lane,target,9,'gundamLaser');cue(lane,'laser');}
-   if(target&&wall>=f.nextBomb){f.nextBomb=wall+4300;a.bombs.push({id:f.id,x:f.x,target:target.x,wall});}
+   f.target=target?.x??f.x+.3;
+   if(target&&wall>=f.nextLaser){f.nextLaser=wall+650;f.lastShot=wall;const origin=mechaPose(mechaOptions(lane,f,wall)).muzzle;a.beams.push({id:f.id,x:f.x,target:target.x,wall,origin});damage(lane,target,9,'gundamLaser');cue(lane,'laser');}
+   if(target&&wall>=f.nextBomb){f.nextBomb=wall+4300;f.lastBomb=wall;a.bombs.push({id:f.id,x:f.x,target:target.x,wall});}
    if(wall-f.born>11000)a.flyer=null;
   }
   a.beams=a.beams.filter(b=>wall-b.wall<150);
@@ -32,29 +34,21 @@ export function createGardenSupport({allies,damage,launch,log,cue}) {
   }
   a.crawlers=a.crawlers.filter(c=>!c.done&&c.x<1.2);
  }
- function geometry(lane,id,x,wall){const size=allies.dimensions(id),scale=lane.zombieScale*.82;return{x:lane.plantX+x*lane.travel,y:Math.max(36+(size?.bodyHeight||60)*scale,lane.floor-95*lane.spriteScale)+Math.sin(wall/330)*2,scale,w:(size?.width||60)*scale,h:(size?.bodyHeight||60)*scale};}
+ function geometry(lane,id,x,wall){const size=allies.dimensions(id),scale=Math.max(.42,lane.zombieScale*.82);return{x:lane.plantX+x*lane.travel,y:Math.max(36+(size?.bodyHeight||60)*scale,lane.floor-95*lane.spriteScale)+Math.sin(wall/330)*2,scale,w:(size?.width||60)*scale,h:(size?.bodyHeight||60)*scale};}
+ function mechaOptions(lane,f,wall){const g=geometry(lane,f.id,f.x,wall);return{id:f.id,x:g.x,y:g.y,height:Math.max(48,g.h),time:wall/1000,targetX:lane.plantX+(f.target??f.x+.3)*lane.travel,targetY:lane.floor-24*lane.zombieScale,shotAge:wall-(f.lastShot??-99999),bombAge:wall-(f.lastBomb??-99999)};}
  function crawler(ctx,c,lane,wall){
-  const scale=Math.max(.45,lane.spriteScale*.72),x=lane.plantX+c.x*lane.travel;
-  ctx.save();ctx.translate(x,lane.floor);ctx.scale(scale,scale);
-  const charge=c.charging!==null,phase=charge?0:c.phase,skin='#f2c3a3',line='#785c58';
-  if(charge){ctx.shadowColor=Math.sin(wall/85)>0?'#ff303d':'#63ff62';ctx.shadowBlur=20;ctx.fillStyle=ctx.shadowColor;ctx.globalAlpha=.28;ctx.beginPath();ctx.arc(0,-16,30+Math.sin(wall/90)*3,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;ctx.shadowBlur=0;}
-  function limb(points,color,width){ctx.strokeStyle=line;ctx.lineWidth=width+2;ctx.lineCap='round';for(const w of[width+2,width]){ctx.lineWidth=w;ctx.strokeStyle=w===width?color:line;ctx.beginPath();points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();}}
-  // Opposite hand/knee advance together; stance half stays on the floor.
-  for(const side of[-1,1]){const p=phase+(side===1?0:Math.PI),stride=Math.cos(p)*6,lift=Math.max(0,Math.sin(p))*5;
-   limb([[-15,-17],[-23-stride,-3-lift],[-33-stride,-1-lift]],side===1?skin:'#c99b80',7);
-   limb([[0,-18],[9+stride*.4,-11-lift],[18+stride,-2-lift]],side===1?skin:'#c99b80',6);
-   if(side===-1){ctx.fillStyle=skin;ctx.beginPath();ctx.ellipse(-9,-19,19,11,.10,0,Math.PI*2);ctx.fill();ctx.fillStyle='#f8fbff';ctx.beginPath();ctx.ellipse(-21,-18,10,11,-.2,0,Math.PI*2);ctx.fill();}
-  }
-  ctx.fillStyle=skin;ctx.strokeStyle=line;ctx.lineWidth=1.5;ctx.beginPath();ctx.ellipse(15,-28,12,12,.15,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle='#503c32';ctx.beginPath();ctx.arc(19,-30,1.8,0,7);ctx.fill();ctx.strokeStyle='#704535';ctx.beginPath();ctx.arc(19,-25,4,0,.9);ctx.stroke();ctx.beginPath();ctx.moveTo(10,-39);ctx.quadraticCurveTo(11,-46,17,-40);ctx.stroke();ctx.restore();
+  const x=lane.plantX+c.x*lane.travel,scale=Math.max(.50,lane.spriteScale*.80),charge=c.charging!==null;
+  ctx.save();if(charge){ctx.shadowColor=Math.sin(wall/150)>0?'#ff6851':'#72e694';ctx.shadowBlur=14;}
+  allies.draw(ctx,{id:'crawler-robot',x,y:lane.floor,scale,time:charge?0:c.phase/(Math.PI*2)*.64,clip:charge?'idle':'walk'});ctx.restore();
  }
  function draw(ctx,lanes,wall){
   for(const lane of lanes){const a=lane.airSupport;if(!a)continue;
    for(const c of a.crawlers)crawler(ctx,c,lane,wall);
-   if(a.flyer){const g=geometry(lane,a.flyer.id,a.flyer.x,wall);allies.draw(ctx,{id:a.flyer.id,...g,time:wall/1000});}
-   for(const b of a.beams){const g=geometry(lane,b.id,b.x,b.wall);ctx.save();ctx.globalAlpha=1-(wall-b.wall)/150;ctx.strokeStyle='#9af8ff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(g.x+g.w*.40,g.y-g.h*.12);ctx.lineTo(lane.plantX+b.target*lane.travel,lane.floor-24*lane.zombieScale);ctx.stroke();ctx.restore();}
+   if(a.flyer)drawGardenMecha(ctx,mechaOptions(lane,a.flyer,wall));
+   for(const b of a.beams){const g=geometry(lane,b.id,b.x,b.wall);ctx.save();ctx.globalAlpha=1-(wall-b.wall)/150;ctx.strokeStyle='#9af8ff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(b.origin?.x??g.x,b.origin?.y??g.y);ctx.lineTo(lane.plantX+b.target*lane.travel,lane.floor-24*lane.zombieScale);ctx.stroke();ctx.restore();}
    for(const b of a.bombs){const g=geometry(lane,b.id,b.x,b.wall),p=Math.min(1,(wall-b.wall)/850),x=g.x+(lane.plantX+b.target*lane.travel-g.x)*p,y=g.y+(lane.floor-g.y)*p*p;ctx.save();ctx.fillStyle='#313c4b';ctx.strokeStyle='#ffdd61';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(x,y,5,8,-.3,0,7);ctx.fill();ctx.stroke();ctx.restore();}
   }
-  for(let i=bursts.length-1;i>=0;i--){const b=bursts[i],p=(wall-b.wall)/650;if(p>=1){bursts.splice(i,1);continue;}const lane=lanes[b.lane];if(!lane)continue;const x=lane.plantX+b.x*lane.travel,y=lane.floor,reach=Math.min(155,Math.max(50,lane.travel*(b.kind==='goblin'?.11:.065)));ctx.save();ctx.globalAlpha=(1-p)*.65;const glow=ctx.createRadialGradient(x,y-12,0,x,y-12,15+reach*p);glow.addColorStop(0,'#fff4b0');glow.addColorStop(.35,'#ff9d36');glow.addColorStop(1,'#ff4a1400');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(x,y-12,15+reach*p,0,7);ctx.fill();ctx.globalAlpha=1-p;ctx.strokeStyle=b.kind==='crawlerCherry'?'#ffcc58':'#a4ecff';ctx.lineWidth=5*(1-p)+1;ctx.beginPath();ctx.ellipse(x,y-4,15+reach*p,6+14*p,0,0,7);ctx.stroke();for(let j=0;j<8;j++){const t=j*Math.PI/4;ctx.fillStyle=j%2?'#ff745a':'#fff2af';ctx.beginPath();ctx.arc(x+Math.cos(t)*p*reach,y-12-Math.abs(Math.sin(t))*p*reach*.7,5*(1-p),0,7);ctx.fill();}ctx.restore();}
+  for(let i=bursts.length-1;i>=0;i--){const b=bursts[i],p=(wall-b.wall)/900;if(p>=1){bursts.splice(i,1);continue;}const lane=lanes[b.lane];if(!lane)continue;const x=lane.plantX+b.x*lane.travel,y=lane.floor,reach=Math.min(220,Math.max(90,lane.travel*(b.kind==='crawlerCherry'?1.5/9:b.kind==='goblin'?.15:.11)));ctx.save();ctx.globalAlpha=(1-p)*.65;const glow=ctx.createRadialGradient(x,y-12,0,x,y-12,15+reach*p);glow.addColorStop(0,'#fff4b0');glow.addColorStop(.35,'#ff9d36');glow.addColorStop(1,'#ff4a1400');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(x,y-12,15+reach*p,0,7);ctx.fill();ctx.globalAlpha=1-p;ctx.strokeStyle=b.kind==='crawlerCherry'?'#ffcc58':'#a4ecff';ctx.lineWidth=5*(1-p)+1;ctx.beginPath();ctx.ellipse(x,y-4,15+reach*p,6+14*p,0,0,7);ctx.stroke();for(let j=0;j<14;j++){const t=j*Math.PI/7;ctx.fillStyle=j%2?'#ff745a':'#fff2af';ctx.beginPath();ctx.arc(x+Math.cos(t)*p*reach,y-12-Math.abs(Math.sin(t))*p*reach*.7,5*(1-p),0,7);ctx.fill();}ctx.restore();}
  }
  function sky(ctx,width,height,wall){
   const ids=['sky-haku','sky-spirit','sky-haku','sky-spirit','sky-haku','sky-spirit'];
