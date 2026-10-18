@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-18T04:01:16.851293+00:00",
+  "updatedAt": "2026-10-18T04:16:15.695383+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1127,6 +1127,14 @@
             {
               "name": "Charles",
               "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-18&student=charles"
+            },
+            {
+              "name": "James",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-18&student=james"
+            },
+            {
+              "name": "Berlingo",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-18&student=berlingo"
             }
           ]
         }
