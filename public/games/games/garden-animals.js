@@ -1,6 +1,7 @@
 /** Small, original Canvas animal avatars. Local origin is between the feet.
  * No portrait/gender inference, external assets, random numbers, or timers. */
 export const GARDEN_ANIMALS = Object.freeze(['cat','dog','rabbit','lion','tiger','panda','cheetah','puma','leopard','eagle']);
+export const GARDEN_ANIMAL_DAMAGE_LABELS = Object.freeze(['Healthy','First nibble','Two bites','Three bites','Four bites','Five bites']);
 
 const GA_TAU = Math.PI * 2;
 const GA_CLAMP = (n,a,b) => Math.max(a,Math.min(b,Number.isFinite(Number(n))?Number(n):a));
@@ -155,21 +156,136 @@ function GA_FACE(ctx,s,p,t,stage,bruise,hurt,eaten) {
  if(hurt>.2){ctx.save();ctx.globalAlpha=hurt*.45;GA_ELL(ctx,14,-43,3.2,2.1,'#f1b1a6');ctx.restore();}
 }
 
+function GA_DAMAGE_CLIP(ctx,s,damage) {
+ if(!damage)return;
+ const ear=s==='rabbit'?[-13,-78]:s==='dog'?[-24,-52]:s==='lion'?[-25,-57]:s==='eagle'?[-25,-14]:s==='cat'||s==='puma'?[-18,-71]:[-20,-67];
+ const holes=[[ear[0],ear[1],1.4+damage*1.05]];
+ if(damage>=2)holes.push([s==='lion'?25:20,-43,1+damage*.9]);
+ if(damage>=3)holes.push([s==='eagle'?-24:-21,-22,1+damage*.8]);
+ if(damage>=4)holes.push([14,-13,1+damage*.72]);
+ if(damage>=5)holes.push([1,-69,3.6]);
+ // Intersect successive even-odd clips: overlapping bite holes subtract as
+ // a union. No destination-out operation can erase the lawn underneath.
+ for(const [x,y,r] of holes){
+  ctx.beginPath();ctx.rect(-40,-90,80,96);ctx.moveTo(x+r,y);ctx.arc(x,y,r,0,GA_TAU);ctx.clip('evenodd');
+  if(r>3){ctx.beginPath();ctx.rect(-40,-90,80,96);ctx.moveTo(x+r*.7+1.4,y+r*.7);ctx.arc(x+r*.7,y+r*.7,1.4,0,GA_TAU);ctx.clip('evenodd');}
+ }
+}
+
 /** Draw one complete connected animal. emotionStage is 0–9, bruiseStage 0–4.
  * Stages: calm, happy, curious, focused, worried, startled, scared, tired,
- * eyes closed, teary. Damage is cosmetic and never changes the species. */
-export function drawGardenAnimal(ctx,{species='cat',time=0,emotionStage,bruiseStage=0,hp=1,maxHp=1,color,hurt=0,eaten=0}={}) {
+ * eyes closed, teary. damageStage0–5 is healthy plus five cartoon bites. */
+export function drawGardenAnimal(ctx,{species='cat',time=0,emotionStage,bruiseStage=0,damageStage,hp=1,maxHp=1,color,hurt=0,eaten=0}={}) {
  if(!ctx||!Object.prototype.hasOwnProperty.call(GA_PALETTES,species))return false;
  const p=GA_PALETTES[species],t=Number.isFinite(Number(time))?Number(time):0;
  const ratio=GA_CLAMP(Number(hp)/Math.max(.001,Number(maxHp)||1),0,1);
- const stage=Math.round(GA_CLAMP(emotionStage??Math.floor((1-ratio)*9),0,9));
+ const damage=Math.round(GA_CLAMP(damageStage??Math.ceil((1-ratio)*5-1e-8),0,5));
+ const fear=[0,4,5,6,6,9][damage];
+ const stage=Math.max(fear,Math.round(GA_CLAMP(emotionStage??0,0,9)));
  const bruise=Math.round(GA_CLAMP(bruiseStage,0,4)),hit=GA_CLAMP(hurt,0,1),gone=GA_CLAMP(eaten,0,1);
  ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
  GA_ELL(ctx,0,-1.7,19,1.65,'rgba(30,42,46,.12)');
- ctx.translate(Math.sin(t*34)*hit*1.4,-Math.abs(Math.sin(t*2.8))*.6);
+ ctx.translate(Math.sin(t*34)*hit*1.4+Math.sin(t*25)*Math.max(0,damage-2)*.18,-Math.abs(Math.sin(t*2.8))*.6);
+ GA_DAMAGE_CLIP(ctx,species,damage);
  GA_BODY(ctx,species,p,t,stage,hit);
  // A collar is an integrated wearable accent, never a floating name badge.
  if(typeof color==='string'&&/^#[\da-f]{3}([\da-f]{3})?$/i.test(color)&&species!=='eagle')GA_PATH(ctx,[['moveTo',-9,-33],['quadraticCurveTo',0,-29,9,-33]],null,color,2.3);
  GA_FACE(ctx,species,p,t,stage,bruise,hit,gone);
+ if(damage>=3){
+  const yy=-58+Math.sin(t*4)*.6;
+  GA_PATH(ctx,[['moveTo',21,yy-3],['quadraticCurveTo',25,yy+2,22,yy+3],['quadraticCurveTo',19,yy+2,21,yy-3]],'#87d9f2');
+  GA_ELL(ctx,21.5,yy+.5,.55,1.1,'#f6fdff');
+ }
+ ctx.restore();return true;
+}
+
+function GA_EASE(value){const a=GA_CLAMP(value,0,1);return a*a*(3-2*a);}
+function GA_LERP(a,b,value){return a+(b-a)*value;}
+function GA_LIMB(ctx,start,end,upper,lower,bend,width,p) {
+ const dx=end[0]-start[0],dy=end[1]-start[1],raw=Math.hypot(dx,dy)||.001;
+ const d=Math.min(raw,upper+lower-.001),ux=dx/raw,uy=dy/raw;
+ const along=(upper*upper-lower*lower+d*d)/(2*d),across=Math.sqrt(Math.max(0,upper*upper-along*along))*bend;
+ const joint=[start[0]+ux*along-uy*across,start[1]+uy*along+ux*across];
+ const finish=[start[0]+ux*d,start[1]+uy*d];
+ for(const [a,b] of [[start,joint],[joint,finish]]){
+  GA_LINE(ctx,a[0],a[1],b[0],b[1],p.ink,width+1.8);
+  const g=ctx.createLinearGradient(a[0]-width/2,a[1],a[0]+width/2,b[1]);g.addColorStop(0,p.light);g.addColorStop(.6,p.fur);g.addColorStop(1,p.shade);
+  GA_LINE(ctx,a[0],a[1],b[0],b[1],g,width);
+ }
+ GA_ELL(ctx,joint[0],joint[1],width*.49,width*.49,p.fur);
+ return finish;
+}
+
+/** Original animal dance rig. ~220px tall at rest, long articulated limbs.
+ * Square: eight counts of right/right-touch, left/left-touch, then alternating
+ * heel digs and arm sweeps. Shuffle: side T-step toe/heel pivots and knee lifts.
+ * These are small visual adaptations, not reproductions of a named trend. */
+export function drawGardenDancer(ctx,{species='cat',time=0,bpm=120,style='square',color,reducedMotion=false}={}) {
+ if(!ctx||!Object.prototype.hasOwnProperty.call(GA_PALETTES,species))return false;
+ const p=GA_PALETTES[species],t=Number.isFinite(Number(time))?Number(time):0;
+ const beat=reducedMotion?0:((t*GA_CLAMP(bpm,30,240)/60)%16+16)%16;
+ const whole=Math.floor(beat),fraction=beat-whole,ease=GA_EASE(fraction);
+ const shuffle=style==='shuffle',pulse=Math.sin(fraction*Math.PI),odd=whole%2;
+ let rootX=0,bob=0;
+ const feet=[[-12,-5,0],[12,-5,0]];
+ if(!reducedMotion&&shuffle){
+  rootX=Math.sin(beat*Math.PI/4)*10;bob=Math.abs(Math.sin(beat*Math.PI))*2.4;
+  for(let i=0;i<2;i++){
+   const side=i?1:-1,active=odd===i;
+   feet[i]=[side*(13+Math.sin(beat*Math.PI)*5),-5-(active?pulse*23:0),side*Math.sin(beat*Math.PI)*.32];
+  }
+ }else if(!reducedMotion&&beat<8){
+  const right=[12,24,24,36,36,36,24,24,12],left=[-12,-12,0,0,12,0,0,-12,-12];
+  const vals=[left,right];
+  for(let i=0;i<2;i++){
+   const moving=vals[i][whole]!==vals[i][whole+1];
+   feet[i]=[GA_LERP(vals[i][whole],vals[i][whole+1],ease),-5-(moving?pulse*7:0),0];
+  }
+  rootX=(feet[0][0]+feet[1][0])/2;bob=pulse*1.7;
+  // Hands stay linked to the torso; feet are expressed in pelvis coordinates.
+  feet[0][0]-=rootX;feet[1][0]-=rootX;
+ }else if(!reducedMotion){
+  bob=Math.abs(Math.sin(beat*Math.PI))*1.4;
+  const active=Math.floor((beat-8)/2)%2,cycle=(beat-8)%2,lift=Math.sin(cycle*Math.PI/2)**2;
+  feet[active]=[(active?1:-1)*(12+lift*6),-5-lift*8,(active?1:-1)*lift*.3];
+ }
+ ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+ GA_ELL(ctx,rootX,-1.6,32,1.55,'rgba(30,42,46,.14)');ctx.translate(rootX,0);
+ const hipY=-87-bob,shoulderY=-148-bob;
+ // Full-length limbs are painted as overlapping connected capsules with
+ // a solved elbow/knee. No image slices or disconnected moving parts.
+ for(let i=0;i<2;i++){
+  const side=i?1:-1,foot=feet[i],hip=[side*10,hipY];
+  const end=GA_LIMB(ctx,hip,[foot[0],foot[1]-2],46,44,-side,11,p);
+  ctx.save();ctx.translate(end[0],end[1]+1);ctx.rotate(foot[2]);
+  GA_ELL(ctx,side*1.5,0,9,4.8,species==='panda'?p.ink:species==='eagle'?'#efb647':p.fur,p.ink,.9);
+  for(let j=-1;j<=1;j++)GA_LINE(ctx,j*2+side*2,-.6,j*2+side*2,2,p.shade,.7);ctx.restore();
+ }
+ // A long torso and neck preserve adult proportions without changing species.
+ const bodyP=species==='eagle'?{...p,fur:'#876448',light:'#b6966b',shade:'#654933'}:p;
+ GA_PATH(ctx,[['moveTo',-9,-159-bob],['quadraticCurveTo',-19,-154-bob,-20,-144-bob],['lineTo',-15,-106-bob],['quadraticCurveTo',-20,-89-bob,-12,-83-bob],['quadraticCurveTo',0,-78-bob,12,-83-bob],['quadraticCurveTo',20,-89-bob,15,-106-bob],['lineTo',20,-144-bob],['quadraticCurveTo',19,-154-bob,9,-159-bob],['closePath']],GA_FUR(ctx,bodyP,0,-126-bob,51),p.ink,1.3);
+ GA_ELL(ctx,0,-122-bob,10,26,species==='eagle'?'#c9b18d':p.muzzle);
+ if(species==='tiger')for(const side of[-1,1])for(let j=0;j<5;j++)GA_LINE(ctx,side*17,-143-bob+j*10,side*11,-140-bob+j*10,p.ink,2.4);
+ if(species==='cheetah'||species==='leopard')for(const [x,y]of[[-14,-140],[13,-132],[-13,-117],[14,-104],[-9,-91]]){
+  if(species==='leopard')GA_ROSETTE(ctx,x,y-bob,2,p.ink);else GA_ELL(ctx,x,y-bob,1.5,2,p.ink);
+ }
+ const accent=typeof color==='string'&&/^#[\da-f]{3}([\da-f]{3})?$/i.test(color)?color:'#459cb7';
+ GA_PATH(ctx,[['moveTo',-14,-100-bob],['quadraticCurveTo',0,-95-bob,14,-100-bob]],null,accent,3);
+ for(let i=0;i<2;i++){
+  const side=i?1:-1,phase=beat*Math.PI/4;
+  let handX=side*(40+Math.sin(phase)*13),handY=-119-bob+side*Math.cos(phase)*15;
+  if(beat>=12&&!shuffle){
+   const reach=Math.sin((beat-12)*Math.PI/4)**2;
+   handX=GA_LERP(handX,side*(42+Math.sin(phase)*9),reach);handY=GA_LERP(handY,-166-bob+Math.cos(phase)*13,reach);
+  }
+  if(shuffle){handX=side*(33+Math.cos(beat*Math.PI/2)*9);handY=-127-bob+side*Math.sin(beat*Math.PI/2)*19;}
+  if(reducedMotion){handX=side*27;handY=-94;}
+  const paw=GA_LIMB(ctx,[side*18,shoulderY],[handX,handY],35,34,side,9.5,bodyP);
+  GA_ELL(ctx,paw[0],paw[1],6.5,7.5,species==='panda'?p.ink:species==='eagle'?'#b08b62':p.light,p.ink,.9);
+  if(species==='eagle')for(let j=0;j<3;j++)GA_LINE(ctx,paw[0]-3+j*3,paw[1]-1,paw[0]-2+j*3,paw[1]+5,'#7c6049',.85);
+ }
+ // The original recognizable head sits on the connected neck and smiles.
+ ctx.save();ctx.translate(0,-124-bob);ctx.scale(1.12,1.12);ctx.rotate(reducedMotion?0:Math.sin(beat*Math.PI/4)*.045);
+ GA_FACE(ctx,species,p,reducedMotion?0:t,Math.floor(beat/4)%2?1:0,0,0,0);ctx.restore();
  ctx.restore();return true;
 }

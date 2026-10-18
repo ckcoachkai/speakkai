@@ -119,7 +119,7 @@ export function createGardenMonsters({artwork={}}={}) {
    ctx.drawImage(sprite.surface,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
   }else paint(frame);
   playhead.selected=selected;
-  ctx.restore();GM_draws++;GM_counts[key]++;
+  ctx.restore();GM_draws++;GM_counts[key]=(GM_counts[key]||0)+1;
   GM_lastPose={id:key,time:GM_FINITE(time),mode,sourceFrame:selected.index,sourceFrameCount:sprite.frames.length,scale:s,height:displayHeight*s};return true;
  }
  function destroy(){if(GM_closed)return;GM_closed=true;GM_controller?.abort();for(const img of GM_images){img.onload=img.onerror=null;try{img.src='';}catch{}}for(const done of GM_pending)done();GM_images.clear();GM_sprites.clear();GM_playheads.clear();GM_lastPose=null;}

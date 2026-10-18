@@ -214,6 +214,7 @@ export function createGardenRenderer({artwork = {}} = {}) {
   function zombieKey(mob) {
     // Losing armor changes an overlay only, keeping the same original body.
     const visual=String(mob.visualType || '').toLowerCase();
+    if(visual==='dancing'||visual==='backup')return visual;
     if(visual.includes('football')||finite(mob.type?.armor)===3)return 'football';
     if(visual.includes('newspaper')||visual.includes('paper'))return 'newspaper';
     if(visual.includes('runner')||visual.includes('pole'))return 'runner';
