@@ -1,8 +1,8 @@
-import { GARDEN_ANIMALS, drawGardenAnimal } from './garden-animals.js?v=20261018-undead';
+import { GARDEN_ANIMALS, drawGardenAnimal } from './garden-animals.js?v=20261018-crisp';
 import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261016-lanes';
 import { GARDEN_RULES, PLANT_BY_ID, ZOMBIE_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
-import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261018-undead';
+import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261018-crisp';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.

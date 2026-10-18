@@ -83,48 +83,36 @@ export function createGardenMonsters({artwork={}}={}) {
   if(sprite.motion==='waddle'&&fall===0){const phase=clock*6;ctx.translate(0,-Math.abs(Math.sin(phase))*3);ctx.rotate(Math.sin(phase)*.035);}
   if(hurt>0)ctx.translate(Math.sin(GM_FINITE(time)*61)*hurt*6,-hurt*2);
   if(fall>0&&!sprite.clips?.death){ctx.rotate(fall*.9);ctx.globalAlpha*=1-fall*.75;}
-  ctx.filter='saturate('+(1-stage*.07)+') brightness('+(1+hurt*.45-stage*.015)+')';
+  // Keep source colors and shading intact, including at low health.
+  ctx.filter=hurt>0?'brightness('+(1+hurt*.25)+')':'none';
   ctx.imageSmoothingEnabled=!sprite.pixelArt;
+  ctx.imageSmoothingQuality='high';
   // Radiation is a clearly documented game effect on the original full-body
   // mutant artwork; it does not substitute a cropped Screamer torso.
-  if(sprite.radiation){ctx.shadowColor='#99ff38';ctx.shadowBlur=15+Math.sin(clock*4)*3;ctx.filter+=' saturate(1.4) hue-rotate(24deg)';}
+  if(sprite.radiation){ctx.shadowColor='#99ff38';ctx.shadowBlur=15+Math.sin(clock*4)*3;}
   const mix=GM_LIMIT((clock-playhead.start)/.10,0,1);
   const paint=(source,alpha=1)=>{
    ctx.save();ctx.globalAlpha*=alpha;
-   if(sprite.undead&&!sprite.generatedZombie&&sprite.surface){
-    const surface=sprite.surface,sc=surface.getContext('2d');
-    const cacheKey=source.rect.join(',');
-    if(sprite.undeadFrame!==cacheKey){
-     sc.clearRect(0,0,surface.width,surface.height);sc.filter='saturate(.58) brightness(.82)';sc.drawImage(sprite.img,...source.rect,0,0,surface.width,surface.height);sc.filter='none';
-     sc.globalCompositeOperation='source-atop';sc.fillStyle='#70895145';sc.fillRect(0,0,surface.width,surface.height);
-     // Wear belongs to the character silhouette, never floating badges.
-     for(let n=0;n<13;n++){const px=(.14+((n*37)%73)/100)*surface.width,py=(.22+((n*19)%65)/100)*surface.height;
-      sc.fillStyle='#303e3433';sc.beginPath();sc.ellipse(px,py,surface.width*.024,surface.height*.014,.5,0,Math.PI*2);sc.fill();
-      sc.strokeStyle='#293c3b88';sc.lineWidth=Math.max(1,surface.height*.004);sc.beginPath();sc.moveTo(px,py);sc.lineTo(px+surface.width*.015,py+surface.height*.012);sc.lineTo(px,py+surface.height*.026);sc.stroke();
-     }sc.globalCompositeOperation='source-over';sprite.undeadFrame=cacheKey;
-    }
-    // Continuous horizontal bands lower the head and lean the upper body
-    // forward without detaching limbs or cropping the complete silhouette.
-    const strips=24,h=surface.height/strips,direction=sprite.flipX?1:-1;
-    for(let row=0;row<strips;row++){
-     const a=row/strips,b=(row+1)/strips;
-     const y0=a+.12*(1-a)*(1-a),y1=b+.12*(1-b)*(1-b);
-     const lean=direction*surface.width*.09*(1-a)*(1-a);
-     ctx.drawImage(surface,0,row*h,surface.width,h,(-foot[0]+lean)*factor,(-foot[1]+y0*surface.height)*factor,surface.width*factor,(y1-y0)*surface.height*factor+.35);
-    }
-   }else ctx.drawImage(sprite.img,...source.rect,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
+   // A single continuous transform preserves crisp contours; slicing the
+   // artwork into horizontal strips made silhouettes look jagged.
+   if(sprite.undead&&!sprite.generatedZombie){
+    ctx.transform(1,0,(sprite.flipX?-1:1)*.045,.96,0,0);
+   }
+   ctx.drawImage(sprite.img,...source.rect,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
    ctx.restore();
   };
   if(sprite.generatedZombie&&sprite.surface&&selected.next!==undefined&&mode!=='death'){
-   const blend=sprite.surface.getContext('2d'),amount=selected.progress*selected.progress*(3-2*selected.progress);
-   blend.clearRect(0,0,sprite.frameWidth,sprite.frameHeight);blend.globalAlpha=1-amount;
+   // Hold a clean pose for most of each frame; a short transition avoids
+   // persistent doubled outlines across the full animation interval.
+   const blend=sprite.surface.getContext('2d'),phase=Math.max(0,(selected.progress-.8)/.2),amount=phase*phase*(3-2*phase);
+   blend.imageSmoothingEnabled=!sprite.pixelArt;blend.imageSmoothingQuality='high';blend.clearRect(0,0,sprite.frameWidth,sprite.frameHeight);blend.globalAlpha=1-amount;
    blend.drawImage(sprite.img,...frame.rect,0,0,sprite.frameWidth,sprite.frameHeight);
    blend.globalCompositeOperation='lighter';blend.globalAlpha=amount;
    blend.drawImage(sprite.img,...sprite.frames[selected.next].rect,0,0,sprite.frameWidth,sprite.frameHeight);
    blend.globalCompositeOperation='source-over';blend.globalAlpha=1;
    ctx.drawImage(sprite.surface,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
   }else if(!sprite.undead&&playhead.previous&&mix<1&&mode!=='death'&&sprite.surface){
-   const blend=sprite.surface.getContext('2d');blend.clearRect(0,0,sprite.frameWidth,sprite.frameHeight);
+   const blend=sprite.surface.getContext('2d');blend.imageSmoothingEnabled=!sprite.pixelArt;blend.imageSmoothingQuality='high';blend.clearRect(0,0,sprite.frameWidth,sprite.frameHeight);
    blend.globalCompositeOperation='source-over';blend.globalAlpha=1-mix;blend.drawImage(sprite.img,...playhead.previous.frame.rect,0,0,sprite.frameWidth,sprite.frameHeight);
    blend.globalCompositeOperation='lighter';blend.globalAlpha=mix;blend.drawImage(sprite.img,...frame.rect,0,0,sprite.frameWidth,sprite.frameHeight);
    blend.globalCompositeOperation='source-over';blend.globalAlpha=1;
