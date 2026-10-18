@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-18T02:37:32.638188+00:00",
+  "updatedAt": "2026-10-18T04:01:16.851293+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1108,6 +1108,27 @@
             ],
             "prepareFor": "Presenting a developed pro or con opening statement."
           }
+        },
+        {
+          "id": "2026-10-18-sun-1130",
+          "date": "2026-10-18",
+          "time": "11:30–13:00",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Ethan",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-18&student=ethan"
+            },
+            {
+              "name": "Yiyi",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-18&student=yiyi"
+            },
+            {
+              "name": "Charles",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-18&student=charles"
+            }
+          ]
         }
       ]
     },

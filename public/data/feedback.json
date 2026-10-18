@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-18T02:37:32.638188+00:00",
+  "updatedAt": "2026-10-18T04:01:16.851293+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1369,6 +1369,34 @@
             "en": "I would like you to write a 100–200-word opening statement on “AI should replace all teachers at school,” supporting your pro or con side. Develop your arguments beyond short, simple points: explain the reasoning clearly and flesh out why each point supports your position. Use the ideas and challenges discussed in class to build a deeper and more thorough understanding of the topic.",
             "zh": "我希望你围绕“人工智能应该取代学校里的所有老师”这一辩题，按照自己的正方或反方立场，写一篇100–200词的开篇陈词。不要只列出简短、简单的观点；要把理由解释清楚，充分展开每一点为什么能够支持自己的立场。结合课堂讨论中的观点与质疑，更深入、全面地理解辩题。"
           }
+        },
+        {
+          "id": "2026-10-18-sun-1130",
+          "date": "2026-10-18",
+          "time": "11:30–13:00",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "Ethan was our first speaker. He continued laughing on stage more than five or six times, which took up time that could have been used by the other students. He needs to develop greater self-awareness while speaking: notice the laughter, regain control, and stay focused on delivering his speech.\n\nThe focus is self-control, including controlling his breathing. He also had trouble standing still and kept moving around. Those movements need to become more controlled so he can settle himself while presenting.\n\nI asked him to imagine repeating the same thing ten or twenty times, or sitting for two hours saying the same thing over and over again. Eventually it would feel boring and tiring. The point was to aim to get it right the first time, rather than let repeated laughter keep taking up class time.\n\nSuggested practice: Before starting, he could pause, settle his feet and body, and take a controlled breath. When he notices laughter starting, he could pause and regain control before continuing.",
+              "zh": "Ethan 是我们的第一位发言者。他在台上持续发笑，反复出现了五六次以上，占用了原本可以留给其他学生的课堂时间。他需要在演讲时提高自我觉察：注意到自己正在发笑，重新控制住自己，把注意力放回演讲上。\n\n重点是自我控制，其中也包括控制呼吸。他还难以站稳不动，说话时不断走动或晃动。这些动作需要更加受控，让自己在展示时能够稳定下来。\n\n我请他想象，把同样的内容重复十遍、二十遍，或者坐在这里两个小时，一遍又一遍地说同样的话，最后也会觉得无聊、疲惫。这个例子的重点是，希望尽量在第一次就把演讲做好，不要让反复发笑继续占用课堂时间。\n\n练习建议：开始前可以先停一下，站稳双脚、让身体稳定下来，并有意识地控制呼吸。察觉到自己又要笑时，可以先暂停，重新控制好自己，再继续说。"
+            },
+            {
+              "id": "yiyi",
+              "name": "Yiyi",
+              "en": "Yiyi was our second speaker overall. I felt that she was clear and concise, and she spoke with clarity for her part. Her content, transition sentences and points were pretty good.\n\nI was hoping for a summary at the very end—a conclusion to bring everything together. The next step is to finish with a clear closing summary so the audience hears how her points connect and what she wants them to remember.\n\nI think she was a little nervous. At times, she repeated the same words, and we could see her fidgeting with her hands and notebook while she was talking. She could practise pausing when she needs to think, then continuing with the next idea. Keeping her hands and notebook steady could also help her present with more controlled movement.",
+              "zh": "Yiyi 是我们的第二位发言者。我觉得她表达清楚、简洁，自己的部分讲得很清晰。她的内容、过渡句和要点都挺不错。\n\n我希望她在最后能有一个总结，用结论把整个发言收起来。下一步是以清楚的总结收尾，让听众听明白各个要点之间的联系，以及她希望大家记住什么。\n\n我觉得她有一点紧张。有时会重复相同的词语，说话时也能看到她的手和笔记本有些小动作。她可以练习在需要思考时先停顿一下，再继续下一个想法。让双手和笔记本保持稳定，也可以帮助她更好地控制展示时的动作。"
+            },
+            {
+              "id": "charles",
+              "name": "Charles",
+              "en": "Overall, Charles was very steady. He spoke at a good pace, and everything was very clear.\n\nFor his content, adding a little more in the way of examples or evidence to support his points would help. A concrete example or relevant piece of evidence can show the audience what he means and make the support for his point clearer. He could practise choosing an example or piece of evidence and explaining how it connects to the point he is making.\n\nThe other focus is the conclusion: finish with a clear ending that brings the main points together and leaves the audience with the message he wants them to remember.",
+              "zh": "整体来看，Charles 的表现很稳。他的语速合适，表达的内容都很清楚。\n\n在内容方面，如果能再增加一些例子或证据来支持自己的要点，会更有帮助。具体的例子或相关证据，可以让听众更清楚地理解他的意思，也让要点的支撑更明确。他可以练习选取一个例子或一项证据，并解释它与自己所讲要点之间的联系。\n\n另一个重点是结论：用清楚的结尾把主要观点收拢起来，让听众记住他希望传达的核心信息。"
+            }
+          ]
         }
       ]
     },
