@@ -6,6 +6,7 @@
 <meta name="color-scheme" content="light dark">
 <meta name="description" content="A standalone classroom debate timer.">
 <title>Debate timer</title>
+<meta name="application-version" content="3.1.0">
 <style>
 :root{color-scheme:light;--canvas:#e9ecf0;--bg:#f5f6f8;--surface:#fff;--text:#182230;--muted:#586477;--faint:#697688;--line:#dde2e9;--track:#e9edf3;--hover:#f1f4f8;--pro:#245ac7;--pro-bg:#edf3ff;--con:#b6412a;--con-bg:#fff1ec;--both:#7252ad;--both-bg:#f2eef9;--amber:#966000;--amber-bg:#fff7e5;--danger:#c82a36;--focus:#245ac7;--shadow:0 12px 48px #14264210}
 :root[data-theme="dark"]{color-scheme:dark;--canvas:#090e17;--bg:#101722;--surface:#17212f;--text:#f0f4fa;--muted:#aebacb;--faint:#8796aa;--line:#344154;--track:#2a3648;--hover:#243144;--pro:#8bb4ff;--pro-bg:#1c3357;--con:#ffa28c;--con-bg:#402b2b;--both:#c4acf3;--both-bg:#332b49;--amber:#f0c267;--amber-bg:#393020;--danger:#ff8990;--focus:#8bb4ff;--shadow:none}
@@ -18,9 +19,38 @@
 .time-track{height:8px;flex-shrink:0;overflow:hidden;background:var(--track);border-radius:8px}.time-fill{height:100%;background:var(--accent);transform-origin:left;transform:scaleX(1)}#stage[data-warning="amber"] .time-fill{background:var(--amber)}#stage[data-warning="red"] .time-fill{background:var(--danger)}.panel-bottom{display:flex;justify-content:space-between;align-items:center;gap:18px;padding-top:21px;min-height:67px;flex-shrink:0}.upnext-label{font-size:12px;letter-spacing:1.4px;font-weight:700;color:var(--muted);margin-bottom:6px}.upnext-text{font-size:20px;font-weight:550;line-height:1.2;letter-spacing:-.2px}.upnext-duration{font-size:24px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}.empty-next{visibility:hidden}
 .agenda{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:19px 16px 16px;display:flex;flex-direction:column;min-height:0}.agenda-head{display:flex;align-items:center;justify-content:space-between;padding:0 9px 13px}.agenda-head h2{font-size:14px;font-weight:700;letter-spacing:1.2px;margin:0}.agenda-head span{font-size:13px;color:var(--muted)}.agenda-list{margin:0;padding:0;list-style:none;flex:1;min-height:0;display:grid;grid-template-rows:repeat(9,minmax(0,1fr));gap:4px}.agenda-list li{min-height:0}.agenda-item{display:flex;align-items:center;gap:12px;padding:5px 10px;width:100%;height:100%;text-align:left;border:1px solid transparent;border-radius:10px;--row-color:var(--pro);--row-bg:var(--pro-bg)}.agenda-item[data-side="con"]{--row-color:var(--con);--row-bg:var(--con-bg)}.agenda-item[data-side="both"]{--row-color:var(--both);--row-bg:var(--both-bg)}.agenda-item[data-state="current"]{background:var(--row-bg);border-color:var(--row-color)}.agenda-item[data-state="next"]{border:1px dashed var(--amber);background:var(--amber-bg)}.agenda-item[data-state="past"] .order-title{color:var(--muted)}.order-number{width:22px;text-align:center;flex-shrink:0;font-size:14px;font-variant-numeric:tabular-nums;color:var(--faint)}.agenda-item[data-state="current"] .order-number{color:var(--row-color);font-weight:700}.order-copy{flex:1;min-width:0}.order-title{display:block;font-size:17px;font-weight:600;line-height:1.2;letter-spacing:-.3px;white-space:nowrap}.order-side{display:block;font-size:11px;letter-spacing:.6px;font-weight:700;color:var(--row-color);line-height:1.1;margin-top:4px}.order-time{font-size:16px;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
 .controls{display:flex;align-items:center;justify-content:space-between;gap:20px}.control-left,.control-right{display:flex;gap:10px;align-items:center}.control-btn{display:inline-flex;justify-content:center;align-items:center;gap:10px;min-height:50px;padding:0 17px;border:1px solid var(--line);border-radius:11px;background:var(--surface);font-size:16px;font-weight:600;white-space:nowrap}.control-btn.icon-only{width:50px;padding:0}.control-btn.primary{background:var(--text);color:var(--surface);border-color:var(--text);min-width:172px}.control-btn.primary:hover{opacity:.88;background:var(--text)}.control-divider{height:24px;width:1px;background:var(--line);margin:0 4px}.control-btn[aria-pressed="false"] .sound-waves{display:none}.control-btn[aria-pressed="true"] .sound-slash{display:none}.control-btn.audio-unavailable{color:var(--danger)}.awake-mark{display:inline-flex;gap:6px;align-items:center;color:var(--muted);font-size:12px;margin-right:2px}.awake-mark svg{width:16px;height:16px}.control-btn.exit-fullscreen .expand-icon{display:none}.control-btn:not(.exit-fullscreen) .collapse-icon{display:none}
-dialog{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;max-width:min(640px,calc(100vw - 32px));width:580px;max-height:calc(100dvh - 48px);overflow:auto;box-shadow:0 25px 100px #0004}dialog::backdrop{background:#08132675;backdrop-filter:blur(3px)}dialog h2{font-size:24px;line-height:1.2;margin:0;font-weight:650;letter-spacing:-.5px}.dialog-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}.dialog-close{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;flex-shrink:0}.field{display:block;margin:16px 0}.field>span,.field-title{display:block;font-size:13px;font-weight:650;color:var(--muted);margin-bottom:8px}input[type="text"],input[type="number"],select{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px}input[type="range"]{accent-color:var(--pro);width:100%;min-height:30px}input[type="checkbox"]{width:18px;height:18px;accent-color:var(--pro)}.settings-row{display:flex;align-items:center;gap:18px;margin:19px 0}.settings-row .field{flex:1;margin:0}.check-row{display:flex;align-items:center;gap:10px;font-size:15px}.settings-buttons{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}.dialog-btn{border:1px solid var(--line);background:var(--surface);padding:11px 18px;min-height:44px;border-radius:9px;font-size:15px;font-weight:600}.dialog-btn.primary{background:var(--text);color:var(--surface);border-color:var(--text)}.dialog-btn.primary:hover{background:var(--text);opacity:.88}.speaker-settings{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}summary{cursor:pointer;font-size:15px;font-weight:600}.speaker-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.speaker-grid .field{margin:5px 0}.speaker-grid input{font-size:14px}.confirm-detail{margin:18px 0 24px;font-size:17px;line-height:1.5;color:var(--muted)}#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:11px 18px;border-radius:10px;background:var(--text);color:var(--surface);box-shadow:0 4px 20px #0003;font-size:14px;text-align:center;max-width:90vw;z-index:10}noscript{position:fixed;inset:0;background:var(--surface);display:grid;place-items:center;padding:30px;font-size:24px;z-index:100}
+dialog{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;max-width:min(640px,calc(100vw - 32px));width:580px;max-height:calc(100dvh - 48px);overflow:auto;box-shadow:0 25px 100px #0004}dialog::backdrop{background:#08132675;backdrop-filter:blur(3px)}dialog h2{font-size:24px;line-height:1.2;margin:0;font-weight:650;letter-spacing:-.5px}.dialog-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}.dialog-close{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;flex-shrink:0}.field{display:block;margin:16px 0}.field>span,.field-title{display:block;font-size:13px;font-weight:650;color:var(--muted);margin-bottom:8px}input[type="text"],select{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px}input[type="range"]{accent-color:var(--pro);width:100%;min-height:30px}input[type="checkbox"]{width:18px;height:18px;accent-color:var(--pro)}.settings-row{display:flex;align-items:center;gap:18px;margin:19px 0}.settings-row .field{flex:1;margin:0}.check-row{display:flex;align-items:center;gap:10px;font-size:15px}.settings-buttons{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}.dialog-btn{border:1px solid var(--line);background:var(--surface);padding:11px 18px;min-height:44px;border-radius:9px;font-size:15px;font-weight:600}.dialog-btn.primary{background:var(--text);color:var(--surface);border-color:var(--text)}.dialog-btn.primary:hover{background:var(--text);opacity:.88}.speaker-settings{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}summary{cursor:pointer;font-size:15px;font-weight:600}.speaker-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.speaker-grid .field{margin:5px 0}.speaker-grid input{font-size:14px}.confirm-detail{margin:18px 0 24px;font-size:17px;line-height:1.5;color:var(--muted)}#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:11px 18px;border-radius:10px;background:var(--text);color:var(--surface);box-shadow:0 4px 20px #0003;font-size:14px;text-align:center;max-width:90vw;z-index:10}noscript{position:fixed;inset:0;background:var(--surface);display:grid;place-items:center;padding:30px;font-size:24px;z-index:100}
 @media(prefers-reduced-motion:no-preference){.time-fill,#overall-fill{transition:transform .12s linear}}
 @media(max-width:540px){dialog{padding:20px}.speaker-grid{grid-template-columns:1fr}.settings-row{flex-wrap:wrap}}
+
+#settings-dialog{position:fixed;inset:0 0 0 auto;margin:0;width:min(610px,100vw);max-width:100vw;height:100dvh;max-height:100dvh;border-radius:20px 0 0 20px;padding:0;overflow:hidden}
+#settings-form{display:flex;flex-direction:column;height:100%;min-height:0}
+#settings-dialog .dialog-head{padding:22px 26px;margin:0;border-bottom:1px solid var(--line);flex-shrink:0}
+.setup-body{flex:1;overflow:auto;padding:0 26px;overscroll-behavior:contain;scrollbar-gutter:stable}
+.setup-section{border-bottom:1px solid var(--line);padding:0 0 2px}
+.setup-section:last-child{border:0}
+.setup-section>summary{display:flex;align-items:center;gap:12px;list-style:none;min-height:60px;font-size:16px;letter-spacing:-.2px}
+.setup-section>summary::-webkit-details-marker{display:none}
+.setup-section>summary::after{content:'›';font-size:27px;font-weight:400;margin-left:auto;color:var(--muted);transform:rotate(90deg)}
+.setup-section[open]>summary::after{transform:rotate(-90deg)}
+.summary-value{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:500}
+.positions{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:0 0 8px}
+.position-side{font-size:12px;font-weight:750;letter-spacing:1px;color:var(--pro);margin:0 0 8px}
+.position-side.con{color:var(--con)}
+.positions .field{margin:12px 0}.positions .field>span{font-size:12px;font-weight:550;margin-bottom:6px}
+.positions input{font-size:14px;padding:9px 10px}
+#settings-dialog .speaker-grid{margin:0 0 16px}
+#settings-dialog .speaker-grid .field{margin:0}
+#settings-dialog .settings-buttons{flex-shrink:0;margin:0;padding:18px 26px;border-top:1px solid var(--line);background:var(--surface)}
+.timing-head,.timing-row{display:grid;grid-template-columns:minmax(0,1fr) 64px 64px;gap:10px;align-items:center}
+.timing-head{font-size:12px;color:var(--muted);padding-bottom:8px}.timing-head span:not(:first-child){text-align:center}
+.timing-row{min-height:54px;border-top:1px solid var(--line);font-size:14px}
+.timing-row input{width:100%;min-height:38px;appearance:textfield;-moz-appearance:textfield;text-align:center;font-variant-numeric:tabular-nums;font-size:16px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);padding:5px}
+.timing-row input::-webkit-inner-spin-button,.timing-row input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.timing-row input:invalid{border-color:var(--danger)}.timing-row label{display:flex;align-items:center;gap:8px;min-width:0}.timing-side{font-size:10px;letter-spacing:.5px;color:var(--pro);font-weight:750;width:34px;flex-shrink:0}.timing-side.con{color:var(--con)}.timing-side.both{color:var(--both)}
+.changeover-row{margin-top:8px;font-weight:600}.field-note{font-size:12px;color:var(--muted);line-height:1.5;margin:4px 0 10px}
+.text-button{font-size:13px;padding:7px 0;margin:0 0 14px;color:var(--muted);text-decoration:underline;text-underline-offset:3px}.text-button:hover{background:none!important;color:var(--text)}
+@media(max-width:540px){#settings-dialog{border-radius:0}.setup-body{padding:0 18px}#settings-dialog .dialog-head{padding:18px}.timing-head,.timing-row{grid-template-columns:minmax(0,1fr) 50px 50px;gap:6px}.timing-row{font-size:12px}.positions{gap:12px}#settings-dialog .speaker-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -78,7 +108,7 @@ dialog{background:var(--surface);border:1px solid var(--line);border-radius:20px
     <div class="control-right">
       <span class="awake-mark" id="awake-mark" title="Screen kept awake while the timer runs" hidden><svg aria-hidden="true"><use href="#i-sun"/></svg>Awake</span>
       <button class="control-btn" id="sound" title="Mute or unmute (M)" aria-label="Sound on" aria-pressed="true" aria-keyshortcuts="M"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3Z"/><g class="sound-waves"><path d="M16 8a6 6 0 0 1 0 8M19 5a10 10 0 0 1 0 14"/></g><path class="sound-slash" d="m16 9 6 6M22 9l-6 6"/></svg><span id="sound-label">Sound on</span></button>
-      <button class="control-btn icon-only" id="settings-button" title="Settings" aria-label="Settings"><svg aria-hidden="true"><use href="#i-settings"/></svg></button>
+      <button class="control-btn" id="settings-button" title="Setup" aria-label="Open setup" aria-haspopup="dialog" aria-controls="settings-dialog"><svg aria-hidden="true"><use href="#i-settings"/></svg>Setup</button>
       <button class="control-btn" id="fullscreen" title="Fullscreen (F)" aria-keyshortcuts="F" aria-pressed="false"><svg class="expand-icon" aria-hidden="true"><use href="#i-full"/></svg><svg class="collapse-icon" aria-hidden="true"><use href="#i-exit"/></svg><span id="fullscreen-label">Fullscreen</span></button>
     </div>
   </footer>
@@ -88,15 +118,31 @@ dialog{background:var(--surface);border:1px solid var(--line);border-radius:20px
 <div id="toast" role="status" hidden></div>
 <dialog id="settings-dialog" aria-labelledby="settings-title">
   <form id="settings-form">
-    <div class="dialog-head"><h2 id="settings-title">Settings</h2><button class="dialog-close" type="button" id="settings-close" aria-label="Close settings"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div>
-    <label class="field"><span>Pro team</span><input type="text" id="pro-input" placeholder="Pro team" maxlength="64" autocomplete="off"></label>
-    <label class="field"><span>Con team</span><input type="text" id="con-input" placeholder="Con team" maxlength="64" autocomplete="off"></label>
-    <div class="settings-row"><label class="field"><span>Display</span><select id="theme-input"><option value="light">Light</option><option value="dark">Dark</option></select></label><button class="dialog-btn" type="button" id="test-sound">Test sound</button></div>
-    <label class="field"><span>Beep volume <output id="volume-value">100%</output></span><input id="volume-input" type="range" min="0" max="100" step="5" value="100" aria-label="Beep volume"></label>
-    <label class="check-row"><input type="checkbox" id="awake-input" checked>Keep screen awake while running</label>
-    <details class="speaker-settings"><summary>Names for each position</summary><div class="speaker-grid" id="speaker-inputs"></div></details>
-    <details class="speaker-settings"><summary>Timing settings</summary><p>Times are in seconds. Changing timings restarts the debate.</p><div class="speaker-grid" id="timing-inputs"></div></details>
-    <div class="settings-buttons"><button class="dialog-btn" id="settings-cancel" type="button">Cancel</button><button class="dialog-btn primary" type="submit">Save</button></div>
+    <div class="dialog-head"><h2 id="settings-title">Debate setup</h2><button class="dialog-close" type="button" id="settings-close" aria-label="Close setup" autofocus><svg aria-hidden="true"><use href="#i-close"/></svg></button></div>
+    <div class="setup-body">
+      <details class="setup-section"><summary>Teams</summary><div class="speaker-grid">
+        <label class="field"><span>Pro team</span><input type="text" id="pro-input" maxlength="64" placeholder="Pro team" autocomplete="off"></label>
+        <label class="field"><span>Con team</span><input type="text" id="con-input" maxlength="64" placeholder="Con team" autocomplete="off"></label>
+      </div></details>
+      <details class="setup-section" open><summary>Speaker positions</summary><div class="positions" id="speaker-inputs"></div><button class="text-button" type="button" id="clear-names">Clear all names</button></details>
+      <details class="setup-section" open><summary>Timings <span class="summary-value" id="setup-total">17:40</span></summary>
+        <div class="timing-head" aria-hidden="true"><span>Section</span><span>Min</span><span>Sec</span></div>
+        <div id="timing-inputs"></div>
+        <div class="timing-row changeover-row"><label for="transition-min">Changeover</label><input type="number" id="transition-min" min="0" max="5" step="1" inputmode="numeric" required aria-label="Changeover minutes"><input type="number" id="transition-sec" min="0" max="59" step="1" inputmode="numeric" required aria-label="Changeover seconds"></div>
+        <div class="field-note">Between every section. Set 0:00 for no changeover.</div>
+        <div class="timing-row"><label for="amber-min">Amber warning</label><input type="number" id="amber-min" min="0" max="99" step="1" inputmode="numeric" required aria-label="Amber warning minutes"><input type="number" id="amber-sec" min="0" max="59" step="1" inputmode="numeric" required aria-label="Amber warning seconds"></div>
+        <div class="timing-row"><label for="red-min">Red warning</label><input type="number" id="red-min" min="0" max="99" step="1" inputmode="numeric" required aria-label="Red warning minutes"><input type="number" id="red-sec" min="0" max="59" step="1" inputmode="numeric" required aria-label="Red warning seconds"></div>
+        <div class="field-note">Time remaining. Set 0:00 to disable a warning.</div>
+        <button class="text-button" type="button" id="default-timings">Reset timings</button>
+      </details>
+      <details class="setup-section"><summary>Sound &amp; display</summary>
+        <label class="field"><span>Beep volume <output id="volume-value">85%</output></span><input id="volume-input" type="range" min="0" max="100" step="5" value="85" aria-label="Beep volume"></label>
+        <div class="settings-row"><label class="check-row"><input type="checkbox" id="sound-input" checked>Sound on</label><button class="dialog-btn" type="button" id="test-sound">Test beep</button></div>
+        <label class="field"><span>Display</span><select id="theme-input"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+        <label class="check-row"><input type="checkbox" id="awake-input" checked>Keep screen awake</label>
+      </details>
+    </div>
+    <div class="settings-buttons"><button class="dialog-btn" id="settings-cancel" type="button">Cancel</button><button class="dialog-btn primary" type="submit">Save &amp; close</button></div>
   </form>
 </dialog>
 <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-detail">
@@ -108,7 +154,7 @@ dialog{background:var(--surface);border:1px solid var(--line);border-radius:20px
 /* Pure timing engine. Durations are milliseconds; displayed seconds never feed back into timekeeping. */
 class DebateEngine {
   constructor(stages, transitionSeconds, now = () => performance.now()) {
-    if (!Array.isArray(stages) || !stages.length || !Number.isFinite(transitionSeconds) || transitionSeconds <= 0) throw new TypeError('Invalid debate schedule');
+    if (!Array.isArray(stages) || !stages.length || !Number.isFinite(transitionSeconds) || transitionSeconds < 0) throw new TypeError('Invalid debate schedule');
     this.stages = stages;
     this.now = now;
     this.phases = [];
@@ -118,7 +164,7 @@ class DebateEngine {
       const duration = stage.seconds * 1000;
       this.phases.push({type:'speech', stageIndex:index, start:offset, end:offset + duration, duration});
       offset += duration;
-      if (index < stages.length - 1) {
+      if (index < stages.length - 1 && transitionSeconds > 0) {
         const changeover = transitionSeconds * 1000;
         this.phases.push({type:'transition', stageIndex:index + 1, start:offset, end:offset + changeover, duration:changeover});
         offset += changeover;
@@ -170,46 +216,57 @@ class DebateEngine {
   }
   jump(index, resume = false) {
     if (!Number.isInteger(index) || index < 0 || index >= this.stages.length) throw new RangeError('Invalid section');
-    this.seek(this.phases[index * 2].start, resume);
+    this.seek(this.phases.find(phase => phase.type === 'speech' && phase.stageIndex === index).start, resume);
   }
 }
 </script>
 <script>
 (() => {
 'use strict';
-const STAGES = [
+const TEMPLATE = Object.freeze([
   {side:'pro', title:'Opening statement', short:'Opening statement', seconds:120, speaker:'proOpening'},
-  {side:'con', title:'Cross-examination', short:'Cross-examination', seconds:60, questions:true, speaker:'conQuestions'},
+  {side:'con', title:'Cross-examination', short:'Cross-examination', seconds:60, questions:true, speaker:'conQuestioner', answer:'proRespondent'},
   {side:'con', title:'Opening statement', short:'Opening statement', seconds:120, speaker:'conOpening'},
-  {side:'pro', title:'Cross-examination', short:'Cross-examination', seconds:60, questions:true, speaker:'proQuestions'},
+  {side:'pro', title:'Cross-examination', short:'Cross-examination', seconds:60, questions:true, speaker:'proQuestioner', answer:'conRespondent'},
   {side:'pro', title:'Rebuttal', short:'Rebuttal', seconds:120, speaker:'proRebuttal'},
   {side:'con', title:'Rebuttal', short:'Rebuttal', seconds:120, speaker:'conRebuttal'},
-  {side:'both', title:'Crossfire', short:'Crossfire', seconds:180, speaker:'crossfire'},
+  {side:'both', title:'Crossfire', short:'Crossfire', seconds:180, speaker:'proCrossfire', answer:'conCrossfire'},
   {side:'pro', title:'Final focus', short:'Final focus', seconds:120, speaker:'proFinal'},
   {side:'con', title:'Final focus', short:'Final focus', seconds:120, speaker:'conFinal'}
-];
-const DEFAULTS = {pro:'Pro team', con:'Con team', sound:true, volume:100, theme:'light', awake:true, speakers:{}, durations:STAGES.map(s=>s.seconds), changeover:5, amber:30, red:10};
-const SETTINGS_KEY = 'speakkai-debate-settings-v3';
-const SESSION_KEY = 'speakkai-debate-session-v3';
-const scheduleSchema = () => JSON.stringify([settings.durations,settings.changeover]);
+]);
+const ROLES = Object.freeze([
+  ['proOpening','pro','Opening statement'],['proRespondent','pro','Cross-examination · Answers'],['proQuestioner','pro','Cross-examination · Questions'],['proRebuttal','pro','Rebuttal'],['proCrossfire','pro','Crossfire'],['proFinal','pro','Final focus'],
+  ['conOpening','con','Opening statement'],['conQuestioner','con','Cross-examination · Questions'],['conRespondent','con','Cross-examination · Answers'],['conRebuttal','con','Rebuttal'],['conCrossfire','con','Crossfire'],['conFinal','con','Final focus']
+]);
+const DEFAULTS = {pro:'', con:'', sound:true, volume:85, theme:'light', awake:true, speakers:{}, durations:TEMPLATE.map(s=>s.seconds), transition:5, amber:30, red:10};
+const SETTINGS_KEY = 'classroom-debate-settings-v3';
+const SESSION_KEY = 'classroom-debate-session-v3';
 const $ = id => document.getElementById(id);
 const ui = Object.fromEntries(['stage','status','clock','section-title','speaker','side','section-count','total-left','overall-fill','time-fill','upnext','next-label','next-title','next-duration','toggle','toggle-icon','toggle-label','previous','next','next-button-label','reset','sound','sound-label','fullscreen','fullscreen-label','team-pro','team-con','pro-name','con-name','announcer','awake-mark'].map(id => [id,$(id)]));
 const safeGet = (store,key) => { try { return JSON.parse(window[store].getItem(key)); } catch (_) { return null; } };
 const safeSet = (store,key,value) => { try { window[store].setItem(key,JSON.stringify(value)); return true; } catch (_) { return false; } };
 const cleanText = (value,fallback='') => typeof value === 'string' && value.trim() ? value.trim().slice(0,64) : fallback;
-function bounded(value,fallback,min,max) { return Number.isFinite(value)?Math.max(min,Math.min(max,Math.round(value))):fallback; }
 function normalizeSettings(value) {
   const v = value && typeof value === 'object' ? value : {};
   const speakers = {};
-  STAGES.forEach(stage => { if (stage.speaker) speakers[stage.speaker] = cleanText(v.speakers?.[stage.speaker]); });
-  return {pro:cleanText(v.pro,DEFAULTS.pro), con:cleanText(v.con,DEFAULTS.con), sound:typeof v.sound === 'boolean' ? v.sound : true, volume:Number.isFinite(v.volume) ? Math.max(0,Math.min(100,v.volume)) : 100, theme:v.theme === 'dark' ? 'dark' : 'light', awake:typeof v.awake === 'boolean' ? v.awake : true, speakers, durations:STAGES.map((s,i)=>bounded(v.durations?.[i],DEFAULTS.durations[i],1,3600)), changeover:bounded(v.changeover,5,1,120), amber:bounded(v.amber,30,0,3600), red:bounded(v.red,10,0,3600)};
+  ROLES.forEach(([key]) => { speakers[key] = cleanText(v.speakers?.[key]); });
+  const durations = TEMPLATE.map((stage,i) => Number.isInteger(v.durations?.[i]) && v.durations[i]>=1 && v.durations[i]<=5999 ? v.durations[i] : stage.seconds);
+  return {pro:cleanText(v.pro), con:cleanText(v.con), sound:typeof v.sound === 'boolean' ? v.sound : true, volume:Number.isFinite(v.volume) ? Math.max(0,Math.min(100,v.volume)) : 85, theme:v.theme === 'dark' ? 'dark' : 'light', awake:typeof v.awake === 'boolean' ? v.awake : true, speakers, durations, amber:Number.isInteger(v.amber)&&v.amber>=0&&v.amber<=5999?v.amber:30, red:Number.isInteger(v.red)&&v.red>=0&&v.red<=5999?v.red:10, transition:Number.isInteger(v.transition) && v.transition>=0 && v.transition<=300 ? v.transition : 5};
 }
-let settings = normalizeSettings(safeGet('localStorage',SETTINGS_KEY));
-STAGES.forEach((stage,i)=>stage.seconds=settings.durations[i]);
-let engine = new DebateEngine(STAGES,settings.changeover);
+const schema = value => JSON.stringify([value.durations,value.transition]);
+function migrateSettings(value) {
+  if (!value || typeof value!=='object') return null;
+  const speakers=value.speakers || {};
+  return {...value,pro:value.pro==='Pro team'?'':value.pro,con:value.con==='Con team'?'':value.con,transition:value.changeover,speakers:{...speakers,proQuestioner:speakers.proQuestions,conQuestioner:speakers.conQuestions,proCrossfire:speakers.crossfire}};
+}
+const storedSettings=safeGet('localStorage',SETTINGS_KEY);
+const importedSettings=storedSettings?null:migrateSettings(safeGet('localStorage','speakkai-debate-settings-v3'));
+let settings = normalizeSettings(storedSettings || importedSettings);
+let STAGES = TEMPLATE.map((stage,i)=>({...stage,seconds:settings.durations[i]}));
+let engine = new DebateEngine(STAGES,settings.transition);
 let restored = false;
-const savedSession = safeGet('sessionStorage',SESSION_KEY);
-if (savedSession?.schema === scheduleSchema() && Number.isFinite(savedSession.elapsed) && savedSession.elapsed > 0 && savedSession.elapsed < engine.total) {
+const savedSession = safeGet('sessionStorage',SESSION_KEY) || (importedSettings?safeGet('sessionStorage','speakkai-debate-session-v3'):null);
+if (savedSession?.schema === schema(settings) && Number.isFinite(savedSession.elapsed) && savedSession.elapsed > 0 && savedSession.elapsed < engine.total) {
   engine.seek(savedSession.elapsed);
   restored = true;
 }
@@ -221,7 +278,7 @@ const titleCase = side => side === 'both' ? 'Both teams' : side === 'pro' ? 'Pro
 const stageLabel = index => `${titleCase(STAGES[index].side)} · ${STAGES[index].title}`;
 let toastTimer;
 function toast(message) { $('toast').textContent=message; $('toast').hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(() => { $('toast').hidden=true; },4000); }
-function saveSession() { safeSet('sessionStorage',SESSION_KEY,{schema:scheduleSchema(),elapsed:engine.position()}); }
+function saveSession() { safeSet('sessionStorage',SESSION_KEY,{schema:schema(settings),elapsed:engine.position()}); }
 function setText(element,text) { if (element.textContent !== text) element.textContent=text; }
 function setData(element,key,value) { if (element.dataset[key] !== value) element.dataset[key]=value; }
 function setAttribute(element,name,value) { if (element.getAttribute(name) !== value) element.setAttribute(name,value); }
@@ -257,15 +314,15 @@ class DebateAudio {
   }
   tones(kind, when, volume=settings.volume) {
     if (!this.context || this.context.state !== 'running' || volume <= 0) return;
-    const patterns = {start:[[0,1047,.3]],end:[[0,784,.3],[.42,784,.3]],finish:[[0,784,.3],[.42,988,.3],[.84,1175,.5]]};
-    const level = .72 * Math.pow(volume / 100,1.3);
-    for (const [offset,frequency,length] of patterns[kind]) {
+    const patterns = {start:[[0,1175,.28]],end:[[0,880,.30],[.43,880,.30]],finish:[[0,880,.28],[.40,1047,.28],[.80,1319,.42]]};
+    const level = .80 * Math.pow(Math.max(0,Math.min(100,volume)) / 100,1.15);
+    for (const [offset,frequency,length] of patterns[kind]) for (const [harmonic,weight] of [[1,.82],[2,.18]]) {
       const oscillator=this.context.createOscillator(),gain=this.context.createGain();
       const at=when+offset;
-      oscillator.type='triangle'; oscillator.frequency.value=frequency;
+      oscillator.type='sine'; oscillator.frequency.value=frequency*harmonic;
       gain.gain.setValueAtTime(0,at);
-      gain.gain.linearRampToValueAtTime(level,at+.015);
-      gain.gain.setValueAtTime(level,at+Math.max(.02,length-.05));
+      gain.gain.linearRampToValueAtTime(level*weight,at+.018);
+      gain.gain.setValueAtTime(level*weight,at+Math.max(.02,length-.05));
       gain.gain.linearRampToValueAtTime(0,at+length);
       oscillator.connect(gain); gain.connect(this.context.destination);
       const node={oscillator,gain}; this.nodes.add(node);
@@ -332,20 +389,47 @@ const agendaRows = STAGES.map((stage,index) => {
   const duration=document.createElement('span');duration.className='order-time';duration.textContent=format(stage.seconds*1000);
   button.append(number,copy,duration);li.append(button);$('agenda').append(li);
   button.addEventListener('click',() => requestJump(index));
-  return {button,number,side};
+  return {button,number,side,duration};
 });
-STAGES.filter(stage => stage.speaker).forEach(stage => {
-  const label=document.createElement('label');label.className='field';const caption=document.createElement('span');caption.textContent=`${titleCase(stage.side)} · ${stage.title}`;const input=document.createElement('input');input.type='text';input.id=`speaker-${stage.speaker}`;input.maxLength=64;input.autocomplete='off';input.placeholder='Add name(s) for this position';label.append(caption,input);$('speaker-inputs').append(label);
+for (const team of ['pro','con']) {
+  const group=document.createElement('div'),heading=document.createElement('h3');heading.className=`position-side ${team}`;heading.textContent=team.toUpperCase();group.append(heading);
+  ROLES.filter(role=>role[1]===team).forEach(([key,,title]) => {
+    const label=document.createElement('label');label.className='field';const caption=document.createElement('span');caption.textContent=title;
+    const input=document.createElement('input');input.type='text';input.id=`speaker-${key}`;input.maxLength=64;input.autocomplete='off';input.placeholder='Name';input.setAttribute('aria-label',`${titleCase(team)} ${title}`);
+    label.append(caption,input);group.append(label);
+  });
+  $('speaker-inputs').append(group);
+}
+TEMPLATE.forEach((stage,index) => {
+  const row=document.createElement('div');row.className='timing-row';
+  const label=document.createElement('label');label.htmlFor=`duration-${index}-min`;
+  const side=document.createElement('span');side.className=`timing-side ${stage.side}`;side.textContent=stage.side==='both'?'BOTH':stage.side.toUpperCase();
+  const title=document.createElement('span');title.textContent=stage.title;label.append(side,title);row.append(label);
+  for (const unit of ['min','sec']) {
+    const input=document.createElement('input');input.type='number';input.id=`duration-${index}-${unit}`;input.min='0';input.max=unit==='min'?'99':'59';input.step='1';input.inputMode='numeric';input.required=true;input.setAttribute('aria-label',`${stageLabel(index)} ${unit==='min'?'minutes':'seconds'}`);row.append(input);
+  }
+  $('timing-inputs').append(row);
 });
-const timingFields = STAGES.map((stage,index)=>({id:'duration-'+index,label:stageLabel(index),min:1,max:3600})).concat([{id:'changeover',label:'Changeover',min:1,max:120},{id:'amber',label:'Amber warning: seconds left',min:0,max:3600},{id:'red',label:'Red warning: seconds left',min:0,max:3600}]);
-timingFields.forEach(field=>{const label=document.createElement('label');label.className='field';const caption=document.createElement('span');caption.textContent=field.label;const input=document.createElement('input');input.id=field.id;input.type='number';input.min=field.min;input.max=field.max;input.step=1;input.required=true;label.append(caption,input);$('timing-inputs').append(label);});
+function teamName(side) { return settings[side] || `${titleCase(side)} team`; }
+function speakerText(stage) {
+  const name=settings.speakers[stage.speaker];
+  if (stage.questions) {
+    const answer=settings.speakers[stage.answer];
+    return `${name || titleCase(stage.side)} asks · ${answer || titleCase(stage.side==='pro'?'con':'pro')} answers`;
+  }
+  if (stage.side==='both') {
+    const other=settings.speakers[stage.answer];
+    return name || other ? `${name || teamName('pro')} · ${other || teamName('con')}` : 'Both teams';
+  }
+  return name || teamName(stage.side);
+}
 function applySettings() {
-  setText($('changeover-label'),settings.changeover+'s changeovers');
-  agendaRows.forEach((row,i)=>{setText(row.button.querySelector('.order-time'),format(STAGES[i].seconds*1000));row.button.setAttribute('aria-label',(i+1)+'. '+stageLabel(i)+', '+STAGES[i].seconds+' seconds');});
   document.documentElement.dataset.theme=settings.theme;
   for (const side of ['pro','con']) {
-    const name=ui[`${side}-name`];setText(name,settings[side]);name.classList.toggle('long',settings[side].length>34);name.classList.toggle('very-long',settings[side].length>49);
+    const name=ui[`${side}-name`];setText(name,teamName(side));name.classList.toggle('long',teamName(side).length>34);name.classList.toggle('very-long',teamName(side).length>49);
   }
+  agendaRows.forEach((row,index)=> { setText(row.duration,format(STAGES[index].seconds*1000));row.button.setAttribute('aria-label',`${index+1}. ${stageLabel(index)}, ${format(STAGES[index].seconds*1000)}`); });
+  setText($('changeover-label'),settings.transition===0?'No changeovers':`${settings.transition}s changeovers`);
   renderSound();
 }
 let lastPhaseKey='',lastAnnounce='',interval=null,lastSave=0;
@@ -353,7 +437,7 @@ function render() {
   const state=engine.snapshot(),stage=STAGES[state.phase.stageIndex];
   const phase=state.done?'done':state.phase.type;
   const seconds=Math.ceil(state.remaining/1000);
-  const warning=phase==='speech'?(seconds<=settings.red?'red':seconds<=settings.amber?'amber':'none'):'none';
+  const warning=phase==='speech'?(settings.red>0&&seconds<=settings.red?'red':settings.amber>0&&seconds<=settings.amber?'amber':'none'):'none';
   setData(ui.stage,'side',state.done?'both':stage.side);setData(ui.stage,'phase',phase);setData(ui.stage,'running',String(state.running));setData(ui.stage,'warning',warning);
   const status=state.done?'Finished':state.running?'Running':restored?'Restored · paused':state.elapsed===0?'Ready':'Paused';
   setText(ui.status,status);
@@ -374,8 +458,7 @@ function render() {
     setText(ui['section-count'],state.done?'09 / 09':`${String(state.phase.stageIndex+1).padStart(2,'0')} / 09`);
     setText(ui.side,state.done?'PRO + CON':phase==='transition'?'CHANGEOVER':stage.side==='both'?'BOTH TEAMS':stage.side.toUpperCase());
     setText(ui['section-title'],state.done?'Debate complete':phase==='transition'?'Changeover':stage.title);
-    let speaker=state.done? '':phase==='transition'?stageLabel(state.phase.stageIndex):stage.questions?`${titleCase(stage.side)} asks · ${titleCase(stage.side==='pro'?'con':'pro')} answers`:stage.side==='both'?'Both teams':(settings.speakers[stage.speaker] || settings[stage.side]);
-    if (!state.done && phase==='speech' && settings.speakers[stage.speaker]) speaker=settings.speakers[stage.speaker];
+    let speaker=state.done?'':phase==='transition'?stageLabel(state.phase.stageIndex):speakerText(stage);
     setText(ui.speaker,speaker);ui.speaker.classList.toggle('long',speaker.length>55);
     const nextIndex=phase==='transition'?state.phase.stageIndex:state.phase.stageIndex+1;
     const hasNext=!state.done && nextIndex<STAGES.length;
@@ -392,7 +475,7 @@ function render() {
     });
   }
   const announcement=`${phaseKey}:${status}`;
-  if (announcement!==lastAnnounce) { lastAnnounce=announcement;setText(ui.announcer,`${status}. ${state.done?'Debate complete':phase==='transition'?`Five-second changeover. Next: ${stageLabel(state.phase.stageIndex)}`:stageLabel(state.phase.stageIndex)}`); }
+  if (announcement!==lastAnnounce) { lastAnnounce=announcement;setText(ui.announcer,`${status}. ${state.done?'Debate complete':phase==='transition'?`${settings.transition}-second changeover. Next: ${stageLabel(state.phase.stageIndex)}`:stageLabel(state.phase.stageIndex)}`); }
   if (state.done) { stopLoop();syncWakeLock();saveSession(); }
   return state;
 }
@@ -434,7 +517,7 @@ function requestNext() {
   const state=engine.snapshot();if (state.done) return;
   const final=state.phaseIndex===engine.phases.length-1;
   confirmAction(final?'Finish debate?':state.phase.type==='transition'?'Start next section?':'End this section?',final?'Con · Final focus':state.phase.type==='transition'?stageLabel(state.phase.stageIndex):`Next: ${stageLabel(state.phase.stageIndex+1)}`,
-    final?'Finish':state.phase.type==='transition'?'Start section':'Changeover',wasRunning => navigate(() => engine.next(),wasRunning));
+    final?'Finish':state.phase.type==='transition'?'Start section':settings.transition?'Changeover':'Next section',wasRunning => navigate(() => engine.next(),wasRunning));
 }
 function requestPrevious() {
   if (engine.position()===0) return;
@@ -447,31 +530,69 @@ function requestReset() {
 }
 function requestJump(index) {
   const state=engine.snapshot();
-  if (state.elapsed===engine.phases[index*2].start && !state.running) return;
+  if (state.elapsed===engine.phases.find(phase=>phase.type==='speech' && phase.stageIndex===index).start && !state.running) return;
   if (!state.running && state.elapsed===0) { navigate(() => engine.jump(index),false);return; }
   confirmAction('Go to section?',stageLabel(index),'Go to section',() => navigate(() => engine.jump(index),false));
 }
 let settingsWasRunning=false;
+function putTimings(durations,transition,amber=30,red=10) {
+  durations.forEach((seconds,i)=> { $(`duration-${i}-min`).value=String(Math.floor(seconds/60));$(`duration-${i}-sec`).value=String(seconds%60); });
+  $('transition-min').value=String(Math.floor(transition/60));$('transition-sec').value=String(transition%60);
+  for (const [key,value] of [['amber',amber],['red',red]]) { $(key+'-min').value=String(Math.floor(value/60));$(key+'-sec').value=String(value%60); }
+  readTimings();
+}
+function readTimings() {
+  let valid=true;
+  function pair(prefix,minSeconds,maxSeconds) {
+    const minutes=$(prefix+'-min'),seconds=$(prefix+'-sec');
+    minutes.setCustomValidity('');seconds.setCustomValidity('');
+    const m=minutes.valueAsNumber,s=seconds.valueAsNumber,total=m*60+s;
+    if (!Number.isInteger(m)||m<0||m>Number(minutes.max)) minutes.setCustomValidity('Enter whole minutes within the allowed range.');
+    if (!Number.isInteger(s)||s<0||s>59) seconds.setCustomValidity('Enter seconds from 0 to 59.');
+    if (Number.isFinite(total) && (total<minSeconds||total>maxSeconds)) seconds.setCustomValidity(minSeconds===1?'Use a time from 0:01 to 99:59.':maxSeconds===300?'Use a changeover from 0:00 to 5:00.':'Use a warning from 0:00 to 99:59.');
+    if (!minutes.validity.valid || !seconds.validity.valid) valid=false;
+    return total;
+  }
+  const durations=TEMPLATE.map((_,i)=>pair(`duration-${i}`,1,5999));
+  const transition=pair('transition',0,300),amber=pair('amber',0,5999),red=pair('red',0,5999);
+  setText($('setup-total'),valid?format((durations.reduce((a,b)=>a+b,0)+transition*(TEMPLATE.length-1))*1000):'Check timings');
+  return valid?{durations,transition,amber,red}:null;
+}
 function openSettings() {
   if ($('confirm-dialog').open || $('settings-dialog').open) return;
   settingsWasRunning=engine.running;pause();
-  $('pro-input').value=settings.pro;$('con-input').value=settings.con;$('theme-input').value=settings.theme;$('volume-input').value=String(settings.volume);$('volume-value').textContent=`${settings.volume}%`;$('awake-input').checked=settings.awake;
-  STAGES.forEach(stage => { if (stage.speaker) $(`speaker-${stage.speaker}`).value=settings.speakers[stage.speaker] || ''; });
-  STAGES.forEach((stage,i)=>$('duration-'+i).value=settings.durations[i]);
-  for(const key of ['changeover','amber','red']) $(key).value=settings[key];
+  $('pro-input').value=settings.pro;$('con-input').value=settings.con;$('theme-input').value=settings.theme;$('volume-input').value=String(settings.volume);$('volume-value').textContent=`${settings.volume}%`;$('awake-input').checked=settings.awake;$('sound-input').checked=settings.sound;
+  ROLES.forEach(([key])=> { $(`speaker-${key}`).value=settings.speakers[key] || ''; });
+  putTimings(settings.durations,settings.transition,settings.amber,settings.red);
   $('settings-dialog').showModal();
 }
 function closeSettings(save) {
   if (!$('settings-dialog').open) return;
+  let crossedBoundary=false;
   if (save) {
-    const speakers={};STAGES.forEach(stage => { if (stage.speaker) speakers[stage.speaker]=$(`speaker-${stage.speaker}`).value; });
-    const oldSchedule=scheduleSchema();
-    settings=normalizeSettings({...settings,durations:STAGES.map((s,i)=>Number($('duration-'+i).value)),changeover:Number($('changeover').value),amber:Number($('amber').value),red:Number($('red').value),pro:$('pro-input').value,con:$('con-input').value,theme:$('theme-input').value,volume:Number($('volume-input').value),awake:$('awake-input').checked,speakers});
-    if(oldSchedule!==scheduleSchema()){STAGES.forEach((stage,i)=>stage.seconds=settings.durations[i]);engine=new DebateEngine(STAGES,settings.changeover);settingsWasRunning=false;restored=false;saveSession();}
-    safeSet('localStorage',SETTINGS_KEY,settings);applySettings();invalidate();
+    const timings=readTimings();if (!timings || !$('settings-form').reportValidity()) { $('settings-form').reportValidity();return; }
+    const speakers={};ROLES.forEach(([key])=> { speakers[key]=$(`speaker-${key}`).value; });
+    const nextSettings=normalizeSettings({...settings,pro:$('pro-input').value,con:$('con-input').value,theme:$('theme-input').value,volume:Number($('volume-input').value),sound:$('sound-input').checked,awake:$('awake-input').checked,speakers,...timings});
+    if (schema(nextSettings)!==schema(settings)) {
+      const state=engine.snapshot(),used=state.elapsed-state.phase.start;
+      STAGES=TEMPLATE.map((stage,i)=>({...stage,seconds:nextSettings.durations[i]}));
+      const replacement=new DebateEngine(STAGES,nextSettings.transition);
+      if (state.done) replacement.seek(replacement.total);
+      else {
+        let phase=replacement.phases.find(p=>p.type===state.phase.type && p.stageIndex===state.phase.stageIndex);
+        if (!phase) { phase=replacement.phases.find(p=>p.type==='speech' && p.stageIndex===state.phase.stageIndex);replacement.seek(phase.start);crossedBoundary=true; }
+        else { replacement.seek(phase.start+Math.min(used,phase.duration));crossedBoundary=used>=phase.duration; }
+      }
+      engine=replacement;
+    }
+    settings=nextSettings;
+    if (!safeSet('localStorage',SETTINGS_KEY,settings)) toast('Saved for this session only. Browser storage is unavailable.');
+    applySettings();invalidate();
   }
-  audio.cancel();$('settings-dialog').close();render();
-  if (settingsWasRunning) resume();settingsWasRunning=false;
+  audio.cancel();$('settings-dialog').close();render();saveSession();
+  if (settingsWasRunning && !crossedBoundary && !engine.snapshot().done) resume();
+  if (crossedBoundary) { restored=false;render();toast('New time already elapsed. Paused at the next section.'); }
+  settingsWasRunning=false;
 }
 async function fullscreen() {
   try {
@@ -488,13 +609,17 @@ function fit() {
 ui.toggle.addEventListener('click',toggle);ui.next.addEventListener('click',requestNext);ui.previous.addEventListener('click',requestPrevious);ui.reset.addEventListener('click',requestReset);
 ui.sound.addEventListener('click',() => {
   settings.sound=!(settings.sound && settings.volume>0);
-  if (settings.sound && settings.volume===0) settings.volume=100;
+  if (settings.sound && settings.volume===0) settings.volume=85;
   safeSet('localStorage',SETTINGS_KEY,settings);renderSound();
   if (settings.sound) { if (engine.running) void audio.schedule();else void audio.test(settings.volume); } else audio.cancel();
 });
 ui.fullscreen.addEventListener('click',fullscreen);
 $('settings-button').addEventListener('click',openSettings);$('settings-close').addEventListener('click',() => closeSettings(false));$('settings-cancel').addEventListener('click',() => closeSettings(false));
 $('settings-form').addEventListener('submit',event => { event.preventDefault();closeSettings(true); });
+$('settings-form').addEventListener('invalid',event=> { const group=event.target.closest('details');if(group) group.open=true; },true);
+$('settings-form').addEventListener('input',event=> { if (event.target.type==='number') readTimings(); });
+$('clear-names').addEventListener('click',()=> { $('pro-input').value='';$('con-input').value='';ROLES.forEach(([key])=> { $(`speaker-${key}`).value=''; }); });
+$('default-timings').addEventListener('click',()=>putTimings(DEFAULTS.durations,DEFAULTS.transition));
 $('settings-dialog').addEventListener('cancel',event => { event.preventDefault();closeSettings(false); });
 $('volume-input').addEventListener('input',() => { $('volume-value').textContent=`${$('volume-input').value}%`; });
 $('test-sound').addEventListener('click',() => void audio.test(Number($('volume-input').value)));
