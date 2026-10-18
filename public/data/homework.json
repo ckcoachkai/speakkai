@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-18T04:16:15.695383+00:00",
+  "updatedAt": "2026-10-18T05:16:06.469338+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1113,8 +1113,16 @@
           "id": "2026-10-18-sun-1130",
           "date": "2026-10-18",
           "time": "11:30–13:00",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "◆ Class content: Students gave their individual speaking presentations, followed by a mock debate on their topics. In the mock debate, they practised thinking through points and expressing their ideas, thoughts and opinions in response to the other side.\n\n◆ Next class: We will continue practising rebuttals and rebuttal techniques. The aim is to help students move from reading their points to understanding how to respond to an opponent’s argument."
+          ],
+          "homework": {
+            "title": "Mock debate — rebuttals to the opposing side",
+            "steps": [
+              "For homework, try to write down rebuttals to the opposing side’s arguments, based on the position you took in class today. Think about what the other side would say and how you would answer it."
+            ],
+            "prepareFor": "Continuing rebuttal and rebuttal-technique practice."
+          },
           "students": [
             {
               "name": "Ethan",
