@@ -1,0 +1,122 @@
+---
+import BrandLogo from '../../components/BrandLogo.astro';
+import data from '../../../public/data/feedback.json';
+import { validateFeedback, formatDate } from '../../lib/feedback.mjs';
+import { williamMondayLesson } from '../../lib/william-homework.mjs';
+
+validateFeedback(data);
+const lesson = williamMondayLesson(data);
+const labels = {
+  en: { title: 'William’s Monday homework', latest: 'Latest recorded Monday lesson', homework: 'Homework', classContent: 'Class content', missing: 'Not recorded for this lesson.', empty: 'No Monday lesson has been recorded yet.', copy: 'Copy homework' },
+  zh: { title: 'William 的周一作业', latest: '最近一次有记录的周一课程', homework: '作业', classContent: '课堂内容', missing: '本次课程尚未记录此项内容。', empty: '尚未记录周一课程。', copy: '复制作业' },
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="William’s latest recorded Monday class content and homework." />
+    <link rel="canonical" href="https://speakkai.com/william/" />
+    <link rel="icon" href="/favicon.svg" />
+    <title>William’s Monday homework | SpeakKai</title>
+  </head>
+  <body>
+    <header class="page-header">
+      <a href="/" aria-label="SpeakKai home"><BrandLogo compact /></a>
+      <div class="languages" aria-label="Page language">
+        <button type="button" data-language="en" aria-pressed="true">EN</button>
+        <button type="button" data-language="zh" aria-pressed="false">中文</button>
+      </div>
+    </header>
+    <main>
+      <h1>{labels.en.title}</h1>
+      {lesson ? <>
+        <p class="lesson-date"><span id="latest-label">{labels.en.latest}</span><br /><time datetime={lesson.date}>{formatDate(lesson.date)}</time><span> · {lesson.time}</span></p>
+        <section class="homework" aria-labelledby="homework-heading">
+          <div class="section-heading"><h2 id="homework-heading">Homework</h2><button type="button" id="copy-homework" disabled={!lesson.homework}>Copy homework</button></div>
+          <p id="homework-text" class="lesson-text">{lesson.homework?.en || labels.en.missing}</p>
+        </section>
+        <section aria-labelledby="content-heading">
+          <h2 id="content-heading">Class content</h2>
+          <p id="content-text" class="lesson-text">{lesson.classContent?.en || labels.en.missing}</p>
+        </section>
+        <p id="copy-status" role="status" aria-live="polite"></p>
+        <textarea id="copy-fallback" aria-label="Homework to copy" readonly hidden></textarea>
+      </> : <p id="empty-state">{labels.en.empty}</p>}
+    </main>
+    <footer>Coach Kai · SpeakKai</footer>
+    <script is:inline type="application/json" id="william-lesson" set:html={JSON.stringify({ lesson, labels }).replaceAll('<', '\\u003c')}></script>
+    <script>
+      type Language = 'en' | 'zh';
+      type Pair = { en: string; zh: string } | null;
+      type Lesson = { date: string; time: string; homework: Pair; classContent: Pair } | null;
+      type Labels = Record<Language, Record<string, string>>;
+      const payload = JSON.parse(document.querySelector('#william-lesson')!.textContent!) as { lesson: Lesson; labels: Labels };
+      let language: Language = 'en';
+      const copyButton = document.querySelector<HTMLButtonElement>('#copy-homework');
+      const status = document.querySelector<HTMLElement>('#copy-status');
+      const fallback = document.querySelector<HTMLTextAreaElement>('#copy-fallback');
+      function render(next: Language) {
+        language = next;
+        const text = payload.labels[next];
+        document.documentElement.lang = next === 'zh' ? 'zh-CN' : 'en';
+        document.title = `${text.title} | SpeakKai`;
+        document.querySelector('h1')!.textContent = text.title;
+        document.querySelectorAll<HTMLButtonElement>('[data-language]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.language === next)));
+        if (status) status.textContent = '';
+        if (fallback) fallback.hidden = true;
+        if (!payload.lesson) { document.querySelector('#empty-state')!.textContent = text.empty; return; }
+        document.querySelector('#latest-label')!.textContent = text.latest;
+        document.querySelector('time')!.textContent = new Intl.DateTimeFormat(next === 'zh' ? 'zh-CN' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'Asia/Shanghai' }).format(new Date(payload.lesson.date + 'T00:00:00+08:00'));
+        document.querySelector('#homework-heading')!.textContent = text.homework;
+        document.querySelector('#content-heading')!.textContent = text.classContent;
+        document.querySelector('#homework-text')!.textContent = payload.lesson.homework?.[next] || text.missing;
+        document.querySelector('#content-text')!.textContent = payload.lesson.classContent?.[next] || text.missing;
+        copyButton!.textContent = text.copy;
+      }
+      document.querySelectorAll<HTMLButtonElement>('[data-language]').forEach(button => button.addEventListener('click', () => render(button.dataset.language as Language)));
+      copyButton?.addEventListener('click', async () => {
+        const text = payload.lesson?.homework?.[language];
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+          status!.textContent = language === 'zh' ? '作业已复制。' : 'Homework copied.';
+        } catch {
+          fallback!.value = text;
+          fallback!.hidden = false;
+          fallback!.focus();
+          fallback!.select();
+          status!.textContent = language === 'zh' ? '请选择并复制下面的作业内容。' : 'Select and copy the homework below.';
+        }
+      });
+    </script>
+  </body>
+</html>
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(body) { margin: 0; background: #fff; color: #172d43; font: 17px/1.8 Arial, 'Microsoft YaHei', sans-serif; }
+  .page-header { max-width: 850px; margin: auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px; border-bottom: 1px solid #e4e3df; }
+  .languages { display: flex; gap: 5px; }
+  button { min-height: 44px; border: 1px solid #b7c6d8; border-radius: 5px; background: white; color: #173149; padding: 8px 14px; font: 600 14px/1.4 Arial, sans-serif; cursor: pointer; }
+  button[aria-pressed='true'] { background: #103f87; border-color: #103f87; color: white; }
+  button:hover { border-color: #103f87; }
+  button:focus-visible, a:focus-visible { outline: 3px solid #bc702f; outline-offset: 3px; }
+  button:disabled { opacity: .5; cursor: default; }
+  main { max-width: 850px; margin: auto; padding: 36px 24px 16px; }
+  h1 { font-size: clamp(31px, 5vw, 43px); line-height: 1.15; margin: 0 0 20px; }
+  .lesson-date { margin: 0 0 30px; color: #566171; font-size: 15px; }
+  time { font-weight: 700; color: #173149; }
+  section { padding: 26px 0; border-top: 1px solid #e4e3df; }
+  section.homework { border-top: 4px solid #103f87; }
+  .section-heading { display: flex; gap: 16px; align-items: center; justify-content: space-between; }
+  h2 { font-size: 27px; line-height: 1.25; margin: 0 0 20px; }
+  .section-heading h2 { margin: 0; }
+  .lesson-text { margin: 20px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+  #copy-status { color: #566171; font-size: 14px; }
+  textarea { width: 100%; min-height: 220px; padding: 14px; font: inherit; }
+  footer { max-width: 850px; margin: auto; padding: 20px 24px 40px; color: #566171; font-size: 13px; }
+  @media (max-width: 500px) { .page-header { padding-inline: 18px; gap: 10px; } main { padding: 28px 18px 12px; } button { padding: 8px 11px; } }
+  @media print { .languages, #copy-homework, #copy-status, textarea { display: none; } main { padding-top: 15px; } }
+</style>
