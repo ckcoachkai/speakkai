@@ -30,10 +30,12 @@ export function createGardenMonsters({artwork={}}={}) {
     const frames=record.frames||[];
     if(frames.length&&frames.every(f=>f.rect?.length===4&&f.rect.every(Number.isFinite)&&f.rect[2]>0&&f.rect[3]>0)){
      const durations=frames.map(f=>Math.max(1,GM_FINITE(f.duration,100)));
-     let surface=null;
-     if(typeof OffscreenCanvas==='function')surface=new OffscreenCanvas(record.frameWidth,record.frameHeight);
-     else if(typeof document!=='undefined'&&document.createElement){surface=document.createElement('canvas');surface.width=record.frameWidth;surface.height=record.frameHeight;}
-     GM_sprites.set(record.id,{...record,img,frames,durations,surface,total:durations.reduce((a,b)=>a+b,0)});
+     const fallback=frames.map((_,i)=>i),clips={};
+     for(const [name,indices] of Object.entries({...record.clips,default:fallback})){
+      const valid=indices.filter(i=>Number.isInteger(i)&&i>=0&&i<frames.length);
+      if(valid.length)clips[name]={indices:valid,total:valid.reduce((sum,i)=>sum+durations[i],0)};
+     }
+     GM_sprites.set(record.id,{...record,img,frames,durations,compiledClips:clips});
     }else GM_errors.push(record.id+': invalid source frames');
    }
    finish();
@@ -50,10 +52,10 @@ export function createGardenMonsters({artwork={}}={}) {
   await Promise.all(manifest.characters.map(loadSprite));
  }catch(e){if(!GM_closed)GM_errors.push(String(e.message||e));}finally{GM_loading=false;}})();
  function frameAt(sprite,time,mode){
-  const clip=sprite.clips?.[mode]||sprite.clips?.walk||sprite.frames.map((_,i)=>i);
-  const total=clip.reduce((sum,i)=>sum+sprite.durations[i],0);
+  const compiled=sprite.compiledClips[mode]||sprite.compiledClips.walk||sprite.compiledClips.default;
+  const clip=compiled.indices,total=compiled.total;
   let at=((Math.max(0,time)*1000)%Math.max(1,total));
-  for(let n=0;n<clip.length;n++){const index=clip[n];if(at<sprite.durations[index])return{frame:sprite.frames[index],index,progress:at/sprite.durations[index],next:clip[(n+1)%clip.length]};at-=sprite.durations[index];}
+  for(let n=0;n<clip.length;n++){const index=clip[n];if(at<sprite.durations[index])return{frame:sprite.frames[index],index};at-=sprite.durations[index];}
   return{frame:sprite.frames[clip[0]],index:clip[0]};
  }
  function draw(ctx,{id,type,monsterId,instanceId,x=0,y=0,scale=1,time=0,hp=1,maxHp=1,hit=0,bite=0,walk,death=0,clip}={}){
@@ -63,8 +65,8 @@ export function createGardenMonsters({artwork={}}={}) {
   const mode=death>0?'death':hit>0?'hurt':bite>0?'attack':walk===false||walk===0?'idle':'walk';
   const clock=GM_FINITE(time),entity=instanceId||key;
   let playhead=GM_playheads.get(entity);
-  if(!playhead||clock<playhead.lastTime){playhead={mode,start:clock,lastTime:clock,previous:null,selected:null};GM_playheads.set(entity,playhead);if(GM_playheads.size>2048)GM_playheads.delete(GM_playheads.keys().next().value);}
-  if(playhead.mode!==mode){playhead.previous=playhead.selected;playhead.mode=mode;playhead.start=clock;}
+  if(!playhead||clock<playhead.lastTime){playhead={mode,start:clock,lastTime:clock};GM_playheads.set(entity,playhead);if(GM_playheads.size>2048)GM_playheads.delete(GM_playheads.keys().next().value);}
+  if(playhead.mode!==mode){playhead.mode=mode;playhead.start=clock;}
   playhead.lastTime=clock;
   const visualClock=sprite.undead ? clock*.58+Math.sin(clock*2)*.075 : clock;
   const localTime=sprite.clips?.[mode]?Math.max(0,visualClock-(sprite.undead?playhead.start*.58:playhead.start)):visualClock;
@@ -72,7 +74,7 @@ export function createGardenMonsters({artwork={}}={}) {
   if(death>0&&sprite.clips?.death?.length){const clip=sprite.clips.death,index=clip[Math.min(clip.length-1,Math.floor(GM_LIMIT(death,0,1)*clip.length))];selected={frame:sprite.frames[index],index};}
   const frame=selected.frame;
   const s=GM_LIMIT(scale,.005,8),hurt=GM_LIMIT(hit,0,1),fall=GM_LIMIT(death,0,1);
-  const ratio=GM_LIMIT(GM_FINITE(hp)/Math.max(.001,GM_FINITE(maxHp,1)),0,1),stage=ratio>.8?0:ratio>.6?1:ratio>.4?2:ratio>.2?3:4;
+
   const displayHeight=sprite.displayHeight||GARDEN_MONSTER_HEIGHT, factor=displayHeight/sprite.bodyHeight,foot=sprite.foot||[sprite.frameWidth/2,sprite.frameHeight];
   ctx.save();
   if(clip&&[clip.x,clip.y,clip.width,clip.height].every(Number.isFinite)&&clip.width>0&&clip.height>0){ctx.beginPath();ctx.rect(clip.x,clip.y,clip.width,clip.height);ctx.clip();}
@@ -90,9 +92,8 @@ export function createGardenMonsters({artwork={}}={}) {
   // Radiation is a clearly documented game effect on the original full-body
   // mutant artwork; it does not substitute a cropped Screamer torso.
   if(sprite.radiation){ctx.shadowColor='#99ff38';ctx.shadowBlur=15+Math.sin(clock*4)*3;}
-  const mix=GM_LIMIT((clock-playhead.start)/.10,0,1);
-  const paint=(source,alpha=1)=>{
-   ctx.save();ctx.globalAlpha*=alpha;
+  const paint=source=>{
+   ctx.save();
    // A single continuous transform preserves crisp contours; slicing the
    // artwork into horizontal strips made silhouettes look jagged.
    if(sprite.undead&&!sprite.generatedZombie){
@@ -101,27 +102,11 @@ export function createGardenMonsters({artwork={}}={}) {
    ctx.drawImage(sprite.img,...source.rect,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
    ctx.restore();
   };
-  if(sprite.generatedZombie&&sprite.surface&&selected.next!==undefined&&mode!=='death'){
-   // Hold a clean pose for most of each frame; a short transition avoids
-   // persistent doubled outlines across the full animation interval.
-   const blend=sprite.surface.getContext('2d'),phase=Math.max(0,(selected.progress-.8)/.2),amount=phase*phase*(3-2*phase);
-   blend.imageSmoothingEnabled=!sprite.pixelArt;blend.imageSmoothingQuality='high';blend.clearRect(0,0,sprite.frameWidth,sprite.frameHeight);blend.globalAlpha=1-amount;
-   blend.drawImage(sprite.img,...frame.rect,0,0,sprite.frameWidth,sprite.frameHeight);
-   blend.globalCompositeOperation='lighter';blend.globalAlpha=amount;
-   blend.drawImage(sprite.img,...sprite.frames[selected.next].rect,0,0,sprite.frameWidth,sprite.frameHeight);
-   blend.globalCompositeOperation='source-over';blend.globalAlpha=1;
-   ctx.drawImage(sprite.surface,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
-  }else if(!sprite.undead&&playhead.previous&&mix<1&&mode!=='death'&&sprite.surface){
-   const blend=sprite.surface.getContext('2d');blend.imageSmoothingEnabled=!sprite.pixelArt;blend.imageSmoothingQuality='high';blend.clearRect(0,0,sprite.frameWidth,sprite.frameHeight);
-   blend.globalCompositeOperation='source-over';blend.globalAlpha=1-mix;blend.drawImage(sprite.img,...playhead.previous.frame.rect,0,0,sprite.frameWidth,sprite.frameHeight);
-   blend.globalCompositeOperation='lighter';blend.globalAlpha=mix;blend.drawImage(sprite.img,...frame.rect,0,0,sprite.frameWidth,sprite.frameHeight);
-   blend.globalCompositeOperation='source-over';blend.globalAlpha=1;
-   ctx.drawImage(sprite.surface,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
-  }else paint(frame);
-  playhead.selected=selected;
+  // Exactly one silhouette per actor: alpha crossfades produce ghost bodies.
+  paint(frame);
   ctx.restore();GM_draws++;GM_counts[key]=(GM_counts[key]||0)+1;
   GM_lastPose={id:key,time:GM_FINITE(time),mode,sourceFrame:selected.index,sourceFrameCount:sprite.frames.length,scale:s,height:displayHeight*s};return true;
  }
  function destroy(){if(GM_closed)return;GM_closed=true;GM_controller?.abort();for(const img of GM_images){img.onload=img.onerror=null;try{img.src='';}catch{}}for(const done of GM_pending)done();GM_images.clear();GM_sprites.clear();GM_playheads.clear();GM_lastPose=null;}
- return{draw,destroy,has:id=>!GM_closed&&GM_sprites.has(id),dimensions(id){const s=GM_sprites.get(id);return s?{height:s.displayHeight||GARDEN_MONSTER_HEIGHT,width:s.frameWidth*(s.displayHeight||GARDEN_MONSTER_HEIGHT)/s.bodyHeight}:null;},getState(){return{ready:!GM_closed&&!GM_loading&&GM_sprites.size===(GM_manifest?.characters.length||0)&&GM_errors.length===0,loading:!GM_closed&&GM_loading,closed:GM_closed,errors:[...GM_errors],types:[...GM_sprites.keys()],sourceAssets:true,animatedTypes:[...GM_sprites.values()].filter(s=>s.frames.length>1).map(s=>s.id),staticTypes:[...GM_sprites.values()].filter(s=>s.frames.length===1).map(s=>s.id),interpolatedTypes:[...GM_sprites.values()].filter(s=>s.interpolation).map(s=>s.id),frameCounts:Object.fromEntries([...GM_sprites.values()].map(s=>[s.id,s.frames.length])),bitmapDraws:GM_draws,vectorDraws:0,drawCounts:{...GM_counts},lastPose:GM_lastPose};}};
+ return{draw,destroy,release(instanceId){GM_playheads.delete(instanceId);},has:id=>!GM_closed&&GM_sprites.has(id),dimensions(id){const s=GM_sprites.get(id);return s?{height:s.displayHeight||GARDEN_MONSTER_HEIGHT,width:s.frameWidth*(s.displayHeight||GARDEN_MONSTER_HEIGHT)/s.bodyHeight}:null;},getState(){return{ready:!GM_closed&&!GM_loading&&GM_sprites.size===(GM_manifest?.characters.length||0)&&GM_errors.length===0,loading:!GM_closed&&GM_loading,closed:GM_closed,errors:[...GM_errors],types:[...GM_sprites.keys()],sourceAssets:true,animatedTypes:[...GM_sprites.values()].filter(s=>s.frames.length>1).map(s=>s.id),staticTypes:[...GM_sprites.values()].filter(s=>s.frames.length===1).map(s=>s.id),interpolatedTypes:[],frameCounts:Object.fromEntries([...GM_sprites.values()].map(s=>[s.id,s.frames.length])),bitmapDraws:GM_draws,vectorDraws:0,drawCounts:{...GM_counts},lastPose:GM_lastPose};}};
 }

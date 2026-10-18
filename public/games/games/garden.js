@@ -1,9 +1,9 @@
-import { createGardenAllies } from './garden-allies.js?v=20261018-guards';
-import { GARDEN_ANIMALS, drawGardenAnimal } from './garden-animals.js?v=20261018-guards';
-import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261018-guards';
+import { createGardenAllies } from './garden-allies.js?v=20261018-clean';
+import { GARDEN_ANIMALS, drawGardenAnimal } from './garden-animals.js?v=20261018-clean';
+import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261018-clean';
 import { GARDEN_RULES, PLANT_BY_ID, ZOMBIE_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
-import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261018-guards';
+import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261018-clean';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
@@ -825,7 +825,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
         addLog({ type: 'mowerSpent', laneId: lane.entry.id, mowerId: mower.uid, x: mower.x, activationKills: mower.kills, studentHp: lane.hp });
         live.textContent = lane.entry.name + "'s lawnmower rescue is spent. " + (livingDefenders(lane).length ? 'Remaining plants protect the student.' : 'Later zombies can now reach the student.');
       }
-      lane.mobs = lane.mobs.filter(mob => !mob.dead || simTime - mob.deathAt < .7);
+      lane.mobs = lane.mobs.filter(mob => {const keep=!mob.dead || simTime-mob.deathAt<.7;if(!keep&&mob.type.giant)monsters.release(mob.uid);return keep;});
       if (simTime >= lane.nextGrowl && lane.mobs.some(mob => !mob.dead)) { playSfx('growl', lane); lane.nextGrowl = simTime + 7 + lane.index % 4; }
       if (!lane.eaten) for (const defender of livingDefenders(lane)) if (simTime >= defender.nextShot) shoot(lane, defender);
     }
@@ -1158,17 +1158,6 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const y = clamp(lane.floor, clip.y + displayHeight * scale + 8, clip.y + clip.height - 8);
     return { x, y, scale, height: displayHeight * scale, clip, laneFloor: lane.floor, laneX: lane.plantX + mob.x * lane.travel };
   }
-  function giantLaneMarker(lane, mob) {
-    if (mob.dead || mob.type.miniature) return;
-    const giant = giantGeometry(lane, mob), anchorX = clamp(giant.laneX, giant.clip.x + 20, width - 28);
-    ctx.save(); ctx.strokeStyle = '#fff1a9b0'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]);
-    ctx.beginPath(); ctx.moveTo(giant.x, giant.y - 3); ctx.lineTo(anchorX, lane.floor - 3); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = '#ffe18a40'; ctx.strokeStyle = '#ffe89f'; ctx.beginPath(); ctx.ellipse(anchorX, lane.floor - 3, 24, 7, 0, 0, TAU); ctx.fill(); ctx.stroke();
-    const label = mob.type.name + ' → ' + lane.entry.name, labelWidth = Math.min(205, Math.max(125, label.length * 6 + 14));
-    const labelX = clamp(anchorX - labelWidth / 2, giant.clip.x + 4, width - labelWidth - 16);
-    rr(labelX, lane.floor - 25, labelWidth, 18, 8, '#35452ee6', '#e9ce85');
-    text(label, labelX + labelWidth / 2, lane.floor - 16, labelWidth - 12, 10, '#fff0bb', 850, 'center'); ctx.restore();
-  }
   function zombie(lane, mob, time) {
     const deadAge = mob.dead ? simTime - mob.deathAt : 0;
     const x = lane.plantX + mob.x * lane.travel, floor = lane.floor;
@@ -1286,9 +1275,6 @@ export default function createGame({ container, names = [], onPick, random = Mat
     for (const lane of lanes) {
       if (!visible(lane)) continue;
       const won = phase === 'result' && winner === lane;
-      const tiny = lane.h < 36;
-      const team = livingDefenders(lane), teamIcons = team.map(defender => WEAPON_MAP[defender.weapon].icon).join(' ') + (lane.power ? ' · ' + lane.power : '');
-      if (lane.h >= 50) text(teamIcons, lane.plantX + .09 * lane.travel, lane.y + 10, Math.max(60, lane.travel * .36), 9, '#355b30', 850);
       for (let g = lane.rail + 8; g < lane.w; g += 53) {
         ctx.strokeStyle = '#47792e77'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(lane.x + g + 9, lane.floor + 3); ctx.lineTo(lane.x + g + 7, lane.floor - 2); ctx.lineTo(lane.x + g + 9, lane.floor + 1); ctx.lineTo(lane.x + g + 13, lane.floor - 2); ctx.stroke();
       }
@@ -1298,7 +1284,6 @@ export default function createGame({ container, names = [], onPick, random = Mat
       potatoMine(lane);
       extraPlants(lane);
       lawnmower(lane, time);
-      lane.mobs.filter(mob => mob.type.giant).forEach(mob => giantLaneMarker(lane, visualMob(mob)));
       const collectionAge = Math.max(0, (wallTime - lane.collectionAt) / 1000);
       if (collectionAge < .65) {
         ctx.save(); ctx.globalAlpha = 1 - collectionAge / .65;
