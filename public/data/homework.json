@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-17T07:23:07.353169+00:00",
+  "updatedAt": "2026-10-18T02:37:32.638188+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -243,9 +243,15 @@
             }
           ],
           "classContent": [
-            "Students shared their thoughts about the Tesla Roadster and its recently introduced features. Feedback included developing a clear message and practising confident delivery, word emphasis, audience eye contact, steady pacing, and awareness of arm movements."
+            "Students shared their thoughts about the Tesla Roadster and its recently introduced features. Feedback included developing a clear message and practising confident delivery, word emphasis, audience eye contact, steady pacing, and awareness of arm movements.\n\nWe also worked on a seven-minute impromptu speech."
           ],
-          "homework": null
+          "homework": {
+            "title": "Impromptu speaking worksheet and practice",
+            "steps": [
+              "Practise two or three impromptu questions. Complete the worksheet for the question assigned in class. If you cannot remember that question, you can use a new one:\n\n“What kind of innovations do you think you’ll see in 2030?”"
+            ],
+            "prepareFor": "Practise two or three impromptu questions and complete the worksheet."
+          }
         }
       ]
     },
@@ -363,6 +369,22 @@
               "feedbackUrl": "/fb/?class=sat-introductory&date=2026-09-19&student=tongtong"
             }
           ]
+        },
+        {
+          "id": "2026-10-17-sat-introductory",
+          "date": "2026-10-17",
+          "time": "16:50–17:30",
+          "classContent": [
+            "We did a little impromptu speaking practice. The focus was to organize responses using Answer–Reason–Example–Message (AREM): answer the question, give a reason, add an example, and finish with a message."
+          ],
+          "homework": {
+            "title": "AREM impromptu speaking practice",
+            "steps": [
+              "Practise answering impromptu questions a bit more using Answer–Reason–Example–Message (AREM). Answer the question, give a reason, add an example, and finish with a message.\n\nUse these five questions for practice:\n\n1. How has technology helped you in your life?\n2. Should we remove electric bikes? Think about Shanghai.\n3. What would you do in a world that is submerged in water?\n4. What would the world be like without any trees?\n5. What do you think about flying cars?"
+            ],
+            "prepareFor": "Practise organizing impromptu answers with Answer–Reason–Example–Message."
+          },
+          "students": []
         }
       ]
     },

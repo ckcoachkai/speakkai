@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-17T07:23:07.353169+00:00",
+  "updatedAt": "2026-10-18T02:37:32.638188+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -274,10 +274,13 @@
           "time": "15:00–16:30",
           "status": "held",
           "classContent": {
-            "en": "Students shared their thoughts about the Tesla Roadster and its recently introduced features. Feedback included developing a clear message and practising confident delivery, word emphasis, audience eye contact, steady pacing, and awareness of arm movements.",
-            "zh": "学生分享了自己对特斯拉 Roadster 及其最近介绍的功能的看法。反馈包括明确核心信息，并练习有信心地表达、强调词语、看向听众、保持稳定语速，以及觉察手臂动作。"
+            "en": "Students shared their thoughts about the Tesla Roadster and its recently introduced features. Feedback included developing a clear message and practising confident delivery, word emphasis, audience eye contact, steady pacing, and awareness of arm movements.\n\nWe also worked on a seven-minute impromptu speech.",
+            "zh": "学生分享了自己对特斯拉 Roadster 及其最近介绍的功能的看法。反馈包括明确核心信息，并练习有信心地表达、强调词语、看向听众、保持稳定语速，以及觉察手臂动作。\n\n我们还练习了一篇七分钟的即兴演讲。"
           },
-          "homework": null,
+          "homework": {
+            "en": "Practise two or three impromptu questions. Complete the worksheet for the question assigned in class. If you cannot remember that question, you can use a new one:\n\n“What kind of innovations do you think you’ll see in 2030?”",
+            "zh": "练习两到三个即兴问题。完成课堂上布置的题目所对应的练习表。如果不记得当时的题目，可以换用这个新题目：\n\n“你认为到了2030年，你会看到哪些创新？”"
+          },
           "students": [
             {
               "id": "kyle",
@@ -440,6 +443,21 @@
               "zh": "➜【活动】：“如果我能拥有一个梦想机器人”作业展示。\n\n➜【回忆与准备】：Tongtong 难以回忆起演讲内容。在老师提示后，她能够开口，但较多依赖跟着老师的话说。目前尚不能确认她是否完成了课前作业。\n\n➜【自信与独立表达】：她显得有些犹豫，需要支持才能继续。下一步是逐渐适应独立说出一小段内容，不需要老师逐句提供提示。\n\n➜【建议练习】：每次练习一两句话，然后把稿子放在一旁，用自己的话解释意思。从熟悉的小段开始，逐步练习完整展示。"
             }
           ]
+        },
+        {
+          "id": "2026-10-17-sat-introductory",
+          "date": "2026-10-17",
+          "time": "16:50–17:30",
+          "status": "held",
+          "classContent": {
+            "en": "We did a little impromptu speaking practice. The focus was to organize responses using Answer–Reason–Example–Message (AREM): answer the question, give a reason, add an example, and finish with a message.",
+            "zh": "我们做了一些即兴演讲练习。重点是用 Answer–Reason–Example–Message（AREM，即回答—理由—例子—核心信息）来组织回答：先回答问题，再给出理由、加入例子，最后以一个核心信息收尾。"
+          },
+          "homework": {
+            "en": "Practise answering impromptu questions a bit more using Answer–Reason–Example–Message (AREM). Answer the question, give a reason, add an example, and finish with a message.\n\nUse these five questions for practice:\n\n1. How has technology helped you in your life?\n2. Should we remove electric bikes? Think about Shanghai.\n3. What would you do in a world that is submerged in water?\n4. What would the world be like without any trees?\n5. What do you think about flying cars?",
+            "zh": "继续多练习一些即兴问题，使用 Answer–Reason–Example–Message（AREM，即回答—理由—例子—核心信息）。先回答问题，再给出理由、加入例子，最后以一个核心信息收尾。\n\n请用以下五个问题练习：\n\n1. 科技在你的生活中给了你哪些帮助？\n2. 我们应该取消电动自行车吗？请结合上海的情况思考。\n3. 如果世界被水淹没了，你会怎么办？\n4. 如果世界上没有任何树木，会是什么样子？\n5. 你怎么看飞行汽车？"
+          },
+          "students": []
         }
       ]
     },
