@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-18T05:16:06.469338+00:00",
+  "updatedAt": "2026-10-18T05:49:09.353698+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1258,6 +1258,27 @@
             ],
             "prepareFor": "Present the approximately 300-word opening statement with researched evidence and examples in the next class."
           }
+        },
+        {
+          "id": "2026-10-18-sun-1330",
+          "date": "2026-10-18",
+          "time": "13:30–15:00",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "April",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-18&student=april"
+            },
+            {
+              "name": "Ning",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-18&student=ning"
+            },
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-18&student=arthur"
+            }
+          ]
         }
       ]
     },
