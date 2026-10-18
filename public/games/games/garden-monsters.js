@@ -77,6 +77,8 @@ export function createGardenMonsters({artwork={}}={}) {
   if(clip&&[clip.x,clip.y,clip.width,clip.height].every(Number.isFinite)&&clip.width>0&&clip.height>0){ctx.beginPath();ctx.rect(clip.x,clip.y,clip.width,clip.height);ctx.clip();}
   ctx.translate(GM_FINITE(x),GM_FINITE(y));ctx.scale(s,s);
   if(sprite.flipX)ctx.scale(-1,1);
+  // A sourced toy profile rocks as a whole; this is not a native walk cycle.
+  if(sprite.motion==='waddle'&&fall===0){const phase=clock*6;ctx.translate(0,-Math.abs(Math.sin(phase))*3);ctx.rotate(Math.sin(phase)*.035);}
   if(hurt>0)ctx.translate(Math.sin(GM_FINITE(time)*61)*hurt*6,-hurt*2);
   if(fall>0&&!sprite.clips?.death){ctx.rotate(fall*.9);ctx.globalAlpha*=1-fall*.75;}
   ctx.filter='saturate('+(1-stage*.07)+') brightness('+(1+hurt*.45-stage*.015)+')';

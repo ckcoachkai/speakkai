@@ -1,7 +1,7 @@
 import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261016-lanes';
 import { GARDEN_RULES, PLANT_BY_ID, ZOMBIE_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
-import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261017-creatures';
+import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261018-avatars';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
@@ -1002,7 +1002,18 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const skin = skins[studentCell(lane.entry) % skins.length], sway = Math.sin(time * 2 + lane.entry.avatarIndex % 23);
     // Arms bend at connected shoulder/elbow anchors. The single procedural
     // head sways at its neck, with no baked portrait face or duplicate body.
-    rr(-16, -25, 32, 26, 9, lane.entry.color);
+    // Full, connected silhouettes: shoes, trouser legs and layered clothing.
+    const outfit = lane.entry.avatarIndex % 4;
+    for (const side of [-1, 1]) {
+      rr(side * 8 - 5, -17, 10, 16, 4, outfit === 2 ? '#526b81' : '#35465c');
+      rr(side * 8 - 7, -6, 15, 7, 3, '#f4eee0', '#354052');
+      rr(side * 8 - 7, -1, 15, 2, 1, '#a1aab2');
+    }
+    rr(-16, -29, 32, 21, 7, lane.entry.color, '#24344b66');
+    if (outfit === 0) { rr(-3, -28, 6, 19, 2, '#ffffff77'); dot(0, -20, 1, '#35465c'); dot(0, -14, 1, '#35465c'); }
+    if (outfit === 1) { rr(-14, -19, 28, 4, 1, '#fff5dbcc'); rr(-14, -12, 28, 2, 1, '#fff5db88'); }
+    if (outfit === 2) { rr(-11, -25, 4, 16, 1, '#415b75'); rr(7, -25, 4, 16, 1, '#415b75'); rr(-10, -19, 20, 10, 3, '#526b81'); }
+    if (outfit === 3) { rr(-10, -17, 20, 7, 3, '#ffffff44'); ctx.strokeStyle = '#fff1d4'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(-4, -27); ctx.lineTo(-5, -19); ctx.moveTo(4, -27); ctx.lineTo(5, -19); ctx.stroke(); }
     for (const side of [-1, 1]) {
       const elbowX = side * 25, elbowY = -14 + sway * side * 2, handX = side * 25, handY = -4 + sway * side * 4;
       ctx.strokeStyle = lane.entry.color; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(side * 13, -21); ctx.lineTo(elbowX, elbowY); ctx.stroke();
@@ -1020,11 +1031,20 @@ export default function createGame({ container, names = [], onPick, random = Mat
     ctx.fillStyle = skin; ctx.strokeStyle = '#735d4240'; ctx.lineWidth = 1;
     for (const side of [-1, 1]) { ctx.beginPath(); ctx.ellipse(side * 22, -46, 4.5, 6, 0, 0, TAU); ctx.fill(); ctx.stroke(); }
     ctx.beginPath(); ctx.ellipse(0, -49, 22, 27, 0, 0, TAU); ctx.fill(); ctx.stroke();
+    const faceLight = ctx.createRadialGradient(-8, -57, 2, 0, -49, 27);
+    faceLight.addColorStop(0, '#fff9e52b'); faceLight.addColorStop(.7, '#ffffff00'); faceLight.addColorStop(1, '#79452b20');
+    ctx.fillStyle = faceLight; ctx.fill();
+    dot(-14, -42, 4, '#ed97782b'); dot(14, -42, 4, '#ed97782b');
     ctx.fillStyle = hair; ctx.beginPath(); ctx.ellipse(0, -67, 23, 12, 0, Math.PI, TAU); ctx.fill();
     if (hairstyle === 1 || hairstyle === 4) { ctx.beginPath(); ctx.moveTo(-21, -67); ctx.quadraticCurveTo(-5, -84, 20, -68); ctx.quadraticCurveTo(3, -59, -13, -62); ctx.closePath(); ctx.fill(); }
     else if (hairstyle === 2) { for (let n = 0; n < 6; n++) dot(-18 + n * 7, -73 - n % 2 * 3, 7, hair); }
     else if (hairstyle >= 3) { ctx.beginPath(); ctx.moveTo(-22, -66); ctx.lineTo(-9, -61); ctx.lineTo(-3, -68); ctx.lineTo(8, -62); ctx.lineTo(22, -68); ctx.closePath(); ctx.fill(); }
     studentExpression(lane, time, skin);
+    if (index % 7 === 2) {
+      ctx.strokeStyle = '#435268'; ctx.lineWidth = 1.4;
+      for (const side of [-1, 1]) { ctx.beginPath(); ctx.ellipse(side * 8, -50, 7, 6, 0, 0, TAU); ctx.stroke(); }
+      ctx.beginPath(); ctx.moveTo(-1, -51); ctx.lineTo(1, -51); ctx.stroke();
+    }
     ctx.restore();
     if (lane.eaten || lane.hurt) {
       for (let n = 0; n < 3; n++) { const a = time * 4 + n * TAU / 3; text('★', Math.cos(a) * 28, -78 + Math.sin(a) * 6, 12, 12, '#fff0a0', 900, 'center'); }
@@ -1061,7 +1081,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     if (mower.status === 'spent') return;
     const running = mower.status === 'sweeping', x = lane.plantX + visualBetween(mower.previousX, mower.x) * lane.travel;
     const naturalWidth = mowerArt?.ready ? Number(mowerArt.manifest.naturalWidth) || 82.8 : 82.8;
-    const size = Math.min(lane.spriteScale * .60 * 82.8, lane.travel * .06);
+    const size = Math.min(lane.spriteScale * .72 * 82.8, lane.travel * .072);
     ctx.save(); ctx.translate(x, lane.floor); ctx.scale(size / naturalWidth, size / naturalWidth);
     ctx.fillStyle = '#26482755'; ctx.beginPath(); ctx.ellipse(0, -2, 37, 7, 0, 0, TAU); ctx.fill();
     if (mowerArt?.ready) {
