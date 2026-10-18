@@ -1,7 +1,8 @@
+import { GARDEN_ANIMALS, drawGardenAnimal } from './garden-animals.js?v=20261018-undead';
 import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261016-lanes';
 import { GARDEN_RULES, PLANT_BY_ID, ZOMBIE_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
-import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261018-avatars';
+import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261018-undead';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
@@ -149,7 +150,7 @@ export function damageZombie(mob, shot) {
 
 export default function createGame({ container, names = [], onPick, random = Math.random, sound = false, speed = 1, artwork = {} }) {
   const rng = () => clamp(Number(random()) || 0, 0, 1 - Number.EPSILON);
-  const players = names.map((entry, index) => ({ ...entry, avatar: ['boy', 'girl', 'neutral'].includes(entry.avatar) ? entry.avatar : 'neutral', avatarIndex: identityHash(entry.id || entry.name || ''), name: String(entry.name ?? 'Gardener ' + (index + 1)), color: entry.color || [C.mint, C.coral, C.gold][index % 3] }));
+  const players = names.map((entry, index) => ({ ...entry, animal: GARDEN_ANIMALS.includes(entry.animal) ? entry.animal : GARDEN_ANIMALS[index % GARDEN_ANIMALS.length], avatar: ['boy', 'girl', 'neutral'].includes(entry.avatar) ? entry.avatar : 'neutral', avatarIndex: identityHash(entry.id || entry.name || ''), name: String(entry.name ?? 'Gardener ' + (index + 1)), color: entry.color || [C.mint, C.coral, C.gold][index % 3] }));
   const root = document.createElement('div');
   root.className = 'garden-siege';
   root.innerHTML = '<style>.garden-siege{width:100%;height:100%;min-height:0;overflow:hidden;background:#101b33;color:#fff4df;position:relative}.garden-siege .garden-window{position:absolute;inset:0;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#7bd8c955 #101b33}.garden-siege canvas{display:block;outline:none}.garden-siege .garden-note{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}.garden-siege .garden-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}</style><div class="garden-window"><canvas role="img" tabindex="0"></canvas></div><div class="garden-note">Plants vs. Zombies: sunshine grows your defenders. Each student has one single-use lawnmower.</div><div class="garden-live" aria-live="polite"></div>';
@@ -986,95 +987,15 @@ export default function createGame({ container, names = [], onPick, random = Mat
     text(lane.entry.name, tag.x + 5, tag.y + tag.height / 2, tag.width - 10, fontSize, won ? '#ffe2a0' : C.cream, 750);
     hpBar(tag.x + 4, tag.y + tag.height + 4, Math.max(24, tag.width - 8), lane.hp, lane.maxHp, lane.hp < 70 ? '#ff947d' : '#c1e689', tiny ? 2 : 3);
   }
-  function studentCell(entry) {
-    const configured = artwork?.studentCells?.[entry.avatar] ?? artwork?.studentCells?.neutral;
-    const cells = (Array.isArray(configured) ? configured : [configured]).filter(cell => Number.isInteger(Number(cell)) && Number(cell) >= 0 && Number(cell) <= 11).map(Number);
-    return cells.length ? cells[entry.avatarIndex % cells.length] : entry.avatarIndex % 12;
-  }
   function student(lane, time, resultAge) {
-    const x = lane.plantX, scale = clamp((lane.h - 29) / 84, .12, .76), floor = lane.floor;
-    const p = lane.eaten ? clamp(resultAge / .7, 0, 1) : 0;
-    ctx.save(); ctx.translate(x, floor); ctx.scale(scale, scale);
-    if (lane.hurt && !lane.eaten) ctx.translate(Math.sin(time * 32) * 2, 0);
-    if (lane.eaten) { ctx.rotate(-p * .15); ctx.translate(0, p * 5); ctx.globalAlpha = 1 - p * .55; }
-    dot(0, 0, 22, '#2e573933');
-    const skins = ['#f4c692', '#ad754e', '#dfab7a', '#78513d', '#ebcba2', '#bd906d'];
-    const skin = skins[studentCell(lane.entry) % skins.length], sway = Math.sin(time * 2 + lane.entry.avatarIndex % 23);
-    // Arms bend at connected shoulder/elbow anchors. The single procedural
-    // head sways at its neck, with no baked portrait face or duplicate body.
-    // Full, connected silhouettes: shoes, trouser legs and layered clothing.
-    const outfit = lane.entry.avatarIndex % 4;
-    for (const side of [-1, 1]) {
-      rr(side * 8 - 5, -17, 10, 16, 4, outfit === 2 ? '#526b81' : '#35465c');
-      rr(side * 8 - 7, -6, 15, 7, 3, '#f4eee0', '#354052');
-      rr(side * 8 - 7, -1, 15, 2, 1, '#a1aab2');
-    }
-    rr(-16, -29, 32, 21, 7, lane.entry.color, '#24344b66');
-    if (outfit === 0) { rr(-3, -28, 6, 19, 2, '#ffffff77'); dot(0, -20, 1, '#35465c'); dot(0, -14, 1, '#35465c'); }
-    if (outfit === 1) { rr(-14, -19, 28, 4, 1, '#fff5dbcc'); rr(-14, -12, 28, 2, 1, '#fff5db88'); }
-    if (outfit === 2) { rr(-11, -25, 4, 16, 1, '#415b75'); rr(7, -25, 4, 16, 1, '#415b75'); rr(-10, -19, 20, 10, 3, '#526b81'); }
-    if (outfit === 3) { rr(-10, -17, 20, 7, 3, '#ffffff44'); ctx.strokeStyle = '#fff1d4'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(-4, -27); ctx.lineTo(-5, -19); ctx.moveTo(4, -27); ctx.lineTo(5, -19); ctx.stroke(); }
-    for (const side of [-1, 1]) {
-      const elbowX = side * 25, elbowY = -14 + sway * side * 2, handX = side * 25, handY = -4 + sway * side * 4;
-      ctx.strokeStyle = lane.entry.color; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(side * 13, -21); ctx.lineTo(elbowX, elbowY); ctx.stroke();
-      ctx.strokeStyle = skin; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(elbowX, elbowY); ctx.lineTo(handX, handY); ctx.stroke(); dot(handX, handY, 3.1, skin);
-    }
-    ctx.save(); ctx.translate(0, -25); ctx.rotate(sway * .024); ctx.translate(0, 25);
-    const index = lane.entry.avatarIndex, hair = ['#543323', '#241e24', '#b17739', '#6e442c'][index % 4];
-    const styles = lane.entry.avatar === 'boy' ? [0, 1, 2] : lane.entry.avatar === 'girl' ? [3, 4, 5] : [0, 1, 2, 3, 4, 5];
-    const hairstyle = styles[index % styles.length];
-    // Stable recorded avatar choices select a style; names never infer gender.
-    if (hairstyle === 3) { rr(-26, -72, 12, 48, 7, hair); rr(14, -72, 12, 48, 7, hair); }
-    if (hairstyle === 4) { dot(25, -62, 12, hair); rr(23, -64, 12, 28, 7, hair); dot(23, -57, 3, '#d88968'); }
-    if (hairstyle === 5) { dot(-26, -49, 9, hair); dot(26, -49, 9, hair); dot(-24, -58, 3, '#d88968'); dot(24, -58, 3, '#d88968'); }
-    rr(-6, -31, 12, 13, 4, skin);
-    ctx.fillStyle = skin; ctx.strokeStyle = '#735d4240'; ctx.lineWidth = 1;
-    for (const side of [-1, 1]) { ctx.beginPath(); ctx.ellipse(side * 22, -46, 4.5, 6, 0, 0, TAU); ctx.fill(); ctx.stroke(); }
-    ctx.beginPath(); ctx.ellipse(0, -49, 22, 27, 0, 0, TAU); ctx.fill(); ctx.stroke();
-    const faceLight = ctx.createRadialGradient(-8, -57, 2, 0, -49, 27);
-    faceLight.addColorStop(0, '#fff9e52b'); faceLight.addColorStop(.7, '#ffffff00'); faceLight.addColorStop(1, '#79452b20');
-    ctx.fillStyle = faceLight; ctx.fill();
-    dot(-14, -42, 4, '#ed97782b'); dot(14, -42, 4, '#ed97782b');
-    ctx.fillStyle = hair; ctx.beginPath(); ctx.ellipse(0, -67, 23, 12, 0, Math.PI, TAU); ctx.fill();
-    if (hairstyle === 1 || hairstyle === 4) { ctx.beginPath(); ctx.moveTo(-21, -67); ctx.quadraticCurveTo(-5, -84, 20, -68); ctx.quadraticCurveTo(3, -59, -13, -62); ctx.closePath(); ctx.fill(); }
-    else if (hairstyle === 2) { for (let n = 0; n < 6; n++) dot(-18 + n * 7, -73 - n % 2 * 3, 7, hair); }
-    else if (hairstyle >= 3) { ctx.beginPath(); ctx.moveTo(-22, -66); ctx.lineTo(-9, -61); ctx.lineTo(-3, -68); ctx.lineTo(8, -62); ctx.lineTo(22, -68); ctx.closePath(); ctx.fill(); }
-    studentExpression(lane, time, skin);
-    if (index % 7 === 2) {
-      ctx.strokeStyle = '#435268'; ctx.lineWidth = 1.4;
-      for (const side of [-1, 1]) { ctx.beginPath(); ctx.ellipse(side * 8, -50, 7, 6, 0, 0, TAU); ctx.stroke(); }
-      ctx.beginPath(); ctx.moveTo(-1, -51); ctx.lineTo(1, -51); ctx.stroke();
-    }
+    const scale = clamp((lane.h - 29) / 84, .12, .76);
+    const fade = lane.eaten ? clamp(resultAge / .7, 0, 1) : 0;
+    ctx.save(); ctx.translate(lane.plantX, lane.floor); ctx.scale(scale, scale);
+    if (lane.eaten) { ctx.rotate(-fade * .12); ctx.globalAlpha = 1 - fade * .55; }
+    drawGardenAnimal(ctx, {species: lane.entry.animal, time, emotionStage: lane.emotionStage,
+      bruiseStage: lane.bruiseStage, hp: lane.hp, maxHp: lane.maxHp, color: lane.entry.color,
+      hurt: lane.hurt, eaten: lane.eaten});
     ctx.restore();
-    if (lane.eaten || lane.hurt) {
-      for (let n = 0; n < 3; n++) { const a = time * 4 + n * TAU / 3; text('★', Math.cos(a) * 28, -78 + Math.sin(a) * 6, 12, 12, '#fff0a0', 900, 'center'); }
-    }
-    ctx.restore();
-  }
-  function studentExpression(lane, time, skin) {
-    const stage = lane.emotionStage, scared = stage >= 5, dazed = stage === 9;
-    // This is the only face: eye opening, pupil direction, hinged brows and
-    // mouth follow the emotional state on a freshly painted full head.
-    const eyeHeight = dazed ? 3 : stage === 0 ? 3.5 : 4 + stage * .45;
-    for (const side of [-1, 1]) {
-      const eyeX = side * 7;
-      ctx.fillStyle = '#fffdf0'; ctx.beginPath(); ctx.ellipse(eyeX, -50, 5, eyeHeight, 0, 0, TAU); ctx.fill();
-      ctx.strokeStyle = '#3e3731'; ctx.lineWidth = 1.5;
-      if (dazed) { ctx.beginPath(); ctx.arc(eyeX, -50, 2.5, time, time + Math.PI * 1.8); ctx.stroke(); }
-      else dot(eyeX + (scared ? Math.sin(time * 2) * .6 : 0), -50 + (stage === 3 ? 1 : 0), scared ? 2.1 : 2.5, '#39362d');
-      const tilt = stage === 0 ? 0 : stage <= 2 ? -.5 : stage === 3 ? side * 2 : -side * (stage >= 6 ? 3 : 1.5);
-      ctx.beginPath(); ctx.moveTo(eyeX - 4, -59 + tilt); ctx.quadraticCurveTo(eyeX, -61 - (scared ? 1 : 0), eyeX + 4, -59 - tilt); ctx.stroke();
-    }
-    ctx.strokeStyle = '#ae806380'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(0, -48); ctx.quadraticCurveTo(3, -44, 0, -43); ctx.stroke();
-    ctx.strokeStyle = '#965e50'; ctx.lineWidth = 1.8; ctx.beginPath();
-    if (stage <= 1) { ctx.moveTo(-5, -39); ctx.quadraticCurveTo(0, stage === 0 ? -33 : -36, 5, -39); ctx.stroke(); }
-    else if (stage <= 4) { ctx.moveTo(-5, -38); ctx.quadraticCurveTo(0, -40 - (stage - 2), 5, -38); ctx.stroke(); }
-    else { ctx.fillStyle = '#89554b'; ctx.ellipse(0, -37, stage === 9 ? 3 : 3.5 + (stage - 5) * .4, stage === 9 ? 2 : 3 + (stage - 5) * .5, 0, 0, TAU); ctx.fill(); }
-    if (lane.hp < lane.maxHp) {
-      dot(-12, -40, 2.7, '#997d9d66');
-      if (lane.bruiseStage >= 2) { ctx.fillStyle = '#b5e5f1cc'; ctx.beginPath(); ctx.ellipse(12, -41, 1.8, 3.4, -.1, 0, TAU); ctx.fill(); }
-      if (lane.bruiseStage >= 3) dot(10, -36, 2, '#997d9d55');
-    }
   }
   function lawnmower(lane, time) {
     const mower = lane.mower;
@@ -1592,7 +1513,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       renderer: renderer.getState(), fx: fx.getState(), melonImpacts: impacts.map(impact => ({ lane: impact.lane, x: impact.position, age: impact.age, kind: impact.kind })), plantCatalogCount: PLANT_CATALOG.length, ruleVersion: GARDEN_RULES.version, pickerPacing: PICKER_PACING,
       zombieCatalogCount: ZOMBIE_CATALOG.length, lootCatalogCount: LOOT_CATALOG.length, healthModel: HEALTH_MODEL,
       artworkLoaded: { plants: Boolean(atlases.plants?.ready), zombies: Boolean(atlases.zombies?.ready), students: Boolean(atlases.students?.ready), mower: Boolean(mowerArt?.ready), monsters: monsters.getState().ready }, fallingResources: rewards.map(reward => ({ kind: reward.kind, lane: reward.lane, landed: reward.landed, x: reward.x, y: reward.y, target: 'student' })),
-      lanes: lanes.map(lane => ({ id: lane.entry.id, avatar: lane.entry.avatar, avatarCell: studentCell(lane.entry), hp: lane.hp, maxHp: lane.maxHp, studentHp: lane.hp, studentMaxHp: lane.maxHp, emotionStage: lane.emotionStage, emotionLabel: STUDENT_EMOTIONS[lane.emotionStage], bruiseStage: lane.bruiseStage, wave: lane.wave, waveSize: lane.waveSize, waveTarget: lane.waveTarget, waveSpawned: lane.waveSpawned, spawned: lane.waveSpawned, deferredSpawns: lane.deferredSpawns, deferred: lane.deferredSpawns, queuedSpawns: lane.queuedSpawns, pendingCount: lane.queuedSpawns + lane.deferredSpawns, nextWave: lane.nextWave, liveZombieCount: lane.mobs.filter(mob => !mob.dead).length, damage: lane.damage, cooldown: lane.cooldown, weapon: livingDefenders(lane)[0]?.weapon ?? null, power: lane.power, kills: lane.kills, loot: [...lane.loot], suns: lane.suns, stars: lane.stars, eaten: lane.eaten, shotsFired: lane.shotsFired, shield: livingDefenders(lane).reduce((total, defender) => total + defender.shield, 0),
+      lanes: lanes.map(lane => ({ id: lane.entry.id, avatar: lane.entry.avatar, animal: lane.entry.animal, hp: lane.hp, maxHp: lane.maxHp, studentHp: lane.hp, studentMaxHp: lane.maxHp, emotionStage: lane.emotionStage, emotionLabel: STUDENT_EMOTIONS[lane.emotionStage], bruiseStage: lane.bruiseStage, wave: lane.wave, waveSize: lane.waveSize, waveTarget: lane.waveTarget, waveSpawned: lane.waveSpawned, spawned: lane.waveSpawned, deferredSpawns: lane.deferredSpawns, deferred: lane.deferredSpawns, queuedSpawns: lane.queuedSpawns, pendingCount: lane.queuedSpawns + lane.deferredSpawns, nextWave: lane.nextWave, liveZombieCount: lane.mobs.filter(mob => !mob.dead).length, damage: lane.damage, cooldown: lane.cooldown, weapon: livingDefenders(lane)[0]?.weapon ?? null, power: lane.power, kills: lane.kills, loot: [...lane.loot], suns: lane.suns, stars: lane.stars, eaten: lane.eaten, shotsFired: lane.shotsFired, shield: livingDefenders(lane).reduce((total, defender) => total + defender.shield, 0),
         mower: { id: lane.mower.uid, status: lane.mower.status, x: lane.mower.x, previousX: lane.mower.previousX, home: LAWNMOWER_RULES.home, speed: LAWNMOWER_RULES.speed, activations: lane.mower.activations, activationKills: lane.mower.kills, kills: lane.mower.kills, killIds: [...lane.mower.killIds], activatedAt: lane.mower.activatedAt, spentAt: lane.mower.spentAt, triggeredBy: lane.mower.triggeredBy },
         trap: lane.trap ? { id: lane.trap.uid, type: 'potato', position: lane.trap.position, armAt: lane.trap.armAt, armRemaining: Math.max(0, lane.trap.armAt - simTime), armed: lane.trap.armed, spent: lane.trap.spent, kills: lane.trap.kills, damage: PLANT_BY_ID.potato.explosionDamage, explodedAt: lane.trap.explodedAt } : null,
         torchwood: lane.torchwood ? { id: lane.torchwood.uid, position: lane.torchwood.position, hp: lane.torchwood.hp, maxHp: lane.torchwood.maxHp, eaten: lane.torchwood.eaten, fireDamage: PLANT_BY_ID.torchwood.fireDamage, fireSplashDamage: PLANT_BY_ID.torchwood.fireSplashDamage } : null,

@@ -39,3 +39,7 @@ Demolisher and Mutated Zombie use original7DaysToDie official reveal/screenshot 
 ## October18 facing update
 
 Rubber Duck now uses gnokii’s CC0 original left-profile [Rubber duck](https://commons.wikimedia.org/wiki/File:Rubber_duck.svg), gently rocked at runtime. It is an authored still, not a native walking cycle. Team Rocket retains the full-body running clip: reviewed alternatives were cropped, occluded or in disguises, and no suitable full-body left-profile cycle was found. Its three-quarter/front-view limitation remains.
+
+## October18 undead variants
+
+Ultraman is now a built-in ChatGPT Image Gen variant: four complete left-facing crouched poses with reaching arms, bent knees and distressed armor. It is not official artwork or an original game walk cycle. Source and atlas hashes are in the manifest. Other special creatures use original sourced animation, with runtime muted green-gray coloring, silhouette-clipped wear and a hunched uneven shamble; their source limb poses are preserved. A later generation batch was rejected, so those creatures were not replaced with generated artwork.

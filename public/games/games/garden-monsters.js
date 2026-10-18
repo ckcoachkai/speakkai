@@ -1,5 +1,5 @@
-/** Internet-sourced character artwork. This module draws downloaded pixels;
- * it does not recreate a character with procedural shapes or generated art. */
+/** Sourced cameo artwork plus explicitly labeled generated zombie variants.
+ * Cosmetic undead treatment and gait never change combat statistics. */
 const GM_FINITE=(value,fallback=0)=>Number.isFinite(Number(value))?Number(value):fallback;
 const GM_LIMIT=(value,min,max)=>Math.max(min,Math.min(max,GM_FINITE(value,min)));
 export const GARDEN_MONSTER_HEIGHT=224;
@@ -53,7 +53,7 @@ export function createGardenMonsters({artwork={}}={}) {
   const clip=sprite.clips?.[mode]||sprite.clips?.walk||sprite.frames.map((_,i)=>i);
   const total=clip.reduce((sum,i)=>sum+sprite.durations[i],0);
   let at=((Math.max(0,time)*1000)%Math.max(1,total));
-  for(const index of clip){if(at<sprite.durations[index])return{frame:sprite.frames[index],index};at-=sprite.durations[index];}
+  for(let n=0;n<clip.length;n++){const index=clip[n];if(at<sprite.durations[index])return{frame:sprite.frames[index],index,progress:at/sprite.durations[index],next:clip[(n+1)%clip.length]};at-=sprite.durations[index];}
   return{frame:sprite.frames[clip[0]],index:clip[0]};
  }
  function draw(ctx,{id,type,monsterId,instanceId,x=0,y=0,scale=1,time=0,hp=1,maxHp=1,hit=0,bite=0,walk,death=0,clip}={}){
@@ -66,7 +66,8 @@ export function createGardenMonsters({artwork={}}={}) {
   if(!playhead||clock<playhead.lastTime){playhead={mode,start:clock,lastTime:clock,previous:null,selected:null};GM_playheads.set(entity,playhead);if(GM_playheads.size>2048)GM_playheads.delete(GM_playheads.keys().next().value);}
   if(playhead.mode!==mode){playhead.previous=playhead.selected;playhead.mode=mode;playhead.start=clock;}
   playhead.lastTime=clock;
-  const localTime=sprite.clips?.[mode]?Math.max(0,clock-playhead.start):clock;
+  const visualClock=sprite.undead ? clock*.58+Math.sin(clock*2)*.075 : clock;
+  const localTime=sprite.clips?.[mode]?Math.max(0,visualClock-(sprite.undead?playhead.start*.58:playhead.start)):visualClock;
   let selected=frameAt(sprite,localTime,mode);
   if(death>0&&sprite.clips?.death?.length){const clip=sprite.clips.death,index=clip[Math.min(clip.length-1,Math.floor(GM_LIMIT(death,0,1)*clip.length))];selected={frame:sprite.frames[index],index};}
   const frame=selected.frame;
@@ -77,6 +78,7 @@ export function createGardenMonsters({artwork={}}={}) {
   if(clip&&[clip.x,clip.y,clip.width,clip.height].every(Number.isFinite)&&clip.width>0&&clip.height>0){ctx.beginPath();ctx.rect(clip.x,clip.y,clip.width,clip.height);ctx.clip();}
   ctx.translate(GM_FINITE(x),GM_FINITE(y));ctx.scale(s,s);
   if(sprite.flipX)ctx.scale(-1,1);
+  if(sprite.undead&&fall===0){const phase=clock*3.2;ctx.translate(Math.sin(phase)*1.8,-Math.max(0,Math.sin(phase))*2.5);ctx.rotate(Math.sin(phase)*.018);}
   // A sourced toy profile rocks as a whole; this is not a native walk cycle.
   if(sprite.motion==='waddle'&&fall===0){const phase=clock*6;ctx.translate(0,-Math.abs(Math.sin(phase))*3);ctx.rotate(Math.sin(phase)*.035);}
   if(hurt>0)ctx.translate(Math.sin(GM_FINITE(time)*61)*hurt*6,-hurt*2);
@@ -87,8 +89,41 @@ export function createGardenMonsters({artwork={}}={}) {
   // mutant artwork; it does not substitute a cropped Screamer torso.
   if(sprite.radiation){ctx.shadowColor='#99ff38';ctx.shadowBlur=15+Math.sin(clock*4)*3;ctx.filter+=' saturate(1.4) hue-rotate(24deg)';}
   const mix=GM_LIMIT((clock-playhead.start)/.10,0,1);
-  const paint=(source,alpha=1)=>{ctx.save();ctx.globalAlpha*=alpha;ctx.drawImage(sprite.img,...source.rect,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);ctx.restore();};
-  if(playhead.previous&&mix<1&&mode!=='death'&&sprite.surface){
+  const paint=(source,alpha=1)=>{
+   ctx.save();ctx.globalAlpha*=alpha;
+   if(sprite.undead&&!sprite.generatedZombie&&sprite.surface){
+    const surface=sprite.surface,sc=surface.getContext('2d');
+    const cacheKey=source.rect.join(',');
+    if(sprite.undeadFrame!==cacheKey){
+     sc.clearRect(0,0,surface.width,surface.height);sc.filter='saturate(.58) brightness(.82)';sc.drawImage(sprite.img,...source.rect,0,0,surface.width,surface.height);sc.filter='none';
+     sc.globalCompositeOperation='source-atop';sc.fillStyle='#70895145';sc.fillRect(0,0,surface.width,surface.height);
+     // Wear belongs to the character silhouette, never floating badges.
+     for(let n=0;n<13;n++){const px=(.14+((n*37)%73)/100)*surface.width,py=(.22+((n*19)%65)/100)*surface.height;
+      sc.fillStyle='#303e3433';sc.beginPath();sc.ellipse(px,py,surface.width*.024,surface.height*.014,.5,0,Math.PI*2);sc.fill();
+      sc.strokeStyle='#293c3b88';sc.lineWidth=Math.max(1,surface.height*.004);sc.beginPath();sc.moveTo(px,py);sc.lineTo(px+surface.width*.015,py+surface.height*.012);sc.lineTo(px,py+surface.height*.026);sc.stroke();
+     }sc.globalCompositeOperation='source-over';sprite.undeadFrame=cacheKey;
+    }
+    // Continuous horizontal bands lower the head and lean the upper body
+    // forward without detaching limbs or cropping the complete silhouette.
+    const strips=24,h=surface.height/strips,direction=sprite.flipX?1:-1;
+    for(let row=0;row<strips;row++){
+     const a=row/strips,b=(row+1)/strips;
+     const y0=a+.12*(1-a)*(1-a),y1=b+.12*(1-b)*(1-b);
+     const lean=direction*surface.width*.09*(1-a)*(1-a);
+     ctx.drawImage(surface,0,row*h,surface.width,h,(-foot[0]+lean)*factor,(-foot[1]+y0*surface.height)*factor,surface.width*factor,(y1-y0)*surface.height*factor+.35);
+    }
+   }else ctx.drawImage(sprite.img,...source.rect,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
+   ctx.restore();
+  };
+  if(sprite.generatedZombie&&sprite.surface&&selected.next!==undefined&&mode!=='death'){
+   const blend=sprite.surface.getContext('2d'),amount=selected.progress*selected.progress*(3-2*selected.progress);
+   blend.clearRect(0,0,sprite.frameWidth,sprite.frameHeight);blend.globalAlpha=1-amount;
+   blend.drawImage(sprite.img,...frame.rect,0,0,sprite.frameWidth,sprite.frameHeight);
+   blend.globalCompositeOperation='lighter';blend.globalAlpha=amount;
+   blend.drawImage(sprite.img,...sprite.frames[selected.next].rect,0,0,sprite.frameWidth,sprite.frameHeight);
+   blend.globalCompositeOperation='source-over';blend.globalAlpha=1;
+   ctx.drawImage(sprite.surface,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
+  }else if(!sprite.undead&&playhead.previous&&mix<1&&mode!=='death'&&sprite.surface){
    const blend=sprite.surface.getContext('2d');blend.clearRect(0,0,sprite.frameWidth,sprite.frameHeight);
    blend.globalCompositeOperation='source-over';blend.globalAlpha=1-mix;blend.drawImage(sprite.img,...playhead.previous.frame.rect,0,0,sprite.frameWidth,sprite.frameHeight);
    blend.globalCompositeOperation='lighter';blend.globalAlpha=mix;blend.drawImage(sprite.img,...frame.rect,0,0,sprite.frameWidth,sprite.frameHeight);
