@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-18T17:50:25.569135+00:00",
+  "updatedAt": "2026-10-19T08:58:11.533644+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1946,6 +1946,52 @@
               "name": "Kiran",
               "en": "✓ Organization: Kiran’s speech included desensitization and was well put together overall. Overall, I think it was put together well. The main thing I would say is that 3 minutes 42 seconds is over time, so we need to keep it within the time and then polish it.\n\n→ Timing: He spoke for 3 minutes 42 seconds, exceeding the three-minute practice target. I suggested keeping a three-minute script to roughly 320–330 words at most as a drafting guide. He can then rehearse aloud and check the actual duration, because delivery pace and pauses also affect the time.\n\n→ Further polishing: I would like to review the written script to identify which areas can be refined. The content-polishing decisions remain pending that review.",
               "zh": "→【课堂中的具体反馈】：整体上，我觉得内容组织得不错。主要需要注意的是，3分42秒已经超时，所以先控制时间，再继续润色。\n\n✓ 组织：Kiran 的演讲涉及“脱敏”（desensitization），整体组织得很好。我 指出，目前最主要的问题是时间。\n\n→ 时间：他发言时长为3分42秒，超过了本次三分钟的练习目标。我 建议，三分钟的演讲稿可以把约320–330词作为写作时的上限参考。之后仍需大声计时练习，检查实际时长，因为语速和停顿也会影响时间。\n\n→ 进一步打磨：我 希望查看他的书面稿件，再确定哪些部分可以修改和完善。具体内容的打磨，还需要等待这次稿件审阅。"
+            }
+          ]
+        },
+        {
+          "id": "mon-afternoon-2026-10-19",
+          "date": "2026-10-19",
+          "time": "15:30–17:30",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "royce",
+              "name": "Royce",
+              "en": "→ Homework preparation: Royce did not do his homework.",
+              "zh": "→【作业准备】：Royce 没有完成作业。"
+            },
+            {
+              "id": "ariel",
+              "name": "Ariel",
+              "en": "→ Speech length: Ariel’s speech was a little short. She spent about 40 seconds talking about “jinx lock.”\n\n◆ Classroom discussion: We discussed what “jinx lock” means. The game was described this way: if two people say the same thing at the same time—for example, “four”—whoever says “jinx” first means the other person has to stay silent until somebody says “cheers.” If both people say “jinx” at the same time, they say “jinx lock” again. I remembered calling it simply “jinx,” while the name being discussed now was “jinx lock.” This explanation came from the classroom discussion; it is separate from what Ariel delivered in her approximately 40-second speech.\n\n→ Suggested practice: She could expand the answer by explaining the game step by step and walking through an example. This would develop the short answer and help listeners picture how the game works.",
+              "zh": "→【演讲长度】：Ariel 的演讲有一点短。她花了大约40秒，讲述“jinx lock”这个游戏。\n\n◆【课堂讨论】：我们讨论了“jinx lock”是什么意思。课堂上对游戏的描述是：如果两个人同时说出同样的话，例如“four（四）”，谁先说出“jinx”，另一个人就要保持安静，直到有人说“cheers”。如果两个人又同时说出“jinx”，就再次说“jinx lock”。我记得以前只是叫“jinx”，而这次讨论的名称是“jinx lock”。这部分解释来自课堂讨论，与 Ariel 在大约40秒的演讲中实际讲出的内容分开记录。\n\n→【练习建议】：她可以把游戏步骤解释得更充分，再带着听众走过一个例子。这样既能展开较短的回答，也能帮助听众在脑中想象游戏如何进行。"
+            },
+            {
+              "id": "william",
+              "name": "William",
+              "en": "✓ Preparation and structure: William did his homework, which was a step in the right direction. His speech had a clear structure and was well organized. The topic—AI making the world thirsty—was interesting and quite unique.\n\n→ Audience engagement: The next step is stronger engagement with the audience. For example, he could address a classmate by name and give a specific example that relates to that person, so the listener can understand the idea better. When I asked the class about William’s speech, understanding was mixed. Clear delivery and organization still need enough explanation to help listeners see the bigger picture.\n\n→ Explain the numbers and create a picture: In the follow-up discussion about AI using water, I introduced cooling data centres as an example of the explanation that could go behind the numbers. William clarified that he had not said that in his speech; he had mainly given numbers. The coaching point is to connect those numbers with specific details and examples, rather than leaving listeners to work out what they mean. We want to help the audience visualize the idea and, where possible, create images in their minds.",
+              "zh": "✓【准备与结构】：William 完成了作业，这是朝正确方向迈出的一步。他的演讲结构清楚，组织得很好。“AI 让世界口渴”这一话题挺有意思，也比较独特。\n\n→【听众互动】：下一步是加强与听众的互动。例如，他可以直接叫一位同学的名字，再给出一个与这位同学相关的具体例子，帮助对方更好地理解。当我询问全班是否理解 William 的演讲时，回答有懂也有不懂。即使表达和组织清楚，仍然需要充分的解释，帮助听众看到更完整的图景。\n\n→【解释数字，建立画面】：在随后关于 AI 使用水的讨论中，我把为数据中心降温作为一个例子，说明数字背后可以补充怎样的解释。William 澄清，他在演讲中并没有讲到这一点，主要只是给出了数字。指导重点是把这些数字与具体细节、例子连接起来，而不是让听众自己猜它们是什么意思。我们希望帮助听众把想法具体化，如果可以，就在他们脑中建立画面。"
+            },
+            {
+              "id": "sean",
+              "name": "Sean",
+              "en": "✓ Vocal control: I felt Sean had better control of his voice. His delivery was not all very loud, high-energy moments; he also included softer moments while speaking. This gave his delivery more variation.\n\n✓ Message: When I asked the class about his message, students were able to identify it: sometimes you do not have to be a really perfect person. Just be yourself.\n\n→ Coaching suggestion: One way to make that message even more memorable is to repeat the key phrase: “Just be yourself. Be yourself. Be yourself. Be yourself.” Continuing to repeat the central message can help it stay in people’s minds. This repetition was my suggested technique, rather than a claim that Sean had already used it in his speech.",
+              "zh": "✓【声音控制】：我觉得 Sean 对声音有了更好的控制。他的表达不再全是很响亮、情绪很高的部分，讲话时也有较轻柔的时刻，让声音呈现出更多变化。\n\n✓【核心信息】：当我询问全班是否听懂他的信息时，学生能够说出他的意思：有时候，你不必做一个特别完美的人。做你自己就好。\n\n→【指导建议】：要让这个信息更令人难忘，可以重复核心句：“Just be yourself. Be yourself. Be yourself. Be yourself.（做你自己就好。做你自己。做你自己。做你自己。）”持续重复核心信息，可以帮助它更深地留在听众脑中。这是我提出的表达技巧，不是说 Sean 在原来的演讲中已经使用了这种重复。"
+            },
+            {
+              "id": "cynthia",
+              "name": "Cynthia",
+              "en": "✓ Structure and delivery: As usual, Cynthia’s speech was very well put together. She used a lot of rhetorical devices and had good energy in her voice.\n\n→ Pace and emphasis: One thing to work on is the short amount of time she spends saying each word. She tends to speak quickly, and lengthening words can help her grab people’s attention a little more. The aim is to let important words last longer so the audience can hear the emphasis in what she is trying to express.\n\n◆ Teacher example: I referred to a video I had recently posted on my WeChat Moments. The speaker’s approach was not especially unusual in other ways, but he drew his words out longer, making each thing he wanted to express sound emphasized. It was a useful example of this technique, and I said I would show it to the class. This was the example I proposed for demonstration, rather than something Cynthia had already done in her speech.",
+              "zh": "✓【结构与表达】：和往常一样，Cynthia 的演讲组织得很好。她运用了很多修辞手法，声音也很有活力。\n\n→【语速与强调】：一个需要练习的地方，是她说每个词时停留的时间比较短。她倾向于讲得较快，把词语适当拉长，可以更好地抓住听众的注意力。重点是让重要的词持续得久一点，让听众听出她想表达的强调。\n\n◆【老师举例】：我提到最近发在微信朋友圈的一段视频。那位演讲者在其他方面的表达方式并没有特别不同，但他把词语拉长，让自己想表达的每一点听起来都带着强调。这是一个很有用的技巧示范，我也说会当场给全班看。这是我提出要展示的例子，不是说 Cynthia 在自己的演讲中已经这样做了。"
+            },
+            {
+              "id": "kieran",
+              "name": "Kiran",
+              "en": "→ One-word impromptu: Kiran answered a one-word impromptu prompt. I think he may not have done this type before. At times, he seemed to struggle a little with connecting the points logically, and I was trying to understand how some parts fitted together.\n\n✓ Energy: He does have a lot of energy. That is useful for some parts of a speech, particularly the more energetic stage performance that competition speaking can call for.\n\n→ Connect with the audience: The delivery also needs moments when he speaks normally and conversationally to the people in front of him. It depends on the moment: some parts benefit from more energy, while other parts connect better when the delivery feels like speaking directly to the audience. The aim is to avoid overwhelming listeners with the same high intensity throughout.\n\n→ Suggested practice: He could pause between points and make the connection to the next idea explicit, then rehearse moving between energetic emphasis and a more conversational voice. This would help listeners follow both his reasoning and his message.",
+              "zh": "→【单词即兴演讲】：Kiran 回答了一道以单个词为题的即兴演讲题。我觉得他可能以前没有做过这种类型。有些时候，他在逻辑上连接各个要点时似乎还有一点困难，我也在努力理解部分内容之间是怎样衔接的。\n\n✓【能量】：他的表达确实很有能量。这对演讲中的某些部分很有帮助，尤其是比赛演讲有时需要更有能量的舞台表现。\n\n→【与听众建立连接】：表达中也需要一些时刻，用正常、自然的交谈语气，直接对面前的听众说话。这要看具体的段落：有些部分适合更有能量，有些部分则在像与听众直接交谈时，更容易建立连接。重点是避免从头到尾保持同样的高强度，让听众感到被压住或不知如何回应。\n\n→【练习建议】：他可以在要点之间稍作停顿，把下一个想法与前一个要点的联系讲清楚，再练习在有能量的强调与自然交谈的声音之间转换。这样可以帮助听众既跟上推理，也听懂他想传达的信息。"
             }
           ]
         }

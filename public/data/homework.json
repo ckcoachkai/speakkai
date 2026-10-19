@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-18T17:50:25.569135+00:00",
+  "updatedAt": "2026-10-19T08:58:11.533644+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1582,6 +1582,39 @@
             "prepareFor": "your next speech presentation",
             "note": "Additional home practice discussed: approximately two to three minutes of daily eye-control practice at a dot or fixed point, or with two or three pictures. No new word count, deadline or submission method was supplied."
           }
+        },
+        {
+          "id": "mon-afternoon-2026-10-19",
+          "date": "2026-10-19",
+          "time": "15:30–17:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Royce",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-19&student=royce"
+            },
+            {
+              "name": "Ariel",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-19&student=ariel"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-19&student=william"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-19&student=sean"
+            },
+            {
+              "name": "Cynthia",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-19&student=cynthia"
+            },
+            {
+              "name": "Kiran",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-19&student=kieran"
+            }
+          ]
         }
       ]
     },
