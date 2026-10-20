@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-20T07:58:43.731778+00:00",
+  "updatedAt": "2026-10-20T08:38:43.790124+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1738,8 +1738,8 @@
           "time": "15:00–16:30",
           "status": "held",
           "classContent": {
-            "en": "◆ Class content: Max, Celia, August and Eva took part in a small debate. Max and August worked together as a team.",
-            "zh": "◆ 课堂内容：Max、Celia、August 和 Eva 进行了一场小辩论。Max 和 August 作为队友一起合作。"
+            "en": "◆ Class sequence: We began with their homework, then practised impromptu speech. After the impromptu practice, we went over all the points for their debate topic.\n\n◆ Mini-debate: Max and August debated against Eva and Celia. I felt this was the most balanced pairing. Afterwards, we gave them feedback on the areas they needed to improve. We wanted them to become more comfortable with the practice of giving their speeches.\n\n◆ Working within a time constraint: We gave them a time constraint so they would focus on their reasoning, rebuttals and the other parts of their speaking. There were still a lot of areas to work on. They mainly stated their claims and then their reasons, but did not go very far into examples, evidence or impact. The focus is to develop the argument beyond the claim and reason, rather than stopping before those supporting details and consequences have been explained.",
+            "zh": "◆【课堂顺序】：我们先从他们的作业开始，然后练习了即兴演讲。即兴练习之后，我们一起梳理了他们辩题的所有论点。\n\n◆【小型辩论】：Max 和 August 一组，对阵 Eva 和 Celia。我觉得这是最均衡的分组。之后，我们针对他们需要改进的地方给予反馈，希望他们通过练习，对自己的演讲表达更加熟悉、更加自在。\n\n◆【在时间限制下练习】：我们给了他们时间限制，让他们在有限的时间内，关注推理、反驳以及演讲的其他方面。仍然有不少地方需要继续练习。他们主要是提出主张，再说明原因，但对例子、证据或影响的展开还不够深入。重点是让论证不只停留在主张和原因，而是继续解释支持这些观点的具体内容及其后果。"
           },
           "homework": null,
           "students": [
