@@ -1,0 +1,384 @@
+{
+  "version": 2,
+  "characters": [
+    {
+      "id": "niulai",
+      "label": "Niu Lai (牛来)",
+      "image": "niulai-native-profile.webp",
+      "frameWidth": 207,
+      "frameHeight": 288,
+      "bodyHeight": 288,
+      "foot": [
+        103.5,
+        288
+      ],
+      "atlasWidth": 1672,
+      "atlasHeight": 870,
+      "displayHeight": 224,
+      "flipX": false,
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 0,
+          "sourceSeconds": 0.0
+        },
+        {
+          "rect": [
+            209,
+            0,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 1,
+          "sourceSeconds": 0.03333333333333333
+        },
+        {
+          "rect": [
+            418,
+            0,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 2,
+          "sourceSeconds": 0.06666666666666667
+        },
+        {
+          "rect": [
+            627,
+            0,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 3,
+          "sourceSeconds": 0.1
+        },
+        {
+          "rect": [
+            836,
+            0,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 4,
+          "sourceSeconds": 0.13333333333333333
+        },
+        {
+          "rect": [
+            1045,
+            0,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 5,
+          "sourceSeconds": 0.16666666666666666
+        },
+        {
+          "rect": [
+            1254,
+            0,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 6,
+          "sourceSeconds": 0.2
+        },
+        {
+          "rect": [
+            1463,
+            0,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 7,
+          "sourceSeconds": 0.23333333333333334
+        },
+        {
+          "rect": [
+            0,
+            290,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 8,
+          "sourceSeconds": 0.26666666666666666
+        },
+        {
+          "rect": [
+            209,
+            290,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 9,
+          "sourceSeconds": 0.3
+        },
+        {
+          "rect": [
+            418,
+            290,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 10,
+          "sourceSeconds": 0.3333333333333333
+        },
+        {
+          "rect": [
+            627,
+            290,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 11,
+          "sourceSeconds": 0.36666666666666664
+        },
+        {
+          "rect": [
+            836,
+            290,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 12,
+          "sourceSeconds": 0.4
+        },
+        {
+          "rect": [
+            1045,
+            290,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 13,
+          "sourceSeconds": 0.43333333333333335
+        },
+        {
+          "rect": [
+            1254,
+            290,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 14,
+          "sourceSeconds": 0.4666666666666667
+        },
+        {
+          "rect": [
+            1463,
+            290,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 15,
+          "sourceSeconds": 0.5
+        },
+        {
+          "rect": [
+            0,
+            580,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 16,
+          "sourceSeconds": 0.5333333333333333
+        },
+        {
+          "rect": [
+            209,
+            580,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 17,
+          "sourceSeconds": 0.5666666666666667
+        },
+        {
+          "rect": [
+            418,
+            580,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 18,
+          "sourceSeconds": 0.6
+        },
+        {
+          "rect": [
+            627,
+            580,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 19,
+          "sourceSeconds": 0.6333333333333333
+        },
+        {
+          "rect": [
+            836,
+            580,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 20,
+          "sourceSeconds": 0.6666666666666666
+        },
+        {
+          "rect": [
+            1045,
+            580,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 21,
+          "sourceSeconds": 0.7
+        },
+        {
+          "rect": [
+            1254,
+            580,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 22,
+          "sourceSeconds": 0.7333333333333333
+        },
+        {
+          "rect": [
+            1463,
+            580,
+            207,
+            288
+          ],
+          "duration": 33.333333333333336,
+          "sourceFrame": 23,
+          "sourceSeconds": 0.7666666666666667
+        }
+      ],
+      "clips": {
+        "walk": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "default": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ]
+      },
+      "nativeFrameCount": 24,
+      "sourceKind": "native-movie-footage-background-masked",
+      "nativeAnimation": true,
+      "sourcePage": "https://www.youtube.com/watch?v=nnRZCULeXK4",
+      "originalURL": "https://www.youtube.com/watch?v=nnRZCULeXK4",
+      "sourceVideoSHA256": "2562aa674ca99ea4243480a9289389d5efa04dead587ad57b88d6739a2a6a049",
+      "processing": "Existing source video frames0-23 at30fps; existing per-frame silhouette masks, common crop and Lanczos downsize. No generated artwork, no interpolation, no mesh motion.",
+      "rights": "Underlying Niu Lai movie and Pocketimes news video belong to rights holders; no separate game redistribution license established.",
+      "limitations": "Genuine held up-left profile and mouth/head motion, not walking. Source frame truncates foot tips; baseline is bottom of visible source silhouette. Only one verified near-full-body action delivered.",
+      "portraitOnly": false,
+      "footDefinition": "[cell width/2, cell height] at bottom of visible source silhouette, not reconstructed feet."
+    }
+  ],
+  "previewOnly": [
+    {
+      "id": "niulai-mama-preview",
+      "label": "Niu Lai calls Mama",
+      "image": "niulai-mama-preview.gif",
+      "nativeFrameCount": 58,
+      "sourcePage": "https://giphy.com/gifs/mom-call-mama-calling-for-RM8zQJIGEdoxiXEhib",
+      "originalURL": "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZm9lOXlzbHJ2cWwwZnY3MDB5em9ybXNscmNwbzVmMWRwcm96cHZ5cSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/RM8zQJIGEdoxiXEhib/giphy.gif",
+      "sourceKind": "community-uploaded-native-film-excerpt",
+      "portraitOnly": true,
+      "transparent": false,
+      "spawnEligible": false,
+      "limitations": "Face and upper-body clip with film scenery and captions; preview only, never add to actor pool."
+    }
+  ],
+  "unavailableRequestedVariants": [
+    "sitting",
+    "sleeping",
+    "running",
+    "dancing"
+  ],
+  "rejectedSources": [
+    {
+      "source": "https://media.niu-lai.online/hero/dance.mp4",
+      "reason": "Visual identity/style and native-film provenance not verified; excluded."
+    },
+    {
+      "source": "https://gifdb.com/niu-lai",
+      "reason": "HTTP403; did not bypass access."
+    }
+  ],
+  "generatedVariantsIncluded": false
+}
