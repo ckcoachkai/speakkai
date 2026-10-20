@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-20T11:05:40.495604+00:00",
+  "updatedAt": "2026-10-20T13:05:12.548951+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2436,10 +2436,13 @@
           "time": "17:40–19:40",
           "status": "held",
           "classContent": {
-            "en": "◆ Homework presentations: Students presented their prepared material. We discussed preparing and organizing logic and structure beforehand, then putting away the text or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Later impromptu practice: Jayden spoke first; his response was a little short and needed further expansion. Nelson spoke second for three minutes and met the time requirement, which was the first requirement for this practice. Sean was called next. This was a separate activity from the earlier homework presentations.",
-            "zh": "◆【作业展示】：学生展示了准备的内容。我们讨论了如何提前准备、组织逻辑和结构，然后在正式演讲时放下文稿或电脑，以便与观众建立联系。\n\n◆【即兴演讲结构】：我们练习了 TOC 和 WSDA 即兴演讲比赛中可能出现的五种不同类型的题目。学生先在尚未学习或理解这些结构之前尝试回答，以此作为练习组织回答的起点。\n\n◆【后续即兴练习】：Jayden 第一个发言，回答略短，需要进一步展开。Nelson 第二个发言，讲了三分钟，达到了本次练习的时长要求；这是老师提出的第一项要求。随后老师请 Sean 发言。这与前面的作业展示是两项不同的活动。"
+            "en": "◆ Homework presentations: Students presented their prepared material. We discussed preparing and organizing logic and structure beforehand, then putting away the text or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Later impromptu practice: Jayden spoke first; his response was a little short and needed further expansion. Nelson spoke second for three minutes and met the time requirement, which was the first requirement for this practice. Sean was called next. This was a separate activity from the earlier homework presentations.\n\n◆ Structure covered in class: Connect with the audience through a rhetorical question or personal connection; develop points 1, 2 and 3; then end with your message. Explain why it is important and why people should care.",
+            "zh": "◆【作业展示】：学生展示了准备的内容。我们讨论了如何提前准备、组织逻辑和结构，然后在正式演讲时放下文稿或电脑，以便与观众建立联系。\n\n◆【即兴演讲结构】：我们练习了 TOC 和 WSDA 即兴演讲比赛中可能出现的五种不同类型的题目。学生先在尚未学习或理解这些结构之前尝试回答，以此作为练习组织回答的起点。\n\n◆【后续即兴练习】：Jayden 第一个发言，回答略短，需要进一步展开。Nelson 第二个发言，讲了三分钟，达到了本次练习的时长要求；这是老师提出的第一项要求。随后老师请 Sean 发言。这与前面的作业展示是两项不同的活动。\n\n◆【课堂结构】：通过设问或个人联系与观众建立联系；展开第 1、2、3 个要点；最后提出核心信息，说明为什么这件事重要，以及为什么大家应该关心。"
           },
-          "homework": null,
+          "homework": {
+            "en": "◆ Prompt: How could a digital tool you use be improved?\n\n→ Use the structure covered in class to prepare your response. Write out your outline: connect with the audience through a rhetorical question or personal connection, develop three main points, and end with your message—why is it important, and why should people care?\n\n→ Deliver the speech, record a video, and present it in the next class.",
+            "zh": "◆【题目】：你使用的一款数字工具可以如何改进？\n\n→ 使用课堂讲过的结构准备回答，并写出演讲提纲：通过设问或个人联系与观众建立联系，展开三个主要要点，最后提出核心信息——为什么重要？为什么大家应该关心？\n\n→ 进行演讲，录制视频，并在下节课展示。"
+          },
           "students": [
             {
               "id": "lyon",

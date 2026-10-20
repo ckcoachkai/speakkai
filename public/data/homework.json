@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-20T11:05:40.495604+00:00",
+  "updatedAt": "2026-10-20T13:05:12.548951+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2006,9 +2006,17 @@
               "feedbackUrl": "/fb/?class=tue-later&date=2026-10-20&student=sean"
             }
           ],
-          "homework": null,
+          "homework": {
+            "title": "How could a digital tool you use be improved?",
+            "steps": [
+              "Use the structure covered in class to prepare your response and write out the outline.",
+              "Connect with the audience through a rhetorical question or personal connection. Develop three main points, then end with your message: why is it important, and why should people care?",
+              "Deliver the speech and record a video."
+            ],
+            "prepareFor": "Present it in the next class."
+          },
           "classContent": [
-            "◆ Homework presentations: Students presented their prepared material. We discussed preparing and organizing logic and structure beforehand, then putting away the text or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Later impromptu practice: Jayden spoke first; his response was a little short and needed further expansion. Nelson spoke second for three minutes and met the time requirement, which was the first requirement for this practice. Sean was called next. This was a separate activity from the earlier homework presentations."
+            "◆ Homework presentations: Students presented their prepared material. We discussed preparing and organizing logic and structure beforehand, then putting away the text or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Later impromptu practice: Jayden spoke first; his response was a little short and needed further expansion. Nelson spoke second for three minutes and met the time requirement, which was the first requirement for this practice. Sean was called next. This was a separate activity from the earlier homework presentations.\n\n◆ Structure covered in class: Connect with the audience through a rhetorical question or personal connection; develop points 1, 2 and 3; then end with your message. Explain why it is important and why people should care."
           ]
         }
       ]
