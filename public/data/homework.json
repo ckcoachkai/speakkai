@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-20T08:38:43.790124+00:00",
+  "updatedAt": "2026-10-20T08:49:32.179225+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1409,7 +1409,14 @@
           "classContent": [
             "◆ Class sequence: We began with their homework, then practised impromptu speech. After the impromptu practice, we went over all the points for their debate topic.\n\n◆ Mini-debate: Max and August debated against Eva and Celia. I felt this was the most balanced pairing. Afterwards, we gave them feedback on the areas they needed to improve. We wanted them to become more comfortable with the practice of giving their speeches.\n\n◆ Working within a time constraint: We gave them a time constraint so they would focus on their reasoning, rebuttals and the other parts of their speaking. There were still a lot of areas to work on. They mainly stated their claims and then their reasons, but did not go very far into examples, evidence or impact. The focus is to develop the argument beyond the claim and reason, rather than stopping before those supporting details and consequences have been explained."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Evidence for your competition debate topic",
+            "steps": [
+              "Find five pieces of evidence for your competition debate topic.",
+              "Write them out so they can help support your points."
+            ],
+            "prepareFor": "Present your evidence in the next class."
+          },
           "students": [
             {
               "name": "Max",
