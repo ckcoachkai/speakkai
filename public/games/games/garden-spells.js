@@ -8,7 +8,7 @@ export function createGardenSpells({damageDefender,log,cue,random=Math.random}) 
   lane.magic??={projectiles:[],lastWall:wall};const a=lane.magic,visualDt=Math.min(.06,Math.max(0,(wall-a.lastWall)/1000));a.lastWall=wall;
   if(lane.eaten){a.projectiles=[];return;}
   for(const mob of lane.mobs){
-   if(mob.dead)continue;const id=casterId(mob),rule=rules[id];
+   if(mob.dead)continue;const id=casterId(mob),rule=rules[id]||mob.type?.spell;
    if(['pennywise','zombieclown'].includes(id)){
     mob.nextEvade??=sim+3;
     if(sim>=mob.nextEvade&&wall>=(mob.evadeReadyWall||0)&&shots.some(p=>p.lane===lane.index&&p.x<mob.x&&mob.x-p.x<.22)){

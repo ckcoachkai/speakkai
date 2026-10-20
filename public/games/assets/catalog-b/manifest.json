@@ -1,0 +1,4225 @@
+{
+  "version": 2,
+  "retrieved": "2026-10-20",
+  "description": "Native downloaded artwork only. No generated images; transparency measured, not inferred. Portraits must not be presented as complete walking sprites.",
+  "characters": [
+    {
+      "name": "Pikachu",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-pikachu",
+      "image": "b-pikachu-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 118057,
+      "transparentFraction": 0.650012188365651,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "759ceafdb4b8d637dfcfe673cf672bc3c472354a3b2e7e0835d9cdcacd8d195d",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+      "sourceImage": "b-pikachu.png",
+      "sourceSha256": "759ceafdb4b8d637dfcfe673cf672bc3c472354a3b2e7e0835d9cdcacd8d195d",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 405,
+      "foot": [
+        237,
+        440
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-pikachu-atlas.png",
+        "pngBytes": 117761,
+        "webpBytes": 73854
+      }
+    },
+    {
+      "name": "Charizard",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-charizard",
+      "image": "b-charizard-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 144568,
+      "transparentFraction": 0.6883058171745152,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "b6d5b8ee9fb05dc6f53294b2cae660dec770b92762cdb19d16bcbd679e1ba43a",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+      "sourceImage": "b-charizard.png",
+      "sourceSha256": "b6d5b8ee9fb05dc6f53294b2cae660dec770b92762cdb19d16bcbd679e1ba43a",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 338,
+      "foot": [
+        237,
+        406
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-charizard-atlas.png",
+        "pngBytes": 137779,
+        "webpBytes": 91132
+      }
+    },
+    {
+      "name": "Blastoise",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-blastoise",
+      "image": "b-blastoise-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 197853,
+      "transparentFraction": 0.5071689750692521,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "ba0a6b633e7a5d5a8c52498b0556518005fd4c63ef4564a8b06b79a73905a635",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png",
+      "sourceImage": "b-blastoise.png",
+      "sourceSha256": "ba0a6b633e7a5d5a8c52498b0556518005fd4c63ef4564a8b06b79a73905a635",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 431,
+      "foot": [
+        236.5,
+        453
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-blastoise-atlas.png",
+        "pngBytes": 194640,
+        "webpBytes": 121456
+      }
+    },
+    {
+      "name": "Venusaur",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-venusaur",
+      "image": "b-venusaur-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 186011,
+      "transparentFraction": 0.6012587257617729,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "106d0040aa775f95871706c30ddd4abaef2c962215f5e8bd4141e0caef0ef8e4",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
+      "sourceImage": "b-venusaur.png",
+      "sourceSha256": "106d0040aa775f95871706c30ddd4abaef2c962215f5e8bd4141e0caef0ef8e4",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 335,
+      "foot": [
+        237,
+        405
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-venusaur-atlas.png",
+        "pngBytes": 183961,
+        "webpBytes": 120620
+      }
+    },
+    {
+      "name": "Mewtwo",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-mewtwo",
+      "image": "b-mewtwo-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 119320,
+      "transparentFraction": 0.7522747922437674,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "d99adeb9b4523073ca218a6f472ea5b602b047ccd8af8dea6fa7ae051f80366a",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png",
+      "sourceImage": "b-mewtwo.png",
+      "sourceSha256": "d99adeb9b4523073ca218a6f472ea5b602b047ccd8af8dea6fa7ae051f80366a",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 431,
+      "foot": [
+        237,
+        453
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-mewtwo-atlas.png",
+        "pngBytes": 110989,
+        "webpBytes": 63436
+      }
+    },
+    {
+      "name": "Mew",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-mew",
+      "image": "b-mew-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 133175,
+      "transparentFraction": 0.7682747922437673,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "9991aee5181178b604b99aec636533b0c5a52a321ce246dd3b9c33243a342a64",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png",
+      "sourceImage": "b-mew.png",
+      "sourceSha256": "9991aee5181178b604b99aec636533b0c5a52a321ce246dd3b9c33243a342a64",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 431,
+      "foot": [
+        237,
+        453
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-mew-atlas.png",
+        "pngBytes": 108394,
+        "webpBytes": 63326
+      }
+    },
+    {
+      "name": "Eevee",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-eevee",
+      "image": "b-eevee-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 142266,
+      "transparentFraction": 0.6469362880886427,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "33ea993d3478ee920062b0bf27792a045b3a2f75d941bdb8cb3912ef50b1fb44",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
+      "sourceImage": "b-eevee.png",
+      "sourceSha256": "33ea993d3478ee920062b0bf27792a045b3a2f75d941bdb8cb3912ef50b1fb44",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 431,
+      "foot": [
+        237,
+        453
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-eevee-atlas.png",
+        "pngBytes": 138814,
+        "webpBytes": 86018
+      }
+    },
+    {
+      "name": "Snorlax",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-snorlax",
+      "image": "b-snorlax-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 139225,
+      "transparentFraction": 0.5554880886426593,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "1afd32e5f6053a50860d67c5d7cc3bc6ca9a174634097fe65880523a0a13a55a",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png",
+      "sourceImage": "b-snorlax.png",
+      "sourceSha256": "1afd32e5f6053a50860d67c5d7cc3bc6ca9a174634097fe65880523a0a13a55a",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 344,
+      "foot": [
+        237,
+        409
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-snorlax-atlas.png",
+        "pngBytes": 138830,
+        "webpBytes": 84196
+      }
+    },
+    {
+      "name": "Gengar",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-gengar",
+      "image": "b-gengar-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 144713,
+      "transparentFraction": 0.5638470914127424,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "b6549b80537676fcf4a589c8853b38cce42f42b5f707bbe2e63797666175cf06",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png",
+      "sourceImage": "b-gengar.png",
+      "sourceSha256": "b6549b80537676fcf4a589c8853b38cce42f42b5f707bbe2e63797666175cf06",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 431,
+      "foot": [
+        236.5,
+        453
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-gengar-atlas.png",
+        "pngBytes": 145042,
+        "webpBytes": 86396
+      }
+    },
+    {
+      "name": "Lucario",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-lucario",
+      "image": "b-lucario-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 91289,
+      "transparentFraction": 0.8028986149584487,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "8c5064f1d4a37c8b554d7ad83d77970b02d6875750f934c782493c83f8943127",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png",
+      "sourceImage": "b-lucario.png",
+      "sourceSha256": "8c5064f1d4a37c8b554d7ad83d77970b02d6875750f934c782493c83f8943127",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 431,
+      "foot": [
+        236.5,
+        453
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-lucario-atlas.png",
+        "pngBytes": 90513,
+        "webpBytes": 54590
+      }
+    },
+    {
+      "name": "Greninja",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-greninja",
+      "image": "b-greninja-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 91388,
+      "transparentFraction": 0.8563722991689751,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "e88f4590ff53a8f8965c9e1be19a0f069c51c4dc7ca64ecb25ac96c64c8504d3",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png",
+      "sourceImage": "b-greninja.png",
+      "sourceSha256": "e88f4590ff53a8f8965c9e1be19a0f069c51c4dc7ca64ecb25ac96c64c8504d3",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 255,
+      "foot": [
+        237,
+        365
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-greninja-atlas.png",
+        "pngBytes": 78253,
+        "webpBytes": 51482
+      }
+    },
+    {
+      "name": "Jigglypuff",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-jigglypuff",
+      "image": "b-jigglypuff-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 147602,
+      "transparentFraction": 0.5420542936288089,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "2d8fa64258727708417495b5ca4d28a148628d962709f58235b9e0837eb41365",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png",
+      "sourceImage": "b-jigglypuff.png",
+      "sourceSha256": "2d8fa64258727708417495b5ca4d28a148628d962709f58235b9e0837eb41365",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 408,
+      "foot": [
+        237,
+        441
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-jigglypuff-atlas.png",
+        "pngBytes": 148866,
+        "webpBytes": 89296
+      }
+    },
+    {
+      "name": "Meowth",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-meowth",
+      "image": "b-meowth-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 115809,
+      "transparentFraction": 0.7481218836565097,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "893353baec0dd1ac52a62af4465d28660a959e18beb21c17cd6cd9d3cb2d173c",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png",
+      "sourceImage": "b-meowth.png",
+      "sourceSha256": "893353baec0dd1ac52a62af4465d28660a959e18beb21c17cd6cd9d3cb2d173c",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 431,
+      "foot": [
+        236.5,
+        453
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-meowth-atlas.png",
+        "pngBytes": 114773,
+        "webpBytes": 71026
+      }
+    },
+    {
+      "name": "Psyduck",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-psyduck",
+      "image": "b-psyduck-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 117239,
+      "transparentFraction": 0.5910515235457063,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "87110a75d9d9c67e0d82b912abcea3c25a96bc394e366812c65639ea1bacdf40",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png",
+      "sourceImage": "b-psyduck.png",
+      "sourceSha256": "87110a75d9d9c67e0d82b912abcea3c25a96bc394e366812c65639ea1bacdf40",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 431,
+      "foot": [
+        237,
+        453
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-psyduck-atlas.png",
+        "pngBytes": 118361,
+        "webpBytes": 73174
+      }
+    },
+    {
+      "name": "Dragonite",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-dragonite",
+      "image": "b-dragonite-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 132064,
+      "transparentFraction": 0.7031623268698061,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "4bd7549caa15eac43a8197ba53e843a95f2b56c71b1121829ea76764fbf26f9c",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png",
+      "sourceImage": "b-dragonite.png",
+      "sourceSha256": "4bd7549caa15eac43a8197ba53e843a95f2b56c71b1121829ea76764fbf26f9c",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 431,
+      "foot": [
+        237,
+        453
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-dragonite-atlas.png",
+        "pngBytes": 124526,
+        "webpBytes": 78986
+      }
+    },
+    {
+      "name": "Gyarados",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-gyarados",
+      "image": "b-gyarados-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 146784,
+      "transparentFraction": 0.735587811634349,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "41d17760b81321cc7a3fb2cb1568d3c33010e892b687eeacb3738ba307071f8b",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png",
+      "sourceImage": "b-gyarados.png",
+      "sourceSha256": "41d17760b81321cc7a3fb2cb1568d3c33010e892b687eeacb3738ba307071f8b",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 431,
+      "foot": [
+        236.5,
+        453
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-gyarados-atlas.png",
+        "pngBytes": 144034,
+        "webpBytes": 93540
+      }
+    },
+    {
+      "name": "Bulbasaur",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-bulbasaur",
+      "image": "b-bulbasaur-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 203385,
+      "transparentFraction": 0.4473440443213296,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "7233d8d8b03b5fa91d835a3069d25769155db93c9ef91b6066e215ed3895e9d8",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+      "sourceImage": "b-bulbasaur.png",
+      "sourceSha256": "7233d8d8b03b5fa91d835a3069d25769155db93c9ef91b6066e215ed3895e9d8",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 402,
+      "foot": [
+        237,
+        438
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-bulbasaur-atlas.png",
+        "pngBytes": 204080,
+        "webpBytes": 128958
+      }
+    },
+    {
+      "name": "Squirtle",
+      "franchise": "Pokemon",
+      "sourcePage": "https://github.com/PokeAPI/sprites",
+      "url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+      "sourceKind": "community repository of official Pokemon artwork",
+      "id": "b-squirtle",
+      "image": "b-squirtle-atlas.webp",
+      "width": 475,
+      "height": 475,
+      "bytes": 155045,
+      "transparentFraction": 0.5764254847645429,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "37cda7bf8ad6f4252d539aed3bd989a85c8cb0f8e9d815be12bad08c16f31fe9",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+      "sourceImage": "b-squirtle.png",
+      "sourceSha256": "37cda7bf8ad6f4252d539aed3bd989a85c8cb0f8e9d815be12bad08c16f31fe9",
+      "frameWidth": 475,
+      "frameHeight": 475,
+      "bodyHeight": 431,
+      "foot": [
+        237,
+        453
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            475,
+            475
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-squirtle-atlas.png",
+        "pngBytes": 155458,
+        "webpBytes": 95562
+      }
+    },
+    {
+      "name": "Goku",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/1",
+      "url": "https://dragonball-api.com/characters/goku_normal.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-goku",
+      "image": "b-goku-atlas.webp",
+      "width": 870,
+      "height": 1959,
+      "bytes": 310658,
+      "transparentFraction": 0.5317318281938326,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "570ed8bdcfa265febabf981991e24242d0810b562763f9d1ee4f958efc4dffcb",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/goku_normal.webp",
+      "sourceImage": "b-goku.webp",
+      "sourceSha256": "570ed8bdcfa265febabf981991e24242d0810b562763f9d1ee4f958efc4dffcb",
+      "frameWidth": 227,
+      "frameHeight": 512,
+      "bodyHeight": 512,
+      "foot": [
+        113,
+        512
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            227,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-goku-atlas.png",
+        "pngBytes": 128135,
+        "webpBytes": 93408
+      }
+    },
+    {
+      "name": "Vegeta",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/2",
+      "url": "https://dragonball-api.com/characters/vegeta_normal.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-vegeta",
+      "image": "b-vegeta-atlas.webp",
+      "width": 810,
+      "height": 2053,
+      "bytes": 219630,
+      "transparentFraction": 0.5768777073019802,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "6e2c06be5c5ca5ffd3feca0ee65a7c207151656ce9a43a65aa552068cfaab6d2",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/vegeta_normal.webp",
+      "sourceImage": "b-vegeta.webp",
+      "sourceSha256": "6e2c06be5c5ca5ffd3feca0ee65a7c207151656ce9a43a65aa552068cfaab6d2",
+      "frameWidth": 202,
+      "frameHeight": 512,
+      "bodyHeight": 512,
+      "foot": [
+        100.5,
+        512
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            202,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-vegeta-atlas.png",
+        "pngBytes": 87886,
+        "webpBytes": 61218
+      }
+    },
+    {
+      "name": "Gohan",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/10",
+      "url": "https://dragonball-api.com/characters/gohan.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-gohan",
+      "image": "b-gohan-atlas.webp",
+      "width": 590,
+      "height": 750,
+      "bytes": 73460,
+      "transparentFraction": 0.6399077233250621,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "2b75e1cee3def6bba179482b20b4d8c26f34d57ac69c0035e033bbcf954ac4ef",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/gohan.webp",
+      "sourceImage": "b-gohan.webp",
+      "sourceSha256": "2b75e1cee3def6bba179482b20b4d8c26f34d57ac69c0035e033bbcf954ac4ef",
+      "frameWidth": 403,
+      "frameHeight": 512,
+      "bodyHeight": 512,
+      "foot": [
+        201,
+        512
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            403,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-gohan-atlas.png",
+        "pngBytes": 167967,
+        "webpBytes": 110318
+      }
+    },
+    {
+      "name": "Piccolo",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/3",
+      "url": "https://dragonball-api.com/characters/picolo_normal.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-piccolo",
+      "image": "b-piccolo-atlas.webp",
+      "width": 414,
+      "height": 661,
+      "bytes": 63700,
+      "transparentFraction": 0.434305636682243,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "526a456218477c24fad8a7e9652a1740b7bb401731f4343ec572487ac877fa92",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/picolo_normal.webp",
+      "sourceImage": "b-piccolo.webp",
+      "sourceSha256": "526a456218477c24fad8a7e9652a1740b7bb401731f4343ec572487ac877fa92",
+      "frameWidth": 321,
+      "frameHeight": 512,
+      "bodyHeight": 502,
+      "foot": [
+        159,
+        512
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            321,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-piccolo-atlas.png",
+        "pngBytes": 150781,
+        "webpBytes": 100312
+      }
+    },
+    {
+      "name": "Krillin",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/11",
+      "url": "https://dragonball-api.com/characters/Krilin_Universo7.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-krillin",
+      "image": "b-krillin-atlas.webp",
+      "width": 230,
+      "height": 460,
+      "bytes": 31214,
+      "transparentFraction": 0.5195085066162571,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "bcf923b92b57289b52bd7cfdce9fd8f3824f796ef288faf83d5d6652f6da3f55",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/Krilin_Universo7.webp",
+      "sourceImage": "b-krillin.webp",
+      "sourceSha256": "bcf923b92b57289b52bd7cfdce9fd8f3824f796ef288faf83d5d6652f6da3f55",
+      "frameWidth": 230,
+      "frameHeight": 460,
+      "bodyHeight": 456,
+      "foot": [
+        114,
+        460
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            230,
+            460
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-krillin-atlas.png",
+        "pngBytes": 108050,
+        "webpBytes": 74474
+      }
+    },
+    {
+      "name": "Bulma",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/4",
+      "url": "https://dragonball-api.com/characters/bulma.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-bulma",
+      "image": "b-bulma-atlas.webp",
+      "width": 290,
+      "height": 920,
+      "bytes": 30386,
+      "transparentFraction": 0.5582904697204969,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "d88505dcfc0143752a4804c03d7a9e9a555634f791f968a181a5367fe4085b41",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/bulma.webp",
+      "sourceImage": "b-bulma.webp",
+      "sourceSha256": "d88505dcfc0143752a4804c03d7a9e9a555634f791f968a181a5367fe4085b41",
+      "frameWidth": 161,
+      "frameHeight": 512,
+      "bodyHeight": 508,
+      "foot": [
+        79.5,
+        510
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            161,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-bulma-atlas.png",
+        "pngBytes": 58485,
+        "webpBytes": 39008
+      }
+    },
+    {
+      "name": "Trunks",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/16",
+      "url": "https://dragonball-api.com/characters/Trunks_Buu_Artwork.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-trunks",
+      "image": "b-trunks-atlas.webp",
+      "width": 284,
+      "height": 605,
+      "bytes": 42502,
+      "transparentFraction": 0.6310139973958333,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "c45599a57ebf274f571b07deee04ef92bdedead02ed48e1f8c804d5ce287220b",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/Trunks_Buu_Artwork.webp",
+      "sourceImage": "b-trunks.webp",
+      "sourceSha256": "c45599a57ebf274f571b07deee04ef92bdedead02ed48e1f8c804d5ce287220b",
+      "frameWidth": 240,
+      "frameHeight": 512,
+      "bodyHeight": 439,
+      "foot": [
+        109,
+        478
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            240,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-trunks-atlas.png",
+        "pngBytes": 112526,
+        "webpBytes": 78328
+      }
+    },
+    {
+      "id": "b-goten",
+      "name": "Goten",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://thecodex.wiki/File:Goten.png",
+      "url": "https://thecodex.wiki/images/c/c2/Goten.png",
+      "image": "b-goten-atlas.webp",
+      "status": "ready",
+      "generated": false,
+      "sourceKind": "community wiki native transparent character render",
+      "rights": "Original artwork rights remain with owners; redistribution license not established.",
+      "originalURL": "https://thecodex.wiki/images/c/c2/Goten.png",
+      "sourceImage": "b-goten.png",
+      "sourceSha256": "64fb52c0193a6e86e2d2a7b6d4f00a8955a6cd02bc31470598373104d1984f69",
+      "frameWidth": 253,
+      "frameHeight": 512,
+      "bodyHeight": 512,
+      "foot": [
+        126,
+        512
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            253,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.5718333127470355,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-goten-atlas.png",
+        "pngBytes": 83825,
+        "webpBytes": 56332
+      }
+    },
+    {
+      "name": "Freezer",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/5",
+      "url": "https://dragonball-api.com/characters/Freezer.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-freezer",
+      "image": "b-freezer-atlas.webp",
+      "width": 296,
+      "height": 500,
+      "bytes": 34994,
+      "transparentFraction": 0.6144324324324324,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "c12455a887276976ae5e0229f37e3c14b44b22621140d38747237830e62aaf6c",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/Freezer.webp",
+      "sourceImage": "b-freezer.webp",
+      "sourceSha256": "c12455a887276976ae5e0229f37e3c14b44b22621140d38747237830e62aaf6c",
+      "frameWidth": 296,
+      "frameHeight": 500,
+      "bodyHeight": 498,
+      "foot": [
+        146.5,
+        500
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            296,
+            500
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-freezer-atlas.png",
+        "pngBytes": 122065,
+        "webpBytes": 73800
+      }
+    },
+    {
+      "name": "Celula",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/9",
+      "url": "https://dragonball-api.com/characters/celula.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-celula",
+      "image": "b-celula-atlas.webp",
+      "width": 447,
+      "height": 937,
+      "bytes": 118352,
+      "transparentFraction": 0.5466428662909836,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "a01b14140e54b4eb122f7df5071e4d94a8bcfdfb646d1f9b8835f9befc453a54",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/celula.webp",
+      "sourceImage": "b-celula.webp",
+      "sourceSha256": "a01b14140e54b4eb122f7df5071e4d94a8bcfdfb646d1f9b8835f9befc453a54",
+      "frameWidth": 244,
+      "frameHeight": 512,
+      "bodyHeight": 496,
+      "foot": [
+        122,
+        506
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            244,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-celula-atlas.png",
+        "pngBytes": 146995,
+        "webpBytes": 108374
+      }
+    },
+    {
+      "name": "Majin Buu",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/32",
+      "url": "https://dragonball-api.com/characters/BuuGordo_Universo7.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-majin-buu",
+      "image": "b-majin-buu-atlas.webp",
+      "width": 435,
+      "height": 557,
+      "bytes": 56698,
+      "transparentFraction": 0.4605712890625,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "ac1854f7318bc53e44b8d58b5057244acbc11921c974852c10c11e8d37b78aa0",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/BuuGordo_Universo7.webp",
+      "sourceImage": "b-majin-buu.webp",
+      "sourceSha256": "ac1854f7318bc53e44b8d58b5057244acbc11921c974852c10c11e8d37b78aa0",
+      "frameWidth": 400,
+      "frameHeight": 512,
+      "bodyHeight": 506,
+      "foot": [
+        199.5,
+        511
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            400,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-majin-buu-atlas.png",
+        "pngBytes": 195286,
+        "webpBytes": 132242
+      }
+    },
+    {
+      "name": "Bills",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/33",
+      "url": "https://dragonball-api.com/characters/Beerus_DBS_Broly_Artwork.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-bills",
+      "image": "b-bills-atlas.webp",
+      "width": 342,
+      "height": 712,
+      "bytes": 50618,
+      "transparentFraction": 0.6386162982723578,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "3b86b70e4eb4efdd93112632303d1e0bb859cc32993a6dbecf12c8ba25259ff3",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/Beerus_DBS_Broly_Artwork.webp",
+      "sourceImage": "b-bills.webp",
+      "sourceSha256": "3b86b70e4eb4efdd93112632303d1e0bb859cc32993a6dbecf12c8ba25259ff3",
+      "frameWidth": 246,
+      "frameHeight": 512,
+      "bodyHeight": 512,
+      "foot": [
+        122.5,
+        512
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            246,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-bills-atlas.png",
+        "pngBytes": 98108,
+        "webpBytes": 68228
+      }
+    },
+    {
+      "name": "Whis",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/34",
+      "url": "https://dragonball-api.com/characters/Whis_DBS_Broly_Artwork.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-whis",
+      "image": "b-whis-atlas.webp",
+      "width": 307,
+      "height": 712,
+      "bytes": 52604,
+      "transparentFraction": 0.5461414734162896,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "7db076356d127771eab9a4cad7071556f4674066b3e8b022c46ed114c5cb4ec7",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/Whis_DBS_Broly_Artwork.webp",
+      "sourceImage": "b-whis.webp",
+      "sourceSha256": "7db076356d127771eab9a4cad7071556f4674066b3e8b022c46ed114c5cb4ec7",
+      "frameWidth": 221,
+      "frameHeight": 512,
+      "bodyHeight": 512,
+      "foot": [
+        110,
+        512
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            221,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-whis-atlas.png",
+        "pngBytes": 101484,
+        "webpBytes": 68766
+      }
+    },
+    {
+      "name": "Android 18",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/64",
+      "url": "https://dragonball-api.com/characters/Androide_18_Artwork.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-android-18",
+      "image": "b-android-18-atlas.webp",
+      "width": 426,
+      "height": 568,
+      "bytes": 24116,
+      "transparentFraction": 0.7945404052734375,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "5efedea7159fbe7a63c5fa43cad143f69ae3fae09e5e878e3ec50ed142dae427",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/Androide_18_Artwork.webp",
+      "sourceImage": "b-android-18.webp",
+      "sourceSha256": "5efedea7159fbe7a63c5fa43cad143f69ae3fae09e5e878e3ec50ed142dae427",
+      "frameWidth": 384,
+      "frameHeight": 512,
+      "bodyHeight": 423,
+      "foot": [
+        200,
+        476
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            384,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-android-18-atlas.png",
+        "pngBytes": 100419,
+        "webpBytes": 68810
+      }
+    },
+    {
+      "name": "Master Roshi",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/17",
+      "url": "https://dragonball-api.com/characters/roshi.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-master-roshi",
+      "image": "b-master-roshi-atlas.webp",
+      "width": 230,
+      "height": 505,
+      "bytes": 31406,
+      "transparentFraction": 0.524631941455015,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "1fed660328684e3e1d74e71a45b9ad5ef6918d8ace0c783e17987ef8b031ddfa",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/roshi.webp",
+      "sourceImage": "b-master-roshi.webp",
+      "sourceSha256": "1fed660328684e3e1d74e71a45b9ad5ef6918d8ace0c783e17987ef8b031ddfa",
+      "frameWidth": 230,
+      "frameHeight": 505,
+      "bodyHeight": 494,
+      "foot": [
+        120.5,
+        502
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            230,
+            505
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-master-roshi-atlas.png",
+        "pngBytes": 110622,
+        "webpBytes": 74396
+      }
+    },
+    {
+      "name": "Yamcha",
+      "franchise": "Dragon Ball",
+      "sourcePage": "https://dragonball-api.com/api/characters/13",
+      "url": "https://dragonball-api.com/characters/Final_Yamcha.webp",
+      "sourceKind": "community API artwork; upstream artist/license unverified",
+      "id": "b-yamcha",
+      "image": "b-yamcha-atlas.webp",
+      "width": 426,
+      "height": 568,
+      "bytes": 39098,
+      "transparentFraction": 0.6833038330078125,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "27e841036c078806fb1053ada3d9400e9701fa8352f7e62fe302cc718d0cfb0c",
+      "status": "ready",
+      "rights": "Character artwork belongs to original rights holders; redistribution license not established.",
+      "originalURL": "https://dragonball-api.com/characters/Final_Yamcha.webp",
+      "sourceImage": "b-yamcha.webp",
+      "sourceSha256": "27e841036c078806fb1053ada3d9400e9701fa8352f7e62fe302cc718d0cfb0c",
+      "frameWidth": 384,
+      "frameHeight": 512,
+      "bodyHeight": 440,
+      "foot": [
+        188,
+        483
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            384,
+            512
+          ],
+          "duration": 1000
+        }
+      ],
+      "displayHeight": 224,
+      "nativeAnimated": false,
+      "sourced": true,
+      "notes": "Static sourced artwork; runtime mesh motion is procedural, not native animation.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-yamcha-atlas.png",
+        "pngBytes": 149350,
+        "webpBytes": 114380
+      }
+    },
+    {
+      "id": "b-naruto-uzumaki",
+      "name": "Naruto Uzumaki",
+      "franchise": "Naruto",
+      "image": "b-naruto-uzumaki-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/montblancworld-naruto-montblanc-x-Ai19LD17xpuDu5omCp",
+      "originalURL": "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjhpYjkzMXVjcWRvcTZvMjh2azRienZldzNnc3F5a2QyaW9zczU4MSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/Ai19LD17xpuDu5omCp/giphy.gif",
+      "uploader": "montblancworld",
+      "uploaderVerified": true,
+      "title": "Naruto Manga Sticker by Montblanc",
+      "tags": [
+        "transparent",
+        "anime",
+        "naruto",
+        "manga",
+        "montblanc",
+        "montblanc x naruto"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-naruto-uzumaki.gif",
+      "sourceSha256": "8be7cbadf967630e02d66f1b5d0ac7dc6e0151ba4920e9e08bca626544f544f2",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "bodyHeight": 244,
+      "foot": [
+        131.5,
+        248
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.809112548828125,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-naruto-uzumaki-atlas.png",
+        "pngBytes": 870001,
+        "webpBytes": 627506
+      }
+    },
+    {
+      "id": "b-sasuke-uchiha",
+      "name": "Sasuke Uchiha",
+      "franchise": "Naruto",
+      "image": "b-sasuke-uchiha-atlas.png",
+      "sourcePage": "https://giphy.com/stickers/sasuke-WO2Qn3wAMqQFi",
+      "originalURL": "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjhpYjkzMXVjcWRvcTZvMjh2azRienZldzNnc3F5a2QyaW9zczU4MSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/WO2Qn3wAMqQFi/giphy.gif",
+      "uploader": "",
+      "uploaderVerified": false,
+      "title": "Sasuke Sticker",
+      "tags": [
+        "transparent",
+        "sasuke"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-sasuke-uchiha.gif",
+      "sourceSha256": "57f21ec0d6a88046f044b992de794559e56e6004332abfd352a725e0f19ef302",
+      "frameWidth": 228,
+      "frameHeight": 512,
+      "bodyHeight": 503,
+      "foot": [
+        113.5,
+        512
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            228,
+            0,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            456,
+            0,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            684,
+            0,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            912,
+            0,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1140,
+            0,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            512,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            228,
+            512,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            456,
+            512,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            684,
+            512,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            912,
+            512,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1140,
+            512,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            1024,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            228,
+            1024,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            456,
+            1024,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            684,
+            1024,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            912,
+            1024,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1140,
+            1024,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            1536,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            228,
+            1536,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            456,
+            1536,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            684,
+            1536,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            912,
+            1536,
+            228,
+            512
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1140,
+            1536,
+            228,
+            512
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.5548845257675439,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork"
+    },
+    {
+      "id": "b-sakura-haruno",
+      "name": "Sakura Haruno",
+      "franchise": "Naruto",
+      "image": "b-sakura-haruno-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/yes-naruto-kbe3FF8dAxZRu",
+      "originalURL": "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjkwOG93N3N0cnYyZTdyazYzaG9tMGpiYmNrcHFnbHc2OGw3eWttNiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/kbe3FF8dAxZRu/giphy.gif",
+      "uploader": "",
+      "uploaderVerified": false,
+      "title": "sakura haruno yes STICKER",
+      "tags": [
+        "transparent",
+        "yes",
+        "cheer",
+        "naruto",
+        "sakura",
+        "sakura haruno",
+        "fantasizing",
+        "icarusflow"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-sakura-haruno.gif",
+      "sourceSha256": "05967415ae938247d6303b6561a8d6d94a7b6bf0459f6f0bd634944189f30d4c",
+      "frameWidth": 256,
+      "frameHeight": 145,
+      "bodyHeight": 140,
+      "foot": [
+        129.5,
+        145
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            0,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            0,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            145,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            145,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            145,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            145,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            145,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            145,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            290,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            290,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            290,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            290,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            290,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            290,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            435,
+            256,
+            145
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            435,
+            256,
+            145
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.5213092672413793,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames. Sourced bust sticker includes another figure; not a full-body walk cycle.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-sakura-haruno-atlas.png",
+        "pngBytes": 807239,
+        "webpBytes": 578106
+      }
+    },
+    {
+      "id": "b-kakashi-hatake",
+      "name": "Kakashi Hatake",
+      "franchise": "Naruto",
+      "image": "b-kakashi-hatake-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/watchvrv-naruto-vrv-watch-1pA5ndaOZlucSjUrXw",
+      "originalURL": "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Mwa3luNGk3YzBqN3JhZDQ0cTlyNjhzMmNneW81aTQ2Nm5nNm1oNyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/1pA5ndaOZlucSjUrXw/giphy.gif",
+      "uploader": "watchvrv",
+      "uploaderVerified": true,
+      "title": "sticker naruto",
+      "tags": [
+        "transparent",
+        "sticker",
+        "naruto",
+        "books",
+        "reading",
+        "kakashi",
+        "vrv",
+        "watch vrv"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-kakashi-hatake.gif",
+      "sourceSha256": "f6e5a69539091864874ce6e0106eb07ad8de0e254ee81bc974b8f159191f8291",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "bodyHeight": 250,
+      "foot": [
+        118,
+        252
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.53338623046875,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames. Sourced seated/upper-body artwork includes a dog and original credit text.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-kakashi-hatake-atlas.png",
+        "pngBytes": 188016,
+        "webpBytes": 79406
+      }
+    },
+    {
+      "id": "b-hinata-hyuga",
+      "name": "Hinata Hyuga",
+      "franchise": "Naruto",
+      "image": "b-hinata-hyuga-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/naruto-hinata-funko-ZNmnqbRm4I4kpbY7C8",
+      "originalURL": "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGpvN3k0ZGE5bWUybTJkZmJ3ODc1NGV5M3ozcjZybXVyYTRxcHdkZCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/ZNmnqbRm4I4kpbY7C8/giphy.gif",
+      "uploader": "brenfi",
+      "uploaderVerified": true,
+      "title": "Naruto Sticker by Brenfi",
+      "tags": [
+        "transparent",
+        "naruto",
+        "hinata",
+        "funko",
+        "augie",
+        "augieomfg"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-hinata-hyuga.gif",
+      "sourceSha256": "d7b3c6cbc938a610cebedb80c8a14b90859170d034cd358a3c526f01abc7c666",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "bodyHeight": 252,
+      "foot": [
+        127.5,
+        254
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.5768585205078125,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-hinata-hyuga-atlas.png",
+        "pngBytes": 272830,
+        "webpBytes": 157450
+      }
+    },
+    {
+      "id": "b-gaara",
+      "name": "Gaara",
+      "franchise": "Naruto",
+      "image": "b-gaara-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/naruto-gaara-yomonaruto-1hzujg1COyO9gqXVkI",
+      "originalURL": "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2x0Y25pNjc5eW50OGUxemJ0MmUwdDU5ZWsxeG9qODlkMWhhN2V1NCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/1hzujg1COyO9gqXVkI/giphy.gif",
+      "uploader": "yomoyeah",
+      "uploaderVerified": true,
+      "title": "Naruto Sticker by yomoyeah",
+      "tags": [
+        "transparent",
+        "naruto",
+        "gaara",
+        "yomonaruto",
+        "ガアラ",
+        "我愛羅"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-gaara.gif",
+      "sourceSha256": "e650a173f4ee2aa769702866a96dd82cd74fd57c1e7bd11702d4e29226e50eb1",
+      "frameWidth": 256,
+      "frameHeight": 271,
+      "bodyHeight": 244,
+      "foot": [
+        130,
+        258
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            271
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            271
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            271
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            271
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.4712004151291513,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-gaara-atlas.png",
+        "pngBytes": 176541,
+        "webpBytes": 113924
+      }
+    },
+    {
+      "id": "b-rock-lee",
+      "name": "Rock Lee",
+      "franchise": "Naruto",
+      "image": "b-rock-lee-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/rock-lee-OPdMI5ZpUdKDu",
+      "originalURL": "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExenI2ejVoeXdkMXp1amI5dXVzOTRlb29yeWVkY3FoYWxmazd4YW96ZSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/OPdMI5ZpUdKDu/giphy.gif",
+      "uploader": "",
+      "uploaderVerified": false,
+      "title": "rock lee Sticker",
+      "tags": [
+        "transparent",
+        "rock lee"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-rock-lee.gif",
+      "sourceSha256": "1f8da1dda48a2bdeee86b4a9e6f9ff2924e8b610099819bdb13068e964318059",
+      "frameWidth": 256,
+      "frameHeight": 232,
+      "bodyHeight": 206,
+      "foot": [
+        159,
+        232
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            232
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            232
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            232
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            232
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            0,
+            256,
+            232
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            0,
+            256,
+            232
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            232,
+            256,
+            232
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            232,
+            256,
+            232
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.7771417025862069,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-rock-lee-atlas.png",
+        "pngBytes": 303745,
+        "webpBytes": 200086
+      }
+    },
+    {
+      "id": "b-neji-hyuga",
+      "name": "Neji Hyuga",
+      "franchise": "Naruto",
+      "image": "b-neji-hyuga-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/dancing-BLqDy064fk1vG",
+      "originalURL": "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnppa2Q2aTV0d3V5bDYwb2ptemZyZWNscXpqZmdpejAyN3dkNzdnYyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/BLqDy064fk1vG/giphy.gif",
+      "uploader": "",
+      "uploaderVerified": false,
+      "title": "naruto dancing Sticker",
+      "tags": [
+        "transparent",
+        "anime",
+        "dancing",
+        "naruto",
+        "spinning",
+        "hinata",
+        "neji",
+        "hinata hyuuga",
+        "neji hyuuga"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-neji-hyuga.gif",
+      "sourceSha256": "d8ec6d460f7bca022b1d2cda34c925191c6565596f953e0c8c0f6bdc1cbd5038",
+      "frameWidth": 256,
+      "frameHeight": 247,
+      "bodyHeight": 217,
+      "foot": [
+        132,
+        230
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            247
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            247
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            247
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            247
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            0,
+            256,
+            247
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            0,
+            256,
+            247
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.6432818825910931,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames. Sourced ensemble sticker includes Hinata beside Neji.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-neji-hyuga-atlas.png",
+        "pngBytes": 236698,
+        "webpBytes": 160950
+      }
+    },
+    {
+      "id": "b-shikamaru-nara",
+      "name": "Shikamaru Nara",
+      "franchise": "Naruto",
+      "image": "b-shikamaru-nara-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/anime-illustration-cartoon-bEIZY5MN6FtnlVGLap",
+      "originalURL": "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3l2NmppY2hpY3NxdGQwdGR2NzBtNmV4NnY2a2Fzenh4b20zeG51YSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/bEIZY5MN6FtnlVGLap/giphy.gif",
+      "uploader": "ShimKoong_Studio",
+      "uploaderVerified": false,
+      "title": "Illustration Ok Sticker",
+      "tags": [
+        "transparent",
+        "anime",
+        "cartoon",
+        "illustration",
+        "ok",
+        "japan",
+        "naruto",
+        "manga",
+        "korea",
+        "sasuke"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-shikamaru-nara.gif",
+      "sourceSha256": "5a1cc770b0b70c66eaf0e5119e1baf473411ad4e43ca6658cc9a4aca8948517e",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "bodyHeight": 218,
+      "foot": [
+        121.5,
+        229
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.7426605224609375,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-shikamaru-nara-atlas.png",
+        "pngBytes": 311931,
+        "webpBytes": 159576
+      }
+    },
+    {
+      "name": "Ino Yamanaka",
+      "franchise": "Naruto",
+      "sourcePage": "https://www.pngkey.com/maxpic/u2y3w7e6e6t4a9r5/",
+      "url": "https://static.wikia.nocookie.net/naruto/images/d/dd/Ino.png",
+      "sourceKind": "Sourced transparent static fan-art bust; artist signature retained",
+      "id": "b-ino-yamanaka",
+      "width": 1440,
+      "height": 1076,
+      "bytes": 115354,
+      "transparentFraction": 0,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "67a4045ae3d11be08e056c82f5e4abfd1cf9bfc3620cf20e47794e36c9a911ed",
+      "status": "ready",
+      "rights": "Third-party copyrighted source; host marks non-commercial/personal use; no redistribution license asserted",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "label": "Ino Yamanaka",
+      "image": "b-ino-yamanaka.webp",
+      "frameWidth": 224,
+      "frameHeight": 224,
+      "bodyHeight": 224,
+      "foot": [
+        112,
+        224
+      ],
+      "displayHeight": 224,
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            224,
+            224
+          ],
+          "duration": 100
+        }
+      ],
+      "originalURL": "https://www.pngkey.com/png/full/988-9885994_ino-yamanaka.png",
+      "nativeTransparency": true,
+      "nativeFrameCount": 1,
+      "sourced": true,
+      "nativeAnimated": false,
+      "notes": "Static sourced fan-art bust, not a full-body walk cycle. Artist signature retained; runtime mesh movement is procedural."
+    },
+    {
+      "id": "b-choji-akimichi",
+      "name": "Choji Akimichi",
+      "franchise": "Naruto",
+      "image": "b-choji-akimichi-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/choji-akimichi-chojiakimichi-MCviZcihpudl1gnKYY",
+      "originalURL": "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExc21oZmZyazFoMTl4b3V1Y3cwNXkweG04ZW44NTZwaDVvcWUzeTZrdyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/MCviZcihpudl1gnKYY/giphy.gif",
+      "uploader": "Edcane",
+      "uploaderVerified": false,
+      "title": "Choji Akimichi Naruto Sticker",
+      "tags": [
+        "transparent",
+        "naruto",
+        "choji",
+        "edcane",
+        "ナルト",
+        "akimichi",
+        "choji akimichi",
+        "chojiakimichi",
+        "秋道チ",
+        "akimichi choji",
+        "秋道チョウジ"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-choji-akimichi.gif",
+      "sourceSha256": "c4f57aee312f5cb2778cc759a95d81b07162aa991f00bf72544d747c9eb1771e",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "bodyHeight": 163,
+      "foot": [
+        136,
+        196
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.8615264892578125,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-choji-akimichi-atlas.png",
+        "pngBytes": 987242,
+        "webpBytes": 680490
+      }
+    },
+    {
+      "id": "b-itachi-uchiha",
+      "name": "Itachi Uchiha",
+      "franchise": "Naruto",
+      "image": "b-itachi-uchiha-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/pixelart-animeart-zaferonline-TfBueKWB8ZrJ27uIZo",
+      "originalURL": "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2hqN25jcG1sbnNubXFic3hjejIzODBnZTJhOGRqdDBsaDh5c3ZsYiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/TfBueKWB8ZrJ27uIZo/giphy.gif",
+      "uploader": "zfrsgtcu",
+      "uploaderVerified": false,
+      "title": "",
+      "tags": [
+        "transparent",
+        "pixelart",
+        "naruto",
+        "animeart",
+        "zaferonline",
+        "zfrsgtcu",
+        "animepixelart",
+        "chineaart"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-itachi-uchiha.gif",
+      "sourceSha256": "1ebdcc2aef4291c29e4d5bb609d3d19822b85e626c116cd837ba6c52c472b0ba",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "bodyHeight": 221,
+      "foot": [
+        127.5,
+        232
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.84326171875,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-itachi-uchiha-atlas.png",
+        "pngBytes": 171129,
+        "webpBytes": 99262
+      }
+    },
+    {
+      "id": "b-jiraiya",
+      "name": "Jiraiya",
+      "franchise": "Naruto",
+      "image": "b-jiraiya-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/cat-kitty-kitten-kbhjpefBvVjSzeVOBK",
+      "originalURL": "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmNsOXFlc3g4aWQwanluZWlhMjNyZDhzZ2Q1Ym1vbTR4NDgzaDBpMyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/kbhjpefBvVjSzeVOBK/giphy.gif",
+      "uploader": "PixeLotion",
+      "uploaderVerified": false,
+      "title": "Cat Summon Sticker",
+      "tags": [
+        "transparent",
+        "anime",
+        "cat",
+        "fire",
+        "japan",
+        "kitty",
+        "pet",
+        "kitten",
+        "naruto",
+        "cosplay",
+        "manga",
+        "comic",
+        "neko",
+        "otaku",
+        "toad",
+        "summon",
+        "jiraiya"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-jiraiya.gif",
+      "sourceSha256": "8250a17656075538dcf0ae0bdb89e07942c981d6135ecb1c428406f8ec2cd4da",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "bodyHeight": 215,
+      "foot": [
+        131,
+        221
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            512,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            768,
+            256,
+            256
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.6018524169921875,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-jiraiya-atlas.png",
+        "pngBytes": 296755,
+        "webpBytes": 100852
+      }
+    },
+    {
+      "id": "b-tsunade",
+      "name": "Tsunade",
+      "franchise": "Naruto",
+      "image": "b-tsunade-atlas.webp",
+      "sourcePage": "https://giphy.com/stickers/cat-kitty-kitten-FmxZ1n7TrAtd1NaPAH",
+      "originalURL": "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMG90ZnMzZ2V1bWpscjJkd3N6bDVkenRoZXY1Z29tdWt4NXc3eG45MSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/FmxZ1n7TrAtd1NaPAH/giphy.gif",
+      "uploader": "PixeLotion",
+      "uploaderVerified": false,
+      "title": "Cat Japan Sticker",
+      "tags": [
+        "transparent",
+        "anime",
+        "cat",
+        "japan",
+        "kitty",
+        "pet",
+        "kitten",
+        "naruto",
+        "punch",
+        "cosplay",
+        "manga",
+        "comic",
+        "neko",
+        "otaku",
+        "slug",
+        "tsunade",
+        "hokage"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party character artwork; no redistribution license asserted.",
+      "sourceImage": "b-tsunade.gif",
+      "sourceSha256": "fa4973a45ac12ba6a69c00e8de5dabcbd2dfc77885940686720e07ee8df8faf3",
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "bodyHeight": 244,
+      "foot": [
+        121.5,
+        248
+      ],
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1280,
+            0,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            0,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            256,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            512,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            768,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        },
+        {
+          "rect": [
+            1024,
+            256,
+            256,
+            256
+          ],
+          "duration": 125
+        }
+      ],
+      "displayHeight": 224,
+      "transparent": true,
+      "transparentFraction": 0.5347137451171875,
+      "nativeAnimated": true,
+      "sourced": true,
+      "notes": "Native sourced animation decoded at 8fps, capped24 frames.",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "sourceKind": "Native GIPHY community sticker, identity visually reviewed; not claimed official artwork",
+      "packaging": {
+        "conversion": "lossless WebP, unchanged atlas layout",
+        "originalPng": "b-tsunade-atlas.png",
+        "pngBytes": 143565,
+        "webpBytes": 53884
+      }
+    },
+    {
+      "name": "Orochimaru",
+      "franchise": "Naruto",
+      "sourcePage": "https://www.kindpng.com/imgv/iJbiwhi_orochimaru-render-by-orochimaru-png-transparent-png/",
+      "url": "https://static.wikia.nocookie.net/naruto/images/1/14/Orochimaru_Infobox.png",
+      "sourceKind": "Sourced transparent static full-body render; source edge speckles retained",
+      "id": "b-orochimaru",
+      "width": 1424,
+      "height": 1076,
+      "bytes": 97726,
+      "transparentFraction": 0,
+      "transparent": true,
+      "animated": false,
+      "generated": false,
+      "sha256": "873a6b218df34521fd8f72628a595ac5642838a949d4f8158f3c0202e92d7ed5",
+      "status": "ready",
+      "rights": "Third-party copyrighted source; host marks non-commercial/personal use; no redistribution license asserted",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "label": "Orochimaru",
+      "image": "b-orochimaru.webp",
+      "frameWidth": 224,
+      "frameHeight": 224,
+      "bodyHeight": 224,
+      "foot": [
+        112,
+        224
+      ],
+      "displayHeight": 224,
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            224,
+            224
+          ],
+          "duration": 100
+        }
+      ],
+      "originalURL": "https://www.kindpng.com/picc/b/282-2823487_orochimaru-render-by-orochimaru-png-transparent-png.png",
+      "nativeTransparency": true,
+      "nativeFrameCount": 1,
+      "sourced": true,
+      "nativeAnimated": false,
+      "notes": "Static sourced artwork; runtime mesh movement is procedural, not native animation."
+    },
+    {
+      "id": "b-minato-namikaze",
+      "name": "Minato Namikaze",
+      "franchise": "Naruto",
+      "sourcePage": "https://www.pngaaa.com/detail/2086296",
+      "originalURL": "https://image.pngaaa.com/296/2086296.png",
+      "uploader": "artbyalici6",
+      "uploaderVerified": false,
+      "title": "Naruto Shippuden Love Sticker",
+      "tags": [
+        "transparent",
+        "love",
+        "anime",
+        "naruto",
+        "manga",
+        "naruto shippuden",
+        "kakashi",
+        "madara",
+        "akatsuki",
+        "alicia",
+        "tobi",
+        "minato",
+        "deidara",
+        "obito uchiha",
+        "horcharta",
+        "artbyalici6",
+        "deidara senpai"
+      ],
+      "status": "ready",
+      "generated": false,
+      "rights": "Third-party copyrighted source; host marks non-commercial/personal use; no redistribution license asserted",
+      "locallyGenerated": false,
+      "upstreamGenerationMethod": "not independently established",
+      "label": "Minato Namikaze",
+      "image": "b-minato-namikaze.webp",
+      "frameWidth": 224,
+      "frameHeight": 224,
+      "bodyHeight": 224,
+      "foot": [
+        112,
+        224
+      ],
+      "displayHeight": 224,
+      "frames": [
+        {
+          "rect": [
+            0,
+            0,
+            224,
+            224
+          ],
+          "duration": 100
+        }
+      ],
+      "sourceKind": "Sourced transparent static full-body fan render; artist signature retained",
+      "nativeTransparency": true,
+      "nativeFrameCount": 1,
+      "sourced": true,
+      "transparent": true,
+      "nativeAnimated": false,
+      "notes": "Static sourced artwork; runtime mesh movement is procedural, not native animation."
+    }
+  ],
+  "readyCount": 50,
+  "blockedCount": 0
+}

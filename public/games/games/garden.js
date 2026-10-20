@@ -1,18 +1,19 @@
 import {gardenWeaponOrigin} from './garden-weapon-motion.js';
+import {SOURCE_CATALOG} from './garden-source-catalog.js';
 import {GARDEN_ANIME_TYPES,createGardenAnime} from './garden-anime.js';
 import {NIULAI_VARIANTS} from './garden-niulai.js';
 import {createGardenBaby} from './garden-baby.js';
-import { playGardenSynth } from './garden-audio.js?v=20261018-life';
-import { createGardenSpells } from './garden-spells.js?v=20261018-life';
-import { drawGardenTrooper, troopMuzzle, setTroopTexture } from './garden-troop-rig.js?v=20261018-life';
-import { perceiveGardenLane, chooseTroopIntent } from './garden-behavior.js?v=20261018-life';
-import { createGardenSupport } from './garden-support.js?v=20261018-life';
-import { createGardenAllies } from './garden-allies.js?v=20261018-life';
-import { GARDEN_ANIMALS, drawGardenAnimal } from './garden-animals.js?v=20261018-life';
-import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261018-life';
+import { playGardenSynth } from './garden-audio.js?v=20261020-sourced';
+import { createGardenSpells } from './garden-spells.js?v=20261020-sourced';
+import { drawGardenTrooper, troopMuzzle, setTroopTexture } from './garden-troop-rig.js?v=20261020-sourced';
+import { perceiveGardenLane, chooseTroopIntent } from './garden-behavior.js?v=20261020-sourced';
+import { createGardenSupport } from './garden-support.js?v=20261020-sourced';
+import { createGardenAllies } from './garden-allies.js?v=20261020-sourced';
+import { GARDEN_ANIMALS, drawGardenAnimal } from './garden-animals.js?v=20261020-sourced';
+import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261020-sourced';
 import { GARDEN_RULES, PLANT_BY_ID, ZOMBIE_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
-import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261018-life';
+import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261020-sourced';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
@@ -42,7 +43,7 @@ export const ZOMBIE_CATALOG = Object.freeze(Array.from({ length: 100 }, (_, inde
 // Classroom cameos use ordinary health, armor and bite mechanics.
 // They are rare members of later waves, never a timed selection shortcut.
 export const GIANT_CATALOG = Object.freeze([
-...GARDEN_ANIME_TYPES.map(t=>({id:t.id,name:t.name,health:1400,bodyHealth:1400,armorHealth:0,speed:.018,bite:45,biteCadence:.8})),
+...SOURCE_CATALOG.filter(t=>t.id!=='hellokitty'),
 ...NIULAI_VARIANTS.map(t=>({id:t.id,name:t.name,health:1800,bodyHealth:1800,armorHealth:0,speed:.014,bite:65,biteCadence:.8})),
 {id:'armor-flier',name:'Armor Flier (original inspired rig)',health:1500,bodyHealth:1500,armorHealth:0,speed:.018,bite:45,biteCadence:.8},{id:'hammer-flier',name:'Hammer Flier (original inspired rig)',health:1800,bodyHealth:1800,armorHealth:0,speed:.015,bite:60,biteCadence:.9},
 {"id": "zeus", "name": "Zeus Zombie", "health": 2300, "bodyHealth": 2300, "armorHealth": 0, "speed": 0.012, "bite": 90, "biteCadence": 0.8},{"id": "poseidon", "name": "Poseidon Zombie", "health": 2300, "bodyHealth": 2300, "armorHealth": 0, "speed": 0.012, "bite": 90, "biteCadence": 0.8},{"id": "gandalf", "name": "Gandalf Zombie", "health": 1900, "bodyHealth": 1900, "armorHealth": 0, "speed": 0.013, "bite": 70, "biteCadence": 0.8},{"id": "kingarthur", "name": "Kingarthur Zombie", "health": 2500, "bodyHealth": 2500, "armorHealth": 0, "speed": 0.011, "bite": 85, "biteCadence": 0.8},{"id": "merlin", "name": "Merlin Zombie", "health": 1850, "bodyHealth": 1850, "armorHealth": 0, "speed": 0.014, "bite": 65, "biteCadence": 0.8},{"id": "hobbit", "name": "Hobbit Zombie", "health": 1250, "bodyHealth": 1250, "armorHealth": 0, "speed": 0.021, "bite": 42, "biteCadence": 0.8},{"id": "zombiecat", "name": "Zombie Cat", "health": 1350, "bodyHealth": 1350, "armorHealth": 0, "speed": 0.023, "bite": 48, "biteCadence": 0.8},{"id": "zombiepanda", "name": "Zombie Panda", "health": 2400, "bodyHealth": 2400, "armorHealth": 0, "speed": 0.01, "bite": 80, "biteCadence": 0.8},{"id": "zombiemonkey", "name": "Zombie Monkey", "health": 1450, "bodyHealth": 1450, "armorHealth": 0, "speed": 0.022, "bite": 52, "biteCadence": 0.8},
@@ -470,9 +471,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
   function spawn(lane, starter = false, forcedType = null) {
     const availableGiants = GIANT_CATALOG.filter(type => monsters.has(type.id));
     const giantEligible = !starter && lane.wave >= 2 && availableGiants.length > 0 && !lane.mobs.some(mob => !mob.dead && mob.type.giant && !mob.type.miniature);
-    const pool = giantEligible && rng() < .003 ? availableGiants : starter ? [ZOMBIE_CATALOG[0]] : ZOMBIE_CATALOG;
+    const pool = giantEligible && rng() < .0225 ? availableGiants : starter ? [ZOMBIE_CATALOG[0]] : ZOMBIE_CATALOG;
     const dancersReady=renderer.getState().rigs.includes('dancing')&&renderer.getState().rigs.includes('backup');
-    const type = forcedType || (!starter && lane.wave>=2 && dancersReady && rng()<.0035 ? DANCING_ZOMBIES[0] : null) || (!starter && pool === ZOMBIE_CATALOG && monsters.has(MINI_ZOMBIE.id) && rng() < .008 ? MINI_ZOMBIE : pool[Math.floor(rng() * pool.length)]);
+    const type = forcedType || (!starter && lane.wave>=2 && dancersReady && rng()<.02625 ? DANCING_ZOMBIES[0] : null) || (!starter && pool === ZOMBIE_CATALOG && monsters.has(MINI_ZOMBIE.id) && rng() < .06 ? MINI_ZOMBIE : pool[Math.floor(rng() * pool.length)]);
     // More zombies increase difficulty; elapsed time never changes their stats.
     const hp = type.health, armorHp = type.armorHealth || 0, shieldHp = type.shieldHealth || 0, bodyHp = type.bodyHealth;
     const uid = ++serial;
