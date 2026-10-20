@@ -2,6 +2,24 @@
 // Apply after each read-only Sheet sync so obsolete source bookings cannot return.
 export function applyFallScheduleOverrides(sheets) {
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  // Ongoing Wednesday booking, starting October 21, with no end date supplied.
+  sheets = sheets.map(sheet => {
+    const match = /^(\w+) (\d{4})$/.exec(sheet.title);
+    if (!match) return sheet;
+    const month = months.indexOf(match[1]), year = Number(match[2]);
+    if (month < 0) return sheet;
+    return {...sheet,rows:sheet.rows.map(row=>({...row,cells:row.cells.map(cell=>{
+      const lines=cell.value.split('\n');
+      if (!/^\d{1,2}$/.test(lines[0])) return cell;
+      const date=new Date(Date.UTC(year,month,Number(lines[0])));
+      if (date.getUTCMonth()!==month || date.getUTCDay()!==3 || date.toISOString().slice(0,10)<'2026-10-21') return cell;
+      const event='19:00–21:00 · CAT TMC meeting';
+      if (lines.includes(event)) return cell;
+      const kept=lines.map(line=>line==='Free all day'||line==='Online free all day'||line==='Unavailable'?'Limited availability':line);
+      if (kept.length===1) kept.push('Limited availability');
+      return {...cell,value:[...kept,event].join('\n')};
+    })}))};
+  });
   return sheets.map(sheet => {
     const match = /^(\w+) (\d{4})$/.exec(sheet.title);
     if (!match || Number(match[2]) !== 2026) return sheet;

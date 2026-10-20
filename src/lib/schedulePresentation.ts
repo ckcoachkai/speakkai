@@ -57,6 +57,7 @@ export function bookingGrade(label: string) {
 }
 
 export function publicBookingPresentation(label: string) {
+  if (label === 'CAT TMC meeting') return {kind:'tmc',title:label};
   // These two event labels were explicitly authorized for public display by Kai.
   if (label === 'Sharing at Zhangjiang Toastmasters Club') return {kind:'tmc',title:label};
   if (label === 'Sharing at DPS') return {kind:'reserved',title:label};

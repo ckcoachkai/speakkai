@@ -6,7 +6,7 @@ import { weeklyScheduleBlocks } from '../src/lib/weeklySchedule.ts';
 import { sanitizeCalendarCell } from './schedule-privacy.mjs';
 
 test('only the two explicitly authorized sharing labels stay public', () => {
-  for (const [label,kind] of [['Sharing at DPS','reserved'],['Sharing at Zhangjiang Toastmasters Club','tmc']]) {
+  for (const [label,kind] of [['Sharing at DPS','reserved'],['Sharing at Zhangjiang Toastmasters Club','tmc'],['CAT TMC meeting','tmc']]) {
     assert.deepEqual(publicBookingPresentation(label),{kind,title:label});
     assert.equal(calendarDisplayEventKind(label),kind);
     assert.equal(publicScheduleCell(`20\nLimited availability\n20:30–21:30 · ${label}`),`20\nLimited availability\n20:30–21:30 · ${label}`);
