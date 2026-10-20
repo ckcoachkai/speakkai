@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-20T08:49:32.179225+00:00",
+  "updatedAt": "2026-10-20T11:02:39.214646+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1621,7 +1621,9 @@
           "id": "mon-afternoon-2026-10-19",
           "date": "2026-10-19",
           "time": "15:30–17:30",
-          "classContent": [],
+          "classContent": [
+            "◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses."
+          ],
           "homework": null,
           "students": [
             {
@@ -1808,8 +1810,18 @@
           "id": "tue-afternoon-2026-10-20",
           "date": "2026-10-20",
           "time": "15:30–17:30",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Class practice and time management: We went over the structure and helped students understand the different types of questions, then practised impromptu speaking. Preparation and speaking share a combined seven minutes; students can decide how to divide that time between planning and speaking."
+          ],
+          "homework": {
+            "title": "Should a group finish together or let members finish separately?",
+            "steps": [
+              "Use the impromptu structure covered in class.",
+              "Write out a structure, plan your response, and then speak on this prompt."
+            ],
+            "prepareFor": "Practise your response.",
+            "note": "Preparation and speaking share seven minutes; decide how to divide the time yourself."
+          },
           "students": [
             {
               "name": "Alyssa",
@@ -1970,6 +1982,33 @@
               "name": "Sean",
               "feedbackUrl": "/fb/?class=tue-later&date=2026-10-13&student=sean"
             }
+          ]
+        },
+        {
+          "id": "tue-later-2026-10-20",
+          "date": "2026-10-20",
+          "time": "17:40–19:40",
+          "students": [
+            {
+              "name": "Lyon",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-10-20&student=lyon"
+            },
+            {
+              "name": "Nelson",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-10-20&student=nelson"
+            },
+            {
+              "name": "Jayden",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-10-20&student=jayden"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-10-20&student=sean"
+            }
+          ],
+          "homework": null,
+          "classContent": [
+            "◆ Homework presentations: Students presented their prepared material. We discussed preparing and organizing logic and structure beforehand, then putting away the text or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Later impromptu practice: Nelson spoke second for three minutes and met the time requirement, which was the first requirement for this practice. Sean was called next. This was a separate activity from the earlier homework presentations."
           ]
         }
       ]

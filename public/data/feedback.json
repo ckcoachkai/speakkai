@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-20T08:49:32.179225+00:00",
+  "updatedAt": "2026-10-20T11:02:39.214646+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1994,7 +1994,10 @@
           "date": "2026-10-19",
           "time": "15:30–17:30",
           "status": "held",
-          "classContent": null,
+          "classContent": {
+            "en": "◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.",
+            "zh": "◆【即兴演讲结构】：我们练习了 TOC 和 WSDA 即兴演讲比赛中可能出现的五种不同类型的题目。学生先在尚未学习或理解这些结构之前尝试回答，以此作为练习组织回答的起点。"
+          },
           "homework": null,
           "students": [
             {
@@ -2222,8 +2225,14 @@
           "date": "2026-10-20",
           "time": "15:30–17:30",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Class practice and time management: We went over the structure and helped students understand the different types of questions, then practised impromptu speaking. Preparation and speaking share a combined seven minutes; students can decide how to divide that time between planning and speaking.",
+            "zh": "◆【即兴演讲结构】：我们练习了 TOC 和 WSDA 即兴演讲比赛中可能出现的五种不同类型的题目。学生先在尚未学习或理解这些结构之前尝试回答，以此作为练习组织回答的起点。\n\n◆【课堂练习与时间安排】：我们讲解了回答结构，帮助学生理解不同类型的题目，然后进行即兴演讲练习。准备和演讲合计七分钟；学生可以自行分配准备与演讲的时间。"
+          },
+          "homework": {
+            "en": "◆ Prompt: Should a group finish together or let members finish separately?\n\n→ Use the impromptu structure covered in class. Write out a structure, plan your response, and then speak on this prompt. Manage the combined seven-minute preparation and speaking time yourself.",
+            "zh": "◆【题目】：一个小组应该一起完成，还是让成员各自完成？\n\n→ 使用课堂讲过的即兴演讲结构。先写出结构，规划回答，再针对这个题目进行演讲。准备与演讲合计七分钟，请自行分配时间。"
+          },
           "students": [
             {
               "id": "alyssa",
@@ -2234,8 +2243,8 @@
             {
               "id": "ethan-liu",
               "name": "Ethan Liu",
-              "en": "✓ Clear presentation and transitions: Overall, Ethan Liu gave a clear presentation and used transition words well. When I asked the class whether they understood what he was talking about, they said yes and were able to identify the message: a mixture is needed, and neither can replace the other. His speech discussed AI in this context.\n\n→ Connect through stories: He used words with a fairly high syllable count, and I felt the speech was a little more information-based. The next step is to use stories to connect with the audience more clearly, alongside that information.\n\n→ Suggested practice: He could choose one main point and develop a short story that helps the audience understand it, then use the transition words he already handles well to connect the story back to the point. This would add a more relatable way into the information.",
-              "zh": "✓【清晰表达与衔接】：整体来看，Ethan Liu 的展示很清楚，过渡词也使用得很好。当我问全班是否理解他在讲什么时，大家回答理解，也能够说出其中的信息：需要一种结合，而不是让其中一方完全取代另一方。他的演讲在这一语境下讨论了 AI。\n\n→【通过故事建立连接】：他使用的词语音节数比较多，我觉得演讲稍微偏向信息介绍。下一步是在提供这些信息的同时，尝试使用故事，更清楚地与听众建立连接。\n\n→【练习建议】：他可以选择一个主要论点，展开一个帮助听众理解它的小故事，再用自己已经运用得不错的过渡词，把故事连接回论点。这样可以为听众提供一个更容易产生联系的切入点，来理解演讲中的信息。"
+              "en": "✓ Clear presentation and transitions: Overall, Ethan Liu gave a clear presentation and used transition words well. When I asked the class whether they understood what he was talking about, they said yes and were able to identify the message: a mixture is needed, and neither can replace the other. His speech discussed AI in this context.\n\n→ Connect through stories: He used words with a fairly high syllable count, and I felt the speech was a little more information-based. The next step is to use stories to connect with the audience more clearly, alongside that information.\n\n→ Suggested practice: He could choose one main point and develop a short story that helps the audience understand it, then use the transition words he already handles well to connect the story back to the point. This would add a more relatable way into the information.\n\n→ Classroom focus and materials: Ethan Liu was playing on his iPad during class. Going forward, he should no longer bring his iPad to class and should use paper and a pencil instead.",
+              "zh": "✓【清晰表达与衔接】：整体来看，Ethan Liu 的展示很清楚，过渡词也使用得很好。当我问全班是否理解他在讲什么时，大家回答理解，也能够说出其中的信息：需要一种结合，而不是让其中一方完全取代另一方。他的演讲在这一语境下讨论了 AI。\n\n→【通过故事建立连接】：他使用的词语音节数比较多，我觉得演讲稍微偏向信息介绍。下一步是在提供这些信息的同时，尝试使用故事，更清楚地与听众建立连接。\n\n→【练习建议】：他可以选择一个主要论点，展开一个帮助听众理解它的小故事，再用自己已经运用得不错的过渡词，把故事连接回论点。这样可以为听众提供一个更容易产生联系的切入点，来理解演讲中的信息。\n\n→【课堂专注与学习用品】：Ethan Liu 在课堂上玩 iPad。今后他不要再带 iPad 来上课，请改用纸和铅笔。"
             },
             {
               "id": "ethan-jia",
@@ -2252,8 +2261,8 @@
             {
               "id": "patrick",
               "name": "Patrick",
-              "en": null,
-              "zh": null
+              "en": "→ Classroom focus: Patrick had previously been playing on a classmate’s iPad during class. The focus is to use class time for the learning activity.",
+              "zh": "→【课堂专注】：Patrick 此前曾在课堂上玩同学的 iPad。需要把课堂时间用于学习活动。"
             }
           ]
         }
@@ -2418,6 +2427,43 @@
               "name": "Sean",
               "en": "→ Homework preparation: He did not complete the homework and said he had forgotten it, even though there had been two to three weeks to work on it. The focus is preparation and responsibility: remember what was assigned and use the time available to get it ready. As a suggested routine, write down the assignment, check it before class, and ask early if anything is unclear. This is preparation guidance, not a new homework assignment. Today's speech-performance feedback has not yet been recorded.\n\nLater speaking attempt\n\n✓ Follow-through and delivery: Sean was the second speaker in this activity. He had something to present, which was good, and he spoke with energy and great enthusiasm. He made up for the earlier missing homework by preparing and presenting during class.\n\n→ Topic choice: His topic was “Should students wear school uniforms?” My concern is that this has very little originality because it is such a common, basic topic—one of the first topics debate judges and coaches often use. I do not recommend it for competition because it is not distinctive. This is my coaching judgment about topic suitability, not an official rule banning the topic. Keep the energy and enthusiasm, but choose a more creative competition topic.\n\n→ Chosen topic: roller coasters and thrill-seeking. Why do amusement parks keep building bigger, crazier and more extreme rides? Why do people seek thrills despite knowing the potential dangers? This also includes free diving, free climbing and parkour, where people may risk their lives. Where does this thrill-seeking need come from—is it innate? The central concern is that we may be fueling a society that continually tests its limits to the extreme while risking lives. U.S. roller-coaster incidents, including the Six Flags examples mentioned in discussion, are possible research leads; specific claims about recalls, closures, deaths and brain or hand injuries must be verified before being used as evidence.",
               "zh": "→【作业准备】：他没有完成作业，说自己忘记了，尽管已经有两到三周可以完成。需要关注准备与责任：记住所布置的任务，利用已有时间准备好。建议建立一个习惯：写下作业，课前检查；有不清楚的地方尽早询问。这是准备方面的建议，不是新布置的作业。目前还没有记录他今天的演讲表现反馈。\n\n后续发言尝试\n\n✓【落实与表达】：Sean 是这个活动的第二位发言者。他至少有内容可以展示，这很好；表达有能量，也很有热情。他在课堂中准备并展示，补上了之前没有完成的作业。\n\n→【选题】：他的题目是“学生应该穿校服吗？”我担心的是，这个题目非常常见、基础，创意较少，也是辩论评委和教练最初常用的题目之一。因此，我不建议把它用于比赛，因为它不够独特。这是我对选题适合度的指导判断，不是比赛规则禁止这个题目。保留能量和热情，同时选择更有创意的比赛题目。\n\n→ 确定的选题：过山车与追求刺激。为什么游乐园持续建造更大、更疯狂、更极端的设施？为什么人们明知有潜在危险，仍然寻求刺激？这也包括自由潜水、自由攀登和跑酷等可能危及生命的活动。这种需求从哪里来，是否与生俱来？核心担忧是，我们可能正在推动一个不断把极限推向更极端、同时冒生命风险的社会。课堂提到的美国过山车事故，包括 Six Flags 的例子，是可能的研究线索；有关召回、停运、死亡以及脑部或手部损伤的具体说法，在作为证据前需要核实。"
+            }
+          ]
+        },
+        {
+          "id": "tue-later-2026-10-20",
+          "date": "2026-10-20",
+          "time": "17:40–19:40",
+          "status": "held",
+          "classContent": {
+            "en": "◆ Homework presentations: Students presented their prepared material. We discussed preparing and organizing logic and structure beforehand, then putting away the text or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Later impromptu practice: Nelson spoke second for three minutes and met the time requirement, which was the first requirement for this practice. Sean was called next. This was a separate activity from the earlier homework presentations.",
+            "zh": "◆【作业展示】：学生展示了准备的内容。我们讨论了如何提前准备、组织逻辑和结构，然后在正式演讲时放下文稿或电脑，以便与观众建立联系。\n\n◆【即兴演讲结构】：我们练习了 TOC 和 WSDA 即兴演讲比赛中可能出现的五种不同类型的题目。学生先在尚未学习或理解这些结构之前尝试回答，以此作为练习组织回答的起点。\n\n◆【后续即兴练习】：Nelson 第二个发言，讲了三分钟，达到了本次练习的时长要求；这是老师提出的第一项要求。随后老师请 Sean 发言。这与前面的作业展示是两项不同的活动。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "lyon",
+              "name": "Lyon",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "nelson",
+              "name": "Nelson",
+              "en": "✓ Homework presentation and initiative: Nelson volunteered to speak second, and I liked his initiative. He was still reading from his text, but the logic and structure of the content were pretty good. This earlier presentation could have been a little longer.\n\n→ Connecting without the computer: I would have hoped he could present without the computer. Practise and review the material beforehand until it feels comfortable, then put the computer away completely so the focus can be on connecting with the audience. He could emphasize his words a little more and speak a little louder to connect with the people in front of him. Otherwise, good job.\n\n✓ Later impromptu practice: In the separate impromptu activity, Nelson was the second speaker and spoke for three minutes. He showed good time control and met the time requirement—the first requirement I had for this practice. This later attempt deserves recognition alongside the earlier coaching about developing his presentation further.",
+              "zh": "✓【作业展示与主动性】：Nelson 主动报名，第二个上台，我很欣赏他的主动性。他仍在照着文字读，不过内容的逻辑和结构相当不错。这一次较早的展示还可以再长一些。\n\n→【放下电脑，与观众联系】：我希望他能够不依赖电脑来展示。提前练习、复习内容，让自己熟悉之后，就把电脑完全放下，把注意力放在与观众建立联系上。他还可以更突出地强调词语，声音再大一些，与面前的听众更好地交流。除此之外，做得不错。\n\n✓【后续即兴练习】：在另一项即兴活动中，Nelson 第二个发言，讲了三分钟。他的时间控制很好，达到了时长要求——这是我对这次练习提出的第一项要求。应当肯定这次后续尝试，同时保留前面关于进一步展开展示内容的指导。"
+            },
+            {
+              "id": "jayden",
+              "name": "Jayden",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "sean",
+              "name": "Sean",
+              "en": "→ Homework presentation: Sean was the first speaker in this activity. He was a little unsure about what he was going to do and was not completely sure about his homework. He hesitated and took deep breaths because he was worried about saying the wrong thing. While speaking, he paced back and forth with one hand behind his back.\n\n✓ Speech length: He gave a long enough speech. However, it did not quite feel like a presentation, because he seemed to be reading very uncomfortably from a script.\n\n→ Becoming comfortable with speaking: The next step is to feel more comfortable talking and to try. If the first attempt does not work, try and try again—“Just do it.” Suggested practice: he could rehearse aloud, then try short sections while looking up from the script, keeping a steadier stance and letting his hands rest naturally. The aim is to become more comfortable addressing the audience.",
+              "zh": "→【作业展示】：Sean 是这项活动的第一位发言者。他有些不确定自己要怎么讲，对作业也不是完全有把握。他略显犹豫，因为担心说错而深呼吸。演讲时，他来回踱步，一只手放在背后。\n\n✓【演讲时长】：他的演讲长度足够。不过，这还不太像一次正式展示，因为他显得很不自在，像是在照着稿子读。\n\n→【更自在地表达】：下一步是让自己更自在地开口，并愿意尝试。如果第一次没有做好，就再试、再试——“Just do it.”（去做就对了。）练习建议：可以先出声排练，再试着抬头、不看稿讲一小段，同时站得更稳，让双手自然放松。目的是更自在地面对观众表达。"
             }
           ]
         }
