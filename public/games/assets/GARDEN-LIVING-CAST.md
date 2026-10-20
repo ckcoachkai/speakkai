@@ -20,3 +20,8 @@ Pikachu uses 18 native transparent frames from the official Pokémon_JPN sticker
 New combat sounds are original layered Web Audio effects, with per-shot rifle sounds, charging tones, lightning thunder, fireballs, hearts and teleports. A compressor limits stacked audio peaks. Lawnmower stays silent. Screen flashes are subtle, rate-limited and disabled for reduced-motion.
 
 Generated asset prompts and original outputs are retained locally in the work folder and Codex generated-images directory. Full mecha part provenance: GARDEN-MECHA-RIG.md.
+
+## October 20 mecha refinement
+Mecha alternate forward/backward flight with varied leg durations and speed. Each has 100 HP, a visible health bar, nearby-enemy damage at 650 ms intervals, and a 1.2-second falling/fading defeat effect. The support hand reaches the rifle foregrip in procedural and textured rendering. Robot crawler behavior remains unchanged.
+The deterministic catalog contains 100 configurations: ten variants each of rifle, cannon, railgun, scatter, plasma, pulse, arc, hand, eye and foot weapons. Variants change color, barrel count, width, damage and cadence; railguns pierce, cannon/plasma splash and arcs chain. Configurations cycle after shots. Hand, eye and foot emissions use separate body origins; these are configurations rather than 100 separate generated weapon artworks. Scatter currently uses the common beam damage path.
+Local verification: integrated browser check passed (5x, sound-enabled battle, no page errors); ten-family render sheet and screenshots are in work/oct20. No deployment performed for this refinement.

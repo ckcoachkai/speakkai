@@ -1,3 +1,7 @@
+import {drawGardenWeapons} from './garden-weapon-motion.js';
+import {GARDEN_ANIME_TYPES,drawGardenAnime} from './garden-anime.js';
+import {NIULAI_VARIANTS,createNiuLaiRenderer} from './garden-niulai.js';
+import {FLIERS,drawFlier} from './garden-fliers.js';
 import {createSkinMotion} from './garden-skin-motion.js';
 /** Sourced cameo artwork plus explicitly labeled generated zombie variants.
  * Cosmetic undead treatment and gait never change combat statistics. */
@@ -16,7 +20,7 @@ export const GARDEN_MONSTER_TYPES=Object.freeze([
 ].map(type=>Object.freeze({...type,width:type.width*(type.height||GARDEN_MONSTER_HEIGHT)/370,height:type.height||GARDEN_MONSTER_HEIGHT,normalHeight:112,sourced:true})));
 
 export function createGardenMonsters({artwork={}}={}) {
- const GM_skin=createSkinMotion();
+ const GM_skin=createSkinMotion(),GM_niu=createNiuLaiRenderer();
  let GM_closed=false,GM_loading=true,GM_manifest=null,GM_draws=0,GM_lastPose=null;
  const GM_sprites=new Map(),GM_errors=[],GM_images=new Set(),GM_pending=new Set(),GM_playheads=new Map();
  const GM_controller=typeof AbortController==='function'?new AbortController():null;
@@ -63,8 +67,8 @@ export function createGardenMonsters({artwork={}}={}) {
  function draw(ctx,{id,type,monsterId,instanceId,x=0,y=0,scale=1,time=0,hp=1,maxHp=1,hit=0,bite=0,walk,death=0,clip,action}={}){
   if(GM_closed||!ctx)return false;
   const key=monsterId||type?.monsterId||type?.id||(typeof type==='string'?type:null)||id,sprite=GM_sprites.get(key);
-  if(!sprite)return false;
-  const mode=death>0?'death':hit>0?'hurt':action&&sprite.clips?.[action]?action:bite>0?'attack':walk===false||walk===0?'idle':'walk';
+  if(GARDEN_ANIME_TYPES.some(t=>t.id===key))return drawGardenAnime(ctx,{id:key,x,y,height:224*scale,time,attack:action?1:bite,death});if(NIULAI_VARIANTS.some(t=>t.id===key))return GM_niu.draw(ctx,key,{x,y,height:224*scale,time});if(FLIERS.includes(key))return drawFlier(ctx,{id:key,x,y,scale,time,action,bite,death,hit});if(!sprite)return false;
+  const mode=death>0?'death':hit>0?'hurt':action?action:bite>0?'attack':walk===false||walk===0?'idle':'walk';
   const clock=GM_FINITE(time),entity=instanceId||key;
   let playhead=GM_playheads.get(entity);
   if(!playhead||clock<playhead.lastTime){playhead={mode,start:clock,lastTime:clock};GM_playheads.set(entity,playhead);if(GM_playheads.size>2048)GM_playheads.delete(GM_playheads.keys().next().value);}
@@ -85,6 +89,7 @@ export function createGardenMonsters({artwork={}}={}) {
   if(sprite.undead&&fall===0){const phase=clock*3.2;ctx.translate(Math.sin(phase)*1.8,-Math.max(0,Math.sin(phase))*2.5);ctx.rotate(Math.sin(phase)*.018);}
   // A sourced toy profile rocks as a whole; this is not a native walk cycle.
   if(sprite.motion==='waddle'&&fall===0){const phase=clock*6;ctx.translate(0,-Math.abs(Math.sin(phase))*3);ctx.rotate(Math.sin(phase)*.035);}
+  if(!sprite.clips?.[mode]&&fall===0){const t=Math.max(0,clock-playhead.start);if(mode==='charge'){ctx.translate(-Math.min(1,t*3)*5,-Math.sin(t*9)*2);ctx.rotate(-.045*Math.min(1,t*3));ctx.shadowColor='#b7edff';ctx.shadowBlur=12+Math.sin(t*13)*5;}else if(mode==='attack'){const thrust=Math.pow(Math.max(0,Math.sin(t*8)),2);ctx.translate(-thrust*16,-thrust*3);ctx.rotate(-thrust*.075);}}
   if(hurt>0)ctx.translate(Math.sin(GM_FINITE(time)*61)*hurt*6,-hurt*2);
   if(fall>0&&!sprite.clips?.death){ctx.rotate(fall*.9);ctx.globalAlpha*=1-fall*.75;}
   // Keep source colors and shading intact, including at low health.
@@ -106,11 +111,12 @@ export function createGardenMonsters({artwork={}}={}) {
   };
   // Exactly one silhouette per actor: alpha crossfades produce ghost bodies.
   paint(frame);
+  drawGardenWeapons(ctx,{id:key,x:0,y:0,scale:2.24,time:clock,action,attack:bite});
   ctx.restore();GM_draws++;GM_counts[key]=(GM_counts[key]||0)+1;
   GM_lastPose={id:key,time:GM_FINITE(time),mode,sourceFrame:selected.index,sourceFrameCount:sprite.frames.length,scale:s,height:displayHeight*s};return true;
  }
- function destroy(){if(GM_closed)return;GM_closed=true;GM_skin.clear();GM_controller?.abort();for(const img of GM_images){img.onload=img.onerror=null;try{img.src='';}catch{}}for(const done of GM_pending)done();GM_images.clear();GM_sprites.clear();GM_playheads.clear();GM_lastPose=null;}
- return{draw,destroy,release(instanceId){GM_playheads.delete(instanceId);},has:id=>!GM_closed&&GM_sprites.has(id),dimensions(id){const s=GM_sprites.get(id);return s?{height:s.displayHeight||GARDEN_MONSTER_HEIGHT,width:s.frameWidth*(s.displayHeight||GARDEN_MONSTER_HEIGHT)/s.bodyHeight}:null;},getState(){return{ready:!GM_closed&&!GM_loading&&GM_sprites.size===(GM_manifest?.characters.length||0)&&GM_errors.length===0,loading:!GM_closed&&GM_loading,closed:GM_closed,errors:[...GM_errors],types:[...GM_sprites.keys()],sourceAssets:true,animatedTypes:[...GM_sprites.values()].filter(s=>s.frames.length>1).map(s=>s.id),staticTypes:[...GM_sprites.values()].filter(s=>s.frames.length===1).map(s=>s.id),interpolatedTypes:[],proceduralMotion:GM_skin.getState(),frameCounts:Object.fromEntries([...GM_sprites.values()].map(s=>[s.id,s.frames.length])),bitmapDraws:GM_draws,vectorDraws:0,drawCounts:{...GM_counts},lastPose:GM_lastPose};}};
+ function destroy(){if(GM_closed)return;GM_closed=true;GM_niu.destroy();GM_skin.clear();GM_controller?.abort();for(const img of GM_images){img.onload=img.onerror=null;try{img.src='';}catch{}}for(const done of GM_pending)done();GM_images.clear();GM_sprites.clear();GM_playheads.clear();GM_lastPose=null;}
+ return{draw,destroy,release(instanceId){GM_playheads.delete(instanceId);},has:id=>!GM_closed&&(GM_sprites.has(id)||FLIERS.includes(id)||GARDEN_ANIME_TYPES.some(t=>t.id===id)||NIULAI_VARIANTS.some(t=>t.id===id)),dimensions(id){if(GARDEN_ANIME_TYPES.some(t=>t.id===id)||NIULAI_VARIANTS.some(t=>t.id===id))return {height:224,width:150};if(FLIERS.includes(id))return {height:190,width:90};const s=GM_sprites.get(id);return s?{height:s.displayHeight||GARDEN_MONSTER_HEIGHT,width:s.frameWidth*(s.displayHeight||GARDEN_MONSTER_HEIGHT)/s.bodyHeight}:null;},getState(){return{ready:!GM_closed&&!GM_loading&&GM_sprites.size===(GM_manifest?.characters.length||0)&&GM_errors.length===0,loading:!GM_closed&&GM_loading,closed:GM_closed,errors:[...GM_errors],types:[...GM_sprites.keys()],sourceAssets:true,animatedTypes:[...GM_sprites.values()].filter(s=>s.frames.length>1).map(s=>s.id),staticTypes:[...GM_sprites.values()].filter(s=>s.frames.length===1).map(s=>s.id),interpolatedTypes:[],proceduralMotion:GM_skin.getState(),frameCounts:Object.fromEntries([...GM_sprites.values()].map(s=>[s.id,s.frames.length])),bitmapDraws:GM_draws,vectorDraws:0,drawCounts:{...GM_counts},lastPose:GM_lastPose};}};
 }
 
 

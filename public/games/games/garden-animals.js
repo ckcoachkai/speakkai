@@ -231,44 +231,32 @@ function GA_LIMB(ctx,start,end,upper,lower,bend,width,p) {
 }
 
 /** Original animal dance rig. ~220px tall at rest, long articulated limbs.
- * Square: eight counts of right/right-touch, left/left-touch, then alternating
- * heel digs and arm sweeps. Shuffle: side T-step toe/heel pivots and knee lifts.
+ * Square: continuous grounded side transfers with alternating foot pickups.
+ * Shuffle: larger toe pickups and coordinated opposing arm sweeps.
  * These are small visual adaptations, not reproductions of a named trend. */
 export function drawGardenDancer(ctx,{species='cat',time=0,bpm=120,style='square',color,reducedMotion=false}={}) {
  if(!ctx||!Object.prototype.hasOwnProperty.call(GA_PALETTES,species))return false;
  const p=GA_PALETTES[species],t=Number.isFinite(Number(time))?Number(time):0;
  const beat=reducedMotion?0:((t*GA_CLAMP(bpm,30,240)/60)%16+16)%16;
- const whole=Math.floor(beat),fraction=beat-whole,ease=GA_EASE(fraction);
- const shuffle=style==='shuffle',pulse=Math.sin(fraction*Math.PI),odd=whole%2;
- let rootX=0,bob=0;
- const feet=[[-12,-5,0],[12,-5,0]];
- if(!reducedMotion&&shuffle){
-  rootX=Math.sin(beat*Math.PI/4)*10;bob=Math.abs(Math.sin(beat*Math.PI))*2.4;
-  for(let i=0;i<2;i++){
-   const side=i?1:-1,active=odd===i;
-   feet[i]=[side*(13+Math.sin(beat*Math.PI)*5),-5-(active?pulse*23:0),side*Math.sin(beat*Math.PI)*.32];
-  }
- }else if(!reducedMotion&&beat<8){
-  const right=[12,24,24,36,36,36,24,24,12],left=[-12,-12,0,0,12,0,0,-12,-12];
-  const vals=[left,right];
-  for(let i=0;i<2;i++){
-   const moving=vals[i][whole]!==vals[i][whole+1];
-   feet[i]=[GA_LERP(vals[i][whole],vals[i][whole+1],ease),-5-(moving?pulse*7:0),0];
-  }
-  rootX=(feet[0][0]+feet[1][0])/2;bob=pulse*1.7;
-  // Hands stay linked to the torso; feet are expressed in pelvis coordinates.
-  feet[0][0]-=rootX;feet[1][0]-=rootX;
- }else if(!reducedMotion){
-  bob=Math.abs(Math.sin(beat*Math.PI))*1.4;
-  const active=Math.floor((beat-8)/2)%2,cycle=(beat-8)%2,lift=Math.sin(cycle*Math.PI/2)**2;
-  feet[active]=[(active?1:-1)*(12+lift*6),-5-lift*8,(active?1:-1)*lift*.3];
+ // Original procedural adaptation of grounded K-pop side transfers and arm sweeps.
+ // Reference: https://www.youtube.com/watch?v=32si5cfrCNc (not motion capture).
+ const shuffle=style==='shuffle',phase=beat*Math.PI/2;
+ const transfer=reducedMotion?0:Math.sin(phase);
+ const rootX=transfer*(shuffle?9:12);
+ const bob=reducedMotion?0:-1-Math.cos(phase*2);
+ const feet=[[-13-rootX,-5,0],[13-rootX,-5,0]];
+ if(!reducedMotion)for(let i=0;i<2;i++){
+  const side=i?1:-1,swing=Math.max(0,-side*transfer)**2;
+  feet[i][0]+=side*swing*(shuffle?12:7);
+  feet[i][1]-=swing*(shuffle?17:9);
+  feet[i][2]=side*swing*.18;
  }
  ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
  GA_ELL(ctx,rootX,-1.6,32,1.55,'rgba(30,42,46,.14)');ctx.translate(rootX,0);
- const danceMotion=gardenAnimalPose(reducedMotion?0:t,0,0);
+
  // A separately wagging tail follows the pelvis; arms and feet retain solved joints.
  ctx.save();ctx.translate(0,-67-bob);ctx.scale(1.4,1.4);GA_TAIL(ctx,species,p,reducedMotion?0:t*1.4);ctx.restore();
- const hipY=-87-bob,shoulderY=-148-bob;
+ const hipY=-97-bob,shoulderY=-148-bob;
  // Full-length limbs are painted as overlapping connected capsules with
  // a solved elbow/knee. No image slices or disconnected moving parts.
  for(let i=0;i<2;i++){
@@ -289,13 +277,11 @@ export function drawGardenDancer(ctx,{species='cat',time=0,bpm=120,style='square
  const accent=typeof color==='string'&&/^#[\da-f]{3}([\da-f]{3})?$/i.test(color)?color:'#459cb7';
  GA_PATH(ctx,[['moveTo',-14,-100-bob],['quadraticCurveTo',0,-95-bob,14,-100-bob]],null,accent,3);
  for(let i=0;i<2;i++){
-  const side=i?1:-1,phase=beat*Math.PI/4;
-  let handX=side*(40+Math.sin(phase)*13),handY=-119-bob+side*Math.cos(phase)*15+danceMotion.paw*10;
-  if(beat>=12&&!shuffle){
-   const reach=Math.sin((beat-12)*Math.PI/4)**2;
-   handX=GA_LERP(handX,side*(42+Math.sin(phase)*9),reach);handY=GA_LERP(handY,-166-bob+Math.cos(phase)*13,reach);
-  }
-  if(shuffle){handX=side*(33+Math.cos(beat*Math.PI/2)*9);handY=-127-bob+side*Math.sin(beat*Math.PI/2)*19;}
+  const side=i?1:-1;
+  const sweep=Math.sin(phase*.5),accent=Math.sin(phase-.35);
+  let handX=side*(39+9*sweep)+accent*8;
+  let handY=-123-bob+side*accent*19-12*(.5+.5*Math.cos(phase*.5));
+  if(shuffle){handX=side*(34+6*sweep)+accent*6;handY=-122-bob+side*accent*16;}
   if(reducedMotion){handX=side*27;handY=-94;}
   const paw=GA_LIMB(ctx,[side*18,shoulderY],[handX,handY],35,34,side,9.5,bodyP);
   GA_ELL(ctx,paw[0],paw[1],6.5,7.5,species==='panda'?p.ink:species==='eagle'?'#b08b62':p.light,p.ink,.9);

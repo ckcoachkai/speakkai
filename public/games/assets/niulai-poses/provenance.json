@@ -1,0 +1,20 @@
+{
+  "character": "Niu Lai (牛来)",
+  "identityConfirmedByUser": true,
+  "artworkKind": "AI-generated reference adaptation; original procedural 20-action rig, not native film footage",
+  "generator": "Built-in image_gen",
+  "reference": {
+    "local": "work/sourced-cameos/a/niulai-characters.png",
+    "recordedURL": "https://niu-lai.net/assets/characters/niu-lai.png",
+    "identityCorroboration": "https://knowyourmeme.com/memes/subcultures/niu-lai"
+  },
+  "rights": "Underlying film character belongs to its rights holders. No standalone game reuse license established. Generated image is not official movie artwork.",
+  "rig": {
+    "head": "Generated bitmap head clipped from rig.png",
+    "torso": "Generated bitmap torso clipped from rig.png",
+    "limbs": "Original procedural connected two-bone capsules; not movie-captured motion"
+  },
+  "poses": 20,
+  "bathroomPoseIncluded": false,
+  "referenceWarnings": "Yellow furry horned niulai.co templates do not match orange film calf and were not used for the final rig."
+}

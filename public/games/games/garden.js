@@ -1,3 +1,7 @@
+import {gardenWeaponOrigin} from './garden-weapon-motion.js';
+import {GARDEN_ANIME_TYPES,createGardenAnime} from './garden-anime.js';
+import {NIULAI_VARIANTS} from './garden-niulai.js';
+import {createGardenBaby} from './garden-baby.js';
 import { playGardenSynth } from './garden-audio.js?v=20261018-life';
 import { createGardenSpells } from './garden-spells.js?v=20261018-life';
 import { drawGardenTrooper, troopMuzzle, setTroopTexture } from './garden-troop-rig.js?v=20261018-life';
@@ -38,6 +42,9 @@ export const ZOMBIE_CATALOG = Object.freeze(Array.from({ length: 100 }, (_, inde
 // Classroom cameos use ordinary health, armor and bite mechanics.
 // They are rare members of later waves, never a timed selection shortcut.
 export const GIANT_CATALOG = Object.freeze([
+...GARDEN_ANIME_TYPES.map(t=>({id:t.id,name:t.name,health:1400,bodyHealth:1400,armorHealth:0,speed:.018,bite:45,biteCadence:.8})),
+...NIULAI_VARIANTS.map(t=>({id:t.id,name:t.name,health:1800,bodyHealth:1800,armorHealth:0,speed:.014,bite:65,biteCadence:.8})),
+{id:'armor-flier',name:'Armor Flier (original inspired rig)',health:1500,bodyHealth:1500,armorHealth:0,speed:.018,bite:45,biteCadence:.8},{id:'hammer-flier',name:'Hammer Flier (original inspired rig)',health:1800,bodyHealth:1800,armorHealth:0,speed:.015,bite:60,biteCadence:.9},
 {"id": "zeus", "name": "Zeus Zombie", "health": 2300, "bodyHealth": 2300, "armorHealth": 0, "speed": 0.012, "bite": 90, "biteCadence": 0.8},{"id": "poseidon", "name": "Poseidon Zombie", "health": 2300, "bodyHealth": 2300, "armorHealth": 0, "speed": 0.012, "bite": 90, "biteCadence": 0.8},{"id": "gandalf", "name": "Gandalf Zombie", "health": 1900, "bodyHealth": 1900, "armorHealth": 0, "speed": 0.013, "bite": 70, "biteCadence": 0.8},{"id": "kingarthur", "name": "Kingarthur Zombie", "health": 2500, "bodyHealth": 2500, "armorHealth": 0, "speed": 0.011, "bite": 85, "biteCadence": 0.8},{"id": "merlin", "name": "Merlin Zombie", "health": 1850, "bodyHealth": 1850, "armorHealth": 0, "speed": 0.014, "bite": 65, "biteCadence": 0.8},{"id": "hobbit", "name": "Hobbit Zombie", "health": 1250, "bodyHealth": 1250, "armorHealth": 0, "speed": 0.021, "bite": 42, "biteCadence": 0.8},{"id": "zombiecat", "name": "Zombie Cat", "health": 1350, "bodyHealth": 1350, "armorHealth": 0, "speed": 0.023, "bite": 48, "biteCadence": 0.8},{"id": "zombiepanda", "name": "Zombie Panda", "health": 2400, "bodyHealth": 2400, "armorHealth": 0, "speed": 0.01, "bite": 80, "biteCadence": 0.8},{"id": "zombiemonkey", "name": "Zombie Monkey", "health": 1450, "bodyHealth": 1450, "armorHealth": 0, "speed": 0.022, "bite": 52, "biteCadence": 0.8},
   {id:'warriorbug',name:'Warrior Bug',health:1800,bodyHealth:1800,armorHealth:0,speed:.022,bite:70,biteCadence:.65},
   { id: 'labubu', name: 'Labubu', health: 1700, bodyHealth: 1700, armorHealth: 0, speed: .015, bite: 62, biteCadence: .58 },
@@ -110,7 +117,7 @@ export function laneAttackPower(lane){
 }
 const STARTERS = ZOMBIE_CATALOG.filter(item => item.armor === 0);
 const DEFENDER_POSITIONS = [.14, .25, .36, .47, .60];
-export const LAWNMOWER_RULES = Object.freeze({ home: .09, radius: .026, speed: .88, exit: 1.16 });
+export const LAWNMOWER_RULES = Object.freeze({ home: .065, radius: .026, speed: .88, exit: 1.16 });
 /** Continuous relative motion prevents a fast sweep from skipping a zombie. */
 export function mowerIntersects(fromX, toX, oldMobX, newMobX, radius = LAWNMOWER_RULES.radius) {
   const from = oldMobX - fromX, to = newMobX - toX;
@@ -180,6 +187,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
   const support=createGardenSupport({allies,artwork,damage:(lane,mob,amount,weapon)=>hit(lane,mob,{ownerId:lane.entry.id,attackerId:'support',damage:amount,weapon,penetration:0}),launch:launchMob,log:entry=>addLog(entry),cue:(lane,kind)=>impactCue(lane,kind)});
   const fx = createGardenFX({ artwork });
   const monsters = createGardenMonsters({ artwork });
+  const baby=createGardenBaby();
+  const anime=createGardenAnime({damageDefender,log:entry=>addLog(entry),cue:(lane,key)=>playSfx(key,lane)});
   canvas.setAttribute('aria-label', 'Plants vs. Zombies name picker. Each student starts behind a pea shooter, a front Tall-nut, and one single-use lawnmower. Suns recruit shooters, Potato Mines, Torchwood, and Cherry Bombs. Every lane faces 5, then 50, 100, 200, and doubling zombie quotas; excess zombies wait behind the live limit. The first student out of health speaks next.');
   let alive = true, raf = 0, generation = 0, phase = 'idle', reported = false, winner = null, winnerSnapshot = null;
   let width = 1000, height = 560, laneHeight = 88, boardHeader = 64, boardFooter = 12, viewportHeight = 560, lanes = [];
@@ -461,9 +470,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
   function spawn(lane, starter = false, forcedType = null) {
     const availableGiants = GIANT_CATALOG.filter(type => monsters.has(type.id));
     const giantEligible = !starter && lane.wave >= 2 && availableGiants.length > 0 && !lane.mobs.some(mob => !mob.dead && mob.type.giant && !mob.type.miniature);
-    const pool = giantEligible && rng() < .03 ? availableGiants : starter ? [ZOMBIE_CATALOG[0]] : ZOMBIE_CATALOG;
+    const pool = giantEligible && rng() < .003 ? availableGiants : starter ? [ZOMBIE_CATALOG[0]] : ZOMBIE_CATALOG;
     const dancersReady=renderer.getState().rigs.includes('dancing')&&renderer.getState().rigs.includes('backup');
-    const type = forcedType || (!starter && lane.wave>=2 && dancersReady && rng()<.035 ? DANCING_ZOMBIES[0] : null) || (!starter && pool === ZOMBIE_CATALOG && monsters.has(MINI_ZOMBIE.id) && rng() < .08 ? MINI_ZOMBIE : pool[Math.floor(rng() * pool.length)]);
+    const type = forcedType || (!starter && lane.wave>=2 && dancersReady && rng()<.0035 ? DANCING_ZOMBIES[0] : null) || (!starter && pool === ZOMBIE_CATALOG && monsters.has(MINI_ZOMBIE.id) && rng() < .008 ? MINI_ZOMBIE : pool[Math.floor(rng() * pool.length)]);
     // More zombies increase difficulty; elapsed time never changes their stats.
     const hp = type.health, armorHp = type.armorHealth || 0, shieldHp = type.shieldHealth || 0, bodyHp = type.bodyHealth;
     const uid = ++serial;
@@ -831,7 +840,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
         for (let index = 0; index < release; index++) { spawn(lane, lane.wave === 1); lane.queuedSpawns--; lane.waveSpawned++; }
         lane.nextSpawn = simTime + pressure.spawnMinimum + rng() * pressure.spawnJitter;
       }
-      lane.perception=perceiveGardenLane(lane,wallTime);spells.update(lane,simTime,wallTime,dt,shots);
+      lane.perception=perceiveGardenLane(lane,wallTime);for(const mob of lane.mobs){if(mob.type.giant){const g=giantGeometry(lane,mob);const o=gardenWeaponOrigin(mob.monsterId,{x:g.x,y:g.y,scale:g.scale*2.24});mob.weaponOrigin={x:(o.x-lane.plantX)/lane.travel,y:o.y};}}spells.update(lane,simTime,wallTime,dt,shots);anime.update(lane,simTime,wallTime);
       for(const defender of livingDefenders(lane)){if(defender.weapon==='trooper'){const goal=(58+(defender.guardOffset||0))*lane.spriteScale/lane.travel;if(defender.entering){const elapsed=Math.max(0,Math.min(.06,(wallTime-(defender.motionWall??wallTime))/1000));defender.motionWall=wallTime;defender.position=Math.min(goal,defender.position+elapsed*55/lane.travel);if(defender.position>=goal)defender.entering=false;}else defender.position=goal;}if(defender.weapon==='clonesword'){
         const nearest=lane.mobs.filter(m=>!m.dead&&m.x>=defender.position-.025).sort((a,b)=>a.x-b.x)[0];
         const visualDt=Math.min(.05,Math.max(0,(wallTime-(defender.motionWall??wallTime))/1000));defender.motionWall=wallTime;
@@ -1221,7 +1230,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       const biteInterval = mob.cadence / (simTime < mob.slowUntil ? mob.slow : 1);
       const bite = mob.attacking ? .5 + .5 * Math.cos((simTime - mob.nextBite) / Math.max(.1, biteInterval) * TAU) : 0;
       ctx.save(); if (mob.dead) ctx.globalAlpha = Math.max(0, 1 - deadAge / .7);
-      monsters.draw(ctx, { id: mob.monsterId, instanceId: mob.uid, x: giant.x, y: giant.y-lift, scale: giant.scale, time: animationTime, hp: mob.hp, maxHp: mob.maxHp, hit: mob.hurt, bite, walk: !mob.dead && !mob.attacking && simTime >= mob.stunnedUntil, death: mob.dead ? clamp(deadAge / .7, 0, 1) : 0, action:mob.cast&&!mob.cast.resolved?'charge':undefined, clip: giant.clip });
+      monsters.draw(ctx, { id: mob.monsterId, instanceId: mob.uid, x: giant.x, y: giant.y-lift, scale: giant.scale, time: animationTime, hp: mob.hp, maxHp: mob.maxHp, hit: mob.hurt, bite, walk: !mob.dead && !mob.attacking && simTime >= mob.stunnedUntil, death: mob.dead ? clamp(deadAge / .7, 0, 1) : 0, action:mob.cast&&!mob.cast.resolved?'charge':wallTime<(mob.animeAttackUntil||0)?'attack':undefined, clip: giant.clip });
       ctx.restore();
       if (!mob.dead) { const barY = giant.y - giant.height + 5; hpBar(giant.x - 35, barY, 70, mob.hp, mob.maxHp, '#dfb66c', 5); if (!type.miniature) text((mob.casting?'Casting · ':mob.attacking?'Attacking · ':'')+type.name, giant.x, barY + 14, 145, 10, '#fff5cf', 850, 'center'); }
       if (!mob.dead && mob.fuseAt) {
@@ -1337,6 +1346,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       [...lane.mobs].filter(mob => !mob.type.giant).sort((a, b) => b.x - a.x).forEach(mob => zombie(lane, visualMob(mob), time));
       lane.defenders.forEach(defender => plant(lane, defender, time));
       student(lane, time, won ? resultAge : 0);
+      baby.draw(ctx,lane,wallTime);
       potatoMine(lane);
       extraPlants(lane);
       lawnmower(lane, time);
@@ -1375,7 +1385,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       else { dot(x - 6, y, 3, color + '55'); dot(x, y, shot.arc ? 8 : 4.6, color, '#598d3f'); if (shot.arc) { ctx.strokeStyle = '#598d3f'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x - 2, y - 7); ctx.quadraticCurveTo(x - 6, y, x - 2, y + 7); ctx.moveTo(x + 3, y - 7); ctx.quadraticCurveTo(x - 1, y, x + 3, y + 7); ctx.stroke(); } dot(x - 1.5, y - 1.5, 1.4, '#f5ffd9'); }
     }
     support.draw(ctx,lanes,wallTime);
-    spells.draw(ctx,lanes,wallTime,width,height,reducedMotion);
+    spells.draw(ctx,lanes,wallTime,width,height,reducedMotion);anime.draw(ctx,lanes,wallTime);
     for(const lane of lanes){if(visible(lane))for(const r of lane.runners)allies.draw(ctx,{id:'goblin',x:lane.plantX+r.x*lane.travel,y:lane.floor,scale:lane.spriteScale,time:wallTime/1000,clip:'walk'});}
     for (const impact of impacts) {
       const lane = lanes[impact.lane]; if (!visible(lane)) continue;
@@ -1472,7 +1482,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     const top = viewport.scrollTop || 0, bottom = top + (viewport.clientHeight || height);
     if (lane.y + lane.h < top || lane.y > bottom) return;
     if(sfxVoices.size>=64){const old=sfxVoices.values().next().value;try{old.source.stop();}catch{}sfxVoices.delete(old);}
-    if(['gatling','explosion','laser','thunder','fireball','fireImpact','heart','charge','teleport'].includes(key))return playGardenSynth(audio,sfxMaster,key,sfxVoices,(lane.plantX/lane.w-.5)*.7);
+    if(['monkey','gatling','explosion','laser','thunder','fireball','fireImpact','heart','charge','teleport'].includes(key))return playGardenSynth(audio,sfxMaster,key,sfxVoices,(lane.plantX/lane.w-.5)*.7);
     const at = audio.currentTime, last = lastSfx.get(key) ?? -Infinity;
     if (at - last < soundGaps[key]) return;
     if (key === 'sun') {
@@ -1603,13 +1613,13 @@ export default function createGame({ container, names = [], onPick, random = Mat
     mowerArt = null;
     for (const lane of lanes) { lane.queuedSpawns = lane.deferredSpawns = lane.waveTarget = lane.waveSpawned = 0; lane.trap = lane.torchwood = lane.bomb = null; lane.mobs = []; }
     waveIndex = 0; nextWaveAt = Infinity;
-    shots = []; pendingShots = []; effects = []; impacts = []; pickupFlights = []; drops = []; rewards = []; lanes = []; sampleBuffers.clear(); renderer.destroy(); support.destroy(); spells.clear(); allies.destroy(); fx.destroy(); monsters.destroy(); root.remove();
+    shots = []; pendingShots = []; effects = []; impacts = []; pickupFlights = []; drops = []; rewards = []; lanes = []; sampleBuffers.clear(); renderer.destroy(); support.destroy(); spells.clear(); allies.destroy(); fx.destroy(); monsters.destroy(); baby.destroy(); anime.destroy(); root.remove();
   }
   function getState() {
     return { phase, time: simTime, winnerId: winnerSnapshot?.id ?? null, winner: winnerSnapshot ? { ...winnerSnapshot } : null, soundEnabled, speed: playbackRate, effectiveSpeed: effectiveTempo(), wave: waveIndex, nextWaveAt,
       sizing: { width, height, viewportHeight, laneHeight, boardHeader, boardFooter, fitsAllRows: players.length <= 10 && boardHeader + lanes.length * laneHeight <= viewportHeight + .01 },
       presentation: { interpolated: true, combatStep: .04, time: renderTime, fraction: renderFraction },
-      visualTiming: PICKER_VISUAL_TIMING, monsters: monsters.getState(), giantCatalogCount: GIANT_CATALOG.length, residentGroot:{ready:monsters.has('groot'),combatant:false}, residentVillager: { dancing:true, ready: monsters.has('minecraft-villager'), audio: sampleURLs.villager.length, combatant: false },
+      visualTiming: PICKER_VISUAL_TIMING, monsters: monsters.getState(), protectedCompanion:baby.getState(), giantCatalogCount: GIANT_CATALOG.length, residentGroot:{ready:monsters.has('groot'),combatant:false}, residentVillager: { dancing:true, ready: monsters.has('minecraft-villager'), audio: sampleURLs.villager.length, combatant: false },
       pickupFlights: pickupFlights.map(flight => ({ kind: flight.kind, sourceLane: flight.lane, ownerId: lanes[flight.ownerLane]?.entry.id, target: 'student', targetX: lanes[flight.ownerLane]?.plantX, duration: flight.duration, progress: clamp((performance.now() - flight.startedWall) / 1000 / flight.duration, 0, 1) })),
       audioEffects: { loadedSamples: sampleBuffers.size, activeVoices: sfxVoices.size, contextActive: Boolean(audio), loading: Boolean(audioLoadController) },
       allies:allies.getState(), renderer: renderer.getState(), fx: fx.getState(), melonImpacts: impacts.map(impact => ({ lane: impact.lane, x: impact.position, age: impact.age, kind: impact.kind })), plantCatalogCount: PLANT_CATALOG.length, ruleVersion: GARDEN_RULES.version, pickerPacing: PICKER_PACING,

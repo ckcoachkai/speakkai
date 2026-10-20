@@ -3,12 +3,12 @@ const KITS=[
  ['Kyrios','#ec82ad','#792c64',0],['Shadow','#376ad1','#e9bf35',1],['Wing','#eeeefa','#2650a5',2],['Strike','#e9eef8','#cc3441',3],['RX-78','#f1f4fb','#285dd0',4],['Leopard','#548b56','#e6b844',5],['Akatsuki','#e9bb42','#8b5422',6],['Aerial','#f1f7ff','#297fca',7],['Wing Zero','#f9faff','#486cad',8],['Freedom','#80cda3','#172d39',9]
 ];
 const point=(o,a,l)=>({x:o.x+Math.cos(a)*l,y:o.y+Math.sin(a)*l});
-export function mechaPose({id,x,y,height=110,time=0,targetX=x+130,targetY=y+100,shotAge=999,bombAge=999}){
+export function mechaPose({weaponId=0,id,x,y,height=110,time=0,targetX=x+130,targetY=y+100,shotAge=999,bombAge=999}){
  const index=Math.max(0,Math.min(9,Number(String(id).replace('gundam',''))||0)),p=time*2.5+index*.73;
  const s=height/110,torso={x,y:y-height*.54},shoulder={x:torso.x+12*s,y:torso.y-9*s};
  const aim=Math.atan2(targetY-shoulder.y,targetX-shoulder.x),recoil=Math.max(0,1-shotAge/160)*5*s;
  const elbow=point(shoulder,aim+.42,19*s),hand=point(elbow,aim-.22,21*s),muzzle=point(hand,aim,35*s-recoil);
- return{index,p,s,x,y,height,torso,shoulder,aim,elbow,hand,muzzle,recoil,bombAge};
+ const weapon=MECHA_WEAPONS[((weaponId%100)+100)%100],origin=weapon.origin==="eye"?{x,y:torso.y-25*s}:weapon.origin==="foot"?{x:x+12*s,y:torso.y+55*s}:weapon.origin==="hand"?hand:muzzle;return{index,p,s,x,y,height,torso,shoulder,aim,elbow,hand,muzzle:origin,recoil,bombAge,weapon};
 }
 export function drawGardenMecha(ctx,options){
  const textured=drawTexturedMecha(ctx,options);if(textured)return textured;
@@ -34,7 +34,7 @@ export function drawGardenMecha(ctx,options){
  poly([[-4,-7],[3,-8],[6,-2],[0,3],[-5,-1]],'#69ffe8');
  for(let i=0;i<3;i++){ctx.strokeStyle='#f8ce4e';ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(-11,-3+i*3);ctx.lineTo(-7,-2+i*3);ctx.stroke();}
  // Rear hand opens on bomb release, separate shoulder and elbow articulation.
- let rearShoulder={x:-12,y:-11},rearElbow=point(rearShoulder,1.9+Math.sin(p)*.16,20),rearHand=point(rearElbow,q.bombAge<500?1.3:1.8,18);joint(rearShoulder);bone(rearShoulder,rearElbow,10);joint(rearElbow);bone(rearElbow,rearHand,8);joint(rearHand,4);plate([[-23,-21],[-11,-23],[-7,-11],[-20,-8]],base);
+ let rearShoulder={x:-12,y:-11},rearElbow=point(rearShoulder,1.9+Math.sin(p)*.16,20),rearHand={x:(hand.x-torso.x)/s+Math.cos(aim)*13,y:(hand.y-torso.y)/s+Math.sin(aim)*13};joint(rearShoulder);bone(rearShoulder,rearElbow,10);joint(rearElbow);bone(rearElbow,rearHand,8);joint(rearHand,4);plate([[-23,-21],[-11,-23],[-7,-11],[-20,-8]],base);
  // Head looks at the target, with an antenna crest and illuminated eye slit.
  ctx.save();ctx.translate(0,-25);ctx.rotate(Math.max(-.15,Math.min(.18,(aim-.6)*.18)));
  plate([[-9,-9],[2,-12],[10,-6],[8,8],[0,12],[-9,6]],base);poly([[-6,-2],[8,-3],[7,1],[-5,2]],'#62ffe7');poly([[0,3],[5,3],[3,10],[-1,8]],accent);
@@ -45,8 +45,8 @@ export function drawGardenMecha(ctx,options){
  ctx.save();ctx.translate(ha.x,ha.y);ctx.rotate(aim);ctx.translate(-recoil/s,0);plate([[-8,-6],[17,-6],[22,-3],[35,-3],[35,3],[14,3],[6,8],[-7,5]],kind===5?'#394c37':'#304654');
  ctx.strokeStyle='#a6c3ce';ctx.lineWidth=1;ctx.strokeRect(-3,-4,15,5);
  if(kind===5)for(let k=0;k<3;k++){ctx.strokeStyle='#849e9e';ctx.beginPath();ctx.moveTo(14,-3+k*3);ctx.lineTo(35,-3+k*3);ctx.stroke();}
- if(options.shotAge<100){ctx.fillStyle='#d1ffff';ctx.beginPath();ctx.moveTo(35,-4);ctx.lineTo(49,0);ctx.lineTo(35,4);ctx.fill();}ctx.restore();
- ctx.restore();return{muzzle,name,index};
+ if(q.weapon.origin==="gun"&&options.shotAge<100){ctx.fillStyle='#d1ffff';ctx.beginPath();ctx.moveTo(35,-4);ctx.lineTo(49,0);ctx.lineTo(35,4);ctx.fill();}ctx.restore();
+ ctx.restore();drawWeapon(ctx,q,options);return{muzzle,name,index};
 }
 
 // Textured components are transformed individually: no fixed whole-character layer.
@@ -68,19 +68,24 @@ function drawTexturedMecha(ctx,o){
  else part(4,-22,0,17,43,-.15);
  for(const side of[-1,1]){const xx=-19+side*5,flame=18+Math.sin(p*5+side)*5;const g=ctx.createLinearGradient(xx,16,xx,45+flame);g.addColorStop(0,'#f1ffff');g.addColorStop(.3,'#51d5ff');g.addColorStop(1,'#348aff00');ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(xx-4,15);ctx.lineTo(xx+4,15);ctx.lineTo(xx,45+flame);ctx.fill();}
  for(const side of[-1,1]){const hip={x:side*7,y:16},knee=point(hip,1.15+side*.38+Math.sin(p+side)*.13,21),ankle=point(knee,1.7+Math.sin(p+side)*.22,20);limb(5,hip,knee,13);limb(6,knee,ankle,12);part(7,ankle.x+3,ankle.y+3,19,11);}
- const back={x:-12,y:-11},be=point(back,1.9+Math.sin(p)*.16,20),bh=point(be,q.bombAge<500?1.3:1.8,18);limb(3,back,be,11);limb(4,be,bh,10);part(10,bh.x,bh.y,10,10);
+ const back={x:-12,y:-11},be=point(back,1.9+Math.sin(p)*.16,20),bh={x:(hand.x-torso.x)/s+Math.cos(aim)*13,y:(hand.y-torso.y)/s+Math.sin(aim)*13};limb(3,back,be,11);limb(4,be,bh,10);part(10,bh.x,bh.y,10,10);
  part(11,0,17,31,23);part(0,0,-4,[35,33,37,39,37,44,37,34,37,36][index],39);part(2,-14,-13,23,21);
  part(1,0,-28,26,29,Math.max(-.15,Math.min(.18,(aim-.6)*.18)));
  const sh=local(shoulder),el=local(elbow),ha=local(hand);limb(3,sh,el,12);limb(4,el,ha,11);part(10,ha.x,ha.y,11,11);part(2,14,-15,24,23);
  // Rifle muzzle at hand + aim * (35 - recoil), exactly matching mechaPose.
  const gunCenter=point(ha,aim,13-recoil/s);part(9,gunCenter.x,gunCenter.y,44,15,aim);
  if(index===5){const second=point(gunCenter,aim+Math.PI/2,5);part(9,second.x,second.y,44,8,aim);}
- if(o.shotAge<100){const m=local(q.muzzle);ctx.save();ctx.translate(m.x,m.y);ctx.rotate(aim);ctx.fillStyle='#dbffff';ctx.beginPath();ctx.moveTo(0,-4);ctx.lineTo(15,0);ctx.lineTo(0,4);ctx.fill();ctx.restore();}
- ctx.restore();return{muzzle:q.muzzle,name:KITS[index][0],index};
+ if(q.weapon.origin==="gun"&&o.shotAge<100){const m=local(q.muzzle);ctx.save();ctx.translate(m.x,m.y);ctx.rotate(aim);ctx.fillStyle='#dbffff';ctx.beginPath();ctx.moveTo(0,-4);ctx.lineTo(15,0);ctx.lineTo(0,4);ctx.fill();ctx.restore();}
+ ctx.restore();drawWeapon(ctx,q,o);return{muzzle:q.muzzle,name:KITS[index][0],index};
 }
 
 export function setMechaTexture(url,regions){
  if(regions)armorRegions=regions;
  if(typeof Image!=='undefined'){const next=new Image();next.onload=()=>{armorImage=next;};next.src=url;}
 }
+
+
+export const MECHA_WEAPONS=Object.freeze(Array.from({length:100},(_,id)=>{const family=['rifle','cannon','railgun','scatter','plasma','pulse','arc','hand','eye','foot'][Math.floor(id/10)],tier=id%10;return Object.freeze({id,name:family+' '+(tier+1),family,origin:['hand','eye','foot'].includes(family)?family:'gun',color:'hsl('+(id*137.508%360)+' 95% 72%)',damage:8+Math.floor(id/10)*2+tier*2,cooldown:350+tier*65,width:1+Math.floor(id/10)*.5+tier*.2,barrels:1+tier%3,pierce:family==='railgun',splash:family==='cannon'||family==='plasma',chain:family==='arc',pellets:family==='scatter'?3+tier%3:1});}));
+function drawWeapon(ctx,q,o){const w=q.weapon;ctx.save();ctx.translate(q.muzzle.x,q.muzzle.y);ctx.rotate(q.aim);ctx.fillStyle=w.color;ctx.strokeStyle='#183444';ctx.lineWidth=1;const length=8+w.id%10;for(let i=0;i<w.barrels;i++){ctx.fillRect(-length*q.s,(i-(w.barrels-1)/2)*5*q.s,length*q.s,(2+Math.floor(w.id/10)%4)*q.s);ctx.strokeRect(-length*q.s,(i-(w.barrels-1)/2)*5*q.s,length*q.s,3*q.s);}if(o.shotAge<100){ctx.shadowColor=w.color;ctx.shadowBlur=18;ctx.beginPath();ctx.arc(0,0,(5+w.id%10*.3)*q.s,0,Math.PI*2);ctx.fill();}ctx.restore();}
+
 

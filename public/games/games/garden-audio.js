@@ -16,6 +16,7 @@ export function playGardenSynth(audio,master,key,voices,pan=0){
  }
  if(heavy){layer('noise',0,0,.37,0,duration,2300);layer('sine',140,35,.35,0,.45);layer('noise',0,0,.09,.06,duration*.8,750);}
  else if(shot){layer('noise',0,0,.19,0,.075,950);layer('triangle',210,75,.09,0,.08,4200);}
+ else if(key==='monkey'){for(let i=0;i<4;i++){layer('sine',i<2?440:650,i<2?310:420,.10,i*.13,.12,1500);layer('triangle',i<2?220:330,180,.025,i*.13,.1,900);}}
  else if(key==='heart'){layer('sine',750,1100,.10,0,.19);layer('sine',1125,1650,.04,.035,.16);}
  else if(key==='teleport'){layer('sine',350,1600,.12,0,.16);layer('noise',0,0,.07,0,.18,1300);}
  else if(key==='charge'){layer('triangle',200,700,.065,0,.48);layer('sine',400,1400,.025,.03,.44);}
