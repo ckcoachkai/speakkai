@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-20T11:02:39.214646+00:00",
+  "updatedAt": "2026-10-20T11:05:40.495604+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2436,16 +2436,16 @@
           "time": "17:40–19:40",
           "status": "held",
           "classContent": {
-            "en": "◆ Homework presentations: Students presented their prepared material. We discussed preparing and organizing logic and structure beforehand, then putting away the text or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Later impromptu practice: Nelson spoke second for three minutes and met the time requirement, which was the first requirement for this practice. Sean was called next. This was a separate activity from the earlier homework presentations.",
-            "zh": "◆【作业展示】：学生展示了准备的内容。我们讨论了如何提前准备、组织逻辑和结构，然后在正式演讲时放下文稿或电脑，以便与观众建立联系。\n\n◆【即兴演讲结构】：我们练习了 TOC 和 WSDA 即兴演讲比赛中可能出现的五种不同类型的题目。学生先在尚未学习或理解这些结构之前尝试回答，以此作为练习组织回答的起点。\n\n◆【后续即兴练习】：Nelson 第二个发言，讲了三分钟，达到了本次练习的时长要求；这是老师提出的第一项要求。随后老师请 Sean 发言。这与前面的作业展示是两项不同的活动。"
+            "en": "◆ Homework presentations: Students presented their prepared material. We discussed preparing and organizing logic and structure beforehand, then putting away the text or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Later impromptu practice: Jayden spoke first; his response was a little short and needed further expansion. Nelson spoke second for three minutes and met the time requirement, which was the first requirement for this practice. Sean was called next. This was a separate activity from the earlier homework presentations.",
+            "zh": "◆【作业展示】：学生展示了准备的内容。我们讨论了如何提前准备、组织逻辑和结构，然后在正式演讲时放下文稿或电脑，以便与观众建立联系。\n\n◆【即兴演讲结构】：我们练习了 TOC 和 WSDA 即兴演讲比赛中可能出现的五种不同类型的题目。学生先在尚未学习或理解这些结构之前尝试回答，以此作为练习组织回答的起点。\n\n◆【后续即兴练习】：Jayden 第一个发言，回答略短，需要进一步展开。Nelson 第二个发言，讲了三分钟，达到了本次练习的时长要求；这是老师提出的第一项要求。随后老师请 Sean 发言。这与前面的作业展示是两项不同的活动。"
           },
           "homework": null,
           "students": [
             {
               "id": "lyon",
               "name": "Lyon",
-              "en": null,
-              "zh": null
+              "en": "✓ Presentation and audience connection: Lyon gave a very good performance. He did not bring his materials, which meant that he could present and connect with all of us. He had better eye contact, better pacing, and spoke more authentically to us. Overall, a good presentation—good, good, good.\n\n→ Prepare beforehand, then put the papers away: We do the homework and preparation beforehand to organize our logic and structure. When we present, however, the aim is to speak without the papers or other materials so that we can really connect with the audience in front of us. This is about preparing first and then being able to address people directly; it does not mean skipping the preparation.",
+              "zh": "✓【展示与观众联系】：Lyon 的表现非常好。他没有带材料，因此能够直接展示，与我们所有人建立联系。他的眼神交流更好，节奏更好，表达也更加真实、自然。整体是一次很好的展示——好，好，好。\n\n→【提前准备，上台放下文稿】：我们提前完成作业、做好准备，是为了整理逻辑和结构。不过，正式展示时，目标是不依赖纸张或其他材料，真正与面前的观众建立联系。重点是先准备好，再直接面对听众表达，并不是省略准备。"
             },
             {
               "id": "nelson",
@@ -2456,8 +2456,8 @@
             {
               "id": "jayden",
               "name": "Jayden",
-              "en": null,
-              "zh": null
+              "en": "→ Impromptu response: Jayden was the first speaker in the later impromptu practice. His answer was a little short, so he needs to expand and develop it further. Suggested practice: after making a point, he could pause to ask himself what else the audience needs to understand, then add an explanation or example rather than ending the response too soon.",
+              "zh": "→【即兴回答】：Jayden 是后续即兴练习的第一位发言者。他的回答略短，需要继续展开、把内容说得更充分。练习建议：提出一个观点后，可以想一想听众还需要了解什么，再补充解释或例子，而不是过早结束回答。"
             },
             {
               "id": "sean",
