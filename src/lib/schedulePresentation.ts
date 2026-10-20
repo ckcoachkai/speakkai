@@ -4,6 +4,8 @@ const nonNameCapitalizedWords = new Set([
 ]);
 
 export function calendarDisplayEventKind(label: string) {
+  if (label === 'Sharing at Zhangjiang Toastmasters Club') return 'tmc';
+  if (label === 'Sharing at DPS') return 'reserved';
   if (/\bboot camp\b/i.test(label)) return "group";
   if (/\bVIP\b|\b1\s*(?:-|v)\s*1\b|\b1\s*-?\s*on\s*-?\s*1\b|一对一/i.test(label)) return "vip";
   if (/^Class booked(?: · (?:华漕|龙柏|古北|威宁路|Hongqiao Hub|Huacao|Longbai|Gubei|Weining Road|G\d+(?:–\d+)*))*$/.test(label)) return "group";
@@ -55,6 +57,9 @@ export function bookingGrade(label: string) {
 }
 
 export function publicBookingPresentation(label: string) {
+  // These two event labels were explicitly authorized for public display by Kai.
+  if (label === 'Sharing at Zhangjiang Toastmasters Club') return {kind:'tmc',title:label};
+  if (label === 'Sharing at DPS') return {kind:'reserved',title:label};
   const originalKind = calendarDisplayEventKind(label);
   if (/\bTMC\b|\(TMC\)/i.test(label)) return { kind: "tmc", title: "TMC booked" };
   // Private sessions remain anonymous, including their area and grade.

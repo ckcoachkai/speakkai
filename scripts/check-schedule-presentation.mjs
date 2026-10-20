@@ -5,6 +5,15 @@ import { calendarDisplayEventKind, publicBookingPresentation, scheduleStartMinut
 import { weeklyScheduleBlocks } from '../src/lib/weeklySchedule.ts';
 import { sanitizeCalendarCell } from './schedule-privacy.mjs';
 
+test('only the two explicitly authorized sharing labels stay public', () => {
+  for (const [label,kind] of [['Sharing at DPS','reserved'],['Sharing at Zhangjiang Toastmasters Club','tmc']]) {
+    assert.deepEqual(publicBookingPresentation(label),{kind,title:label});
+    assert.equal(calendarDisplayEventKind(label),kind);
+    assert.equal(publicScheduleCell(`20\nLimited availability\n20:30–21:30 · ${label}`),`20\nLimited availability\n20:30–21:30 · ${label}`);
+  }
+  assert.equal(publicBookingPresentation('Sharing with Lily Online 1-1').title,'VIP 1-to-1 booked');
+});
+
 test('holiday boot camps are anonymous group bookings', () => {
   for (const label of ['Grade 1 SDG boot camp', 'Grades 6–7 competition boot camp']) {
     assert.equal(calendarDisplayEventKind(label), 'group');
