@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-19T08:58:11.533644+00:00",
+  "updatedAt": "2026-10-20T06:27:47.209975+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1401,6 +1401,33 @@
             ],
             "prepareFor": "Developing both sides of the speech topic and explaining why each impact matters."
           }
+        },
+        {
+          "id": "sun-1500-2026-10-18",
+          "date": "2026-10-18",
+          "time": "15:00–16:30",
+          "classContent": [
+            "◆ Class content: Max, Celia, August and Eva took part in a small debate. Max and August worked together as a team."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Max",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-18&student=max"
+            },
+            {
+              "name": "Celia",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-18&student=celia"
+            },
+            {
+              "name": "August",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-18&student=august"
+            },
+            {
+              "name": "Eva",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-18&student=eva"
+            }
+          ]
         }
       ]
     },
