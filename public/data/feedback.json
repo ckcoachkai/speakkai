@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-21T11:33:53.275557+00:00",
+  "updatedAt": "2026-10-21T12:14:05.167342+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2006,8 +2006,8 @@
             {
               "id": "royce",
               "name": "Royce",
-              "en": "→ Homework preparation: Royce did not do his homework.",
-              "zh": "→【作业准备】：Royce 没有完成作业。"
+              "en": "✓ Homework preparation and presentation: Royce had prepared his homework beforehand. He wrote it out and presented it.\n\n→ Delivery and persuasion: His delivery still followed the same style, with the same issue: he was a little too forceful in pushing the audience to make a change. The next step is to invite the audience to consider his message, using a more conversational tone rather than making them feel pressured to agree or act. Suggested practice: he could rehearse his call for change as an invitation, keeping the purpose clear while giving listeners room to consider the idea.",
+              "zh": "✓【作业准备与展示】：Royce 已经提前准备了作业，把内容写了出来，并进行了演讲。\n\n→【表达与说服】：他的表达仍沿用了同样的风格，也存在同样的问题：在推动观众作出改变时，语气有一点过于强硬。下一步是邀请听众思考他的信息，用更自然的交谈语气表达，而不是让人感到被迫同意或采取行动。练习建议：可以把呼吁改变的部分练习成一种邀请，清楚表达目的，同时给听众思考这个想法的空间。"
             },
             {
               "id": "ariel",
