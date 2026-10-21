@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-20T13:05:12.548951+00:00",
+  "updatedAt": "2026-10-21T11:33:53.275557+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1622,9 +1622,18 @@
           "date": "2026-10-19",
           "time": "15:30–17:30",
           "classContent": [
-            "◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses."
+            "◆ Homework presentations and preparation: Students presented their prepared material. We discussed preparing beforehand to organize logic and structure, reviewing and rehearsing until the material feels comfortable, then putting away the paper or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: We worked on the five different types of questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. We then went over the structure, helped students understand the question types, and practised planning and delivering impromptu responses.\n\n◆ Time management: Preparation and speaking share a combined seven minutes; students can decide how to divide that time. The speaking-time requirement in the practice was three minutes. The focus was to develop the answer sufficiently rather than finish too briefly.\n\n◆ Connect, develop and finish: Connect with the audience through a rhetorical question or personal connection. Develop points 1, 2 and 3, then end with your message: why is it important, and why should people care? Write an outline, plan the response, and practise speaking from that preparation.\n\n◆ Audience engagement and delivery: We worked on helping listeners understand the bigger picture through specific details and examples that they can visualize. Delivery should include vocal variation: energetic emphasis as well as more conversational moments. Emphasize important words and allow them enough time to stand out, rather than rushing through every word. Preparation should support direct eye contact and a more natural connection with the people in front of you."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Impromptu speech practice",
+            "steps": [
+              "Prompts: (1) Should a group finish together or let members finish separately? (2) How could a digital tool you use be improved?",
+              "Use the structure covered in class: connect with the audience through a rhetorical question or personal connection, develop three main points, and end with your message—why is it important, and why should people care?",
+              "Write out the outline, plan your speech, and deliver it.",
+              "Manage the combined seven-minute preparation and speaking time yourself. Record a video."
+            ],
+            "prepareFor": "Present it in the next class."
+          },
           "students": [
             {
               "name": "Royce",
@@ -1811,7 +1820,7 @@
           "date": "2026-10-20",
           "time": "15:30–17:30",
           "classContent": [
-            "◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Class practice and time management: We went over the structure and helped students understand the different types of questions, then practised impromptu speaking. Preparation and speaking share a combined seven minutes; students can decide how to divide that time between planning and speaking."
+            "◆ Homework presentations and preparation: We began with students presenting their prepared material. We discussed preparing beforehand to organize logic and structure, reviewing and rehearsing until the material feels comfortable, then putting away the paper or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: Our impromptu work covered the five different types of questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. We then went over the structure, helped students understand the question types, and practised planning and delivering impromptu responses.\n\n◆ Time management: Preparation and speaking share a combined seven minutes; students can decide how to divide that time. The speaking-time requirement in the practice was three minutes. The focus was to develop the answer sufficiently rather than finish too briefly.\n\n◆ Connect, develop and finish: Connect with the audience through a rhetorical question or personal connection. Develop points 1, 2 and 3, then end with your message: why is it important, and why should people care? Write an outline, plan the response, and practise speaking from that preparation.\n\n◆ Audience engagement and delivery: We worked on helping listeners understand the bigger picture through specific details and examples that they can visualize. Delivery should include vocal variation: energetic emphasis as well as more conversational moments. Emphasize important words and allow them enough time to stand out, rather than rushing through every word. Preparation should support direct eye contact and a more natural connection with the people in front of you."
           ],
           "homework": {
             "title": "Should a group finish together or let members finish separately?",
@@ -2016,7 +2025,7 @@
             "prepareFor": "Present it in the next class."
           },
           "classContent": [
-            "◆ Homework presentations: Students presented their prepared material. We discussed preparing and organizing logic and structure beforehand, then putting away the text or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: We worked on the five different types of speech questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. This initial attempt gave them a starting point for working on how to organize their responses.\n\n◆ Later impromptu practice: Jayden spoke first; his response was a little short and needed further expansion. Nelson spoke second for three minutes and met the time requirement, which was the first requirement for this practice. Sean was called next. This was a separate activity from the earlier homework presentations.\n\n◆ Structure covered in class: Connect with the audience through a rhetorical question or personal connection; develop points 1, 2 and 3; then end with your message. Explain why it is important and why people should care."
+            "◆ Homework presentations and preparation: Students presented their prepared material. We revisited the importance of preparing beforehand to organize logic and structure, reviewing and rehearsing until the material feels comfortable, then putting away the paper or computer when presenting so they can connect with the audience.\n\n◆ Impromptu speech structures: The impromptu lesson focused on the five different types of questions that may appear in TOC and WSDA impromptu competitions. Students first tried answering questions before learning or understanding the structures. We then went over the structure, helped students understand the question types, and practised planning and delivering impromptu responses.\n\n◆ Time management: Preparation and speaking share a combined seven minutes; students can decide how to divide that time. The speaking-time requirement in the practice was three minutes. The focus was to develop the answer sufficiently rather than finish too briefly.\n\n◆ Connect, develop and finish: Connect with the audience through a rhetorical question or personal connection. Develop points 1, 2 and 3, then end with your message: why is it important, and why should people care? Write an outline, plan the response, and practise speaking from that preparation.\n\n◆ Audience engagement and delivery: We worked on helping listeners understand the bigger picture through specific details and examples that they can visualize. Delivery should include vocal variation: energetic emphasis as well as more conversational moments. Emphasize important words and allow them enough time to stand out, rather than rushing through every word. Preparation should support direct eye contact and a more natural connection with the people in front of you.\n\n◆ Later practice in this class: Jayden spoke first and needed to expand his short response. Nelson spoke second for three minutes and met the time requirement. Sean was called next. This was separate from the earlier homework presentations."
           ]
         }
       ]
