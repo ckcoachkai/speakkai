@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-21T12:14:05.167342+00:00",
+  "updatedAt": "2026-10-22T09:17:42.979824+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -637,6 +637,43 @@
               "name": "Jarvis",
               "en": "Jarvis gave an okay impromptu speech on the homework topic. However, his reasoning and the content he shared were a bit simple and did not go into much depth. This is the problem I mentioned with not really practising at home: there are fewer specific details and not enough new input. When there is less input, the output is less detailed, which makes the speech less credible and less believable. We want to address this so he can give a better speech.\n\nWhile Elsa was presenting, Jarvis took her book without her permission and played with it. This affected Elsa’s performance, and she left before concluding her speech to get her book back.\n\nHomework is one of the basic things we need to do. Coming up to present it lets us practise both prepared speeches and impromptu speaking. If students cannot do their homework, they cannot attend competitions. How can we prepare for a competition if we do not prepare? If the goal is simply to practise skills in class, that is one thing. If students want to achieve awards or other competition goals, they have to put in the preparation as well. I want parents to be aware of this.",
               "zh": "Jarvis围绕作业主题做了一次尚可的即兴演讲。不过，他的推理和所讲的内容有些简单，没有深入展开。这也是我之前提到的、在家没有充分练习所带来的问题：缺少更具体的细节，也没有足够的新信息输入。输入少，输出的内容就不够详细，演讲的可信度和说服力也会受到影响。我们需要改善这一点，帮助他把演讲讲得更好。\n\nElsa展示时，Jarvis未经她同意拿走了她的书，并拿着玩。这影响了Elsa的表现，她为了拿回自己的书，在完成演讲结尾之前就离开了。\n\n完成作业是最基本的要求之一。把准备好的内容带到台上展示，才能让我们同时练习准备演讲和即兴表达。如果学生不能完成作业，就不能参加比赛。不做准备，又怎么为比赛做好准备？如果只是想在课堂上练习技能，那是一回事；如果想获得奖项或实现其他比赛目标，就还需要投入准备工作。我希望家长了解这一点。"
+            }
+          ]
+        },
+        {
+          "id": "thu-afternoon-2026-10-22",
+          "date": "2026-10-22",
+          "time": "15:30–17:30",
+          "status": "held",
+          "classContent": {
+            "en": "◆ Prepared speeches and topic focus: Students spoke about why people have the habit of doing dangerous things. Many focused on the roller-coaster situation, but the aim was to include dangerous things people do in their own lives and explain why they do them, rather than repeatedly focus on death. The personal example belonged in the speech they were supposed to prepare; this was not a request to give a new personal example immediately during the discussion.\n\n◆ Organizing before speaking: Students could use time before class, including when they arrived early, or while other students were speaking to write and organize ideas in their notebooks. They could put those notes on the table in front of them and use them while speaking. Writing ideas down becomes especially helpful as the content and information become more difficult.",
+            "zh": "◆【准备的演讲与主题重点】：学生围绕人们为什么会有做危险事情的习惯进行演讲。很多人集中讲过山车，但目标是把自己生活中人们会做的危险事情放进演讲，解释为什么会这样做，而不是反复集中在死亡上。个人例子应该放在原本要准备的演讲中；这并不是要求学生在讨论时立刻再讲一个新的个人例子。\n\n◆【开口前组织内容】：学生可以利用课前时间，包括提前到达后的时间，或其他同学演讲时，在笔记本里写下并组织想法。演讲时可以把这些笔记放在面前的桌上使用。随着内容和信息变得更难，把想法写下来会尤其有帮助。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "remy",
+              "name": "Remi",
+              "en": "✓ Energy and presentation: Remi brought a lot of energy, and overall it was a very exciting presentation. Good job.\n\n→ Classroom participation: He was playing with toys and, while another student was speaking, talking and writing on the whiteboard. This was disruptive to the speaker. The next step is to put the toys aside and listen quietly while classmates speak, so they have the same opportunity to be heard.",
+              "zh": "✓【能量与展示】：Remi 带来了很多能量，整体是一次非常精彩、令人兴奋的展示。做得好。\n\n→【课堂参与】：他在玩玩具，并在另一位同学演讲时讲话、在白板上写字，干扰了发言者。下一步是在同学演讲时放下玩具、安静倾听，让别人也有同样被听见的机会。"
+            },
+            {
+              "id": "owen",
+              "name": "Owen",
+              "en": "✓ Impromptu presentation: Owen did a really good job. His speech was well organized and well put together; I initially was not sure whether it had been prepared, but he confirmed it was impromptu. Overall, it was logical and easy to understand.\n\n→ Written preparation: He does reasonably well when he comes up to speak, but he does not really prepare by writing things down. I have repeatedly explained that this will help him, especially when the content or information becomes more difficult. The next step is to write and organize his ideas before speaking, with notes on the table available as support. This preparation guidance does not take away from the clear impromptu performance he gave.",
+              "zh": "✓【即兴展示】：Owen 做得非常好。他的演讲组织清楚、内容安排得很好；我起初不确定是不是提前准备的，但他确认这是即兴演讲。整体逻辑清楚，很容易理解。\n\n→【书面准备】：他上台讲的时候表现还可以，但并没有真正通过写下内容来准备。我已经反复向他说明，这会帮助他，尤其当内容或信息变得更难时。下一步是在开口前写下、整理想法，并把笔记放在桌上作为支持。这项准备方面的指导，并不否定他这次清晰的即兴表现。"
+            },
+            {
+              "id": "elsa",
+              "name": "Elsa",
+              "en": "→ Homework and speech structure: Elsa did not do her homework. She thought her speech would be very short, but the overall length was fine. The main area to improve was the full structure of her speech, which was not yet in place. Suggested practice: she could organize an outline using the structure covered in class before speaking, so the response has a clearer overall shape rather than relying on length alone.",
+              "zh": "→【作业与演讲结构】：Elsa 没有做作业。她以为自己的演讲会很短，但整体长度是可以的。主要需要改进的是演讲的完整结构，这一点还没有做到位。练习建议：可以在开口前按照课堂讲过的结构整理提纲，让回答有更清楚的整体安排，而不只是长度足够。"
+            },
+            {
+              "id": "jarvis",
+              "name": "Jarvis",
+              "en": "✓ Preparation and speech length: Jarvis did the preparation and homework, and he spoke for longer. This was really good.\n\n→ Develop the intended topic: He repeatedly used the word “die.” The focus should be why people have the habit of doing dangerous things, rather than repeatedly emphasizing death. Many students focused on roller coasters; the teacher wanted examples from their own lives of dangerous things people do, included in the prepared speech, and an explanation of why.\n\n→ Classroom focus and behaviour: Jarvis was playing with toys, picking up forks and spoons and randomly throwing them about. He was also talking and writing on the whiteboard while another student was speaking, which was disruptive. He needs to keep the utensils on the table, put the toys aside and give the speaker his attention. The focus is on these specific actions and on sustaining attention during classmates’ presentations.",
+              "zh": "✓【准备与演讲长度】：Jarvis 做了准备、完成了作业，演讲也讲得更长。这一点非常好。\n\n→【展开题目真正要讨论的内容】：他反复使用“die（死亡）”这个词。重点应该是人们为什么会有做危险事情的习惯，而不是反复强调死亡。很多学生集中讲过山车；老师希望他们在准备的演讲里，加入自己生活中人们会做的危险事情，并解释为什么会这样做。\n\n→【课堂专注与行为】：Jarvis 在玩玩具，拿起叉子和勺子，随意把它们扔来扔去。他也在另一位同学演讲时讲话、在白板上写字，造成了干扰。他需要把餐具留在桌上、放下玩具，并把注意力给发言者。重点是改进这些具体行为，并在同学展示时持续专注。"
             }
           ]
         }

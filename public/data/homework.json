@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-21T11:33:53.275557+00:00",
+  "updatedAt": "2026-10-22T09:17:42.979824+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -534,6 +534,33 @@
             {
               "name": "Jarvis",
               "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-15&student=jarvis"
+            }
+          ]
+        },
+        {
+          "id": "thu-afternoon-2026-10-22",
+          "date": "2026-10-22",
+          "time": "15:30–17:30",
+          "classContent": [
+            "◆ Prepared speeches and topic focus: Students spoke about why people have the habit of doing dangerous things. Many focused on the roller-coaster situation, but the aim was to include dangerous things people do in their own lives and explain why they do them, rather than repeatedly focus on death. The personal example belonged in the speech they were supposed to prepare; this was not a request to give a new personal example immediately during the discussion.\n\n◆ Organizing before speaking: Students could use time before class, including when they arrived early, or while other students were speaking to write and organize ideas in their notebooks. They could put those notes on the table in front of them and use them while speaking. Writing ideas down becomes especially helpful as the content and information become more difficult."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Remi",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-22&student=remy"
+            },
+            {
+              "name": "Owen",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-22&student=owen"
+            },
+            {
+              "name": "Elsa",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-22&student=elsa"
+            },
+            {
+              "name": "Jarvis",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-22&student=jarvis"
             }
           ]
         }
