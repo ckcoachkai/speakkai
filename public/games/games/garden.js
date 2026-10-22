@@ -1,5 +1,6 @@
 import {gardenWeaponOrigin} from './garden-weapon-motion.js';
 import {SOURCE_CATALOG} from './garden-source-catalog.js';
+import {TRUMP_CAST_TYPES} from './garden-trump-cast.js?v=20261022-trump30';
 import {GARDEN_ANIME_TYPES,createGardenAnime} from './garden-anime.js';
 import {createGardenBaby} from './garden-baby.js';
 import { playGardenSynth } from './garden-audio.js?v=20261020-animated';
@@ -12,7 +13,7 @@ import { GARDEN_ANIMALS, drawGardenAnimal } from './garden-animals.js?v=20261020
 import { createGardenRenderer, drawGardenPlantUpgrade } from './garden-rig.js?v=20261020-animated';
 import { GARDEN_RULES, PLANT_BY_ID, ZOMBIE_BY_ID, getSplashDamage } from './garden-rules.js?v=20261013-garden';
 import { createGardenFX } from './garden-fx.js?v=20261013-garden';
-import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261020-animated';
+import { createGardenMonsters, GARDEN_MONSTER_TYPES, GARDEN_MONSTER_HEIGHT } from './garden-monsters.js?v=20261022-trump30';
 
 /**
  * Plants vs. Zombies. A real, symmetric classroom lane battle.
@@ -42,6 +43,7 @@ export const ZOMBIE_CATALOG = Object.freeze(Array.from({ length: 100 }, (_, inde
 // Classroom cameos use ordinary health, armor and bite mechanics.
 // They are rare members of later waves, never a timed selection shortcut.
 export const GIANT_CATALOG = Object.freeze([
+...TRUMP_CAST_TYPES.map(type=>({id:type.id,name:type.name,health:1500,bodyHealth:1500,armorHealth:0,speed:.016,bite:50,biteCadence:.75,generated:true,fictional:true})),
 ...SOURCE_CATALOG.filter(t=>t.id!=='hellokitty'),
 {id:'armor-flier',name:'Armor Flier (original inspired rig)',health:1500,bodyHealth:1500,armorHealth:0,speed:.018,bite:45,biteCadence:.8},{id:'hammer-flier',name:'Hammer Flier (original inspired rig)',health:1800,bodyHealth:1800,armorHealth:0,speed:.015,bite:60,biteCadence:.9},
 {"id": "zeus", "name": "Zeus Zombie", "health": 2300, "bodyHealth": 2300, "armorHealth": 0, "speed": 0.012, "bite": 90, "biteCadence": 0.8},{"id": "poseidon", "name": "Poseidon Zombie", "health": 2300, "bodyHealth": 2300, "armorHealth": 0, "speed": 0.012, "bite": 90, "biteCadence": 0.8},{"id": "gandalf", "name": "Gandalf Zombie", "health": 1900, "bodyHealth": 1900, "armorHealth": 0, "speed": 0.013, "bite": 70, "biteCadence": 0.8},{"id": "kingarthur", "name": "Kingarthur Zombie", "health": 2500, "bodyHealth": 2500, "armorHealth": 0, "speed": 0.011, "bite": 85, "biteCadence": 0.8},{"id": "merlin", "name": "Merlin Zombie", "health": 1850, "bodyHealth": 1850, "armorHealth": 0, "speed": 0.014, "bite": 65, "biteCadence": 0.8},{"id": "hobbit", "name": "Hobbit Zombie", "health": 1250, "bodyHealth": 1250, "armorHealth": 0, "speed": 0.021, "bite": 42, "biteCadence": 0.8},{"id": "zombiecat", "name": "Zombie Cat", "health": 1350, "bodyHealth": 1350, "armorHealth": 0, "speed": 0.023, "bite": 48, "biteCadence": 0.8},{"id": "zombiepanda", "name": "Zombie Panda", "health": 2400, "bodyHealth": 2400, "armorHealth": 0, "speed": 0.01, "bite": 80, "biteCadence": 0.8},{"id": "zombiemonkey", "name": "Zombie Monkey", "health": 1450, "bodyHealth": 1450, "armorHealth": 0, "speed": 0.022, "bite": 52, "biteCadence": 0.8},
@@ -1221,9 +1223,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     // lane height never does. The foot may move down while its lane stays fixed.
     const displayHeight = monsters.dimensions(mob.monsterId)?.height || GARDEN_MONSTER_TYPES.find(type => type.id === mob.monsterId)?.height || GARDEN_MONSTER_HEIGHT;
     const scale = Math.min(lane.zombieScale * (mob.type?.visualScale || 1), Math.max(.02, (clip.height - 16) / displayHeight));
-    const typeWidth = monsters.dimensions(mob.monsterId)?.width || GARDEN_MONSTER_TYPES.find(type => type.id === mob.monsterId)?.width || GARDEN_MONSTER_HEIGHT * 470 / 370;
-    const halfWidth = (typeWidth / 2 + 28) * scale;
-    const x = clamp(lane.plantX + mob.x * lane.travel, clip.x + halfWidth, clip.x + clip.width - halfWidth);
+    const x = lane.plantX + mob.x * lane.travel; // Match the combat position; clipping must never pin a walking monster in place.
     const y = clamp(lane.floor, clip.y + displayHeight * scale + 8, clip.y + clip.height - 8);
     return { x, y, scale, height: displayHeight * scale, clip, laneFloor: lane.floor, laneX: lane.plantX + mob.x * lane.travel };
   }

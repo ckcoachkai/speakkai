@@ -3,6 +3,7 @@ import {GARDEN_ANIME_TYPES,drawGardenAnime} from './garden-anime.js';
 import {NIULAI_VARIANTS,createNiuLaiRenderer} from './garden-niulai.js';
 import {FLIERS,drawFlier} from './garden-fliers.js';
 import {createSkinMotion} from './garden-skin-motion.js';
+import {TRUMP_CAST_TYPES} from './garden-trump-cast.js?v=20261022-trump30';
 /** Sourced cameo artwork plus explicitly labeled generated zombie variants.
  * Cosmetic undead treatment and gait never change combat statistics. */
 const GM_FINITE=(value,fallback=0)=>Number.isFinite(Number(value))?Number(value):fallback;
@@ -17,7 +18,7 @@ export const GARDEN_MONSTER_TYPES=Object.freeze([
  {id:'minecraft-zombie',name:'Minecraft Zombie',width:155,height:72},{id:'minecraft-villager',name:'Minecraft Villager',width:145,height:64},
  {id:'pennywise',name:'Pennywise',width:365},{id:'zombieclown',name:'Zombie Clown',width:365},
  {id:'demolisher',name:'Demolisher',width:350},{id:'mutated',name:'Mutated Zombie',width:350},{id:'irradiated',name:'Irradiated Zombie',width:320}
-].map(type=>Object.freeze({...type,width:type.width*(type.height||GARDEN_MONSTER_HEIGHT)/370,height:type.height||GARDEN_MONSTER_HEIGHT,normalHeight:112,sourced:true})));
+].map(type=>Object.freeze({...type,width:type.width*(type.height||GARDEN_MONSTER_HEIGHT)/370,height:type.height||GARDEN_MONSTER_HEIGHT,normalHeight:112,sourced:true})).concat(TRUMP_CAST_TYPES));
 
 export function isNativeAnimatedMonster(record){return Boolean(record&&record.frames?.length>1&&record.nativeAnimated!==false);}
 
@@ -87,12 +88,11 @@ export function createGardenMonsters({artwork={}}={}) {
   ctx.save();
   if(clip&&[clip.x,clip.y,clip.width,clip.height].every(Number.isFinite)&&clip.width>0&&clip.height>0){ctx.beginPath();ctx.rect(clip.x,clip.y,clip.width,clip.height);ctx.clip();}
   ctx.translate(GM_FINITE(x),GM_FINITE(y));ctx.scale(s,s);
-  if(sprite.flipX)ctx.scale(-1,1);
   if(sprite.undead&&fall===0){const phase=clock*3.2;ctx.translate(Math.sin(phase)*1.8,-Math.max(0,Math.sin(phase))*2.5);ctx.rotate(Math.sin(phase)*.018);}
   // A sourced toy profile rocks as a whole; this is not a native walk cycle.
   if(sprite.motion==='waddle'&&fall===0){const phase=clock*6;ctx.translate(0,-Math.abs(Math.sin(phase))*3);ctx.rotate(Math.sin(phase)*.035);}
-  if(!sprite.clips?.[mode]&&fall===0){const t=Math.max(0,clock-playhead.start);if(mode==='charge'){ctx.translate(-Math.min(1,t*3)*5,-Math.sin(t*9)*2);ctx.rotate(-.045*Math.min(1,t*3));ctx.shadowColor='#b7edff';ctx.shadowBlur=12+Math.sin(t*13)*5;}else if(mode==='attack'){const thrust=Math.pow(Math.max(0,Math.sin(t*8)),2);ctx.translate(-thrust*16,-thrust*3);ctx.rotate(-thrust*.075);}}
-  if(hurt>0)ctx.translate(Math.sin(GM_FINITE(time)*61)*hurt*6,-hurt*2);
+  if(!sprite.clips?.[mode]&&fall===0){const t=Math.max(0,clock-playhead.start);if(mode==='charge'){ctx.translate(-Math.min(1,t*3)*5,-Math.sin(t*9)*2);ctx.rotate(-.045*Math.min(1,t*3));ctx.shadowColor='#b7edff';ctx.shadowBlur=12+Math.sin(t*13)*5;}else if(mode==='attack'){const cycle=(t%.78)/.78,anticipation=cycle<.22?Math.sin(cycle/.22*Math.PI):0,strike=cycle>=.22?Math.sin(Math.min(1,(cycle-.22)/.78)*Math.PI)**3:0;ctx.translate(anticipation*3-strike*16,-strike*3);ctx.rotate(anticipation*.015-strike*.075);}}
+  if(hurt>0)ctx.translate(hurt*7,-hurt*2);
   if(fall>0&&!sprite.clips?.death){ctx.rotate(fall*.9);ctx.globalAlpha*=1-fall*.75;}
   // Keep source colors and shading intact, including at low health.
   ctx.filter=hurt>0?'brightness('+(1+hurt*.25)+')':'none';
@@ -103,12 +103,15 @@ export function createGardenMonsters({artwork={}}={}) {
   if(sprite.radiation){ctx.shadowColor='#99ff38';ctx.shadowBlur=15+Math.sin(clock*4)*3;}
   const paint=source=>{
    ctx.save();
+   const anchor=source.anchor||foot;
+   // Facing mirrors source pixels only. Attacks and recoil keep world direction.
+   if(sprite.flipX)ctx.scale(-1,1);
    // A single continuous transform preserves crisp contours; slicing the
    // artwork into horizontal strips made silhouettes look jagged.
    if(sprite.undead&&!sprite.generatedZombie){
     ctx.transform(1,0,(sprite.flipX?-1:1)*.045,.96,0,0);
    }
-   if(sprite.preserveNativeMotion||sprite.radiation||!GM_skin.draw(ctx,sprite.img,source.rect,{id:key,time:clock,x:-foot[0]*factor,y:-foot[1]*factor,width:sprite.frameWidth*factor,height:sprite.frameHeight*factor,mode,action,hit:hurt,nativeFrames:sprite.frames.length,pixelArt:sprite.pixelArt}))ctx.drawImage(sprite.img,...source.rect,-foot[0]*factor,-foot[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
+   if(sprite.preserveNativeMotion||sprite.radiation||!GM_skin.draw(ctx,sprite.img,source.rect,{id:key,time:clock,x:-anchor[0]*factor,y:-anchor[1]*factor,width:sprite.frameWidth*factor,height:sprite.frameHeight*factor,mode,action,hit:hurt,nativeFrames:sprite.frames.length,pixelArt:sprite.pixelArt}))ctx.drawImage(sprite.img,...source.rect,-anchor[0]*factor,-anchor[1]*factor,sprite.frameWidth*factor,sprite.frameHeight*factor);
    ctx.restore();
   };
   // Exactly one silhouette per actor: alpha crossfades produce ghost bodies.
