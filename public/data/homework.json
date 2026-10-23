@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-23T09:45:52.315130+00:00",
+  "updatedAt": "2026-10-23T12:58:52.409101+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1059,6 +1059,33 @@
             {
               "name": "Zoe",
               "feedbackUrl": "/fb/?class=fri-later&date=2026-10-16&student=zoey"
+            }
+          ]
+        },
+        {
+          "id": "fri-later-2026-10-23",
+          "date": "2026-10-23",
+          "time": "18:00–20:00",
+          "classContent": [
+            "◆ Homework presentations: Students came up to deliver their homework speeches. The presentations included reading from paper and speaking from memory. We highlighted memorizing the speech as a step toward presenting it rather than simply reading through the text.\n\n◆ Delivery feedback: The feedback focused on a clear voice, articulation, hand gestures, speaking while putting the paper down, a more natural delivery rather than a mechanical reading, a slightly slower pace, emphasis, and enough volume to be heard. These were feedback and practice points from the presentations; no new homework assignment was recorded."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Merlin",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-23&student=merlin"
+            },
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-23&student=arthur"
+            },
+            {
+              "name": "Molly",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-23&student=molly"
+            },
+            {
+              "name": "Zoe",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-10-23&student=zoey"
             }
           ]
         }

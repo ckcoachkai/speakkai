@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-23T09:45:52.315130+00:00",
+  "updatedAt": "2026-10-23T12:58:52.409101+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1315,6 +1315,43 @@
               "name": "Zoe",
               "en": "→ Attitude and participation: During the first half of the lesson, Zoe repeatedly said that she was very tired and did not really want to do anything. She kept returning to complaints of being tired, and she said that it had taken her three hours to get to class. Overall, I felt that her attitude and motivation during that part of the lesson were not very positive. She did, however, go through everything.\n\n→ Suggested next step: She could briefly explain how she is feeling, then focus on attempting the next task rather than repeatedly returning to the complaint. This would help her keep her attention on the practice once she has begun.",
               "zh": "→【态度与参与】：在这节课的前半段，Zoe 反复说自己很累，不太想做任何事情。她不断回到“很累”这一抱怨上，也说自己花了三个小时才到课堂。整体来看，我觉得她在那一段课堂中的态度和积极性不太理想。不过，她还是把所有内容都做了一遍。\n\n→【下一步建议】：她可以简要说明自己的感受，然后把注意力转向尝试下一个任务，而不是反复回到同一个抱怨上。这样可以帮助她在开始练习后，把注意力继续放在练习本身。"
+            }
+          ]
+        },
+        {
+          "id": "fri-later-2026-10-23",
+          "date": "2026-10-23",
+          "time": "18:00–20:00",
+          "status": "held",
+          "classContent": {
+            "en": "◆ Homework presentations: Students came up to deliver their homework speeches. The presentations included reading from paper and speaking from memory. We highlighted memorizing the speech as a step toward presenting it rather than simply reading through the text.\n\n◆ Delivery feedback: The feedback focused on a clear voice, articulation, hand gestures, speaking while putting the paper down, a more natural delivery rather than a mechanical reading, a slightly slower pace, emphasis, and enough volume to be heard. These were feedback and practice points from the presentations; no new homework assignment was recorded.",
+            "zh": "◆【作业展示】：学生上台展示自己的作业演讲，既有看着稿纸朗读的展示，也有凭记忆进行的展示。我们强调，记住演讲是从单纯读完文字走向真正展示的一步。\n\n◆【表达反馈】：反馈重点包括清楚的声音、吐字、手势、放下稿纸时继续表达、用更自然的方式讲话而不只是机械朗读，以及稍微放慢语速、增加强调和使用让听众听见的音量。这些是根据展示提出的反馈和练习重点；现有记录没有提供新的作业任务。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "merlin",
+              "name": "Merlin",
+              "en": "Merlin came up to deliver his speech, but his delivery was very mechanical and he read through the text. I do not think he had really practised at home; that is my impression from this presentation, rather than confirmed knowledge of his practice. He brought the paper up and read it.\n\nSuggested practice: he could rehearse the speech aloud before presenting, aiming for natural phrasing rather than simply finishing the reading.",
+              "zh": "Merlin 上台进行了演讲，但表达比较机械，主要是把文字读完。我觉得他可能没有在家真正练习；这是我根据这次展示形成的印象，并不是已经确认他在家的练习情况。他把稿纸带上台，然后照着读了出来。\n\n练习建议：可以在展示前出声练习演讲，尝试用更自然的语气表达，而不只是把文字读完。"
+            },
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": "Arthur spoke with a clear voice and better articulation. He also used hand gestures and spoke while putting the paper down. I felt he was taking the presentation more seriously.\n\nSuggested practice: he could continue putting the paper down while speaking and using clear articulation and gestures, so the presentation feels more direct to the audience.",
+              "zh": "Arthur 讲话时声音清楚，吐字也更清晰。他还运用了手势，并在放下稿纸的同时继续表达。我觉得他对这次展示更认真了一些。\n\n练习建议：可以继续练习在讲话时放下稿纸，保持清楚的吐字并运用手势，让表达更直接地传达给听众。"
+            },
+            {
+              "id": "molly",
+              "name": "Molly",
+              "en": "Molly memorized her speech rather than reading it, which was the main achievement in this homework presentation. Well done for remembering it and presenting it. Her voice was a little soft, so she could increase the volume. Her hand gestures could also be better. The next step is to keep presenting from memory while developing a stronger voice and clearer gestures.",
+              "zh": "Molly 记住了自己的演讲，而不是照着稿子读，这是这次作业展示中最主要的成果。能够记住并展示出来，做得好。她的声音稍微轻了一点，可以提高音量，手势也还可以改进。下一步是继续脱稿展示，同时让声音更有力量、手势更清楚。"
+            },
+            {
+              "id": "zoey",
+              "name": "Zoe",
+              "en": "Zoe’s presentation was very well put together. She used hand gestures, had everything on one page and spoke clearly. Her pace was slightly fast, and she could add more emphasis, but otherwise she did a very good job.\n\nSuggested practice: she could slow down slightly and emphasize the key words, giving listeners more time to follow the ideas while keeping her clear speech and gestures.",
+              "zh": "Zoe 的展示组织得非常好。她运用了手势，把全部内容放在一页纸上，并且表达清楚。语速稍微快了一点，还可以增加一些重音和强调；除此之外，她做得很好。\n\n练习建议：可以稍微放慢语速，强调关键词，在保持清楚表达和手势的同时，让听众有更多时间跟上思路。"
             }
           ]
         }
