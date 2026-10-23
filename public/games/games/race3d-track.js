@@ -245,8 +245,8 @@ export function createTrack(THREE) {
   addRibbon({ left: -12.9, right: 12.9, step: 1.3, lift: -0.17, material: gravelMaterial, uvScale: 8, name: 'continuous-gravel-runoff' });
 
   const asphaltTexture = makeGrainTexture(61, 25, 7813);
-  const asphaltMaterial = makeStandard('#747d80', 0.94, asphaltTexture ? { map: asphaltTexture } : {});
-  addRibbon({ left: -HALF_WIDTH, right: HALF_WIDTH, step: 0.95, lift: 0, material: asphaltMaterial, uvScale: 9, name: 'continuous-asphalt-racing-surface' });
+  const asphaltMaterial = makeStandard('#b9bcb9', 0.94, asphaltTexture ? { map: asphaltTexture, bumpMap: asphaltTexture, bumpScale: 0.018 } : {});
+  addRibbon({ left: -HALF_WIDTH, right: HALF_WIDTH, step: 0.95, lift: 0, material: asphaltMaterial, uvScale: 3.5, name: 'continuous-asphalt-racing-surface' });
 
   const white = makeStandard('#e8e8df', 0.74, { emissive: '#111111' });
   const centerPaint = makeStandard('#dfe2dc', 0.72);
@@ -269,6 +269,31 @@ export function createTrack(THREE) {
     addRibbon({ left: edge - 0.075, right: edge + 0.075, step: 1.0, lift: 0.055, material: white, name: `painted-road-edge-${side}` });
   }
 
+  // Bank-following tire deposits and concrete seams are batched into two meshes.
+  const rubberQuads = [], curbJoints = [];
+  for (let d = 40; d < totalLength; d += 3.1) {
+    const f = frameAt(d);
+    if (Math.abs(f.bank) < 0.009 || Math.sin(d * 0.031) < -0.42) continue;
+    const line = clamp(f.bank * -30, -2.8, 2.8);
+    for (const offset of [-0.72, 0.72]) {
+      const l = line + offset + Math.sin(d * 0.06) * 0.12;
+      rubberQuads.push({ points: [
+        surfacePoint(d, l - 0.13, 0.012), surfacePoint(d + 2.6, l - 0.10, 0.012),
+        surfacePoint(d + 2.6, l + 0.12, 0.012), surfacePoint(d, l + 0.13, 0.012)
+      ] });
+    }
+  }
+  addQuads(rubberQuads, makeStandard('#161918', 0.98, { transparent: true, opacity: 0.24, depthWrite: false }), 'embedded-tire-rubber');
+  for (let d = 0; d < totalLength; d += 1.35) {
+    for (const side of [-1, 1]) {
+      const a = Math.min(side * 7.2, side * 8.1), b = Math.max(side * 7.2, side * 8.1);
+      curbJoints.push({ points: [
+        surfacePoint(d, a, 0.054), surfacePoint(d + 0.045, a, 0.054),
+        surfacePoint(d + 0.045, b, 0.054), surfacePoint(d, b, 0.054)
+      ] });
+    }
+  }
+  addQuads(curbJoints, makeStandard('#655f58', 1, { transparent: true, opacity: 0.25, depthWrite: false }), 'curb-expansion-joints');
   // Broken centerline: one batched mesh keeps the marking lightweight.
   const dashes = [];
   for (let d = 8; d < totalLength; d += 22) {

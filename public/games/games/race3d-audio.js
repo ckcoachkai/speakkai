@@ -13,8 +13,9 @@ export function createRaceAudio({ sound = true } = {}) {
   let context = null, master = null, compressor = null, noiseBuffer = null;
   let noiseSource = null, windFilter = null, windGain = null, skidFilter = null, skidGain = null;
   let engines = [], effects = new Set(), closeTimer = 0, finishTimer = 0;
-  let lastGear = null, lastSpeed = 0, lastSpin = new Map(), lastCars = new Map();
+  let lastSpin = new Map(), lastCars = new Map(), eventCooldowns = new Map();
   let lastCrashAt = -Infinity, lastShiftAt = -Infinity, raceStartedAt = 0;
+  let lastUpdateAt = 0;
   let previousCountdown = -1;
 
   function makeNoiseBuffer(ctx) {
@@ -34,23 +35,30 @@ export function createRaceAudio({ sound = true } = {}) {
     const lowFilter = ctx.createBiquadFilter(), highFilter = ctx.createBiquadFilter();
     const lowGain = ctx.createGain(), highGain = ctx.createGain(), bus = ctx.createGain();
     const pan = typeof ctx.createStereoPanner === 'function' ? ctx.createStereoPanner() : null;
-    low.type = 'sawtooth'; high.type = 'triangle'; pulse.type = 'square';
+    // Uneven exhaust harmonics give a combustion timbre, without the bright
+    // constant buzz of an unfiltered sawtooth or any recorded engine samples.
+    low.type = 'triangle'; high.type = 'triangle'; pulse.type = 'sine';
+    if (typeof ctx.createPeriodicWave === 'function') {
+      const real = new Float32Array(25), imag = new Float32Array(25);
+      for (let n = 1; n < imag.length; n++) imag[n] = (n % 2 ? 1 : 0.52) / Math.pow(n, 1.28);
+      low.setPeriodicWave(ctx.createPeriodicWave(real, imag));
+    }
     lowFilter.type = 'lowpass'; lowFilter.Q.value = 0.65;
     highFilter.type = 'bandpass'; highFilter.Q.value = 0.9;
-    lowGain.gain.value = 0.62; highGain.gain.value = 0.24;
+    lowGain.gain.value = 0.58; highGain.gain.value = 0.17;
     bus.gain.value = 0;
     low.connect(lowFilter).connect(lowGain).connect(bus);
     high.connect(highFilter).connect(highGain).connect(bus);
-    // A separate pulse layer gives the engine a four-cylinder edge without
-    // adding recorded samples.
-    const pulseGain = ctx.createGain(); pulseGain.gain.value = 0.08;
+    // The lower firing-order harmonic carries the exhaust body at idle.
+    const pulseGain = ctx.createGain(); pulseGain.gain.value = 0.15;
     const pulseFilter = ctx.createBiquadFilter(); pulseFilter.type = 'lowpass'; pulseFilter.frequency.value = 280;
     pulse.connect(pulseFilter).connect(pulseGain).connect(bus);
     if (pan) bus.connect(pan).connect(destination); else bus.connect(destination);
     const now = ctx.currentTime;
     low.frequency.value = 34; high.frequency.value = 68; pulse.frequency.value = 34;
     low.start(now); high.start(now); pulse.start(now);
-    return { low, high, pulse, lowFilter, highFilter, pulseFilter, lowGain, highGain, pulseGain, bus, pan };
+    return { low, high, pulse, lowFilter, highFilter, pulseFilter, lowGain, highGain, pulseGain, bus, pan,
+      carId: null, gear: 1, rpm: 950, speed: 0, load: 0.15, shiftUntil: 0 };
   }
 
   function createGraph() {
@@ -137,7 +145,7 @@ export function createRaceAudio({ sound = true } = {}) {
     return true;
   }
 
-  function tone(frequency, duration = 0.11, { type = 'sine', volume = 0.09, delay = 0, endFrequency = frequency } = {}) {
+  function tone(frequency, duration = 0.11, { type = 'sine', volume = 0.09, delay = 0, endFrequency = frequency, pan = 0 } = {}) {
     if (!context || !master || !enabled || effects.size >= MAX_FX) return;
     try {
       const now = context.currentTime + Math.max(0, delay), osc = context.createOscillator(), gain = context.createGain();
@@ -145,32 +153,40 @@ export function createRaceAudio({ sound = true } = {}) {
       if (endFrequency !== frequency) osc.frequency.exponentialRampToValueAtTime(Math.max(1, endFrequency), now + duration);
       gain.gain.setValueAtTime(0.0001, now); gain.gain.exponentialRampToValueAtTime(volume, now + 0.012);
       gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-      osc.connect(gain).connect(master);
-      if (!addEffect([osc], [osc, gain])) return;
+      const panner = typeof context.createStereoPanner === 'function' ? context.createStereoPanner() : null;
+      osc.connect(gain);
+      if (panner) { panner.pan.value = clamp(pan, -1, 1); gain.connect(panner).connect(master); }
+      else gain.connect(master);
+      if (!addEffect([osc], [osc, gain, ...(panner ? [panner] : [])])) return;
       osc.start(now); osc.stop(now + duration + 0.015);
     } catch {}
   }
 
-  function noiseHit(duration = 0.16, volume = 0.18, cutoff = 1200) {
+  function noiseHit(duration = 0.16, volume = 0.18, cutoff = 1200, { endCutoff = cutoff, type = 'lowpass', pan = 0, attack = 0.004, delay = 0 } = {}) {
     if (!context || !noiseBuffer || !master || !enabled || effects.size >= MAX_FX) return;
     try {
-      const now = context.currentTime, source = context.createBufferSource(), filter = context.createBiquadFilter(), gain = context.createGain();
-      source.buffer = noiseBuffer; filter.type = 'lowpass'; filter.frequency.value = cutoff;
-      gain.gain.setValueAtTime(volume, now); gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-      source.connect(filter).connect(gain).connect(master);
-      if (!addEffect([source], [source, filter, gain])) return;
+      const now = context.currentTime + delay, source = context.createBufferSource(), filter = context.createBiquadFilter(), gain = context.createGain();
+      source.buffer = noiseBuffer; filter.type = type; filter.frequency.setValueAtTime(cutoff, now);
+      if (endCutoff !== cutoff) filter.frequency.exponentialRampToValueAtTime(Math.max(20, endCutoff), now + duration);
+      gain.gain.setValueAtTime(0.0001, now); gain.gain.exponentialRampToValueAtTime(volume, now + Math.min(attack, duration * 0.4));
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+      const panner = typeof context.createStereoPanner === 'function' ? context.createStereoPanner() : null;
+      source.connect(filter).connect(gain);
+      if (panner) { panner.pan.value = clamp(pan, -1, 1); gain.connect(panner).connect(master); }
+      else gain.connect(master);
+      if (!addEffect([source], [source, filter, gain, ...(panner ? [panner] : [])])) return;
       source.start(now); source.stop(now + duration + 0.01);
     } catch {}
   }
 
-  function crash(intensity = 1) {
+  function crash(intensity = 1, { volume = 1, pan = 0 } = {}) {
     const now = context?.currentTime ?? 0;
     if (!context || now - lastCrashAt < 0.18) return;
     lastCrashAt = now;
     const strength = clamp(Number(intensity) || 1, 0.35, 1.6);
-    noiseHit(0.22, 0.14 * strength, 780);
-    tone(92 + Math.random() * 22, 0.19, { type: 'triangle', volume: 0.095 * strength, endFrequency: 42 });
-    tone(410, 0.055, { type: 'square', volume: 0.035 * strength, endFrequency: 170 });
+    noiseHit(0.22, 0.14 * strength * volume, 780, { pan });
+    tone(92 + Math.random() * 22, 0.19, { type: 'triangle', volume: 0.095 * strength * volume, endFrequency: 42, pan });
+    tone(410, 0.055, { type: 'square', volume: 0.035 * strength * volume, endFrequency: 170, pan });
   }
 
   function shift(direction = 1) {
@@ -185,7 +201,7 @@ export function createRaceAudio({ sound = true } = {}) {
     if (!events) return [];
     if (Array.isArray(events)) return events;
     if (Array.isArray(events.events)) return events.events;
-    const flags = ['crash', 'collision', 'gearshift', 'shift', 'skid'];
+    const flags = ['crash', 'collision', 'gearshift', 'shift', 'skid', 'pickup', 'boost', 'banana-drop', 'banana-hit', 'bomb-launch', 'bomb-explode'];
     const flagged = flags.filter(key => events[key]).map(key => ({ type: key, intensity: events[key]?.intensity ?? events.intensity }));
     if (flagged.length) return flagged;
     return [events];
@@ -203,20 +219,79 @@ export function createRaceAudio({ sound = true } = {}) {
   function scalarDistance(car) { return Number(car?.distance ?? car?.progress ?? 0) || 0; }
   function scalarSide(car) { return Number(car?.lateral ?? car?.offset ?? car?.x ?? 0) || 0; }
 
-  function normalizeEvents(events, cars) {
-    let crashEvent = false, shiftEvent = false;
-    for (const event of eventList(events)) {
-      const type = eventType(event);
-      if (/crash|collision|impact|hit|spinout/.test(type)) { crashEvent = true; crash(event?.intensity ?? event?.strength ?? 1); }
-      if (/gear|shift/.test(type)) { shiftEvent = true; shift(event?.direction ?? 1); }
-      if (/skid|drift/.test(type)) tone(1320, 0.13, { type: 'sine', volume: 0.035, endFrequency: 920 });
+  function eventSpace(event, primary) {
+    if (!primary || typeof event !== 'object') return { volume: 0.75, pan: 0 };
+    const isPrimary = event?.carId === primary.id;
+    const eventDistance = Number(event?.distance);
+    const separation = Number.isFinite(eventDistance) ? Math.abs(eventDistance - scalarDistance(primary)) : 0;
+    const lateral = Number(event?.lateral);
+    return {
+      volume: isPrimary ? 1 : (separation > 180 ? 0 : 0.85 / (1 + separation * 0.035)),
+      pan: Number.isFinite(lateral) ? clamp((lateral - scalarSide(primary)) / 10, -0.85, 0.85) : 0,
+    };
+  }
+
+  function powerSound(type, space) {
+    const { volume, pan } = space;
+    if (type === 'item-pickup' || type === 'pickup') {
+      tone(920, 0.085, { volume: 0.065 * volume, endFrequency: 1320, pan });
+      tone(1580, 0.13, { type: 'triangle', volume: 0.045 * volume, delay: 0.075, pan });
+    } else if (type === 'boost') {
+      noiseHit(0.7, 0.15 * volume, 450, { endCutoff: 4400, type: 'bandpass', attack: 0.045, pan });
+      tone(160, 0.48, { type: 'triangle', volume: 0.07 * volume, endFrequency: 440, pan });
+    } else if (type === 'banana-drop') {
+      tone(310, 0.12, { volume: 0.065 * volume, endFrequency: 125, pan });
+      noiseHit(0.055, 0.035 * volume, 700, { pan });
+    } else if (type === 'banana-hit' || type === 'spin' || type === 'skid') {
+      // Filtered rubber scrape and descending squeal distinguish a slip from
+      // the low, hard body impact used for collisions and bomb damage.
+      noiseHit(0.5, 0.1 * volume, 2400, { endCutoff: 700, type: 'bandpass', attack: 0.02, pan });
+      tone(1450, 0.32, { volume: 0.04 * volume, endFrequency: 420, pan });
+    } else if (type === 'bomb-launch') {
+      noiseHit(0.2, 0.11 * volume, 480, { endCutoff: 2800, type: 'bandpass', attack: 0.025, pan });
+      tone(225, 0.16, { type: 'triangle', volume: 0.055 * volume, endFrequency: 95, pan });
+    } else if (type === 'bomb-explode') {
+      noiseHit(0.65, 0.28 * volume, 2200, { endCutoff: 140, pan });
+      tone(100, 0.5, { type: 'triangle', volume: 0.18 * volume, endFrequency: 28, pan });
+      noiseHit(0.13, 0.09 * volume, 5200, { endCutoff: 1200, type: 'highpass', pan });
     }
+  }
+
+  function normalizeEvents(events, cars, primary) {
+    let crashEvent = false, shiftEvent = false;
+    const now = context.currentTime;
+    // Nearby explosions take voice priority over the numerous item boxes in a
+    // large grid. Every one-shot still uses the same twelve-voice ceiling.
+    const priority = event => (eventType(event) === 'bomb-explode' ? 100 : 0) + eventSpace(event, primary).volume * 10;
+    const list = eventList(events).slice(0, 80).sort((a, b) => priority(b) - priority(a));
+    for (const event of list) {
+      const type = eventType(event);
+      const space = eventSpace(event, primary);
+      if (space.volume < 0.04) continue;
+      const isSkid = /^(banana-hit|spin|skid|drift|spinout)$/.test(type);
+      const isPower = /^(item-pickup|pickup|boost|banana-drop|banana-hit|bomb-launch|bomb-explode)$/.test(type);
+      const group = isSkid ? 'skid' : type;
+      const key = `${group}:${event?.carId ?? 'all'}`;
+      const interval = isSkid ? 0.55 : type === 'boost' ? 0.7 : 0.14;
+      // Explicit impacts suppress state fallbacks even when another event from
+      // this car was just heard; a single slip must not become a second crash.
+      if (isSkid || type === 'bomb-hit' || type === 'bomb-explode') crashEvent = true;
+      if (now - (eventCooldowns.get(key) ?? -Infinity) < interval) continue;
+      eventCooldowns.set(key, now);
+      if (isPower || isSkid) powerSound(isSkid ? 'skid' : type, space);
+      else if (/crash|collision|impact|hit/.test(type)) { crashEvent = true; crash(event?.intensity ?? event?.strength ?? 1, space); }
+      else if (/gear|shift/.test(type)) { shiftEvent = true; if (space.volume > 0.5) shift(event?.direction ?? 1); }
+    }
+    while (eventCooldowns.size > 256) eventCooldowns.delete(eventCooldowns.keys().next().value);
     // Simulation state is also a useful fallback if an event queue was drained
     // between rendered frames.
     for (let i = 0; i < cars.length; i++) {
       const car = cars[i], id = carId(car, i), old = lastCars.get(id), speed = carSpeed(car), spin = carSpin(car);
-      if (!crashEvent && ((spin > 0.08 && (lastSpin.get(id) ?? 0) <= 0.08) || (old && old.speed - speed > 7))) {
-        crash(clamp((old ? old.speed - speed : 8) / 12, 0.45, 1.4)); crashEvent = true;
+      const space = eventSpace({ carId: id, distance: scalarDistance(car), lateral: scalarSide(car) }, primary);
+      if (!crashEvent && space.volume > 0.1 && spin > 0.08 && (lastSpin.get(id) ?? 0) <= 0.08) {
+        powerSound('skid', space); crashEvent = true;
+      } else if (!crashEvent && space.volume > 0.1 && old && old.speed - speed > 7) {
+        crash(clamp((old.speed - speed) / 12, 0.45, 1.4), space); crashEvent = true;
       }
       if (!shiftEvent && old && old.gear != null && car?.gear != null && Number(car.gear) !== old.gear) {
         shift(Number(car.gear) > old.gear ? 1 : -1); shiftEvent = true;
@@ -237,42 +312,58 @@ export function createRaceAudio({ sound = true } = {}) {
     return [primary, ...others.slice(0, MAX_ENGINES - 1)];
   }
 
-  function updateEngines(cars, focusId, time) {
+  function updateEngines(selected, time, dt) {
     if (!context || !master) return;
-    const selected = chooseEngines(cars, focusId);
     const primary = selected[0];
-    let primarySpeed = primary ? carSpeed(primary) : 0;
-    if (primary?.finished) primarySpeed *= 0.18;
-    const speedLimit = Math.max(35, Number(primary?.topSpeed ?? primary?.maxSpeed) || 72);
-    const ratio = clamp(primarySpeed / speedLimit, 0, 1);
-    const gearCount = 6;
-    const gearPosition = Math.min(gearCount - 0.0001, ratio * gearCount);
-    const gear = Math.floor(gearPosition) + 1;
-    const throttle = clamp(0.22 + (primarySpeed - lastSpeed) * 0.05, 0.08, 1);
-    if (racing && !finished && lastGear != null && gear !== lastGear && time - lastShiftAt > 0.12) shift(gear > lastGear ? 1 : -1);
-    lastGear = gear;
-    lastSpeed = primarySpeed;
-
+    const gearLimits = [0.24, 0.43, 0.65, 0.88, 1.18];
+    if (!primary) { smooth(windGain.gain, 0, time); smooth(skidGain.gain, 0, time); }
     for (let i = 0; i < engines.length; i++) {
       const engine = engines[i], car = selected[i];
       if (!car) { smooth(engine.bus.gain, 0, time); continue; }
-      const speed = carSpeed(car), normalized = clamp(speed / Math.max(35, Number(car?.topSpeed ?? car?.maxSpeed) || 72), 0, 1);
-      const localPosition = Math.min(gearCount - 0.0001, normalized * gearCount);
-      const localRpm = 900 + (localPosition - Math.floor(localPosition)) * 5450;
-      const hz = localRpm / 30;
-      engine.low.frequency.setTargetAtTime(hz, time, 0.07);
-      engine.high.frequency.setTargetAtTime(hz * 2.02, time, 0.07);
-      engine.pulse.frequency.setTargetAtTime(hz * 0.5, time, 0.07);
-      engine.lowFilter.frequency.setTargetAtTime(270 + normalized * 1700, time, 0.1);
-      engine.highFilter.frequency.setTargetAtTime(430 + normalized * 2100, time, 0.1);
-      engine.pulseFilter.frequency.setTargetAtTime(130 + normalized * 330, time, 0.1);
-      const gain = i === 0 ? 0.19 + normalized * 0.05 : 0.075 / (i + 0.25 + Math.abs(scalarDistance(car) - scalarDistance(primary)) * 0.03);
-      const slip = clamp(Math.max(carSpin(car) * 0.65, carSideSpeed(car) / 10, Number(car?.skid ?? car?.drift) || 0), 0, 1);
-      engine.bus.gain.setTargetAtTime(gain * (0.6 + throttle * 0.4) * (racing ? 1 : 0), time, 0.09);
+      const speed = carSpeed(car), limit = Math.max(20, Number(car?.topSpeed ?? car?.maxSpeed) || 43);
+      const normalized = clamp(speed / limit, 0, 1.3), boosted = Number(car?.boost) > 0;
+      const changedCar = engine.carId !== carId(car, i);
+      if (changedCar) {
+        engine.carId = carId(car, i); engine.speed = speed; engine.gear = 1;
+        while (engine.gear < 5 && normalized > gearLimits[engine.gear - 1] * 0.91) engine.gear++;
+        engine.shiftUntil = 0;
+      }
+      const oldGear = engine.gear;
+      // Separate up/down thresholds keep the engine from hunting between gears
+      // through corners. A short load dip makes each upshift audible.
+      if (engine.gear < 5 && normalized > gearLimits[engine.gear - 1] * 0.92) engine.gear++;
+      else if (engine.gear > 1 && normalized < gearLimits[engine.gear - 2] * 0.72) engine.gear--;
+      if (engine.gear !== oldGear && !changedCar) {
+        engine.shiftUntil = time + 0.11;
+        if (i === 0 && !finished) shift(engine.gear > oldGear ? 1 : -1);
+      }
+      const acceleration = clamp((speed - engine.speed) / dt, -20, 14);
+      engine.speed = speed;
+      const braking = clamp(Number(car?.brake) || 0, 0, 1);
+      const load = clamp(0.42 + acceleration * 0.05 - braking * 0.4 + (boosted ? 0.25 : 0), 0.08, 1);
+      engine.load += (load - engine.load) * (1 - Math.exp(-dt * 9));
+      const targetRpm = clamp(950 + normalized / gearLimits[engine.gear - 1] * 5550 + (boosted ? 260 : 0), 900, 7300);
+      engine.rpm += (targetRpm - engine.rpm) * (1 - Math.exp(-dt * 14));
+      const relativeSpeed = i === 0 ? 0 : speed - carSpeed(primary);
+      const approach = scalarDistance(car) < scalarDistance(primary) ? 1 : -1;
+      const doppler = clamp(1 + relativeSpeed * approach / 340, 0.94, 1.06);
+      const idleFlutter = speed < 3 ? Math.sin(time * 31 + i * 1.7) * 1.4 : 0;
+      const hz = (engine.rpm / 30 + idleFlutter) * doppler;
+      smooth(engine.low.frequency, hz, time, 0.025);
+      smooth(engine.high.frequency, hz * 2.01, time, 0.035);
+      smooth(engine.pulse.frequency, hz * 0.5, time, 0.03);
+      smooth(engine.lowFilter.frequency, 330 + normalized * 1350 + engine.load * 600, time, 0.08);
+      smooth(engine.highFilter.frequency, 480 + normalized * 1800, time, 0.08);
+      smooth(engine.pulseFilter.frequency, 140 + normalized * 270, time, 0.08);
+      smooth(engine.highGain.gain, 0.09 + engine.load * 0.14 + (boosted ? 0.06 : 0), time, 0.08);
+      const gain = i === 0 ? 0.2 + normalized * 0.035 : 0.08 / (i + 0.25 + Math.abs(scalarDistance(car) - scalarDistance(primary)) * 0.03);
+      const slip = clamp(Math.max(carSpin(car) * 0.65, carSideSpeed(car) / 10, Number(car?.slip ?? car?.skid ?? car?.drift) || 0), 0, 1);
+      const shiftLoad = time < engine.shiftUntil ? 0.55 : 1;
+      smooth(engine.bus.gain, gain * (0.52 + engine.load * 0.48) * shiftLoad * (racing ? 1 : 0), time, 0.045);
       if (engine.pan) engine.pan.pan.setTargetAtTime(clamp((scalarSide(car) - scalarSide(primary)) / 14, -0.85, 0.85), time, 0.12);
       if (i === 0) {
         smooth(windFilter.frequency, 180 + normalized * 1800, time, 0.12);
-        smooth(windGain.gain, racing ? 0.015 + normalized * 0.11 : 0, time, 0.16);
+        smooth(windGain.gain, racing ? normalized * normalized * 0.1 + (boosted ? 0.07 : 0) : 0, time, 0.16);
         smooth(skidFilter.frequency, 650 + slip * 1900, time, 0.05);
         smooth(skidGain.gain, racing ? Math.pow(slip, 1.25) * 0.22 : 0, time, 0.045);
       }
@@ -292,8 +383,9 @@ export function createRaceAudio({ sound = true } = {}) {
   function start() {
     if (!alive) return;
     if (finishTimer) { clearTimeout(finishTimer); finishTimer = 0; }
-    racing = true; finished = false; lastGear = null; lastSpeed = 0;
-    lastSpin.clear(); lastCars.clear(); lastCrashAt = -Infinity; lastShiftAt = -Infinity; previousCountdown = -1;
+    racing = true; finished = false; lastUpdateAt = 0;
+    lastSpin.clear(); lastCars.clear(); eventCooldowns.clear(); lastCrashAt = -Infinity; lastShiftAt = -Infinity; previousCountdown = -1;
+    for (const engine of engines) { engine.carId = null; engine.rpm = 950; engine.load = 0.15; }
     if (!enabled || !unlockFromGesture()) return;
     const now = context.currentTime;
     raceStartedAt = now;
@@ -307,14 +399,17 @@ export function createRaceAudio({ sound = true } = {}) {
     if (!alive || !racing || !enabled || !context || context.state !== 'running') return;
     const list = Array.isArray(cars) ? cars : [];
     const now = context.currentTime;
-    normalizeEvents(events, list);
+    const selected = chooseEngines(list, focusId);
+    const dt = clamp(lastUpdateAt ? now - lastUpdateAt : 1 / 60, 1 / 240, 0.1);
+    lastUpdateAt = now;
+    normalizeEvents(events, list, selected[0]);
     for (let i = 0; i < list.length; i++) {
       const car = list[i], id = carId(car, i);
       lastCars.set(id, { speed: carSpeed(car), gear: car?.gear == null ? null : Number(car.gear) });
     }
     while (lastCars.size > 64) lastCars.delete(lastCars.keys().next().value);
     playCountdown(now);
-    updateEngines(list, focusId, now);
+    updateEngines(selected, now, dt);
   }
 
   function finish(winner) {
@@ -334,8 +429,8 @@ export function createRaceAudio({ sound = true } = {}) {
   function reset() {
     if (!alive) return;
     if (finishTimer) { clearTimeout(finishTimer); finishTimer = 0; }
-    racing = false; finished = false; lastGear = null; lastSpeed = 0;
-    previousCountdown = -1; lastSpin.clear(); lastCars.clear();
+    racing = false; finished = false; lastUpdateAt = 0;
+    previousCountdown = -1; lastSpin.clear(); lastCars.clear(); eventCooldowns.clear();
     cancelEffects();
     if (context && master) {
       const now = context.currentTime;
@@ -368,7 +463,7 @@ export function createRaceAudio({ sound = true } = {}) {
     if (closeTimer) { clearTimeout(closeTimer); closeTimer = 0; }
     if (finishTimer) { clearTimeout(finishTimer); finishTimer = 0; }
     disposeGraph();
-    lastSpin.clear(); lastCars.clear();
+    lastSpin.clear(); lastCars.clear(); eventCooldowns.clear();
   }
 
   return { start, update, finish, reset, setSound, destroy };

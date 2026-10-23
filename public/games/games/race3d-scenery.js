@@ -1,3 +1,6 @@
+import { addScenicArt } from './race3d-scenic-art.js?v=20261023-race3d-upgrade';
+import { createRoadsideBuildings } from './race3d-buildings.js?v=20261023-race3d-upgrade';
+import { addLandscapeTerrain } from './race3d-terrain.js?v=20261023-race3d-upgrade';
 /**
  * Warm-day circuit scenery for race3d.
  *
@@ -8,6 +11,10 @@
 export function createRaceScenery(THREE, track) {
   const group = new THREE.Group();
   group.name = 'race3d-scenery';
+  const replacedTrees = [];
+  track.group?.traverse(object => {
+    if (object.name.startsWith('park-pine-')) { replacedTrees.push([object, object.visible]); object.visible = false; }
+  });
   const total = Math.max(1, Number(track?.totalLength) || 1);
   const TAU = Math.PI * 2;
   let seed = 0x1a2b3c4d;
@@ -111,39 +118,6 @@ export function createRaceScenery(THREE, track) {
   meadow.rotation.x = -Math.PI / 2;
   meadow.position.set(center.x, groundY - 0.3, center.z);
 
-  // Gradient sky dome. Its size follows the circuit so the chase camera always
-  // remains inside it, even on a long course.
-  const skyRadius = far * 5;
-  const skyGeometry = new THREE.SphereGeometry(skyRadius, 48, 24);
-  const skyPos = skyGeometry.getAttribute('position');
-  const skyColors = [];
-  const horizon = new THREE.Color('#e7d1ad');
-  const lower = new THREE.Color('#b4d5e4');
-  const zenith = new THREE.Color('#4b91c4');
-  for (let i = 0; i < skyPos.count; i++) {
-    const h = skyPos.getY(i) / skyRadius;
-    const c = h < 0.08 ? lower.clone().lerp(horizon, clamp((0.08 - h) / 0.48, 0, 1)) : horizon.clone().lerp(zenith, clamp((h - 0.08) / 0.92, 0, 1));
-    skyColors.push(c.r, c.g, c.b);
-  }
-  skyGeometry.setAttribute('color', new THREE.Float32BufferAttribute(skyColors, 3));
-  const sky = new THREE.Mesh(skyGeometry, new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.BackSide, depthWrite: false, fog: false }));
-  sky.name = 'warm-day-sky';
-  sky.position.copy(center);
-  sky.renderOrder = -1000;
-  group.add(sky);
-
-  // Warm sunlight and open-sky fill. The game can still add its own lights.
-  const hemi = new THREE.HemisphereLight('#e6f3ff', '#696448', 1.05);
-  hemi.name = 'sky-fill';
-  group.add(hemi);
-  const sunLight = new THREE.DirectionalLight('#fff1d2', 2.0);
-  sunLight.name = 'afternoon-sun';
-  sunLight.position.set(center.x + far * 0.45, center.y + far * 0.72, center.z + far * 0.32);
-  sunLight.target.position.copy(center);
-  group.add(sunLight, sunLight.target);
-  const sun = addMesh(new THREE.SphereGeometry(24 * unit, 20, 12), new THREE.MeshBasicMaterial({ color: '#fff4d4', fog: false }), 'sun-disc');
-  sun.position.set(center.x + far * 1.55, center.y + far * 2.1, center.z - far * 1.1);
-
   // Distant, layered foothills and mountains around the full course horizon.
   function makeRidge(name, innerPad, outerPad, height, tint, phase) {
     const segments = 192;
@@ -190,12 +164,17 @@ export function createRaceScenery(THREE, track) {
   makeRidge('olive-foothills', 70 * unit, 250 * unit, 64 * unit, '#789166', 0.4);
   makeRidge('blue-distance-mountains', 300 * unit, 470 * unit, 118 * unit, '#71889a', 1.6);
 
+  const terrain = addLandscapeTerrain({ THREE, group, route, groundY, unit, center, radius });
+
+  const buildings = createRoadsideBuildings(THREE, track, { heightAt: terrain.heightAt, roadClearance: terrain.roadClearance, groundY });
+  group.add(buildings.group);
+
   // Low scrub remains close to the route while trees sit farther back. The
   // lateral margins keep every instance outside the defined track surface.
   const dummy = new THREE.Object3D();
   const trunkGeo = new THREE.CylinderGeometry(0.32 * unit, 0.58 * unit, 5.5 * unit, 7);
   const crownGeo = new THREE.IcosahedronGeometry(3.45 * unit, 1);
-  crownGeo.translate(0, 6.4 * unit, 0);
+  crownGeo.translate(0, 3.8 * unit, 0);
   const trunkMat = mat('#65513a', 1);
   const foliageMats = [mat('#48663b', 1), mat('#5f783e', 1), mat('#6e8047', 1)];
   const shrubGeo = new THREE.IcosahedronGeometry(2.3 * unit, 1);
@@ -209,7 +188,7 @@ export function createRaceScenery(THREE, track) {
     const p = at.p.clone().addScaledVector(at.right, side * offset);
     const scale = 0.7 + rand() * 0.8;
     return { p, scale, type: Math.floor(rand() * foliageMats.length) };
-  });
+  }).filter(tree => terrain.roadClearance(tree.p.x, tree.p.z) > 16 * unit);
   const trunkInstances = new THREE.InstancedMesh(trunkGeo, trunkMat, trees.length);
   trunkInstances.name = 'roadside-tree-trunks';
   const canopyInstances = foliageMats.map((material, type) => {
@@ -220,7 +199,7 @@ export function createRaceScenery(THREE, track) {
   const canopySlots = [0, 0, 0];
   for (let i = 0; i < trees.length; i++) {
     const tree = trees[i];
-    dummy.position.set(tree.p.x, groundY + 2.75 * unit * tree.scale, tree.p.z);
+    dummy.position.set(tree.p.x, terrain.heightAt(tree.p.x, tree.p.z) + 2.75 * unit * tree.scale, tree.p.z);
     dummy.rotation.set(0, rand() * TAU, 0);
     dummy.scale.set(tree.scale, tree.scale, tree.scale);
     dummy.updateMatrix();
@@ -231,6 +210,8 @@ export function createRaceScenery(THREE, track) {
     canopy.setColorAt(slot, new THREE.Color(['#668346', '#78934b', '#879a55'][tree.type]).multiplyScalar(0.82 + rand() * 0.34));
   }
   trunkInstances.instanceMatrix.needsUpdate = true;
+  trunkInstances.visible = false;
+  canopyInstances.forEach(mesh => { mesh.visible = false; });
   group.add(trunkInstances, ...canopyInstances);
 
   const shrubCount = clamp(Math.round(total / 5.5), 240, 1000);
@@ -243,8 +224,8 @@ export function createRaceScenery(THREE, track) {
     const side = i % 2 ? 1 : -1;
     const offset = at.width * 0.5 + (11 + rand() * 24) * unit;
     const p = at.p.clone().addScaledVector(at.right, side * offset);
-    const s = (0.5 + rand() * 0.75) * unit;
-    dummy.position.set(p.x, groundY + s * 0.55, p.z);
+    const s = terrain.roadClearance(p.x, p.z) > 6 * unit ? (0.5 + rand() * 0.75) * unit : 0;
+    dummy.position.set(p.x, terrain.heightAt(p.x, p.z) + s * 0.55, p.z);
     dummy.rotation.set(0, rand() * TAU, 0);
     dummy.scale.set(s, s * (0.6 + rand() * 0.55), s);
     dummy.updateMatrix();
@@ -342,56 +323,40 @@ export function createRaceScenery(THREE, track) {
   box(pits, 'pit-timing-tower', -pitLength * 0.41, 13.5 * unit, pitLocalSide * 10 * unit, 8 * unit, 10 * unit, 8 * unit, mat('#e3ded1', 0.65));
   box(pits, 'pit-timing-window', -pitLength * 0.41, 15.5 * unit, pitLocalSide * 5.9 * unit, 6.6 * unit, 2.1 * unit, 0.2 * unit, mat('#243e52', 0.3, { metalness: 0.25 }));
 
-  // Sparse high clouds are batched into a single instanced mesh and drift very
-  // slowly; the fixed mountain layers provide the horizon behind them.
-  const cloudCount = 62;
-  const cloudGeo = new THREE.IcosahedronGeometry(1, 1);
-  const cloudMat = new THREE.MeshStandardMaterial({ color: '#f3f0e7', roughness: 1, transparent: true, opacity: 0.72, depthWrite: false });
-  const clouds = new THREE.InstancedMesh(cloudGeo, cloudMat, cloudCount);
-  clouds.name = 'high-cumulus';
-  for (let i = 0; i < cloudCount; i++) {
-    const a = rand() * TAU;
-    const r = far * (0.42 + rand() * 1.05);
-    const x = center.x + Math.cos(a) * r;
-    const z = center.z + Math.sin(a) * r;
-    const y = center.y + far * (0.24 + rand() * 0.23);
-    const size = 9 + rand() * 22;
-    dummy.position.set(x, y, z);
-    dummy.rotation.set(rand() * 0.3, rand() * TAU, rand() * 0.3);
-    dummy.scale.set(size * (1.2 + rand()), size * 0.45, size * 0.7);
-    dummy.updateMatrix();
-    clouds.setMatrixAt(i, dummy.matrix);
-    if (typeof clouds.setColorAt === 'function') clouds.setColorAt(i, new THREE.Color(i % 4 ? '#f6f2e9' : '#dbe5e7'));
-  }
-  clouds.instanceMatrix.needsUpdate = true;
-  if (clouds.instanceColor) clouds.instanceColor.needsUpdate = true;
-  group.add(clouds);
-
+  addScenicArt(THREE, { group, track, terrain, unit });
   let disposed = false;
   return {
     group,
     update(elapsed = 0) {
       if (disposed) return;
-      clouds.rotation.y = Number(elapsed) * 0.0016;
+
     },
     dispose() {
       if (disposed) return;
       disposed = true;
+      for (const [object, visible] of replacedTrees) object.visible = visible;
+      const resources = new Set();
       group.traverse((object) => {
-        if (object.geometry && typeof object.geometry.dispose === 'function') object.geometry.dispose();
+        if (object.geometry) resources.add(object.geometry);
         if (object.material) {
           const materials = Array.isArray(object.material) ? object.material : [object.material];
           for (const material of materials) {
             for (const value of Object.values(material)) {
-              if (value && value.isTexture && typeof value.dispose === 'function') value.dispose();
+              if (value && value.isTexture) resources.add(value);
             }
-            if (typeof material.dispose === 'function') material.dispose();
+            resources.add(material);
           }
         }
       });
+      for (const resource of resources) resource.dispose?.();
       group.clear();
     },
   };
 }
 
 export default createRaceScenery;
+
+
+
+
+
