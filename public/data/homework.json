@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-23T09:12:53.548233+00:00",
+  "updatedAt": "2026-10-23T09:45:52.315130+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -867,9 +867,17 @@
           "date": "2026-10-23",
           "time": "15:40–17:40",
           "classContent": [
-            "◆ Homework presentations: We worked through the students’ homework presentations. I had tried to keep the speeches as simple as possible so students could remember them and speak on stage. Some students were still reading from their texts; others had memorized their speeches and presented them.\n\n◆ Presenting rather than reading: For this class, we need to focus on hand gestures and on speaking in a presentation style. Otherwise, it becomes filling in the blanks and reading. The immediate priority was to get through all the homework presentations first. Reading from a script does not give us as much presentation practice as trying to say the speech ourselves, even if we forget some things.\n\n◆ Delivery and paper handling: The feedback addressed clear pronunciation, speaking loudly enough to be heard, speaking more slowly, using hand gestures, and bringing out energy. A music stand was suggested as a way to support the paper and reduce distracting page handling. These were presentation and practice suggestions; no new homework assignment was recorded."
+            "◆ Homework presentations: We worked through the students’ homework presentations. I had tried to keep the speeches as simple as possible so students could remember them and speak on stage. Some students were still reading from their texts; others had memorized their speeches and presented them.\n\n◆ Presenting rather than reading: For this class, we need to focus on hand gestures and on speaking in a presentation style. Otherwise, it becomes filling in the blanks and reading. The immediate priority was to get through all the homework presentations first. Reading from a script does not give us as much presentation practice as trying to say the speech ourselves, even if we forget some things.\n\n◆ Delivery and paper handling: The feedback addressed clear pronunciation, speaking loudly enough to be heard, speaking more slowly, using hand gestures, and bringing out energy. A music stand was suggested as a way to support the paper and reduce distracting page handling. These were presentation and practice suggestions.\n\n◆ Ethos, pathos and logos: We went over these as simply as possible and explained what each one meant. Ethos is about credibility—personal credibility, or the personal experience and story someone might have to help support a persuasive speech. Pathos is connecting through emotions. Logos is using facts and details.\n\n◆ Examples and multiple-choice practice: We went through examples and multiple-choice questions to practise understanding these three ways of persuading.\n\n◆ Creating a simple speech together: We then tried to create a simple speech together, related to wintertime and staying at home in the winter. We connected the topic with ethos, pathos and logos, using all three in the speech. The speech should be short and easy so students can memorize it and present it without paper next class."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Memorize and present the wintertime speech",
+            "steps": [
+              "Memorize the short, simple speech we created together in class about wintertime and staying at home in the winter, using ethos, pathos and logos.",
+              "Present the speech without paper in the next class."
+            ],
+            "prepareFor": "Present without paper next class.",
+            "note": "The only task is to memorize the speech and then present it; it should be short and easy."
+          },
           "students": [
             {
               "name": "Ray",
