@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-22T09:17:42.979824+00:00",
+  "updatedAt": "2026-10-23T09:12:53.548233+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1066,6 +1066,55 @@
               "name": "Michaela",
               "en": "Michaela’s voice was a bit louder today, and it was easier for me to hear her than before. I think she seemed a little more confident as well. Michaela, just keep going and keep getting better at this.",
               "zh": "Michaela今天的声音比之前响亮了一些，我也更容易听清楚她的表达。我觉得她看起来也比之前多了一点自信。Michaela，继续保持，继续练习，让自己在这方面越来越好。"
+            }
+          ]
+        },
+        {
+          "id": "fri-afternoon-2026-10-23",
+          "date": "2026-10-23",
+          "time": "15:40–17:40",
+          "status": "held",
+          "classContent": {
+            "en": "◆ Homework presentations: We worked through the students’ homework presentations. I had tried to keep the speeches as simple as possible so students could remember them and speak on stage. Some students were still reading from their texts; others had memorized their speeches and presented them.\n\n◆ Presenting rather than reading: For this class, we need to focus on hand gestures and on speaking in a presentation style. Otherwise, it becomes filling in the blanks and reading. The immediate priority was to get through all the homework presentations first. Reading from a script does not give us as much presentation practice as trying to say the speech ourselves, even if we forget some things.\n\n◆ Delivery and paper handling: The feedback addressed clear pronunciation, speaking loudly enough to be heard, speaking more slowly, using hand gestures, and bringing out energy. A music stand was suggested as a way to support the paper and reduce distracting page handling. These were presentation and practice suggestions; no new homework assignment was recorded.",
+            "zh": "◆【作业展示】：我们逐一进行了学生的作业展示。我尽量把演讲内容保持得简单，让学生能够记住，并站到台上说出来。有些学生仍在看稿朗读，也有学生已经记住演讲并进行了展示。\n\n◆【展示，而不只是朗读】：这门课需要重点练习手势，以及用演讲展示的方式表达。否则，就只是填空后把内容读出来。当时首先要做的是让大家完成所有作业展示。与其一直看稿，不如尝试自己把演讲说出来，即使忘掉一些内容，也能获得更多展示方面的练习。\n\n◆【表达与稿纸使用】：反馈涉及清楚的发音、让听众听见的音量、放慢语速、运用手势，以及带出表达的能量。老师建议可以用谱架支撑稿纸，减少翻动纸张带来的干扰。这些属于展示与练习建议；现有记录没有提供新的作业任务。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "ray",
+              "name": "Ray",
+              "en": "✓ Presentation: Overall, Ray gave a good presentation and used hand gestures.\n\n→ Clear words and less reliance on the script: Later in the speech, he slurred some words, and he was still reading from the text. I had kept the speech as simple as possible so he could potentially memorize it, but he continued to read from the script. Remember, reading from the script does not give us as much practice in presenting. It is better to try saying it yourself, even if you forget some things. That would help more. Suggested practice: he could rehearse the simple speech, then put the script aside and focus on saying the words clearly.",
+              "zh": "✓【展示】：整体来看，Ray 的展示不错，也运用了手势。\n\n→【说清每个词，减少对稿子的依赖】：演讲后半段，他有些词说得含混，而且仍在看着文字读。我已经尽量把演讲保持得简单，希望他有可能记住，但他还是在照稿朗读。记住，一直读稿并不能让我们获得同样多的演讲展示练习。不如尝试自己说出来，即使忘掉一些内容，也会更有帮助。练习建议：可以先练习这篇简单的演讲，再放下稿子，专注于把每个词说清楚。"
+            },
+            {
+              "id": "mikaela",
+              "name": "Mikaela",
+              "en": "✓ Presentation and audibility: Overall, Mikaela gave a good performance. I think two students and I could hear her, which was good.\n\n→ Paper handling: The flipping of the paper was distracting. I think using the music stand might be a little better, so she would not have that distraction from the papers. This would let her focus more on delivering the presentation. The stand is a suggested support for presenting, rather than a new homework requirement.",
+              "zh": "✓【展示与可听度】：整体来看，Mikaela 的表现不错。我想有两位学生和我能够听见她的表达，这一点很好。\n\n→【稿纸使用】：翻动稿纸有些分散注意力。我觉得使用谱架可能会更好一些，这样就不会受到这些纸张的干扰，也能更专注于展示。谱架是帮助展示的建议，并不是新的作业要求。"
+            },
+            {
+              "id": "harper",
+              "name": "Harper",
+              "en": "✓ Reading and pronunciation: Harper read clearly and had good pronunciation.\n\n→ Move toward a presentation: For this class, we need to focus on hand gestures and on speaking in a more presentation-like style. Otherwise, it is just filling in the blanks and reading. We first needed to get through all the homework presentations. For Harper, the next step is to build on her clear pronunciation by practising how to present the speech with gestures, rather than only reading the words.",
+              "zh": "✓【朗读与发音】：Harper 朗读清楚，发音也很好。\n\n→【进一步练习展示】：这门课需要重点练习手势，以及用更像演讲展示的方式表达。否则，就只是填空后把内容读出来。我们当时首先要让大家完成所有作业展示。对 Harper 来说，下一步是在清楚发音的基础上，练习配合手势把演讲展示出来，而不只是读出文字。"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "✓ Homework presentation: Ethan memorized his speech, added hand gestures, and was able to present it on stage. He put those parts together and did a really good job. I had tried to keep the speech as simple as possible for students to work on, so they could remember it and say it on stage.\n\n→ Classroom self-control: After I complimented his presentation, Ethan was jumping up and down, screaming and dancing in class. While other students were trying to write, he was pointing his finger in the air, dancing and tapping his feet on the floor. These actions interrupt the quiet others need for writing. He needs to keep his body and voice quiet during their work time and save that energy for his own presentation.",
+              "zh": "✓【作业展示】：Ethan 记住了自己的演讲，加入了手势，并能够站到台上展示。他把这些部分结合起来，做得很好。我尽量把演讲内容保持得简单，方便学生练习、记住，再站到台上说出来。\n\n→【课堂自我控制】：在我表扬他的展示之后，Ethan 在课堂上跳上跳下、大声尖叫和跳舞。其他同学正在尝试写东西时，他把手指指向空中、跳舞，并用脚在地板上打拍子。这些行为干扰了别人写作时需要的安静。他需要在同学写作时保持身体和声音安静，把这些能量留给自己的展示。"
+            },
+            {
+              "id": "wendy",
+              "name": "Wendy",
+              "en": "✓ Memorized presentation: Wendy memorized her speech and was able to speak it on stage. I had tried to keep the speech as simple as possible for students to work on, and she was able to remember it and present it. She came across as friendly and happy.\n\n→ Gestures and energy: I would suggest adding a little more hand gesture work. If possible, speak perhaps 5% louder to bring out a little more energy. The next step is to keep the friendly manner while making her gestures and voice carry the message more strongly.",
+              "zh": "✓【记住内容并展示】：Wendy 记住了自己的演讲，也能够站到台上说出来。我尽量把演讲内容保持得简单，方便学生练习，而她能够记住并展示出来。她给人的感觉友好、开心。\n\n→【手势与能量】：我建议再增加一些手势。如果可以，声音大约再提高 5%，带出多一点能量。下一步是保持友好的表达方式，同时让手势和声音更有力地传达信息。"
+            },
+            {
+              "id": "evan",
+              "name": "Evan",
+              "en": "→ Voice and delivery: Evan presented, but his voice was rather soft compared with how he usually speaks. He quickly went through the whole speech and was reading from his text, so there was not much more I could comment on from this attempt. My main guidance is to speak louder, clearer and slower. Suggested practice: he could rehearse saying the speech at a more deliberate pace, making each word clear and using enough volume for the audience to hear.",
+              "zh": "→【声音与表达】：Evan 进行了展示，不过和他平时讲话相比，这次声音比较轻。他很快地把整篇演讲带了过去，而且是在照着文字读，因此就这次尝试而言，我没有太多其他可以评价的地方。最主要的指导是：声音更响亮、表达更清楚、语速更慢。练习建议：可以用更从容的速度练习说出这篇演讲，把每个词说清楚，并用足够的音量让听众听见。"
             }
           ]
         }
