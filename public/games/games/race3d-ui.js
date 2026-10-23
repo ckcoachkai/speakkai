@@ -1,4 +1,4 @@
-const STYLE_URL = new URL('./race3d-ui.css?v=20261023-race3d-laps-map-audio', import.meta.url).href;
+const STYLE_URL = new URL('./race3d-ui.css?v=20261023-race3d-ten-powers-sky', import.meta.url).href;
 
 function ensureStyles() {
   if (document.querySelector('link[data-race3d-ui-style]')) return;
@@ -57,15 +57,19 @@ export function createRaceUI(container, players = [], options = {}) {
   const position = makeStat('position', 'POSITION', `1 / ${racers.length || 1}`);
   stats.append(lap.item, speed.item, position.item);
 
-  const standings = make('details', 'race3d-standings');
-  const summary = make('summary', 'race3d-standings-summary');
+  const standings = make('section', 'race3d-standings');
+  standings.setAttribute('aria-label', 'All racers and finish times');
+  const summary = make('div', 'race3d-standings-summary');
   const summaryCopy = make('span', 'race3d-standings-copy');
   summaryCopy.append(make('strong', '', 'STANDINGS'), make('span', 'race3d-leader-summary', 'Grid ready'));
-  summary.append(make('span', 'race3d-summary-mark', '▤'), summaryCopy, make('span', 'race3d-chevron', '⌄'));
+  summary.append(make('span', 'race3d-summary-mark', '▤'), summaryCopy);
   standings.append(summary);
   const roster = make('ol', 'race3d-roster');
   roster.setAttribute('aria-label', 'Live racer positions');
+  roster.tabIndex = 0;
   standings.append(roster);
+  const continueButton = make('button', 'race3d-continue', 'Continue with first speaker');
+  continueButton.type = 'button'; continueButton.hidden = true; standings.append(continueButton);
 
   const camera = make('div', 'race3d-camera');
   camera.setAttribute('role', 'group');
@@ -81,7 +85,15 @@ export function createRaceUI(container, players = [], options = {}) {
   next.setAttribute('aria-label', 'Follow the next car');
   next.title = 'Follow next car';
   const cameraActions = make('div', 'race3d-camera-actions');
-  cameraActions.append(prev, next);
+  const viewUp = make('button', 'race3d-camera-button', '↑');
+  const viewDown = make('button', 'race3d-camera-button', '↓');
+  viewUp.type = viewDown.type = 'button';
+  viewUp.setAttribute('aria-label', 'View up toward overhead');
+  viewDown.setAttribute('aria-label', 'View down toward first person');
+  const onViewUp = () => options.onView?.(-1);
+  const onViewDown = () => options.onView?.(1);
+  viewUp.addEventListener('click', onViewUp); viewDown.addEventListener('click', onViewDown);
+  cameraActions.append(prev, next, viewUp, viewDown);
   const cameraInfo = make('div', 'race3d-camera-info');
   cameraInfo.append(cameraTitle, cameraName);
   camera.append(cameraInfo, cameraActions);
@@ -119,7 +131,12 @@ export function createRaceUI(container, players = [], options = {}) {
       g.append(title,c,t); svg.append(g); dots.set(r.id,g);
     });
   }
-  root.append(stats, standings, camera, labelLayer, status, map);
+  const countdown = make('div', 'race3d-countdown');
+  countdown.hidden = true;
+  countdown.setAttribute('role', 'status');
+  countdown.setAttribute('aria-live', 'assertive');
+  countdown.setAttribute('aria-atomic', 'true');
+  root.append(stats, standings, camera, labelLayer, status, map, countdown);
   container.appendChild(root);
 
   const rows = new Map();
@@ -137,9 +154,10 @@ export function createRaceUI(container, players = [], options = {}) {
     rows.set(racer.id, { row, rank, swatch, name, detail, racer });
   }
 
+  let continued = false, timing = {}, finishKey = '';
   let cameraIndex = 0;
   let currentPhase = 'idle';
-  let winnerId = '';
+  let winnerId = null;
   let lastBoardOrder = '';
   let boardAt = -Infinity;
   let disposed = false;
@@ -150,6 +168,11 @@ export function createRaceUI(container, players = [], options = {}) {
 
   function orderedCars(cars) {
     return cars.slice().sort((a, b) => {
+      if (Number.isFinite(a.finishTime) || Number.isFinite(b.finishTime)) {
+        if (!Number.isFinite(a.finishTime)) return 1;
+        if (!Number.isFinite(b.finishTime)) return -1;
+        return a.finishTime - b.finishTime || (a.finishPosition || a.gridPosition || 0) - (b.finishPosition || b.gridPosition || 0);
+      }
       const rankA = Number(a.position);
       const rankB = Number(b.position);
       if (Number.isFinite(rankA) && Number.isFinite(rankB) && rankA !== rankB) return rankA - rankB;
@@ -212,10 +235,24 @@ export function createRaceUI(container, players = [], options = {}) {
     }
   }
 
-  function update(cars = [], elapsed = 0, phase = 'idle', focusedId) {
+  function update(cars = [], elapsed = 0, phase = 'idle', focusedId, metadata) {
     if (disposed) return;
+    if (metadata) timing = metadata;
+    const countdownText = timing.countdownStep == null ? '' : String(timing.countdownStep);
+    const showCountdown = ['3', '2', '1', 'GO'].includes(countdownText);
+    countdown.hidden = !showCountdown;
+    if (countdown.textContent !== (showCountdown ? countdownText : '')) countdown.textContent = showCountdown ? countdownText : '';
+    countdown.dataset.step = showCountdown ? countdownText : '';
+    cameraTitle.textContent = ({overhead:'OVERHEAD',chase:'CHASE VIEW','first-person':'FIRST PERSON'})[timing.cameraMode] || 'CHASE VIEW';
+    viewUp.disabled = timing.cameraMode === 'overhead';
+    viewDown.disabled = timing.cameraMode === 'first-person';
     if (focusedId !== undefined) mapFocusId = focusedId;
-    select.disabled = phase === 'countdown' || phase === 'running';
+    select.disabled = ['countdown','running','finishing','finished'].includes(phase);
+    if (winnerId !== null) {
+      const allFinished = timing.allFinished === true || (cars.length > 0 && cars.every(car => Number.isFinite(car.finishTime)));
+      continueButton.disabled = continued || !allFinished;
+      continueButton.textContent = allFinished ? 'Continue with first speaker' : 'Waiting for all racers…';
+    }
     currentCars = Array.isArray(cars) ? cars : [];
     if (projectMap) for (const car of currentCars) {
       const dot=dots.get(String(car.id)); if (!dot) continue;
@@ -236,9 +273,14 @@ export function createRaceUI(container, players = [], options = {}) {
     }
 
     const now = Number(elapsed) || 0;
-    if (now - boardAt >= 0.35 || phaseChanged) {
+    const newFinishKey = ranking.map(c => c.finishTime ?? '').join('|');
+    const finishesChanged = newFinishKey !== finishKey; finishKey = newFinishKey;
+    const timeScale = Number(timing.timeScale) > 0 ? Number(timing.timeScale) : 1;
+    const crossingTime = car => Number.isFinite(car.finishTimeReal) ? car.finishTimeReal : car.finishTime / timeScale;
+    const clock = seconds => { const ms = Math.round(Math.max(0, seconds) * 1000); return Math.floor(ms / 60000) + ':' + String(Math.floor(ms / 1000) % 60).padStart(2, '0') + '.' + String(ms % 1000).padStart(3, '0'); };
+    if (now - boardAt >= 0.1 || phaseChanged || finishesChanged) {
       const orderKey = ranking.map((car, index) => carId(car, index)).join('|');
-      if (orderKey !== lastBoardOrder || now - boardAt >= 0.35) {
+      if (orderKey !== lastBoardOrder || now - boardAt >= 0.1 || phaseChanged || finishesChanged) {
         lastBoardOrder = orderKey;
         for (let i = 0; i < ranking.length; i++) {
           const car = ranking[i];
@@ -257,27 +299,31 @@ export function createRaceUI(container, players = [], options = {}) {
             entry = { row, rank, swatch, name, detail, racer };
             rows.set(id, entry);
           }
-          const rank = Number(car.position) || i + 1;
+          const rank = i + 1;
           entry.rank.textContent = String(rank).padStart(2, '0');
           entry.name.textContent = getName(car, entry.racer.name);
           entry.swatch.style.backgroundColor = getColor(car, entry.racer.color);
           const progress = Number(options.totalLength ?? car.totalLength) > 0
             ? `${Math.min(100, Math.max(0, (Number(car.distance) || 0) / Number(options.totalLength ?? car.totalLength) / laps * 100))}%`
             : '';
-          entry.detail.textContent = phase === 'finished' && car.finished ? 'FIN' : `L${getLap(car)}`;
-          entry.row.classList.toggle('is-winner', winnerId === id || (phase === 'finished' && !!car.finished));
-          if (winnerId === id) entry.detail.textContent = 'WIN';
+          const finished = Number.isFinite(car.finishTime), leaderTime = ranking[0]?.finishTime;
+          const gap = finished && Number.isFinite(leaderTime) && i > 0 ? ' +' + Math.max(0, crossingTime(car) - crossingTime(ranking[0])).toFixed(3) + 's' : '';
+          entry.detail.textContent = finished ? clock(crossingTime(car)) + gap : clock(now) + ' · L' + getLap(car);
+          entry.row.dataset.finished = String(finished);
+          entry.row.setAttribute('aria-label', rank + '. ' + getName(car, entry.racer.name) + (finished ? ', finished in ' : ', elapsed ') + entry.detail.textContent + (winnerId === id ? ', winner and first speaker' : ''));
+          entry.name.title = getName(car, entry.racer.name);
+          entry.row.classList.toggle('is-winner', winnerId === id);
           entry.row.style.setProperty('--race-progress', progress);
           roster.appendChild(entry.row);
         }
         const leader = ranking[0];
-        summary.querySelector('.race3d-leader-summary').textContent = leader ? `P1 · ${getName(leader)}` : 'Grid ready';
+        summary.querySelector('.race3d-leader-summary').textContent = leader ? `${winnerId === carId(leader, 0) ? 'FIRST SPEAKER' : 'P1'} · ${getName(leader)}` : 'Grid ready';
         boardAt = now;
       }
     }
 
     if (ranking.length) cameraIndex = ((cameraIndex % ranking.length) + ranking.length) % ranking.length;
-    const target = ranking[cameraIndex] || ranking[0];
+    const target = ranking.find((car, index) => carId(car, index) === String(mapFocusId)) || ranking[cameraIndex] || ranking[0];
     cameraName.textContent = target ? getName(target) : 'Leader';
     prev.disabled = ranking.length < 2;
     next.disabled = ranking.length < 2;
@@ -285,7 +331,7 @@ export function createRaceUI(container, players = [], options = {}) {
       lap.value.textContent = `${getLap(target)} / ${laps}`;
       speed.value.textContent = String(Math.round(getSpeed(target)));
       speed.value.setAttribute('aria-label', `${Math.round(getSpeed(target))} kilometers per hour`);
-      const rank = Number(target.position) || cameraIndex + 1;
+      const rank = ranking.indexOf(target) + 1;
       position.value.textContent = `${rank} / ${ranking.length}`;
     } else {
       lap.value.textContent = `1 / ${laps}`;
@@ -320,26 +366,40 @@ export function createRaceUI(container, players = [], options = {}) {
 
   function setWinner(winner) {
     if (disposed || !winner) return;
+    if (winnerId !== null) return;
     winnerId = String(winner.id ?? winner);
+    continueButton.hidden = false;
+    continueButton.disabled = true;
+    continueButton.textContent = 'Waiting for all racers…';
+    boardAt = -Infinity;
     const winnerCar = currentCars.find((car, index) => carId(car, index) === winnerId);
     const winnerName = getName(winnerCar || winner, rows.get(winnerId)?.racer.name || 'Racer');
     const row = rows.get(winnerId)?.row;
     if (row) {
       row.classList.add('is-winner');
-      const detail = row.querySelector('.race3d-roster-detail');
-      if (detail) detail.textContent = 'WIN';
+      row.dataset.firstSpeaker = 'true';
     }
-    announce(`${winnerName} wins the race`);
+    announce(`${winnerName} wins and is the first speaker. Other racers are still finishing.`);
   }
 
+  const onContinue = () => { if (winnerId === null || continueButton.disabled || continued || disposed) return; continued = true; continueButton.disabled = true; options.onContinue?.(); };
+  continueButton.addEventListener('click', onContinue);
   function reset() {
+    continued = false; timing = {}; finishKey = ''; continueButton.hidden = true; continueButton.disabled = false;
     cameraIndex = 0;
     lastBoardOrder = '';
     boardAt = -Infinity;
     currentPhase = 'idle';
-    winnerId = '';
+    winnerId = null;
+    mapFocusId = undefined;
+    for (const entry of rows.values()) {
+      entry.rank.textContent = '—'; entry.detail.textContent = 'GRID';
+      entry.row.classList.remove('is-winner');
+      delete entry.row.dataset.firstSpeaker; delete entry.row.dataset.finished;
+      entry.row.removeAttribute('aria-label');
+    }
     announce('Race ready');
-    standings.open = false;
+
     update([], 0, 'idle');
   }
 
@@ -349,6 +409,8 @@ export function createRaceUI(container, players = [], options = {}) {
     select.removeEventListener('change',onLaps);
     prev.removeEventListener('click', onPrevious);
     next.removeEventListener('click', onNext);
+    continueButton.removeEventListener('click', onContinue);
+    viewUp.removeEventListener('click', onViewUp); viewDown.removeEventListener('click', onViewDown);
     root.remove();
     labels.clear();
     rows.clear();

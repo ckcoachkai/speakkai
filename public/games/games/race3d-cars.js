@@ -1,3 +1,7 @@
+import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261023-race3d-ten-powers-sky';
+import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261023-race3d-ten-powers-sky';
+import { createCarMotion } from './race3d-car-motion.js?v=20261023-race3d-ten-powers-sky';
+
 /**
  * Sculpted low-slung GT cars for race3d. All car geometry is authored around
  * local +Z forward, with Y up; the track module supplies world placement.
@@ -12,6 +16,8 @@ export function createRaceCars(THREE, racers = []) {
   const geometryCache = new Map();
   const materialCache = new Map();
   let disposed = false;
+  const lateDisposedResources=new WeakSet();
+  const authoredAssets = createAuthoredCarAssets(THREE, {isDisposed:()=>disposed,registerResource(type,resource){if(!resource)return;if(disposed){if(!lateDisposedResources.has(resource)){lateDisposedResources.add(resource);resource.dispose?.();resource.image?.close?.();}return;}({geometry:geometries,material:materials,texture:textures})[type].add(resource);}});
 
   const cacheGeometry = (key, make) => {
     if (!geometryCache.has(key)) {
@@ -210,7 +216,7 @@ export function createRaceCars(THREE, racers = []) {
     result.computeVertexNormals();
     return result;
   }
-  const bodyGeometry = cacheGeometry('sculpted-body-v1', createBodyGeometry);
+  const bodyGeometry = cacheGeometry('sculpted-body-v2', () => createBodyGeometry(REAL_GT_PROFILE));
  const gtSurface=bodySurface, gtSurfaceY=bodySurfaceY;
  const hyperBody=cacheGeometry('aster-body-v1',()=>createBodyGeometry(hypercarProfile));
  const hyperSurface=bodySurface, hyperSurfaceY=bodySurfaceY;
@@ -364,10 +370,10 @@ export function createRaceCars(THREE, racers = []) {
       for (const side of [-1, 1]) mesh(car, box(.018, .20, .36), mats.stripe, 'door-number-panel', [side * .99, .68, -.24]);
     }
 
-    const wheelSpin = [], steeringPivots = [];
+    const wheelSpin = [], steeringPivots = [], wheelMounts = [];
     for (const side of [-1, 1]) for (const axle of [-1, 1]) {
-      addWheel(car, side, axle, wheelSpin, 0, mats);
-      const wheel = car.children.at(-1);
+      const wheel = addWheel(car, side, axle, wheelSpin, 0, mats);
+      wheelMounts.push(wheel);
       if (axle > 0) steeringPivots.push(wheel);
       if(profile===2 || profile===3) continue;
       // Fender lips follow the upper shoulder of each wheel opening.
@@ -382,37 +388,21 @@ export function createRaceCars(THREE, racers = []) {
     }
     if(profile!==2 && profile!==3) addRaceCarDetails(THREE,car,index,mats,{cacheGeometry,mesh,box,sphere,mat,sampleBody:profile===1?hyperSurface:gtSurface,surfaceY:(x,z)=>(profile===1?hyperSurfaceY:gtSurfaceY)(z,x/(profile===1?hyperSurface:gtSurface)(z).half)});
     if(profile===4) addVisionVariant(THREE,car,mats,api);
+    if(profile===0) addRealGT(THREE,car,mats,api);
     mergeStaticMeshes(car);
+    const motion = createCarMotion(THREE, { car, racer, wheelSpin, wheelMounts, steeringPivots, lighting, index });
     group.add(car);
-    meshes.set(racer.id ?? index, { car, racer, wheelSpin, steeringPivots, primaryHex, lighting });
+    const state={ car, racer, wheelSpin, wheelMounts, steeringPivots, primaryHex, lighting, motion };
+    meshes.set(racer.id ?? index, state);
+    state.assetsReady=authoredAssets.attach(state,index).catch(error=>{authoredAssets.errors.push({id:car.userData.racerId,message:String(error.message||error)});return false;});
   }
 
   function sideSafe(index) { return index % 2 ? 1 : -1; }
   racers.forEach((racer, index) => buildCar(racer, index));
 
-  function update(track) {
+  function update(track, dt = 1 / 60) {
     if (disposed || !track?.sampleTrack) return;
-    for (const state of meshes.values()) {
-      const racer = state.racer;
-      const sample = track.sampleTrack(Number(racer.distance) || 0);
-      if (!sample?.position || !sample?.tangent) continue;
-      const right = sample.right || { x: sample.tangent.z || 0, y: 0, z: -(sample.tangent.x || 0) };
-      const lateral = Number(racer.lateral) || 0;
-      const yaw = Math.atan2(sample.tangent.x || 0, sample.tangent.z || 0) + (Number(racer.heading) || 0);
-      state.car.position.set(
-        sample.position.x + (right.x || 0) * lateral,
-        (sample.position.y || 0) + .035 + Math.sin((Number(racer.distance) || 0) * .16) * Math.min(.012, Math.abs(Number(racer.speed) || 0) * .00025),
-        sample.position.z + (right.z || 0) * lateral,
-      );
-      state.car.rotation.set(0, yaw, Math.sin((Number(racer.distance) || 0) * .11) * .008, 'YXZ');
-      const roll = (Number(racer.distance) || 0) / .42;
-      for (const wheel of state.wheelSpin) wheel.rotation.x = roll;
-      const steering = THREE.MathUtils.clamp(Number(racer.heading) || 0, -.45, .45) * .52;
-      for (const wheel of state.steeringPivots) wheel.rotation.y = steering;
-      state.lighting.update(racer);
-      state.car.userData.finished = Boolean(racer.finished);
-      state.car.userData.speed = Number(racer.speed) || 0;
-    }
+    for (const state of meshes.values()) state.motion.update(track, dt);
   }
 
   function dispose() {
@@ -420,13 +410,18 @@ export function createRaceCars(THREE, racers = []) {
     disposed = true;
     group.removeFromParent();
     for (const geometry of geometries) geometry.dispose();
-    for (const texture of textures) texture.dispose();
+    for (const texture of textures) { texture.dispose(); texture.image?.close?.(); }
     for (const material of materials) material.dispose();
     group.clear();
     meshes.clear(); geometries.clear(); textures.clear(); materials.clear(); geometryCache.clear(); materialCache.clear();
   }
 
-  return { group, update, dispose };
+  return { group, update, dispose, assetsReady:Promise.all([...meshes.values()].map(state=>state.assetsReady)), assetErrors:authoredAssets.errors,
+    reset() { for (const state of meshes.values()) state.motion.reset(); },
+    snapshot() { return [...meshes.values()].map(state => ({...state.motion.snapshot(),assetId:state.car.userData.assetId||null,assetLoaded:!!state.car.userData.assetLoaded,assetDimensions:state.car.userData.assetDimensions||null,authoredWheelCount:state.car.userData.authoredWheelCount||0})); },
+    assetSnapshot() {return {errors:[...authoredAssets.errors],cars:[...meshes.values()].map(s=>({id:s.racer.id,...s.car.userData,authoredWheelCount:s.car.userData.authoredWheelCount||0}))};},
+    setHiddenId(id) { for (const state of meshes.values()) state.car.visible = id === null || state.racer.id !== id; },
+  };
 }
 
 export default createRaceCars;

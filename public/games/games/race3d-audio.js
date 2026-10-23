@@ -12,9 +12,10 @@ export function createRaceAudio({ sound = true } = {}) {
   let enabled = Boolean(sound), alive = true, racing = false, finished = false;
   let context = null, master = null, compressor = null, noiseBuffer = null;
   let noiseSource = null, windFilter = null, windGain = null, skidFilter = null, skidGain = null;
+  let thrustFilter = null, thrustGain = null;
   let engines = [], effects = new Set(), closeTimer = 0, finishTimer = 0;
   let lastSpin = new Map(), lastCars = new Map(), eventCooldowns = new Map();
-  let lastCrashAt = -Infinity, lastShiftAt = -Infinity, raceStartedAt = 0;
+  let lastCrashAt = -Infinity, lastShiftAt = -Infinity;
   let lastUpdateAt = 0;
   let previousCountdown = -1;
 
@@ -81,6 +82,9 @@ export function createRaceAudio({ sound = true } = {}) {
       skidGain = ctx.createGain(); skidGain.gain.value = 0;
       noiseSource.connect(windFilter).connect(windGain).connect(master);
       noiseSource.connect(skidFilter).connect(skidGain).connect(master);
+      thrustFilter = ctx.createBiquadFilter(); thrustFilter.type = 'bandpass'; thrustFilter.Q.value = 0.8;
+      thrustGain = ctx.createGain(); thrustGain.gain.value = 0;
+      noiseSource.connect(thrustFilter).connect(thrustGain).connect(master);
       noiseSource.start();
       engines = Array.from({ length: MAX_ENGINES }, () => makeEngine(ctx, master));
       return true;
@@ -111,7 +115,8 @@ export function createRaceAudio({ sound = true } = {}) {
       for (const node of Object.values(engine)) { try { node.disconnect(); } catch {} }
     }
     engines = [];
-    for (const node of [windFilter, windGain, skidFilter, skidGain, master, compressor]) { try { node?.disconnect(); } catch {} }
+    for (const node of [windFilter, windGain, skidFilter, skidGain, thrustFilter, thrustGain, master, compressor]) { try { node?.disconnect(); } catch {} }
+    thrustFilter = thrustGain = null;
     windFilter = windGain = skidFilter = skidGain = master = compressor = noiseBuffer = null;
     if (ctx && ctx.state !== 'closed') { try { const closing = ctx.close(); closing?.catch?.(() => {}); } catch {} }
   }
@@ -143,6 +148,15 @@ export function createRaceAudio({ sound = true } = {}) {
       }
     };
     return true;
+  }
+
+  function reserveEffects(count) {
+    while (effects.size > MAX_FX - count) {
+      const effect = effects.values().next().value;
+      effects.delete(effect);
+      for (const source of effect.sources) { try { source.onended = null; source.stop(); } catch {} }
+      for (const node of effect.nodes) { try { node.disconnect(); } catch {} }
+    }
   }
 
   function tone(frequency, duration = 0.11, { type = 'sine', volume = 0.09, delay = 0, endFrequency = frequency, pan = 0 } = {}) {
@@ -234,6 +248,18 @@ export function createRaceAudio({ sound = true } = {}) {
   function powerSound(type, space, itemType) {
     const { volume, pan } = space;
     if (type === 'item-pickup' || type === 'pickup') {
+      const motifs = {
+        launch: [660, 1320, 'square', 0.06], rocket: [880, 1760, 'triangle', 0.13],
+        shield: [1046, 1568, 'sine', 0.1], missile: [1480, 1110, 'square', 0.075],
+        shockwave: [523, 2093, 'triangle', 0.15], freeze: [2349, 1760, 'sine', 0.16],
+        repair: [1319, 1661, 'sine', 0.1],
+      };
+      if (motifs[itemType]) {
+        const [first, second, wave, delay] = motifs[itemType];
+        tone(first, 0.12, { type: wave, volume: 0.07 * volume, pan });
+        tone(second, 0.22, { type: wave, volume: 0.065 * volume, delay, pan });
+        return;
+      }
       // Each collected item has a two-note identity before its deployment cue.
       if (itemType === 'banana') {
         tone(780, 0.12, { volume: 0.09 * volume, endFrequency: 390, pan });
@@ -252,6 +278,17 @@ export function createRaceAudio({ sound = true } = {}) {
       }
       tone(920, 0.085, { volume: 0.065 * volume, endFrequency: 1320, pan });
       tone(1580, 0.13, { type: 'triangle', volume: 0.045 * volume, delay: 0.075, pan });
+    } else if (/^(launch|rocket|shield|missile|shockwave|freeze|repair)(-|$)/.test(type)) {
+      const ability = type.split('-')[0];
+      const cues = {
+        launch: [160, 680, 0.36, 'triangle', 850], rocket: [190, 760, 0.55, 'sawtooth', 1800],
+        shield: [520, 1040, 0.48, 'sine', 3200], missile: [1800, 420, 0.32, 'triangle', 2400],
+        shockwave: [140, 32, 0.55, 'triangle', 550], freeze: [3200, 1600, 0.5, 'sine', 6000],
+        repair: [660, 1320, 0.42, 'sine', 1200],
+      };
+      const [pitch, end, duration, wave, cutoff] = cues[ability];
+      tone(pitch, duration, { type: wave, endFrequency: end, volume: 0.065 * volume, pan });
+      noiseHit(duration, 0.075 * volume, cutoff, { type: 'bandpass', endCutoff: cutoff / 2, pan });
     } else if (type === 'boost') {
       noiseHit(0.7, 0.15 * volume, 450, { endCutoff: 4400, type: 'bandpass', attack: 0.045, pan });
       tone(160, 0.48, { type: 'triangle', volume: 0.07 * volume, endFrequency: 440, pan });
@@ -286,7 +323,7 @@ export function createRaceAudio({ sound = true } = {}) {
       const space = eventSpace(event, primary);
       if (space.volume < 0.04) continue;
       const isSkid = /^(banana-hit|spin|skid|drift|spinout)$/.test(type);
-      const isPower = /^(item-pickup|pickup|boost|banana-drop|banana-hit|bomb-launch|bomb-explode)$/.test(type);
+      const isPower = /^(item-pickup|pickup|boost|banana-drop|banana-hit|bomb-launch|bomb-explode)$/.test(type) || /^(launch|rocket|shield|missile|shockwave|freeze|repair)(-|$)/.test(type);
       const group = isSkid ? 'skid' : type;
       const key = `${group}:${event?.carId ?? 'all'}`;
       const interval = isSkid ? 0.55 : type === 'boost' ? 0.7 : 0.14;
@@ -297,12 +334,7 @@ export function createRaceAudio({ sound = true } = {}) {
       eventCooldowns.set(key, now);
       if (focusedPickup(event)) {
         // Reserve two voices even if earlier frames filled the transient pool.
-        while (effects.size > MAX_FX - 2) {
-          const effect = effects.values().next().value;
-          effects.delete(effect);
-          for (const source of effect.sources) { try { source.onended = null; source.stop(); } catch {} }
-          for (const node of effect.nodes) { try { node.disconnect(); } catch {} }
-        }
+        reserveEffects(2);
       }
       if (isPower || isSkid) powerSound(isSkid ? 'skid' : type, space, event?.itemType);
       else if (/crash|collision|impact|hit/.test(type)) { crashEvent = true; crash(event?.intensity ?? event?.strength ?? 1, space); }
@@ -341,6 +373,9 @@ export function createRaceAudio({ sound = true } = {}) {
   function updateEngines(selected, time, dt) {
     if (!context || !master) return;
     const primary = selected[0];
+    const thrust = racing && Number(primary?.rocketRemaining ?? 0) > 0;
+    smooth(thrustGain?.gain, thrust ? 0.16 : 0, time, 0.04);
+    smooth(thrustFilter?.frequency, 1100 + Math.min(50, carSpeed(primary)) * 30, time, 0.08);
     const gearLimits = [0.24, 0.43, 0.65, 0.88, 1.18];
     if (!primary) { smooth(windGain.gain, 0, time); smooth(skidGain.gain, 0, time); }
     for (let i = 0; i < engines.length; i++) {
@@ -396,16 +431,15 @@ export function createRaceAudio({ sound = true } = {}) {
     }
   }
 
-  function playCountdown(time) {
-    if (!racing || finished || !context) return;
-    const elapsed = time - raceStartedAt;
-    const step = Math.floor(elapsed / 0.65);
-    if (step < 0 || step > 3 || step === previousCountdown) return;
-    previousCountdown = step;
-    if (step < 3) tone(510, 0.09, { type: 'square', volume: 0.055 });
-    else { tone(820, 0.15, { type: 'triangle', volume: 0.085 }); tone(1040, 0.12, { type: 'sine', volume: 0.035, delay: 0.045 }); }
+  function playCountdown(value) {
+    if (!racing || finished || !context || ![3, 2, 1, 'GO'].includes(value) || value === previousCountdown) return;
+    previousCountdown = value;
+    // The core supplies the visible transitions; audio has no independent clock.
+    // One oscillator per cue also makes GO unmistakable without an extra beep.
+    reserveEffects(1);
+    tone(value === 'GO' ? 1040 : 510, value === 'GO' ? 0.28 : 0.12,
+      { type: value === 'GO' ? 'triangle' : 'square', volume: value === 'GO' ? 0.11 : 0.075 });
   }
-
   function start() {
     if (!alive) return;
     if (finishTimer) { clearTimeout(finishTimer); finishTimer = 0; }
@@ -414,11 +448,7 @@ export function createRaceAudio({ sound = true } = {}) {
     for (const engine of engines) { engine.carId = null; engine.rpm = 950; engine.load = 0.15; }
     if (!enabled || !unlockFromGesture()) return;
     const now = context.currentTime;
-    raceStartedAt = now;
     smooth(master?.gain, 0.82, now, 0.07);
-    // Three dry warning beeps and a higher release tone match the simulation's
-    // start lights; they never loop or play outside the race.
-    playCountdown(now);
   }
 
   function update(cars = [], focusId = null, events = []) {
@@ -428,13 +458,14 @@ export function createRaceAudio({ sound = true } = {}) {
     const selected = chooseEngines(list, focusId);
     const dt = clamp(lastUpdateAt ? now - lastUpdateAt : 1 / 60, 1 / 240, 0.1);
     lastUpdateAt = now;
-    normalizeEvents(events, list, selected[0]);
+    const pending = eventList(events);
+    for (const event of pending) if (eventType(event) === 'countdown') playCountdown(event.value);
+    normalizeEvents(pending.filter(event => eventType(event) !== 'countdown'), list, selected[0]);
     for (let i = 0; i < list.length; i++) {
       const car = list[i], id = carId(car, i);
       lastCars.set(id, { speed: carSpeed(car), gear: car?.gear == null ? null : Number(car.gear) });
     }
     while (lastCars.size > 64) lastCars.delete(lastCars.keys().next().value);
-    playCountdown(now);
     updateEngines(selected, now, dt);
   }
 
@@ -445,6 +476,7 @@ export function createRaceAudio({ sound = true } = {}) {
     const now = context.currentTime;
     for (const engine of engines) smooth(engine.bus.gain, 0, now, 0.12);
     smooth(windGain?.gain, 0, now, 0.12); smooth(skidGain?.gain, 0, now, 0.08);
+    smooth(thrustGain?.gain, 0, now, 0.06);
     tone(590, 0.18, { type: 'triangle', volume: 0.08, delay: 0.06 });
     tone(790, 0.22, { type: 'sine', volume: 0.07, delay: 0.24 });
     tone(990, 0.32, { type: 'triangle', volume: 0.055, delay: 0.46 });
@@ -463,6 +495,7 @@ export function createRaceAudio({ sound = true } = {}) {
       try { master.gain.setValueAtTime(0, now); } catch { master.gain.value = 0; }
       for (const engine of engines) { try { engine.bus.gain.setValueAtTime(0, now); } catch { engine.bus.gain.value = 0; } }
       try { windGain?.gain.setValueAtTime(0, now); skidGain?.gain.setValueAtTime(0, now); } catch {}
+      try { thrustGain?.gain.setValueAtTime(0, now); } catch {}
       try { context.suspend()?.catch?.(() => {}); } catch {}
     }
   }

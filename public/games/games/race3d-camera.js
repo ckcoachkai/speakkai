@@ -1,5 +1,5 @@
 /** Smooth third-person chase camera for the race3d course. */
-export function createChaseCamera({ THREE, camera, track }) {
+export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
   if (!THREE?.Vector3 || !camera || !track?.sampleTrack) {
     throw new TypeError('createChaseCamera needs THREE, a camera, and a track sampler');
   }
@@ -26,8 +26,13 @@ export function createChaseCamera({ THREE, camera, track }) {
   const springChange = new THREE.Vector3();
   const springTemporary = new THREE.Vector3();
   const springCorrection = new THREE.Vector3();
+  const previousCarPosition = new THREE.Vector3();
+  const carMovement = new THREE.Vector3();
+  let previousCarId = null;
   let initialized = false;
   let fov = Number.isFinite(camera.fov) ? camera.fov : 50;
+  const modes = ['overhead', 'chase', 'first-person'];
+  let modeIndex = 1, overheadMix = 0, firstPersonMix = 0;
 
   const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
   const finite = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
@@ -79,43 +84,73 @@ export function createChaseCamera({ THREE, camera, track }) {
       .addScaledVector(right, Math.sin(heading)).normalize();
     lateral.copy(right).multiplyScalar(finite(focusCar.lateral));
     samplePosition.add(lateral);
+    const flightHeight = Math.max(0, finite(focusCar.flightHeight));
+    samplePosition.y += flightHeight + finite(sample.bank) * finite(focusCar.lateral);
 
     const width = clamp(finite(sample.width, finite(track.width, 16)), 8, 40);
     const topSpeed = Math.max(1, finite(focusCar.maxSpeed, 55));
     const speed = Math.max(0, finite(focusCar.speed));
     const speedRatio = clamp(speed / topSpeed, 0, 1);
+    const modeAlpha = 1 - Math.exp(-step / Math.max(1, timeScale) / .36);
+    overheadMix += ((modeIndex === 0 ? 1 : 0) - overheadMix) * modeAlpha;
+    firstPersonMix += ((modeIndex === 2 ? 1 : 0) - firstPersonMix) * modeAlpha;
+    const chaseMix = Math.max(0, 1 - overheadMix - firstPersonMix);
 
     // Keep the car visibly in front of the camera while opening the shot a
     // little at speed. The low mount gives a road-level view and a steady horizon.
-    const trailing = clamp(width * (0.86 + speedRatio * 0.13), 12, 22);
-    const cameraHeight = clamp(width * (0.30 + speedRatio * 0.035), 4.2, 7.4);
+    const trailing = clamp(width * (0.86 + speedRatio * 0.13), 12, 22) * chaseMix + 7 * overheadMix - .48 * firstPersonMix;
+    const cameraHeight = clamp(width * (0.30 + speedRatio * 0.035), 4.2, 7.4) * chaseMix + (width * 2.65 + speedRatio * 3) * overheadMix + 1.29 * firstPersonMix;
     wantedPosition.copy(samplePosition)
       .addScaledVector(forward, -trailing)
       .addScaledVector(up, cameraHeight);
+    // A trailing camera can cross an uphill section before its target does.
+    // Keep its lens above the road at the camera's own longitudinal station.
+    const cameraRoad = track.sampleTrack(distance - trailing);
+    if (cameraRoad?.position && flightHeight < 1) {
+      const roadY = finite(cameraRoad.position.y) + finite(cameraRoad.bank) * finite(focusCar.lateral);
+      wantedPosition.y = Math.max(wantedPosition.y, roadY + .9);
+    }
 
     // Aim through the road ahead. Blending the projected heading with a
     // sampled point on the bend anticipates curvature without swinging overhead.
-    const lookDistance = clamp(width * (0.50 + speedRatio * 0.60), 8, 22);
+    const lookDistance = clamp(width * (0.50 + speedRatio * 0.60), 8, 22) * chaseMix + 3 * overheadMix + 30 * firstPersonMix;
     straightAhead.copy(samplePosition).addScaledVector(forward, lookDistance);
     const lookSample = track.sampleTrack(distance + lookDistance) || {};
     read(curveAhead, lookSample.position, straightAhead);
+    curveAhead.y += flightHeight;
     read(lookRight, lookSample.right, right);
     curveAhead.addScaledVector(lookRight, finite(focusCar.lateral) * 0.28);
-    desiredLook.copy(straightAhead).lerp(curveAhead, 0.58);
+    desiredLook.copy(straightAhead).lerp(curveAhead, .58 * chaseMix + .38 * overheadMix + .24 * firstPersonMix);
     desiredLook.y += 1.35;
     wantedTarget.copy(desiredLook);
 
-    const wantedFov = 49 + speedRatio * 3.2;
+    const wantedFov = (49 + speedRatio * 3.2) * chaseMix + 58 * overheadMix + 67 * firstPersonMix;
     if (!initialized) {
       position.copy(wantedPosition);
       target.copy(wantedTarget);
       fov = wantedFov;
       initialized = true;
     } else {
+      // Follow translation immediately, then spring the camera's offset. Without
+      // this feed-forward, a cockpit camera trails several car lengths at speed
+      // and falls below a flying car as its altitude changes.
+      if (previousCarId === focusCar.id) {
+        carMovement.copy(samplePosition).sub(previousCarPosition);
+        position.add(carMovement);
+        target.add(carMovement);
+      }
       springVector(position, positionVelocity, wantedPosition, 0.52, step);
       springVector(target, targetVelocity, wantedTarget, 0.43, step);
+      if (modeIndex === 2 && firstPersonMix > .98) {
+        position.copy(wantedPosition);
+        target.copy(wantedTarget);
+        positionVelocity.set(0, 0, 0);
+        targetVelocity.set(0, 0, 0);
+      }
       fov = smoothScalar(fov, wantedFov, 0.68, step);
     }
+    previousCarPosition.copy(samplePosition);
+    previousCarId = focusCar.id;
 
     camera.position.copy(position);
     camera.up.copy(up);
@@ -128,15 +163,27 @@ export function createChaseCamera({ THREE, camera, track }) {
 
   function reset() {
     initialized = false;
+    previousCarId = null;
     positionVelocity.set(0, 0, 0);
     targetVelocity.set(0, 0, 0);
+  }
+
+  function changeMode(direction) {
+    const next = clamp(modeIndex + Math.sign(finite(direction)), 0, modes.length - 1);
+    if (next === modeIndex) return false;
+    modeIndex = next;
+    return true;
   }
 
   function dispose() {
     initialized = false;
   }
 
-  return { update, reset, dispose };
+  return { update, reset, dispose, changeMode,
+    get mode() { return modes[modeIndex]; },
+    get hideFocusedCar() { return modeIndex === 2 || firstPersonMix > .04; },
+    get transition() { return { overhead: overheadMix, firstPerson: firstPersonMix }; },
+  };
 }
 
 export default createChaseCamera;

@@ -1,0 +1,47 @@
+{
+  "models": [
+    {
+      "id": "f1-2026",
+      "file": "f1.glb",
+      "source": "Qvist_designs CC-BY-4.0",
+      "bytes": 954364,
+      "sha256": "ac66abdf4d35bfbec4411867b3aee927b1e0ba47181a338714e344f73c3c77d6",
+      "triangles": 39137,
+      "primitives": 7,
+      "materials": 4,
+      "textures": 0,
+      "extensionsRequired": [],
+      "embeddedOnly": true
+    },
+    {
+      "id": "gt3",
+      "file": "gt3.glb",
+      "source": "toddeppe CC-BY-4.0",
+      "bytes": 4441524,
+      "sha256": "341a79791701f733c90fb87e00af4d1976bdfef082015f28397939caa5df1f61",
+      "triangles": 29362,
+      "primitives": 11,
+      "materials": 5,
+      "textures": 15,
+      "extensionsRequired": [],
+      "embeddedOnly": true
+    },
+    {
+      "id": "car-concept",
+      "file": "supercar.glb",
+      "source": "Eric Chadwick / Darmstadt Graphics Group GmbH 2024 CC-BY-4.0",
+      "bytes": 8665184,
+      "sha256": "dcea69f4e59df488433abf7de1d409c442ac31e880629e758b4bb07391ee27c5",
+      "triangles": 162020,
+      "primitives": 41,
+      "materials": 23,
+      "textures": 13,
+      "extensionsRequired": [],
+      "embeddedOnly": true
+    }
+  ],
+  "credits": "CREDITS.md",
+  "threeVersion": "0.186.1",
+  "coordinates": "Y up, +Z forward after loader normalization",
+  "instances": "Templates share geometry and textures; clone transforms and paint are independent."
+}

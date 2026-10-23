@@ -251,7 +251,11 @@ export function createRaceScenery(THREE, track) {
     const offset = at.width * 0.5 + 8.2 * unit;
     const p = at.p.clone().addScaledVector(at.right, side * offset);
     const mesh = barriers[i % 2];
-    dummy.position.set(p.x, groundY + 0.58 * unit, p.z);
+    // Elevated sections have graded earthworks above the meadow. Rest the
+    // barrier on that shoulder so walls do not disappear under the banking.
+    const shoulderY = track.sampleGround?.(d, side * offset)?.y;
+    const barrierY = Math.max(terrain.heightAt(p.x, p.z), Number.isFinite(shoulderY) ? shoulderY : groundY);
+    dummy.position.set(p.x, barrierY + 0.58 * unit, p.z);
     setYaw(dummy, at.tangent);
     dummy.scale.set(1, 1, 1);
     dummy.updateMatrix();

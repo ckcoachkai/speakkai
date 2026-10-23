@@ -16,11 +16,11 @@ export function createTrack(THREE) {
   const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
   const wrap = (d, length) => ((d % length) + length) % length;
 
-  // The route has a fast start straight, a tightening north hairpin, a long
+  // Full-size geometric course (about 4.3 km), with a 700 m start straight, a north hairpin, a long
   // back straight, then a flowing pair of elevation-changing esses.
   const anchors = [
-    [-220, 0.55, 244], [-112, 0.50, 269], [22, 0.58, 278],
-    [150, 0.80, 267], [237, 1.10, 230], [270, 1.62, 166],
+    [-220, 0.55, 269], [-112, 0.50, 269], [22, 0.58, 269],
+    [150, 0.80, 269], [237, 1.10, 230], [270, 1.62, 166],
     [258, 2.08, 95], [207, 2.24, 41], [174, 2.00, -22],
     [194, 1.50, -91], [260, 1.08, -160], [268, 0.72, -218],
     [227, 0.60, -267], [145, 0.88, -281], [61, 1.30, -260],
@@ -28,7 +28,7 @@ export function createTrack(THREE) {
     [-300, 1.70, -237], [-326, 1.15, -162], [-302, 0.72, -96],
     [-240, 0.52, -43], [-222, 0.63, 7], [-265, 1.04, 62],
     [-318, 1.43, 130], [-309, 1.55, 193], [-267, 1.10, 232]
-  ].map(([x, y, z]) => new THREE.Vector3(x, y, z));
+  ].map(([x, y, z]) => new THREE.Vector3(x * 1.95, y * 4.5, z * 1.95));
 
   const courseCurve = new THREE.CatmullRomCurve3(anchors, true, 'catmullrom', 0.45);
   courseCurve.arcLengthDivisions = 12000;
@@ -52,7 +52,7 @@ export function createTrack(THREE) {
     const turn = before.z * after.x - before.x * after.z;
     const curvature = turn / (probe * 2);
     const bank = clamp(-curvature * 2.0, -0.085, 0.085);
-    return { position, tangent, right, bank };
+    return { position, tangent, right, bank, curvature };
   }
 
   function sampleTrack(distance) {
@@ -61,6 +61,8 @@ export function createTrack(THREE) {
       position: frame.position,
       tangent: frame.tangent,
       right: frame.right,
+      bank: Math.atan(frame.bank),
+      curvature: frame.curvature,
       width: ROAD_WIDTH
     };
   }
@@ -112,7 +114,7 @@ export function createTrack(THREE) {
     return texture;
   }
 
-  function addRibbon({ left, right, start = 0, length = totalLength, step = 1.4, lift = 0, material, uvScale = 1, colors = null, name = 'course-ribbon' }) {
+  function addRibbon({ left, right, start = 0, length = totalLength, step = 2.1, lift = 0, material, uvScale = 1, colors = null, name = 'course-ribbon' }) {
     const segments = Math.max(2, Math.ceil(length / step));
     const positions = [];
     const uvs = [];
@@ -186,7 +188,7 @@ export function createTrack(THREE) {
   // strip above a flat floor.
   const GROUND_Y = -1.35;
   const groundMaterial = makeStandard('#405a3e', 1);
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1900, 1550), groundMaterial);
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(2900, 2550), groundMaterial);
   ground.name = 'race-course-ground';
   ground.rotation.x = -Math.PI / 2;
   ground.position.y = GROUND_Y;
@@ -195,7 +197,7 @@ export function createTrack(THREE) {
 
   const earthPositions = [], earthUvs = [], earthColors = [], earthIndices = [];
   const earthSections = [-46, -28, -14, 0, 14, 28, 46];
-  const earthSteps = Math.ceil(totalLength / 2.5);
+  const earthSteps = Math.ceil(totalLength / 3.5);
   const earthGrass = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 1, vertexColors: true });
   const greenIn = new THREE.Color('#344e38');
   const greenOut = new THREE.Color('#486445');
@@ -355,7 +357,7 @@ export function createTrack(THREE) {
   for (const side of [-1, 1]) {
     for (const height of [0.94, 1.57]) {
       const railPath = ribbonPath(side * 12.35, height, 2.4);
-      const rail = new THREE.Mesh(new THREE.TubeGeometry(railPath, Math.ceil(totalLength / 1.6), height > 1 ? 0.115 : 0.095, 7, true), railMetal);
+      const rail = new THREE.Mesh(new THREE.TubeGeometry(railPath, Math.ceil(totalLength / 2.5), height > 1 ? 0.115 : 0.095, 7, true), railMetal);
       rail.name = `continuous-steel-guardrail-${side}-${height}`;
       rail.castShadow = true;
       rail.receiveShadow = true;
@@ -468,7 +470,7 @@ export function createTrack(THREE) {
     group.clear();
   }
 
-  return { group, totalLength, sampleTrack, dispose };
+  return { group, totalLength, sampleTrack, sampleGround: earthPoint, dispose };
 }
 
 export const createRaceTrack = createTrack;

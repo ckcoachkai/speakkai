@@ -1,0 +1,9 @@
+Race Car 01 by toddeppe. Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0).
+License: https://creativecommons.org/licenses/by/4.0/
+Creator source: https://sketchfab.com/3d-models/race-car-01-7243b4952d4341ff96d2c5a9ff431238
+Creator profile: https://sketchfab.com/toddeppe
+Primary license verification: https://api.sketchfab.com/v3/models/7243b4952d4341ff96d2c5a9ff431238
+Downloaded optimized GLB from DraftFate: https://www.draftfate.com/draft-circuit
+File: https://www.draftfate.com/assets/draft-circuit/race-car-01.glb?v=2026-07-18.1
+Mirror changes: glTF-Transform v4.4.1 optimization; 166196 triangles, meshopt compression, quantized mesh data, WebP embedded textures. Source Sketchfab page lists approximately 609900 triangles. Exact optimization settings are not documented by the mirror.
+No model modifications were made in this acquisition. Retain this attribution and identify further modifications in derivative uses.

@@ -74,6 +74,7 @@
 .race3d-roster-detail { color: #a9eadc; font-size: 8px; font-weight: 700; letter-spacing: .4px; text-align: right; }
 .race3d-roster-row.is-winner { background: rgb(248 199 90 / 9%); color: #ffe3a1; }
 .race3d-roster-row.is-winner .race3d-roster-detail { color: #f8c75a; }
+.race3d-roster-row.is-winner .race3d-roster-name::after { display: block; color: #f8c75a; content: "FIRST SPEAKER"; font-size: 8px; letter-spacing: .4px; }
 
 .race3d-camera { right: max(18px, env(safe-area-inset-right)); display: flex; min-width: 188px; align-items: center; gap: 12px; padding: 8px 9px 8px 13px; }
 .race3d-camera-info { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 2px; }
@@ -129,3 +130,25 @@
 .race3d-lap-select{color:white;background:#243647;border:1px solid #ffffff60;border-radius:5px;padding:3px 10px;font:inherit}
 .race3d-lap-select:disabled{opacity:.6}
 @media(max-width:700px){.race3d-minimap{top:92px;left:10px;width:138px;padding:7px}}
+
+/* Permanent timing board keeps the centre of the road open. */
+.race3d-standings{top:18px;right:18px;bottom:auto;left:auto;width:min(300px,30vw)}
+.race3d-standings-summary{cursor:default}
+.race3d-roster{max-height:min(38dvh,360px);overscroll-behavior:contain;touch-action:pan-y}
+.race3d-roster-row{grid-template-columns:20px 4px minmax(0,1fr);gap:6px;padding:5px 7px}
+.race3d-roster-detail{grid-column:3;font-size:10px;letter-spacing:0;font-variant-numeric:tabular-nums;text-align:left;white-space:nowrap}
+.race3d-continue{display:block;margin:5px auto 10px;padding:9px 12px;border:1px solid #f8c75a;border-radius:8px;background:#293422;color:#ffe3a1;cursor:pointer}
+.race3d-continue[hidden]{display:none}
+.race3d-continue:disabled{cursor:default;opacity:.65}
+.race3d-lap-select:focus-visible{outline:2px solid #8fe3d2;outline-offset:3px}
+.race3d-roster:focus-visible{outline:2px solid #8fe3d2;outline-offset:-2px}
+.race3d-camera{max-width:calc(100% - 24px)}
+@media(max-width:1000px){.race3d-stats{top:auto;bottom:18px;left:18px;transform:none;width:240px;min-width:0}.race3d-standings{width:250px}}
+@media(max-width:700px){.race3d-standings{top:10px;right:10px;left:auto;bottom:auto;width:min(210px,49vw)}.race3d-minimap{top:10px;width:min(138px,34vw)}.race3d-roster{max-height:28dvh;padding:0 4px 4px}.race3d-roster-row{gap:4px;min-height:34px;padding:3px}.race3d-roster-detail{font-size:9px}.race3d-summary-mark{display:none}.race3d-camera{width:auto;bottom:10px;right:10px;flex-direction:column;gap:5px}.race3d-camera-actions{gap:3px}.race3d-camera-button{width:32px;height:32px}.race3d-stats{left:10px;bottom:10px;width:min(180px,46vw);min-height:50px}.race3d-stat{padding:5px}.race3d-continue{font-size:10px;margin:4px auto 7px;padding:7px}}
+.race3d-countdown{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);display:grid;place-items:center;min-width:1.8em;min-height:1.8em;border:2px solid #fff7e770;border-radius:50%;background:#0c141eb8;color:#fff7e7;font:900 clamp(64px,12vw,140px)/1 system-ui,sans-serif;text-shadow:0 4px 16px #000;box-shadow:0 8px 40px #0006;pointer-events:none}
+.race3d-countdown[data-step="GO"]{color:#a9eadc;border-color:#a9eadc}
+.race3d-countdown[hidden]{display:none}
+@media(max-width:700px){.race3d-stats{grid-template-columns:.85fr 1.05fr 1.2fr}}
+@media(max-width:700px){.race3d-standings{width:min(210px,42vw)}.race3d-camera{width:min(172px,42vw)}.race3d-camera-info{width:100%}.race3d-continue{max-width:calc(100% - 8px)}.race3d-stat-label{font-size:7px;letter-spacing:.7px}.race3d-stat-position .race3d-stat-value{font-size:11px}.race3d-stat-lap .race3d-stat-value{font-size:12px}}
+@media(max-width:400px){.race3d-standings-summary{padding:6px}.race3d-leader-summary{font-size:10px}.race3d-roster-row{grid-template-columns:16px 3px minmax(0,1fr)}.race3d-roster-detail{font-size:8px}.race3d-camera-actions{display:grid;grid-template-columns:repeat(2,36px)}.race3d-camera-button{width:36px;height:36px}.race3d-stat-speed .race3d-stat-value::after{font-size:7px}}
+@media(max-height:480px){.race3d-roster{max-height:24dvh}.race3d-minimap{width:112px}.race3d-stats{top:auto;bottom:10px;left:10px;transform:none;width:190px;min-width:0}.race3d-stat{padding:5px}.race3d-stat-label{font-size:7px;letter-spacing:.7px}.race3d-stat-position .race3d-stat-value{font-size:12px}.race3d-stat-lap .race3d-stat-value{font-size:13px}.race3d-standings{top:10px;right:10px;width:210px}.race3d-countdown{font-size:64px}}
