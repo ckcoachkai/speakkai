@@ -3,8 +3,8 @@ import { createRaceTrack } from './race3d-track.js?v=20261023-race3d-upgrade';
 import { createRaceCars } from './race3d-cars.js?v=20261023-race3d-upgrade';
 import { createRaceSimulation } from './race3d-physics.js?v=20261023-race3d-upgrade';
 import { createChaseCamera } from './race3d-camera.js?v=20261023-race3d-upgrade';
-import { createRaceAudio } from './race3d-audio.js?v=20261023-race3d-upgrade';
-import { createRaceUI } from './race3d-ui.js?v=20261023-race3d-upgrade';
+import { createRaceAudio } from './race3d-audio.js?v=20261023-race3d-laps-map-audio';
+import { createRaceUI } from './race3d-ui.js?v=20261023-race3d-laps-map-audio';
 import { createRaceEffects } from './race3d-fx.js?v=20261023-race3d-upgrade';
 import { createRaceScenery } from './race3d-scenery.js?v=20261023-race3d-upgrade';
 import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261023-race3d-upgrade';
@@ -19,6 +19,8 @@ const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
 /** Three.js Grand Prix, keeping the arcade's regular create/start/reset/destroy contract. */
 export default function createGame({ container, names = [], onPick, random = Math.random, sound = true }) {
+  let laps = 5;
+  try { const n = Number(localStorage.getItem('race3d-laps')); if ([1,3,5,10].includes(n)) laps = n; } catch {}
   const players = names.slice(0, 60).map((player, index) => ({
     ...player,
     id: player.id,
@@ -51,7 +53,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   const canvas = document.createElement('canvas');
   canvas.className = 'race3d-canvas';
   canvas.setAttribute('role', 'img');
-  canvas.setAttribute('aria-label', 'Three dimensional Grand Prix. Follow the leading racer through a two lap circuit.');
+  canvas.setAttribute('aria-label', 'Three dimensional Grand Prix. Follow the leading racer through the selected race circuit.');
   root.prepend(canvas);
 
   const resize = () => {
@@ -88,7 +90,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       car.screen = { x, y, visible: point.z > -1 && point.z < 1 && x > -80 && x < size.width + 80 && y > -60 && y < size.height + 60 };
       car.position = rank + 1;
       car.speedKmh = Math.max(0, Number(car.speed ?? car.velocity ?? 0) * 3.6);
-      car.lapCount = Math.min(2, Math.floor(Math.max(0, car.distance) / track.totalLength) + 1);
+      car.lapCount = Math.min(laps, Math.floor(Math.max(0, car.distance) / track.totalLength) + 1);
     }
   };
 
@@ -157,7 +159,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     atmosphere?.update(camera.position);
     camera.updateMatrixWorld(true);
     projectCars(ordered);
-    ui?.update(ordered, raceElapsed, mode);
+    ui?.update(ordered, raceElapsed, mode, focusedId);
     audio?.update(simulation?.cars || [], focusedId, audioEvents);
     audioEvents = [];
     renderer.render(scene, camera);
@@ -233,7 +235,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     audio?.reset();
     powerups?.reset();
     audio?.start();
-    canvas.setAttribute('aria-label', 'Grand Prix starting. Chase camera follows the leader through a two lap circuit.');
+    canvas.setAttribute('aria-label', 'Grand Prix starting. Chase camera follows the leader through the selected race circuit.');
     render(0);
     raf = requestAnimationFrame(frame);
   };
@@ -298,6 +300,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     atmosphere = createRaceAtmosphere(THREE, { scene, renderer });
     track = createRaceTrack(THREE);
     scenery = createRaceScenery(THREE, track);
+    track.raceDistance = track.totalLength * laps;
     simulation = createRaceSimulation({ players, track, random });
     carModels = createRaceCars(THREE, simulation.cars);
     chaseCamera = createChaseCamera({ THREE, camera, track });
@@ -306,7 +309,17 @@ export default function createGame({ container, names = [], onPick, random = Mat
     audio = createRaceAudio({ sound });
     world.add(track.group, scenery.group, carModels.group, effects.group, powerups.group);
     ui = createRaceUI(root, players, {
-      laps: 2,
+      laps, track,
+      onLaps: value => {
+        if (mode === 'countdown' || mode === 'running') return false;
+        laps = value;
+        try { localStorage.setItem('race3d-laps', String(laps)); } catch {}
+        track.raceDistance = track.totalLength * laps;
+        simulation.dispose(); world.remove(carModels.group); carModels.dispose();
+        simulation = createRaceSimulation({ players, track, random });
+        carModels = createRaceCars(THREE, simulation.cars); world.add(carModels.group);
+        reset(); return true;
+      },
       totalLength: track.totalLength,
       onCamera: direction => {
         const count = simulation?.cars.length || 1;
@@ -318,7 +331,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     resizeObserver = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null;
     resizeObserver?.observe(root);
     window.addEventListener('resize', resize, { passive: true });
-    track.raceDistance = track.totalLength * 2;
+    track.raceDistance = track.totalLength * laps;
     simulation.reset();
     setPhase('idle');
     resize();
@@ -327,7 +340,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       snapshot: () => {
         const direction = camera.getWorldDirection(new THREE.Vector3());
         return {
-          phase: mode,
+          phase: mode, laps,
           elapsed,
           raceElapsed,
           totalLength: track?.totalLength || 0,

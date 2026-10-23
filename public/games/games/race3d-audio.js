@@ -231,9 +231,25 @@ export function createRaceAudio({ sound = true } = {}) {
     };
   }
 
-  function powerSound(type, space) {
+  function powerSound(type, space, itemType) {
     const { volume, pan } = space;
     if (type === 'item-pickup' || type === 'pickup') {
+      // Each collected item has a two-note identity before its deployment cue.
+      if (itemType === 'banana') {
+        tone(780, 0.12, { volume: 0.09 * volume, endFrequency: 390, pan });
+        tone(510, 0.16, { volume: 0.075 * volume, endFrequency: 1020, delay: 0.12, pan });
+        return;
+      }
+      if (itemType === 'bomb') {
+        tone(220, 0.09, { type: 'square', volume: 0.055 * volume, pan });
+        tone(330, 0.16, { type: 'square', volume: 0.05 * volume, delay: 0.13, pan });
+        return;
+      }
+      if (itemType === 'boost') {
+        tone(620, 0.24, { type: 'triangle', volume: 0.085 * volume, endFrequency: 1860, pan });
+        tone(1240, 0.2, { volume: 0.055 * volume, endFrequency: 2480, delay: 0.08, pan });
+        return;
+      }
       tone(920, 0.085, { volume: 0.065 * volume, endFrequency: 1320, pan });
       tone(1580, 0.13, { type: 'triangle', volume: 0.045 * volume, delay: 0.075, pan });
     } else if (type === 'boost') {
@@ -262,8 +278,9 @@ export function createRaceAudio({ sound = true } = {}) {
     const now = context.currentTime;
     // Nearby explosions take voice priority over the numerous item boxes in a
     // large grid. Every one-shot still uses the same twelve-voice ceiling.
-    const priority = event => (eventType(event) === 'bomb-explode' ? 100 : 0) + eventSpace(event, primary).volume * 10;
-    const list = eventList(events).slice(0, 80).sort((a, b) => priority(b) - priority(a));
+    const focusedPickup = event => primary && event?.carId === primary.id && /^(item-pickup|pickup)$/.test(eventType(event));
+    const priority = event => (focusedPickup(event) ? 200 : eventType(event) === 'bomb-explode' ? 100 : 0) + eventSpace(event, primary).volume * 10;
+    const list = eventList(events).sort((a, b) => priority(b) - priority(a)).slice(0, 80);
     for (const event of list) {
       const type = eventType(event);
       const space = eventSpace(event, primary);
@@ -278,7 +295,16 @@ export function createRaceAudio({ sound = true } = {}) {
       if (isSkid || type === 'bomb-hit' || type === 'bomb-explode') crashEvent = true;
       if (now - (eventCooldowns.get(key) ?? -Infinity) < interval) continue;
       eventCooldowns.set(key, now);
-      if (isPower || isSkid) powerSound(isSkid ? 'skid' : type, space);
+      if (focusedPickup(event)) {
+        // Reserve two voices even if earlier frames filled the transient pool.
+        while (effects.size > MAX_FX - 2) {
+          const effect = effects.values().next().value;
+          effects.delete(effect);
+          for (const source of effect.sources) { try { source.onended = null; source.stop(); } catch {} }
+          for (const node of effect.nodes) { try { node.disconnect(); } catch {} }
+        }
+      }
+      if (isPower || isSkid) powerSound(isSkid ? 'skid' : type, space, event?.itemType);
       else if (/crash|collision|impact|hit/.test(type)) { crashEvent = true; crash(event?.intensity ?? event?.strength ?? 1, space); }
       else if (/gear|shift/.test(type)) { shiftEvent = true; if (space.volume > 0.5) shift(event?.direction ?? 1); }
     }

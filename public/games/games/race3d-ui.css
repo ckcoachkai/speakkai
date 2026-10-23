@@ -117,3 +117,15 @@
 @media (prefers-reduced-motion: reduce) {
   .race3d-chevron, .race3d-camera-button { transition: none; }
 }
+
+.race3d-minimap{position:absolute;top:18px;left:18px;width:190px;padding:9px;border:1px solid #ffffff30;border-radius:12px;background:#0c141ee6;pointer-events:auto}
+.race3d-minimap strong{font-size:9px;letter-spacing:1px}
+.race3d-minimap svg{display:block;width:100%;overflow:visible}
+.race3d-map-track{fill:none;stroke:#8b9cae;stroke-width:5;stroke-linejoin:round}
+.race3d-minimap circle{stroke:#101820;stroke-width:1.5}
+.race3d-minimap text{fill:white;text-anchor:middle;font:bold 9px system-ui;paint-order:stroke;stroke:#101820;stroke-width:2px}
+.race3d-minimap .is-focused circle{stroke:white;stroke-width:3}
+.race3d-lap-control{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.race3d-lap-select{color:white;background:#243647;border:1px solid #ffffff60;border-radius:5px;padding:3px 10px;font:inherit}
+.race3d-lap-select:disabled{opacity:.6}
+@media(max-width:700px){.race3d-minimap{top:92px;left:10px;width:138px;padding:7px}}

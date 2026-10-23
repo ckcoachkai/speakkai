@@ -1,4 +1,4 @@
-const STYLE_URL = new URL('./race3d-ui.css', import.meta.url).href;
+const STYLE_URL = new URL('./race3d-ui.css?v=20261023-race3d-laps-map-audio', import.meta.url).href;
 
 function ensureStyles() {
   if (document.querySelector('link[data-race3d-ui-style]')) return;
@@ -52,7 +52,7 @@ export function createRaceUI(container, players = [], options = {}) {
     item.append(make('span', 'race3d-stat-label', title), make('strong', 'race3d-stat-value', value));
     return { item, value: item.querySelector('.race3d-stat-value') };
   };
-  const lap = makeStat('lap', 'LAP', `1 / ${options.laps ?? 2}`);
+  const lap = makeStat('lap', 'LAP', `1 / ${options.laps ?? 5}`);
   const speed = makeStat('speed', 'SPEED', '0');
   const position = makeStat('position', 'POSITION', `1 / ${racers.length || 1}`);
   stats.append(lap.item, speed.item, position.item);
@@ -93,7 +93,33 @@ export function createRaceUI(container, players = [], options = {}) {
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   status.setAttribute('aria-atomic', 'true');
-  root.append(stats, standings, camera, labelLayer, status);
+  const map = make('div', 'race3d-minimap');
+  map.setAttribute('aria-label', 'Track map and racer positions');
+  map.append(make('strong', '', 'TRACK MAP'));
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg'); svg.setAttribute('viewBox', '0 0 200 150'); map.append(svg);
+  const control = make('label', 'race3d-lap-control', 'Laps ');
+  const select = make('select', 'race3d-lap-select'); select.setAttribute('aria-label', 'Number of laps');
+  for (const n of [1,3,5,10]) { const o = make('option', '', String(n)); o.value = String(n); select.append(o); }
+  select.value = String(options.laps ?? 5); control.append(select); map.append(control);
+  const dots = new Map(); let projectMap;
+  if (options.track) {
+    const points = Array.from({length:201}, (_,i) => options.track.sampleTrack(i / 200 * options.track.totalLength).position);
+    const xs = points.map(p => p.x), zs = points.map(p => p.z);
+    const minX = Math.min(...xs), minZ = Math.min(...zs), dx = Math.max(...xs)-minX, dz = Math.max(...zs)-minZ;
+    const scale = Math.min(176/(dx||1),126/(dz||1));
+    projectMap = p => ({ x:(200-dx*scale)/2+(p.x-minX)*scale, y:(150-dz*scale)/2+(p.z-minZ)*scale });
+    const path = document.createElementNS(ns,'path'); path.setAttribute('class','race3d-map-track');
+    path.setAttribute('d', points.map((p,i) => { const q=projectMap(p); return `${i?'L':'M'}${q.x},${q.y}`; }).join(' ')+' Z'); svg.append(path);
+    racers.forEach((r,i) => {
+      const g=document.createElementNS(ns,'g'); g.dataset.racerId=r.id;
+      const c=document.createElementNS(ns,'circle'); c.setAttribute('r','5'); c.setAttribute('fill',r.color);
+      const t=document.createElementNS(ns,'text'); t.textContent=String(i+1); t.setAttribute('y','-7');
+      const title=document.createElementNS(ns,'title'); title.textContent=`${i+1}. ${r.name}`;
+      g.append(title,c,t); svg.append(g); dots.set(r.id,g);
+    });
+  }
+  root.append(stats, standings, camera, labelLayer, status, map);
   container.appendChild(root);
 
   const rows = new Map();
@@ -118,7 +144,8 @@ export function createRaceUI(container, players = [], options = {}) {
   let boardAt = -Infinity;
   let disposed = false;
   let currentCars = [];
-  const laps = Math.max(1, Number(options.laps) || 2);
+  let mapFocusId;
+  let laps = Math.max(1, Number(options.laps) || 5);
   const announce = (message) => { status.textContent = message; };
 
   function orderedCars(cars) {
@@ -185,9 +212,19 @@ export function createRaceUI(container, players = [], options = {}) {
     }
   }
 
-  function update(cars = [], elapsed = 0, phase = 'idle') {
+  function update(cars = [], elapsed = 0, phase = 'idle', focusedId) {
     if (disposed) return;
+    if (focusedId !== undefined) mapFocusId = focusedId;
+    select.disabled = phase === 'countdown' || phase === 'running';
     currentCars = Array.isArray(cars) ? cars : [];
+    if (projectMap) for (const car of currentCars) {
+      const dot=dots.get(String(car.id)); if (!dot) continue;
+      const s=options.track.sampleTrack(car.distance), lateral=Number(car.lateral)||0;
+      const q=projectMap({x:s.position.x+s.right.x*lateral,z:s.position.z+s.right.z*lateral});
+      dot.setAttribute('transform',`translate(${q.x},${q.y})`);
+      dot.classList.toggle('is-focused',String(car.id)===String(mapFocusId));
+      dot.setAttribute('aria-label',`${getName(car)}, position ${car.position||1}`);
+    }
     const ranking = orderedCars(currentCars);
     const phaseChanged = phase !== currentPhase;
     if (phaseChanged) {
@@ -269,6 +306,13 @@ export function createRaceUI(container, players = [], options = {}) {
     if (target) announce(`Following ${getName(target)}`);
     update(currentCars, Number(stats.dataset.elapsed) || 0, currentPhase);
   }
+  const onLaps = () => {
+    const n=Number(select.value), old=laps;
+    if (select.disabled || ![1,3,5,10].includes(n)) { select.value=String(laps); return; }
+    laps=n; if (options.onLaps?.(n)===false) laps=old;
+    select.value=String(laps); update(currentCars,0,currentPhase);
+  };
+  select.addEventListener('change',onLaps);
   const onPrevious = () => moveCamera(-1);
   const onNext = () => moveCamera(1);
   prev.addEventListener('click', onPrevious);
@@ -302,6 +346,7 @@ export function createRaceUI(container, players = [], options = {}) {
   function destroy() {
     if (disposed) return;
     disposed = true;
+    select.removeEventListener('change',onLaps);
     prev.removeEventListener('click', onPrevious);
     next.removeEventListener('click', onNext);
     root.remove();
