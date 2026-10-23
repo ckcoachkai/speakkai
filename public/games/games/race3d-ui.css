@@ -1,0 +1,119 @@
+.race3d-hud {
+  --r3-ink: #fff7e7;
+  --r3-muted: #9fb0bf;
+  --r3-line: rgb(255 255 255 / 13%);
+  --r3-panel: rgb(12 20 30 / 73%);
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  color: var(--r3-ink);
+  font: 500 12px/1.3 "DM Sans", system-ui, sans-serif;
+  pointer-events: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.race3d-hud *, .race3d-hud *::before, .race3d-hud *::after { box-sizing: border-box; }
+.race3d-hud button, .race3d-hud summary { font: inherit; }
+.race3d-hud button:focus-visible, .race3d-hud summary:focus-visible {
+  outline: 2px solid #8fe3d2;
+  outline-offset: 3px;
+}
+
+.race3d-stats {
+  position: absolute;
+  top: max(18px, env(safe-area-inset-top));
+  left: 50%;
+  display: grid;
+  grid-template-columns: .92fr 1.2fr .92fr;
+  width: min(356px, calc(100vw - 250px));
+  min-width: 266px;
+  min-height: 61px;
+  transform: translateX(-50%);
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 15px;
+  background: linear-gradient(135deg, rgb(18 28 39 / 82%), var(--r3-panel));
+  box-shadow: 0 8px 26px rgb(0 0 0 / 18%);
+  backdrop-filter: blur(14px) saturate(125%);
+  pointer-events: auto;
+}
+
+.race3d-stat { display: flex; min-width: 0; flex-direction: column; justify-content: center; padding: 9px 13px; }
+.race3d-stat + .race3d-stat { border-left: 1px solid var(--r3-line); }
+.race3d-stat-label { color: var(--r3-muted); font-size: 8px; font-weight: 700; letter-spacing: 1.3px; }
+.race3d-stat-value { overflow: hidden; margin-top: 3px; color: var(--r3-ink); font: 650 16px/1.05 "Space Grotesk", "DM Sans", system-ui, sans-serif; font-variant-numeric: tabular-nums; text-overflow: ellipsis; white-space: nowrap; }
+.race3d-stat-speed .race3d-stat-value::after { content: " km/h"; color: #9fb0bf; font: 500 9px "DM Sans", system-ui, sans-serif; }
+.race3d-stat-speed .race3d-stat-value { color: #a9eadc; font-size: 19px; }
+
+.race3d-standings, .race3d-camera {
+  position: absolute;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 13px;
+  background: linear-gradient(145deg, rgb(18 28 39 / 82%), var(--r3-panel));
+  box-shadow: 0 8px 26px rgb(0 0 0 / 18%);
+  backdrop-filter: blur(13px) saturate(125%);
+  pointer-events: auto;
+}
+
+.race3d-standings { left: max(18px, env(safe-area-inset-left)); width: min(238px, 32vw); overflow: hidden; }
+.race3d-standings-summary { display: flex; min-height: 44px; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; list-style: none; }
+.race3d-standings-summary::-webkit-details-marker { display: none; }
+.race3d-summary-mark { display: grid; width: 26px; height: 26px; flex: none; place-items: center; border: 1px solid var(--r3-line); border-radius: 8px; color: #a9eadc; font-size: 14px; }
+.race3d-standings-copy { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 2px; }
+.race3d-standings-copy strong { color: var(--r3-muted); font-size: 8px; letter-spacing: 1.25px; }
+.race3d-leader-summary { overflow: hidden; color: var(--r3-ink); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.race3d-chevron { color: var(--r3-muted); font-size: 17px; transition: transform .16s ease; }
+.race3d-standings[open] .race3d-chevron { transform: rotate(180deg); }
+.race3d-roster { display: grid; max-height: min(34dvh, 290px); gap: 1px; overflow: auto; margin: 0; padding: 0 8px 8px; list-style: none; scrollbar-color: rgb(169 234 220 / 38%) transparent; scrollbar-width: thin; }
+.race3d-roster-row { position: relative; display: grid; min-height: 32px; grid-template-columns: 22px 4px minmax(0, 1fr) 28px; align-items: center; gap: 8px; overflow: hidden; padding: 0 7px; border-radius: 7px; color: #dce4e8; }
+.race3d-roster-row::before { position: absolute; right: 0; bottom: 0; left: 0; height: 1px; background: rgb(255 255 255 / 5%); content: ""; }
+.race3d-roster-rank { color: #9fb0bf; font-size: 9px; font-variant-numeric: tabular-nums; text-align: right; }
+.race3d-roster-swatch { width: 4px; height: 17px; border-radius: 4px; }
+.race3d-roster-name { overflow: hidden; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.race3d-roster-detail { color: #a9eadc; font-size: 8px; font-weight: 700; letter-spacing: .4px; text-align: right; }
+.race3d-roster-row.is-winner { background: rgb(248 199 90 / 9%); color: #ffe3a1; }
+.race3d-roster-row.is-winner .race3d-roster-detail { color: #f8c75a; }
+
+.race3d-camera { right: max(18px, env(safe-area-inset-right)); display: flex; min-width: 188px; align-items: center; gap: 12px; padding: 8px 9px 8px 13px; }
+.race3d-camera-info { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 2px; }
+.race3d-camera-title { color: var(--r3-muted); font-size: 8px; font-weight: 700; letter-spacing: 1.2px; }
+.race3d-camera-name { overflow: hidden; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.race3d-camera-actions { display: flex; gap: 5px; }
+.race3d-camera-button { display: grid; width: 34px; height: 34px; flex: none; place-items: center; border: 1px solid rgb(255 255 255 / 13%); border-radius: 9px; background: rgb(255 255 255 / 6%); color: var(--r3-ink); cursor: pointer; font-size: 22px !important; line-height: 1; touch-action: manipulation; }
+.race3d-camera-button:hover:not(:disabled) { border-color: rgb(169 234 220 / 45%); background: rgb(169 234 220 / 12%); color: #a9eadc; }
+.race3d-camera-button:disabled { cursor: default; opacity: .35; }
+
+.race3d-player-labels { position: absolute; inset: 0; overflow: hidden; }
+.race3d-player-label { position: absolute; top: 0; left: 0; display: flex; max-width: min(180px, 35vw); align-items: center; gap: 6px; padding: 4px 8px; overflow: hidden; border: 1px solid rgb(255 255 255 / 13%); border-radius: 999px; background: rgb(7 12 18 / 77%); box-shadow: 0 3px 10px rgb(0 0 0 / 28%); white-space: nowrap; }
+.race3d-player-label[hidden] { display: none; }
+.race3d-player-label-dot { width: 6px; height: 6px; flex: none; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
+.race3d-player-label-name { overflow: hidden; font-size: 10px; font-weight: 650; text-overflow: ellipsis; }
+.race3d-player-label[data-rank="1"] { border-color: rgb(248 199 90 / 52%); }
+.race3d-player-label[data-rank="1"]::after { color: #f8c75a; content: "P1"; font-size: 8px; font-weight: 800; }
+.race3d-sr-status { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
+
+@media (max-width: 700px) {
+  .race3d-stats { top: max(13px, env(safe-area-inset-top)); width: min(340px, calc(100vw - 28px)); min-width: 0; min-height: 55px; }
+  .race3d-stat { padding: 7px 9px; }
+  .race3d-stat-value { font-size: 14px; }
+  .race3d-stat-speed .race3d-stat-value { font-size: 17px; }
+  .race3d-standings, .race3d-camera { bottom: max(12px, env(safe-area-inset-bottom)); }
+  .race3d-standings { left: max(12px, env(safe-area-inset-left)); width: min(190px, 48vw); }
+  .race3d-camera { right: max(12px, env(safe-area-inset-right)); min-width: 0; width: min(172px, 42vw); gap: 7px; padding: 6px 6px 6px 9px; }
+  .race3d-camera-button { width: 36px; height: 36px; }
+  .race3d-standings-summary { min-height: 42px; gap: 7px; padding: 7px 8px; }
+  .race3d-summary-mark { width: 24px; height: 24px; }
+  .race3d-roster { max-height: 32dvh; }
+}
+
+@media (max-width: 380px) {
+  .race3d-standings { width: 44vw; }
+  .race3d-camera { width: 42vw; }
+  .race3d-camera-title { font-size: 7px; letter-spacing: .7px; }
+  .race3d-camera-name { font-size: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .race3d-chevron, .race3d-camera-button { transition: none; }
+}
