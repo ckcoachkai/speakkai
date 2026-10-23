@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-23T12:58:52.409101+00:00",
+  "updatedAt": "2026-10-23T14:28:04.942219+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1324,10 +1324,13 @@
           "time": "18:00–20:00",
           "status": "held",
           "classContent": {
-            "en": "◆ Homework presentations: Students came up to deliver their homework speeches. The presentations included reading from paper and speaking from memory. We highlighted memorizing the speech as a step toward presenting it rather than simply reading through the text.\n\n◆ Delivery feedback: The feedback focused on a clear voice, articulation, hand gestures, speaking while putting the paper down, a more natural delivery rather than a mechanical reading, a slightly slower pace, emphasis, and enough volume to be heard. These were feedback and practice points from the presentations; no new homework assignment was recorded.",
-            "zh": "◆【作业展示】：学生上台展示自己的作业演讲，既有看着稿纸朗读的展示，也有凭记忆进行的展示。我们强调，记住演讲是从单纯读完文字走向真正展示的一步。\n\n◆【表达反馈】：反馈重点包括清楚的声音、吐字、手势、放下稿纸时继续表达、用更自然的方式讲话而不只是机械朗读，以及稍微放慢语速、增加强调和使用让听众听见的音量。这些是根据展示提出的反馈和练习重点；现有记录没有提供新的作业任务。"
+            "en": "◆ Homework presentations: We worked through the students’ homework presentations. I had tried to keep the speeches as simple as possible so students could remember them and speak on stage. Some students were still reading from their texts; others had memorized their speeches and presented them.\n\n◆ Presenting rather than reading: For this class, we need to focus on hand gestures and on speaking in a presentation style. Otherwise, it becomes filling in the blanks and reading. The immediate priority was to get through all the homework presentations first. Reading from a script does not give us as much presentation practice as trying to say the speech ourselves, even if we forget some things.\n\n◆ Delivery and paper handling: The feedback addressed clear pronunciation, speaking loudly enough to be heard, speaking more slowly, using hand gestures, and bringing out energy. A music stand was suggested as a way to support the paper and reduce distracting page handling. These were presentation and practice suggestions.\n\n◆ Ethos, pathos and logos: We went over these as simply as possible and explained what each one meant. Ethos is about credibility—personal credibility, or the personal experience and story someone might have to help support a persuasive speech. Pathos is connecting through emotions. Logos is using facts and details.\n\n◆ Examples and multiple-choice practice: We went through examples and multiple-choice questions to practise understanding these three ways of persuading.\n\n◆ Creating a simple speech together: We then tried to create a simple speech together, related to wintertime and staying at home in the winter. We connected the topic with ethos, pathos and logos, using all three in the speech. The speech should be short and easy so students can memorize it and present it without paper next class.",
+            "zh": "◆【作业展示】：我们逐一进行了学生的作业展示。我尽量把演讲内容保持得简单，让学生能够记住，并站到台上说出来。有些学生仍在看稿朗读，也有学生已经记住演讲并进行了展示。\n\n◆【展示，而不只是朗读】：这门课需要重点练习手势，以及用演讲展示的方式表达。否则，就只是填空后把内容读出来。当时首先要做的是让大家完成所有作业展示。与其一直看稿，不如尝试自己把演讲说出来，即使忘掉一些内容，也能获得更多展示方面的练习。\n\n◆【表达与稿纸使用】：反馈涉及清楚的发音、让听众听见的音量、放慢语速、运用手势，以及带出表达的能量。老师建议可以用谱架支撑稿纸，减少翻动纸张带来的干扰。这些属于展示与练习建议。\n\n◆【Ethos、Pathos 与 Logos】：我们尽量用简单的方式讲解这三个概念，说明每一个是什么意思。Ethos 讲的是可信度——个人的可信度，或者一个人能够用来支持说服性演讲的亲身经历和故事。Pathos 是通过情感建立联系。Logos 是运用事实和细节。\n\n◆【例子与选择题练习】：我们通过一些例子和选择题，练习理解这三种说服方式。\n\n◆【一起创作简单的演讲】：接着，我们尝试一起创作一篇简单的演讲，围绕冬天以及冬天待在家里这个主题，将 Ethos、Pathos 和 Logos 与主题联系起来，在演讲中运用这三种方式。演讲应该简短、容易，方便学生记住，并在下一次课不看稿展示。"
           },
-          "homework": null,
+          "homework": {
+            "en": "Memorize the short, simple speech we created together in class about wintertime and staying at home in the winter, using ethos, pathos and logos.\n\nPresent it without paper in the next class. The only task is to memorize the speech and then present it; it should be short and easy.",
+            "zh": "记住我们在课堂上一起创作的、围绕冬天以及冬天待在家里的简短演讲，运用 Ethos、Pathos 和 Logos。\n\n下一次课不看稿进行展示。任务只有记住演讲，然后把它展示出来；内容应该简短、容易。"
+          },
           "students": [
             {
               "id": "merlin",
