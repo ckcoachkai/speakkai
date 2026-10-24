@@ -21,7 +21,6 @@ export function createRacePowerups(THREE, { track } = {}) {
   const color = new THREE.Color();
   const limits = Object.freeze({ pickups: 96, bananas: 96, bombs: 60, missiles: 60, waves: 48, cars: 60, flames: 120, smoke: 120, sparks: 200, trails: 240, shockwaves: 20 });
   const itemTypes = ['launch', 'rocket', 'boost', 'bomb', 'shield', 'banana', 'missile', 'shockwave', 'freeze', 'repair'];
-  const itemLabels = ['SPACE LAUNCH', 'ROCKET', 'NITRO', 'BOMB', 'SHIELD', 'BANANA', 'MISSILE', 'SHOCKWAVE', 'FREEZE', 'REPAIR'];
   const itemColors = [0xb68aff, 0x36edbe, 0x38dcea, 0xff994d, 0x5bbcff, 0xffda3b, 0xff6373, 0xe892ff, 0xa0edff, 0x74ef9a];
   const indicators = new Map();
   const finite = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
@@ -91,7 +90,8 @@ export function createRacePowerups(THREE, { track } = {}) {
   for (let face = 0; face < 4; face++) glyphs.push(question.clone().rotateY(face * Math.PI / 2));
   question.dispose();
   const pickupCore = batch('pickup-shell', new THREE.BoxGeometry(1.46, 1.46, 1.46), standard(0xffffff, {
-    roughness: .2, metalness: .3, emissive: 0x273f40, emissiveIntensity: .46
+    roughness: .11, metalness: .08, emissive: 0x354c69, emissiveIntensity: .6,
+    transparent: true, opacity: .3, depthWrite: false, side: THREE.DoubleSide
   }), limits.pickups);
   const pickupFrame = batch('pickup-frame', combine(edges), standard(0xd9edee, { roughness: .22, metalness: .72 }), limits.pickups);
   const pickupGlyph = batch('pickup-question', combine(glyphs), standard(0xfff6cd, {
@@ -101,64 +101,6 @@ export function createRacePowerups(THREE, { track } = {}) {
     basic(0x91e6e9, { transparent: true, opacity: .52, depthWrite: false }), limits.pickups);
   const pickupColors = Object.fromEntries(itemTypes.map((type, index) => [type, itemColors[index]]));
 
-  // One small local atlas supplies ten crisp icons and real item names. The
-  // cards are instanced, billboarded and follow the car that received the item.
-  function makeItemAtlas() {
-    if (typeof document === 'undefined') return null;
-    const canvas = document.createElement('canvas');
-    canvas.width = 1024; canvas.height = 1024;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return null;
-    for (let i = 0; i < itemTypes.length; i++) {
-      const x = i % 2 * 512, y = Math.floor(i / 2) * 204.8;
-      const tint = `#${itemColors[i].toString(16).padStart(6, '0')}`;
-      ctx.save(); ctx.translate(x, y); ctx.fillStyle = 'rgba(7,17,30,.94)';
-      ctx.strokeStyle = tint; ctx.lineWidth = 7;
-      ctx.beginPath(); ctx.roundRect(10, 9, 492, 185, 24); ctx.fill(); ctx.stroke();
-      ctx.shadowColor = tint; ctx.shadowBlur = 13; ctx.strokeStyle = tint; ctx.fillStyle = tint;
-      ctx.lineWidth = 10; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-      ctx.save(); ctx.translate(256, 77);
-      const line = (points, close = false, fill = false) => {
-        ctx.beginPath(); ctx.moveTo(...points[0]); for (const p of points.slice(1)) ctx.lineTo(...p);
-        if (close) ctx.closePath(); if (fill) ctx.fill(); else ctx.stroke();
-      };
-      const circle = (r, px = 0, py = 0, fill = false) => { ctx.beginPath(); ctx.arc(px, py, r, 0, TAU); if (fill) ctx.fill(); else ctx.stroke(); };
-      const type = itemTypes[i];
-      if (type === 'launch' || type === 'rocket' || type === 'missile') {
-        line([[0,-46],[21,-12],[18,30],[-18,30],[-21,-12]], true, true);
-        line([[-18,8],[-38,36],[-18,29]], true, true); line([[18,8],[38,36],[18,29]], true, true);
-        ctx.fillStyle = '#eaffff'; circle(7, 0, -6, true);
-        if (type === 'launch') { line([[-34,-33],[-45,-45]]); line([[34,-33],[45,-45]]); line([[0,39],[0,53]]); }
-        else if (type === 'rocket') { line([[-10,38],[-15,52]]); line([[10,38],[15,52]]); }
-        else { ctx.strokeStyle = '#fff3cf'; line([[-37,-30],[-25,-30]]); line([[25,-30],[37,-30]]); }
-      } else if (type === 'boost') line([[8,-45],[-29,9],[-2,9],[-13,47],[30,-10],[3,-10]], true, true);
-      else if (type === 'bomb') { circle(31, 0, 9, true); line([[5,-22],[13,-39],[28,-40],[33,-50]]); ctx.fillStyle='#fff6bd';circle(6,33,-50,true); }
-      else if (type === 'shield') { line([[0,-45],[37,-31],[31,10],[0,46],[-31,10],[-37,-31]], true);ctx.strokeStyle='#e8fbff';line([[-14,0],[-2,13],[20,-14]]); }
-      else if (type === 'banana') { line([[0,-40],[6,-3],[43,31],[9,21],[0,2],[-9,21],[-43,31],[-6,-3]],true,true); }
-      else if (type === 'shockwave') { for(const r of [14,29,44]){ctx.beginPath();ctx.arc(0,0,r,-2.7,2.7);ctx.stroke();} }
-      else if (type === 'freeze') { for(let axis=0;axis<3;axis++){ctx.save();ctx.rotate(axis*Math.PI/3);line([[0,-44],[0,44]]);line([[-13,-29],[0,-16],[13,-29]]);line([[-13,29],[0,16],[13,29]]);ctx.restore();} }
-      else if (type === 'repair') line([[-12,-40],[12,-40],[12,-12],[40,-12],[40,12],[12,12],[12,40],[-12,40],[-12,12],[-40,12],[-40,-12],[-12,-12]],true,true);
-      ctx.restore(); ctx.shadowBlur = 0; ctx.fillStyle = '#f5fbff';
-      ctx.font = '900 38px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText(itemLabels[i], 256, 164, 456); ctx.restore();
-    }
-    const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = 4; textures.add(texture); return texture;
-  }
-  const atlas = makeItemAtlas();
-  const labelGeometry = new THREE.PlaneGeometry(5.2, 2.08);
-  const labelUV = new THREE.InstancedBufferAttribute(new Float32Array(limits.cars * 2), 2);
-  labelGeometry.setAttribute('aItemCell', labelUV);
-  const labelMaterial = basic(0xffffff, { map: atlas, transparent: true, opacity: .98, depthWrite: false, depthTest: false, toneMapped: false });
-  labelMaterial.onBeforeCompile = shader => {
-    shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nattribute vec2 aItemCell;')
-      .replace('#include <uv_vertex>', '#include <uv_vertex>\n#ifdef USE_MAP\nvMapUv = (vMapUv + aItemCell) / vec2(2.0, 5.0);\n#endif');
-  };
-  labelMaterial.customProgramCacheKey = () => 'race3d-item-label-atlas-v1';
-  const itemCards = batch('received-item-label', labelGeometry, labelMaterial, limits.cars);
-  itemCards.renderOrder = 9;
-
   // Three broad, curling flaps and their pale inner skin form an actual peel.
   function peelGeometry(inner = false) {
     const positions = [], indices = [];
@@ -167,9 +109,9 @@ export function createRacePowerups(THREE, { track } = {}) {
       const start = positions.length / 3;
       for (let row = 0; row <= 12; row++) {
         const t = row / 12;
-        const radius = .09 + 1.14 * t;
-        const width = .024 + .31 * Math.pow(Math.sin(Math.PI * t), .7);
-        const height = .43 * Math.pow(1 - t, 2) + .31 * Math.pow(t, 5);
+        const radius = .055 + 1.22 * Math.sin(t * 1.18);
+        const width = (.018 + .32 * Math.pow(Math.sin(Math.PI * t), .66)) * (inner?.78:1);
+        const height = .82 * Math.pow(1 - t, 2.2) + .49 * Math.pow(t, 6);
         for (let col = 0; col <= 4; col++) {
           const cross = col / 2 - 1;
           const x = radius, z = cross * width;
@@ -188,12 +130,12 @@ export function createRacePowerups(THREE, { track } = {}) {
     geometry.computeVertexNormals();
     return geometry;
   }
-  const bananaOuter = batch('banana-peel', peelGeometry(), standard(0xd9ab26, { roughness: .6, metalness: .02, side: THREE.DoubleSide }), limits.bananas);
-  const bananaInner = batch('banana-flesh', peelGeometry(true), standard(0xffe696, { roughness: .78, metalness: 0, side: THREE.DoubleSide }), limits.bananas);
-  const tips = [new THREE.CylinderGeometry(.09, .15, .28, 8).translate(0, .5, 0)];
+  const bananaOuter = batch('banana-peel', peelGeometry(), standard(0xffcf12, { roughness: .47, metalness: .02, side: THREE.DoubleSide }), limits.bananas);
+  const bananaInner = batch('banana-flesh', combine([peelGeometry(true), new THREE.ConeGeometry(.13,.74,9).translate(0,.78,0)]), standard(0xffedb1, { roughness: .78, metalness: 0, side: THREE.DoubleSide }), limits.bananas);
+  const tips = [new THREE.CylinderGeometry(.055, .09, .19, 8).translate(0, 1.1, 0)];
   for (let i = 0; i < 3; i++) {
     const angle = i * TAU / 3;
-    tips.push(sphere(.068, Math.sin(angle) * 1.225, .34, Math.cos(angle) * 1.225));
+    tips.push(sphere(.072, Math.sin(angle) * 1.183, .49, Math.cos(angle) * 1.183));
   }
   const bananaTips = batch('banana-stem', combine(tips), standard(0x70562e, { roughness: .9, metalness: 0 }), limits.bananas);
 
@@ -224,8 +166,33 @@ export function createRacePowerups(THREE, { track } = {}) {
     basic(0xffaa69,{transparent:true,opacity:.83,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.missiles);
   const waveArc = batch('forward-wave-arc',new THREE.TorusGeometry(1,.055,6,32,Math.PI).rotateX(Math.PI/2),
     basic(0xffffff,{transparent:true,opacity:.9,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.waves);
-  const waveWall = batch('forward-wave-front',new THREE.PlaneGeometry(2,1.35).translate(0,.62,0),
-    basic(0xffffff,{transparent:true,opacity:.28,depthWrite:false,toneMapped:false,side:THREE.DoubleSide,blending:THREE.AdditiveBlending}),limits.waves);
+  // The thrown wave has a physical carrier: a glowing, pulsing jellyfish.
+  // Tentacles share one geometry and shader; no scene nodes are created per wave.
+  const jellyTime = { value: 0 };
+  const jellyBell = batch('jellyfish-bell', new THREE.SphereGeometry(.92,24,12,0,TAU,0,Math.PI*.56).scale(1,.74,1).translate(0,.32,0),
+    standard(0xee9aff,{emissive:0xae38dd,emissiveIntensity:.8,roughness:.12,metalness:.03,transparent:true,opacity:.57,depthWrite:false,side:THREE.DoubleSide}), limits.waves);
+  const jellyRim = batch('jellyfish-luminous-rim',new THREE.TorusGeometry(.9,.065,6,32).rotateX(Math.PI/2).translate(0,.19,0),
+    basic(0xffc9ff,{transparent:true,opacity:.9,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.waves);
+  const tentacleParts=[];
+  for(let i=0;i<9;i++){
+    const angle=i*TAU/9, length=1.6+(i%3)*.45;
+    const curve=new THREE.CatmullRomCurve3(Array.from({length:9},(_,j)=>{
+      const t=j/8;
+      return new THREE.Vector3(Math.sin(angle)*(.7-.19*t)+Math.sin(t*7+i)*.13*t,.2-t*(1.05+(i%2)*.27),Math.cos(angle)*.66-t*length);
+    }));
+    tentacleParts.push(new THREE.TubeGeometry(curve,16,i%3===0?.047:.031,5,false));
+  }
+  const tentacleMaterial=standard(0xf4acff,{emissive:0xb64cef,emissiveIntensity:1.05,roughness:.34,transparent:true,opacity:.8,depthWrite:false});
+  tentacleMaterial.onBeforeCompile=shader=>{
+    shader.uniforms.uJellyTime=jellyTime;
+    shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nuniform float uJellyTime;')
+      .replace('#include <begin_vertex>','#include <begin_vertex>\nfloat sway = 1.0 - smoothstep(-1.3, 0.15, position.y);\ntransformed.x += sin(uJellyTime * 5.5 + position.z * 3.4 + position.x * 2.0) * 0.2 * sway;\ntransformed.y += sin(uJellyTime * 4.0 + position.z * 4.0) * 0.12 * sway;');
+  };
+  tentacleMaterial.customProgramCacheKey=()=> 'race3d-jellyfish-tentacles-v1';
+  const jellyTentacles=batch('jellyfish-tentacles',combine(tentacleParts),tentacleMaterial,limits.waves);
+  const jellyCore=batch('jellyfish-heart',combine([sphere(.29,0,.47,0),sphere(.09,-.26,.41,.71),sphere(.09,.26,.41,.71)]),
+    basic(0xfff0ff,{transparent:true,opacity:.9,depthWrite:false,toneMapped:false}),limits.waves);
+  const jellyMeshes=[jellyBell,jellyRim,jellyTentacles,jellyCore];
   const shieldBubble = batch('shield-bubble',new THREE.SphereGeometry(2.85,24,16),standard(0x71caff,{
     roughness:.08,metalness:.12,emissive:0x168cde,emissiveIntensity:.45,transparent:true,opacity:.18,depthWrite:false,
     side:THREE.DoubleSide
@@ -242,6 +209,16 @@ export function createRacePowerups(THREE, { track } = {}) {
   }),limits.cars);
   const repairHalo = batch('repair-energy',new THREE.TorusGeometry(1.45,.09,6,32).rotateX(Math.PI/2),
     basic(0x67ffb0,{transparent:true,opacity:.8,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.cars);
+  const repairSweep = batch('repair-restoration-silhouette',combine([
+    box(2.75,.065,.065,0,.2,1.73),box(2.75,.065,.065,0,.2,-1.73),
+    box(.065,.065,3.46,-1.38,.2,0),box(.065,.065,3.46,1.38,.2,0),
+    new THREE.TorusGeometry(.64,.045,5,20).rotateY(Math.PI/2).translate(-1.48,.3,.96),
+    new THREE.TorusGeometry(.64,.045,5,20).rotateY(Math.PI/2).translate(1.48,.3,.96),
+    new THREE.TorusGeometry(.64,.045,5,20).rotateY(Math.PI/2).translate(-1.48,.3,-.96),
+    new THREE.TorusGeometry(.64,.045,5,20).rotateY(Math.PI/2).translate(1.48,.3,-.96)
+  ]),basic(0x8bffc0,{transparent:true,opacity:.65,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.cars);
+  const repairCross=batch('repair-restoring-cross',combine([box(.18,.75,.16,0,0,0),box(.75,.18,.16,0,0,0)]),
+    basic(0xcaffdc,{transparent:true,opacity:.95,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.cars);
   const launchPlume = batch('launch-vertical-plume',new THREE.ConeGeometry(.8,7,12).translate(0,-3.5,0),
     basic(0x52efda,{transparent:true,opacity:.65,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.cars);
   const launchCore = batch('launch-hot-core',new THREE.ConeGeometry(.4,5,10).translate(0,-2.5,0),
@@ -294,6 +271,52 @@ export function createRacePowerups(THREE, { track } = {}) {
   const flameCore = batch('boost-hot-core', flameGeometry.clone(), basic(0xc8ffff, {
     transparent: true, opacity: .9, toneMapped: false, depthWrite: false, blending: THREE.AdditiveBlending
   }), limits.flames);
+
+  // Inventory objects are actual lit geometry, floating above their receiver.
+  // Geometry/materials are shared with the thrown objects wherever possible.
+  const held = Object.fromEntries(itemTypes.map(type=>[type,[]]));
+  function heldPart(type,name,geometry,material){
+    const mesh=batch(`held-${type}-${name}`,geometry,material,limits.cars);held[type].push(mesh);return mesh;
+  }
+  function heldCopy(type,mesh,geometry=mesh.geometry){return heldPart(type,mesh.name,geometry,mesh.material);}
+  const silver=standard(0xe2f0ff,{roughness:.2,metalness:.65});
+  const whiteHot=basic(0xf4fff4,{toneMapped:false});
+  function rocketObject(type,tint,wide=false){
+    heldPart(type,'body',combine([new THREE.CylinderGeometry(.24,.3,1.3,12),new THREE.ConeGeometry(.26,.58,12).translate(0,.94,0)]),silver);
+    heldPart(type,'fins',combine([box(.12,.65,.96,0,-.54,0),box(.96,.65,.12,0,-.54,0),sphere(.15,0,.34,.24)]),standard(tint,{roughness:.3,metalness:.42,emissive:tint,emissiveIntensity:.15}));
+    heldPart(type,'flame',new THREE.ConeGeometry(.23,wide?1.2:.75,8).rotateZ(Math.PI).translate(0,wide?-1.18:-.96,0),basic(tint,{toneMapped:false}));
+  }
+  rocketObject('launch',0xb68aff,true);
+  heldPart('launch','orbital-ring',new THREE.TorusGeometry(.88,.055,6,28).rotateX(Math.PI*.34),basic(0xe4c7ff,{toneMapped:false}));
+  rocketObject('rocket',0x36edbe,true);
+  heldPart('rocket','engine-collars',combine([new THREE.TorusGeometry(.3,.075,6,16).rotateX(Math.PI/2).translate(0,-.45,0),new THREE.TorusGeometry(.3,.06,6,16).rotateX(Math.PI/2).translate(0,-.21,0)]),standard(0x1ac38f,{metalness:.6,roughness:.22}));
+  function extrudedPolygon(points,depth=.22){
+    const shape=new THREE.Shape();shape.moveTo(...points[0]);for(const p of points.slice(1))shape.lineTo(...p);shape.closePath();
+    return new THREE.ExtrudeGeometry(shape,{depth,bevelEnabled:true,bevelSize:.045,bevelThickness:.04,bevelSegments:2,steps:1}).translate(0,0,-depth/2);
+  }
+  const bolt=extrudedPolygon([[.16,1.06],[-.69,-.1],[-.12,-.1],[-.32,-1.03],[.73,.26],[.15,.26]],.27);
+  heldPart('boost','lightning',bolt,standard(0x36f4ec,{roughness:.2,metalness:.4,emissive:0x09bcb7,emissiveIntensity:.52}));
+  heldPart('boost','power-ring',new THREE.TorusGeometry(.86,.038,5,28).rotateY(.4),basic(0x92fff7,{toneMapped:false}));
+  for(const mesh of [bombBody,bombCollar,bombFuse])heldCopy('bomb',mesh);
+  heldPart('bomb','lit-fuse',sphere(.115,.4,1.04,.03),basic(0xffc34d,{toneMapped:false}));
+  const shieldShape=[[0,1.03],[.79,.72],[.65,-.35],[0,-1.02],[-.65,-.35],[-.79,.72]];
+  heldPart('shield','plate',extrudedPolygon(shieldShape,.3),standard(0x369ded,{roughness:.17,metalness:.55,emissive:0x18539a,emissiveIntensity:.4}));
+  heldPart('shield','crest',combine([box(.15,1.15,.1,0,.13,.24),box(.85,.15,.1,0,.22,.24)]),standard(0xb9eaff,{roughness:.14,metalness:.75}));
+  for(const mesh of [bananaOuter,bananaInner,bananaTips])heldCopy('banana',mesh);
+  heldCopy('missile',missileBody,missileBody.geometry.clone().rotateX(-Math.PI/2));
+  heldCopy('missile',missileFins,missileFins.geometry.clone().rotateX(-Math.PI/2));
+  heldPart('missile','target-ring',new THREE.TorusGeometry(.84,.04,5,28),basic(0xff6475,{toneMapped:false}));
+  for(const mesh of jellyMeshes)heldCopy('shockwave',mesh);
+  const snowParts=[];
+  for(let i=0;i<6;i++){
+    const a=i*TAU/6;
+    snowParts.push(box(.105,1.65,.13,0,0,0).rotateZ(a));
+    for(const side of [-1,1])snowParts.push(box(.09,.37,.12,side*.12,.56,0).rotateZ(side*.65).rotateZ(a));
+  }
+  heldPart('freeze','snow-crystal',combine(snowParts),standard(0xc6f7ff,{roughness:.18,metalness:.35,emissive:0x4ac8ed,emissiveIntensity:.5}));
+  heldPart('freeze','crystal-core',new THREE.IcosahedronGeometry(.29,0),standard(0x65d6ff,{roughness:.1,metalness:.45}));
+  heldPart('repair','green-ring',new THREE.TorusGeometry(.76,.15,8,24),standard(0x20cb77,{roughness:.24,metalness:.4,emissive:0x13894f,emissiveIntensity:.5}));
+  heldPart('repair','medical-cross',combine([box(.23,1.05,.27,0,0,.06),box(1.05,.23,.27,0,0,.06)]),whiteHot);
 
   function frame(source, lift = 0) {
     const distance = finite(source?.distance);
@@ -379,10 +402,10 @@ export function createRacePowerups(THREE, { track } = {}) {
         if (!indicators.has(event.carId) && indicators.size >= limits.cars) indicators.delete(indicators.keys().next().value);
         indicators.set(event.carId, { type: event.itemType, until: clock + 2.1 });
       }
-      if (!['item-pickup', 'banana-hit', 'bomb-explode', 'boost', 'launch-activate', 'rocket-activate', 'shield-activate',
+      if (!['item-pickup', 'banana-launch', 'banana-land', 'banana-hit', 'bomb-explode', 'boost', 'launch-activate', 'rocket-activate', 'shield-activate',
         'missile-launch', 'missile-hit', 'shockwave-launch', 'shockwave-hit', 'freeze-launch', 'freeze-hit',
         'repair', 'launch-land', 'shield-block'].includes(event.type)) continue;
-      const groundEvent = ['bomb-explode','missile-hit','shockwave-hit','freeze-hit','launch-land'].includes(event.type);
+      const groundEvent = ['bomb-explode','banana-land','missile-hit','shockwave-hit','freeze-hit','launch-land'].includes(event.type);
       frame({ distance: event.distance ?? car?.distance, lateral: event.lateral ?? car?.lateral }, .65 + (groundEvent ? 0 : Math.max(0,finite(car?.flightHeight))));
       // event coordinates refer to the impact location, not the current shooter.
       if (event.position && typeof event.position === 'object') {
@@ -403,6 +426,7 @@ export function createRacePowerups(THREE, { track } = {}) {
     if (lastTime !== null && time < lastTime - .001) reset();
     lastTime = time;
     clock += step;
+    jellyTime.value=clock;
     emissionTime += step;
     // Keep effect emission bounded during slow frames and background-tab wakes.
     const emitTrail = emissionTime >= 1 / 30;
@@ -426,8 +450,10 @@ export function createRacePowerups(THREE, { track } = {}) {
     n = 0;
     for (const hazard of source.hazards || []) {
       if (hazard.type !== 'banana' || hazard.active === false || n >= limits.bananas) continue;
-      frame(hazard, .055);
-      dummy.rotation.y += finite(hazard.id?.toString?.().length, n) * .73;
+      const airborne=hazard.phase==='airborne';
+      frame(hazard, Math.max(.055,finite(hazard.height,.055)));
+      dummy.rotation.y += finite(hazard.heading) + finite(hazard.id?.toString?.().length, n) * .73 + (airborne?finite(hazard.age)*6:0);
+      dummy.rotation.z=airborne?Math.sin(finite(hazard.age)*7)*.22:0;
       const remaining = Math.max(0, finite(hazard.ttl, 18) - finite(hazard.age));
       dummy.scale.setScalar(Math.min(1, remaining * 2.5));
       for (const mesh of [bananaOuter, bananaInner, bananaTips]) stamp(mesh, n);
@@ -475,18 +501,23 @@ export function createRacePowerups(THREE, { track } = {}) {
       n++;
     }
     count([missileBody,missileFins,missileJet],n);
-    n=0;
+    n=0;let jellyN=0;
     for(const wave of source.waves || []){
       if(!['shockwave','freeze'].includes(wave.type) || wave.active===false || n>=limits.waves)continue;
-      frame(wave,.14);dummy.scale.set(clamp(wave.radius,1,8),1,1.4);
-      stamp(waveArc,n);stamp(waveWall,n);
-      color.setHex(wave.type==='freeze'?0x8be7ff:0xe58aff);waveArc.setColorAt(n,color);waveWall.setColorAt(n,color);
+      if(wave.type==='shockwave'&&jellyN<limits.waves){
+        frame(wave,finite(wave.height,1.65));dummy.rotation.y+=finite(wave.heading);
+        const pulse=1+Math.sin(clock*7+finite(wave.age)*2)*.12;
+        dummy.scale.set(pulse,1/pulse,pulse);stamp(jellyBell,jellyN);stamp(jellyRim,jellyN);stamp(jellyCore,jellyN);
+        dummy.scale.set(1,1,1);stamp(jellyTentacles,jellyN);jellyN++;
+      }
+      frame(wave,.14);dummy.rotation.y+=finite(wave.heading);dummy.scale.set(clamp(wave.radius,1,8),1,1.4);
+      stamp(waveArc,n);
+      color.setHex(wave.type==='freeze'?0x8be7ff:0xe58aff);waveArc.setColorAt(n,color);
       if(emitTrail){offset.copy(tangent).multiplyScalar(-1);offset.y=.8;particle(sparks,point,offset,wave.type==='freeze'?0xbdf8ff:0xeb9dff,.4,.1,1);}
       n++;
     }
-    count([waveArc,waveWall],n);
+    count([waveArc],n);count(jellyMeshes,jellyN);
     if(waveArc.instanceColor)waveArc.instanceColor.needsUpdate=true;
-    if(waveWall.instanceColor)waveWall.instanceColor.needsUpdate=true;
 
     n = 0;
     for (const car of cars.slice(0, 60)) {
@@ -516,7 +547,8 @@ export function createRacePowerups(THREE, { track } = {}) {
     }
     count([flameOuter, flameCore], n);
     if (flameOuter.instanceColor) flameOuter.instanceColor.needsUpdate = true;
-    let shieldN=0,freezeN=0,repairN=0,launchN=0,labelN=0;
+    let shieldN=0,freezeN=0,repairN=0,launchN=0;
+    const heldCounts=Object.fromEntries(itemTypes.map(type=>[type,0]));
     for(const car of cars.slice(0,limits.cars)){
       const height=Math.max(0,finite(car.flightHeight));
       const indicator=indicators.get(car.id);
@@ -527,8 +559,16 @@ export function createRacePowerups(THREE, { track } = {}) {
       if(finite(car.freezeRemaining)>0 && !car.finished){
         frame(car,1.1+height);dummy.scale.set(1,.67,1.06);stamp(freezeShell,freezeN);stamp(freezeEdges,freezeN);freezeN++;
       }
-      if(indicator?.type==='repair' && indicator.until>clock){
-        frame(car,.35+height+Math.sin(clock*5)*.12);stamp(repairHalo,repairN);repairN++;
+      if(finite(car.repairRemaining)>0&&!car.finished){
+        const sweep=(clock*.85+repairN*.19)%1;
+        frame(car,.2+height+sweep*2.2);dummy.rotation.y+=finite(car.heading);
+        dummy.scale.setScalar(1+.08*Math.sin(clock*10));stamp(repairHalo,repairN);stamp(repairSweep,repairN);
+        frame(car,2.4+height+Math.sin(clock*5)*.16);dummy.rotation.y+=clock*.9;stamp(repairCross,repairN);
+        if(emitTrail){
+          frame(car,.35+height);offset.set(Math.sin(clock*9)*1.2,.9+Math.sin(clock*6)*.3,Math.cos(clock*9)*1.7);point.add(offset);
+          offset.set(0,1.8,0);particle(sparks,point,offset,0x80ffba,.55,.075,.9);
+        }
+        repairN++;
       }
       if(finite(car.flightRemaining)>0 && height>.1 && finite(car.flightRemaining)>finite(car.flightDuration)*.46 && !car.finished){
         frame(car,height+.3);const pulse=1+.15*Math.sin(clock*43+launchN);dummy.scale.set(pulse,Math.min(1.6,Math.max(.3,height/6)),pulse);
@@ -536,20 +576,19 @@ export function createRacePowerups(THREE, { track } = {}) {
         if(emitTrail){offset.set(0,-4,0);particle(trails,point,offset,0x76ffdb,.55,.35,2);}
       }
       let type=indicator?.type || (itemTypes.includes(car.activeItem)?car.activeItem:null);
-      const remaining={launch:car.flightRemaining,rocket:car.rocketRemaining,boost:car.boost,shield:car.shieldRemaining,freeze:car.freezeRemaining}[type];
+      const remaining={launch:car.flightRemaining,rocket:car.rocketRemaining,boost:car.boost,shield:car.shieldRemaining,freeze:car.freezeRemaining,repair:car.repairRemaining}[type];
       if(indicator && indicator.until<=clock && finite(remaining)<=0){indicators.delete(car.id);type=itemTypes.includes(car.activeItem)?car.activeItem:null;}
-      const typeIndex=itemTypes.indexOf(type);
-      if(typeIndex>=0){
-        frame(car,5.4+height);
-        if(camera?.quaternion)dummy.quaternion.copy(camera.quaternion);
-        else dummy.rotation.set(0,Math.PI,0);
-        const pop=indicator?1+Math.max(0,indicator.until-clock-1.8)*.55:1;dummy.scale.setScalar(pop);
-        stamp(itemCards,labelN);labelUV.setXY(labelN,typeIndex%2,4-Math.floor(typeIndex/2));labelN++;
+      if(held[type]&&!car.finished){
+        frame(car,4.4+height+Math.sin(clock*2.8+finite(car.id?.toString?.().length))*.17);
+        dummy.rotation.y+=clock*1.18;dummy.rotation.z=Math.sin(clock*2)*.06;
+        const pop=indicator?1+Math.max(0,indicator.until-clock-1.8)*.55:1;
+        dummy.scale.setScalar(pop*(type==='banana'?.98:1.05));
+        for(const mesh of held[type])stamp(mesh,heldCounts[type]);heldCounts[type]++;
       }
     }
     for(const [id,value]of indicators)if(value.until<=clock&&!cars.some(car=>car.id===id))indicators.delete(id);
-    count([shieldBubble,shieldRim],shieldN);count([freezeShell,freezeEdges],freezeN);count([repairHalo],repairN);
-    count([launchPlume,launchCore],launchN);count([itemCards],labelN);labelUV.needsUpdate=true;
+    count([shieldBubble,shieldRim],shieldN);count([freezeShell,freezeEdges],freezeN);count([repairHalo,repairSweep,repairCross],repairN);
+    count([launchPlume,launchCore],launchN);for(const type of itemTypes)count(held[type],heldCounts[type]);
     updateParticles(smoke, step);
     updateParticles(sparks, step);
     updateParticles(trails, step);

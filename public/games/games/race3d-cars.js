@@ -1,6 +1,6 @@
-import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261023-race3d-ten-powers-sky';
-import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261023-race3d-ten-powers-sky';
-import { createCarMotion } from './race3d-car-motion.js?v=20261023-race3d-ten-powers-sky';
+import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261024-race3d-release1';
+import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261024-race3d-release1';
+import { createCarMotion } from './race3d-car-motion.js?v=20261024-race3d-release1';
 
 /**
  * Sculpted low-slung GT cars for race3d. All car geometry is authored around
@@ -402,7 +402,7 @@ export function createRaceCars(THREE, racers = []) {
 
   function update(track, dt = 1 / 60) {
     if (disposed || !track?.sampleTrack) return;
-    for (const state of meshes.values()) state.motion.update(track, dt);
+    for (const state of meshes.values()) {state.motion.update(track, dt);state.authoredVisuals?.update(state.racer);}
   }
 
   function dispose() {
@@ -418,7 +418,7 @@ export function createRaceCars(THREE, racers = []) {
 
   return { group, update, dispose, assetsReady:Promise.all([...meshes.values()].map(state=>state.assetsReady)), assetErrors:authoredAssets.errors,
     reset() { for (const state of meshes.values()) state.motion.reset(); },
-    snapshot() { return [...meshes.values()].map(state => ({...state.motion.snapshot(),assetId:state.car.userData.assetId||null,assetLoaded:!!state.car.userData.assetLoaded,assetDimensions:state.car.userData.assetDimensions||null,authoredWheelCount:state.car.userData.authoredWheelCount||0})); },
+    snapshot() { return [...meshes.values()].map(state => ({...state.motion.snapshot(),assetId:state.car.userData.assetId||null,assetLoaded:!!state.car.userData.assetLoaded,assetDimensions:state.car.userData.assetDimensions||null,authoredWheelCount:state.car.userData.authoredWheelCount||0,finish:state.authoredVisuals?.snapshot()||null})); },
     assetSnapshot() {return {errors:[...authoredAssets.errors],cars:[...meshes.values()].map(s=>({id:s.racer.id,...s.car.userData,authoredWheelCount:s.car.userData.authoredWheelCount||0}))};},
     setHiddenId(id) { for (const state of meshes.values()) state.car.visible = id === null || state.racer.id !== id; },
   };

@@ -72,38 +72,17 @@ export function createSkySpirit(THREE, {scene} = {}) {
     return out;
   }
   const p=new THREE.Vector3(), next=new THREE.Vector3(), tangent=new THREE.Vector3(), axis=new THREE.Vector3(1,0,0);
-  const flightForward=new THREE.Vector3(1,0,0), flightRight=new THREE.Vector3(0,0,1);
-  const flightTarget=new THREE.Vector3(), flightAxis=new THREE.Vector3();
-  let flightInitialized=false;
   function pose(g,u) {
     spine(u,g.position); spine(Math.min(1,u+.008),next); tangent.subVectors(g.position,next).normalize();
     if(u<1) g.quaternion.setFromUnitVectors(axis,tangent);
   }
-  function update(dt=0, cameraPosition, camera) {
+  function update(dt=0) {
     if(disposed) return;
     time+=Math.max(0,Math.min(.1,Number.isFinite(dt)?dt:0));
-    // A travelling companion in the sky. The old origin-centred orbit could
-    // disappear behind the driver for whole laps of the extended circuit.
-    // Ease a genuine 3D flight path ahead of the current view, with lateral
-    // passes and height variation; its head, skin and limbs stay world geometry.
+    // Background flight is world-anchored, independent of the followed car.
     const phase=time*.023;
-    if(cameraPosition && camera?.getWorldDirection) {
-      camera.getWorldDirection(flightForward);
-      flightForward.y=0;
-      if(flightForward.lengthSq()<.001) flightForward.set(1,0,0);
-      else flightForward.normalize();
-      flightRight.set(-flightForward.z,0,flightForward.x);
-      flightTarget.copy(cameraPosition).addScaledVector(flightForward,72)
-        .addScaledVector(flightRight,Math.sin(time*.09)*16);
-      flightTarget.y=cameraPosition.y+8.5+Math.sin(time*.19)*2;
-      root.position.lerp(flightTarget,flightInitialized?1-Math.exp(-Math.min(.1,Math.max(0,dt))*4.5):1);
-      flightInitialized=true;
-      flightAxis.copy(flightRight).addScaledVector(flightForward,.28+Math.sin(time*.13)*.18).normalize();
-      root.rotation.set(0,Math.atan2(-flightAxis.z,flightAxis.x),Math.sin(time*.12)*.06);
-    } else {
-      root.position.set(Math.sin(phase)*105,49+Math.sin(time*.075)*7,Math.cos(phase)*92);
-      root.rotation.set(0,phase+Math.PI/2,Math.sin(time*.12)*.06);
-    }
+    root.position.set(Math.sin(phase)*105,49+Math.sin(time*.075)*7,Math.cos(phase)*92);
+    root.rotation.set(0,phase+Math.PI/2,Math.sin(time*.12)*.06);
     for(let i=0;i<rings;i++) {
       const u=i/(rings-1); spine(u,p);
       const radius=(.57*Math.pow(1-u,.58)+.025)*(1+.12*Math.sin(u*Math.PI));

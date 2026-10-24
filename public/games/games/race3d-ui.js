@@ -1,4 +1,4 @@
-const STYLE_URL = new URL('./race3d-ui.css?v=20261023-race3d-ten-powers-sky', import.meta.url).href;
+const STYLE_URL = new URL('./race3d-ui.css?v=20261024-race3d-release1', import.meta.url).href;
 
 function ensureStyles() {
   if (document.querySelector('link[data-race3d-ui-style]')) return;
@@ -56,6 +56,20 @@ export function createRaceUI(container, players = [], options = {}) {
   const speed = makeStat('speed', 'SPEED', '0');
   const position = makeStat('position', 'POSITION', `1 / ${racers.length || 1}`);
   stats.append(lap.item, speed.item, position.item);
+  const condition = make('div', 'race3d-condition');
+  const conditionLabel = make('span', 'race3d-condition-label', 'CONDITION');
+  const conditionMeter = make('span', 'race3d-condition-meter');
+  conditionMeter.setAttribute('role', 'meter');
+  conditionMeter.setAttribute('aria-label', 'Followed car condition');
+  conditionMeter.setAttribute('aria-valuemin', '0'); conditionMeter.setAttribute('aria-valuemax', '100');
+  const conditionFill = make('span', 'race3d-condition-fill'); conditionMeter.append(conditionFill);
+  const conditionValue = make('strong', 'race3d-condition-value', '100%');
+  const trickBonus = make('span', 'race3d-trick-bonus'); trickBonus.hidden = true;
+  condition.append(conditionLabel, conditionMeter, conditionValue, trickBonus);
+  const effectFeedback = make('div', 'race3d-effect-feedback');
+  effectFeedback.hidden = true; effectFeedback.setAttribute('role', 'status');
+  effectFeedback.setAttribute('aria-live', 'polite');
+  stats.append(condition, effectFeedback);
 
   const standings = make('section', 'race3d-standings');
   standings.setAttribute('aria-label', 'All racers and finish times');
@@ -165,6 +179,52 @@ export function createRaceUI(container, players = [], options = {}) {
   let mapFocusId;
   let laps = Math.max(1, Number(options.laps) || 5);
   const announce = (message) => { status.textContent = message; };
+  let feedbackUntil = 0, feedbackCar = null, lastConditionId = null;
+  const effectState = new Map(), seenEffectEvents = new Set();
+  function updateCondition(target, events = []) {
+    const wallNow = performance.now();
+    const id = target ? carId(target, 0) : null;
+    const damage = Math.min(1, Math.max(0, Number(target?.damage) || 0));
+    const percent = Math.round((1 - damage) * 100);
+    conditionValue.textContent = `${percent}%`;
+    conditionMeter.setAttribute('aria-valuenow', String(percent));
+    conditionMeter.setAttribute('aria-label', `${target ? getName(target) : 'Car'} condition`);
+    conditionFill.style.width = `${percent}%`;
+    condition.dataset.level = percent < 40 ? 'low' : percent < 75 ? 'worn' : 'good';
+    condition.dataset.repairing = String(Number(target?.repairRemaining) > 0);
+    const bonus = Math.max(0, Number(target?.trickSpeedBonus) || 0) * 3.6;
+    trickBonus.hidden = bonus < 0.05;
+    trickBonus.textContent = `+${Math.round(bonus)} km/h`;
+    trickBonus.title = 'Speed earned from completed flips';
+    let message = '';
+    for (const event of events) {
+      if (!['repair', 'trick-complete'].includes(event.type)) continue;
+      const key = `${event.type}:${event.carId}:${event.time}:${event.rampId ?? ''}`;
+      if (seenEffectEvents.has(key)) continue;
+      seenEffectEvents.add(key);
+      if (String(event.carId) !== id) continue;
+      if (event.type === 'repair') {
+        const restored = Math.round(Math.max(0, Number(event.restoredSpeed) || 0) * 3.6);
+        message = `Repaired · ${Math.round((1 - Math.min(1, Math.max(0, Number(event.afterDamage) || 0))) * 100)}%${restored ? ` · +${restored} km/h` : ''}`;
+      } else {
+        const flips = Math.max(0, Math.floor(Number(event.fullFlips) || 0));
+        if (flips) message = `${flips}× flip landed · +${Math.round(Math.max(0, Number(event.bonusAdded) || 0) * 3.6)} km/h`;
+      }
+    }
+    // Keep feedback useful for callers that only provide car snapshots.
+    const previous = effectState.get(id);
+    if (!message && previous && target && lastConditionId === id) {
+      if (Number(target.repairRemaining) > previous.repairRemaining + 0.1) message = `Repaired · ${percent}%`;
+      else if (Number(target.completedFlips) > previous.completedFlips) message = `${Number(target.completedFlips) - previous.completedFlips}× flip landed · +${Math.round(Math.max(0, bonus - previous.bonus))} km/h`;
+    }
+    if (message) {
+      effectFeedback.textContent = message; feedbackUntil = wallNow + 2600; feedbackCar = id;
+    }
+    effectFeedback.hidden = !target || feedbackCar !== id || wallNow >= feedbackUntil;
+    if (seenEffectEvents.size > 240) seenEffectEvents.delete(seenEffectEvents.values().next().value);
+    if (target) effectState.set(id, { repairRemaining: Number(target.repairRemaining) || 0, completedFlips: Number(target.completedFlips) || 0, bonus });
+    lastConditionId = id;
+  }
 
   function orderedCars(cars) {
     return cars.slice().sort((a, b) => {
@@ -324,6 +384,7 @@ export function createRaceUI(container, players = [], options = {}) {
 
     if (ranking.length) cameraIndex = ((cameraIndex % ranking.length) + ranking.length) % ranking.length;
     const target = ranking.find((car, index) => carId(car, index) === String(mapFocusId)) || ranking[cameraIndex] || ranking[0];
+    updateCondition(target, Array.isArray(metadata?.events) ? metadata.events : []);
     cameraName.textContent = target ? getName(target) : 'Leader';
     prev.disabled = ranking.length < 2;
     next.disabled = ranking.length < 2;
@@ -385,6 +446,7 @@ export function createRaceUI(container, players = [], options = {}) {
   const onContinue = () => { if (winnerId === null || continueButton.disabled || continued || disposed) return; continued = true; continueButton.disabled = true; options.onContinue?.(); };
   continueButton.addEventListener('click', onContinue);
   function reset() {
+    effectState.clear(); seenEffectEvents.clear(); feedbackUntil = 0; feedbackCar = null; lastConditionId = null; effectFeedback.textContent = '';
     continued = false; timing = {}; finishKey = ''; continueButton.hidden = true; continueButton.disabled = false;
     cameraIndex = 0;
     lastBoardOrder = '';

@@ -215,7 +215,7 @@ export function createRaceAudio({ sound = true } = {}) {
     if (!events) return [];
     if (Array.isArray(events)) return events;
     if (Array.isArray(events.events)) return events.events;
-    const flags = ['crash', 'collision', 'gearshift', 'shift', 'skid', 'pickup', 'boost', 'banana-drop', 'banana-hit', 'bomb-launch', 'bomb-explode'];
+    const flags = ['crash', 'collision', 'gearshift', 'shift', 'skid', 'pickup', 'boost', 'banana-drop', 'banana-launch', 'banana-land', 'banana-hit', 'bomb-launch', 'bomb-explode', 'ramp-approach', 'ramp-takeoff', 'ramp-land', 'trick-complete', 'repair'];
     const flagged = flags.filter(key => events[key]).map(key => ({ type: key, intensity: events[key]?.intensity ?? events.intensity }));
     if (flagged.length) return flagged;
     return [events];
@@ -278,13 +278,26 @@ export function createRaceAudio({ sound = true } = {}) {
       }
       tone(920, 0.085, { volume: 0.065 * volume, endFrequency: 1320, pan });
       tone(1580, 0.13, { type: 'triangle', volume: 0.045 * volume, delay: 0.075, pan });
-    } else if (/^(launch|rocket|shield|missile|shockwave|freeze|repair)(-|$)/.test(type)) {
+    } else if (/^repair(-|$)/.test(type)) {
+      // Soft ratchet clicks, a rising servo, then a warm restored chord.
+      // Delays share the ordinary voice pool, so repair cannot leak voices.
+      noiseHit(0.065, 0.045 * volume, 1600, { type: 'bandpass', endCutoff: 900, pan });
+      noiseHit(0.065, 0.035 * volume, 2100, { type: 'bandpass', delay: 0.11, pan });
+      tone(230, 0.28, { type: 'triangle', endFrequency: 460, volume: 0.045 * volume, pan });
+      for (const [pitch, delay] of [[660, 0.22], [830.6, 0.27], [990, 0.32]])
+        tone(pitch, 0.31, { volume: 0.035 * volume, delay, pan });
+    } else if (/^shockwave(-|$)/.test(type)) {
+      // A rounded, expanding liquid pulse for the jellyfish's shockwave.
+      tone(190, 0.52, { volume: 0.08 * volume, endFrequency: 42, pan });
+      tone(430, 0.3, { volume: 0.043 * volume, endFrequency: 100, delay: 0.055, pan });
+      noiseHit(0.48, 0.085 * volume, 1900, { type: 'bandpass', endCutoff: 190, attack: 0.065, pan });
+      tone(310, 0.29, { volume: 0.035 * volume, endFrequency: 70, delay: 0.17, pan });
+    } else if (/^(launch|rocket|shield|missile|freeze)(-|$)/.test(type)) {
       const ability = type.split('-')[0];
       const cues = {
         launch: [160, 680, 0.36, 'triangle', 850], rocket: [190, 760, 0.55, 'sawtooth', 1800],
         shield: [520, 1040, 0.48, 'sine', 3200], missile: [1800, 420, 0.32, 'triangle', 2400],
-        shockwave: [140, 32, 0.55, 'triangle', 550], freeze: [3200, 1600, 0.5, 'sine', 6000],
-        repair: [660, 1320, 0.42, 'sine', 1200],
+        freeze: [3200, 1600, 0.5, 'sine', 6000],
       };
       const [pitch, end, duration, wave, cutoff] = cues[ability];
       tone(pitch, duration, { type: wave, endFrequency: end, volume: 0.065 * volume, pan });
@@ -292,9 +305,28 @@ export function createRaceAudio({ sound = true } = {}) {
     } else if (type === 'boost') {
       noiseHit(0.7, 0.15 * volume, 450, { endCutoff: 4400, type: 'bandpass', attack: 0.045, pan });
       tone(160, 0.48, { type: 'triangle', volume: 0.07 * volume, endFrequency: 440, pan });
-    } else if (type === 'banana-drop') {
+    } else if (type === 'banana-launch') {
+      noiseHit(0.27, 0.065 * volume, 650, { type: 'bandpass', endCutoff: 2800, attack: 0.025, pan });
+      tone(350, 0.23, { volume: 0.045 * volume, endFrequency: 830, pan });
+    } else if (type === 'banana-land' || type === 'banana-drop') {
       tone(310, 0.12, { volume: 0.065 * volume, endFrequency: 125, pan });
       noiseHit(0.055, 0.035 * volume, 700, { pan });
+    } else if (type === 'ramp-approach') {
+      tone(350, 0.21, { type: 'triangle', volume: 0.04 * volume, endFrequency: 700, pan });
+      noiseHit(0.22, 0.045 * volume, 600, { type: 'bandpass', endCutoff: 1800, attack: 0.04, pan });
+    } else if (type === 'ramp-takeoff') {
+      // Nitro lift followed by a longer airy tail, once per launch.
+      tone(140, 0.32, { type: 'triangle', volume: 0.07 * volume, endFrequency: 560, pan });
+      noiseHit(0.32, 0.11 * volume, 400, { type: 'bandpass', endCutoff: 2800, attack: 0.025, pan });
+      noiseHit(0.85, 0.065 * volume, 2400, { type: 'bandpass', endCutoff: 800, attack: 0.08, delay: 0.16, pan });
+    } else if (type === 'trick-complete') {
+      for (const [pitch, delay] of [[784, 0], [988, 0.075], [1568, 0.15]])
+        tone(pitch, 0.23, { type: 'triangle', volume: 0.045 * volume, delay, pan });
+    } else if (type === 'ramp-land') {
+      // Low tyre contact and a soft suspension rebound, without a crash clang.
+      noiseHit(0.16, 0.085 * volume, 700, { endCutoff: 170, pan });
+      tone(105, 0.2, { volume: 0.07 * volume, endFrequency: 48, pan });
+      tone(68, 0.18, { volume: 0.025 * volume, endFrequency: 92, delay: 0.075, pan });
     } else if (type === 'banana-hit' || type === 'spin' || type === 'skid') {
       // Filtered rubber scrape and descending squeal distinguish a slip from
       // the low, hard body impact used for collisions and bomb damage.
@@ -323,10 +355,10 @@ export function createRaceAudio({ sound = true } = {}) {
       const space = eventSpace(event, primary);
       if (space.volume < 0.04) continue;
       const isSkid = /^(banana-hit|spin|skid|drift|spinout)$/.test(type);
-      const isPower = /^(item-pickup|pickup|boost|banana-drop|banana-hit|bomb-launch|bomb-explode)$/.test(type) || /^(launch|rocket|shield|missile|shockwave|freeze|repair)(-|$)/.test(type);
+      const isPower = /^(item-pickup|pickup|boost|banana-drop|banana-launch|banana-land|banana-hit|bomb-launch|bomb-explode|ramp-approach|ramp-takeoff|ramp-land|trick-complete)$/.test(type) || /^(launch|rocket|shield|missile|shockwave|freeze|repair)(-|$)/.test(type);
       const group = isSkid ? 'skid' : type;
       const key = `${group}:${event?.carId ?? 'all'}`;
-      const interval = isSkid ? 0.55 : type === 'boost' ? 0.7 : 0.14;
+      const interval = isSkid ? 0.55 : /^(ramp-|trick-complete|repair)/.test(type) ? 1 : type === 'boost' ? 0.7 : 0.14;
       // Explicit impacts suppress state fallbacks even when another event from
       // this car was just heard; a single slip must not become a second crash.
       if (isSkid || type === 'bomb-hit' || type === 'bomb-explode') crashEvent = true;

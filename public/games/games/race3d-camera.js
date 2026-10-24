@@ -33,6 +33,7 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
   let fov = Number.isFinite(camera.fov) ? camera.fov : 50;
   const modes = ['overhead', 'chase', 'first-person'];
   let modeIndex = 1, overheadMix = 0, firstPersonMix = 0;
+  let supportHeight = 0;
 
   const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
   const finite = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
@@ -85,7 +86,10 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
     lateral.copy(right).multiplyScalar(finite(focusCar.lateral));
     samplePosition.add(lateral);
     const flightHeight = Math.max(0, finite(focusCar.flightHeight));
-    samplePosition.y += flightHeight + finite(sample.bank) * finite(focusCar.lateral);
+    supportHeight = flightHeight + Math.max(0, finite(focusCar.rampHeight));
+    // Follow the authoritative climb and flight, while retaining a level horizon
+    // during somersaults and banana spinouts in all three camera modes.
+    samplePosition.y += supportHeight + finite(sample.bank) * finite(focusCar.lateral);
 
     const width = clamp(finite(sample.width, finite(track.width, 16)), 8, 40);
     const topSpeed = Math.max(1, finite(focusCar.maxSpeed, 55));
@@ -117,7 +121,7 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
     straightAhead.copy(samplePosition).addScaledVector(forward, lookDistance);
     const lookSample = track.sampleTrack(distance + lookDistance) || {};
     read(curveAhead, lookSample.position, straightAhead);
-    curveAhead.y += flightHeight;
+    curveAhead.y += supportHeight;
     read(lookRight, lookSample.right, right);
     curveAhead.addScaledVector(lookRight, finite(focusCar.lateral) * 0.28);
     desiredLook.copy(straightAhead).lerp(curveAhead, .58 * chaseMix + .38 * overheadMix + .24 * firstPersonMix);
@@ -180,6 +184,12 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
   }
 
   return { update, reset, dispose, changeMode,
+    snapshot: () => ({
+      position: { x: position.x, y: position.y, z: position.z },
+      target: { x: target.x, y: target.y, z: target.z }, supportHeight,
+      horizonUp: { x: up.x, y: up.y, z: up.z },
+      ignoresTrickRotation: true, ignoresSpinRotation: true,
+    }),
     get mode() { return modes[modeIndex]; },
     get hideFocusedCar() { return modeIndex === 2 || firstPersonMix > .04; },
     get transition() { return { overhead: overheadMix, firstPerson: firstPersonMix }; },
