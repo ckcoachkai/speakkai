@@ -3,7 +3,7 @@ export function createCarFinish(THREE, root, spec, primaryHex, registerResource)
   const cache=new Map(), paint=[], brake=[], headlights=[];
   const identity=new THREE.Color(primaryHex), damage={value:0};
   const isPaint=m=>/paint|candy|basecoat|bodycolor|bodywork|carpaint|Nose & chassis finish/i.test(m.name)||spec.id==='gt3'&&m.name==='BODY';
-  const isRubber=m=>/tire|tyre|rubber|wheel finish/i.test(m.name);
+  const isRubber=m=>/tire|tyre|rubber|wheel finish|^Thread$|Sidewall/i.test(m.name);
   function finish(source) {
     if(cache.has(source))return cache.get(source);
     let material=source;
@@ -12,8 +12,8 @@ export function createCarFinish(THREE, root, spec, primaryHex, registerResource)
       if(!source.isMeshPhysicalMaterial)THREE.MeshStandardMaterial.prototype.copy.call(material,source);
       // Paint 2 is the coupe's dark carbon trim; retain its original material.
       if(/Paint 2/i.test(source.name)){material.color.copy(source.color);material.roughness=.37;material.clearcoat=.34;}
-      else {material.color.copy(identity);material.roughness=spec.id==='gt3'?.38:.27;material.metalness=spec.id==='gt3'?.32:.48;material.clearcoat=.92;}
-      material.clearcoatRoughness=.16;
+      else {material.color.copy(identity);material.roughness=spec.id==='gt3'?.31:.23;material.metalness=spec.id==='gt3'?.35:.58;material.clearcoat=1;}
+      material.clearcoatRoughness=.12;
       material.envMapIntensity=1.15;
       // Surface scuffs appear with physics damage and vanish immediately after repair.
       // The source maps remain visible; no geometry or normal displacement is used.
@@ -32,11 +32,13 @@ export function createCarFinish(THREE, root, spec, primaryHex, registerResource)
       paint.push(material);
     } else if(isRubber(source)) {
       material=source.clone();material.roughness=Math.max(.73,source.roughness);material.metalness=0;material.envMapIntensity=.45;
+    } else if(/light_glow_back|Glass_rear_lights/i.test(source.name)) {
+      material=source.clone();material.emissive=new THREE.Color('#e1191c');material.emissiveIntensity=.45;brake.push(material);
     } else if(/glass/i.test(source.name)) {
       material=source.clone();material.transmission=0;material.transparent=true;
       material.opacity=spec.id==='car-concept'?.46:.70;material.depthWrite=false;material.roughness=.09;
       material.color.set('#637d8d');material.envMapIntensity=1.15;
-    } else if(/brakelight|headlight/i.test(source.name)) {
+    } else if(/brakelight|headlight|emission_1/i.test(source.name)) {
       material=source.clone();
       if(/brake/i.test(source.name)){material.emissiveIntensity=.65;brake.push(material);}
       else {material.emissiveIntensity=3.2;headlights.push(material);}

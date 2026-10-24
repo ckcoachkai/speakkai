@@ -1,6 +1,8 @@
-import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261024-race3d-release1';
-import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261024-race3d-release1';
-import { createCarMotion } from './race3d-car-motion.js?v=20261024-race3d-release1';
+import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261024-race3d-realism2';
+import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261024-race3d-realism2';
+import { createCarMotion } from './race3d-car-motion.js?v=20261024-race3d-realism2';
+import { createRacerForm, getRacerFormMeta } from './race3d-racer-forms.js?v=20261024-race3d-realism2';
+import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261024-race3d-realism2';
 
 /**
  * Sculpted low-slung GT cars for race3d. All car geometry is authored around
@@ -18,6 +20,8 @@ export function createRaceCars(THREE, racers = []) {
   let disposed = false;
   const lateDisposedResources=new WeakSet();
   const authoredAssets = createAuthoredCarAssets(THREE, {isDisposed:()=>disposed,registerResource(type,resource){if(!resource)return;if(disposed){if(!lateDisposedResources.has(resource)){lateDisposedResources.add(resource);resource.dispose?.();resource.image?.close?.();}return;}({geometry:geometries,material:materials,texture:textures})[type].add(resource);}});
+
+  const damageVisuals=createDamageVisuals(THREE,group,(type,resource)=>({geometry:geometries,material:materials,texture:textures})[type].add(resource));
 
   const cacheGeometry = (key, make) => {
     if (!geometryCache.has(key)) {
@@ -296,7 +300,22 @@ export function createRaceCars(THREE, racers = []) {
     return texture;
   }
 
+  function buildForm(racer,index) {
+    const form=createRacerForm(THREE,racer.racerType,{color:racer.color});
+    const car=new THREE.Group();car.name='car-'+(racer.id??index);car.add(form.group);
+    const wheelSpin=[],wheelMounts=[],steeringPivots=[],lighting={update(){}};
+    const visualRacer=Object.create(racer);
+    const motion=createCarMotion(THREE,{car,racer:visualRacer,wheelSpin,wheelMounts,steeringPivots,lighting,index});
+    const d=form.dimensions;
+    Object.assign(car.userData,{racerId:racer.id,assetId:racer.racerType,assetLabel:form.meta.label,assetLoaded:true,authoredWheelCount:form.wheelGroups.length,
+      assetDimensions:{width:d.width,height:d.height,length:d.length},driverEye:[0,Math.min(1.7,d.height*.7),.25],exhaustAnchors:form.meta.category==='spacecraft'?[[0,d.height*.4,-d.length*.44]]:[],racerForm:form.meta});
+    group.add(car);
+    const state={car,racer,visualRacer,form,motion,wheelSpin,wheelMounts,steeringPivots,lighting,assetsReady:Promise.resolve(true)};
+    meshes.set(racer.id??index,state);damageVisuals.add(state);
+  }
+
   function buildCar(racer, index) {
+    if(getRacerFormMeta(racer.racerType)){buildForm(racer,index);return;}
     const primary = safeColor(racer.color, ['#ef594f', '#20b8a4', '#f2b83d', '#527de6', '#d75ca9', '#8bbf54'][index % 6]);
     const primaryHex = `#${primary.getHexString()}`;
     const accent = contrastColor(primaryHex);
@@ -390,24 +409,57 @@ export function createRaceCars(THREE, racers = []) {
     if(profile===4) addVisionVariant(THREE,car,mats,api);
     if(profile===0) addRealGT(THREE,car,mats,api);
     mergeStaticMeshes(car);
-    const motion = createCarMotion(THREE, { car, racer, wheelSpin, wheelMounts, steeringPivots, lighting, index });
+    const visualRacer=Object.create(racer);
+    const motion = createCarMotion(THREE, { car, racer:visualRacer, wheelSpin, wheelMounts, steeringPivots, lighting, index });
     group.add(car);
-    const state={ car, racer, wheelSpin, wheelMounts, steeringPivots, primaryHex, lighting, motion };
+    const state={ car, racer, visualRacer, wheelSpin, wheelMounts, steeringPivots, primaryHex, lighting, motion };
     meshes.set(racer.id ?? index, state);
+    damageVisuals.add(state);
     state.assetsReady=authoredAssets.attach(state,index).catch(error=>{authoredAssets.errors.push({id:car.userData.racerId,message:String(error.message||error)});return false;});
   }
 
   function sideSafe(index) { return index % 2 ? 1 : -1; }
   racers.forEach((racer, index) => buildCar(racer, index));
 
+  // Official results stay on racer. Only this inherited render pose coasts off
+  // the finish line, braking into two spaced rows within the existing 3.2s hold.
+  function resetVisual(state) {
+    for(const key of Object.keys(state.visualRacer))delete state.visualRacer[key];
+    state.finishCoast=null;
+  }
+  function updateFinishPose(state,track,dt) {
+    const racer=state.racer,visual=state.visualRacer;
+    if(!racer.finished){if(state.finishCoast)resetVisual(state);return;}
+    if(!state.finishCoast){
+      const rank=Math.max(1,Math.floor(Number(racer.finishPosition)||1));
+      const width=Number(track.sampleTrack(racer.distance)?.width)||16.5;
+      state.finishCoast={time:0,from:Number(racer.distance)||0,lateral:Number(racer.lateral)||0,
+        to:(Number(track.raceDistance)||Number(racer.distance)||0)+32+Math.floor((rank-1)/2)*7.4,
+        side:(rank%2?1:-1)*Math.max(2,width/2-2.7),height:Number(racer.flightHeight)||0};
+    }
+    const coast=state.finishCoast,duration=2.75;
+    coast.time=Math.min(duration,coast.time+Math.max(0,Math.min(.1,Number(dt)||0)));
+    const u=coast.time/duration,left=1-u,ease=1-left*left*left,sideEase=u*u*(3-2*u);
+    const travel=Math.max(0,coast.to-coast.from),sideSpeed=(coast.side-coast.lateral)*6*u*left/duration;
+    visual.distance=coast.from+travel*ease;visual.lateral=coast.lateral+(coast.side-coast.lateral)*sideEase;
+    visual.speed=3*travel*left*left/duration;visual.acceleration=-6*travel*left/(duration*duration);
+    visual.heading=visual.speed>.1?Math.max(-.38,Math.min(.38,Math.atan2(sideSpeed,visual.speed))):0;
+    visual.brake=u<1?.7:0;visual.spin=0;visual.spinAngle=0;
+    visual.flightHeight=coast.height*left*left;visual.flightRemaining=0;visual.verticalVelocity=0;
+    visual.rampHeight=0;visual.rampPitch=0;visual.trickAngle=0;visual.parked=u>=1;
+  }
+
   function update(track, dt = 1 / 60) {
     if (disposed || !track?.sampleTrack) return;
-    for (const state of meshes.values()) {state.motion.update(track, dt);state.authoredVisuals?.update(state.racer);}
+    for (const state of meshes.values()) {updateFinishPose(state,track,dt);state.motion.update(track, dt);state.form?.update(dt,state.visualRacer);state.authoredVisuals?.update(state.visualRacer);}
+    damageVisuals.update(dt);
   }
 
   function dispose() {
     if (disposed) return;
     disposed = true;
+    damageVisuals.dispose();
+    for(const state of meshes.values())state.form?.dispose();
     group.removeFromParent();
     for (const geometry of geometries) geometry.dispose();
     for (const texture of textures) { texture.dispose(); texture.image?.close?.(); }
@@ -417,8 +469,10 @@ export function createRaceCars(THREE, racers = []) {
   }
 
   return { group, update, dispose, assetsReady:Promise.all([...meshes.values()].map(state=>state.assetsReady)), assetErrors:authoredAssets.errors,
-    reset() { for (const state of meshes.values()) state.motion.reset(); },
-    snapshot() { return [...meshes.values()].map(state => ({...state.motion.snapshot(),assetId:state.car.userData.assetId||null,assetLoaded:!!state.car.userData.assetLoaded,assetDimensions:state.car.userData.assetDimensions||null,authoredWheelCount:state.car.userData.authoredWheelCount||0,finish:state.authoredVisuals?.snapshot()||null})); },
+    reset() { damageVisuals.reset(); for (const state of meshes.values()) {resetVisual(state);state.motion.reset();} },
+    visualPose(id) {return meshes.get(id)?.visualRacer||null;},
+    damageSnapshot() {return damageVisuals.snapshot();},
+    snapshot() { return [...meshes.values()].map(state => ({...state.motion.snapshot(),visualDistance:state.visualRacer.distance,visualLateral:state.visualRacer.lateral,visualSpeed:state.visualRacer.speed,parked:!!state.visualRacer.parked,racerType:state.racer.racerType||null,vehicleName:state.racer.vehicleName||state.car.userData.assetLabel,form:state.form?.meta||null,assetId:state.car.userData.assetId||null,assetLoaded:!!state.car.userData.assetLoaded,assetDimensions:state.car.userData.assetDimensions||null,authoredWheelCount:state.car.userData.authoredWheelCount||0,finish:state.authoredVisuals?.snapshot()||null})); },
     assetSnapshot() {return {errors:[...authoredAssets.errors],cars:[...meshes.values()].map(s=>({id:s.racer.id,...s.car.userData,authoredWheelCount:s.car.userData.authoredWheelCount||0}))};},
     setHiddenId(id) { for (const state of meshes.values()) state.car.visible = id === null || state.racer.id !== id; },
   };

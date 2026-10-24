@@ -167,3 +167,44 @@
 .race3d-effect-feedback{grid-column:1/-1;padding:0 10px 7px;color:#a9eadc;font-size:10px;line-height:1.3;text-align:center;font-variant-numeric:tabular-nums}
 @media(max-width:700px){.race3d-condition{padding:4px 5px 6px;gap:4px;flex-wrap:wrap}.race3d-condition-label{font-size:6px;letter-spacing:.3px}.race3d-condition-value,.race3d-trick-bonus{font-size:8px}.race3d-effect-feedback{font-size:9px;padding:0 5px 6px}}
 @media(prefers-reduced-motion:reduce){.race3d-condition-fill{transition:none}}
+
+/* Racer cards occupy the unused side rails; the centre stays available for driving. */
+.race3d-cards{position:absolute;top:var(--rail-top,230px);bottom:88px;width:208px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#63848c #0c1722;pointer-events:auto;touch-action:pan-y;padding:0 3px 4px 0;contain:layout style}
+.race3d-cards-left{left:18px}.race3d-cards-right{right:18px;width:min(250px,23vw)}
+.race3d-cards[hidden]{display:none}
+.race3d-racer-card{flex:none;padding:8px 9px;border:1px solid #ffffff24;border-left:3px solid var(--racer-color,#7bd8c9);border-radius:9px;background:linear-gradient(135deg,#101e2bf0,#0a1420ed);box-shadow:0 4px 15px #0002;color:#e7f0f4}
+.race3d-racer-card.is-focused{border-color:#b8eee0bb;box-shadow:0 0 0 1px #b8eee026,0 4px 15px #0003}
+.race3d-card-head{display:flex;align-items:center;gap:6px;min-width:0}
+.race3d-card-rank{flex:none;color:#b9cbd5;font:800 9px/1 system-ui}
+.race3d-card-player{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:750 11px/1.3 system-ui}
+.race3d-card-item{display:block;width:19px;height:19px;flex:none}.race3d-card-item[hidden]{display:none}.race3d-card-item svg{width:100%;height:100%}
+.race3d-card-vehicle{display:flex;gap:7px;align-items:center;margin:3px 0}
+.race3d-card-thumb{display:block;width:62px;height:36px;flex:none;color:var(--racer-color,#7bd8c9)}.race3d-card-thumb svg{display:block;width:100%;height:100%}
+.race3d-card-model{font:600 10px/1.25 system-ui;color:#d7e5eb;overflow-wrap:anywhere}
+.race3d-card-attributes-label{display:block;color:#9db3bf;font:650 7px/1.3 system-ui;letter-spacing:.9px;margin:1px 0 4px}
+.race3d-card-attributes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px 4px;margin:0}
+.race3d-card-attribute{min-width:0}.race3d-card-attribute dt{color:#9eb5c0;font:500 7px/1.2 system-ui;white-space:nowrap}.race3d-card-attribute dd{margin:2px 0 0;font:700 9px/1.1 system-ui;color:#d9ebe8;font-variant-numeric:tabular-nums;white-space:nowrap}
+.race3d-racer-card.is-finished .race3d-card-rank{color:#f9d574}.race3d-racer-card[data-damage-level="20"] .race3d-card-attribute:nth-child(5) dd{color:#ffad91}
+.race3d-roulette{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:grid;justify-items:center;gap:3px;pointer-events:none;filter:drop-shadow(0 3px 8px #0009);z-index:4}
+.race3d-roulette[hidden]{display:none}.race3d-roulette-owner{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:700 10px/1.2 system-ui;color:#e9f8f1}
+.race3d-roulette-cube{display:grid;place-items:center;width:58px;height:58px;border:2px solid #d5bfff;border-radius:12px;background:linear-gradient(135deg,#6c72b9ee,#433878ed 48%,#2c637de8);box-shadow:inset 3px 3px 0 #ffffff30,inset -4px -4px 0 #04062855,0 0 15px #9d8cff55;transform:rotate(-5deg)}
+.race3d-roulette-icon{display:block;width:44px;height:44px}.race3d-roulette-icon svg{display:block;width:100%;height:100%}
+.race3d-roulette-name{padding:3px 7px;border-radius:5px;background:#101f2bdc;font:750 10px/1.2 system-ui;color:#f5f7e6;white-space:nowrap}
+.race3d-roulette[data-rolling="true"] .race3d-roulette-cube{animation:race3d-item-rock .28s ease-in-out infinite alternate}
+.race3d-roulette[data-rolling="false"] .race3d-roulette-cube{border-color:#fff1a5;box-shadow:inset 3px 3px 0 #ffffff30,inset -4px -4px 0 #04062855,0 0 20px #f8d26966;transform:rotate(0)}
+@keyframes race3d-item-rock{from{transform:rotate(-9deg) scale(.96)}to{transform:rotate(9deg) scale(1.03)}}
+.race3d-finish-splash{position:absolute;left:50%;top:27%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:none;text-align:center;z-index:5;text-shadow:0 3px 9px #000c;min-width:210px;max-width:calc(100% - 100px)}
+.race3d-finish-splash[hidden]{display:none}.race3d-finish-rank{font:950 clamp(70px,9vw,125px)/.85 system-ui;color:#f9dc86;filter:drop-shadow(0 5px 0 #6e511b);letter-spacing:-6px}
+.race3d-finish-name{font:850 clamp(15px,2vw,24px)/1.2 system-ui;color:#fffdf1;overflow-wrap:anywhere;max-width:100%;padding:4px 10px;border-radius:8px;background:#11202ad4}
+.race3d-finish-caption{font:800 10px/1.1 system-ui;color:#f8d784;letter-spacing:2px}.race3d-finish-splash:not([data-place="1"]) .race3d-finish-rank{color:#c2e8e4;filter:drop-shadow(0 5px 0 #35516a)}
+.race3d-finish-confetti{position:absolute;left:50%;top:45%;width:0;height:0;z-index:-1}
+.race3d-confetti-piece{position:absolute;left:-4px;top:-4px;width:7px;height:11px;border-radius:1px;opacity:0}
+.race3d-finish-splash.is-celebrating .race3d-confetti-piece{animation:race3d-finish-confetti .95s ease-out var(--confetti-delay) both}
+.race3d-finish-splash.is-celebrating .race3d-finish-rank{animation:race3d-rank-arrival .35s cubic-bezier(.2,1.6,.5,1) both}
+@keyframes race3d-finish-confetti{0%{opacity:1;transform:translate(0,0) rotate(0)}75%{opacity:1}100%{opacity:0;transform:translate(var(--confetti-x),var(--confetti-y)) rotate(var(--confetti-turn))}}
+@keyframes race3d-rank-arrival{from{opacity:0;transform:scale(.3) rotate(-12deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@media(max-width:1200px){.race3d-cards{width:180px}.race3d-card-attributes{gap:5px 2px}.race3d-card-attribute dt{font-size:6px}.race3d-card-attribute dd{font-size:8px}.race3d-card-model{font-size:9px}}
+@media(max-width:1000px),(max-height:560px){.race3d-cards{display:none}}
+@media(max-width:700px){.race3d-roulette{bottom:118px}.race3d-roulette-cube{width:44px;height:44px}.race3d-roulette-icon{width:34px;height:34px}.race3d-roulette-owner,.race3d-roulette-name{font-size:8px}.race3d-finish-splash{top:49%;max-width:calc(100% - 80px)}.race3d-finish-rank{font-size:72px}.race3d-finish-caption{font-size:8px}}
+@media(max-height:480px){.race3d-roulette{bottom:14px}.race3d-roulette-cube{width:40px;height:40px}.race3d-roulette-icon{width:30px;height:30px}.race3d-finish-splash{top:39%;gap:3px}.race3d-finish-rank{font-size:66px}.race3d-finish-name{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.race3d-roulette[data-rolling="true"] .race3d-roulette-cube,.race3d-finish-splash.is-celebrating .race3d-confetti-piece,.race3d-finish-splash.is-celebrating .race3d-finish-rank{animation:none}.race3d-finish-splash.is-celebrating .race3d-confetti-piece{opacity:.8;transform:translate(var(--confetti-x),var(--confetti-y)) rotate(var(--confetti-turn))}}

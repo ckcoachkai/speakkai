@@ -1,0 +1,381 @@
+{
+  "createdAt": "2026-10-24",
+  "entries": [
+    {
+      "id": "lamborghini-gallardo",
+      "name": "Lamborghini Gallardo 2010",
+      "creator": "Artem P",
+      "creatorUrl": "https://sketchfab.com/temp0.crazy",
+      "sourceUrl": "https://sketchfab.com/3d-models/lamborghini-gallardo-2010-ff0eb2242d0e42eb8b7034b4db639e56",
+      "metadataUrl": "https://api.sketchfab.com/v3/models/ff0eb2242d0e42eb8b7034b4db639e56",
+      "mirror": "https://github.com/apuroop-busetty/threejslambo",
+      "downloadBase": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/",
+      "note": "Mirror license.txt refers to a different Aventador model and is excluded. Correct Gallardo creator/license/source are embedded in scene.gltf and independently confirmed through Sketchfab public metadata. Original source credits brake disc/caliper by Velstyde https://www.blendswap.com/blends/view/74983 and tire texture by young-chief https://www.deviantart.com/young-chief/art/bfgoodrich-bumpmap-68955392.",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "licenseVerifiedAt": "2026-10-24",
+      "licenseEvidenceFile": "lamborghini-gallardo/sketchfab-metadata.json",
+      "originalFaceCount": 154699,
+      "attribution": "Lamborghini Gallardo 2010 by Artem P (https://sketchfab.com/temp0.crazy), licensed CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Source: https://sketchfab.com/3d-models/lamborghini-gallardo-2010-ff0eb2242d0e42eb8b7034b4db639e56. Modified for this game: normalized scale and origin, four named wheel pivot groups, geometry simplification, merged compatible parts, texture resize and self-contained GLB conversion. Mirror license.txt refers to a different Aventador model and is excluded. Correct Gallardo creator/license/source are embedded in scene.gltf and independently confirmed through Sketchfab public metadata. Original source credits brake disc/caliper by Velstyde https://www.blendswap.com/blends/view/74983 and tire texture by young-chief https://www.deviantart.com/young-chief/art/bfgoodrich-bumpmap-68955392.",
+      "downloadedSources": [
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/scene.gltf",
+          "localFile": "lamborghini-gallardo/original/scene.gltf",
+          "bytes": 228370,
+          "sha256": "0a5e01bc8ec5f70dd38bae2a57253630c4a68fa3a674413778799b0408f2dc83"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/scene.bin",
+          "localFile": "lamborghini-gallardo/original/scene.bin",
+          "bytes": 6573784,
+          "sha256": "1a2403028c20121d7ef6cbc42108dbc1361736d712f6ae31680eece454c9bf25"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/paint_metallicRoughness.png",
+          "localFile": "lamborghini-gallardo/original/textures/paint_metallicRoughness.png",
+          "bytes": 634774,
+          "sha256": "1d6b6d4873239c806c1e78a59e2d19b231f53a3df5da8644dd61a62618c338c7"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/paint_sec_metallicRoughness.png",
+          "localFile": "lamborghini-gallardo/original/textures/paint_sec_metallicRoughness.png",
+          "bytes": 636232,
+          "sha256": "ac5675a99d0fd5adff78834822824297addaa2b5ef0d5636e854a9622fc981a8"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/glass_baseColor.png",
+          "localFile": "lamborghini-gallardo/original/textures/glass_baseColor.png",
+          "bytes": 19821,
+          "sha256": "987a6b649e8c6dc4e5d780c4e530f1067ec46301027356ef53947137b049a62a"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/chrome_light_reflective_normal.png",
+          "localFile": "lamborghini-gallardo/original/textures/chrome_light_reflective_normal.png",
+          "bytes": 32548,
+          "sha256": "4f32bd6349d055e179dc8c4009e9adf2d2d3c520e51d7b9bb5503e56614595fe"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/light_inner_back_normal.png",
+          "localFile": "lamborghini-gallardo/original/textures/light_inner_back_normal.png",
+          "bytes": 225221,
+          "sha256": "012972af8bb674ab764406311092c4016a029df50d623c46e75df1eb95f12b65"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/light_glow_back_baseColor.png",
+          "localFile": "lamborghini-gallardo/original/textures/light_glow_back_baseColor.png",
+          "bytes": 86604,
+          "sha256": "0f6c6801c468777459d9c24e13df3c2f18589cd5a72d602bd04507f7758cd1f6"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/light_glow_back_emissive.png",
+          "localFile": "lamborghini-gallardo/original/textures/light_glow_back_emissive.png",
+          "bytes": 17279,
+          "sha256": "ed994a42fff672ba0fb1b0d6b1b00c429696976fb6bab3ad9179bad9433396f8"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/grid_back_baseColor.png",
+          "localFile": "lamborghini-gallardo/original/textures/grid_back_baseColor.png",
+          "bytes": 46859,
+          "sha256": "866f300bb660000772ab0aeb66f8ad6b4d74376fe4286f3f92eac6bb75e97ea4"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/grid_back_normal.png",
+          "localFile": "lamborghini-gallardo/original/textures/grid_back_normal.png",
+          "bytes": 639336,
+          "sha256": "e18208dacdeddec105a3fe3678faae13a7c05e159a57efa7d547beeb4acb5981"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/grid_baseColor.png",
+          "localFile": "lamborghini-gallardo/original/textures/grid_baseColor.png",
+          "bytes": 4167,
+          "sha256": "cb91d3363be423b2253f2ea0c9edf079573667d5b11668f5b867f8aca6baa0b6"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/grid_normal.png",
+          "localFile": "lamborghini-gallardo/original/textures/grid_normal.png",
+          "bytes": 43663,
+          "sha256": "eb3b20e54d935589412587d65e794e94cd72ca98fc985674ca7dc84e28ff1116"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/bull_logo_baseColor.png",
+          "localFile": "lamborghini-gallardo/bull-logo-retry.png",
+          "bytes": 77012,
+          "sha256": "e513109bcdd53026f16d26503d692a6d2f2b3b7b7582bb55fcf043a50e14f113"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/bull_logo_metallicRoughness.png",
+          "localFile": "lamborghini-gallardo/original/textures/bull_logo_metallicRoughness.png",
+          "bytes": 14482,
+          "sha256": "e25b81366a8de1123a4a9297778fe7be2fdd09bbd3396d11651edee54f9923eb"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/bull_logo_normal.png",
+          "localFile": "lamborghini-gallardo/original/textures/bull_logo_normal.png",
+          "bytes": 104367,
+          "sha256": "73de129a61a34a1d630e675f19cbb69b3303d131320b0ba3c255991cb80b6de3"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/engine_baseColor.png",
+          "localFile": "lamborghini-gallardo/original/textures/engine_baseColor.png",
+          "bytes": 750582,
+          "sha256": "0193f890391c56bf277e1af47942095545b8a72917b0fa7b5562c6274d7de804"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/engine_metallicRoughness.png",
+          "localFile": "lamborghini-gallardo/original/textures/engine_metallicRoughness.png",
+          "bytes": 187641,
+          "sha256": "37caa003e96a4651cf45ec89c78e965da1c147e35bcc9611920517b87672fbdb"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/engine_normal.png",
+          "localFile": "lamborghini-gallardo/original/textures/engine_normal.png",
+          "bytes": 941626,
+          "sha256": "ab91578cc2e4416a7e98071dbd7564c414c16de17ff325ea5a97f39b81eb473e"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/exhaust_grid_baseColor.png",
+          "localFile": "lamborghini-gallardo/original/textures/exhaust_grid_baseColor.png",
+          "bytes": 20096,
+          "sha256": "3634fe0c20530c6e7a52732c9435e4834d811c56be350ce600fd8df39b524062"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/exhaust_grid_normal.png",
+          "localFile": "lamborghini-gallardo/original/textures/exhaust_grid_normal.png",
+          "bytes": 154643,
+          "sha256": "b8966f4c266e2954d892087b56afb681a26a8475936523279dbce8f531a19d3a"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/interior_normal.png",
+          "localFile": "lamborghini-gallardo/original/textures/interior_normal.png",
+          "bytes": 2887925,
+          "sha256": "0bac2a0694eca3381b1247a8272917f76c7b10c04256d83507000b50bad89a92"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/dashbard_emissive.png",
+          "localFile": "lamborghini-gallardo/original/textures/dashbard_emissive.png",
+          "bytes": 11608,
+          "sha256": "c1247a845c38fcc2ca1fab4dc4e4a9414389aaed606fd726cd12578a86ff144a"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/tire_baseColor.png",
+          "localFile": "lamborghini-gallardo/original/textures/tire_baseColor.png",
+          "bytes": 176272,
+          "sha256": "b88de9baa13814a0bf2d3ed00f2f7051a4cb5ac84719a6b91e8b896603949280"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/tire_metallicRoughness.png",
+          "localFile": "lamborghini-gallardo/original/textures/tire_metallicRoughness.png",
+          "bytes": 447953,
+          "sha256": "5c8466237178ab3b8c954eb9e3bf189dc97987d0e169303ad08fa7e710bb2b4f"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/tire_normal.png",
+          "localFile": "lamborghini-gallardo/original/textures/tire_normal.png",
+          "bytes": 1112883,
+          "sha256": "e8010caf16e4ccb067337556313d2109b7039ef6953f002556b8d2656dd9fceb"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/apuroop-busetty/threejslambo/main/textures/material_normal.png",
+          "localFile": "lamborghini-gallardo/original/textures/material_normal.png",
+          "bytes": 279951,
+          "sha256": "33e3e517b013d522c2b739e371f82cab2d306ad4c5867dd72db17f7a90bf9e56"
+        }
+      ],
+      "optimizedAsset": {
+        "file": "lamborghini-gallardo/lamborghini-gallardo.glb",
+        "bytes": 7408852,
+        "sha256": "c87e4f082ebf4767268fb65577f897446615096296fe696f40b2843366a9d505",
+        "triangles": 99042,
+        "bounds": {
+          "min": [
+            -1.1065561771392822,
+            0.0007999236449277025,
+            -2.172499895095825
+          ],
+          "max": [
+            1.1066091060638428,
+            1.1364786624908447,
+            2.172499895095825
+          ]
+        },
+        "drawCalls": 43,
+        "textures": 25,
+        "extensions": []
+      },
+      "orientation": "Y up, front +Z, spin axis X. Ground Y=0, centered X/Z. Dimensions normalized for gameplay.",
+      "dimensions": {
+        "width": 2.213165283203125,
+        "height": 1.135678738845917,
+        "length": 4.34499979019165,
+        "note": "Normalized visual dimensions in meters; not manufacturer specifications."
+      },
+      "wheels": [
+        {
+          "name": "WheelFrontL",
+          "pivot": [
+            0.8031212946525834,
+            0.3214170122699535,
+            1.1060739202388632
+          ],
+          "spinAxis": "X"
+        },
+        {
+          "name": "WheelRearL",
+          "pivot": [
+            0.8087723438139535,
+            0.3214170122699535,
+            -1.4359171867650347
+          ],
+          "spinAxis": "X"
+        },
+        {
+          "name": "WheelFrontR",
+          "pivot": [
+            -0.803121301149053,
+            0.32141700337972995,
+            1.106073920238795
+          ],
+          "spinAxis": "X"
+        },
+        {
+          "name": "WheelRearR",
+          "pivot": [
+            -0.8087723503104229,
+            0.32141700337972995,
+            -1.4359171867651026
+          ],
+          "spinAxis": "X"
+        }
+      ],
+      "validation": {
+        "selfContained": true,
+        "requiresGeometryDecoder": false,
+        "preview": "lamborghini-gallardo/preview-optimized.png"
+      }
+    },
+    {
+      "id": "tesla-roadster",
+      "name": "Tesla Roadster 2020 concept",
+      "creator": "metarex.4d",
+      "creatorUrl": "https://sketchfab.com/metarex.4d",
+      "sourceUrl": "https://sketchfab.com/3d-models/tesla-roadster-2020-1fbf29e297bd4a17ac39a00a378441d8",
+      "metadataUrl": "https://api.sketchfab.com/v3/models/1fbf29e297bd4a17ac39a00a378441d8",
+      "mirror": "https://github.com/stevenzhang070302/tesla-roadster-webgi",
+      "downloadUrl": "https://cdn.jsdelivr.net/gh/stevenzhang070302/tesla-roadster-webgi@main/assets/tesla.glb",
+      "upstreamDownloadUrl": "https://raw.githubusercontent.com/stevenzhang070302/tesla-roadster-webgi/main/assets/tesla.glb",
+      "note": "Public repository Readme.md explicitly credits metarex.4d and CC Attribution. Original Sketchfab API independently confirms CC BY 4.0 and separate named wheel assemblies. The source public copy already includes WebGI material adjustments; optional WebGI extensions are omitted on conversion. This depicts the older 2020/2017 concept, not the 2026 revealed vehicle.",
+      "license": "CC-BY-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "licenseVerifiedAt": "2026-10-24",
+      "licenseEvidenceFile": "tesla-roadster/sketchfab-metadata.json",
+      "originalFaceCount": 608850,
+      "attribution": "Tesla Roadster 2020 concept by metarex.4d (https://sketchfab.com/metarex.4d), licensed CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Source: https://sketchfab.com/3d-models/tesla-roadster-2020-1fbf29e297bd4a17ac39a00a378441d8. Modified for this game: normalized scale and origin, four named wheel pivot groups, geometry simplification, merged compatible parts, texture resize and self-contained GLB conversion. Public repository Readme.md explicitly credits metarex.4d and CC Attribution. Original Sketchfab API independently confirms CC BY 4.0 and separate named wheel assemblies. The source public copy already includes WebGI material adjustments; optional WebGI extensions are omitted on conversion. This depicts the older 2020/2017 concept, not the 2026 revealed vehicle.",
+      "downloadedSources": [
+        {
+          "url": "https://cdn.jsdelivr.net/gh/stevenzhang070302/tesla-roadster-webgi@main/assets/tesla.glb",
+          "upstreamUrl": "https://raw.githubusercontent.com/stevenzhang070302/tesla-roadster-webgi/main/assets/tesla.glb",
+          "localFile": "tesla-roadster/cdn.glb",
+          "bytes": 7962640,
+          "sha256": "9ca3f8be562d47e08c80770f094a5dcf30b65c697951ddd60476dfb25588acc3"
+        }
+      ],
+      "optimizedAsset": {
+        "file": "tesla-roadster/tesla-roadster.glb",
+        "bytes": 4978932,
+        "sha256": "185d6952cf0133a94c70e950ad1b647930e3c594e2bf394bc288436fe741b472",
+        "triangles": 99631,
+        "bounds": {
+          "min": [
+            -0.9604953527450562,
+            -1.1254345677613742e-8,
+            -2.3495535850524902
+          ],
+          "max": [
+            0.9606218222771671,
+            1.1983367204666138,
+            2.3497164249420166
+          ]
+        },
+        "drawCalls": 56,
+        "textures": 10,
+        "extensions": [
+          "KHR_materials_clearcoat",
+          "KHR_materials_emissive_strength",
+          "KHR_materials_ior",
+          "KHR_materials_specular",
+          "KHR_materials_transmission",
+          "KHR_materials_volume",
+          "KHR_texture_transform"
+        ]
+      },
+      "orientation": "Y up, front +Z, spin axis X. Ground Y=0, centered X/Z. Dimensions normalized for gameplay.",
+      "dimensions": {
+        "width": 1.9211171750222231,
+        "height": 1.1983367317209594,
+        "length": 4.699270009994507,
+        "note": "Normalized visual dimensions in meters; not manufacturer specifications."
+      },
+      "wheels": [
+        {
+          "name": "WheelFrontR",
+          "pivot": [
+            -0.8084673073267797,
+            0.3302181563752185,
+            1.489138497086807
+          ],
+          "spinAxis": "X"
+        },
+        {
+          "name": "WheelFrontL",
+          "pivot": [
+            0.7738999802001414,
+            0.3301997668256409,
+            1.489088158338283
+          ],
+          "spinAxis": "X"
+        },
+        {
+          "name": "WheelRearL",
+          "pivot": [
+            0.7997383509074237,
+            0.35860338180462337,
+            -1.479111118292326
+          ],
+          "spinAxis": "X"
+        },
+        {
+          "name": "WheelRearR",
+          "pivot": [
+            -0.7997383471226919,
+            0.35840855713794784,
+            -1.4791075019054742
+          ],
+          "spinAxis": "X"
+        }
+      ],
+      "validation": {
+        "selfContained": true,
+        "requiresGeometryDecoder": false,
+        "preview": "tesla-roadster/preview-optimized.png"
+      }
+    }
+  ],
+  "excludedCandidates": [
+    {
+      "name": "Lamborghini Aventador configurator",
+      "url": "https://github.com/moizahmad418/aventador-3d-configurator",
+      "reason": "Repository source points to tf3dm; creator/asset redistribution license not established. Code MIT license is insufficient."
+    },
+    {
+      "name": "Bugatti Veyron 16.4 Super Sport by DJS",
+      "url": "https://sketchfab.com/3d-models/bugatti-veyron-164-super-sport-8928a6a2bda541fd8a06da3b990633ad",
+      "mirror": "https://github.com/nnamusanga/threejs-bugatti-configurator",
+      "reason": "Embedded attribution and repository license agree CC BY4; around 508k triangle primitives and 99 textures. Deferred to keep this increment bounded; no redistribution-ready optimized asset produced."
+    },
+    {
+      "name": "Tesla Roadster by Yyy",
+      "url": "https://sketchfab.com/3d-models/tesla-roadster-e918af22247d45859696187ce3756baf",
+      "reason": "CC BY candidate; alternate not needed after authenticated-free public mirror of metarex.4d source was verified."
+    }
+  ]
+}

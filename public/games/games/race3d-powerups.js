@@ -19,6 +19,11 @@ export function createRacePowerups(THREE, { track } = {}) {
   const point = new THREE.Vector3(), right = new THREE.Vector3(), tangent = new THREE.Vector3();
   const heading = new THREE.Vector3(), offset = new THREE.Vector3();
   const color = new THREE.Color();
+  const exhaustTime = { value: 0 };
+  const exhaustRotation = new THREE.Quaternion(), exhaustScale = new THREE.Vector3();
+  const exhaustMatrix = new THREE.Matrix4(), inverseEffects = new THREE.Matrix4();
+  const exhaustOrigin = new THREE.Vector3(), exhaustDirection = new THREE.Vector3();
+  const defaultExhaustAnchors = [[-.48, .375, -2.43], [.48, .375, -2.43]];
   const limits = Object.freeze({ pickups: 96, bananas: 96, bombs: 60, missiles: 60, waves: 48, cars: 60, flames: 120, smoke: 120, sparks: 200, trails: 240, shockwaves: 20 });
   const itemTypes = ['launch', 'rocket', 'boost', 'bomb', 'shield', 'banana', 'missile', 'shockwave', 'freeze', 'repair'];
   const itemColors = [0xb68aff, 0x36edbe, 0x38dcea, 0xff994d, 0x5bbcff, 0xffda3b, 0xff6373, 0xe892ff, 0xa0edff, 0x74ef9a];
@@ -162,8 +167,10 @@ export function createRacePowerups(THREE, { track } = {}) {
   ]), standard(0xe8eff1,{metalness:.75,roughness:.24,emissive:0x391319,emissiveIntensity:.2}),limits.missiles);
   const missileFins = batch('missile-fins', combine(Array.from({length:4},(_,i)=>
     box(.09,.9,.65,0,0,-.65).rotateZ(i*Math.PI/2))), standard(0xe64f65,{metalness:.4,roughness:.3}),limits.missiles);
-  const missileJet = batch('missile-thrust',new THREE.ConeGeometry(.22,2.3,8).rotateX(-Math.PI/2).translate(0,0,-2.05),
-    basic(0xffaa69,{transparent:true,opacity:.83,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.missiles);
+  const missileJet = batch('missile-thrust', exhaustGeometry(.12, 1.15).translate(0, 0, -.9),
+    exhaustMaterial('missile', .34), limits.missiles);
+  const missileCore = batch('missile-hot-core', exhaustGeometry(.047, .37).translate(0, 0, -.9),
+    exhaustMaterial('missile-core', .72, true), limits.missiles);
   const waveArc = batch('forward-wave-arc',new THREE.TorusGeometry(1,.055,6,32,Math.PI).rotateX(Math.PI/2),
     basic(0xffffff,{transparent:true,opacity:.9,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.waves);
   // The thrown wave has a physical carrier: a glowing, pulsing jellyfish.
@@ -219,10 +226,60 @@ export function createRacePowerups(THREE, { track } = {}) {
   ]),basic(0x8bffc0,{transparent:true,opacity:.65,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.cars);
   const repairCross=batch('repair-restoring-cross',combine([box(.18,.75,.16,0,0,0),box(.75,.18,.16,0,0,0)]),
     basic(0xcaffdc,{transparent:true,opacity:.95,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.cars);
-  const launchPlume = batch('launch-vertical-plume',new THREE.ConeGeometry(.8,7,12).translate(0,-3.5,0),
-    basic(0x52efda,{transparent:true,opacity:.65,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.cars);
-  const launchCore = batch('launch-hot-core',new THREE.ConeGeometry(.4,5,10).translate(0,-2.5,0),
-    basic(0xdcfff7,{transparent:true,opacity:.9,depthWrite:false,toneMapped:false,blending:THREE.AdditiveBlending}),limits.cars);
+  // Small layered exhaust volumes fade along the jet instead of drawing an
+  // opaque cone. Their local -Z axis starts at the measured exhaust outlet.
+  function exhaustGeometry(radius, length) {
+    const positions = [], uvs = [], indices = [];
+    const rings = 15, sides = 12;
+    for (let ring = 0; ring <= rings; ring++) {
+      const t = ring / rings;
+      const r = radius * (.68 + Math.sin(Math.PI * t) * .42) * Math.pow(1 - t, .7);
+      for (let side = 0; side <= sides; side++) {
+        const angle = side / sides * TAU;
+        positions.push(Math.cos(angle) * r, Math.sin(angle) * r, -t * length);
+        uvs.push(side / sides, t);
+        if (ring < rings && side < sides) {
+          const a = ring * (sides + 1) + side, b = a + sides + 1;
+          indices.push(a, b, a + 1, b, b + 1, a + 1);
+        }
+      }
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+    geometry.setIndex(indices); geometry.computeVertexNormals();
+    return geometry;
+  }
+  function exhaustMaterial(key, opacity, hot = false) {
+    const material = basic(0xffffff, { transparent: true, opacity, depthWrite: false,
+      toneMapped: false, blending: THREE.AdditiveBlending, side: THREE.FrontSide });
+    material.onBeforeCompile = shader => {
+      shader.uniforms.exhaustTime = exhaustTime;
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nuniform float exhaustTime;\nvarying vec2 vExhaustUv;')
+        .replace('#include <begin_vertex>', `#include <begin_vertex>
+          vExhaustUv = uv;
+          float exhaustT = uv.y;
+          float exhaustPhase = instanceMatrix[3].x * 1.7 + instanceMatrix[3].z * .31;
+          transformed.x += sin(exhaustTime * 34.0 - exhaustT * 21.0 + exhaustPhase) * .018 * exhaustT;
+          transformed.y += sin(exhaustTime * 27.0 - exhaustT * 17.0 + exhaustPhase) * .014 * exhaustT;`);
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nuniform float exhaustTime;\nvarying vec2 vExhaustUv;')
+        .replace('#include <opaque_fragment>', `
+          float exhaustT = vExhaustUv.y;
+          float wisps = .78 + .13 * sin(exhaustT * 39.0 - exhaustTime * 38.0 + sin(vExhaustUv.x * 18.85) * 1.4);
+          float softEdge = pow(abs(sin(vExhaustUv.x * 6.28318)), .32) * .5 + .5;
+          outgoingLight *= mix(vec3(${hot ? '.94, .98, 1.0' : '.54, .76, 1.0'}), vec3(.19, .36, .71), exhaustT);
+          diffuseColor.a *= pow(1.0 - exhaustT, 1.55) * smoothstep(0.0, .035, exhaustT) * wisps * softEdge;
+          #include <opaque_fragment>`);
+    };
+    material.customProgramCacheKey = () => `race3d-exhaust-${key}-v1`;
+    return material;
+  }
+  const launchPlume = batch('launch-vertical-plume', exhaustGeometry(.28, 2.7).rotateX(-Math.PI / 2),
+    exhaustMaterial('launch', .28), limits.cars);
+  const launchCore = batch('launch-hot-core', exhaustGeometry(.10, 1.0).rotateX(-Math.PI / 2),
+    exhaustMaterial('launch-core', .65, true), limits.cars);
 
   function fadedMaterial(material, key) {
     material.transparent = true;
@@ -234,12 +291,23 @@ export function createRacePowerups(THREE, { track } = {}) {
       shader.fragmentShader = shader.fragmentShader
         .replace('#include <common>', '#include <common>\nvarying float vPowerAlpha;')
         .replace('#include <opaque_fragment>', 'diffuseColor.a *= vPowerAlpha;\n#include <opaque_fragment>');
+      if (key === 'boost-trail') {
+        shader.vertexShader = shader.vertexShader
+          .replace('#include <common>', '#include <common>\nvarying vec3 vExhaustNormal;\nvarying vec3 vExhaustView;')
+          .replace('#include <project_vertex>', `#include <project_vertex>
+            vec3 scaleSquared = vec3(dot(instanceMatrix[0].xyz, instanceMatrix[0].xyz), dot(instanceMatrix[1].xyz, instanceMatrix[1].xyz), dot(instanceMatrix[2].xyz, instanceMatrix[2].xyz));
+            vExhaustNormal = normalMatrix * mat3(instanceMatrix) * (normal / max(scaleSquared, vec3(.000001)));
+            vExhaustView = -mvPosition.xyz;`);
+        shader.fragmentShader = shader.fragmentShader
+          .replace('#include <common>', '#include <common>\nvarying vec3 vExhaustNormal;\nvarying vec3 vExhaustView;')
+          .replace('#include <opaque_fragment>', 'diffuseColor.a *= pow(max(0.0, dot(normalize(vExhaustNormal), normalize(vExhaustView))), 1.8);\n#include <opaque_fragment>');
+      }
     };
     material.customProgramCacheKey = () => `race3d-item-alpha-${key}`;
     return material;
   }
   function particlePool(name, capacity, material) {
-    const geometry = new THREE.SphereGeometry(1, 7, 5);
+    const geometry = new THREE.SphereGeometry(1, name === 'boost-trail' ? 16 : 7, name === 'boost-trail' ? 10 : 5);
     const alpha = new THREE.InstancedBufferAttribute(new Float32Array(capacity), 1);
     geometry.setAttribute('aPowerAlpha', alpha);
     const mesh = batch(name, geometry, fadedMaterial(material, name), capacity);
@@ -254,7 +322,7 @@ export function createRacePowerups(THREE, { track } = {}) {
     opacity: .95, toneMapped: false, blending: THREE.AdditiveBlending
   }));
   const trails = particlePool('boost-trail', limits.trails, basic(0xffffff, {
-    opacity: .48, toneMapped: false, blending: THREE.AdditiveBlending
+    opacity: .19, toneMapped: false, blending: THREE.AdditiveBlending
   }));
   const shockAlpha = new THREE.InstancedBufferAttribute(new Float32Array(limits.shockwaves), 1);
   const shockGeometry = new THREE.TorusGeometry(1, .026, 5, 48).rotateX(Math.PI / 2);
@@ -264,13 +332,8 @@ export function createRacePowerups(THREE, { track } = {}) {
   }), 'shockwave'), limits.shockwaves);
   const shocks = Array.from({ length: limits.shockwaves }, () => ({ live: false, age: 0, radius: 1, position: new THREE.Vector3() }));
   let shockCursor = 0;
-  const flameGeometry = new THREE.ConeGeometry(.56, 5.2, 9).rotateX(-Math.PI / 2).translate(0, 0, -2.6);
-  const flameOuter = batch('boost-jet', flameGeometry, basic(0xffffff, {
-    transparent: true, opacity: .82, toneMapped: false, depthWrite: false, blending: THREE.AdditiveBlending
-  }), limits.flames);
-  const flameCore = batch('boost-hot-core', flameGeometry.clone(), basic(0xc8ffff, {
-    transparent: true, opacity: .9, toneMapped: false, depthWrite: false, blending: THREE.AdditiveBlending
-  }), limits.flames);
+  const flameOuter = batch('boost-jet', exhaustGeometry(.18, 1.6), exhaustMaterial('boost', .34), limits.flames);
+  const flameCore = batch('boost-hot-core', exhaustGeometry(.073, .55), exhaustMaterial('boost-core', .78, true), limits.flames);
 
   // Inventory objects are actual lit geometry, floating above their receiver.
   // Geometry/materials are shared with the thrown objects wherever possible.
@@ -284,7 +347,8 @@ export function createRacePowerups(THREE, { track } = {}) {
   function rocketObject(type,tint,wide=false){
     heldPart(type,'body',combine([new THREE.CylinderGeometry(.24,.3,1.3,12),new THREE.ConeGeometry(.26,.58,12).translate(0,.94,0)]),silver);
     heldPart(type,'fins',combine([box(.12,.65,.96,0,-.54,0),box(.96,.65,.12,0,-.54,0),sphere(.15,0,.34,.24)]),standard(tint,{roughness:.3,metalness:.42,emissive:tint,emissiveIntensity:.15}));
-    heldPart(type,'flame',new THREE.ConeGeometry(.23,wide?1.2:.75,8).rotateZ(Math.PI).translate(0,wide?-1.18:-.96,0),basic(tint,{toneMapped:false}));
+    heldPart(type,'flame',exhaustGeometry(.13,wide?.82:.58).rotateX(-Math.PI/2).translate(0,-.66,0),exhaustMaterial(`held-${type}`,.34));
+    heldPart(type,'hot-core',exhaustGeometry(.047,.29).rotateX(-Math.PI/2).translate(0,-.66,0),exhaustMaterial(`held-${type}-core`,.72,true));
   }
   rocketObject('launch',0xb68aff,true);
   heldPart('launch','orbital-ring',new THREE.TorusGeometry(.88,.055,6,28).rotateX(Math.PI*.34),basic(0xe4c7ff,{toneMapped:false}));
@@ -427,6 +491,7 @@ export function createRacePowerups(THREE, { track } = {}) {
     lastTime = time;
     clock += step;
     jellyTime.value=clock;
+    exhaustTime.value=clock;
     emissionTime += step;
     // Keep effect emission bounded during slow frames and background-tab wakes.
     const emitTrail = emissionTime >= 1 / 30;
@@ -496,11 +561,11 @@ export function createRacePowerups(THREE, { track } = {}) {
       frame(missile, Math.max(0,finite(missile.height,1.1)));
       dummy.rotation.y += finite(missile.heading);
       stamp(missileBody,n);stamp(missileFins,n);
-      dummy.scale.set(1,1,1+.15*Math.sin(clock*49+n));stamp(missileJet,n);
-      if(emitTrail){offset.copy(tangent).multiplyScalar(-4);particle(trails,point,offset,0xffb08b,.35,.15,.6);}
+      dummy.scale.set(1,1,1+.065*Math.sin(clock*49+n));stamp(missileJet,n);stamp(missileCore,n);
+      if(emitTrail){offset.copy(tangent).applyAxisAngle(UP,finite(missile.heading)).multiplyScalar(-4);point.addScaledVector(offset,.25);particle(trails,point,offset,0x92b1d8,.18,.055,1.1);}
       n++;
     }
-    count([missileBody,missileFins,missileJet],n);
+    count([missileBody,missileFins,missileJet,missileCore],n);
     n=0;let jellyN=0;
     for(const wave of source.waves || []){
       if(!['shockwave','freeze'].includes(wave.type) || wave.active===false || n>=limits.waves)continue;
@@ -520,33 +585,57 @@ export function createRacePowerups(THREE, { track } = {}) {
     if(waveArc.instanceColor)waveArc.instanceColor.needsUpdate=true;
 
     n = 0;
+    // Cars and effects share the scaled course parent. Read rendered poses so
+    // outlet position and plume direction also follow suspension, banks/flips.
+    const carGroup = group.parent?.children.find(child => child.name === 'race3d-cars');
+    const renderedCars = new Map((carGroup?.children || []).map(model => [model.userData.racerId, model]));
+    group.updateWorldMatrix(true, false);
+    carGroup?.updateWorldMatrix(true, true);
+    inverseEffects.copy(group.matrixWorld).invert();
     for (const car of cars.slice(0, 60)) {
       const rocket=finite(car.rocketRemaining)>0;
       if (car.finished || (finite(car.boost) <= 0 && !rocket)) continue;
-      frame(car, .4 + Math.max(0,finite(car.flightHeight)));
+      const thrust = rocket ? car.rocketAcceleration : car.nitroAcceleration;
+      if (Number.isFinite(thrust) && thrust <= .01) continue;
+      frame(car, Math.max(0,finite(car.flightHeight)));
       heading.copy(tangent).applyAxisAngle(UP, finite(car.heading));
       const yaw = Math.atan2(heading.x, heading.z);
       right.set(heading.z, 0, -heading.x).normalize();
-      const pulse = 1 + .2 * Math.sin(clock * 41 + n * 1.4);
-      for (const side of [-1, 1]) {
-        dummy.position.copy(point).addScaledVector(heading, -2.15).addScaledVector(right, side * .58);
-        dummy.rotation.set(0, yaw, 0);
-        dummy.scale.set(rocket?1.35:1, rocket?1.05:.8, pulse*(rocket?2.05:1));
+      const model = renderedCars.get(car.id);
+      const anchors = model?.userData.exhaustAnchors || car.exhaustAnchors || defaultExhaustAnchors;
+      const chassis = model?.getObjectByName('chassis-motion');
+      if (model) {
+        exhaustMatrix.multiplyMatrices(inverseEffects, (chassis || model).matrixWorld);
+        exhaustMatrix.decompose(exhaustOrigin, exhaustRotation, exhaustScale);
+      }
+      for (const anchor of anchors.slice(0, 2)) {
+        if (n >= limits.flames) break;
+        const pulse = 1 + .065 * Math.sin(clock * 43 + n * 2.1) + .035 * Math.sin(clock * 71 + n);
+        if (model) {
+          dummy.position.set(finite(anchor[0]), finite(anchor[1]) - (chassis ? .47 : 0), finite(anchor[2]));
+          dummy.position.applyMatrix4(exhaustMatrix);
+          dummy.quaternion.copy(exhaustRotation);
+          exhaustDirection.set(0, 0, -1).applyQuaternion(exhaustRotation).normalize();
+        } else {
+          dummy.position.copy(point).addScaledVector(heading, finite(anchor[2])).addScaledVector(right, finite(anchor[0]));
+          dummy.position.y += finite(anchor[1]);
+          dummy.rotation.set(0, yaw, 0);
+          exhaustDirection.copy(heading).negate();
+        }
+        dummy.scale.set(rocket ? 1.2 : .82, rocket ? 1.2 : .82, pulse * (rocket ? 1.5 : .85));
         stamp(flameOuter, n);
-        color.setHex(side === -1 ? 0x18ffad : 0x21bfff);
-        flameOuter.setColorAt(n, color);
-        dummy.scale.set(rocket ? .72 : .54, rocket ? .6 : .45, pulse*(rocket ? 1.4 : .65));
+        dummy.scale.set(rocket ? 1.2 : 1, rocket ? 1.2 : 1, pulse * (rocket ? 1.4 : .9));
         stamp(flameCore, n);
         if (emitTrail) {
-          offset.copy(heading).multiplyScalar(-3);
-          offset.y += .14;
-          particle(trails, dummy.position, offset, side === -1 ? 0x37f6ba : 0x77eaff, rocket ? .42 : .3, rocket ? .24 : .18, .7);
+          exhaustOrigin.copy(dummy.position).addScaledVector(exhaustDirection, rocket ? 1.2 : .65);
+          offset.copy(exhaustDirection).multiplyScalar(rocket ? 8 : 5);
+          offset.y += .08;
+          particle(trails, exhaustOrigin, offset, 0x7c9fc9, rocket ? .21 : .15, rocket ? .09 : .055, 1.1);
         }
         n++;
       }
     }
     count([flameOuter, flameCore], n);
-    if (flameOuter.instanceColor) flameOuter.instanceColor.needsUpdate = true;
     let shieldN=0,freezeN=0,repairN=0,launchN=0;
     const heldCounts=Object.fromEntries(itemTypes.map(type=>[type,0]));
     for(const car of cars.slice(0,limits.cars)){
@@ -573,7 +662,7 @@ export function createRacePowerups(THREE, { track } = {}) {
       if(finite(car.flightRemaining)>0 && height>.1 && finite(car.flightRemaining)>finite(car.flightDuration)*.46 && !car.finished){
         frame(car,height+.3);const pulse=1+.15*Math.sin(clock*43+launchN);dummy.scale.set(pulse,Math.min(1.6,Math.max(.3,height/6)),pulse);
         stamp(launchPlume,launchN);stamp(launchCore,launchN);launchN++;
-        if(emitTrail){offset.set(0,-4,0);particle(trails,point,offset,0x76ffdb,.55,.35,2);}
+        if(emitTrail){offset.set(0,-4,0);particle(trails,point,offset,0x9cb6dd,.24,.12,1.1);}
       }
       let type=indicator?.type || (itemTypes.includes(car.activeItem)?car.activeItem:null);
       const remaining={launch:car.flightRemaining,rocket:car.rocketRemaining,boost:car.boost,shield:car.shieldRemaining,freeze:car.freezeRemaining,repair:car.repairRemaining}[type];

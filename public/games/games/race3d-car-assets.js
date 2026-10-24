@@ -1,8 +1,10 @@
 import { GLTFLoader } from '../assets/vendor/GLTFLoader.js';
-import { createCarFinish } from './race3d-car-finish.js?v=20261024-race3d-release1';
+import { createCarFinish } from './race3d-car-finish.js?v=20261024-race3d-realism2';
 
 // Licensed authored meshes. Templates share their GPU buffers/textures across all racers.
 export const RACE_CAR_ASSETS = [
+  { id:'lamborghini-gallardo', label:'Lamborghini Gallardo 2010', url:new URL('../assets/race3d-cars/lamborghini-gallardo.glb',import.meta.url).href, yaw:0, length:4.45, wheelPattern:/^Wheel(Front|Rear)[LR]$/i },
+  { id:'tesla-roadster', label:'Tesla Roadster 2020 concept', url:new URL('../assets/race3d-cars/tesla-roadster.glb',import.meta.url).href, yaw:0, length:4.7, wheelPattern:/^Wheel(Front|Rear)[LR]$/i },
   { id:'f1-2026', label:'Qvist 2026 Formula concept', url:new URL('../assets/race3d-cars/f1.glb',import.meta.url).href, yaw:Math.PI/2, length:5.1, wheelPattern:/^(wheel|tyre|tire)[_-]?(fl|fr|rl|rr|front|rear|left|right)|wheel.*(front|rear)|^(front|rear).*wheel/i },
   { id:'gt3', label:'Race Car 01 LMGT3', url:new URL('../assets/race3d-cars/gt3.glb',import.meta.url).href, yaw:0, length:4.7, wheelPattern:/^Wheel(Front|Rear)[LR]$/i },
   { id:'car-concept', label:'CarConcept sports coupe', url:new URL('../assets/race3d-cars/supercar.glb',import.meta.url).href, yaw:0, length:4.6, wheelPattern:/^Wheel(Front|Rear)[LR]$/i },
@@ -31,9 +33,9 @@ export function createAuthoredCarAssets(THREE, { isDisposed, registerResource })
     return pending.get(spec.id);
   }
   // Loading starts once per race; failures leave the complete procedural car visible.
-  const ready=Promise.all(RACE_CAR_ASSETS.map(template));
+  const ready=Promise.resolve();
   async function attach(state,index) {
-    const spec=RACE_CAR_ASSETS[index%RACE_CAR_ASSETS.length], source=await template(spec);
+    const spec=RACE_CAR_ASSETS.find(s=>s.id===state.racer.racerType)||RACE_CAR_ASSETS[(index%3)+2], source=await template(spec);
     if(!source||isDisposed())return false;
     const normalized=new THREE.Group();normalized.name='authored-'+spec.id;
     const model=source.clone(true);model.rotation.y=spec.yaw;normalized.add(model);
@@ -72,7 +74,7 @@ export function createAuthoredCarAssets(THREE, { isDisposed, registerResource })
     state.authoredVisuals=finish;finish.update(state.racer);
     // Anchors are car-local, measured from the normalized source shell. Formula
     // has one central high exhaust; the road cars use low rear outlet pairs.
-    const exhaustAnchors=spec.id==='f1-2026'?[[0,size.y*.56,-size.z*.45]]:
+    const exhaustAnchors=spec.id==='tesla-roadster'?[]:spec.id==='f1-2026'?[[0,size.y*.56,-size.z*.45]]:
       [[-size.x*.22,size.y*.25,-size.z*.485],[size.x*.22,size.y*.25,-size.z*.485]];
     const lampAnchors={front:[],rear:[]};
     // Existing authored lamp geometry supplies exact placement, including the

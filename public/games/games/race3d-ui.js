@@ -1,4 +1,5 @@
-const STYLE_URL = new URL('./race3d-ui.css?v=20261024-race3d-release1', import.meta.url).href;
+import { createRaceExtras } from './race3d-ui-extras.js?v=20261024-race3d-realism2';
+const STYLE_URL = new URL('./race3d-ui.css?v=20261024-race3d-realism2', import.meta.url).href;
 
 function ensureStyles() {
   if (document.querySelector('link[data-race3d-ui-style]')) return;
@@ -152,6 +153,7 @@ export function createRaceUI(container, players = [], options = {}) {
   countdown.setAttribute('aria-atomic', 'true');
   root.append(stats, standings, camera, labelLayer, status, map, countdown);
   container.appendChild(root);
+  const extras = createRaceExtras(root, players);
 
   const rows = new Map();
   for (const racer of racers) {
@@ -402,6 +404,7 @@ export function createRaceUI(container, players = [], options = {}) {
     stats.dataset.phase = phase;
     stats.dataset.elapsed = String(Math.max(0, now).toFixed(1));
     updateLabels(currentCars, ranking);
+    extras.update(currentCars, target?.id, metadata || {}, phase);
   }
 
   function moveCamera(direction) {
@@ -446,6 +449,7 @@ export function createRaceUI(container, players = [], options = {}) {
   const onContinue = () => { if (winnerId === null || continueButton.disabled || continued || disposed) return; continued = true; continueButton.disabled = true; options.onContinue?.(); };
   continueButton.addEventListener('click', onContinue);
   function reset() {
+    extras.reset();
     effectState.clear(); seenEffectEvents.clear(); feedbackUntil = 0; feedbackCar = null; lastConditionId = null; effectFeedback.textContent = '';
     continued = false; timing = {}; finishKey = ''; continueButton.hidden = true; continueButton.disabled = false;
     cameraIndex = 0;
@@ -473,12 +477,13 @@ export function createRaceUI(container, players = [], options = {}) {
     next.removeEventListener('click', onNext);
     continueButton.removeEventListener('click', onContinue);
     viewUp.removeEventListener('click', onViewUp); viewDown.removeEventListener('click', onViewDown);
+    extras.destroy();
     root.remove();
     labels.clear();
     rows.clear();
   }
 
-  return { update, setWinner, reset, destroy };
+  return { update, setWinner, reset, destroy, extrasSnapshot: extras.snapshot };
 }
 
 export default createRaceUI;
