@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-23T14:28:04.942219+00:00",
+  "updatedAt": "2026-10-24T09:11:29.275192+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -145,6 +145,29 @@
               "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-10-17&student=kailyn"
             }
           ]
+        },
+        {
+          "id": "sat-original-oratory-2026-10-24",
+          "date": "2026-10-24",
+          "time": "13:00–15:00",
+          "classContent": [
+            "◆ Personal perspective and persuasion: We focused on sharing a personal perspective using ethos, pathos and logos, then giving supporting details. Students used one of the speech structures to develop their perspective into a speech.\n\n◆ AI and energy discussion: The class prompt asked students to imagine a world where we never have enough energy to support ourselves, while we are in a race to improve AI, which requires a great deal of power: ‘What do you think we should do?’ Discussion directions on the slide included creating more energy, slowing down AI, finding efficient ways to solve the problem, improving technology and creating a consensus. These were ideas to consider, rather than a single prescribed answer.\n\n◆ Organizing the speech: Students could use Cause → Effect → Impact → Solution, or the simpler structure Answer → Reason → Example → Message. The focus was to share a perspective, develop it with supporting details, and use one of these structures to create a speech."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Kenny",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-10-24&student=kenny"
+            },
+            {
+              "name": "Kailyn",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-10-24&student=kailyn"
+            },
+            {
+              "name": "Winston",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-10-24&student=winston"
+            }
+          ]
         }
       ]
     },
@@ -252,6 +275,23 @@
             ],
             "prepareFor": "Practise two or three impromptu questions and complete the worksheet."
           }
+        },
+        {
+          "id": "sat-foundations-2026-10-24",
+          "date": "2026-10-24",
+          "time": "15:00–16:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-24&student=william"
+            },
+            {
+              "name": "Ivy",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-24&student=ivy"
+            }
+          ]
         }
       ]
     },
@@ -384,7 +424,31 @@
             ],
             "prepareFor": "Practise organizing impromptu answers with Answer–Reason–Example–Message."
           },
-          "students": []
+          "students": [
+            {
+              "name": "Stacey",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-10-17&student=stacey"
+            }
+          ]
+        },
+        {
+          "id": "sat-introductory-2026-10-24",
+          "date": "2026-10-24",
+          "time": "16:32–18:30",
+          "classContent": [
+            "◆ Impromptu speaking and class focus: Stacey and Liam focused mainly on impromptu speaking. I felt this was a competition area they could enter. There have also been some student switches, so introducing a large amount of new material could be difficult for different students.\n\n◆ Thinking, logic and speaking length: The aim was to strengthen critical thinking and the ability to organize logic and structure, while gradually increasing answers from around 30 seconds toward eventually two minutes. This would help prepare them for other competition opportunities, including TOC impromptu, the recently upgraded WSDA impromptu work mentioned in class, ESTP and similar competitions. These were preparation goals, not a claim that the students already spoke for two minutes or that they had entered a competition.\n\n◆ Developing answers: We focused on building an argument and organizing it with Answer → Reason → Example → Message. We continued exploring ways to develop the logic of answers and speak for longer, with more practice questions to work on. Stacey needed to expand her short answers, while Liam needed to slow down and give more thorough answers."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Stacey",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-10-24&student=stacey"
+            },
+            {
+              "name": "Liam",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-10-24&student=liam"
+            }
+          ]
         }
       ]
     },
@@ -542,9 +606,15 @@
           "date": "2026-10-22",
           "time": "15:30–17:30",
           "classContent": [
-            "◆ Prepared speeches and topic focus: Students spoke about why people have the habit of doing dangerous things. Many focused on the roller-coaster situation, but the aim was to include dangerous things people do in their own lives and explain why they do them, rather than repeatedly focus on death. The personal example belonged in the speech they were supposed to prepare; this was not a request to give a new personal example immediately during the discussion.\n\n◆ Organizing before speaking: Students could use time before class, including when they arrived early, or while other students were speaking to write and organize ideas in their notebooks. They could put those notes on the table in front of them and use them while speaking. Writing ideas down becomes especially helpful as the content and information become more difficult."
+            "◆ Prepared speeches and topic focus: Students spoke about why people have the habit of doing dangerous things. Many focused on the roller-coaster situation, but the aim was to include dangerous things people do in their own lives and explain why they do them, rather than repeatedly focus on death. The personal example belonged in the speech they were supposed to prepare; this was not a request to give a new personal example immediately during the discussion.\n\n◆ Organizing before speaking: Students could use time before class, including when they arrived early, or while other students were speaking to write and organize ideas in their notebooks. They could put those notes on the table in front of them and use them while speaking. Writing ideas down becomes especially helpful as the content and information become more difficult.\n\n◆ Persuasive speaking: We went over ethos, pathos and logos. Ethos builds credibility through our stories; pathos persuades through emotions; logos uses logic, statistics, studies and facts. We considered how these approaches help establish why a message matters and encourage an audience to do something.\n\n◆ Worked example—exercise and diet: The slides used persuading people that losing weight through exercise and diet is important as an example. We connected ethos with telling a story, pathos with how it feels, and logos with discussing health risks. The example listed heart attack, cancer, stroke, diabetes and death in connection with obesity. These were classroom examples of persuasive content.\n\n◆ Agree or disagree—‘People should go to spas’: We also used this statement to consider an agreeing or disagreeing position and how ethos, pathos and logos could support that position."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Ethos: a winter story",
+            "steps": [
+              "Share a short story about what you do in winter."
+            ],
+            "prepareFor": "Complete the worksheet’s ethos task."
+          },
           "students": [
             {
               "name": "Remi",
