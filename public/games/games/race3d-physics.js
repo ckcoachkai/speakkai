@@ -308,7 +308,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
   function refreshDamageState(car) {
     car.damage = clamp(finite(car.damage), 0, 1);
     const level = car.damage > 0 ? Math.min(DAMAGE_LEVELS, Math.ceil(car.damage * DAMAGE_LEVELS - 1e-8)) : 0;
-    car.hitPoints = Math.round((1 - car.damage) * 100);
+    car.hitPoints = car.damage === 1 ? 0 : Math.max(1, Math.round((1 - car.damage) * 100));
     if (level !== car.damageLevel) {
       const previousLevel = car.damageLevel;
       car.damageLevel = level;

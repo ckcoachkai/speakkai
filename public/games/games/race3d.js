@@ -1,7 +1,7 @@
 import * as THREE from '../assets/vendor/three.module.js';
 import { createRaceTrack } from './race3d-track.js?v=20261024-race3d-realism2';
 import { createRaceCars } from './race3d-cars.js?v=20261024-race3d-realism2';
-import { createRaceSimulation } from './race3d-physics.js?v=20261024-race3d-realism2';
+import { createRaceSimulation } from './race3d-physics.js?v=20261024-race3d-hp';
 import { createChaseCamera } from './race3d-camera.js?v=20261024-race3d-realism2';
 import { createRaceAudio } from './race3d-audio.js?v=20261024-race3d-realism2';
 import { createRaceUI } from './race3d-ui.js?v=20261024-race3d-realism2';
