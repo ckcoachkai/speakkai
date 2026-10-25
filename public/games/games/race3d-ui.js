@@ -1,5 +1,5 @@
 import { createRaceExtras } from './race3d-ui-extras.js?v=20261024-race3d-realism2';
-const STYLE_URL = new URL('./race3d-ui.css?v=20261024-race3d-realism2', import.meta.url).href;
+const STYLE_URL = new URL('./race3d-ui.css?v=20261024-race3d-review1', import.meta.url).href;
 
 function ensureStyles() {
   if (document.querySelector('link[data-race3d-ui-style]')) return;
@@ -187,7 +187,11 @@ export function createRaceUI(container, players = [], options = {}) {
     const wallNow = performance.now();
     const id = target ? carId(target, 0) : null;
     const damage = Math.min(1, Math.max(0, Number(target?.damage) || 0));
-    const percent = Math.round((1 - damage) * 100);
+    // Use the simulation's health value, including its 1 HP floor before
+    // replacement. Rounding damage alone can show a premature 0%.
+    const percent = Number.isFinite(target?.hitPoints)
+      ? Math.round(Math.min(100, Math.max(0, target.hitPoints)))
+      : damage === 1 ? 0 : Math.max(1, Math.round((1 - damage) * 100));
     conditionValue.textContent = `${percent}%`;
     conditionMeter.setAttribute('aria-valuenow', String(percent));
     conditionMeter.setAttribute('aria-label', `${target ? getName(target) : 'Car'} condition`);
@@ -376,7 +380,9 @@ export function createRaceUI(container, players = [], options = {}) {
           entry.name.title = getName(car, entry.racer.name);
           entry.row.classList.toggle('is-winner', winnerId === id);
           entry.row.style.setProperty('--race-progress', progress);
-          roster.appendChild(entry.row);
+          // Keep stable rows attached: repeatedly appending the whole board
+          // churns the DOM even when no racer has changed position.
+          if (roster.children[i] !== entry.row) roster.insertBefore(entry.row, roster.children[i] || null);
         }
         const leader = ranking[0];
         summary.querySelector('.race3d-leader-summary').textContent = leader ? `${winnerId === carId(leader, 0) ? 'FIRST SPEAKER' : 'P1'} · ${getName(leader)}` : 'Grid ready';

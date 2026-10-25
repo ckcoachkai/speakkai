@@ -208,3 +208,8 @@
 @media(max-width:700px){.race3d-roulette{bottom:118px}.race3d-roulette-cube{width:44px;height:44px}.race3d-roulette-icon{width:34px;height:34px}.race3d-roulette-owner,.race3d-roulette-name{font-size:8px}.race3d-finish-splash{top:49%;max-width:calc(100% - 80px)}.race3d-finish-rank{font-size:72px}.race3d-finish-caption{font-size:8px}}
 @media(max-height:480px){.race3d-roulette{bottom:14px}.race3d-roulette-cube{width:40px;height:40px}.race3d-roulette-icon{width:30px;height:30px}.race3d-finish-splash{top:39%;gap:3px}.race3d-finish-rank{font-size:66px}.race3d-finish-name{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.race3d-roulette[data-rolling="true"] .race3d-roulette-cube,.race3d-finish-splash.is-celebrating .race3d-confetti-piece,.race3d-finish-splash.is-celebrating .race3d-finish-rank{animation:none}.race3d-finish-splash.is-celebrating .race3d-confetti-piece{opacity:.8;transform:translate(var(--confetti-x),var(--confetti-y)) rotate(var(--confetti-turn))}}
+
+/* Reserve the arcade's Start/Controls strip on phones and short screens. */
+@media(max-width:700px),(max-height:480px){
+  .race3d-stats,.race3d-camera{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+}
