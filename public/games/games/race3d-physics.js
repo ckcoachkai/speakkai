@@ -3,7 +3,7 @@
  * Bounded, game-balanced vehicle profiles alter speed, grip and durability.
  * Traffic, slipstreams, errors and items determine the actual first crossing.
  */
-import { createRampLayout, rampHeightAt, rampSlopeAt } from './race3d-ramps.js?v=20261025-supercars';
+import { createRampLayout, rampHeightAt, rampSlopeAt } from './race3d-ramps.js?v=20261025-supercars-ramps';
 
 const STEP = 1 / 120, MAX_FRAME_DELTA = 0.25, MAX_STEPS_PER_UPDATE = 30;
 const MAX_CARS = 60, CAR_LENGTH = 4.4, CAR_WIDTH = 1.9, TOP_SPEED = 43;
@@ -512,8 +512,10 @@ export function createRaceSimulation({ players = [], track, random = Math.random
 
       const front=(contacts[0].supportY+contacts[1].supportY)/2,rear=(contacts[2].supportY+contacts[3].supportY)/2;
       const left=(contacts[0].supportY+contacts[2].supportY)/2,right=(contacts[1].supportY+contacts[3].supportY)/2;
+      const supportY=rear+(front-rear)*(-car.rearAxle)/car.wheelbase;
+      car.supportY=supportY;car.supportHeight=supportY-ground.y;
       car.supportPitch=Math.atan2(front-rear,car.wheelbase)-ground.grade;
-      car.supportRoll=Math.atan2(right-left,WHEEL_TRACK)-ground.bank;
+      car.supportRoll=Math.atan2(right-left,car.trackWidth)-ground.bank;
       car.rampHeight=Math.max(0,car.supportHeight);car.rampPitch=car.supportPitch;
     } else { car.supportY=ground.y+car.flightHeight;car.supportHeight=0;car.supportRoll=0; }
     car.wheelContacts=contacts;
@@ -551,7 +553,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       const lap=Math.max(0,Math.floor((car.distance+car.frontAxle-ramp.distance)/trackLength));
       const rampStart=ramp.distance+lap*trackLength,lip=rampStart+ramp.length;
       const key=`${car.gridPosition}:${ramp.id}:${lap}`;
-      if(rampHits.has(key)||car.distance+car.frontAxle<rampStart||car.previousProgress+car.rearAxle>lip)continue;
+      if(rampHits.has(key)||car.distance+car.frontAxle<rampStart||car.previousProgress+car.rearAxle>lip+.5)continue;
       if(Math.abs(car.lateral-ramp.lateral)>ramp.width/2-CAR_WIDTH*.52)continue;
       // Enter at the flush approach; crossing a tall side cannot teleport the car up.
       const already=car.rampId===ramp.id&&car._rampLap===lap&&car._onRamp;
@@ -559,7 +561,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       if(!already)emit('ramp-approach',car,{rampId:ramp.id,height:ramp.height,length:ramp.length,intensity:.55});
       car.rampId=ramp.id;car._rampLap=lap;car._onRamp=true;car.rampState='approach';
       active=ramp;start=rampStart;updateWheelSupport(car,active,start);car.trickAngle=0;
-      if(car.distance+car.rearAxle<lip)break;
+      if(Math.min(...car.wheelContacts.map(c=>c.distance))<lip)break;
       rampHits.add(key);car._onRamp=false;
       const ground=roadSurfaceAt(car.distance,car.lateral);
       const pitch=ground.grade+Math.atan(rampSlopeAt(ramp,1));
@@ -573,6 +575,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
         if(velocity-RAMP_GRAVITY*t<0&&projectedY<=roadSurfaceAt(projectedDistance,projectedLateral).y) {car.flightDuration=t;break;}
       }
       car.flightRemaining=car.flightDuration;car.flightKind='ramp';car.rampState='airborne';
+      car.nitroAcceleration=0;car.motorPowerW=0;car.regenW=0;car.brake=0;
       car._rampTakeoffHeight=takeoffWorldY-ground.y;car._rampTakeoffWorldY=takeoffWorldY;car._airWorldY=takeoffWorldY;
       car._rampTakeoffVelocity=velocity;car._rampTakeoffPitch=car.rampPitch;car._rampFlightElapsed=0;
       car.flightHeight=takeoffWorldY-ground.y;car.verticalVelocity=velocity;car.rampHeight=0;
@@ -606,7 +609,9 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       // A bounded flight follows course progress continuously. Ground contact,
       // tires and pickups cannot teleport it or alter its actual crossing time.
       car.spin = 0; car.spinAngle *= Math.exp(-5 * dt); car.heading *= Math.exp(-.4 * dt);
-      car.nitroAcceleration = stepNitro(car, dt, 3.5); car.motorPowerW = 0; car.regenW = 0; car.brake = 0;
+      // Engine nitrous needs tyre traction; only the separate rocket applies
+      // direct thrust while airborne.
+      car.nitroAcceleration = stepNitro(car, dt, 0); car.motorPowerW = 0; car.regenW = 0; car.brake = 0;
       car.speed = clamp(car.speed + (car.rocketAcceleration + car.nitroAcceleration - car.drag * 0.35) * dt, 4, speedLimitFor(car));
       car.lateralVelocity *= Math.exp(-.18*dt);
       car.yawRate = -car.heading * .4;
@@ -740,6 +745,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     if (pickup.type === 'launch') {
       if (car.spin > 0 || car.freezeRemaining > 0) emit('recovery', car, { recoveryType: 'launch', intensity: 0.65 });
       car.flightRemaining = car.flightDuration = FLIGHT_DURATION; car.flightKind = 'launch';
+      car.nitroAcceleration = 0; car.motorPowerW = 0; car.regenW = 0; car.brake = 0;
       car.rampState = 'ground'; car.rampHeight = 0; car.rampPitch = 0; car.trickAngle = 0;
       car.flightHeight = 0; car.verticalVelocity = FLIGHT_HEIGHT * 4 / FLIGHT_DURATION;
       car.spin = 0; car.freezeRemaining = 0; car.heading *= 0.3;

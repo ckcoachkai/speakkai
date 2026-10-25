@@ -1,4 +1,4 @@
-import { createRaceItemModels } from './race3d-item-models.js?v=20261025-supercars';
+import { createRaceItemModels } from './race3d-item-models.js?v=20261025-supercars-ramps';
 
 /**
  * Pooled kart items. Entity positions, lifetimes and hits belong to the race
@@ -677,7 +677,7 @@ export function createRacePowerups(THREE, { track } = {}) {
         }
         repairN++;
       }
-      if(finite(car.flightRemaining)>0 && height>.1 && finite(car.flightRemaining)>finite(car.flightDuration)*.46 && !car.finished){
+      if(car.flightKind==='launch' && finite(car.flightRemaining)>0 && height>.1 && finite(car.flightRemaining)>finite(car.flightDuration)*.46 && !car.finished){
         carFrame(car,.3);const pulse=1+.15*Math.sin(clock*43+launchN);dummy.scale.set(pulse,Math.min(1.6,Math.max(.3,height/6)),pulse);
         stamp(launchPlume,launchN);stamp(launchCore,launchN);launchN++;
         if(emitTrail){offset.set(0,-4,0);particle(trails,point,offset,0x9cb6dd,.24,.12,1.1);}

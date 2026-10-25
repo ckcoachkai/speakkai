@@ -1,7 +1,7 @@
-import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261025-supercars';
-import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261025-supercars';
-import { createCarMotion } from './race3d-car-motion.js?v=20261025-supercars';
-import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261025-supercars';
+import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261025-supercars-ramps';
+import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261025-supercars-ramps';
+import { createCarMotion } from './race3d-car-motion.js?v=20261025-supercars-ramps';
+import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261025-supercars-ramps';
 
 /**
  * Sculpted low-slung GT cars for race3d. All car geometry is authored around

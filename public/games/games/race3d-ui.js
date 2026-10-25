@@ -1,6 +1,6 @@
-import { RACE_ROSTER_TYPES, getRacerIdentity } from './race3d-roster.js?v=20261025-supercars';
-import { createRaceExtras } from './race3d-ui-extras.js?v=20261025-supercars';
-const STYLE_URL = new URL('./race3d-ui.css?v=20261025-supercars', import.meta.url).href;
+import { RACE_ROSTER_TYPES, getRacerIdentity } from './race3d-roster.js?v=20261025-supercars-ramps';
+import { createRaceExtras } from './race3d-ui-extras.js?v=20261025-supercars-ramps';
+const STYLE_URL = new URL('./race3d-ui.css?v=20261025-supercars-ramps', import.meta.url).href;
 
 function ensureStyles() {
   if (document.querySelector('link[data-race3d-ui-style]')) return;

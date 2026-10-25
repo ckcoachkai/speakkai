@@ -1,5 +1,5 @@
-import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-supercars';
-import { RACE_ROSTER_TYPES, getRacerIdentity } from './race3d-roster.js?v=20261025-supercars';
+import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-supercars-ramps';
+import { RACE_ROSTER_TYPES, getRacerIdentity } from './race3d-roster.js?v=20261025-supercars-ramps';
 
 const make = (tag, className, text) => {
   const node = document.createElement(tag);

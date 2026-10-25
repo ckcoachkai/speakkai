@@ -1,21 +1,21 @@
 import * as THREE from '../assets/vendor/three.module.js';
-import { createRaceTrack } from './race3d-track.js?v=20261025-supercars';
-import { createRaceCars } from './race3d-cars.js?v=20261025-supercars';
-import { createRaceSimulation } from './race3d-physics.js?v=20261025-supercars';
-import { createChaseCamera } from './race3d-camera.js?v=20261025-supercars';
-import { createRaceAudio } from './race3d-audio.js?v=20261025-supercars';
-import { createRaceUI } from './race3d-ui.js?v=20261025-supercars';
-import { createRaceEffects } from './race3d-fx.js?v=20261025-supercars';
-import { createRaceScenery } from './race3d-scenery.js?v=20261025-supercars';
-import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261025-supercars';
-import { createRacePowerups } from './race3d-powerups.js?v=20261025-supercars';
-import { createRaceRamps } from './race3d-ramps.js?v=20261025-supercars';
-import { createSkySpirit } from './race3d-sky-spirit.js?v=20261025-supercars';
-import { createFinishFrogs } from './race3d-finish-frogs.js?v=20261025-supercars';
-import { assignRacerTypes } from './race3d-roster.js?v=20261025-supercars';
-import { createRaceSelection, SELECTION_SECONDS } from './race3d-selection.js?v=20261025-supercars';
+import { createRaceTrack } from './race3d-track.js?v=20261025-supercars-ramps';
+import { createRaceCars } from './race3d-cars.js?v=20261025-supercars-ramps';
+import { createRaceSimulation } from './race3d-physics.js?v=20261025-supercars-ramps';
+import { createChaseCamera } from './race3d-camera.js?v=20261025-supercars-ramps';
+import { createRaceAudio } from './race3d-audio.js?v=20261025-supercars-ramps';
+import { createRaceUI } from './race3d-ui.js?v=20261025-supercars-ramps';
+import { createRaceEffects } from './race3d-fx.js?v=20261025-supercars-ramps';
+import { createRaceScenery } from './race3d-scenery.js?v=20261025-supercars-ramps';
+import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261025-supercars-ramps';
+import { createRacePowerups } from './race3d-powerups.js?v=20261025-supercars-ramps';
+import { createRaceRamps } from './race3d-ramps.js?v=20261025-supercars-ramps';
+import { createSkySpirit } from './race3d-sky-spirit.js?v=20261025-supercars-ramps';
+import { createFinishFrogs } from './race3d-finish-frogs.js?v=20261025-supercars-ramps';
+import { assignRacerTypes } from './race3d-roster.js?v=20261025-supercars-ramps';
+import { createRaceSelection, SELECTION_SECONDS } from './race3d-selection.js?v=20261025-supercars-ramps';
 
-import { rampPlaybackTarget, advancePlaybackRate } from './race3d-playback.js?v=20261025-supercars';
+import { rampPlaybackTarget, advancePlaybackRate } from './race3d-playback.js?v=20261025-supercars-ramps';
 
 const COLORS = ['#54d7c4', '#f4c65a', '#ff7666', '#a6b1f1', '#79b8ee', '#d2a4dd', '#a9d58b', '#edb987'];
 const STEP = 1 / 60;

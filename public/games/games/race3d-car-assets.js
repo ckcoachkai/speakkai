@@ -1,5 +1,5 @@
 import { GLTFLoader } from '../assets/vendor/GLTFLoader.js';
-import { createCarFinish } from './race3d-car-finish.js?v=20261025-supercars';
+import { createCarFinish } from './race3d-car-finish.js?v=20261025-supercars-ramps';
 
 // Licensed authored meshes. Templates share their GPU buffers/textures across all racers.
 export const RACE_CAR_ASSETS = [

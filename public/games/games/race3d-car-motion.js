@@ -1,4 +1,4 @@
-import { createRampLayout, sampleRampSurface } from './race3d-ramps.js?v=20261025-supercars';
+import { createRampLayout, sampleRampSurface } from './race3d-ramps.js?v=20261025-supercars-ramps';
 
 /** Rigid tyre frame plus a damped sprung shell. Distances are track metres. */
 export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts = [], steeringPivots = [], lighting, index = 0 }) {
@@ -131,12 +131,13 @@ export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts
         // Iteration also follows the tiny horizontal patch shift as a spring
         // compresses along the car's inclined local-up axis.
         for(let j=0;j<5;j++){
+          const error=contact.surfaceY-contact.contactY;
+          if(Math.abs(error)<=1e-7)break;
+          supportOffset+=error/Math.max(.2,rotationUp.y);
           contact=contactSurface(supportOffset);
-          supportOffset+=(contact.surfaceY-contact.contactY)/Math.max(.2,rotationUp.y);
         }
-      }
+      }else contact=contactSurface(supportOffset);
       wheel.position.set(base.x,base.y+supportOffset,base.z);
-      contact=contactSurface(supportOffset);
       const front=state.id.startsWith('front');
       const desiredSteering=front&&Number.isFinite(turnRadius)?clamp(Math.atan(wheelbase/(turnRadius-base.x)),-.5,.5):0;
       // Ackermann: the inside front tyre turns more sharply than the outside.
@@ -145,7 +146,14 @@ export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts
       if(steeringPivots.includes(wheel))wheel.rotation.y=state.steering;
       const spin=wheelSpin[i];
       if(spin){
-        if(grounded){state.angularVelocity=step>0?deltaDistance/step/radius:0;state.angle+=deltaDistance/radius;}
+        if(grounded){
+          // A rigid wheel hub describes its own arc around the turn centre:
+          // inside tyres cover fewer metres; outside tyres cover more. The
+          // fore/aft offset also matters for the steered front wheel paths.
+          const arcScale=Number.isFinite(turnRadius)?Math.hypot(1-base.x/turnRadius,base.z/turnRadius):1;
+          const wheelTravel=deltaDistance*arcScale;
+          state.angularVelocity=step>0?wheelTravel/step/radius:0;state.angle+=wheelTravel/radius;
+        }
         else{state.angularVelocity*=Math.exp(-step*.08);state.angle+=state.angularVelocity*step;}
         if(racer.parked){state.angularVelocity=0;}
         spin.rotation.x=state.angle;
