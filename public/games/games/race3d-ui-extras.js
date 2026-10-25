@@ -1,6 +1,6 @@
-import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-balance-drivers1';
-import { inventoryFace } from './race3d-item-rules.js?v=20261025-balance-drivers1';
-import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261025-balance-drivers1';
+import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-fifty1';
+import { inventoryFace } from './race3d-item-rules.js?v=20261025-fifty1';
+import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261025-fifty1';
 
 const make = (tag, className, text) => {
   const node = document.createElement(tag);
@@ -174,11 +174,13 @@ export function createRaceExtras(root, players = []) {
     if (car) {
       for (const [item, field] of [['boost','boost'],['rocket','rocketRemaining'],['shield','shieldRemaining'],['repair','repairRemaining'],['freeze','freezeRemaining'],['launch','flightRemaining']]) {
         if(item==='freeze'&&car.attackSlowRemaining>0)continue;
-        if (item === 'launch' && car.flightKind === 'ramp') continue;
+        if (item === 'launch' && (car.flightKind === 'ramp'||car.flightKind==='hop'&&car.hopSource!=='launch')) continue;
         const remaining = finite(car[field]);
         if (remaining > .01) active.push([item, remaining / timeScale]);
       }
       if(car.attackSlowRemaining>0&&ITEM_VISUALS[car.attackSource])active.push([car.attackSource,car.attackSlowRemaining/timeScale,'Disrupted']);
+      for(const [field,remaining]of Object.entries(car.itemEffects||{})){const item={padBoost:'strip',padBrake:'inverter',foamSlow:'foam',pickupBlock:'decoy',slingRelease:'slingshot',capRelease:'capacitor',theftImmune:'theft'}[field]||field;if(remaining>.01&&ITEM_VISUALS[item])active.push([item,remaining/timeScale,['emp','jammer','oil','padBrake','foamSlow','pickupBlock'].includes(field)?'Disrupted · '+ITEM_VISUALS[item][0]:'Active · '+ITEM_VISUALS[item][0]]);}
+      if(car.itemCharge)active.push(['charge',car.itemCharge.fuse/timeScale,'Attached charge']);
     }
     const nextKey = active.map(([type, seconds]) => `${type}:${seconds.toFixed(1)}`).join('|');
     if (nextKey === effectKey) return;

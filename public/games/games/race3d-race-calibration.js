@@ -1,4 +1,4 @@
-import {getVehicleSpec} from './race3d-vehicle-specs.js?v=20261025-balance-drivers1';
+import {getVehicleSpec} from './race3d-vehicle-specs.js?v=20261025-fifty1';
 /** Fictional mixed-class race tuning. Source reference specs remain unmodified. */
 export const RACE_CALIBRATION=Object.freeze({
  'f1-2026':{topSpeedKph:162,powerKW:144,torqueNm:370,tireGrip:1.20,downforceCoefficient:1.7,brakeDecelMps2:13.5,launchAccelMps2:10.1},

@@ -36,7 +36,8 @@
     "check:flagship-budget": "node scripts/check-flagship-budget.mjs",
     "check:race3d-flight": "node scripts/check-race3d-flight.mjs",
     "check:race3d-disruption": "node scripts/check-race3d-disruption.mjs",
-    "check:race3d-balance": "node scripts/check-race3d-balance.mjs"
+    "check:race3d-balance": "node scripts/check-race3d-balance.mjs",
+    "check:race3d-fifty": "node scripts/check-race3d-extra-batch1.mjs && node scripts/check-race3d-extra-batch2.mjs && node scripts/check-race3d-extra-batch3.mjs && node scripts/check-race3d-propulsion.mjs && node scripts/check-race3d-fifty.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

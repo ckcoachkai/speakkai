@@ -4,17 +4,12 @@
  */
 const clamp01 = value => Math.max(0, Math.min(1, value));
 const ROAD_TOP = .035;
+import {safeRampSites} from './race3d-course-safety.js?v=20261025-fifty1';
 
-export function createRampLayout(totalLength) {
-  if (!Number.isFinite(totalLength) || totalLength <= 0) return [];
-  return [
-    [.100, -4.25, 21, 2.65], [.295, 4.25, 22, 2.95],
-    [.470, -4.25, 19, 2.6], [.665, 4.25, 23, 3.1],
-    [.860, -4.25, 21, 2.8]
-  ].map(([fraction, lateral, length, height], index) => ({
-    id: `ramp-${index + 1}`, distance: totalLength * fraction,
-    lateral, width: 5.8, length, height
-  }));
+export function createRampLayout(track) {
+  // A length alone cannot establish geometry safety. Never manufacture an
+  // unvalidated deck from an arbitrary percentage of the route.
+  return track&&typeof track==='object'?safeRampSites(track):[];
 }
 
 /** Progress is normalized from the flush approach (0) to the launch lip (1). */
@@ -50,7 +45,7 @@ export function sampleRampSurface(track, ramps, distance, lateral = 0) {
 export function createRaceRamps(THREE, { track }) {
   const group = new THREE.Group();
   group.name = 'race3d-ramps';
-  const layout = createRampLayout(track?.totalLength);
+  const layout = createRampLayout(track);
   track.ramps=layout;
   group.userData.ramps = layout;
   const materials = [], geometries = [], batches = new Map();

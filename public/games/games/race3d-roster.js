@@ -1,5 +1,5 @@
-import { RACE_VEHICLE_PROFILES, getVehicleProfile } from './race3d-vehicle-specs.js?v=20261025-balance-drivers1';
-import {getRaceVehicleSpec} from './race3d-race-calibration.js?v=20261025-balance-drivers1';
+import { RACE_VEHICLE_PROFILES, getVehicleProfile } from './race3d-vehicle-specs.js?v=20261025-fifty1';
+import {getRaceVehicleSpec} from './race3d-race-calibration.js?v=20261025-fifty1';
 
 export const RACE_ROSTER_TYPES = Object.freeze(Object.keys(RACE_VEHICLE_PROFILES));
 export function getRacerIdentity(type) {

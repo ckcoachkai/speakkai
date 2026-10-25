@@ -1,4 +1,4 @@
-import {surfaceForWheel,wheelLoads,vehicleProfile} from './race3d-vehicle.js?v=20261025-balance-drivers1';
+import {surfaceForWheel,wheelLoads,vehicleProfile,unilateralSupportHeight} from './race3d-vehicle.js?v=20261025-fifty1';
 /** Car pose follows the authoritative road/flight state; only suspension flex is visual. */
 export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts = [], steeringPivots = [], lighting, index = 0 }) {
   const finite = (n, fallback = 0) => Number.isFinite(Number(n)) ? Number(n) : fallback;
@@ -46,7 +46,7 @@ export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts
   function update(track, dt = 1 / 60, {detailed=true}={}) {
     if (!track?.sampleTrack) return;
     const distance = finite(racer.distance), speed = Math.max(0, finite(racer.speed));
-    if (previousDistance !== null && distance < previousDistance - 2) reset();
+    if (previousDistance !== null && distance < previousDistance - 2&&!racer._rewindActive) reset();
     previousDistance = distance;
     const sample = track.sampleTrack(distance);
     if (!sample?.position || !sample?.tangent) return;
@@ -75,12 +75,13 @@ export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts
     const supportPitch=Math.atan2(frontY-rearY,wb),supportRoll=Math.atan2(avg(b=>b.x>0,(b,i)=>surfaces[i].y)-avg(b=>b.x<0,(b,i)=>surfaces[i].y),trackWidth);
     const centerY=(frontY*(-rearZ)+rearY*frontZ)/wb;
     const bottomOffset=avg(()=>true,(b,i)=>b.y-wheelRadius(wheelSpin[i]||{}));
-    const baseY=airborne?groundY+flight:centerY-bottomOffset;
+    const supportedY=unilateralSupportHeight(wheelBases.map((b,i)=>({x:b.x,z:b.z,height:surfaces[i].y})),centerY,supportPitch,supportRoll);
+    const baseY=airborne?groundY+flight:supportedY-bottomOffset;
     const loads=wheelLoads(racer),p=vehicleProfile(racer);
     // A full somersault belongs to the entire rigid car, including its tyres.
     // The quaternion is composed in the car's local right axis after road bank;
     // rotating around its centre avoids swinging the car around the tyre contact.
-    const trickAngle = racer.flightKind==='ramp'?0:finite(racer.trickAngle);
+    const trickAngle = ['ramp','hop'].includes(racer.flightKind)?0:finite(racer.trickAngle);
     const yaw = Math.atan2(finite(tangent.x), finite(tangent.z, 1)) + finite(racer.heading) + finite(racer.spinAngle);
     car.position.set(finite(sample.position.x) + finite(right.x) * lateral, baseY,
       finite(sample.position.z) + finite(right.z) * lateral);

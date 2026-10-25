@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import * as THREE from '../public/games/assets/vendor/three.module.js';
+import {createRaceTrack} from '../public/games/games/race3d-track.js';
+import {auditStraightCorridor,safeRampSites} from '../public/games/games/race3d-course-safety.js';
+import {createRampLayout} from '../public/games/games/race3d-ramps.js';
+const straight={totalLength:4000,width:16.5,hazards:[],sampleTrack:d=>({position:{x:0,y:0,z:d},tangent:{x:0,y:0,z:1},bank:0,width:16.5})};
+assert.ok(auditStraightCorridor(straight,1000).safe);assert.equal(safeRampSites(straight).length,5);assert.ok(safeRampSites(straight).every(r=>r.lateral===0&&r.corridor.landing===400));assert.deepEqual(createRampLayout(4000),[]);assert.deepEqual(createRampLayout(straight),safeRampSites(straight));const disposable=createRampLayout(straight);disposable.length=0;assert.equal(createRampLayout(straight).length,5,'callers cannot mutate the cached layout');
+const bend={...straight,sampleTrack:d=>({position:{x:200*Math.sin(d/200),y:0,z:200*Math.cos(d/200)},tangent:{x:Math.cos(d/200),y:0,z:-Math.sin(d/200)},width:16.5})};assert.equal(auditStraightCorridor(bend,1000).reason,'bend');
+const steep={...straight,sampleTrack:d=>({position:{x:0,y:d*.2,z:d},tangent:{x:0,y:.196,z:.98},width:16.5})};assert.equal(auditStraightCorridor(steep,1000).reason,'grade-or-bank');
+const narrow={...straight,sampleTrack:d=>({...straight.sampleTrack(d),width:9})};assert.equal(auditStraightCorridor(narrow,1000).reason,'width');
+const blocked={...straight,hazards:[{distance:1100,lateral:0,radius:2}]};assert.equal(auditStraightCorridor(blocked,1000).reason,'obstruction');
+const crossing={...straight,sampleTrack:d=>d<2000?{position:{x:0,y:0,z:d-1000},tangent:{x:0,y:0,z:1},width:16.5}:{position:{x:d-3000,y:0,z:0},tangent:{x:1,y:0,z:0},width:16.5}};assert.equal(auditStraightCorridor(crossing,850).reason,'near-intersection');
+const real=createRaceTrack(THREE),sites=safeRampSites(real);console.log(JSON.stringify({unitGuards:['bend','grade','width','obstruction','intersection'],realLength:real.totalLength,sites}));assert.ok(sites.length>=1,'real course has a validated straight ramp');for(const r of sites)assert.ok(auditStraightCorridor(real,r.distance).safe);real.dispose();

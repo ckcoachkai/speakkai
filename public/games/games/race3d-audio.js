@@ -1,5 +1,6 @@
-import {audioPeakCurve} from './race3d-finish-fx.js?v=20261025-balance-drivers1';
-import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261025-balance-drivers1';
+import {audioPeakCurve} from './race3d-finish-fx.js?v=20261025-fifty1';
+import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261025-fifty1';
+import {ALL_ITEM_IDS,ITEM_REGISTRY} from './race3d-item-registry.js?v=20261025-fifty1';
 /** Recorded driving textures with a procedural fallback. All audio creation and resume calls stay on start/setSound
  * so browsers only unlock the graph from a host user gesture. */
 export function createRaceAudio({ sound = true } = {}) {
@@ -460,6 +461,7 @@ export function createRaceAudio({ sound = true } = {}) {
       const space = eventSpace(event, primary);
       if (space.volume < 0.04) continue;
       if(type==='finish-burst'){finishBurst({...space,volume:space.volume*(event.intensity??1)});continue;}
+      if(type.startsWith('extra-')&&ITEM_REGISTRY[event.itemType]){const key='extra:'+event.carId;if(now-(eventCooldowns.get(key)??-Infinity)<.18)continue;eventCooldowns.set(key,now);const i=ALL_ITEM_IDS.indexOf(event.itemType),base=170+(i%11)*31,ratio=1.22+(i%5)*.13; tone(base,.09,{type:'triangle',volume:.035*space.volume,pan:space.pan,endFrequency:/hit|burst/.test(type)?base*.7:base*1.1});tone(base*ratio,.13,{type:'sine',volume:.025*space.volume,pan:space.pan,delay:.035});continue;}
       const isSkid = /^(banana-hit|spin|skid|drift|spinout)$/.test(type);
       const isPower = /^(item-pickup|item-ready|pickup|boost|banana-drop|banana-launch|banana-land|banana-hit|bomb-launch|bomb-explode|ramp-approach|ramp-takeoff|ramp-land|trick-complete)$/.test(type) || /^(launch|rocket|shield|missile|shockwave|freeze|repair)(-|$)/.test(type);
       if(type==='item-pickup' && primary && event.carId!==primary.id)continue;

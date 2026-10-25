@@ -6,9 +6,11 @@ const track={totalLength:4000,raceDistance:2000,width:16.5,hazards:[],sampleTrac
 function run(type,carType,mode,seed=.413,defenderPower=null){
  const sim=createRaceSimulation({players:['owner','target','chaser'].map(id=>({id,name:id,...getRacerIdentity(carType)})),track,random:()=>seed,autoItems:false});sim.ramps.length=sim.pickups.length=0;
  const by=id=>sim.cars.find(c=>c.id===id),target=by('target');sim.awardItem('owner',type);if(defenderPower)sim.awardItem('target',defenderPower);for(let n=0;n<542;n++)sim.update(1/120);
- for(const c of sim.cars)Object.assign(c,{distance:c.id==='owner'?(type==='banana'?170:100):c.id==='target'?155:80,previousProgress:c.id==='owner'?(type==='banana'?170:100):c.id==='target'?155:80,lateral:c.id==='chaser'?3.1:0,preferredLane:c.id==='chaser'?3.1:0,speed:35,topSpeed:38,maxSpeed:38,lateralVelocity:0,heading:0,spin:0,damage:0,_hitImmune:0,_nextDecision:Infinity,_nextMistake:Infinity,_pace:1,_brakeTiming:1});
+ const place=()=>{for(const c of sim.cars)Object.assign(c,{distance:c.id==='owner'?(type==='banana'?170:100):c.id==='target'?155:80,previousProgress:c.id==='owner'?(type==='banana'?170:100):c.id==='target'?155:80,lateral:c.id==='chaser'?3.1:0,preferredLane:c.id==='chaser'?3.1:0,speed:35,topSpeed:38,maxSpeed:38,lateralVelocity:0,heading:0,spin:0,damage:0,_hitImmune:0,_nextDecision:Infinity,_nextMistake:Infinity,_pace:1,_brakeTiming:1});};place();
  if(mode==='shield')target.shieldRemaining=60;
- if(defenderPower)assert.ok(sim.useHeldItem('target'));
+ if(defenderPower){assert.ok(sim.useHeldItem('target'));if(defenderPower==='rocket'){// Isolate forward thrust after the genuine bounded rocket hop lands.
+  for(let n=0;n<2400&&target.flightRemaining>0;n++)sim.update(1/120);assert.equal(target.flightRemaining,0);assert.ok(target.rocketRemaining>0);place();
+ }}
  if(mode==='air-miss')for(const c of sim.cars){if(c.id!=='owner')Object.assign(c,{flightKind:'launch',flightDuration:6,flightRemaining:6});}
  if(mode!=='baseline'){assert.ok(sim.useHeldItem('owner'));assert.equal(by('owner').inventoryItem,null);assert.equal(sim.useHeldItem('owner'),false);}
  // An already landed banana fixture isolates its impact from the separately

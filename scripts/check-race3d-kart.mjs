@@ -11,7 +11,7 @@ const place=(s)=>{s.cars.forEach((c,i)=>Object.assign(c,{distance:100+i*30,previ
 const ready=(s,type,id='p0')=>{assert.ok(s.awardItem(id,type));assert.equal(s.useHeldItem(id),false);advance(s,4.51);assert.equal(car(s,id).inventoryPhase,'ready');};
 const outcomes=[];
 // Same opportunity permits duplicate results but never forces a shared result.
-assert.equal(drawItem(()=>0),'launch');assert.equal(drawItem(()=>.999),'repair');
+assert.equal(drawItem(()=>0),'launch');assert.equal(ITEM_TYPES.length,50);assert.equal(drawItem(()=>.999),ITEM_TYPES.at(-1));
 assert.equal(resolveQuality('auto',{width:390}).id,'low');assert.equal(resolveQuality('auto',{width:1440,cores:8,racers:24}).id,'medium');assert.equal(resolveQuality('high').detailedCars,6);
 {const s=make(24);for(const c of s.cars)assert.ok(s.awardItem(c.id,drawItem(c._itemRandom)));assert.ok(new Set(s.cars.map(c=>c.inventoryItem)).size>1);assert.ok(new Set(s.cars.map(c=>c.inventoryItem)).size<24);const first=s.cars[0].inventoryItem;assert.equal(s.awardItem(s.cars[0].id,'bomb'),false);assert.equal(s.cars[0].inventoryItem,first);advance(s,4.51);const phases=s.cars.map(c=>c.inventoryPhase);assert.ok(phases.every(p=>p==='ready'));s.reset();assert.ok(s.cars.every(c=>!c.inventoryItem&&c.itemsUsed===0));s.dispose();assert.equal(s.awardItem('p0','boost'),false);}
 for(const type of ['boost','rocket','shield','launch','repair']){

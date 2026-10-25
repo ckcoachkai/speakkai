@@ -1,9 +1,9 @@
-import {addCarGuide} from "./race3d-car-guide.js?v=20261025-balance-drivers1";
-import { createRaceExtras } from './race3d-ui-extras.js?v=20261025-balance-drivers1';
-import { inventoryFace } from './race3d-item-rules.js?v=20261025-balance-drivers1';
-import { ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-balance-drivers1';
-const STYLE_URL = new URL('./race3d-ui.css?v=20261025-balance-drivers1', import.meta.url).href;
-import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261025-balance-drivers1';
+import {addCarGuide} from "./race3d-car-guide.js?v=20261025-fifty1";
+import { createRaceExtras } from './race3d-ui-extras.js?v=20261025-fifty1';
+import { inventoryFace } from './race3d-item-rules.js?v=20261025-fifty1';
+import { ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-fifty1';
+const STYLE_URL = new URL('./race3d-ui.css?v=20261025-fifty1', import.meta.url).href;
+import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261025-fifty1';
 
 function ensureStyles() {
   if (document.querySelector('link[data-race3d-ui-style]')) return;

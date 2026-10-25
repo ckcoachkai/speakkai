@@ -1,23 +1,23 @@
 import * as THREE from '../assets/vendor/three.module.js';
-import { createRaceTrack } from './race3d-track.js?v=20261025-balance-drivers1';
-import { createRaceCars } from './race3d-cars.js?v=20261025-balance-drivers1';
-import { createRaceSimulation } from './race3d-physics.js?v=20261025-balance-drivers1';
-import { createChaseCamera } from './race3d-camera.js?v=20261025-balance-drivers1';
-import { createRaceAudio } from './race3d-audio.js?v=20261025-balance-drivers1';
-import { createRaceUI } from './race3d-ui.js?v=20261025-balance-drivers1';
-import { createRaceEffects } from './race3d-fx.js?v=20261025-balance-drivers1';
-import { createRaceScenery } from './race3d-city.js?v=20261025-balance-drivers1';
-import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261025-balance-drivers1';
-import { createRacePowerups } from './race3d-powerups.js?v=20261025-balance-drivers1';
-import { createRaceRamps } from './race3d-ramps.js?v=20261025-balance-drivers1';
-import { createSkySpirit } from './race3d-sky-spirit.js?v=20261025-balance-drivers1';
-import { assignRacerTypes } from './race3d-roster.js?v=20261025-balance-drivers1';
-import { resolveQuality } from './race3d-quality.js?v=20261025-balance-drivers1';
-import { createContactShadows } from './race3d-quality.js?v=20261025-balance-drivers1';
-import { createCircuitFestival } from './race3d-festival.js?v=20261025-balance-drivers1';
-import {createRaceSelection,SELECTION_SECONDS} from './race3d-selection.js?v=20261025-balance-drivers1';
-import {rampPlaybackTarget,advancePlaybackRate} from './race3d-playback.js?v=20261025-balance-drivers1';
-import {createFrameBudget} from './race3d-frame-budget.js?v=20261025-balance-drivers1';
+import { createRaceTrack } from './race3d-track.js?v=20261025-fifty1';
+import { createRaceCars } from './race3d-cars.js?v=20261025-fifty1';
+import { createRaceSimulation } from './race3d-physics.js?v=20261025-fifty1';
+import { createChaseCamera } from './race3d-camera.js?v=20261025-fifty1';
+import { createRaceAudio } from './race3d-audio.js?v=20261025-fifty1';
+import { createRaceUI } from './race3d-ui.js?v=20261025-fifty1';
+import { createRaceEffects } from './race3d-fx.js?v=20261025-fifty1';
+import { createRaceScenery } from './race3d-city.js?v=20261025-fifty1';
+import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261025-fifty1';
+import { createRacePowerups } from './race3d-powerups.js?v=20261025-fifty1';
+import { createRaceRamps } from './race3d-ramps.js?v=20261025-fifty1';
+import { createSkySpirit } from './race3d-sky-spirit.js?v=20261025-fifty1';
+import { assignRacerTypes } from './race3d-roster.js?v=20261025-fifty1';
+import { resolveQuality } from './race3d-quality.js?v=20261025-fifty1';
+import { createContactShadows } from './race3d-quality.js?v=20261025-fifty1';
+import { createCircuitFestival } from './race3d-festival.js?v=20261025-fifty1';
+import {createRaceSelection,SELECTION_SECONDS} from './race3d-selection.js?v=20261025-fifty1';
+import {rampPlaybackTarget,advancePlaybackRate} from './race3d-playback.js?v=20261025-fifty1';
+import {createFrameBudget} from './race3d-frame-budget.js?v=20261025-fifty1';
 
 const COLORS = ['#54d7c4', '#f4c65a', '#ff7666', '#a6b1f1', '#79b8ee', '#d2a4dd', '#a9d58b', '#edb987'];
 const STEP = 1 / 60;
@@ -240,6 +240,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     powerups?.update(dt, {
       pickups: simulation?.pickups || [], projectiles: simulation?.projectiles || [],
       hazards: simulation?.hazards || [], waves: simulation?.waves || [], time: simulation?.time || 0,
+      effectActors:simulation?.effectActors,
     }, { cars: simulation?.cars || [], camera });
     projectCars(ordered);
     }
@@ -614,6 +615,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
             hiddenCarId: chaseCamera?.hideFocusedCar ? focusedId : null,
           },
           cars: simulation?.cars.map(car => ({
+            itemEffects:{...car.itemEffects},itemCharge:car.itemCharge?{...car.itemCharge}:null,
             driverSkills:car.driverSkills,driverControl:car.driverControl,vehicleSpec:car.vehicleSpec,
             inventoryItem:car.inventoryItem,inventoryPhase:car.inventoryPhase,inventorySerial:car.inventorySerial,
             rouletteRemaining:car.rouletteRemaining,itemsCollected:car.itemsCollected,itemsUsed:car.itemsUsed,lastUsedItem:car.lastUsedItem,
@@ -641,6 +643,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
             wheelContacts: (car.wheelContacts || []).map(contact => ({ ...contact })),
             throttle: car.throttle || 0, nitroAcceleration: car.nitroAcceleration || 0,
             rocketAcceleration: car.rocketAcceleration || 0,
+            hopSource:car.hopSource||null,launchBlastRemaining:car.launchBlastRemaining||0,rocketVectorThrust:car.rocketVectorThrust||0,rocketLiftAcceleration:car.rocketLiftAcceleration||0,rocketStabilize:car.rocketStabilize||0,
             verticalVelocity: car.verticalVelocity || 0, landingImpulse: car.landingImpulse || 0,
             rocketRemaining: car.rocketRemaining || 0, shieldRemaining: car.shieldRemaining || 0,
             repairRemaining: car.repairRemaining || 0,

@@ -1,4 +1,6 @@
-import { createRaceItemModels } from './race3d-item-models.js?v=20261025-balance-drivers1';
+import { createRaceItemModels } from './race3d-item-models.js?v=20261025-fifty1';
+import {inventoryFace} from './race3d-item-rules.js?v=20261025-fifty1';
+import {createExtraVisuals} from './race3d-extra-visuals.js?v=20261025-fifty1';
 
 /**
  * Pooled kart items. Entity positions, lifetimes and hits belong to the race
@@ -16,6 +18,7 @@ export function createRacePowerups(THREE, { track } = {}) {
   const reducedMotion=!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const activeNitroIds=[],activeRocketIds=[];
   group.name = 'race3d-powerups';
+  const extraVisuals=createExtraVisuals(THREE,{track,reducedMotion,low:(globalThis.innerWidth||1400)<720});group.add(extraVisuals.group);
   const authoredItems = createRaceItemModels(THREE, { parent: group, capacity: 96 });
   const geometries = new Set(), materials = new Set(), textures = new Set();
   const batches = [];
@@ -487,7 +490,7 @@ export function createRacePowerups(THREE, { track } = {}) {
       const kind = event.type === 'bomb-explode' || event.type === 'missile-hit' ? 'explosion'
         : event.type === 'item-pickup' ? event.itemType
           : event.type.startsWith('shield') ? 'shield' : event.type.split('-')[0];
-      spray(point, kind, event.radius ?? (event.type === 'missile-hit' ? 2.8 : 1));
+      spray(point, kind, kind==='explosion'?Math.min(16,(event.radius??2.8)*1.8):(event.radius??1));
     }
   }
 
@@ -605,13 +608,15 @@ export function createRacePowerups(THREE, { track } = {}) {
     group.updateWorldMatrix(true, false);
     carGroup?.updateWorldMatrix(true, false);
     inverseEffects.copy(group.matrixWorld).invert();
+    extraVisuals.update(state,cars,camera,renderedCars);
     activeNitroIds.length=activeRocketIds.length=0;let streakN=0;
     for (const car of cars.slice(0, 60)) {
-      const rocket=finite(car.rocketRemaining)>0;
+      const rocketActive=finite(car.rocketRemaining)>0&&!(car.itemEffects?.emp>0);if(rocketActive&&!car.finished)activeRocketIds.push(car.id);
+      const rocket=false;
       if (car.finished || (finite(car.boost) <= 0 && !rocket)) continue;
       // A soft charge glow lasts exactly as long as the active effect. Actual
       // thrust changes its length; traction limits never hide activation.
-      const thrust = Math.max(0, finite(car.rocketAcceleration)) + Math.max(0, finite(car.nitroAcceleration));
+      const thrust = Math.max(0, finite(car.nitroAcceleration));
       const power=clamp(Math.max(.24,thrust/(rocket?9:7)),0,1);
       if(car.boost>0)activeNitroIds.push(car.id);if(rocket)activeRocketIds.push(car.id);
       const jetWidth = Math.sqrt(power), jetLength = .2 + .8 * power;
@@ -642,9 +647,9 @@ export function createRacePowerups(THREE, { track } = {}) {
           dummy.rotation.set(0, yaw, 0);
           exhaustDirection.copy(heading).negate();
         }
-        dummy.scale.set((rocket ? 1.2 : .82) * jetWidth, (rocket ? 1.2 : .82) * jetWidth, pulse * (rocket ? 1.5 : .85) * jetLength);
+        dummy.scale.set(1.1*jetWidth,1.1*jetWidth,pulse*2.8*jetLength);
         stamp(flameOuter, n);
-        dummy.scale.set((rocket ? 1.2 : 1) * jetWidth, (rocket ? 1.2 : 1) * jetWidth, pulse * (rocket ? 1.4 : .9) * jetLength);
+        dummy.scale.set(1.2*jetWidth,1.2*jetWidth,pulse*2.6*jetLength);
         stamp(flameCore, n);
         if (emitTrail) {
           exhaustOrigin.copy(dummy.position).addScaledVector(exhaustDirection, (rocket ? 1.2 : .65) * jetLength);
@@ -691,7 +696,7 @@ export function createRacePowerups(THREE, { track } = {}) {
         stamp(launchPlume,launchN);stamp(launchCore,launchN);launchN++;
         if(emitTrail){offset.set(0,-4,0);particle(trails,point,offset,0x9cb6dd,.24,.12,1.1);}
       }
-      let type=car.inventoryPhase==='rolling'?itemTypes[(Math.floor(finite(source.time)*2.4)+(car.inventorySerial||0)*3+(car.gridPosition||0))%itemTypes.length]:car.inventoryItem || null;
+      let type=inventoryFace(car,finite(source.time));
       const remaining={launch:car.flightRemaining,rocket:car.rocketRemaining,boost:car.boost,shield:car.shieldRemaining,freeze:car.freezeRemaining,repair:car.repairRemaining}[type];
       if(indicator && indicator.until<=clock && finite(remaining)<=0)indicators.delete(car.id);
       if(held[type]&&!car.finished){
@@ -738,6 +743,7 @@ export function createRacePowerups(THREE, { track } = {}) {
     activeNitroIds.length=activeRocketIds.length=0;
     clock = 0; burstSerial = 0; lastTime = null; shockCursor = 0; emissionTime = 0; indicators.clear();
     authoredItems.reset();
+    extraVisuals.reset();
     for (const pool of [smoke, sparks, trails]) {
       pool.cursor = 0;
       for (const p of pool.particles) p.live = false;
@@ -751,6 +757,7 @@ export function createRacePowerups(THREE, { track } = {}) {
     if (disposed) return;
     reset(); disposed = true;
     authoredItems.dispose();
+    extraVisuals.dispose();
     group.removeFromParent();
     for (const mesh of batches) mesh.dispose();
     for (const geometry of geometries) geometry.dispose();
@@ -759,5 +766,5 @@ export function createRacePowerups(THREE, { track } = {}) {
     group.clear(); geometries.clear(); materials.clear(); textures.clear();
   }
   return { group, update, handleEvents, reset, dispose, limits, assetsReady: authoredItems.ready,
-    snapshot: () => ({nitroIds:[...activeNitroIds],rocketIds:[...activeRocketIds],reducedMotion,authored:authoredItems.snapshot(),indicators:[...indicators].map(([id,value])=>({id,...value,remaining:Math.max(0,value.until-clock)}))}) };
+    snapshot: () => ({nitroIds:[...activeNitroIds],rocketIds:[...activeRocketIds],reducedMotion,extended:extraVisuals.snapshot(),authored:authoredItems.snapshot(),indicators:[...indicators].map(([id,value])=>({id,...value,remaining:Math.max(0,value.until-clock)}))}) };
 }
