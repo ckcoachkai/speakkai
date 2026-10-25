@@ -3,9 +3,16 @@ export const ITEM_TYPES = Object.freeze(['launch','rocket','boost','bomb','shiel
 export const ROULETTE_DURATION = 4.5;
 export const ITEM_HOLD_MIN = 2.5;
 export const ITEM_HOLD_MAX = 5;
-export function drawItem(random = Math.random) {
+export function itemWeights({position=1,count=1,gap=0}={}){
+ const trailing=Math.max(0,Math.min(1,Math.max(count>1?(position-1)/(count-1):0,gap/180)));
+ return ITEM_TYPES.map(type=>['boost','rocket','missile','shockwave'].includes(type)?1+trailing*1.5:['banana','shield'].includes(type)?1.45-trailing*.75:type==='repair'?1+trailing*.4:1);
+}
+export function drawItem(random = Math.random,context) {
   const n=Number(random());
-  return ITEM_TYPES[Math.floor(Math.max(0,Math.min(.999999999,Number.isFinite(n)?n:.5))*ITEM_TYPES.length)];
+  const value=Math.max(0,Math.min(.999999999,Number.isFinite(n)?n:.5));
+  if(!context)return ITEM_TYPES[Math.floor(value*ITEM_TYPES.length)];
+  const weights=itemWeights(context);let target=value*weights.reduce((a,b)=>a+b,0);
+  for(let i=0;i<weights.length;i++){target-=weights[i];if(target<0)return ITEM_TYPES[i];}return ITEM_TYPES.at(-1);
 }
 export function inventoryFace(car, time = 0) {
   if(!car || car.finished)return null;

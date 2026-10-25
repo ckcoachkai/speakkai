@@ -1,4 +1,4 @@
-import { createRaceItemModels } from './race3d-item-models.js?v=20261025-city-contact1';
+import { createRaceItemModels } from './race3d-item-models.js?v=20261025-balance-drivers1';
 
 /**
  * Pooled kart items. Entity positions, lifetimes and hits belong to the race

@@ -1,5 +1,5 @@
 import { GLTFLoader } from '../assets/vendor/GLTFLoader.js';
-import { createCarFinish } from './race3d-car-finish.js?v=20261025-city-contact1';
+import { createCarFinish } from './race3d-car-finish.js?v=20261025-balance-drivers1';
 
 // Licensed authored meshes. Templates share their GPU buffers/textures across all racers.
 export const RACE_CAR_ASSETS = [

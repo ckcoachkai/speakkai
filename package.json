@@ -35,7 +35,8 @@
     "check:course-editorial": "node scripts/check-course-editorial.mjs",
     "check:flagship-budget": "node scripts/check-flagship-budget.mjs",
     "check:race3d-flight": "node scripts/check-race3d-flight.mjs",
-    "check:race3d-disruption": "node scripts/check-race3d-disruption.mjs"
+    "check:race3d-disruption": "node scripts/check-race3d-disruption.mjs",
+    "check:race3d-balance": "node scripts/check-race3d-balance.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

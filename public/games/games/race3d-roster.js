@@ -1,9 +1,10 @@
-import { RACE_VEHICLE_PROFILES, getVehicleProfile } from './race3d-vehicle-specs.js?v=20261025-city-contact1';
+import { RACE_VEHICLE_PROFILES, getVehicleProfile } from './race3d-vehicle-specs.js?v=20261025-balance-drivers1';
+import {getRaceVehicleSpec} from './race3d-race-calibration.js?v=20261025-balance-drivers1';
 
 export const RACE_ROSTER_TYPES = Object.freeze(Object.keys(RACE_VEHICLE_PROFILES));
 export function getRacerIdentity(type) {
   const profile = getVehicleProfile(type);
-  return profile ? { ...profile, racerType: type, category: 'car', ratingsKind: 'reference-informed-simulation' } : null;
+  return profile ? { ...profile,vehicleSpec:getRaceVehicleSpec(type),referenceSpec:profile.vehicleSpec,specBasis:{...profile.specBasis,kind:'mixed-class-race-calibration',referenceFields:profile.specBasis.referenceFields.filter(k=>!['powerKW','torqueNm','topSpeedKph'].includes(k)),notes:'Mixed-class game calibration: power, speed, grip and braking are tuned for competitive racing; they are not manufacturer performance claims. Reference notes: '+profile.specBasis.notes}, racerType: type, category: 'car', ratingsKind: 'mixed-class-race-calibration' } : null;
 }
 
 /**

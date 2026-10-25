@@ -31,4 +31,3 @@ const light=raceElectricDrive({speed:35,throttle:1,massKg:760,longitudinalAccel:
 const strong=raceElectricDrive({speed:25,brake:.4,brakeFactor:1.2,longitudinalAccel:30}),weak=raceElectricDrive({speed:25,brake:.4,brakeFactor:.94,longitudinalAccel:30});assert.ok(Math.abs(strong.acceleration)>Math.abs(weak.acceleration)*1.2);
 assert.equal(new Set(RACE_ROSTER_TYPES.map(t=>getRacerIdentity(t).vehicleSpec.massKg)).size,5);assert.ok(getRacerIdentity('gt3').durabilityFactor>getRacerIdentity('f1-2026').durabilityFactor);
 console.log(JSON.stringify({persistentOwnedSlots:true,usedIconClears:true,ownerBananaImmunity:true,opponentSpin:6.2,spinRecovery:2.2,bombRange:6000,jellyfishRange:1000,purposefulAI:true,massAndBrakes:true,slotsPerCar:1}));
-

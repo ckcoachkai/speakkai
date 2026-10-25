@@ -1,5 +1,5 @@
-import {audioPeakCurve} from './race3d-finish-fx.js?v=20261025-city-contact1';
-import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261025-city-contact1';
+import {audioPeakCurve} from './race3d-finish-fx.js?v=20261025-balance-drivers1';
+import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261025-balance-drivers1';
 /** Recorded driving textures with a procedural fallback. All audio creation and resume calls stay on start/setSound
  * so browsers only unlock the graph from a host user gesture. */
 export function createRaceAudio({ sound = true } = {}) {

@@ -1,4 +1,4 @@
-import {surfaceForWheel,wheelLoads,vehicleProfile} from './race3d-vehicle.js?v=20261025-city-contact1';
+import {surfaceForWheel,wheelLoads,vehicleProfile} from './race3d-vehicle.js?v=20261025-balance-drivers1';
 /** Car pose follows the authoritative road/flight state; only suspension flex is visual. */
 export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts = [], steeringPivots = [], lighting, index = 0 }) {
   const finite = (n, fallback = 0) => Number.isFinite(Number(n)) ? Number(n) : fallback;

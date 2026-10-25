@@ -1,6 +1,6 @@
-import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-city-contact1';
-import { inventoryFace } from './race3d-item-rules.js?v=20261025-city-contact1';
-import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261025-city-contact1';
+import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-balance-drivers1';
+import { inventoryFace } from './race3d-item-rules.js?v=20261025-balance-drivers1';
+import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261025-balance-drivers1';
 
 const make = (tag, className, text) => {
   const node = document.createElement(tag);
@@ -117,6 +117,7 @@ export function createRaceExtras(root, players = []) {
       entry.values.forEach((node, i) => { if (node.textContent !== values[i]) node.textContent = values[i]; });
       entry.priority.textContent = `Focus: ${{corners:'corner speed',grip:'grip & endurance',speed:'straight-line speed',balanced:'balanced pace',launch:'electric acceleration'}[spec.priority] || spec.priority} · ramps ${Math.round(finite(spec.rampPreference) * 100)}%`;
       entry.notes.textContent = `${basis?.notes || 'Simulation values.'} 0–100 is a game estimate from power, operating mass and grip, not a measured road-test time. μ = tire grip; Cd = drag coefficient; Cᴸ = downforce coefficient.`;
+      if(car.driverSkills){entry.priority.textContent+=' · Driver: '+car.driverSkills.label;entry.priority.title='Fictional skills drawn anew each race, not a student assessment. Reaction '+Math.round(car.driverSkills.reaction*100)+'; control '+Math.round(car.driverSkills.control*100)+'; braking '+Math.round(car.driverSkills.braking*100)+'; ramp '+Math.round(car.driverSkills.ramp*100)+'; items '+Math.round(car.driverSkills.items*100)+'.';entry.notes.textContent+=' '+entry.priority.title;}
       if (entry.sourceType !== type) {
         entry.sourceType = type; entry.sources.replaceChildren();
         for (const source of (car.sources || identity.sources || [])) {

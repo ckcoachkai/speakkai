@@ -3,14 +3,15 @@
  * Bounded, game-balanced vehicle profiles alter speed, grip and durability.
  * Traffic, slipstreams, errors and items determine the actual first crossing.
  */
-import { createRampLayout, rampHeightAt, rampSlopeAt } from './race3d-ramps.js?v=20261025-city-contact1';
-import { ITEM_TYPES, drawItem, ROULETTE_DURATION, ITEM_HOLD_MIN, ITEM_HOLD_MAX } from './race3d-item-rules.js?v=20261025-city-contact1';
+import { createRampLayout, rampHeightAt, rampSlopeAt } from './race3d-ramps.js?v=20261025-balance-drivers1';
+import { ITEM_TYPES, drawItem, ROULETTE_DURATION, ITEM_HOLD_MIN, ITEM_HOLD_MAX } from './race3d-item-rules.js?v=20261025-balance-drivers1';
 
-import {vehicleProfile,wheelFootprint,wheelLoads,rampSupport,planRampApproach,roadSurface} from './race3d-vehicle.js?v=20261025-city-contact1';
+import {vehicleProfile,wheelFootprint,wheelLoads,rampSupport,planRampApproach,roadSurface} from './race3d-vehicle.js?v=20261025-balance-drivers1';
 
-import {itemDecision} from './race3d-strategy.js?v=20261025-city-contact1';
-import {getVehicleSpec} from './race3d-vehicle-specs.js?v=20261025-city-contact1';
-import {launchAttitude,advanceAttitude,landingAttitude} from './race3d-flight.js?v=20261025-city-contact1';
+import {itemDecision} from './race3d-strategy.js?v=20261025-balance-drivers1';
+import {getRaceVehicleSpec as getVehicleSpec} from './race3d-race-calibration.js?v=20261025-balance-drivers1';
+import {createDriverSkills,driverControls} from './race3d-drivers.js?v=20261025-balance-drivers1';
+import {launchAttitude,advanceAttitude,landingAttitude} from './race3d-flight.js?v=20261025-balance-drivers1';
 
 const STEP = 1 / 120, MAX_FRAME_DELTA = 0.25, MAX_STEPS_PER_UPDATE = 30;
 const MAX_CARS = 60, CAR_LENGTH = 4.4, CAR_WIDTH = 1.9, TOP_SPEED = 43;
@@ -63,14 +64,14 @@ export function raceForceEnvelope({ speed = 0, curvature = 0, draft = 0, offRoad
 export function raceElectricDrive({ speed = 0, throttle = 0, brake = 0, energyJ = BATTERY_J * 0.8, dt = STEP, longitudinalAccel = 11, accelerationFactor = 1, massKg=MASS, motorPowerW=MOTOR_POWER_W, brakeFactor=1, vehicleSpec } = {}) {
   speed = Math.max(0, finite(speed)); dt = clamp(finite(dt), 0, 0.1);
   throttle = finite(throttle); brake = finite(brake); energyJ = finite(energyJ);
-  const driveFactor = clamp(finite(accelerationFactor, 1), 0.35, 1.3);
+  const driveFactor = vehicleSpec ? 1 : clamp(finite(accelerationFactor, 1), 0.35, 1.3);
   const energy = clamp(energyJ, 0, BATTERY_J), soc = energy / BATTERY_J;
   massKg=clamp(finite(vehicleSpec?.massKg,massKg),500,2600);
   const electric=!vehicleSpec||/electric|hybrid/i.test(vehicleSpec.engineType);
   if(vehicleSpec){motorPowerW=vehicleSpec.powerKW*1000;brakeFactor=vehicleSpec.brakeDecelMps2/BRAKE_ACCEL;}
   const gripN = Math.max(0, finite(longitudinalAccel)) * massKg;
   const availablePower = motorPowerW*driveFactor*(electric?clamp(soc/.08,0,1):1);
-  const launchN=vehicleSpec?vehicleSpec.torqueNm*8*.92/.34:ENGINE_ACCEL*massKg;
+  const launchN=vehicleSpec?Math.min(vehicleSpec.torqueNm*8*.92/.34,massKg*(vehicleSpec.launchAccelMps2||Infinity)):ENGINE_ACCEL*massKg;
   const driveN = brake > 0 ? 0 : Math.min(launchN*driveFactor, availablePower / Math.max(speed, 1), gripN) * clamp(throttle, 0, 1);
   const brakeN = Math.min(clamp(brake, 0, 1) * BRAKE_ACCEL * brakeFactor * massKg, gripN);
   const regenW = electric?Math.min(brakeN * speed, 70000 * clamp((1 - soc) / 0.08, 0, 1), (BATTERY_J - energy) / Math.max(dt * 0.92, 1e-6)):0;
@@ -98,7 +99,7 @@ function stepNitro(car, dt, tractionAcceleration) {
   return acceleration;
 }
 
-export function createRaceSimulation({ players = [], track, random = Math.random, autoItems = true } = {}) {
+export function createRaceSimulation({ players = [], track, random = Math.random, autoItems = true,driverMode='varied' } = {}) {
   if (!track || typeof track.sampleTrack !== 'function') throw new TypeError('createRaceSimulation requires sampleTrack(distance)');
   const roster = Array.from(players).slice(0, MAX_CARS).map((player, index) => {
     const p = typeof player === 'string' ? { name: player } : (player || {});
@@ -172,6 +173,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       const side = (gridPosition % 2 ? 1 : -1) * laneSwap;
       const strategySeed = Math.floor(gridRandom() * 4294967296) >>> 0;
       const driverRandom = rng(strategySeed);
+      const driverSkills=createDriverSkills(rng(strategySeed^0x194E2B75),driverMode),driverControl=driverControls(driverSkills);
       const car = existing.get(p.id) || {};
       for (const key of Object.keys(car)) delete car[key];
       Object.assign(car, {
@@ -186,7 +188,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
         draft: 0, drafting: 0, drag: 0, acceleration: 0,
         propulsion: 'electric', motorPowerW: 0, regenW: 0, batteryEnergyJ: BATTERY_J * 0.8, batterySOC: 0.8,
         dragN: 0, downforceN: 0, nitroAcceleration: 0,
-        nitro: { reservoir: 1, heat: 0, remaining: 0, cooldown: 0 }, strategySeed,
+        nitro: { reservoir: 1, heat: 0, remaining: 0, cooldown: 0 }, strategySeed,driverSkills,driverControl,_lineError:0,_rampAimError:0,_controlClock:0,_controlThrottle:0,_controlBrake:0,
         offRoad: false, mistakeTimer: 0, mistakeType: null, mistake: null, activeItem: null,
         inventoryItem: null, inventoryPhase: 'empty', inventorySerial: 0,
         rouletteRemaining: 0, rouletteDuration: ROULETTE_DURATION, itemUseAt: Infinity,
@@ -227,14 +229,16 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     car.mistakeTimer = Math.max(0, car.mistakeTimer - dt);
     if (!car.mistakeTimer) car.mistakeType = null;
     if (time >= car._nextDecision) {
-      car._nextDecision = time + 1.8 + car._random() * 2.8;
+      car._nextDecision = time + car.driverControl.reactionSeconds + car._random()*.5;
       // Driver decisions use the SAME distribution for every vehicle profile;
       // names and roster order never grant extra skill or pace bonuses.
-      car._pace = 0.955 + car._random() * 0.06;
-      car._brakeTiming = 0.85 + car._random() * 0.3;
+      car._pace = 1;
+      car._brakeTiming = car.driverControl.brakeMargin;
+      car._lineError=(car._random()*2-1)*car.driverControl.lineError;
+      car._rampAimError=(car._random()*2-1)*car.driverControl.rampError;
     }
     if (time >= car._nextMistake && car.speed > 12 && car.spin <= 0) {
-      car._nextMistake = time + 13 + car._random() * 17;
+      car._nextMistake = time + car.driverControl.mistakeInterval + car._random()*17;
       const curve = curvatureAt(car.distance + car.speed * 0.5), roll = car._random();
       car.mistakeType = Math.abs(curve) > 0.004 ? (roll < 0.5 ? 'late-brake' : 'wide') : (roll < 0.45 ? 'wide' : 'lift');
       car.mistakeTimer = car.mistakeType === 'lift' ? 1.1 : 1.8 + car._random() * 0.7;
@@ -261,7 +265,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
   }
   function laneTargetFor(car, curvature, traffic) {
     const limit = Math.max(0.2, sample(car.distance).width / 2 - CAR_WIDTH * 0.78);
-    let target = clamp(car.preferredLane, -limit, limit);
+    let target = clamp(car.preferredLane+car._lineError, -limit, limit);
     if (Math.abs(curvature) > 0.003) target += Math.sign(curvature) * Math.min(1.15, Math.abs(curvature) * 35);
     const passingCar = traffic.near.find(other => other.id === car._passingId);
     const holdingPass = time < car._passUntil && passingCar && passingCar.distance > car.distance - CAR_LENGTH * 1.6;
@@ -296,21 +300,22 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     if(car.rampState==='approach') return ramps.find(r=>r.id===car.rampId)?.lateral??target;
     car.rampPlan=plan;
     if(plan){
-      if(plan.reachable){target=clamp(plan.target,-limit,limit);car._passUntil=0;}
+      if(plan.reachable){target=clamp(plan.target+car._rampAimError,-limit,limit);car._passUntil=0;}
       else if(car._rampSkipKey!==plan.key+':'+plan.reason){car._rampSkipKey=plan.key+':'+plan.reason;emit('ramp-skip',car,{rampId:plan.id,reason:plan.reason});}
     }
     return clamp(target, -limit - 2.5, limit + 2.5);
   }
-  function targetSpeedFor(car, curvature, traffic) {
+  function targetSpeedFor(car, curvature, traffic,envelope) {
     const bonusScale = Math.min(1, car.speedFactor);
     let target = car.topSpeed * car._pace + bonusScale * (car.trickSpeedBonus + (car.repairRemaining > 0 ? 5 : 0) + (car.boost > 0 ? 12 : 0) + (car.rocketRemaining > 0 ? 18 : 0));
     const lateBrake = car.mistakeType === 'late-brake';
     const braking = BRAKE_ACCEL * car.brakeFactor * car._brakeTiming * (lateBrake ? 0.42 : 0.86);
     // Brake before bends throughout the stopping horizon. Tire load still
     // limits the actual turn, including if an error delayed braking.
+    const plannedGrip=car.vehicleSpec?envelope.gripAccel:CORNER_GRIP*car.gripFactor;
     for (const offset of [0, 12, 25, 43, 68]) {
-      const curve = Math.abs(offset ? curvatureAt(car.distance + offset) : curvature);
-      const corner = Math.sqrt(CORNER_GRIP * car.gripFactor * (lateBrake ? 1.18 : 0.88) / Math.max(curve, 0.0001));
+      const curve = Math.abs(offset ? curvatureAt(car.distance + offset*car.driverControl.lookAhead) : curvature);
+      const corner = Math.sqrt(plannedGrip * (lateBrake ? 1.18 : 0.88) / Math.max(curve, 0.0001));
       target = Math.min(target, Math.sqrt(corner * corner + 2 * braking * offset));
     }
     if (car.mistakeType === 'lift') target *= 0.76;
@@ -500,7 +505,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       if (!car.spin) { if(car._bananaSpin){car.tractionRecovery=2.2;car._bananaSpin=false;}car.heading *= 0.3; emit('recovery', car, { recoveryType: 'spin', intensity: 0.7 }); }
     } else {
       car.spinAngle *= Math.exp(-5 * dt);
-      const desiredSpeed = targetSpeedFor(car, curvature, traffic); car.targetSpeed = desiredSpeed;
+      const desiredSpeed = targetSpeedFor(car, curvature, traffic,envelope); car.targetSpeed = desiredSpeed;
       const error = desiredSpeed - car.speed;
       const engine=car.vehicleSpec?Math.min(car.vehicleSpec.torqueNm*8*.92/.34,car.powerW*.92/Math.max(1,car.speed))/car.massKg:Math.min(ENGINE_ACCEL*car.accelerationFactor,car.powerW*car.accelerationFactor/Math.max(1,car.speed)/car.massKg);
       const gradient = (sample(car.distance).tangent.y+Math.sin(car.rampState==='approach'?car.rampPitch:0))*9.81;
@@ -511,7 +516,9 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       } else {
         car.brake = clamp(-error * 0.7 / BRAKE_ACCEL, 0, 1);
       }
-      car.throttle=throttle;
+      car._controlClock-=dt;
+      if(car._controlClock<=0){car._controlClock=car.driverControl.reactionSeconds;car._controlThrottle=throttle;car._controlBrake=car.brake;}
+      throttle=car._controlThrottle;car.brake=car._controlBrake;car.throttle=throttle;
       if(car.attackSlowRemaining>0)throttle*=.35;
       const drive = raceElectricDrive({ speed: car.speed, throttle, brake: car.brake,
         energyJ: car.batteryEnergyJ, dt, longitudinalAccel: envelope.longitudinalAccel, accelerationFactor: car.accelerationFactor,massKg:car.massKg,motorPowerW:car.powerW,brakeFactor:car.brakeFactor,vehicleSpec:car.vehicleSpec });
@@ -528,7 +535,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       const demand = car.speed * car.speed * Math.abs(curvature) / envelope.gripAccel;
       const grip = clamp(1 - Math.max(0, demand - 0.92) * 0.7, 0.25, 1);
       const yawLimit = clamp(1.42 - car.speed * 0.009, 0.82, 1.42) * grip;
-      car.yawRate = clamp(angleDelta(car.heading, desiredHeading) * 5.2, -yawLimit, yawLimit);
+      car.yawRate = clamp(angleDelta(car.heading, desiredHeading) * car.driverControl.steerResponse, -yawLimit, yawLimit);
       car.heading = clamp(car.heading + car.yawRate * dt, -0.68, 0.68);
       car.slip = Math.abs(angleDelta(Math.atan2(car.lateralVelocity, Math.max(2, car.speed)), car.heading));
       const offRoad = Math.abs(car.lateral) + CAR_WIDTH * 0.5 > roadHalf;
@@ -648,7 +655,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       if(car.rouletteRemaining<=1e-8){car.inventoryPhase='ready';emit('item-ready',car,{itemType:car.inventoryItem,inventorySerial:car.inventorySerial});}
     }
     if(autoItems&&car.inventoryPhase==='ready'&&time>=car.itemUseAt&&time>=(car._nextItemThink||0)){
-      car._nextItemThink=time+.16+car._timingRandom()*.12;
+      car._nextItemThink=time+car.driverControl.itemThink+car._timingRandom()*.12;
       const decision=itemDecision(car,canonicalCars,{trackLength,curvature:curvatureAt,projectiles,waves});car.itemDecision=decision;
       if(decision.use){car._itemAim=decision;deployItem(car);}
     }
@@ -729,7 +736,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       // only after the inexpensive spatial rejection, preserving pickup order.
       const key = `${car.gridPosition}:${pickup.gateId}:${lap}`;
       if (pickupHits.has(key)) continue;
-      pickupHits.add(key); queueItem(car, drawItem(car._itemRandom), pickup.id);
+      pickupHits.add(key); queueItem(car, drawItem(car._itemRandom,{position:car.position||1,count:canonicalCars.filter(c=>!c.finished).length,gap:Math.max(0,...canonicalCars.filter(c=>!c.finished).map(c=>c.distance))-car.distance}), pickup.id);
       break;
     }
   }

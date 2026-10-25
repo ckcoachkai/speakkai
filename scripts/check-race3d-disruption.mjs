@@ -31,5 +31,3 @@ const severities=[.13,.54,.87].map(seed=>run('bomb','gt3','hit',seed).hit.durati
 for(const carType of RACE_ROSTER_TYPES)for(const power of ['boost','rocket']){const r=run('bomb',carType,'hit',.413,power);assert.ok(r.hit&&r.allFinished&&r.recovered);}
 assert.equal(itemDecision({id:'a',distance:0,speed:30,brake:0,inventoryItem:'boost',attackSlowRemaining:2},[]).use,false);
 console.log(JSON.stringify({pairedCases:outcomes.length,shieldAndAirMissCases:outcomes.length*2,boostedDefenders:10,seededImpactDurations:severities,eventualFinish:true,resetCleanup:true,noGuaranteedRankChange:true,outcomes}));
-
-

@@ -19,7 +19,7 @@ export function itemDecision(car,cars,{trackLength=1e6,curvature=()=>0,projectil
    const side=o.lateral+(o.lateralVelocity||0)*Math.min(t,1.5)-car.lateral;
    const steerable=type==='missile'?7.5*t:type==='bomb'?4*t:0;
    const miss=Math.max(0,Math.abs(side)-steerable),confidence=clamp(.94-miss/(p.width+1)*.58-Math.min(.35,Math.abs(o.lateralVelocity||0)*t*.055)-t*.012,0,.95);
-   if(confidence<.53)return null;
+   if(confidence<(car.driverControl?.itemConfidence??.53))return null;
    return {targetId:o.id,confidence,intercept:t,aimLateralSpeed:type==='bomb'?clamp(side/Math.max(.3,t),-4,4):0,score:confidence+.12*(d>0?1:0)-Math.abs(d)*.0002};
   }).filter(Boolean).sort((a,b)=>b.score-a.score||String(a.targetId).localeCompare(String(b.targetId)));
   return candidates[0]?{use:true,reason:'intercept',...candidates[0]}:hold('no-useful-target');

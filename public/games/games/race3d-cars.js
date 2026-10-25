@@ -1,9 +1,9 @@
-import {createFinishFX,advanceFinishVisual} from './race3d-finish-fx.js?v=20261025-city-contact1';
-import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261025-city-contact1';
-import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261025-city-contact1';
-import { createCarMotion } from './race3d-car-motion.js?v=20261025-city-contact1';
-import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261025-city-contact1';
-import { vehicleProfile } from './race3d-vehicle.js?v=20261025-city-contact1';
+import {createFinishFX,advanceFinishVisual} from './race3d-finish-fx.js?v=20261025-balance-drivers1';
+import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261025-balance-drivers1';
+import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261025-balance-drivers1';
+import { createCarMotion } from './race3d-car-motion.js?v=20261025-balance-drivers1';
+import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261025-balance-drivers1';
+import { vehicleProfile } from './race3d-vehicle.js?v=20261025-balance-drivers1';
 
 /**
  * Sculpted low-slung GT cars for race3d. All car geometry is authored around
