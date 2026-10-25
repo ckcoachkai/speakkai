@@ -213,3 +213,96 @@
 @media(max-width:700px),(max-height:480px){
   .race3d-stats,.race3d-camera{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 }
+/* Reference-informed cars: readable data, including a compact followed-car panel. */
+.race3d-cards{width:228px;bottom:92px}
+.race3d-cards-right{width:228px}
+.race3d-racer-card{padding:10px}
+.race3d-card-player{font-size:13px}
+.race3d-card-model{font-size:11px;line-height:1.3}
+.race3d-card-thumb{width:65px;height:38px}
+.race3d-card-engine{display:block;margin:1px 0 5px;color:#e5f2f9;font:700 11px/1.3 system-ui}
+.race3d-card-attributes-label{font-size:8px;letter-spacing:.6px;margin:5px 0}
+.race3d-card-attributes{gap:8px 5px}
+.race3d-card-attribute dt{font:500 9px/1.25 system-ui;white-space:normal}
+.race3d-card-attribute dd{font:750 11px/1.25 system-ui;margin-top:3px}
+.race3d-card-priority{margin:8px 0 3px;color:#f8d87e;font:650 10px/1.4 system-ui}
+.race3d-card-provenance{font:500 10px/1.5 system-ui;color:#bacbd6;pointer-events:auto}
+.race3d-card-provenance summary{cursor:pointer;min-height:24px;padding:4px 0;color:#bce7e0}
+.race3d-card-provenance p{margin:5px 0}
+.race3d-card-sources{display:grid;gap:6px}.race3d-card-sources a{color:#99d5ed;overflow-wrap:anywhere}
+.race3d-focus-specs{display:none;pointer-events:auto}
+.race3d-roulette{bottom:24px;gap:5px}
+.race3d-roulette-cube{width:82px;height:82px;border-radius:18px;border-width:3px;background:linear-gradient(135deg,#9f92e9f5,#503c97f5 48%,#227d9af0);box-shadow:inset 4px 4px 0 #ffffff40,inset -5px -5px 0 #04062855,0 0 30px #bbadff70}
+.race3d-roulette-icon{width:64px;height:64px}
+.race3d-roulette-owner{font-size:12px;max-width:220px}
+.race3d-roulette-name{font-size:13px;padding:5px 10px;border:1px solid #fff3}
+.race3d-roulette-timer{font:800 12px/1 system-ui;color:#fff0ae;font-variant-numeric:tabular-nums;text-shadow:0 1px 4px #000}
+.race3d-active-effects{position:absolute;left:50%;bottom:200px;transform:translateX(-50%);display:flex;flex-wrap:wrap;justify-content:center;gap:5px;max-width:calc(100% - 30px);z-index:4}
+.race3d-active-effects[hidden]{display:none}
+.race3d-effect-pill{display:flex;align-items:center;gap:7px;padding:6px 10px;background:#102435ef;border:1px solid #9ecff27a;border-radius:30px;box-shadow:0 3px 12px #0004;white-space:nowrap;font:700 11px/1.2 system-ui;color:#effcff}
+.race3d-effect-pill>span:last-child{color:#ffe79a;font-variant-numeric:tabular-nums}
+.race3d-effect-icon{width:26px;height:26px;display:block}.race3d-effect-icon svg{width:100%;height:100%}
+.race3d-selection{position:absolute;left:0;right:0;bottom:24px;display:grid;gap:10px;justify-items:center;z-index:3;pointer-events:none}
+.race3d-selection[hidden]{display:none}
+.race3d-selection-title{font:900 clamp(16px,3vw,28px)/1.1 system-ui;letter-spacing:2px;text-shadow:0 3px 12px #000;color:#fff0b1}
+.race3d-selection-list{display:flex;gap:8px;max-width:calc(100% - 28px);overflow-x:auto;pointer-events:auto;scrollbar-width:thin;padding:0 3px 5px}
+.race3d-selection-card{flex:0 0 154px;display:grid;grid-template-columns:46px 1fr;align-items:center;column-gap:5px;padding:7px 9px;border:1px solid #ffffff36;border-radius:12px;background:#102331c9;box-shadow:0 4px 12px #0003;color:var(--racer-color);transition:border-color .15s,background .15s}
+.race3d-selection-owner{grid-column:1/-1;color:#f2faf8;font:800 12px/1.25 system-ui;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:136px}
+.race3d-selection-icon{display:block;width:46px;height:30px}.race3d-selection-icon svg{width:100%;height:100%}
+.race3d-selection-model{font:600 10px/1.25 system-ui;color:#deedf3;min-height:26px}
+.race3d-selection-card[data-locked="true"]{border-color:#f8d66f;background:#293a39e8}
+.race3d-hud[data-phase="selecting"] .race3d-stats,.race3d-hud[data-phase="selecting"] .race3d-standings,.race3d-hud[data-phase="selecting"] .race3d-camera,.race3d-hud[data-phase="selecting"] .race3d-minimap,.race3d-hud[data-phase="selecting"] .race3d-cards,.race3d-hud[data-phase="selecting"] .race3d-focus-specs{display:none}
+@media(max-width:1200px){.race3d-cards,.race3d-cards-right{width:210px}.race3d-card-model{font-size:11px}.race3d-card-attribute dt{font-size:9px}.race3d-card-attribute dd{font-size:10px}}
+@media(max-width:1000px),(max-height:560px){
+ .race3d-cards{display:none}
+ .race3d-focus-specs{display:block;position:absolute;top:var(--focus-top,190px);left:12px;width:230px;max-height:calc(100% - var(--focus-top,190px) - 205px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;touch-action:pan-y;border-radius:10px}
+ .race3d-focus-specs .race3d-racer-card{border-color:#a9eadc80}
+}
+@media(max-width:700px){
+ .race3d-focus-specs{left:10px;right:10px;width:auto;max-height:calc(100% - var(--focus-top,190px) - 225px)}
+ .race3d-focus-specs .race3d-racer-card{padding:8px 10px}
+ .race3d-focus-specs .race3d-card-vehicle{margin:1px 0;gap:6px}
+ .race3d-focus-specs .race3d-card-thumb{width:46px;height:26px}
+ .race3d-focus-specs .race3d-card-model{font-size:11px}
+ .race3d-focus-specs .race3d-card-engine{font-size:10px;margin:0 0 3px}
+ .race3d-focus-specs .race3d-card-attributes{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ .race3d-focus-specs .race3d-card-attributes-label{font-size:8px;margin:3px 0}
+ .race3d-roulette{left:50%;bottom:calc(224px + env(safe-area-inset-bottom,0px));gap:2px}
+ .race3d-roulette-cube{width:66px;height:66px;border-radius:14px}.race3d-roulette-icon{width:52px;height:52px}
+ .race3d-roulette-owner{font-size:10px}.race3d-roulette-name{font-size:12px;padding:4px 8px}.race3d-roulette-timer{font-size:11px}
+ .race3d-active-effects{bottom:calc(202px + env(safe-area-inset-bottom,0px));gap:4px;width:calc(100% - 20px)}
+ .race3d-effect-pill{font-size:10px;padding:4px 7px;gap:4px}.race3d-effect-icon{width:20px;height:20px}
+ .race3d-selection{bottom:calc(110px + env(safe-area-inset-bottom,0px));gap:7px}
+ .race3d-selection-card{flex-basis:136px;padding:6px}.race3d-selection-owner{font-size:11px}.race3d-selection-model{font-size:10px}
+}
+@media(max-height:480px){
+ .race3d-focus-specs{top:12px;left:134px;width:210px;max-height:calc(100% - 118px)}
+ .race3d-focus-specs .race3d-card-player{font-size:11px}.race3d-focus-specs .race3d-card-attributes{gap:5px}
+ .race3d-roulette{left:56%;bottom:114px}.race3d-roulette-cube{width:64px;height:64px}.race3d-roulette-icon{width:50px;height:50px}
+ .race3d-active-effects{left:55%;bottom:88px;width:250px}
+ .race3d-selection{bottom:102px}.race3d-selection-title{font-size:16px}.race3d-selection-card{flex-basis:132px}
+}
+@media(prefers-reduced-motion:reduce){.race3d-selection-card{transition:none}}
+.race3d-hud[data-phase="selecting"] .race3d-player-label{max-width:min(240px,45vw);white-space:normal;border-radius:10px;padding:5px 8px;text-align:center}
+.race3d-hud[data-phase="selecting"] .race3d-player-label[data-rank="1"]::after{display:none}
+.race3d-hud[data-phase="selecting"] .race3d-roulette,.race3d-hud[data-phase="selecting"] .race3d-active-effects{display:none}
+@media(max-width:700px) and (min-height:481px){
+ .race3d-focus-specs{max-height:calc(100% - var(--focus-top,190px) - 212px)}
+ .race3d-focus-specs .race3d-card-vehicle{margin:-15px 0 1px 65px;min-height:24px}.race3d-focus-specs .race3d-card-thumb{display:none}
+ .race3d-focus-specs .race3d-card-player{max-width:60px;font-size:11px}.race3d-focus-specs .race3d-card-model{font-size:10px}
+ .race3d-focus-specs .race3d-card-attributes{gap:5px}.race3d-focus-specs .race3d-card-attribute dd{margin-top:2px}
+}
+@media(max-width:700px) and (min-height:481px){
+ .race3d-focus-specs{max-height:calc(100% - var(--focus-top,190px) - 222px)}
+ .race3d-hud[data-powerup="true"] .race3d-focus-specs{width:calc(50% - 15px);right:auto}
+ .race3d-hud[data-powerup="true"] .race3d-focus-specs .race3d-card-vehicle{margin:2px 0;min-height:0}
+ .race3d-hud[data-powerup="true"] .race3d-focus-specs .race3d-card-attributes{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .race3d-roulette{left:auto;right:12px;transform:none;bottom:calc(248px + env(safe-area-inset-bottom,0px));width:calc(50% - 24px)}
+ .race3d-active-effects{left:auto;right:10px;transform:none;width:calc(50% - 20px);max-width:none;bottom:calc(220px + env(safe-area-inset-bottom,0px))}
+ .race3d-effect-pill{font-size:9px;padding:4px 6px;gap:3px}.race3d-effect-icon{width:17px;height:17px}
+}
+
+@media(max-height:480px){
+ .race3d-roulette{bottom:136px}
+ .race3d-focus-specs{max-height:calc(100% - 176px)}
+}

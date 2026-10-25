@@ -1,5 +1,5 @@
 import { GLTFLoader } from '../assets/vendor/GLTFLoader.js';
-import { createCarFinish } from './race3d-car-finish.js?v=20261024-race3d-realism2';
+import { createCarFinish } from './race3d-car-finish.js?v=20261025-supercars';
 
 // Licensed authored meshes. Templates share their GPU buffers/textures across all racers.
 export const RACE_CAR_ASSETS = [
@@ -48,7 +48,7 @@ export function createAuthoredCarAssets(THREE, { isDisposed, registerResource })
     bounds=new THREE.Box3().setFromObject(normalized);size=bounds.getSize(new THREE.Vector3());
     const wheelRoots=[];
     normalized.traverse(node=>{if(spec.wheelPattern.test(node.name)&&!wheelRoots.some(p=>{let a=node.parent;while(a){if(a===p)return true;a=a.parent;}return false;}))wheelRoots.push(node);});
-    const spins=[],steering=[];
+    const spins=[],steering=[],mounts=[];
     for(const wheel of wheelRoots) {
       // Keep the authored axle origin. A mesh bounding-box centre can differ
       // from the true hub (calipers and asymmetric spokes are not axle pivots).
@@ -59,18 +59,27 @@ export function createAuthoredCarAssets(THREE, { isDisposed, registerResource })
       spin.userData.rollingRadius=Math.max(.12,wheelSize.y*.5);
       spin.userData.axle=center.z>0?'front':'rear';
       spin.userData.authoredWheelName=wheel.name;
+      steer.userData.wheelId=`${center.z>0?'front':'rear'}-${center.x<0?'left':'right'}`;
+      steer.userData.rollingRadius=spin.userData.rollingRadius;
+      steer.userData.authoredWheelName=wheel.name;
       // The coupe's brake caliper follows steering, while its disc and rim roll.
       for(const child of [...wheel.children])if(/brakepad/i.test(child.name))steer.attach(child);
-      spins.push(spin);if(center.z>0)steering.push(steer);
+      spins.push(spin);mounts.push(steer);if(center.z>0)steering.push(steer);
     }
     const finish=createCarFinish(THREE,normalized,spec,state.primaryHex,registerResource);
     const chassis=state.car.getObjectByName('chassis-motion');
     if(!chassis)return false;
     for(const child of chassis.children)child.visible=false;
     for(const wheel of state.wheelMounts)wheel.visible=false;
+    // Unsprung tyres belong to the rigid car frame, not the sprung shell.
+    // The old hierarchy made all four tyres rise and tilt with body weight
+    // transfer, leaving them visibly floating above the deck in acceleration.
+    for(const mount of mounts){normalized.remove(mount);state.car.add(mount);}
     normalized.position.y=-.47;chassis.add(normalized);
+    state.wheelMounts.splice(0,state.wheelMounts.length,...mounts);
     state.wheelSpin.splice(0,state.wheelSpin.length,...spins);
     state.steeringPivots.splice(0,state.steeringPivots.length,...steering);
+    state.motion.refreshWheels();
     state.authoredVisuals=finish;finish.update(state.racer);
     // Anchors are car-local, measured from the normalized source shell. Formula
     // has one central high exhaust; the road cars use low rear outlet pairs.

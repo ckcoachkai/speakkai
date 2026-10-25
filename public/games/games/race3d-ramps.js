@@ -20,12 +20,31 @@ export function createRampLayout(totalLength) {
 /** Progress is normalized from the flush approach (0) to the launch lip (1). */
 export function rampHeightAt(ramp, progress) {
   const u = clamp01(progress);
-  return ramp.height * u * u * (2 - u);
+  return ramp.height * u * u;
 }
 
 export function rampSlopeAt(ramp, progress) {
   const u = clamp01(progress);
-  return ramp.height / ramp.length * (4 * u - 3 * u * u);
+  return 2 * ramp.height / ramp.length * u;
+}
+
+/** The tyre contact surface used by both physics and rendered wheel placement.
+ * Track metres in, world metres out. Outside a deck there is no invisible lift.
+ */
+export function sampleRampSurface(track, ramps, distance, lateral = 0) {
+  const sample = track.sampleTrack(distance);
+  const roadY = (Number(sample?.position?.y) || 0) + (Number(sample?.right?.y) || 0) * lateral + Math.tan(Number(sample?.bank) || 0) * lateral + ROAD_TOP;
+  const totalLength = Number(track.totalLength) || 1;
+  let rampHeight = 0, rampSlope = 0, rampId = null, progress = 0, deck = null;
+  for (const ramp of ramps || []) {
+    const lap = Math.floor((distance - ramp.distance) / totalLength);
+    if (lap < 0) continue;
+    const along = distance - ramp.distance - lap * totalLength;
+    if (along < 0 || along > ramp.length || Math.abs(lateral - ramp.lateral) > ramp.width / 2) continue;
+    progress = along / ramp.length; deck = ramp; rampId = ramp.id;
+    rampHeight = rampHeightAt(ramp, progress); rampSlope = rampSlopeAt(ramp, progress); break;
+  }
+  return { surfaceY: roadY + rampHeight, roadY, rampHeight, rampSlope, rampId, progress, ramp: deck };
 }
 
 export function createRaceRamps(THREE, { track }) {

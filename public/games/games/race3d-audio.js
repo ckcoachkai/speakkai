@@ -1,4 +1,4 @@
-import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261024-race3d-realism2';
+import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261025-supercars';
 /** Recorded driving textures with a procedural fallback. All audio creation and resume calls stay on start/setSound
  * so browsers only unlock the graph from a host user gesture. */
 export function createRaceAudio({ sound = true } = {}) {

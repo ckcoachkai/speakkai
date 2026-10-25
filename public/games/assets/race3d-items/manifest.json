@@ -1,0 +1,107 @@
+{
+  "version": "20261025-authored-items1",
+  "items": [
+    {
+      "id": "banana",
+      "file": "banana.glb",
+      "bytes": 83728,
+      "triangles": 3504,
+      "meshes": 3,
+      "textures": 0,
+      "forward": "+Z",
+      "source": "Original Blender authored procedural sculpture, SpeakKai 2026-10-25"
+    },
+    {
+      "id": "bomb",
+      "file": "bomb.glb",
+      "bytes": 116540,
+      "triangles": 4156,
+      "meshes": 6,
+      "textures": 0,
+      "forward": "+Z",
+      "source": "Original Blender authored procedural sculpture, SpeakKai 2026-10-25"
+    },
+    {
+      "id": "boost",
+      "file": "boost.glb",
+      "bytes": 177352,
+      "triangles": 6496,
+      "meshes": 6,
+      "textures": 0,
+      "forward": "+Z",
+      "source": "Original Blender authored procedural sculpture, SpeakKai 2026-10-25"
+    },
+    {
+      "id": "shield",
+      "file": "shield.glb",
+      "bytes": 33636,
+      "triangles": 1216,
+      "meshes": 6,
+      "textures": 0,
+      "forward": "+Z",
+      "source": "Original Blender authored procedural sculpture, SpeakKai 2026-10-25"
+    },
+    {
+      "id": "repair",
+      "file": "repair.glb",
+      "bytes": 37112,
+      "triangles": 1188,
+      "meshes": 5,
+      "textures": 0,
+      "forward": "+Z",
+      "source": "Original Blender authored procedural sculpture, SpeakKai 2026-10-25"
+    },
+    {
+      "id": "freeze",
+      "file": "freeze.glb",
+      "bytes": 56556,
+      "triangles": 1816,
+      "meshes": 4,
+      "textures": 0,
+      "forward": "+Z",
+      "source": "Original Blender authored procedural sculpture, SpeakKai 2026-10-25"
+    },
+    {
+      "id": "missile",
+      "file": "missile.glb",
+      "bytes": 72692,
+      "triangles": 2666,
+      "meshes": 6,
+      "textures": 0,
+      "forward": "+Z",
+      "source": "Original Blender authored procedural sculpture, SpeakKai 2026-10-25"
+    },
+    {
+      "id": "rocket",
+      "file": "rocket.glb",
+      "bytes": 95308,
+      "triangles": 3530,
+      "meshes": 6,
+      "textures": 0,
+      "forward": "+Z",
+      "source": "Original Blender authored procedural sculpture, SpeakKai 2026-10-25"
+    },
+    {
+      "id": "launch",
+      "file": "launch.glb",
+      "bytes": 178920,
+      "triangles": 6836,
+      "meshes": 5,
+      "textures": 0,
+      "forward": "+Z",
+      "source": "Original Blender authored procedural sculpture, SpeakKai 2026-10-25"
+    },
+    {
+      "id": "shockwave",
+      "file": "shockwave.glb",
+      "bytes": 186936,
+      "triangles": 7328,
+      "meshes": 21,
+      "textures": 0,
+      "forward": "+Z",
+      "source": "Original Blender authored procedural sculpture, SpeakKai 2026-10-25"
+    }
+  ],
+  "textureCount": 0,
+  "totalBytes": 1038780
+}

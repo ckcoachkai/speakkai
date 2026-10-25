@@ -1,5 +1,6 @@
-import { createRaceExtras } from './race3d-ui-extras.js?v=20261024-race3d-realism2';
-const STYLE_URL = new URL('./race3d-ui.css?v=20261024-race3d-review1', import.meta.url).href;
+import { RACE_ROSTER_TYPES, getRacerIdentity } from './race3d-roster.js?v=20261025-supercars';
+import { createRaceExtras } from './race3d-ui-extras.js?v=20261025-supercars';
+const STYLE_URL = new URL('./race3d-ui.css?v=20261025-supercars', import.meta.url).href;
 
 function ensureStyles() {
   if (document.querySelector('link[data-race3d-ui-style]')) return;
@@ -279,6 +280,7 @@ export function createRaceUI(container, players = [], options = {}) {
       let label = labels.get(id);
       if (!label) {
         label = make('div', 'race3d-player-label');
+        label.dataset.racerId = id;
         const dot = make('span', 'race3d-player-label-dot');
         const name = make('span', 'race3d-player-label-name');
         label.append(dot, name);
@@ -290,7 +292,11 @@ export function createRaceUI(container, players = [], options = {}) {
       const rank = Number(car.position) || ranking.findIndex(item => carId(item, 0) === id) + 1;
       const color = getColor(car, racer?.color || '#7bd8c9');
       const entry = labels.get(id);
-      entry.name.textContent = name;
+      if (currentPhase === 'selecting') {
+        const progress = Math.max(0, Math.min(1, Number(timing.selectionProgress) || 0));
+        const type = progress >= .72 && RACE_ROSTER_TYPES.includes(car.racerType) ? car.racerType : RACE_ROSTER_TYPES[(Math.floor(progress * 36) + i * 2) % RACE_ROSTER_TYPES.length];
+        entry.name.textContent = `${name} · ${getRacerIdentity(type).vehicleName}`;
+      } else entry.name.textContent = name;
       entry.dot.style.backgroundColor = color;
       entry.label.style.transform = `translate3d(${screen.x}px,${screen.y}px,0) translate(-50%,-115%)`;
       entry.label.dataset.rank = String(rank);
@@ -313,7 +319,7 @@ export function createRaceUI(container, players = [], options = {}) {
     viewUp.disabled = timing.cameraMode === 'overhead';
     viewDown.disabled = timing.cameraMode === 'first-person';
     if (focusedId !== undefined) mapFocusId = focusedId;
-    select.disabled = ['countdown','running','finishing','finished'].includes(phase);
+    select.disabled = ['selecting','countdown','running','finishing','finished'].includes(phase);
     if (winnerId !== null) {
       const allFinished = timing.allFinished === true || (cars.length > 0 && cars.every(car => Number.isFinite(car.finishTime)));
       continueButton.disabled = continued || !allFinished;
