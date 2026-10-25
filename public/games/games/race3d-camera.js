@@ -128,7 +128,8 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
     desiredLook.y += 1.35;
     wantedTarget.copy(desiredLook);
 
-    const wantedFov = (49 + speedRatio * 3.2) * chaseMix + 58 * overheadMix + 67 * firstPersonMix;
+    const powered=Number(focusCar.boost)>0||Number(focusCar.rocketRemaining)>0;
+    const wantedFov = (52 + speedRatio * 8 + (powered?3:0)) * chaseMix + 58 * overheadMix + (67+(powered?2:0)) * firstPersonMix;
     if (!initialized) {
       position.copy(wantedPosition);
       target.copy(wantedTarget);

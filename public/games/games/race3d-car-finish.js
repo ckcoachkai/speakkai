@@ -2,6 +2,7 @@
 export function createCarFinish(THREE, root, spec, primaryHex, registerResource) {
   const cache=new Map(), paint=[], brake=[], headlights=[];
   const identity=new THREE.Color(primaryHex), damage={value:0};
+  const liveryInverse={value:new THREE.Matrix4()};
   const isPaint=m=>/paint|candy|basecoat|bodycolor|bodywork|carpaint|Nose & chassis finish/i.test(m.name)||spec.id==='gt3'&&m.name==='BODY';
   const isRubber=m=>/tire|tyre|rubber|wheel finish|^Thread$|Sidewall/i.test(m.name);
   function finish(source) {
@@ -19,19 +20,22 @@ export function createCarFinish(THREE, root, spec, primaryHex, registerResource)
       // The source maps remain visible; no geometry or normal displacement is used.
       material.onBeforeCompile=shader=>{
         shader.uniforms.carDamage=damage;
-        shader.vertexShader='varying vec3 vCarPaintPosition;\n'+shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nvCarPaintPosition=position;');
+        shader.uniforms.carLiveryInverse=liveryInverse;
+        shader.vertexShader='uniform mat4 carLiveryInverse; varying vec3 vCarPaintPosition;\n'+shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nvCarPaintPosition=(carLiveryInverse*modelMatrix*vec4(transformed,1.0)).xyz;');
         shader.fragmentShader='uniform float carDamage; varying vec3 vCarPaintPosition;\n'+shader.fragmentShader;
         shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
           float carStreak=step(.90,fract(vCarPaintPosition.y*47.0+sin(vCarPaintPosition.z*14.0)*.14));
           float carPatch=smoothstep(.25,.78,sin(vCarPaintPosition.x*16.0+vCarPaintPosition.z*5.0)*.5+.5);
           float carScuff=carStreak*carPatch*carDamage;
+          float racingStripe=(1.0-smoothstep(.035,.06,abs(abs(vCarPaintPosition.x)-.19)))*smoothstep(.35,.85,vCarPaintPosition.y);
+          diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.065,.10,.13),racingStripe*.92);
           diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.20,.21,.22),carScuff*.67);
         `).replace('#include <roughnessmap_fragment>','#include <roughnessmap_fragment>\nroughnessFactor=min(1.0,roughnessFactor+carScuff*.55);');
       };
-      material.customProgramCacheKey=()=> 'race-car-paint-scuff-v1';
+      material.customProgramCacheKey=()=> 'race-car-prism-livery-v2';
       paint.push(material);
     } else if(isRubber(source)) {
-      material=source.clone();material.roughness=Math.max(.73,source.roughness);material.metalness=0;material.envMapIntensity=.45;
+      material=source.clone();material.roughness=Math.max(.88,source.roughness);material.metalness=0;material.envMapIntensity=.3;
     } else if(/light_glow_back|Glass_rear_lights/i.test(source.name)) {
       material=source.clone();material.emissive=new THREE.Color('#e1191c');material.emissiveIntensity=.45;brake.push(material);
     } else if(/glass/i.test(source.name)) {
@@ -51,10 +55,11 @@ export function createCarFinish(THREE, root, spec, primaryHex, registerResource)
   root.traverse(node=>{if(node.isMesh)node.material=Array.isArray(node.material)?node.material.map(finish):finish(node.material);});
   return {
     update(racer) {
+      root.updateWorldMatrix(true,false);liveryInverse.value.copy(root.matrixWorld).invert();
       damage.value=THREE.MathUtils.clamp(Number(racer.damage)||0,0,1);
       const braking=Number(racer.brake)>.08||Number(racer.acceleration)<-3;
       for(const material of brake)material.emissiveIntensity=braking?4.0:.65;
     },
-    snapshot(){return {paintMaterials:paint.length,rubberMaterials:[...cache.keys()].filter(isRubber).length,brakeMaterials:brake.length,headlightMaterials:headlights.length,damage:damage.value};},
+    snapshot(){return {paintMaterials:paint.length,rubberMaterials:[...cache.keys()].filter(isRubber).length,brakeMaterials:brake.length,headlightMaterials:headlights.length,damage:damage.value,livery:'original-twin-stripe'};},
   };
 }

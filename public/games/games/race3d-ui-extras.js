@@ -1,5 +1,6 @@
-import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-supercars-ramps';
-import { RACE_ROSTER_TYPES, getRacerIdentity } from './race3d-roster.js?v=20261025-supercars-ramps';
+import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-city-contact1';
+import { inventoryFace } from './race3d-item-rules.js?v=20261025-city-contact1';
+import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261025-city-contact1';
 
 const make = (tag, className, text) => {
   const node = document.createElement(tag);
@@ -43,8 +44,8 @@ export function createRaceExtras(root, players = []) {
   root.append(left, right, compact, roulette, effects, selection, finish);
   let disposed = false, lastCardsAt = -Infinity, lastLayoutAt = -Infinity, shownItemKey = '';
   let finishTimer = 0, activeFinish = false, visibleFinish = null, finishSequence = 0;
-  const finishQueue = [], seenFinish = new Set(), pickups = new Map(), seenItems = new Set();
-  let itemSerial = 0, effectKey = '', previousPhase = '';
+  const finishQueue = [], seenFinish = new Set();
+  let effectKey = '', previousPhase = '';
 
   function cardFor(id, car, index) {
     let entry = cards.get(id);
@@ -77,7 +78,7 @@ export function createRaceExtras(root, players = []) {
     return entry;
   }
 
-  function updateCards(cars, focusedId, now) {
+  function updateCards(cars, focusedId, now, simulationTime) {
     if (now - lastCardsAt < 160) return;
     lastCardsAt = now;
     const sources = cars.length ? cars : [...roster.values()];
@@ -124,8 +125,10 @@ export function createRaceExtras(root, players = []) {
         }
       }
       entry.card.dataset.damageLevel = String(clamp(Math.floor(finite(car.damageLevel, finite(car.damage) * 20)), 0, 20));
-      const pickup = pickups.get(id), item = pickup && now < pickup.until ? pickup.item : car.activeItem;
+      const item = inventoryFace(car,simulationTime);
       entry.item.hidden = !ITEM_VISUALS[item];
+      entry.item.dataset.phase=car.inventoryPhase||'empty';
+      entry.item.setAttribute('aria-label',car.inventoryPhase==='rolling'?'Choosing an item':ITEM_VISUALS[item]?.[0]||'No held item');
       if (entry.icon !== item) { entry.icon = item; entry.item.innerHTML = itemThumbnail(item); entry.item.title = ITEM_VISUALS[item]?.[0] || ''; }
     });
     left.hidden = !left.children.length; right.hidden = !right.children.length;
@@ -152,45 +155,16 @@ export function createRaceExtras(root, players = []) {
     root.style.setProperty('--focus-top', `${Math.max(leftTop,rightTop)}px`);
   }
 
-  function processPickups(events, cars, now) {
-    for (const event of events) {
-      if (event.type !== 'item-pickup' || !ITEM_VISUALS[event.itemType]) continue;
-      const id = String(event.carId ?? event.id), key = `${id}:${event.pickupId || ''}:${event.time ?? ''}:${event.itemType}`;
-      if (seenItems.has(key)) continue;
-      seenItems.add(key);
-      pickups.set(id, { id, item: event.itemType, at: now, until: now + Math.max(5000, finite(event.displayDuration, 25) / finite(event.timeScale, 5) * 1000), serial: ++itemSerial });
+  function updateRoulette(focusedId, cars, now, simulationTime) {
+    const target=cars.find(c=>String(c.id)===String(focusedId))||cars[0];
+    if(target?.inventoryItem){
+      const item=inventoryFace(target,simulationTime),rolling=target.inventoryPhase==='rolling';
+      const key=`${target.id}:${target.inventorySerial}:${item}:${rolling}`;
+      roulette.hidden=false;
+      if(shownItemKey!==key){shownItemKey=key;rouletteOwner.textContent=String(target.name||'Racer');rouletteIcon.innerHTML=itemThumbnail(item);rouletteName.textContent=rolling?'PRISM DRAW':ITEM_VISUALS[item]?.[0]||'Ready';roulette.dataset.rolling=String(rolling);roulette.dataset.item=rolling?'choosing':item;}
+      return;
     }
-    // A snapshot-only caller may not forward events; an active item still gets a reveal.
-    for (const car of cars) {
-      const id = String(car.id), prior = pickups.get(id);
-      if (ITEM_VISUALS[car.activeItem] && prior?.item !== car.activeItem) {
-        pickups.set(id, { id, item: car.activeItem, at: now, until: now + 5000, serial: ++itemSerial });
-      }
-    }
-    if (seenItems.size > 400) {
-      const oldest = [...seenItems].slice(0, seenItems.size - 300);
-      oldest.forEach(key => seenItems.delete(key));
-    }
-  }
-
-  function updateRoulette(focusedId, cars, now) {
-    const id = String(focusedId ?? cars[0]?.id), entry = pickups.get(id);
-    if (!entry || now >= entry.until) { roulette.hidden = true; shownItemKey = ''; return; }
-    rouletteTimer.textContent = `${Math.max(0, (entry.until - now) / 1000).toFixed(1)}s`;
-    const age = now - entry.at, rolling = age < 750;
-    const types = Object.keys(ITEM_VISUALS);
-    const item = rolling ? (age < 140 ? '?' : types[Math.floor(age / 75) % types.length]) : entry.item;
-    const key = `${id}:${entry.serial}:${item}:${rolling}`;
-    roulette.hidden = false;
-    if (shownItemKey === key) return;
-    shownItemKey = key;
-    const owner = cars.find(car => String(car.id) === id) || roster.get(id);
-    rouletteOwner.textContent = String(owner?.name || 'Racer');
-    rouletteIcon.innerHTML = itemThumbnail(item);
-    rouletteName.textContent = rolling ? 'Choosing item…' : ITEM_VISUALS[item][0];
-    roulette.dataset.rolling = String(rolling);
-    roulette.dataset.item = rolling ? 'choosing' : entry.item;
-    roulette.setAttribute('aria-label', `${rouletteOwner.textContent}: ${rouletteName.textContent}`);
+    roulette.hidden=true;shownItemKey='';
   }
 
   function updateEffects(focusedId, cars, timeScale = 5) {
@@ -198,18 +172,20 @@ export function createRaceExtras(root, players = []) {
     const active = [];
     if (car) {
       for (const [item, field] of [['boost','boost'],['rocket','rocketRemaining'],['shield','shieldRemaining'],['repair','repairRemaining'],['freeze','freezeRemaining'],['launch','flightRemaining']]) {
+        if(item==='freeze'&&car.attackSlowRemaining>0)continue;
         if (item === 'launch' && car.flightKind === 'ramp') continue;
         const remaining = finite(car[field]);
         if (remaining > .01) active.push([item, remaining / timeScale]);
       }
+      if(car.attackSlowRemaining>0&&ITEM_VISUALS[car.attackSource])active.push([car.attackSource,car.attackSlowRemaining/timeScale,'Disrupted']);
     }
     const nextKey = active.map(([type, seconds]) => `${type}:${seconds.toFixed(1)}`).join('|');
     if (nextKey === effectKey) return;
     effectKey = nextKey; effects.hidden = !active.length; effects.replaceChildren();
-    for (const [item, seconds] of active) {
+    for (const [item, seconds, label] of active) {
       const pill = make('span', 'race3d-effect-pill');
       const icon = make('span', 'race3d-effect-icon'); icon.innerHTML = itemThumbnail(item);
-      pill.append(icon, make('strong','',ITEM_VISUALS[item][0]), make('span','',`${seconds.toFixed(1)}s`)); effects.append(pill);
+      pill.append(icon,make('strong','',label||ITEM_VISUALS[item][0]),make('span','',`${seconds.toFixed(1)}s`));effects.append(pill);
     }
   }
 
@@ -265,15 +241,12 @@ export function createRaceExtras(root, players = []) {
 
   function update(cars = [], focusedId, metadata = {}, phase = 'idle') {
     if (disposed) return;
-    const now = performance.now(), events = Array.isArray(metadata.events) ? metadata.events : [];
-    const phaseChanged = previousPhase !== phase; previousPhase = phase;
-    root.dataset.phase = phase;
-    updateSelection(cars, metadata, phase);
-    processPickups(events, cars, now);
-    const canonicalTimeScale = finite(metadata.timeScale, 5) > 0 ? finite(metadata.timeScale, 5) : 5;
-    const effectTimeScale = finite(metadata.effectTimeScale, canonicalTimeScale);
-    updateCards(cars, focusedId, now); layout(now, phaseChanged); updateRoulette(focusedId, cars, now); updateEffects(focusedId, cars, effectTimeScale > 0 ? effectTimeScale : canonicalTimeScale);
-    root.dataset.powerup = String(!roulette.hidden || !effects.hidden);
+    const now = performance.now();
+    updateCards(cars, focusedId, now, finite(metadata.simulationTime));
+    for(const car of cars){const entry=cards.get(String(car.id));if(!entry)continue;const item=inventoryFace(car,finite(metadata.simulationTime));entry.item.hidden=!item;if(entry.icon!==item){entry.icon=item;entry.item.innerHTML=item?itemThumbnail(item):'';}} layout(now); updateRoulette(focusedId, cars, now, finite(metadata.simulationTime));
+    const followed=cars.find(car=>String(car.id)===String(focusedId))||cars[0],compactItem=compact.querySelector('.race3d-card-item');
+    if(compactItem){const face=followed?inventoryFace(followed,finite(metadata.simulationTime)):null;compactItem.hidden=!face;if(compactItem.dataset.face!==String(face)){compactItem.dataset.face=String(face);compactItem.innerHTML=face?itemThumbnail(face):'';}}
+    const phaseChanged=previousPhase!==phase;previousPhase=phase;root.dataset.phase=phase;updateSelection(cars,metadata,phase);updateEffects(focusedId,cars,finite(metadata.effectTimeScale,5));root.dataset.powerup=String(!roulette.hidden||!effects.hidden);
     if (!['idle','selecting','countdown'].includes(phase)) {
       const finishers = cars.filter(car => Number.isFinite(car.finishTime)).slice().sort((a, b) => a.finishTime - b.finishTime || finite(a.finishPosition) - finite(b.finishPosition));
       finishers.forEach((car, index) => {
@@ -288,9 +261,10 @@ export function createRaceExtras(root, players = []) {
 
   function reset() {
     clearTimeout(finishTimer); finishTimer = 0; activeFinish = false; visibleFinish = null;
-    finishQueue.length = 0; seenFinish.clear(); pickups.clear(); seenItems.clear(); finishSequence = 0;
-    itemSerial = 0; shownItemKey = ''; effectKey = ''; compact.dataset.key = ''; compact.replaceChildren(); lastCardsAt = lastLayoutAt = -Infinity;
-    finish.hidden = roulette.hidden = effects.hidden = selection.hidden = true; effects.replaceChildren(); selectionList.replaceChildren(); selectionCards.clear(); finishBurst.replaceChildren(); finish.classList.remove('is-celebrating');
+    finishQueue.length = 0; seenFinish.clear(); finishSequence = 0;
+    shownItemKey = ''; lastCardsAt = lastLayoutAt = -Infinity;
+    finish.hidden = roulette.hidden = true; finishBurst.replaceChildren(); finish.classList.remove('is-celebrating');
+    effectKey='';compact.dataset.key='';compact.replaceChildren();effects.hidden=selection.hidden=true;effects.replaceChildren();selectionList.replaceChildren();selectionCards.clear();
     for (const entry of cards.values()) { entry.item.hidden = true; entry.card.classList.remove('is-finished'); }
   }
   // The CSS file can finish loading after the idle frame. Observe only the fixed

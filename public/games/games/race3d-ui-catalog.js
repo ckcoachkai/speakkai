@@ -3,7 +3,6 @@ export const RACER_CARD_NAMES = Object.freeze({
   'f1-2026':'Qvist 2026 Formula concept', gt3:'Race Car 01 LMGT3',
   'car-concept':'CarConcept sports coupe', 'lamborghini-gallardo':'Lamborghini Gallardo 2010',
   'tesla-roadster':'Tesla Roadster 2020 concept',
-
 });
 
 const carSilhouette = '<path d="M9 43 15 32 28 29 39 19h36l16 13 17 3 4 13H8Z" fill="currentColor"/><path d="m42 23-10 9h50l-10-9Z" fill="#add8eb"/><path d="m16 35 14-1m61 3 13 2" stroke="#fff5cb" stroke-width="3"/><path d="M19 45h83" stroke="#101923" stroke-width="4"/><g fill="#111b25" stroke="#6f8190" stroke-width="3"><circle cx="28" cy="46" r="9"/><circle cx="91" cy="46" r="9"/></g>';
@@ -25,7 +24,7 @@ export const ITEM_VISUALS = Object.freeze({
   missile:['Missile','<path d="M51 6c8 17-9 36-24 37L17 32C20 17 36 4 51 6Z" fill="#edf2f6"/><circle cx="40" cy="19" r="6" fill="#f27667"/><path d="m18 35-11 4 4-14 12-3m5 17-3 13 14-5-2-12" fill="#e96855"/><path d="m13 42-9 17 18-11" fill="#ffce61"/>'],
   launch:['Launch','<path d="m18 47 14-32 14 32Z" fill="#e2a7ff"/><path d="m18 51 14-8 14 8" fill="none" stroke="#f8d6ff" stroke-width="6"/><path d="m17 23 15-16 15 16" fill="none" stroke="#f8d6ff" stroke-width="5"/>'],
   rocket:['Rocket','<path d="M32 3C16 15 17 33 22 42h20c5-9 6-27-10-39Z" fill="#eef3f7"/><circle cx="32" cy="21" r="7" fill="#7bd4ef"/><path d="m21 32-10 15 12-3m19-12 11 15-12-3" fill="#ff7963"/><path d="m26 45 6 16 6-16" fill="#ffcb65"/>'],
-  shockwave:['Shockwave','<path d="M9 30c0-28 46-28 46 0Z" fill="#c6b0ff" stroke="#e5d6ff" stroke-width="2"/><path d="M17 31c-7 17 12 16 4 29m11-29c-8 15 10 17 2 27m12-27c8 15-10 17-3 27" fill="none" stroke="#b69bff" stroke-width="4"/>'],
+  shockwave:['Jellyfish shockwave','<path d="M9 30c0-28 46-28 46 0Z" fill="#c6b0ff" stroke="#e5d6ff" stroke-width="2"/><path d="M17 31c-7 17 12 16 4 29m11-29c-8 15 10 17 2 27m12-27c8 15-10 17-3 27" fill="none" stroke="#b69bff" stroke-width="4"/>'],
   freeze:['Freeze','<g stroke="#b3efff" stroke-width="4" stroke-linecap="round"><path d="M32 5v54M9 18l46 27M9 45l46-27M25 10l7 7 7-7M25 54l7-7 7 7M11 26l10-3-1-10M44 51l-1-10 10-3M11 38l10 3-1 10M44 13l-1 10 10 3"/></g>'],
 });
 export function itemThumbnail(type) {

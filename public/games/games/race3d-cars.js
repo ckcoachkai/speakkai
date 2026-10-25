@@ -1,15 +1,19 @@
-import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261025-supercars-ramps';
-import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261025-supercars-ramps';
-import { createCarMotion } from './race3d-car-motion.js?v=20261025-supercars-ramps';
-import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261025-supercars-ramps';
+import {createFinishFX,advanceFinishVisual} from './race3d-finish-fx.js?v=20261025-city-contact1';
+import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261025-city-contact1';
+import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261025-city-contact1';
+import { createCarMotion } from './race3d-car-motion.js?v=20261025-city-contact1';
+import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261025-city-contact1';
+import { vehicleProfile } from './race3d-vehicle.js?v=20261025-city-contact1';
 
 /**
  * Sculpted low-slung GT cars for race3d. All car geometry is authored around
  * local +Z forward, with Y up; the track module supplies world placement.
  */
-export function createRaceCars(THREE, racers = []) {
+export function createRaceCars(THREE, racers = [], options = {}) {
   const group = new THREE.Group();
   group.name = 'race3d-cars';
+  const reducedMotion=options.reducedMotion??!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const finishFX=createFinishFX(THREE,{quality:options.id,reducedMotion});group.add(finishFX.group);let finishEvents=[];
   const meshes = new Map();
   const geometries = new Set();
   const materials = new Set();
@@ -18,7 +22,7 @@ export function createRaceCars(THREE, racers = []) {
   const materialCache = new Map();
   let disposed = false;
   const lateDisposedResources=new WeakSet();
-  const authoredAssets = createAuthoredCarAssets(THREE, {isDisposed:()=>disposed,registerResource(type,resource){if(!resource)return;if(disposed){if(!lateDisposedResources.has(resource)){lateDisposedResources.add(resource);resource.dispose?.();resource.image?.close?.();}return;}({geometry:geometries,material:materials,texture:textures})[type].add(resource);}});
+  const authoredAssets = createAuthoredCarAssets(THREE, {prepareAsset:options.prepareAsset,isDisposed:()=>disposed,registerResource(type,resource){if(!resource)return;if(disposed){if(!lateDisposedResources.has(resource)){lateDisposedResources.add(resource);resource.dispose?.();resource.image?.close?.();}return;}({geometry:geometries,material:materials,texture:textures})[type].add(resource);}});
 
   const damageVisuals=createDamageVisuals(THREE,group,(type,resource)=>({geometry:geometries,material:materials,texture:textures})[type].add(resource));
 
@@ -378,6 +382,7 @@ export function createRaceCars(THREE, racers = []) {
     const wheelSpin = [], steeringPivots = [], wheelMounts = [];
     for (const side of [-1, 1]) for (const axle of [-1, 1]) {
       const wheel = addWheel(car, side, axle, wheelSpin, 0, mats);
+      const footprint=vehicleProfile(racer);wheel.position.x=side*footprint.track/2;wheel.position.z=axle>0?footprint.front:-footprint.rear;
       wheelMounts.push(wheel);
       if (axle > 0) steeringPivots.push(wheel);
       if(profile===2 || profile===3) continue;
@@ -401,57 +406,48 @@ export function createRaceCars(THREE, racers = []) {
     const state={ car, racer, visualRacer, wheelSpin, wheelMounts, steeringPivots, primaryHex, lighting, motion };
     meshes.set(racer.id ?? index, state);
     damageVisuals.add(state);
-    state.assetsReady=authoredAssets.attach(state,index).catch(error=>{authoredAssets.errors.push({id:car.userData.racerId,message:String(error.message||error)});return false;});
+    state.assetsReady=options.authoredModels===false?Promise.resolve(false):authoredAssets.attach(state,index).catch(error=>{authoredAssets.errors.push({id:car.userData.racerId,message:String(error.message||error)});return false;});
   }
 
   function sideSafe(index) { return index % 2 ? 1 : -1; }
   racers.forEach((racer, index) => buildCar(racer, index));
-
-  // Official results stay on racer. Only this inherited render pose coasts off
-  // the finish line, braking into two spaced rows within the existing 3.2s hold.
-  function resetVisual(state) {
-    for(const key of Object.keys(state.visualRacer))delete state.visualRacer[key];
-    state.finishCoast=null;
-  }
-  function updateFinishPose(state,track,dt) {
-    const racer=state.racer,visual=state.visualRacer;
-    if(!racer.finished){if(state.finishCoast)resetVisual(state);return;}
-    if(!state.finishCoast){
-      const rank=Math.max(1,Math.floor(Number(racer.finishPosition)||1));
-      const width=Number(track.sampleTrack(racer.distance)?.width)||16.5;
-      state.finishCoast={time:0,from:Number(racer.distance)||0,lateral:Number(racer.lateral)||0,
-        to:(Number(track.raceDistance)||Number(racer.distance)||0)+32+Math.floor((rank-1)/2)*7.4,
-        side:(rank%2?1:-1)*Math.max(2,width/2-2.7),height:Number(racer.flightHeight)||0};
-    }
-    const coast=state.finishCoast,duration=2.75;
-    coast.time=Math.min(duration,coast.time+Math.max(0,Math.min(.1,Number(dt)||0)));
-    const u=coast.time/duration,left=1-u,ease=1-left*left*left,sideEase=u*u*(3-2*u);
-    const travel=Math.max(0,coast.to-coast.from),sideSpeed=(coast.side-coast.lateral)*6*u*left/duration;
-    visual.distance=coast.from+travel*ease;visual.lateral=coast.lateral+(coast.side-coast.lateral)*sideEase;
-    visual.speed=3*travel*left*left/duration;visual.acceleration=-6*travel*left/(duration*duration);
-    visual.heading=visual.speed>.1?Math.max(-.38,Math.min(.38,Math.atan2(sideSpeed,visual.speed))):0;
-    visual.yawRate=u<1?(visual.heading-(coast.lastHeading??visual.heading))/Math.max(.001,Math.min(.1,Number(dt)||0)):0;
-    coast.lastHeading=visual.heading;
-    visual.lateralAcceleration=u<1?6*(coast.side-coast.lateral)*(1-2*u)/(duration*duration):0;
-    visual.landingImpulse=0;
-    visual.brake=u<1?.7:0;visual.spin=0;visual.spinAngle=0;
-    visual.flightHeight=coast.height*left*left;visual.flightRemaining=0;visual.verticalVelocity=0;
-    visual.rampHeight=0;visual.rampPitch=0;visual.trickAngle=0;visual.parked=u>=1;
-    // Finishing coast has its own visual distance; contact telemetry from the
-    // stopped official racer must not keep its wheels on an old ramp plane.
-    visual.wheelContacts=null;visual.supportHeight=0;visual.supportPitch=0;visual.supportRoll=0;
+  const lodBody=cacheGeometry('lod-body',()=>new THREE.BoxGeometry(1.85,.62,4.25).translate(0,.63,0));
+  const lodCabin=cacheGeometry('lod-cabin',()=>new THREE.BoxGeometry(1.35,.55,1.7).translate(0,1.15,-.1));
+  const lodTire=cacheGeometry('lod-tire',()=>new THREE.CylinderGeometry(.44,.44,.25,8).rotateZ(Math.PI/2));
+  for(const state of meshes.values())if(!state.form){
+    const proxy=new THREE.Group();proxy.name='distance-lod';
+    const shell=new THREE.Mesh(lodBody,mat('lod:'+state.primaryHex,state.primaryHex,.35,.45));proxy.add(shell);
+    if(state.racer.racerType!=='f1-2026')proxy.add(new THREE.Mesh(lodCabin,mat('lod-glass','#294653',.18,.3)));
+    for(const side of [-1,1])for(const axle of [-1,1]){const w=new THREE.Mesh(lodTire,mat('lod-rubber','#101820',.8,0));w.position.set(side*.94,.44,axle*1.4);proxy.add(w);}
+    const detail=new THREE.Group();detail.name='detailed-racer';for(const child of [...state.car.children])detail.add(child);state.car.add(detail);
+    proxy.visible=false;state.detailGroup=detail;state.proxy=proxy;state.car.add(proxy);
   }
 
-  function update(track, dt = 1 / 60) {
+  // Finishing is immutable in physics; spin and disassembly are render-only.
+  function resetVisual(state){for(const key of Object.keys(state.visualRacer))delete state.visualRacer[key];state.finishAnimation=null;state.finishHidden=false;state.finishStage=null;state.car.visible=true;}
+  function updateFinishPose(state,track,dt){
+    if(!state.racer.finished){if(state.finishAnimation)resetVisual(state);return null;}
+    const f=advanceFinishVisual(state.finishAnimation,state.racer,dt,reducedMotion);state.finishAnimation=f.state;state.finishHidden=f.hidden;state.finishStage=f.stage;state.car.visible=!f.hidden;Object.assign(state.visualRacer,f.pose,{finishHidden:f.hidden});
+    return f.burst?state:null;
+  }
+  function update(track, dt = 1 / 60, view = {}) {
     if (disposed || !track?.sampleTrack) return;
-    for (const state of meshes.values()) {updateFinishPose(state,track,dt);state.motion.update(track, dt);state.authoredVisuals?.update(state.visualRacer);}
+    const focus=meshes.get(view.focusedId)?.racer;
+    const gap=state=>{const raw=Math.abs(state.racer.distance-(focus?.distance??state.racer.distance))%track.totalLength;return Math.min(raw,track.totalLength-raw);};
+    const detailed=new Set([...meshes.values()].filter(s=>s.proxy).sort((a,b)=>gap(a)-gap(b)||a.racer.gridPosition-b.racer.gridPosition).slice(0,view.detailedCars||6));
+    const bursts=[];for (const state of meshes.values()) {
+      const distance=gap(state),far=!!state.proxy&&(distance>(view.lodDistance||120)||(distance>35&&!detailed.has(state)));const burst=updateFinishPose(state,track,dt);state.motion.update(track,dt,{detailed:!far||!!state.finishAnimation});if(burst){const f=new THREE.Vector3(0,0,1).applyQuaternion(state.car.quaternion),r=new THREE.Vector3(1,0,0).applyQuaternion(state.car.quaternion),d=state.car.userData.assetDimensions||{};bursts.push({length:d.length||4.4,width:d.width||1.9,forwardX:f.x,forwardZ:f.z,rightX:r.x,rightZ:r.z,carId:state.racer.id,gridPosition:state.racer.gridPosition,color:state.primaryHex,x:state.car.position.x,y:state.car.position.y+.75,z:state.car.position.z,distance:state.visualRacer.distance,lateral:state.visualRacer.lateral,time:state.finishAnimation.age});}if(!far){state.form?.update(dt,state.visualRacer);state.authoredVisuals?.update(state.visualRacer);}
+      if(state.proxy){state.proxy.visible=far;state.detailGroup.visible=!far;state.car.userData.lod=far?'distant':'detailed';}
+    }
+    finishEvents.push(...finishFX.emit(bursts));finishFX.update(dt);
     damageVisuals.update(dt);
   }
 
   function dispose() {
     if (disposed) return;
     disposed = true;
-    damageVisuals.dispose();
+    finishFX.dispose();finishEvents=[];damageVisuals.dispose();
+    for(const state of meshes.values())state.form?.dispose();
     group.removeFromParent();
     for (const geometry of geometries) geometry.dispose();
     for (const texture of textures) { texture.dispose(); texture.image?.close?.(); }
@@ -461,16 +457,18 @@ export function createRaceCars(THREE, racers = []) {
   }
 
   return { group, update, dispose, assetsReady:Promise.all([...meshes.values()].map(state=>state.assetsReady)), assetErrors:authoredAssets.errors,
-    reset() { damageVisuals.reset(); for (const state of meshes.values()) {state.car.scale.setScalar(1);state.car.visible=true;resetVisual(state);state.motion.reset();} },
+    reset() { finishFX.reset();finishEvents=[];damageVisuals.reset(); for (const state of meshes.values()) {state.car.scale.setScalar(1);state.car.visible=true;resetVisual(state);state.motion.reset();} },
+    drainFinishEvents(){const events=finishEvents;finishEvents=[];return events;},
+    finishSnapshot(){const states=[...meshes.values()].filter(s=>s.racer.finished);return {...finishFX.snapshot(),hidden:states.filter(s=>s.finishHidden).length,pending:states.filter(s=>!s.finishHidden).length,complete:states.every(s=>s.finishStage==='cleared')&&finishFX.snapshot().alive===0};},
     selectionPose(id, { x, y, rotation, scale = 1 }) {
       const state=meshes.get(id);if(!state)return;
       state.car.visible=true;state.car.position.set(x,y,0);state.car.rotation.set(.18,rotation,0);state.car.scale.setScalar(scale);
     },
     visualPose(id) {return meshes.get(id)?.visualRacer||null;},
     damageSnapshot() {return damageVisuals.snapshot();},
-    snapshot() { return [...meshes.values()].map(state => ({...state.motion.snapshot(),visualDistance:state.visualRacer.distance,visualLateral:state.visualRacer.lateral,visualSpeed:state.visualRacer.speed,parked:!!state.visualRacer.parked,racerType:state.racer.racerType||null,vehicleName:state.racer.vehicleName||state.car.userData.assetLabel,assetId:state.car.userData.assetId||null,assetLoaded:!!state.car.userData.assetLoaded,assetDimensions:state.car.userData.assetDimensions||null,authoredWheelCount:state.car.userData.authoredWheelCount||0,finish:state.authoredVisuals?.snapshot()||null})); },
+    snapshot() { return [...meshes.values()].map(state => ({...state.motion.snapshot(),visualDistance:state.visualRacer.distance,visualLateral:state.visualRacer.lateral,visualSpeed:state.visualRacer.speed,finishHidden:!!state.finishHidden,finishStage:state.finishStage||null,racerType:state.racer.racerType||null,vehicleName:state.racer.vehicleName||state.car.userData.assetLabel,form:state.form?.meta||null,assetId:state.car.userData.assetId||null,assetLoaded:!!state.car.userData.assetLoaded,assetDimensions:state.car.userData.assetDimensions||null,authoredWheelCount:state.car.userData.authoredWheelCount||0,finish:state.authoredVisuals?.snapshot()||null})); },
     assetSnapshot() {return {errors:[...authoredAssets.errors],cars:[...meshes.values()].map(s=>({id:s.racer.id,...s.car.userData,authoredWheelCount:s.car.userData.authoredWheelCount||0}))};},
-    setHiddenId(id) { for (const state of meshes.values()) state.car.visible = id === null || state.racer.id !== id; },
+    setHiddenId(id) { for (const state of meshes.values()) state.car.visible = !state.finishHidden&&(id === null || state.racer.id !== id); },
   };
 }
 

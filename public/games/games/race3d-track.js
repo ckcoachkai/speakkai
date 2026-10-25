@@ -434,10 +434,21 @@ export function createTrack(THREE) {
     group.add(mesh);
     return mesh;
   }
-  gateBar('start-gantry-left-column', -10.9, 2.65, 0.5, 5.3, 0.5, gateDark);
-  gateBar('start-gantry-right-column', 10.9, 2.65, 0.5, 5.3, 0.5, gateDark);
-  gateBar('start-gantry-overhead-beam', 0, 5.25, 22.2, 0.55, 0.72, gateDark);
-  gateBar('start-gantry-bright-sign-band', 0, 4.82, 14.5, 0.48, 0.76, gateAccent);
+  // Keep the chase-camera sightline open rather than filling the horizon with
+  // a low, blank beam. This is visual furniture; road/finish physics is unchanged.
+  gateBar('start-gantry-left-column', -10.9, 4.0, 0.5, 8.0, 0.5, gateDark);
+  gateBar('start-gantry-right-column', 10.9, 4.0, 0.5, 8.0, 0.5, gateDark);
+  gateBar('start-gantry-overhead-beam', 0, 7.95, 22.2, 0.55, 0.72, gateDark);
+  gateBar('start-gantry-bright-sign-band', 0, 7.35, 14.5, 0.75, 0.76, gateAccent);
+  const signCanvas=typeof document!=='undefined'?document.createElement('canvas'):null;if(signCanvas){signCanvas.width=1536;signCanvas.height=96;}
+  const signContext=signCanvas?.getContext('2d');
+  if(signContext){
+    signContext.fillStyle='#12343f';signContext.fillRect(0,0,1536,96);
+    signContext.fillStyle='#c7fff0';signContext.font='800 60px system-ui,sans-serif';signContext.textAlign='center';signContext.textBaseline='middle';signContext.fillText('SPEAKKAI  /  PRISM CIRCUIT',768,49);
+    const map=new THREE.CanvasTexture(signCanvas);map.colorSpace=THREE.SRGBColorSpace;
+    const sign=new THREE.Mesh(new THREE.PlaneGeometry(14.2,.62),new THREE.MeshBasicMaterial({map,toneMapped:false}));
+    sign.name='original-prism-circuit-sign';sign.position.copy(startCenter).addScaledVector(start.tangent,-.4);sign.position.y+=7.35;sign.quaternion.copy(gateQuat);sign.rotateY(Math.PI);group.add(sign);
+  }
 
   const lampGeo = new THREE.SphereGeometry(0.18, 12, 8);
   const lampDark = makeStandard('#101617', 0.5, { metalness: 0.3 });
@@ -446,12 +457,12 @@ export function createTrack(THREE) {
   const greenLamp = new THREE.MeshStandardMaterial({ color: '#64da84', emissive: '#138437', emissiveIntensity: 0.42, roughness: 0.32 });
   for (let cluster = 0; cluster < 3; cluster++) {
     const x = -1.25 + cluster * 1.25;
-    gateBar(`start-light-casing-${cluster}`, x, 4.36, 0.63, 1.15, 0.62, lampDark);
+    gateBar(`start-light-casing-${cluster}`, x, 6.96, 0.63, 1.15, 0.62, lampDark);
     for (let lamp = 0; lamp < 3; lamp++) {
       const mesh = new THREE.Mesh(lampGeo, [redLamp, amberLamp, greenLamp][lamp]);
       mesh.name = `start-light-${cluster}-${lamp}`;
       mesh.position.copy(startCenter).addScaledVector(start.right, x);
-      mesh.position.y += 4.69 - lamp * 0.32;
+      mesh.position.y += 7.29 - lamp * 0.32;
       group.add(mesh);
     }
   }

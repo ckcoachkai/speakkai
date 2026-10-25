@@ -1,21 +1,23 @@
 import * as THREE from '../assets/vendor/three.module.js';
-import { createRaceTrack } from './race3d-track.js?v=20261025-supercars-ramps';
-import { createRaceCars } from './race3d-cars.js?v=20261025-supercars-ramps';
-import { createRaceSimulation } from './race3d-physics.js?v=20261025-supercars-ramps';
-import { createChaseCamera } from './race3d-camera.js?v=20261025-supercars-ramps';
-import { createRaceAudio } from './race3d-audio.js?v=20261025-supercars-ramps';
-import { createRaceUI } from './race3d-ui.js?v=20261025-supercars-ramps';
-import { createRaceEffects } from './race3d-fx.js?v=20261025-supercars-ramps';
-import { createRaceScenery } from './race3d-scenery.js?v=20261025-supercars-ramps';
-import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261025-supercars-ramps';
-import { createRacePowerups } from './race3d-powerups.js?v=20261025-supercars-ramps';
-import { createRaceRamps } from './race3d-ramps.js?v=20261025-supercars-ramps';
-import { createSkySpirit } from './race3d-sky-spirit.js?v=20261025-supercars-ramps';
-import { createFinishFrogs } from './race3d-finish-frogs.js?v=20261025-supercars-ramps';
-import { assignRacerTypes } from './race3d-roster.js?v=20261025-supercars-ramps';
-import { createRaceSelection, SELECTION_SECONDS } from './race3d-selection.js?v=20261025-supercars-ramps';
-
-import { rampPlaybackTarget, advancePlaybackRate } from './race3d-playback.js?v=20261025-supercars-ramps';
+import { createRaceTrack } from './race3d-track.js?v=20261025-city-contact1';
+import { createRaceCars } from './race3d-cars.js?v=20261025-city-contact1';
+import { createRaceSimulation } from './race3d-physics.js?v=20261025-city-contact1';
+import { createChaseCamera } from './race3d-camera.js?v=20261025-city-contact1';
+import { createRaceAudio } from './race3d-audio.js?v=20261025-city-contact1';
+import { createRaceUI } from './race3d-ui.js?v=20261025-city-contact1';
+import { createRaceEffects } from './race3d-fx.js?v=20261025-city-contact1';
+import { createRaceScenery } from './race3d-city.js?v=20261025-city-contact1';
+import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261025-city-contact1';
+import { createRacePowerups } from './race3d-powerups.js?v=20261025-city-contact1';
+import { createRaceRamps } from './race3d-ramps.js?v=20261025-city-contact1';
+import { createSkySpirit } from './race3d-sky-spirit.js?v=20261025-city-contact1';
+import { assignRacerTypes } from './race3d-roster.js?v=20261025-city-contact1';
+import { resolveQuality } from './race3d-quality.js?v=20261025-city-contact1';
+import { createContactShadows } from './race3d-quality.js?v=20261025-city-contact1';
+import { createCircuitFestival } from './race3d-festival.js?v=20261025-city-contact1';
+import {createRaceSelection,SELECTION_SECONDS} from './race3d-selection.js?v=20261025-city-contact1';
+import {rampPlaybackTarget,advancePlaybackRate} from './race3d-playback.js?v=20261025-city-contact1';
+import {createFrameBudget} from './race3d-frame-budget.js?v=20261025-city-contact1';
 
 const COLORS = ['#54d7c4', '#f4c65a', '#ff7666', '#a6b1f1', '#79b8ee', '#d2a4dd', '#a9d58b', '#edb987'];
 const STEP = 1 / 60;
@@ -34,6 +36,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
     name: String(player.name ?? ''),
     color: player.color || COLORS[index % COLORS.length],
   })), random);
+  let qualityMode='auto';try{const saved=localStorage.getItem('race3d-quality');if(['auto','low','medium','high'].includes(saved))qualityMode=saved;}catch{}
+  const qualityFor=()=>resolveQuality(qualityMode,{width:container.clientWidth||innerWidth,cores:navigator.hardwareConcurrency||4,racers:players.length});
+  let quality=qualityFor(),festival,contactShadows;
   const root = document.createElement('div');
   root.className = 'race3d';
   root.innerHTML = `<style>
@@ -50,10 +55,18 @@ export default function createGame({ container, names = [], onPick, random = Mat
   root.appendChild(credits);
   let renderer, track, scenery, atmosphere, skySpirit, simulation, carModels, chaseCamera, audio, ui, effects, powerups, ramps, frogs, selection;
   let alive = true, mode = 'idle', elapsed = 0, raceElapsed = 0, previous = null, accumulator = 0, raf = 0;
+  let shaderReady = false, pendingStart = false, warmRevision = 0;
+  const preparing = document.createElement('div');
+  preparing.setAttribute('role', 'status');
+  preparing.textContent = 'Preparing the circuit…';
+  preparing.style.cssText = 'position:absolute;inset:0;z-index:9;display:grid;place-content:center;pointer-events:none;background:#10202dcc;font:600 18px system-ui';
+  root.appendChild(preparing);
   let playbackRate = SIMULATION_RATE;
+  let cinematicRamps=false;try{cinematicRamps=localStorage.getItem('race3d-cinematic')==='true';}catch{}
+  const frameBudget=createFrameBudget();let detailScale=1,renderScale=1,warmFrames=0;
   let picked = false, winnerId = null, cameraOffset = 0, focusedId = null, cameraTargetId = null;
   let countdownAt = 0, countdownElapsed = 0, countdownCue = 3, goAt = -Infinity;
-  let selectionAt = null, selectionProgress = 0, selectionEpoch = 0;
+  let selectionAt = null, selectionProgress = 0, selectionEpoch = 0,selectionTimeout=0;
   let resizeObserver = null;
   let audioEvents = [];
   let uiEvents = [];
@@ -101,8 +114,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     renderer.setSize(size.width, size.height, false);
     camera.aspect = size.width / size.height;
     camera.updateProjectionMatrix();
-    if (mode === 'selecting') render(0, 0);
-    else renderer.render(scene, camera);
+    if(shaderReady){if(mode==='selecting')render(0,0);else renderer.render(scene,camera);}
   };
 
   const playerFor = id => simulation?.cars.find(car => car.id === id);
@@ -151,6 +163,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
     for (const event of events || []) if (event.type === 'car-finish') frogs?.celebrate(event.carId ?? event.id);
     for (const event of events || []) {
       eventCounts[event.type] = (eventCounts[event.type] || 0) + 1;
+      if(event.itemType&&['item-pickup','item-ready','item-use'].includes(event.type)){
+        const key=event.type+':'+event.itemType;eventCounts[key]=(eventCounts[key]||0)+1;
+      }
       recentEvents.push({
         type: event.type, carId: event.carId, time: event.time,
         itemType: event.itemType, distance: event.distance, lateral: event.lateral,
@@ -165,7 +180,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       const position = sample.position.clone().add(sample.right.clone().multiplyScalar(lateral));
       position.y += Math.max(0, Number(car.flightHeight) || 0) + Math.max(0, Number(car.rampHeight) || 0);
       const mapped = {
-        collision: 'collision', spin: 'skid', recovery: 'dust', 'car-finish': 'celebration',
+        collision: 'collision', spin: 'skid', recovery: 'dust',
         oil: 'skid', cone: 'dust', gas: 'speed', boost: 'speed',
         'banana-hit': 'skid', 'bomb-hit': 'collision',
         land: 'dust', 'ramp-land': 'dust', 'trick-complete': 'speed', 'missile-hit': 'collision', repair: 'speed', rocket: 'speed',
@@ -188,7 +203,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   };
 
   const render = (dt, cameraDt = dt) => {
-    if (!alive || !renderer) return;
+    if (!alive || !renderer || !shaderReady) return;
     scenery?.update(elapsed);
     ramps?.update(elapsed);
     frogs?.update(dt, { cars: simulation?.cars || [], time: simulation?.time || 0 });
@@ -198,8 +213,11 @@ export default function createGame({ container, names = [], onPick, random = Mat
       selection?.update(selectionProgress, size, selectionAt === null);
       focusedId = null;
     } else {
-    carModels?.update(track, dt);
     const focused = focusCar();
+    carModels?.update(track, dt,{focusedId:focused?.id,lodDistance:quality.lodDistance*detailScale,detailedCars:Math.max(1,Math.floor(quality.detailedCars*detailScale))});
+    audioEvents.push(...(carModels?.drainFinishEvents?.()||[]));
+    contactShadows?.update(id=>carModels?.visualPose(id));
+    festival?.update(elapsed);
     if (focused) {
       const cameraCar = carModels?.visualPose?.(focused.id) || focused;
       focusedId = focused.id;
@@ -227,8 +245,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
     }
     ui?.update(ordered, raceElapsed, mode, focusedId, {
       events: uiEvents,
-      results: simulation?.results || [], allFinished: !!simulation?.allFinished,
-      simulationTime: simulation?.time || 0, timeScale: SIMULATION_RATE, effectTimeScale: playbackRate,
+      results: simulation?.results || [], allFinished: !!simulation?.allFinished,finishCelebrationComplete:carModels?.finishSnapshot?.().complete!==false,
+      simulationTime: simulation?.time || 0, timeScale: SIMULATION_RATE,effectTimeScale:playbackRate,
       cameraMode: chaseCamera?.mode || 'chase',
       selectionProgress, selectionLoading: mode === 'selecting' && selectionAt === null,
       countdownRemaining: mode === 'countdown' ? Math.max(0, COUNTDOWN - countdownElapsed) : 0,
@@ -242,6 +260,23 @@ export default function createGame({ container, names = [], onPick, random = Mat
     renderer.render(mode === 'selecting' ? selection.scene : scene, mode === 'selecting' ? selection.camera : camera);
   };
 
+  const warmScene = () => {
+    const revision = ++warmRevision;
+    shaderReady = false; preparing.style.display = 'grid';
+    // compileAsync polls KHR_parallel_shader_compile before first draw. Retain
+    // Three's shader diagnostics, but avoid blocking on unfinished programs.
+    Promise.all([renderer.compileAsync(scene, camera),selection?renderer.compileAsync(selection.scene,selection.camera):null,selection&&carModels?renderer.compileAsync(carModels.group,selection.camera,selection.scene):null]).then(() => {
+      if (!alive || revision !== warmRevision) return;
+      shaderReady = true; preparing.style.display = 'none'; render(0, 0);
+      if (pendingStart) { pendingStart = false; start(); }
+    }).catch(error => {
+      if (!alive || revision !== warmRevision) return;
+      pendingStart = false;
+      preparing.textContent = 'The circuit could not prepare. Try Performance quality or restart.';
+      console.error('Grand Prix shader preparation failed', error);
+    });
+  };
+  const carOptions = () => ({...quality, prepareAsset: model => Promise.all([renderer.compileAsync(model,camera,scene),selection?renderer.compileAsync(model,selection.camera,selection.scene):null])});
   const watchCarAssets = models => {
     models?.assetsReady?.then(() => {
       if (!alive || carModels !== models) return;
@@ -263,7 +298,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   };
 
   const continueWinner = () => {
-    if (picked || winnerId === null || !simulation?.allFinished) return;
+    if (picked || winnerId === null || !simulation?.allFinished || !carModels?.finishSnapshot?.().complete) return;
     const winner = playerFor(winnerId);
     if (!winner) return;
     picked = true;
@@ -275,6 +310,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
 
   const frame = now => {
     if (!alive) return;
+    const cpuStart=performance.now(),rawFrameMs=previous===null?0:now-previous;
     raf = 0;
     if (previous === null) previous = now;
     const frameDelta = clamp((now - previous) / 1000, 0, 0.1);
@@ -302,7 +338,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     } else if (mode === 'running' || mode === 'finishing') {
       accumulator += frameDelta;
       while (accumulator >= STEP && alive && (mode === 'running' || mode === 'finishing')) {
-        playbackRate = advancePlaybackRate(playbackRate, rampPlaybackTarget(focusCar(), SIMULATION_RATE), STEP);
+        playbackRate = advancePlaybackRate(playbackRate, cinematicRamps?rampPlaybackTarget(focusCar(), SIMULATION_RATE):SIMULATION_RATE, STEP);
         const simulationDelta = STEP * playbackRate;
         const winner = simulation.update(simulationDelta);
         raceElapsed += simulationDelta / SIMULATION_RATE;
@@ -320,16 +356,23 @@ export default function createGame({ container, names = [], onPick, random = Mat
       }
     }
     render(frameDelta, cameraDelta || frameDelta);
+    if(qualityMode==='auto'&&(mode==='running'||mode==='finishing')&&++warmFrames>180){
+      const next=frameBudget.sample(rawFrameMs,performance.now()-cpuStart);
+      if(next){detailScale=next.detail;if(renderScale!==next.scale){renderScale=next.scale;renderer.setPixelRatio(Math.min(devicePixelRatio||1,quality.dpr)*renderScale);renderer.setSize(size.width,size.height,false);}}
+    }
     // The arcade may destroy this game synchronously from onPick.
     if (!alive) return;
     if (mode === 'finished') {
-      if (elapsed < (finishAt + 3.2)) raf = requestAnimationFrame(frame);
+      if (elapsed < (finishAt + 4.2)) raf = requestAnimationFrame(frame);
     } else raf = requestAnimationFrame(frame);
   };
   let finishAt = 0;
 
   const start = () => {
     if (!alive || mode === 'selecting' || mode === 'countdown' || mode === 'running' || mode === 'finishing' || !players.length) return;
+    if (!shaderReady) { pendingStart = true; audio?.start(); return; }
+    frameBudget.reset();warmFrames=0;detailScale=renderScale=1;
+    renderer.setPixelRatio(Math.min(devicePixelRatio||1,quality.dpr));renderer.setSize(size.width,size.height,false);
     cancelAnimationFrame(raf);
     raf = 0;
     simulation.reset();
@@ -356,9 +399,10 @@ export default function createGame({ container, names = [], onPick, random = Mat
     setPhase('selecting');
     selection.begin(carModels);
     const beginSelectionClock=()=>{
-      if(alive && mode==='selecting' && selectionEpoch===epoch && selectionAt===null)selectionAt=performance.now();
+      if(selectionEpoch===epoch){clearTimeout(selectionTimeout);selectionTimeout=0;if(alive && mode==='selecting' && selectionAt===null)selectionAt=performance.now();}
     };
-    Promise.resolve(carModels.assetsReady).then(beginSelectionClock,beginSelectionClock);
+    // Network stalls never hold a classroom in the showroom indefinitely.
+    clearTimeout(selectionTimeout);Promise.race([carModels.assetsReady,new Promise(resolve=>{selectionTimeout=setTimeout(resolve,2500);})]).then(beginSelectionClock,beginSelectionClock);
     ui?.reset();
     frogs?.reset();
     chaseCamera?.reset();
@@ -372,6 +416,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
 
   const reset = () => {
     if (!alive) return;
+    pendingStart = false;
+    frameBudget.reset();warmFrames=0;detailScale=renderScale=1;
+    renderer.setPixelRatio(Math.min(devicePixelRatio||1,quality.dpr));renderer.setSize(size.width,size.height,false);clearTimeout(selectionTimeout);selectionTimeout=0;
     cancelAnimationFrame(raf);
     raf = 0;
     ++selectionEpoch;selectionAt=null;selectionProgress=0;
@@ -405,6 +452,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
   };
 
   const destroy = () => {
+    clearTimeout(selectionTimeout);selectionTimeout=0;
+    pendingStart = false; warmRevision++;
     if (!alive) return;
     alive = false;
     cancelAnimationFrame(raf);
@@ -427,6 +476,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     track?.dispose();
     atmosphere?.dispose();
     skySpirit?.dispose();
+    festival?.dispose();contactShadows?.dispose();
     renderer?.dispose();
     renderer?.forceContextLoss?.();
     root.remove();
@@ -435,29 +485,39 @@ export default function createGame({ container, names = [], onPick, random = Mat
 
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.65));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, quality.dpr));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.0;
-    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.enabled = quality.shadows;
     renderer.shadowMap.type = THREE.PCFShadowMap;
-    atmosphere = createRaceAtmosphere(THREE, { scene, renderer });
+    atmosphere = createRaceAtmosphere(THREE, { scene, renderer,shadows:quality.shadows,shadowSize:quality.shadowSize,skyWidth:quality.skyWidth });
     skySpirit = createSkySpirit(THREE, { scene });
     track = createRaceTrack(THREE);
-    scenery = createRaceScenery(THREE, track);
+    scenery = createRaceScenery(THREE, track,quality);
     track.raceDistance = track.totalLength * laps;
     simulation = createRaceSimulation({ players, track, random });
-    carModels = createRaceCars(THREE, simulation.cars);
-    selection = createRaceSelection(THREE, {racers:simulation.cars});
+    carModels = createRaceCars(THREE, simulation.cars,carOptions());
+    selection=createRaceSelection(THREE,{racers:simulation.cars});
     chaseCamera = createChaseCamera({ THREE, camera, track, timeScale: SIMULATION_RATE });
     effects = createRaceEffects(THREE);
     powerups = createRacePowerups(THREE, { track });
     ramps = createRaceRamps(THREE, { track });
-    frogs = createFinishFrogs(THREE, { track });
+    festival=createCircuitFestival(THREE,track);festival.group.visible=quality.id!=='low';
+    contactShadows=createContactShadows(THREE,track,simulation.cars);
     audio = createRaceAudio({ sound });
-    world.add(track.group, scenery.group, carModels.group, effects.group, powerups.group, ramps.group, frogs.group);
+    world.add(track.group, scenery.group, carModels.group, effects.group, powerups.group, ramps.group,festival.group,contactShadows.group);
     ui = createRaceUI(root, players, {
-      laps, track,
+      laps, track,qualityMode,cinematicRamps,onCinematic:value=>{cinematicRamps=value;try{localStorage.setItem('race3d-cinematic',String(value));}catch{}},
+      onQuality:value=>{
+        if(mode!=='idle')return false;
+        qualityMode=value;quality=qualityFor();try{localStorage.setItem('race3d-quality',value);}catch{}
+        renderer.setPixelRatio(Math.min(devicePixelRatio||1,quality.dpr));renderer.shadowMap.enabled=quality.shadows;
+        frameBudget.reset();warmFrames=0;detailScale=renderScale=1;
+        atmosphere.dispose();atmosphere=createRaceAtmosphere(THREE,{scene,renderer,shadows:quality.shadows,shadowSize:quality.shadowSize,skyWidth:quality.skyWidth});
+        carModels.dispose();carModels=createRaceCars(THREE,simulation.cars,carOptions());world.add(carModels.group);watchCarAssets(carModels);
+        festival.group.visible=quality.id!=='low';scenery?.setQuality?.(quality.id);warmScene();return true;
+      },
       onLaps: value => {
         if (mode === 'selecting' || mode === 'countdown' || mode === 'running' || mode === 'finishing') return false;
         laps = value;
@@ -465,8 +525,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
         track.raceDistance = track.totalLength * laps;
         selection.dispose();simulation.dispose(); world.remove(carModels.group); carModels.dispose();
         simulation = createRaceSimulation({ players, track, random });
-        carModels = createRaceCars(THREE, simulation.cars); world.add(carModels.group);
-        selection = createRaceSelection(THREE, {racers:simulation.cars});
+        carModels = createRaceCars(THREE, simulation.cars,carOptions()); world.add(carModels.group);
+        contactShadows.dispose();contactShadows=createContactShadows(THREE,track,simulation.cars);world.add(contactShadows.group);
+    selection=createRaceSelection(THREE,{racers:simulation.cars});
         watchCarAssets(carModels);
         reset(); return true;
       },
@@ -492,13 +553,14 @@ export default function createGame({ container, names = [], onPick, random = Mat
     resize();
     render(0);
     watchCarAssets(carModels);
+    warmScene();
     root.__race3d = {
       snapshot: () => {
         const direction = camera.getWorldDirection(new THREE.Vector3());
         return {
-          phase: mode, laps, playbackRate,
-          selection: selection?.snapshot?.() || null,
-          selectionProgress,
+          finishEffects:carModels?.finishSnapshot?.(),phase: mode, shaderReady, laps,quality:{mode:qualityMode,...quality},festival:festival?.stats,
+          playbackRate,selection:selection?.snapshot?.()||null,selectionProgress,
+          frameBudget:{...frameBudget.snapshot(),actualDpr:renderer.getPixelRatio(),renderScale},city:scenery?.stats,
           countdownRemaining: mode === 'countdown' ? Math.max(0, COUNTDOWN - countdownElapsed) : 0,
           countdownStep: mode === 'countdown' ? Math.max(1, Math.ceil(COUNTDOWN - countdownElapsed)) :
             mode === 'running' && elapsed - goAt < .65 ? 'GO' : null,
@@ -537,8 +599,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
             .map(car => ({ id: car.id, item: car.activeItem, boost: car.boost || 0, spin: car.spin || 0,
               flight: car.flightRemaining || 0, rocket: car.rocketRemaining || 0,
               shield: car.shieldRemaining || 0, freeze: car.freezeRemaining || 0 })),
-          powerupMeshes: Object.fromEntries((powerups?.group.children || [])
-            .map(mesh => [mesh.name, Number.isFinite(mesh.count) ? mesh.count : 0])),
+          powerupMeshes:(()=>{const counts={};powerups?.group.traverse(mesh=>{if(mesh.isInstancedMesh)counts[mesh.name]=mesh.count;});return counts;})(),
           powerupAssets: powerups?.snapshot?.() || null,
           renderer: {
             calls: renderer.info.render.calls, triangles: renderer.info.render.triangles,
@@ -553,6 +614,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
             hiddenCarId: chaseCamera?.hideFocusedCar ? focusedId : null,
           },
           cars: simulation?.cars.map(car => ({
+            inventoryItem:car.inventoryItem,inventoryPhase:car.inventoryPhase,inventorySerial:car.inventorySerial,
+            rouletteRemaining:car.rouletteRemaining,itemsCollected:car.itemsCollected,itemsUsed:car.itemsUsed,lastUsedItem:car.lastUsedItem,
+            itemDecision:car.itemDecision?{...car.itemDecision}:null,massKg:car.massKg,brakeFactor:car.brakeFactor,powerW:car.powerW,tractionRecovery:car.tractionRecovery||0,
             racerType: car.racerType, vehicleName: car.vehicleName, damageLevel: car.damageLevel,
             hitPoints: car.hitPoints, replacements: car.replacements, replacementRemaining: car.replacementRemaining,
             id: car.id, name: car.name, distance: car.distance, lateral: car.lateral,
@@ -563,6 +627,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
             flightHeight: car.flightHeight || 0, flightRemaining: car.flightRemaining || 0,
             flightKind: car.flightKind || null, rampState: car.rampState || 'ground', rampId: car.rampId ?? null,
             rampHeight: car.rampHeight || 0, rampPitch: car.rampPitch || 0,
+            rampPlan:car.rampPlan?{...car.rampPlan}:null,wheelLoads:(car.wheelLoads||[]).map(w=>({...w})),tireGripFactor:car.tireGripFactor||1,
             trickAngle: car.trickAngle || 0, trickFlips: car.trickFlips || 0,
             completedFlips: car.completedFlips || 0, trickSpeedBonus: car.trickSpeedBonus || 0,
             rampTakeoffs: car.rampTakeoffs || 0, spinAngle: car.spinAngle || 0,
@@ -605,6 +670,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     track?.dispose();
     atmosphere?.dispose();
     skySpirit?.dispose();
+    festival?.dispose();contactShadows?.dispose();frogs?.dispose();
     renderer?.dispose();
     renderer?.forceContextLoss?.();
     root.replaceChildren();

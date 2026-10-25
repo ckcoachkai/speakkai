@@ -1,11 +1,12 @@
-import { createRampLayout, sampleRampSurface } from './race3d-ramps.js?v=20261025-supercars-ramps';
-
-/** Rigid tyre frame plus a damped sprung shell. Distances are track metres. */
+import {surfaceForWheel,wheelLoads,vehicleProfile} from './race3d-vehicle.js?v=20261025-city-contact1';
+/** Car pose follows the authoritative road/flight state; only suspension flex is visual. */
 export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts = [], steeringPivots = [], lighting, index = 0 }) {
   const finite = (n, fallback = 0) => Number.isFinite(Number(n)) ? Number(n) : fallback;
   const clamp = (n, low, high) => Math.max(low, Math.min(high, finite(n)));
-  const wheelRadius = wheel => Math.max(.08, finite(wheel.userData?.rollingRadius, .423));
-  const wheelId = wheel => wheel.userData?.wheelId || `${wheel.position.z>0?'front':'rear'}-${wheel.position.x<0?'left':'right'}`;
+  const wheelRadius = wheel => {
+    const radius = finite(wheel.userData?.rollingRadius, .42);
+    return radius > .01 ? radius : .42;
+  };
   const chassis = new THREE.Group();
   chassis.name = 'chassis-motion';
   chassis.position.y = .47;
@@ -16,26 +17,21 @@ export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts
     chassis.add(component);
   }
   car.add(chassis);
-  let wheelBases = [], wheelStates = [], ramps = [], rampTrack = null;
+  let wheelBases=[],wheelTravel=[];
+  function configureWheels(){wheelBases=wheelMounts.map(w=>w.position.clone());wheelTravel=wheelMounts.map(()=>({angle:0,previous:null,omega:0}));}
+  configureWheels();
   const roadRotation = new THREE.Quaternion(), trickRotation = new THREE.Quaternion();
   const localRight = new THREE.Vector3(1, 0, 0), pivot = new THREE.Vector3(0, .72, 0);
-  const roadPivot = new THREE.Vector3(), rotatedPivot = new THREE.Vector3(), localPoint = new THREE.Vector3();
+  const roadPivot = new THREE.Vector3(), rotatedPivot = new THREE.Vector3();
   const motion = { heave: 0, pitch: 0, roll: 0, heaveV: 0, pitchV: 0, rollV: 0 };
   let initialized = false, previousDistance = null;
-  const pose = { id: racer.id, groundY: 0, modelY: 0, flightHeight: 0, roadPitch: 0, roadBank: 0, bodyHeave: 0, bodyPitch: 0, bodyRoll: 0, steering: 0, wheelContacts: [] };
+  const pose = { id: racer.id, groundY: 0, modelY: 0, flightHeight: 0, roadPitch: 0, roadBank: 0, bodyHeave: 0, bodyPitch: 0, bodyRoll: 0, steering: 0 };
 
-  function refreshWheels() {
-    wheelBases = wheelMounts.map(wheel => wheel.position.clone());
-    wheelStates = wheelMounts.map(wheel => ({id:wheelId(wheel),angle:0,angularVelocity:0,steering:0}));
-  }
-  refreshWheels();
   function reset() {
     for (const key of Object.keys(motion)) motion[key] = 0;
-    initialized = false; previousDistance = null;
+    initialized = false; previousDistance = null;wheelTravel.forEach(w=>{w.angle=0;w.previous=null;w.omega=0;});
     chassis.position.y = .47; chassis.rotation.set(0, 0, 0);
-    wheelMounts.forEach((wheel, i) => {wheel.position.copy(wheelBases[i]);wheel.rotation.y=0;});
-    wheelSpin.forEach(wheel=>{wheel.rotation.x=0;});
-    for(const state of wheelStates){state.angle=0;state.angularVelocity=0;state.steering=0;}
+    wheelMounts.forEach((wheel, i) => wheel.position.copy(wheelBases[i]));
   }
   function spring(key, target, frequency, damping, dt) {
     const velocity = `${key}V`, omega = Math.PI * 2 * frequency;
@@ -47,29 +43,48 @@ export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts
       remaining -= h;
     }
   }
-  function update(track, dt = 1 / 60) {
+  function update(track, dt = 1 / 60, {detailed=true}={}) {
     if (!track?.sampleTrack) return;
-    if(rampTrack!==track){ramps=createRampLayout(track.totalLength);rampTrack=track;}
     const distance = finite(racer.distance), speed = Math.max(0, finite(racer.speed));
     if (previousDistance !== null && distance < previousDistance - 2) reset();
-    const deltaDistance=previousDistance===null?0:Math.max(0,distance-previousDistance);
     previousDistance = distance;
     const sample = track.sampleTrack(distance);
     if (!sample?.position || !sample?.tangent) return;
     const lateral = finite(racer.lateral), tangent = sample.tangent;
     const right = sample.right || { x: tangent.z || 0, y: 0, z: -(tangent.x || 0) };
-    const bank = clamp(sample.bank, -.25, .25);
+    const bank = clamp(sample.bank, -.15, .15);
     const grade = Math.atan2(finite(tangent.y), Math.max(.001, Math.hypot(finite(tangent.x), finite(tangent.z))));
     const groundY = finite(sample.position.y) + finite(right.y) * lateral + Math.tan(bank) * lateral + .035;
     const flight = Math.max(0, finite(racer.flightHeight));
-    const rampHeight = Math.max(0, finite(racer.supportHeight,racer.rampHeight));
+    const rampHeight = Math.max(0, finite(racer.rampHeight));
     const airborne = flight > .03 || finite(racer.flightRemaining) > 0;
-    const rampPitch = finite(racer.supportPitch,racer.rampPitch);
-    const trickAngle = finite(racer.trickAngle);
-    const heading=finite(racer.heading),yaw = Math.atan2(finite(tangent.x), finite(tangent.z, 1)) + heading + finite(racer.spinAngle);
-    car.position.set(finite(sample.position.x) + finite(right.x) * lateral, groundY + rampHeight + flight,
+    const recovering=finite(racer.recoveryRemaining)>0&&(Math.abs(finite(racer.landingPitch))+Math.abs(finite(racer.landingRoll))>.12);
+    const rampPitch = finite(racer.rampPitch);
+    if(!detailed){
+      // Far proxies need the authoritative pose, not four rendered hub solves.
+      car.position.set(finite(sample.position.x)+finite(right.x)*lateral,groundY+rampHeight+flight,finite(sample.position.z)+finite(right.z)*lateral);
+      car.rotation.set(-grade-rampPitch+finite(racer.airAttitude?.pitch)+finite(racer.landingPitch),Math.atan2(tangent.x,tangent.z)+finite(racer.heading)+finite(racer.spinAngle),bank+finite(racer.airRoll)+finite(racer.landingRoll),'YXZ');
+      initialized=false;for(const travel of wheelTravel)travel.previous=null;
+      Object.assign(pose,{supportY:car.position.y,modelY:car.position.y,flightHeight:flight,rampHeight,rampPitch,wheels:[],lod:'proxy'});return;
+    }
+    const surfaces=wheelBases.map(base=>surfaceForWheel(track,racer,{x:base.x,z:base.z},{extendLip:true}));
+    const avg=(test,fn)=>{let n=0,sum=0;wheelBases.forEach((b,i)=>{if(test(b)){sum+=fn(b,i);n++;}});return n?sum/n:0;};
+    const frontZ=avg(b=>b.z>0,b=>b.z),rearZ=avg(b=>b.z<0,b=>b.z),wb=Math.max(1,frontZ-rearZ);
+    const frontY=avg(b=>b.z>0,(b,i)=>surfaces[i].y),rearY=avg(b=>b.z<0,(b,i)=>surfaces[i].y);
+    const trackWidth=Math.max(1,avg(b=>b.x>0,b=>b.x)-avg(b=>b.x<0,b=>b.x));
+    const supportPitch=Math.atan2(frontY-rearY,wb),supportRoll=Math.atan2(avg(b=>b.x>0,(b,i)=>surfaces[i].y)-avg(b=>b.x<0,(b,i)=>surfaces[i].y),trackWidth);
+    const centerY=(frontY*(-rearZ)+rearY*frontZ)/wb;
+    const bottomOffset=avg(()=>true,(b,i)=>b.y-wheelRadius(wheelSpin[i]||{}));
+    const baseY=airborne?groundY+flight:centerY-bottomOffset;
+    const loads=wheelLoads(racer),p=vehicleProfile(racer);
+    // A full somersault belongs to the entire rigid car, including its tyres.
+    // The quaternion is composed in the car's local right axis after road bank;
+    // rotating around its centre avoids swinging the car around the tyre contact.
+    const trickAngle = racer.flightKind==='ramp'?0:finite(racer.trickAngle);
+    const yaw = Math.atan2(finite(tangent.x), finite(tangent.z, 1)) + finite(racer.heading) + finite(racer.spinAngle);
+    car.position.set(finite(sample.position.x) + finite(right.x) * lateral, baseY,
       finite(sample.position.z) + finite(right.z) * lateral);
-    car.rotation.set(-grade - rampPitch, yaw, bank+finite(racer.supportRoll), 'YXZ');
+    car.rotation.set(airborne?-grade-rampPitch+finite(racer.airAttitude?.pitch):-supportPitch+finite(racer.landingPitch),yaw,airborne?bank+finite(racer.airRoll):supportRoll+finite(racer.landingRoll),'YXZ');
     roadRotation.copy(car.quaternion);
     trickRotation.setFromAxisAngle(localRight, trickAngle);
     car.quaternion.multiply(trickRotation);
@@ -77,105 +92,65 @@ export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts
     rotatedPivot.copy(pivot).applyQuaternion(car.quaternion);
     car.position.add(roadPivot).sub(rotatedPivot);
 
-    const contacts=Array.isArray(racer.wheelContacts)?racer.wheelContacts:[];
-    const compression=id=>finite(contacts.find(c=>c.id===id)?.compression);
-    const wheelbase=Math.max(1.8,finite(racer.wheelbase,2.72)), trackWidth=Math.max(1.2,finite(racer.trackWidth,1.66));
     const acceleration = clamp(racer.acceleration, -22, 16);
-    const sideAcceleration = clamp(finite(racer.lateralAcceleration,speed*speed*finite(sample.curvature)), -30, 30);
+    const sideAcceleration = clamp(finite(racer.lateralAcceleration), -22, 22);
+    const moving = Math.min(1, speed / 25), phase = index * 1.618;
+    const roughness = racer.offRoad ? .065 : .012;
+    const bump = 0;
     const landing = clamp(racer.landingImpulse, 0, 1);
-    const frontCompression=(compression('front-left')+compression('front-right'))*.5;
-    const rearCompression=(compression('rear-left')+compression('rear-right'))*.5;
-    const leftCompression=(compression('front-left')+compression('rear-left'))*.5;
-    const rightCompression=(compression('front-right')+compression('rear-right'))*.5;
-    // These are load-driven spring targets, with no free-running sine wobble.
-    const targetHeave=airborne?.025:contacts.length?-(frontCompression+rearCompression)*.5:-landing*.12;
-    const targetPitch=airborne?0:clamp(contacts.length?(frontCompression-rearCompression)/wheelbase:-acceleration*.005,-.13,.13);
-    const targetRoll=airborne?0:clamp(contacts.length?(leftCompression-rightCompression)/trackWidth:sideAcceleration*.004,-.12,.12);
+    const targetHeave = airborne ? .035 : bump - finite(racer.downforceN)/Math.max(500,p.massKg)*.007 - landing*.12*(3/p.suspensionHz)**2;
+    const flightPitch = airborne ? -clamp(Math.atan2(finite(racer.verticalVelocity), Math.max(10, speed)) * .55, -.3, .3) : 0;
+    const targetPitch = clamp((airborne ? 0 : -acceleration*p.cg/(9.81*wb)*.6) + landing*.025, -.16, .16);
+    const targetRoll = airborne ? 0 : clamp(sideAcceleration*p.cg/(9.81*trackWidth)*.42, -.14, .14);
     const step = clamp(dt, 0, .1);
     if (!initialized) {
       motion.heave = targetHeave; motion.pitch = targetPitch; motion.roll = targetRoll; initialized = true;
     } else {
-      spring('heave', targetHeave, 3.1, .78, step);
-      spring('pitch', targetPitch, 2.5, .80, step);
-      spring('roll', targetRoll, 2.7, .82, step);
+      spring('heave',targetHeave,p.suspensionHz,p.damping,step);
+      spring('pitch',targetPitch,p.suspensionHz*.78,p.damping,step);
+      spring('roll',targetRoll,p.suspensionHz*.84,p.damping,step);
     }
-    chassis.position.y = .47 + clamp(motion.heave, -.16, .10);
+    chassis.position.y = .47 + clamp(motion.heave, -.2, .13);
     chassis.rotation.set(motion.pitch, 0, motion.roll, 'YXZ');
-
-    const rotationUp = new THREE.Vector3(0,1,0).applyQuaternion(car.quaternion);
-    const steeringYaw=speed*finite(sample.curvature)+finite(racer.yawRate);
-    const turnRadius=Math.abs(steeringYaw)>.001&&speed>.5?speed/steeringYaw:Infinity;
-    const centreSteering=Number.isFinite(turnRadius)?clamp(Math.atan(wheelbase/turnRadius),-.48,.48):0;
-    const wheelContactSnapshots=[];
-    wheelMounts.forEach((wheel, i) => {
-      const base=wheelBases[i],state=wheelStates[i],radius=wheelRadius(wheel);
-      const telemetry=contacts.find(c=>c.id===state.id);
-      const horizontalLength=Math.max(.001,Math.hypot(tangent.x,tangent.z));
-      // Sample beneath the rotated tyre patch, not beneath its unrotated hub.
-      // On a bank or slope the hub is one radius along the road normal, so a
-      // simple world-Y radius offset would bury the tyre in the inclined deck.
-      const contactSurface=offset=>{
-        localPoint.set(base.x,base.y+offset-radius,base.z).applyQuaternion(car.quaternion);
-        const along=(localPoint.x*tangent.x+localPoint.z*tangent.z)/horizontalLength;
-        const across=lateral+localPoint.x*right.x+localPoint.z*right.z;
-        const surface=sampleRampSurface(track,ramps,distance+along,across);
-        return {surfaceY:finite(surface?.surfaceY,groundY),contactY:car.position.y+localPoint.y};
-      };
-      let contact=contactSurface(0);
-      // Once the front axle has left the lip it extends slightly instead of
-      // being snapped through several metres of air to the road below.
-      const grounded=!airborne&&(telemetry?.grounded!==false)&&Math.abs(contact.surfaceY-contact.contactY)<.36;
-      let supportOffset=-.045;
-      if(grounded){
-        supportOffset=0;
-        // Iteration also follows the tiny horizontal patch shift as a spring
-        // compresses along the car's inclined local-up axis.
-        for(let j=0;j<5;j++){
-          const error=contact.surfaceY-contact.contactY;
-          if(Math.abs(error)<=1e-7)break;
-          supportOffset+=error/Math.max(.2,rotationUp.y);
-          contact=contactSurface(supportOffset);
+    const up=new THREE.Vector3(0,1,0).applyQuaternion(car.quaternion),v=new THREE.Vector3();
+    const steering=clamp(racer.steeringAngle??(finite(racer.heading)*.68+finite(racer.yawRate)*.055),-.48,.48),turnRadius=Math.abs(steering)>.0001?wb/Math.tan(steering):Infinity;
+    const wheelContacts=[];
+    wheelMounts.forEach((wheel,i)=>{
+      const base=wheelBases[i],spin=wheelSpin[i],radius=wheelRadius(spin||{}),travel=wheelTravel[i];let surface=surfaces[i];
+      wheel.position.copy(base);
+      if(!airborne&&!recovering){
+        // Iterate the actual rotated hub's horizontal position, rather than
+        // sampling an upright footprint underneath a pitched chassis.
+        for(let pass=0;pass<(racer.rampState==='approach'?3:1);pass++){
+          v.copy(wheel.position).applyQuaternion(car.quaternion);
+          const along=(v.x*tangent.x+v.z*tangent.z)/Math.max(.001,Math.hypot(tangent.x,tangent.z)),across=v.x*right.x+v.z*right.z,h=finite(racer.heading);
+          surface=surfaceForWheel(track,racer,{x:across*Math.cos(h)-along*Math.sin(h),z:along*Math.cos(h)+across*Math.sin(h)},{extendLip:true});
+          wheel.position.y+=(surface.y+radius-v.y-car.position.y)/Math.max(.65,up.y);
+          wheel.position.y=clamp(wheel.position.y,base.y-.20,base.y+.20);
         }
-      }else contact=contactSurface(supportOffset);
-      wheel.position.set(base.x,base.y+supportOffset,base.z);
-      const front=state.id.startsWith('front');
-      const desiredSteering=front&&Number.isFinite(turnRadius)?clamp(Math.atan(wheelbase/(turnRadius-base.x)),-.5,.5):0;
-      // Ackermann: the inside front tyre turns more sharply than the outside.
-      const blend=1-Math.exp(-step*18);
-      state.steering+=(desiredSteering-state.steering)*blend;
-      if(steeringPivots.includes(wheel))wheel.rotation.y=state.steering;
-      const spin=wheelSpin[i];
+      }else wheel.position.y-=.08;
+      if(base.z>0)wheel.rotation.y=Number.isFinite(turnRadius)?clamp(Math.atan(wb/(turnRadius-base.x)),-.52,.52):0;
       if(spin){
-        if(grounded){
-          // A rigid wheel hub describes its own arc around the turn centre:
-          // inside tyres cover fewer metres; outside tyres cover more. The
-          // fore/aft offset also matters for the steered front wheel paths.
-          const arcScale=Number.isFinite(turnRadius)?Math.hypot(1-base.x/turnRadius,base.z/turnRadius):1;
-          const wheelTravel=deltaDistance*arcScale;
-          state.angularVelocity=step>0?wheelTravel/step/radius:0;state.angle+=wheelTravel/radius;
-        }
-        else{state.angularVelocity*=Math.exp(-step*.08);state.angle+=state.angularVelocity*step;}
-        if(racer.parked){state.angularVelocity=0;}
-        spin.rotation.x=state.angle;
+        if(!airborne&&travel.previous&&step>0){const dd=surface.d-travel.previous.d,dl=surface.l-travel.previous.l,dy=surface.y-travel.previous.y;if(Math.abs(dd)<25){const ds=Math.hypot(dd,dl,dy)*Math.sign(dd||1);travel.angle+=ds/radius;travel.omega=ds/radius/step;}}
+        else if(airborne&&step>0){travel.omega*=Math.exp(-.08*step);travel.angle+=travel.omega*step;}
+        spin.rotation.x=travel.angle;
       }
-      localPoint.copy(wheel.position).applyQuaternion(car.quaternion);
-      const hubY=car.position.y+localPoint.y;
-      wheelContactSnapshots.push({id:state.id,grounded,load:grounded?finite(telemetry?.load,.25):0,
-        compression:finite(telemetry?.compression),surfaceY:contact.surfaceY,contactPointY:contact.contactY,hubY,radius,
-        contactError:grounded?contact.contactY-contact.surfaceY:null,
-        suspensionTravel:wheel.position.y-base.y,steering:state.steering,angularVelocity:state.angularVelocity});
+      travel.previous={d:surface.d,l:surface.l,y:surface.y};v.copy(wheel.position).applyQuaternion(car.quaternion).add(car.position);
+      const load=loads.find(l=>l.side===Math.sign(base.x)&&(l.axle>0)===(base.z>0))||{load:0,compression:0};
+      wheelContacts.push({side:Math.sign(base.x),axle:base.z>0?'front':'rear',x:base.x,z:base.z,radius,hubX:v.x,hubY:v.y,hubZ:v.z,surfaceY:surface.y,contactError:airborne||recovering?null:v.y-radius-surface.y,contact:!airborne&&!recovering&&surface.contact&&Math.abs(v.y-radius-surface.y)<.035,load:load.load,compression:load.compression,steering:base.z>0?wheel.rotation.y:0,angle:travel.angle});
     });
+    pose.wheels=wheelContacts;pose.wheelbase=wb;pose.trackWidth=trackWidth;
     lighting?.update(racer);
     Object.assign(pose, { groundY, modelY: car.position.y, flightHeight: flight, rampHeight, rampPitch,
-      supportY: groundY + rampHeight + flight, rampState: racer.rampState || 'ground', rampId: racer.rampId ?? null,
-      flightKind: racer.flightKind || null, trickAngle, trickFlips: finite(racer.trickFlips),
+      supportY: baseY, rampState: racer.rampState || 'ground', rampId: racer.rampId ?? null,
+      flightKind: racer.flightKind || null, trickAngle:finite(racer.trickAngle),airPitch:finite(racer.airAttitude?.pitch),airRoll:finite(racer.airRoll),trickFlips: finite(racer.trickFlips),lod:'detailed',
       completedFlips: finite(racer.completedFlips), trickSpeedBonus: finite(racer.trickSpeedBonus),
       spinAngle: finite(racer.spinAngle), worldQuaternion: car.quaternion.toArray(),
-      roadPitch: -grade, roadBank: bank, wheelContacts:wheelContactSnapshots,
-      bodyHeave: chassis.position.y - .47, bodyPitch: motion.pitch, bodyRoll: motion.roll, steering:centreSteering });
+      roadPitch: -supportPitch, roadBank: supportRoll,
+      bodyHeave: chassis.position.y - .47, bodyPitch: motion.pitch, bodyRoll: motion.roll, steering });
     Object.assign(car.userData, { finished: !!racer.finished, speed, flightHeight: flight, motion: pose });
   }
-  return { update, reset, refreshWheels, snapshot: () => ({ ...pose, wheelHeights: wheelMounts.map(wheel => wheel.position.y),
+  return { update, reset, configureWheels, snapshot: () => ({ ...pose, wheels:(pose.wheels||[]).map(w=>({...w})), wheelHeights: wheelMounts.map(wheel => wheel.position.y),
     wheelRolling: wheelSpin.map(wheel => ({ radius: wheelRadius(wheel), axis: 'x', axle: wheel.userData?.axle || null,
       authoredWheelName: wheel.userData?.authoredWheelName || null, angle: wheel.rotation.x })) }) };
 }

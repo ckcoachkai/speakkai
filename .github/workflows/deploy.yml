@@ -46,6 +46,15 @@ jobs:
         run: node --test scripts/check-schedule-presentation.mjs
       - name: Build
         run: npm run build
+      - name: Verify Grand Prix inventory, counters, jumps and finish lifecycle
+        # Circuit Prism tests are deterministic and do not need WebGL or audio.
+        run: |
+          node scripts/check-race3d-kart.mjs
+          node scripts/check-race3d-vehicle.mjs
+          node scripts/check-race3d-strategy.mjs
+          node scripts/check-race3d-finish.mjs
+          node scripts/check-race3d-flight.mjs
+          node scripts/check-race3d-disruption.mjs
       - name: Verify Dynamite Mice game and media
         run: |
           node scripts/check-maze.mjs --dist

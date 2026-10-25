@@ -1,6 +1,9 @@
-import { RACE_ROSTER_TYPES, getRacerIdentity } from './race3d-roster.js?v=20261025-supercars-ramps';
-import { createRaceExtras } from './race3d-ui-extras.js?v=20261025-supercars-ramps';
-const STYLE_URL = new URL('./race3d-ui.css?v=20261025-supercars-ramps', import.meta.url).href;
+import {addCarGuide} from "./race3d-car-guide.js?v=20261025-city-contact1";
+import { createRaceExtras } from './race3d-ui-extras.js?v=20261025-city-contact1';
+import { inventoryFace } from './race3d-item-rules.js?v=20261025-city-contact1';
+import { ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-city-contact1';
+const STYLE_URL = new URL('./race3d-ui.css?v=20261025-city-contact1', import.meta.url).href;
+import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261025-city-contact1';
 
 function ensureStyles() {
   if (document.querySelector('link[data-race3d-ui-style]')) return;
@@ -130,6 +133,13 @@ export function createRaceUI(container, players = [], options = {}) {
   const select = make('select', 'race3d-lap-select'); select.setAttribute('aria-label', 'Number of laps');
   for (const n of [1,3,5,10]) { const o = make('option', '', String(n)); o.value = String(n); select.append(o); }
   select.value = String(options.laps ?? 5); control.append(select); map.append(control);
+  const graphics=make('label','race3d-lap-control','Graphics '),qualitySelect=make('select','race3d-lap-select');qualitySelect.setAttribute('aria-label','Graphics quality');
+  for(const [value,label] of [['auto','Auto'],['low','Performance'],['medium','Balanced'],['high','Detailed']]){const o=make('option','',label);o.value=value;qualitySelect.append(o);}
+  qualitySelect.value=options.qualityMode||'auto';graphics.append(qualitySelect);map.append(graphics);
+  const destroyGuide=addCarGuide(root,map,options);
+  let qualityMode=qualitySelect.value;
+  const onQuality=()=>{const next=qualitySelect.value;if(qualitySelect.disabled||options.onQuality?.(next)===false)qualitySelect.value=qualityMode;else qualityMode=next;};
+  qualitySelect.addEventListener('change',onQuality);
   const dots = new Map(); let projectMap;
   if (options.track) {
     const points = Array.from({length:201}, (_,i) => options.track.sampleTrack(i / 200 * options.track.totalLength).position);
@@ -166,9 +176,10 @@ export function createRaceUI(container, players = [], options = {}) {
     swatch.setAttribute('aria-hidden', 'true');
     const name = make('span', 'race3d-roster-name', racer.name);
     const detail = make('span', 'race3d-roster-detail', 'GRID');
-    row.append(rank, swatch, name, detail);
+    const item=make('span','race3d-row-item');item.hidden=true;
+    row.append(rank, swatch, name, detail,item);
     roster.appendChild(row);
-    rows.set(racer.id, { row, rank, swatch, name, detail, racer });
+    rows.set(racer.id, { row, rank, swatch, name, detail, racer,item });
   }
 
   let continued = false, timing = {}, finishKey = '';
@@ -320,10 +331,11 @@ export function createRaceUI(container, players = [], options = {}) {
     viewDown.disabled = timing.cameraMode === 'first-person';
     if (focusedId !== undefined) mapFocusId = focusedId;
     select.disabled = ['selecting','countdown','running','finishing','finished'].includes(phase);
+    qualitySelect.disabled=phase!=='idle';
     if (winnerId !== null) {
       const allFinished = timing.allFinished === true || (cars.length > 0 && cars.every(car => Number.isFinite(car.finishTime)));
-      continueButton.disabled = continued || !allFinished;
-      continueButton.textContent = allFinished ? 'Continue with first speaker' : 'Waiting for all racers…';
+      const celebrationReady=timing.finishCelebrationComplete!==false;continueButton.disabled=continued||!allFinished||!celebrationReady;
+      continueButton.textContent=allFinished?(celebrationReady?'Continue with first speaker':'Finishing celebrations…'):'Waiting for all racers…';
     }
     currentCars = Array.isArray(cars) ? cars : [];
     if (projectMap) for (const car of currentCars) {
@@ -385,6 +397,13 @@ export function createRaceUI(container, players = [], options = {}) {
           entry.row.setAttribute('aria-label', rank + '. ' + getName(car, entry.racer.name) + (finished ? ', finished in ' : ', elapsed ') + entry.detail.textContent + (winnerId === id ? ', winner and first speaker' : ''));
           entry.name.title = getName(car, entry.racer.name);
           entry.row.classList.toggle('is-winner', winnerId === id);
+          if(!entry.item){entry.item=make('span','race3d-row-item');entry.row.append(entry.item);}
+          const face=inventoryFace(car,Number(timing.simulationTime)||0),rolling=car.inventoryPhase==='rolling';
+          entry.item.hidden=!face;
+          entry.item.dataset.phase=car.inventoryPhase||'empty';
+          if(entry.item.dataset.face!==face){entry.item.dataset.face=face||'';entry.item.innerHTML=face?itemThumbnail(face):'';}
+          entry.item.title=rolling?'Choosing independently…':face?ITEM_VISUALS[face]?.[0]+' · ready':'';
+          entry.item.setAttribute('aria-label',entry.item.title);
           entry.row.style.setProperty('--race-progress', progress);
           // Keep stable rows attached: repeatedly appending the whole board
           // churns the DOM even when no racer has changed position.
@@ -416,6 +435,8 @@ export function createRaceUI(container, players = [], options = {}) {
     stats.dataset.phase = phase;
     stats.dataset.elapsed = String(Math.max(0, now).toFixed(1));
     updateLabels(currentCars, ranking);
+    // Ownership changes cannot wait for the standings text refresh throttle.
+    for(const car of currentCars){const entry=rows.get(carId(car,0));if(entry?.item&&!car.inventoryItem)entry.item.hidden=true;}
     extras.update(currentCars, target?.id, metadata || {}, phase);
   }
 
@@ -485,6 +506,7 @@ export function createRaceUI(container, players = [], options = {}) {
     if (disposed) return;
     disposed = true;
     select.removeEventListener('change',onLaps);
+    destroyGuide();qualitySelect.removeEventListener('change',onQuality);
     prev.removeEventListener('click', onPrevious);
     next.removeEventListener('click', onNext);
     continueButton.removeEventListener('click', onContinue);
@@ -499,3 +521,4 @@ export function createRaceUI(container, players = [], options = {}) {
 }
 
 export default createRaceUI;
+

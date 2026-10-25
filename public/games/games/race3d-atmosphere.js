@@ -1,8 +1,8 @@
 /** A single atmospheric lighting rig; attach directly to scene, outside scaled world. */
-export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true } = {}) {
+export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, shadowSize=2048,skyWidth=1024 } = {}) {
   const previous = { background: scene.background, environment: scene.environment, fog: scene.fog };
   const direction = new THREE.Vector3(-0.59, 0.71, 0.38).normalize();
-  const width = 1024, height = 512;
+  const width = skyWidth, height = skyWidth/2;
   const canvas = document.createElement('canvas');
   canvas.width = width; canvas.height = height;
   const ctx = canvas.getContext('2d');
@@ -59,7 +59,7 @@ export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true } 
   const sun=new THREE.DirectionalLight(0xffedcf,2.65);
   sun.position.copy(direction).multiplyScalar(160);
   sun.castShadow=shadows;
-  sun.shadow.mapSize.set(2048,2048);
+  sun.shadow.mapSize.set(shadowSize,shadowSize);
   Object.assign(sun.shadow.camera,{left:-65,right:65,top:65,bottom:-65,near:1,far:350});
   sun.shadow.bias=-0.00012; sun.shadow.normalBias=0.035;
   sun.shadow.radius=2;

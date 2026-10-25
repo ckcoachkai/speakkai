@@ -1,4 +1,5 @@
-import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261025-supercars-ramps';
+import {audioPeakCurve} from './race3d-finish-fx.js?v=20261025-city-contact1';
+import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261025-city-contact1';
 /** Recorded driving textures with a procedural fallback. All audio creation and resume calls stay on start/setSound
  * so browsers only unlock the graph from a host user gesture. */
 export function createRaceAudio({ sound = true } = {}) {
@@ -11,7 +12,7 @@ export function createRaceAudio({ sound = true } = {}) {
   };
 
   let enabled = Boolean(sound), alive = true, racing = false, finished = false;
-  let context = null, master = null, compressor = null, noiseBuffer = null;
+  let context = null, master = null, compressor = null, peakLimiter = null, noiseBuffer = null;
   let noiseSource = null, windFilter = null, windGain = null, skidFilter = null, skidGain = null;
   let thrustFilter = null, thrustGain = null, turboFilter = null, turboGain = null;
   let sampleGeneration = 0, sampleAbort = null, tireSample = null;
@@ -85,7 +86,7 @@ export function createRaceAudio({ sound = true } = {}) {
   let engines = [], effects = new Set(), closeTimer = 0, finishTimer = 0;
   let lastSpin = new Map(), lastCars = new Map(), eventCooldowns = new Map();
   let lastCrashAt = -Infinity, lastShiftAt = -Infinity;
-  let lastUpdateAt = 0;
+  let lastUpdateAt = 0,lastFinishBurstAt=-Infinity,finishBurstsPlayed=0,mergedFinishBursts=0,activeCount=0;
   let previousCountdown = -1;
 
   function makeNoiseBuffer(ctx) {
@@ -142,7 +143,8 @@ export function createRaceAudio({ sound = true } = {}) {
       compressor.threshold.value = -18; compressor.knee.value = 16;
       compressor.ratio.value = 4; compressor.attack.value = 0.008; compressor.release.value = 0.18;
       master = ctx.createGain(); master.gain.value = 0;
-      master.connect(compressor).connect(ctx.destination);
+      peakLimiter=ctx.createWaveShaper();peakLimiter.curve=audioPeakCurve();peakLimiter.oversample='none';
+      master.connect(compressor).connect(peakLimiter).connect(ctx.destination);
       noiseBuffer = makeNoiseBuffer(ctx);
       noiseSource = ctx.createBufferSource(); noiseSource.buffer = noiseBuffer; noiseSource.loop = true;
       windFilter = ctx.createBiquadFilter(); windFilter.type = 'lowpass'; windFilter.frequency.value = 250;
@@ -194,9 +196,9 @@ export function createRaceAudio({ sound = true } = {}) {
       for (const node of Object.values(engine)) { try { node.disconnect(); } catch {} }
     }
     engines = [];
-    for (const node of [windFilter, windGain, skidFilter, skidGain, thrustFilter, thrustGain, turboFilter, turboGain, master, compressor]) { try { node?.disconnect(); } catch {} }
+    for (const node of [windFilter, windGain, skidFilter, skidGain, thrustFilter, thrustGain, turboFilter, turboGain, master, compressor, peakLimiter]) { try { node?.disconnect(); } catch {} }
     thrustFilter = thrustGain = turboFilter = turboGain = null;
-    windFilter = windGain = skidFilter = skidGain = master = compressor = noiseBuffer = null;
+    windFilter = windGain = skidFilter = skidGain = master = compressor = peakLimiter = noiseBuffer = null;
     if (ctx && ctx.state !== 'closed') { try { const closing = ctx.close(); closing?.catch?.(() => {}); } catch {} }
   }
 
@@ -329,7 +331,13 @@ export function createRaceAudio({ sound = true } = {}) {
 
   function powerSound(type, space, itemType) {
     const { volume, pan } = space;
-    if (type === 'item-pickup' || type === 'pickup') {
+    if(type==='item-pickup'||type==='pickup'){
+      // Original ratcheting prism draw, bounded to six short voices. The
+      // result's distinct motif plays only when that driver's draw locks.
+      for(let i=0;i<6;i++)tone(470+i*115,.045,{type:'triangle',volume:.034*volume,delay:i*.115,pan});
+      return;
+    }
+    if (type === 'item-ready') {
       const motifs = {
         launch: [660, 1320, 'square', 0.06], rocket: [880, 1760, 'triangle', 0.13],
         shield: [1046, 1568, 'sine', 0.1], missile: [1480, 1110, 'square', 0.075],
@@ -426,13 +434,21 @@ export function createRaceAudio({ sound = true } = {}) {
     }
   }
 
+  function finishBurst(space){
+    const now=context.currentTime;if(now-lastFinishBurstAt<.12){mergedFinishBursts++;return;}
+    lastFinishBurstAt=now;finishBurstsPlayed++;reserveEffects(3);
+    const volume=Math.min(.8,space.volume),pan=space.pan||0;
+    noiseHit(.62,.20*volume,4800,{endCutoff:180,pan,attack:.012});
+    tone(95,.65,{type:'sine',volume:.16*volume,endFrequency:27,pan});
+    noiseHit(.25,.055*volume,6000,{endCutoff:1900,type:'highpass',pan,attack:.008});
+  }
   function normalizeEvents(events, cars, primary) {
     let crashEvent = false, shiftEvent = false;
     const now = context.currentTime;
     // Nearby explosions take voice priority over the numerous item boxes in a
     // large grid. Every one-shot still uses the same twelve-voice ceiling.
-    const focusedPickup = event => primary && event?.carId === primary.id && /^(item-pickup|pickup)$/.test(eventType(event));
-    const priority = event => (focusedPickup(event) ? 200 : eventType(event) === 'bomb-explode' ? 100 : 0) + eventSpace(event, primary).volume * 10;
+    const focusedPickup = event => primary && event?.carId === primary.id && /^(item-pickup|item-ready|pickup)$/.test(eventType(event));
+    const priority = event => (focusedPickup(event) ? 200 : eventType(event) === 'finish-burst' ? 150 : eventType(event) === 'bomb-explode' ? 100 : 0) + eventSpace(event, primary).volume * 10;
     const list = eventList(events).sort((a, b) => priority(b) - priority(a)).slice(0, 80);
     for (const event of list) {
       const type = eventType(event);
@@ -443,8 +459,10 @@ export function createRaceAudio({ sound = true } = {}) {
       }
       const space = eventSpace(event, primary);
       if (space.volume < 0.04) continue;
+      if(type==='finish-burst'){finishBurst({...space,volume:space.volume*(event.intensity??1)});continue;}
       const isSkid = /^(banana-hit|spin|skid|drift|spinout)$/.test(type);
-      const isPower = /^(item-pickup|pickup|boost|banana-drop|banana-launch|banana-land|banana-hit|bomb-launch|bomb-explode|ramp-approach|ramp-takeoff|ramp-land|trick-complete)$/.test(type) || /^(launch|rocket|shield|missile|shockwave|freeze|repair)(-|$)/.test(type);
+      const isPower = /^(item-pickup|item-ready|pickup|boost|banana-drop|banana-launch|banana-land|banana-hit|bomb-launch|bomb-explode|ramp-approach|ramp-takeoff|ramp-land|trick-complete)$/.test(type) || /^(launch|rocket|shield|missile|shockwave|freeze|repair)(-|$)/.test(type);
+      if(type==='item-pickup' && primary && event.carId!==primary.id)continue;
       const group = isSkid ? 'skid' : /crash|collision|impact|hit/.test(type) ? 'impact' : type;
       const key = `${group}:${event?.carId ?? 'all'}`;
       const interval = isSkid ? 0.55 : group === 'impact' ? .18 : /^(ramp-|trick-complete|repair)/.test(type) ? 1 : type === 'boost' ? 0.7 : 0.14;
@@ -455,7 +473,7 @@ export function createRaceAudio({ sound = true } = {}) {
       eventCooldowns.set(key, now);
       if (focusedPickup(event)) {
         // Reserve two voices even if earlier frames filled the transient pool.
-        reserveEffects(2);
+        reserveEffects(type==='item-pickup'?6:2);
       }
       if (isPower || isSkid) powerSound(isSkid ? 'skid' : type, space, event?.itemType);
       else if (/crash|collision|impact|hit/.test(type)) { crashEvent = true; crash(event?.intensity ?? event?.strength ?? 1, space); }
@@ -580,15 +598,18 @@ export function createRaceAudio({ sound = true } = {}) {
   }
 
   function update(cars = [], focusId = null, events = []) {
-    if (!alive || !racing || !enabled || !context || context.state !== 'running') return;
+    if(!alive)return;
     const list = Array.isArray(cars) ? cars : [];
+    const active=list.filter(c=>!c.finished);activeCount=active.length;
+    if (!racing || !enabled || !context || context.state !== 'running') return;
     const now = context.currentTime;
-    const selected = chooseEngines(list, focusId);
+    const selected = chooseEngines(active, focusId);
     const dt = clamp(lastUpdateAt ? now - lastUpdateAt : 1 / 60, 1 / 240, 0.1);
     lastUpdateAt = now;
     const pending = eventList(events);
     for (const event of pending) if (eventType(event) === 'countdown') playCountdown(event.value);
-    if (!skipTransientFrame) normalizeEvents(pending.filter(event => eventType(event) !== 'countdown'), list, selected[0]);
+    const listener=list.find(c=>c.id===focusId)||selected[0];
+    if (!skipTransientFrame) normalizeEvents(pending.filter(event => eventType(event) !== 'countdown'), list, listener);
     for (let i = 0; i < list.length; i++) {
       const car = list[i], id = carId(car, i);
       lastCars.set(id, { speed: carSpeed(car), gear: car?.gear == null ? null : Number(car.gear) });
@@ -596,28 +617,21 @@ export function createRaceAudio({ sound = true } = {}) {
     while (lastCars.size > 64) lastCars.delete(lastCars.keys().next().value);
     updateEngines(selected, now, dt);
     skipTransientFrame = false;
+    if(finished&&!activeCount&&pending.some(e=>eventType(e)==='finish-burst')){
+      if(finishTimer)clearTimeout(finishTimer);
+      finishTimer=setTimeout(()=>{finishTimer=0;if(!alive||activeCount||!context)return;master?.gain.setValueAtTime(0,context.currentTime);racing=false;context.suspend()?.catch?.(()=>{});},1450);
+    }
   }
 
-  function finish(winner) {
-    if (!alive || finished) return;
-    finished = true; racing = false;
-    if (!enabled || !context || context.state !== 'running') return;
-    const now = context.currentTime;
-    for (const engine of engines) smooth(engine.bus.gain, 0, now, 0.12);
-    smooth(windGain?.gain, 0, now, 0.12); smooth(skidGain?.gain, 0, now, 0.08);
-    smooth(thrustGain?.gain, 0, now, 0.06); smooth(turboGain?.gain, 0, now, .06); smooth(tireSample?.gain.gain, 0, now, .08);
-    cancelEffects();
-    tone(590, 0.18, { type: 'triangle', volume: 0.08, delay: 0.06 });
-    tone(790, 0.22, { type: 'sine', volume: 0.07, delay: 0.24 });
-    tone(990, 0.32, { type: 'triangle', volume: 0.055, delay: 0.46 });
-    if (finishTimer) clearTimeout(finishTimer);
-    finishTimer = setTimeout(() => { finishTimer = 0; if (context && master && !racing) smooth(master.gain, 0, context.currentTime, 0.2); }, 950);
+  function finish(winner){
+    // A winner is recorded before the other drivers finish. Keep their mixer
+    // alive and leave the decorative burst sounds on the regular shared bus.
+    if(!alive||finished)return;finished=true;
   }
-
   function reset() {
     if (!alive) return;
     if (finishTimer) { clearTimeout(finishTimer); finishTimer = 0; }
-    racing = false; finished = false; lastUpdateAt = 0;
+    racing = false; finished = false; lastUpdateAt = 0;lastFinishBurstAt=-Infinity;finishBurstsPlayed=mergedFinishBursts=activeCount=0;
     focusIdentity = null; skipTransientFrame = true; controlsSnapshot = []; seenEvents.clear();
     for (const engine of engines) engine.controls = newAudioState();
     previousCountdown = -1; lastSpin.clear(); lastCars.clear(); eventCooldowns.clear();
@@ -647,7 +661,10 @@ export function createRaceAudio({ sound = true } = {}) {
     if (racing) {
       skipTransientFrame = true; focusIdentity = null; seenEvents.clear(); lastUpdateAt = 0;
       for (const engine of engines) engine.controls = newAudioState();
-      if (unlockFromGesture()) smooth(master?.gain, 0.82, context.currentTime, 0.08);
+      if (unlockFromGesture()) {
+        smooth(master?.gain, 0.82, context.currentTime, 0.08);
+        if(finished&&!activeCount){if(finishTimer)clearTimeout(finishTimer);finishTimer=setTimeout(()=>{finishTimer=0;if(!alive||activeCount||!context)return;master?.gain.setValueAtTime(0,context.currentTime);racing=false;context.suspend()?.catch?.(()=>{});},1600);}
+      }
     }
   }
 
@@ -661,7 +678,7 @@ export function createRaceAudio({ sound = true } = {}) {
   }
 
   const snapshot = () => ({ enabled, racing, finished, contextState: context?.state || 'none',
-    sampleCount: sampleBuffers.size, sampleErrors: [...sampleErrors], loops: sampleLoops.size,
+    finishBurstsPlayed,mergedFinishBursts,peakProtected:!!peakLimiter,activeCount,sampleCount: sampleBuffers.size, sampleErrors: [...sampleErrors], loops: sampleLoops.size,
     engines: controlsSnapshot.map(value => ({ ...value })), transientVoices: effects.size,
     creditsURL: new URL('../assets/race3d-audio/CREDITS.md', import.meta.url).href });
   return { start, update, finish, reset, setSound, destroy, snapshot };

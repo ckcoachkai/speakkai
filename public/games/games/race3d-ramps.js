@@ -13,7 +13,7 @@ export function createRampLayout(totalLength) {
     [.860, -4.25, 21, 2.8]
   ].map(([fraction, lateral, length, height], index) => ({
     id: `ramp-${index + 1}`, distance: totalLength * fraction,
-    lateral, width: 5.4, length, height
+    lateral, width: 5.8, length, height
   }));
 }
 
@@ -51,6 +51,7 @@ export function createRaceRamps(THREE, { track }) {
   const group = new THREE.Group();
   group.name = 'race3d-ramps';
   const layout = createRampLayout(track?.totalLength);
+  track.ramps=layout;
   group.userData.ramps = layout;
   const materials = [], geometries = [], batches = new Map();
   const material = (color, extra = {}) => {
@@ -58,7 +59,7 @@ export function createRaceRamps(THREE, { track }) {
     materials.push(result);
     return result;
   };
-  const deck = material(0xeaff00, { roughness: .48, metalness: .16, emissive: 0x7d8700, emissiveIntensity: .24 });
+  const deck = material(0x233e4d, { roughness: .5, metalness: .48, emissive: 0x093741, emissiveIntensity: .12 });
   const steel = material(0x96a8b0, { roughness: .32, metalness: .82 });
   const dark = material(0x101c25, { roughness: .66, metalness: .66, side: THREE.DoubleSide });
   const cyan = material(0x60e8ed, { roughness: .28, metalness: .45, emissive: 0x1b8c9a, emissiveIntensity: .62 });
@@ -113,6 +114,12 @@ export function createRaceRamps(THREE, { track }) {
   for (const ramp of layout) {
     const half = ramp.width / 2;
     ribbon(deckBatch, ramp, 0, 1, -half, half);
+    // A flush dashed landing corridor makes the trajectory and bypass lane
+    // legible without adding a collision or changing the shared road profile.
+    for(let offset=30;offset<100;offset+=10)for(const side of [-1,1]){
+      const a=ramp.distance+ramp.length+offset,b=a+5,l=ramp.lateral+side*(half-.2);
+      quad(arrowBatch,point(a,l-.07,.025),point(b,l-.07,.025),point(b,l+.07,.025),point(a,l+.07,.025));
+    }
     // The shell meets the road at every section; no horizontal floating wedge
     // approximation, even over the course's changing grade and banking.
     const segments = Math.ceil(ramp.length / .5);

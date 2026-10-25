@@ -1,5 +1,5 @@
 import { GLTFLoader } from '../assets/vendor/GLTFLoader.js';
-import { createCarFinish } from './race3d-car-finish.js?v=20261025-supercars-ramps';
+import { createCarFinish } from './race3d-car-finish.js?v=20261025-city-contact1';
 
 // Licensed authored meshes. Templates share their GPU buffers/textures across all racers.
 export const RACE_CAR_ASSETS = [
@@ -10,7 +10,7 @@ export const RACE_CAR_ASSETS = [
   { id:'car-concept', label:'CarConcept sports coupe', url:new URL('../assets/race3d-cars/supercar.glb',import.meta.url).href, yaw:0, length:4.6, wheelPattern:/^Wheel(Front|Rear)[LR]$/i },
 ];
 
-export function createAuthoredCarAssets(THREE, { isDisposed, registerResource }) {
+export function createAuthoredCarAssets(THREE, { isDisposed, registerResource, prepareAsset }) {
   const loader=new GLTFLoader(), pending=new Map(), errors=[];
   function collect(root) {
     root.traverse(node=>{
@@ -69,6 +69,10 @@ export function createAuthoredCarAssets(THREE, { isDisposed, registerResource })
     const finish=createCarFinish(THREE,normalized,spec,state.primaryHex,registerResource);
     const chassis=state.car.getObjectByName('chassis-motion');
     if(!chassis)return false;
+    // Leave the procedural car visible while an authored shader variant links.
+    // Slow or missing assets never prevent the existing car from racing.
+    await prepareAsset?.(normalized);
+    if (isDisposed()) return false;
     for(const child of chassis.children)child.visible=false;
     for(const wheel of state.wheelMounts)wheel.visible=false;
     // Unsprung tyres belong to the rigid car frame, not the sprung shell.
@@ -76,10 +80,12 @@ export function createAuthoredCarAssets(THREE, { isDisposed, registerResource })
     // transfer, leaving them visibly floating above the deck in acceleration.
     for(const mount of mounts){normalized.remove(mount);state.car.add(mount);}
     normalized.position.y=-.47;chassis.add(normalized);
+    // Real hubs leave the sprung body so its load-transfer flex cannot float tyres.
+    for(const mount of mounts){const center=mount.position.clone();(state.detailGroup||state.car).add(mount);mount.position.copy(center);}
     state.wheelMounts.splice(0,state.wheelMounts.length,...mounts);
     state.wheelSpin.splice(0,state.wheelSpin.length,...spins);
     state.steeringPivots.splice(0,state.steeringPivots.length,...steering);
-    state.motion.refreshWheels();
+    state.motion.configureWheels();
     state.authoredVisuals=finish;finish.update(state.racer);
     // Anchors are car-local, measured from the normalized source shell. Formula
     // has one central high exhaust; the road cars use low rear outlet pairs.

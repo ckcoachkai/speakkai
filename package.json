@@ -10,6 +10,11 @@
     "build": "astro check && astro build && node scripts/build-feedback-alias.mjs && node scripts/build-dnd-alias.mjs && node scripts/apply-editorial-theme.mjs",
     "preview": "astro preview",
     "check": "astro check",
+    "check:race3d-kart": "node scripts/check-race3d-kart.mjs",
+    "check:race3d-vehicle": "node scripts/check-race3d-vehicle.mjs",
+    "check:race3d-strategy": "node scripts/check-race3d-strategy.mjs",
+    "check:race3d-finish": "node scripts/check-race3d-finish.mjs",
+    "measure:race3d-cars": "node scripts/measure-race3d-cars.mjs",
     "check:experiment-lab": "node scripts/check-experiment-lab.mjs",
     "check:original-baseline": "node scripts/check-original-baseline.mjs",
     "check:original-visuals": "python scripts/compare-original-screenshots.py",
@@ -28,7 +33,9 @@
     "check:practice-content": "node scripts/check-practice-content.mjs",
     "check:course-languages": "node scripts/check-course-languages.mjs",
     "check:course-editorial": "node scripts/check-course-editorial.mjs",
-    "check:flagship-budget": "node scripts/check-flagship-budget.mjs"
+    "check:flagship-budget": "node scripts/check-flagship-budget.mjs",
+    "check:race3d-flight": "node scripts/check-race3d-flight.mjs",
+    "check:race3d-disruption": "node scripts/check-race3d-disruption.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

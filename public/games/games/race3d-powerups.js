@@ -1,4 +1,4 @@
-import { createRaceItemModels } from './race3d-item-models.js?v=20261025-supercars-ramps';
+import { createRaceItemModels } from './race3d-item-models.js?v=20261025-city-contact1';
 
 /**
  * Pooled kart items. Entity positions, lifetimes and hits belong to the race
@@ -13,6 +13,8 @@ import { createRaceItemModels } from './race3d-item-models.js?v=20261025-superca
 export function createRacePowerups(THREE, { track } = {}) {
   if (typeof track?.sampleTrack !== 'function') throw new TypeError('Kart items require sampleTrack(distance)');
   const group = new THREE.Group();
+  const reducedMotion=!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const activeNitroIds=[],activeRocketIds=[];
   group.name = 'race3d-powerups';
   const authoredItems = createRaceItemModels(THREE, { parent: group, capacity: 96 });
   const geometries = new Set(), materials = new Set(), textures = new Set();
@@ -108,6 +110,7 @@ export function createRacePowerups(THREE, { track } = {}) {
   }), limits.pickups);
   const pickupHalo = batch('pickup-ground-ring', new THREE.TorusGeometry(1.16, .037, 5, 28).rotateX(Math.PI / 2),
     basic(0x91e6e9, { transparent: true, opacity: .52, depthWrite: false }), limits.pickups);
+  const pickupPrism=batch('pickup-prism',new THREE.OctahedronGeometry(.45),standard(0x98dfff,{emissive:0x239ed0,emissiveIntensity:1.8,metalness:.5,roughness:.2}),limits.pickups);
   const pickupColors = Object.fromEntries(itemTypes.map((type, index) => [type, itemColors[index]]));
 
   // Three broad, curling flaps and their pale inner skin form an actual peel.
@@ -338,6 +341,7 @@ export function createRacePowerups(THREE, { track } = {}) {
   let shockCursor = 0;
   const flameOuter = batch('boost-jet', exhaustGeometry(.18, 1.6), exhaustMaterial('boost', .34), limits.flames);
   const flameCore = batch('boost-hot-core', exhaustGeometry(.073, .55), exhaustMaterial('boost-core', .78, true), limits.flames);
+  const nitroStreaks=batch('nitro-energy-streaks',new THREE.PlaneGeometry(.16,3.8).rotateX(-Math.PI/2),basic(0x48eaff,{transparent:true,opacity:.55,depthWrite:false,blending:THREE.AdditiveBlending,toneMapped:false}),120);
 
   // Inventory objects are actual lit geometry, floating above their receiver.
   // Geometry/materials are shared with the thrown objects wherever possible.
@@ -497,10 +501,10 @@ export function createRacePowerups(THREE, { track } = {}) {
     clock += step;
     authoredItems.beginFrame(clock);
     jellyTime.value=clock;
-    exhaustTime.value=clock;
+    exhaustTime.value=reducedMotion?0:clock;
     emissionTime += step;
     // Keep effect emission bounded during slow frames and background-tab wakes.
-    const emitTrail = emissionTime >= 1 / 30;
+    const emitTrail = !reducedMotion&&emissionTime >= 1 / 30;
     if (emitTrail) emissionTime %= 1 / 30;
     let n = 0;
     for (const pickup of source.pickups || []) {
@@ -508,14 +512,16 @@ export function createRacePowerups(THREE, { track } = {}) {
       frame(pickup, 1.45 + Math.sin(clock * 2.3 + n * 1.7) * .16);
       dummy.rotation.y += clock * 1.25 + n * .47;
       dummy.rotation.z = Math.sin(clock * 1.7 + n) * .07;
-      for (const mesh of [pickupCore, pickupFrame, pickupGlyph]) stamp(mesh, n);
-      color.setHex(pickupColors[pickup.type] || 0x61b6c4);
+      for (const mesh of [pickupCore, pickupFrame, pickupGlyph,pickupPrism]) stamp(mesh, n);
+      // All boxes conceal their result. Animated prism faces are original;
+      // item selection belongs to each driver's independent inventory.
+      color.setHSL((clock*.13+n*.073)%1,.78,.58);
       pickupCore.setColorAt(n, color);
       frame(pickup, .08);
       stamp(pickupHalo, n);
       n++;
     }
-    count([pickupCore, pickupFrame, pickupGlyph, pickupHalo], n);
+    count([pickupCore, pickupFrame, pickupGlyph, pickupHalo,pickupPrism], n);
     if (pickupCore.instanceColor) pickupCore.instanceColor.needsUpdate = true;
 
     n = 0;
@@ -597,32 +603,34 @@ export function createRacePowerups(THREE, { track } = {}) {
     const carGroup = group.parent?.children.find(child => child.name === 'race3d-cars');
     const renderedCars = new Map((carGroup?.children || []).map(model => [model.userData.racerId, model]));
     group.updateWorldMatrix(true, false);
-    carGroup?.updateWorldMatrix(true, true);
+    carGroup?.updateWorldMatrix(true, false);
     inverseEffects.copy(group.matrixWorld).invert();
+    activeNitroIds.length=activeRocketIds.length=0;let streakN=0;
     for (const car of cars.slice(0, 60)) {
       const rocket=finite(car.rocketRemaining)>0;
       if (car.finished || (finite(car.boost) <= 0 && !rocket)) continue;
-      // A timer only means the item is available. Its delivered acceleration
-      // falls with speed, grip and braking, so the exhaust follows actual
-      // propulsion rather than showing a full jet throughout that timer.
+      // A soft charge glow lasts exactly as long as the active effect. Actual
+      // thrust changes its length; traction limits never hide activation.
       const thrust = Math.max(0, finite(car.rocketAcceleration)) + Math.max(0, finite(car.nitroAcceleration));
-      if (thrust <= .08) continue;
-      const power = clamp(thrust / (rocket ? 9 : 7), 0, 1);
+      const power=clamp(Math.max(.24,thrust/(rocket?9:7)),0,1);
+      if(car.boost>0)activeNitroIds.push(car.id);if(rocket)activeRocketIds.push(car.id);
       const jetWidth = Math.sqrt(power), jetLength = .2 + .8 * power;
       frame(car, Math.max(0,finite(car.flightHeight)));
       heading.copy(tangent).applyAxisAngle(UP, finite(car.heading));
       const yaw = Math.atan2(heading.x, heading.z);
       right.set(heading.z, 0, -heading.x).normalize();
       const model = renderedCars.get(car.id);
-      const anchors = model?.userData.exhaustAnchors || car.exhaustAnchors || defaultExhaustAnchors;
+      const outlets=model?.userData.exhaustAnchors||car.exhaustAnchors||defaultExhaustAnchors;
+      const anchors=outlets.length?outlets:[[-.62,.28,-2.1],[.62,.28,-2.1]];
       const chassis = model?.getObjectByName('chassis-motion');
       if (model) {
+        (chassis||model).updateWorldMatrix(true,false);
         exhaustMatrix.multiplyMatrices(inverseEffects, (chassis || model).matrixWorld);
         exhaustMatrix.decompose(exhaustOrigin, exhaustRotation, exhaustScale);
       }
       for (const anchor of anchors.slice(0, 2)) {
         if (n >= limits.flames) break;
-        const pulse = 1 + .065 * Math.sin(clock * 43 + n * 2.1) + .035 * Math.sin(clock * 71 + n);
+        const pulse=reducedMotion?1:1+.065*Math.sin(clock*43+n*2.1)+.035*Math.sin(clock*71+n);
         if (model) {
           dummy.position.set(finite(anchor[0]), finite(anchor[1]) - (chassis ? .47 : 0), finite(anchor[2]));
           dummy.position.applyMatrix4(exhaustMatrix);
@@ -642,12 +650,13 @@ export function createRacePowerups(THREE, { track } = {}) {
           exhaustOrigin.copy(dummy.position).addScaledVector(exhaustDirection, (rocket ? 1.2 : .65) * jetLength);
           offset.copy(exhaustDirection).multiplyScalar((rocket ? 8 : 5) * jetLength);
           offset.y += .08;
-          particle(trails, exhaustOrigin, offset, 0x7c9fc9, rocket ? .21 : .15, (rocket ? .09 : .055) * jetWidth, 1.1);
+          particle(trails,exhaustOrigin,offset,rocket?0xffbd71:0x48eaff,.32,.12,1.25);
         }
         n++;
       }
+      if(car.boost>0&&car.flightRemaining<=0)for(const side of [-1,1]){frame(car,.10);dummy.position.addScaledVector(heading,-2).addScaledVector(right,side*.62);dummy.rotation.y=yaw;dummy.scale.set(1,1,1+power*.65);stamp(nitroStreaks,streakN++);}
     }
-    count([flameOuter, flameCore], n);
+    count([flameOuter, flameCore], n);count([nitroStreaks],streakN);
     let shieldN=0,freezeN=0,repairN=0,launchN=0;
     const heldCounts=Object.fromEntries(itemTypes.map(type=>[type,0]));
     function carFrame(car,lift){
@@ -682,9 +691,9 @@ export function createRacePowerups(THREE, { track } = {}) {
         stamp(launchPlume,launchN);stamp(launchCore,launchN);launchN++;
         if(emitTrail){offset.set(0,-4,0);particle(trails,point,offset,0x9cb6dd,.24,.12,1.1);}
       }
-      let type=indicator?.type || (itemTypes.includes(car.activeItem)?car.activeItem:null);
+      let type=car.inventoryPhase==='rolling'?itemTypes[(Math.floor(finite(source.time)*2.4)+(car.inventorySerial||0)*3+(car.gridPosition||0))%itemTypes.length]:car.inventoryItem || null;
       const remaining={launch:car.flightRemaining,rocket:car.rocketRemaining,boost:car.boost,shield:car.shieldRemaining,freeze:car.freezeRemaining,repair:car.repairRemaining}[type];
-      if(indicator && indicator.until<=clock && finite(remaining)<=0){indicators.delete(car.id);type=itemTypes.includes(car.activeItem)?car.activeItem:null;}
+      if(indicator && indicator.until<=clock && finite(remaining)<=0)indicators.delete(car.id);
       if(held[type]&&!car.finished){
         const modelHeight=finite(renderedCars.get(car.id)?.userData?.assetDimensions?.height,2.0);
         const revealHeight=clamp(modelHeight+1.8,3.25,5.2);
@@ -726,6 +735,7 @@ export function createRacePowerups(THREE, { track } = {}) {
 
   function reset() {
     if (disposed) return;
+    activeNitroIds.length=activeRocketIds.length=0;
     clock = 0; burstSerial = 0; lastTime = null; shockCursor = 0; emissionTime = 0; indicators.clear();
     authoredItems.reset();
     for (const pool of [smoke, sparks, trails]) {
@@ -749,5 +759,5 @@ export function createRacePowerups(THREE, { track } = {}) {
     group.clear(); geometries.clear(); materials.clear(); textures.clear();
   }
   return { group, update, handleEvents, reset, dispose, limits, assetsReady: authoredItems.ready,
-    snapshot: () => ({ authored: authoredItems.snapshot(), indicators: [...indicators].map(([id,value])=>({id,...value,remaining:Math.max(0,value.until-clock)})) }) };
+    snapshot: () => ({nitroIds:[...activeNitroIds],rocketIds:[...activeRocketIds],reducedMotion,authored:authoredItems.snapshot(),indicators:[...indicators].map(([id,value])=>({id,...value,remaining:Math.max(0,value.until-clock)}))}) };
 }

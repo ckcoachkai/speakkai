@@ -1,4 +1,4 @@
-import { RACE_VEHICLE_PROFILES, getVehicleProfile } from './race3d-vehicle-specs.js?v=20261025-supercars-ramps';
+import { RACE_VEHICLE_PROFILES, getVehicleProfile } from './race3d-vehicle-specs.js?v=20261025-city-contact1';
 
 export const RACE_ROSTER_TYPES = Object.freeze(Object.keys(RACE_VEHICLE_PROFILES));
 export function getRacerIdentity(type) {
