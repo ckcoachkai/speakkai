@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-25T09:06:13.142256+00:00",
+  "updatedAt": "2026-10-26T09:13:22.935477+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2381,6 +2381,52 @@
               "name": "Kiran",
               "en": "→ One-word impromptu: Kiran answered a one-word impromptu prompt. I think he may not have done this type before. At times, he seemed to struggle a little with connecting the points logically, and I was trying to understand how some parts fitted together.\n\n✓ Energy: He does have a lot of energy. That is useful for some parts of a speech, particularly the more energetic stage performance that competition speaking can call for.\n\n→ Connect with the audience: The delivery also needs moments when he speaks normally and conversationally to the people in front of him. It depends on the moment: some parts benefit from more energy, while other parts connect better when the delivery feels like speaking directly to the audience. The aim is to avoid overwhelming listeners with the same high intensity throughout.\n\n→ Suggested practice: He could pause between points and make the connection to the next idea explicit, then rehearse moving between energetic emphasis and a more conversational voice. This would help listeners follow both his reasoning and his message.",
               "zh": "→【单词即兴演讲】：Kiran 回答了一道以单个词为题的即兴演讲题。我觉得他可能以前没有做过这种类型。有些时候，他在逻辑上连接各个要点时似乎还有一点困难，我也在努力理解部分内容之间是怎样衔接的。\n\n✓【能量】：他的表达确实很有能量。这对演讲中的某些部分很有帮助，尤其是比赛演讲有时需要更有能量的舞台表现。\n\n→【与听众建立连接】：表达中也需要一些时刻，用正常、自然的交谈语气，直接对面前的听众说话。这要看具体的段落：有些部分适合更有能量，有些部分则在像与听众直接交谈时，更容易建立连接。重点是避免从头到尾保持同样的高强度，让听众感到被压住或不知如何回应。\n\n→【练习建议】：他可以在要点之间稍作停顿，把下一个想法与前一个要点的联系讲清楚，再练习在有能量的强调与自然交谈的声音之间转换。这样可以帮助听众既跟上推理，也听懂他想传达的信息。"
+            }
+          ]
+        },
+        {
+          "id": "mon-afternoon-2026-10-26",
+          "date": "2026-10-26",
+          "time": "15:30–17:30",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "royce",
+              "name": "Royce",
+              "en": "During our discussion, classmates said they understood Royce’s speech and identified its topic as Everest. There are still areas of logic he needs to improve. A positive point was that his delivery felt less controlling: I did not feel he was trying to force the audience to do something.\n\nThis was a useful step toward being more polite and encouraging rather than forceful. When a speaker has not established the credibility to tell people what to do, especially against their will, it is difficult to persuade them through pressure. I felt Royce was beginning to take this on board. He should keep that more encouraging approach while working on the logic of his points.",
+              "zh": "在课堂讨论中，同学表示能理解Royce的演讲，并指出题目与珠穆朗玛峰有关。他的逻辑仍有一些需要改进的地方。一个积极之处是，这次表达给人的控制感少了：我没有觉得他在试图强迫听众做某件事。\n\n这是朝着更礼貌、更鼓励式表达迈出的一步，而不是一味强硬地要求听众。当演讲者还没有建立足够的可信度，尤其是要求别人做违背自己意愿的事时，很难靠施压来说服他们。我觉得Royce开始理解并运用这一点了。他应继续保持这种更有鼓励性的方式，同时加强各个观点的逻辑。"
+            },
+            {
+              "id": "ariel",
+              "name": "Ariel",
+              "en": "Ariel did a very good job putting everything together. Her presentation was well organized, with a good structure and hand gestures, and she spoke for a total of two minutes. She said she would speak more slowly, but the pace she actually used sounded regular. My impression is that her usual pace may be a little too fast; the regular pace she used here worked well.",
+              "zh": "Ariel做得很好，能够把各个方面结合起来。她的展示组织清楚，有很好的结构和手势，总共讲了两分钟。她说自己会讲得慢一点，但这次实际使用的是正常的节奏。因此，我猜她平时的语速可能有一点快；这次正常的节奏是合适的。"
+            },
+            {
+              "id": "william",
+              "name": "William",
+              "en": "William was the last speaker. His presentation was well put together, and he had very good control of himself and what he was saying. His logic, structure and pacing were good, and he used hand gestures.\n\nUsing the laptop has helped him improve the logic and structure of his presentation. The next step is to try taking the laptop out of the equation and presenting without it, while keeping that organization. Overall, very good.",
+              "zh": "William是最后一位发言的学生。他的展示组织得很好，对自己的状态和表达内容都有很好的控制。他的逻辑、结构和节奏都很好，也运用了手势。\n\n使用电脑帮助他进一步改善了演讲的逻辑和结构。下一步是尝试不依赖电脑来展示，同时保持这样的内容组织。整体来说，表现非常好。"
+            },
+            {
+              "id": "sean",
+              "name": "Sean",
+              "en": "Sean was very well prepared, and his presentation was well put together and very interactive. I felt that it sounded genuine and authentic. The audience connection was there, and the delivery was not too extreme, so it was much more relaxing to listen to.\n\nIf Sean wants to improve further, he can focus a little more on the depth of the message itself. He should keep coming back to the question: ‘How can we craft a stronger message?’ The next step is to think more deeply about the message he wants to leave with the audience while keeping that genuine, interactive connection.",
+              "zh": "Sean准备得非常好，展示组织完整，互动性也很强。我觉得他的表达听起来真诚、自然，与听众的联系是到位的，表达方式也不过分强烈，因此听起来更放松、更舒服。\n\n如果Sean想进一步提升，可以更多关注核心信息本身的深度。他应该不断回到这个问题：‘我们怎样才能打造更有力量的核心信息？’下一步是在保持真诚、互动式听众交流的同时，更深入地思考自己希望给听众留下什么信息。"
+            },
+            {
+              "id": "cynthia",
+              "name": "Cynthia",
+              "en": "I suggested that Cynthia also enter competitions. I feel that every homework speech she gives is very well put together, with clear articulation, good clarity, a good message and plenty of rhetorical devices. Overall, her speeches are very well organized, and everything about this presentation was really good.\n\nI would encourage her to go and test it out on a bigger stage, in front of an audience. I would also like to see the script itself from time to time so that we can make small refinements where needed. Otherwise, very good job.",
+              "zh": "我建议Cynthia也去参加比赛。我觉得她每一次作业演讲都组织得很好，吐字清楚、表达清晰，有很好的核心信息，也运用了很多修辞手法。整体来说，她的演讲安排得非常完整，这次展示的各个方面都很好。\n\n我鼓励她去更大的舞台、在更多听众面前试一试。我也希望不时看看她的稿件本身，这样需要时可以做一些小小的润色和调整。除此之外，做得非常好。"
+            },
+            {
+              "id": "kieran",
+              "name": "Kiran",
+              "en": "Kiran was the first to speak and brought a lot of energy. Energy is good, but jumping up and down might be too much for the judges. He needs to keep that energy slightly more controlled and vary its intensity. This is especially important when preparing for an online presentation rather than an in-person one, because the available space is limited.\n\nWe also need to cut the speech a little to fit the time. If Kiran prefers to speak faster, I suggested that we could aim for 352–370 words for his actual competition speech. He needs to be a little more cautious about balancing the amount of content, his pace and controlled energy.",
+              "zh": "Kiran是第一位发言的学生，他带来了很多能量。有能量是好的，不过上下跳动可能会让评委觉得有些过多。他需要稍微控制一下能量，并让表达的强弱有所变化。准备线上展示时，这一点尤其重要，因为与线下相比，可用的空间有限。\n\n我们也需要稍微删减一些演讲内容，以符合时间要求。如果Kiran更喜欢讲得快一些，我建议他正式比赛的演讲稿可以考虑控制在352–370词。他需要更加留意内容量、语速和能量控制之间的配合。"
             }
           ]
         }
