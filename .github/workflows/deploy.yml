@@ -46,6 +46,8 @@ jobs:
         run: node --test scripts/check-schedule-presentation.mjs
       - name: Build
         run: npm run build
+      - name: Verify health setup shell has no data or collection surface
+        run: node scripts/check-health.mjs --dist
       - name: Verify Grand Prix inventory, counters, jumps and finish lifecycle
         # Circuit Prism tests are deterministic and do not need WebGL or audio.
         run: |
