@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-24T09:11:29.275192+00:00",
+  "updatedAt": "2026-10-25T09:06:13.190430+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1320,6 +1320,45 @@
               "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-18&student=berlingo"
             }
           ]
+        },
+        {
+          "id": "sun-1130-2026-10-25",
+          "date": "2026-10-25",
+          "time": "11:30–13:00",
+          "classContent": [
+            "◆ Homework presentations: Everyone completed their homework very well. Students presented their speeches and received feedback on openings and conclusions, concise recaps, pacing, volume, articulation and connecting with the audience.\n\n◆ Back-and-forth rebuttal practice: Charles, Ethan and Yiyi debated against James. The practice topics were ‘Teachers should play racing games in class’ and ‘Students should choose who goes next.’ Everyone practised rebutting the previous point and responding to rebuttals.\n\n◆ Staying on the point: A major focus was staying on task—arguing against the actual point being made, rather than moving to other points. Students needed to listen carefully and identify exactly what each side was saying so their rebuttal addressed it directly.\n\n◆ Developing the response: Some rebuttals were still a little short. Next class, we will go further into how to expand answers and speak for longer."
+          ],
+          "homework": {
+            "title": "Students should not use AI in class",
+            "steps": [
+              "Use the worksheet taken home.",
+              "Start with one point for one side, rebut your own point, then rebut that response. Continue responding to the immediately preceding point.",
+              "Practise four back-and-forth rounds, thinking through the reasoning and using critical thinking to challenge your previous points."
+            ],
+            "prepareFor": "Practise responding directly to the previous point."
+          },
+          "students": [
+            {
+              "name": "Ethan",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-25&student=ethan"
+            },
+            {
+              "name": "Yiyi",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-25&student=yiyi"
+            },
+            {
+              "name": "Charles",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-25&student=charles"
+            },
+            {
+              "name": "James",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-25&student=james"
+            },
+            {
+              "name": "Berlingo",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-25&student=berlingo"
+            }
+          ]
         }
       ]
     },
@@ -1470,6 +1509,46 @@
               "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-18&student=audrey"
             }
           ]
+        },
+        {
+          "id": "sun-1330-2026-10-25",
+          "date": "2026-10-25",
+          "time": "13:30–15:00",
+          "classContent": [
+            "◆ Speaking and feedback: The class included impromptu responses. Feedback focused on articulation and volume, clear structure, transition words, pacing, connecting with the audience, and developing examples. Audrey was asked to try another impromptu response after receiving feedback; the result of that next attempt has not yet been recorded.\n\n◆ Hypothetical examples: We discussed how a hypothetical situation can support a point when evidence or a suitable personal example is not available. The aim is to help the audience or judge visualize the speaker’s perspective. The topic was ‘Students should grade their teachers.’ Teresa, Ning and Arthur were assigned the pro side; Audrey and April were assigned the con side."
+          ],
+          "homework": {
+            "title": "Students should grade their teachers",
+            "steps": [
+              "Pro side: Teresa, Ning and Arthur. Con side: Audrey and April.",
+              "Choose three points for your assigned side and write three hypothetical situations or examples, one supporting each point.",
+              "Help the audience or judge visualize your side. A hypothetical situation can support the point when evidence or a suitable personal example is not available."
+            ],
+            "prepareFor": "Use the hypothetical examples to explain and support your points.",
+            "note": "Make it clear that the situations are hypothetical."
+          },
+          "students": [
+            {
+              "name": "April",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-25&student=april"
+            },
+            {
+              "name": "Ning",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-25&student=ning"
+            },
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-25&student=arthur"
+            },
+            {
+              "name": "Teresa",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-25&student=teresa"
+            },
+            {
+              "name": "Audrey",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-25&student=audrey"
+            }
+          ]
         }
       ]
     },
@@ -1608,6 +1687,31 @@
             {
               "name": "Eva",
               "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-18&student=eva"
+            }
+          ]
+        },
+        {
+          "id": "sun-1500-2026-10-25",
+          "date": "2026-10-25",
+          "time": "15:00–16:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Max",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-25&student=max"
+            },
+            {
+              "name": "Celia",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-25&student=celia"
+            },
+            {
+              "name": "August",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-25&student=august"
+            },
+            {
+              "name": "Eva",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-25&student=eva"
             }
           ]
         }

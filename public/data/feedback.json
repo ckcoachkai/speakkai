@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-24T09:11:29.256154+00:00",
+  "updatedAt": "2026-10-25T09:06:13.142256+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1632,6 +1632,52 @@
               "zh": "在书面准备方面，打字可能会更合适，因为他只写了少量内容。不过，他确实有尝试表达自己的想法。\n\n最主要的建议是把作业准备组织得更清楚一些。他的口头回答有一点短，所以他的时间控制目标是更充分地利用发言时间：多讲一点，把回答展开，并更深入地说明自己想表达、想说的内容。\n\n练习建议：他可以先把想法打出来并组织好，再进行排练，然后选择一个想讲得更充分的要点。补充自己为什么这样想，再加入一个具体例子，可以帮助他增加有实质内容的表达。\n\n◆ 模拟辩论：Berlingo 大多是在读纸上的内容，而不是在辩论过程中思考并发展自己的回应。我认为，他需要先学习相关技巧，弄明白具体应该怎样做，而不只是直接尝试。下节课我们会继续练习反驳及反驳技巧。支持建议：他可以先找出对方的论点，逐步思考如何回应，再练习用自己的话把回应说出来。这是帮助他逐步掌握技巧的方法，不是额外的作业要求。"
             }
           ]
+        },
+        {
+          "id": "sun-1130-2026-10-25",
+          "date": "2026-10-25",
+          "time": "11:30–13:00",
+          "status": "held",
+          "classContent": {
+            "en": "◆ Homework presentations: Everyone completed their homework very well. Students presented their speeches and received feedback on openings and conclusions, concise recaps, pacing, volume, articulation and connecting with the audience.\n\n◆ Back-and-forth rebuttal practice: Charles, Ethan and Yiyi debated against James. The practice topics were ‘Teachers should play racing games in class’ and ‘Students should choose who goes next.’ Everyone practised rebutting the previous point and responding to rebuttals.\n\n◆ Staying on the point: A major focus was staying on task—arguing against the actual point being made, rather than moving to other points. Students needed to listen carefully and identify exactly what each side was saying so their rebuttal addressed it directly.\n\n◆ Developing the response: Some rebuttals were still a little short. Next class, we will go further into how to expand answers and speak for longer.",
+            "zh": "◆【作业展示】：大家的作业都完成得很好。学生展示演讲，并接受有关开头和结尾、简短总结、节奏、音量、吐字以及听众交流的反馈。\n\n◆【来回反驳练习】：Charles、Ethan和Yiyi一组，与James进行辩论。练习题目是‘老师应该在课堂上玩赛车游戏’和‘学生应该决定下一个由谁发言’。每个人都练习了反驳前一个观点，并回应对方的反驳。\n\n◆【紧扣正在讨论的观点】：一个重点是保持切题——针对对方实际提出的观点反驳，而不是转去讲其他观点。学生需要仔细倾听，弄清每一方具体在说什么，让自己的反驳直接回应那个观点。\n\n◆【展开回应】：有些反驳仍然比较短。下一节课，我们会进一步学习怎样展开回答、讲得更长。"
+          },
+          "homework": {
+            "en": "Topic: ‘Students should not use AI in class.’ Use the worksheet taken home to practise four back-and-forth rounds of rebuttal. Start with one point for one side, rebut your own point, then rebut that response and continue responding to the immediately preceding point. Keep thinking through the reasoning and use critical thinking to challenge your own previous points. The task is four rounds back and forth.",
+            "zh": "题目：‘学生不应该在课堂上使用人工智能。’使用带回家的学习单，练习四轮来回反驳。先为一方提出一个观点，再反驳自己的观点，然后反驳刚才的回应，继续针对紧接着的前一个观点作出回应。不断思考理由，运用批判性思考来反驳自己之前提出的观点。任务是来回进行四轮。"
+          },
+          "students": [
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "Ethan was our first speaker, and I felt his points were all good. To improve the presentation, he needs an opening and a conclusion. After explaining his points, he should summarize them in as few words as possible. That brief recap helps the audience remember what he has said. For practice, he could prepare a short opening to introduce his main idea and a concise conclusion that brings his points together.\n\nI also feel that Ethan is more interested in debate than public speaking. He seems to get much more into debate, as I noticed in the previous class as well.\n\n◆ Debate activity: During the debate activity, I again felt that Ethan was more excited about debate.",
+              "zh": "Ethan是第一位上台演讲的学生，我觉得他的观点都很好。要进一步提升展示，他需要加入开头和结尾。讲完各个观点后，要尽量用简短的语言总结。这样的简短回顾能帮助听众更好地记住他说过的内容。练习时，可以准备一个简短的开头来介绍核心观点，再用精练的结尾把各个观点串起来。\n\n我也感觉Ethan对辩论比对公众演讲更感兴趣。他在辩论中似乎更投入，上一节课我也观察到了这一点。\n\n◆【辩论活动】：在辩论活动中，我再次感觉Ethan对辩论更兴奋、更感兴趣。"
+            },
+            {
+              "id": "yiyi",
+              "name": "Yiyi",
+              "en": "Yiyi’s presentation was very well put together. She spoke at a fairly fast pace, which I felt suited this presentation. She included an opening and a conclusion and explained her points. Overall, it was a very good presentation.\n\n◆ Debate activity: Yiyi also went into depth with her ideas in the debate activity.",
+              "zh": "Yiyi的演讲组织得很好。她的语速比较快，但我觉得这个节奏适合这次展示。她有开头和结尾，也讲清了自己的观点。整体来说，这是一次非常好的展示。\n\n◆【辩论活动】：Yiyi在辩论活动中的想法也比较深入。"
+            },
+            {
+              "id": "charles",
+              "name": "Charles",
+              "en": "Charles spoke quite quickly and went through his content. Overall, it was fine, but a little short—I think it was about one minute. He could speak for a little longer. His next steps are to speak a little louder and add more content to his speech where possible. Giving himself more time to develop the content would help him extend the speech rather than finish so quickly. Otherwise, good job.\n\n◆ Debate activity: During the debate activity, Charles still needed to improve his articulation a little at times.",
+              "zh": "Charles讲得比较快，把内容讲完了。整体来说还可以，不过有些短——我觉得大约只有一分钟。他可以再讲长一点。接下来可以稍微提高音量，并尽可能增加一些演讲内容。给自己更多时间展开内容，有助于延长演讲，而不是很快就讲完。除此之外，做得不错。\n\n◆【辩论活动】：在辩论活动中，Charles有时仍需要进一步改善吐字。"
+            },
+            {
+              "id": "james",
+              "name": "James",
+              "en": "James was able to deliver everything verbally without paper or reading any content. He kept the material in his head, which was very good for the presentation and for connecting with the audience: he could talk directly to everyone.\n\nThere were a few small hiccups, which I felt came from needing more practice. Rehearsing the delivery a couple of times would help make it smoother. Overall, not bad. James could increase his pacing a little and bring a little more assertiveness and force to his delivery.\n\n◆ Debate activity: James showed a good command of what he was doing and was able to respond quickly in the back-and-forth debate.",
+              "zh": "James能够全程脱稿表达，不需要拿纸，也不需要读任何内容。他把内容记在脑中，这对演讲展示和与听众建立联系都很好：他能够直接面向大家讲话。\n\n过程中有一些小小的卡顿，我觉得这与练习还不够有关。把表达多练习几遍，会有助于讲得更顺畅。整体来说，表现不错。James可以稍微加快一点表达节奏，并在表达中增加一些坚定感和力度。\n\n◆【辩论活动】：James对自己在做的事情掌握得很好，在来回辩论中能够迅速作出回应。"
+            },
+            {
+              "id": "berlingo",
+              "name": "Berlingo",
+              "en": null,
+              "zh": null
+            }
+          ]
         }
       ]
     },
@@ -1813,6 +1859,52 @@
               "zh": "Audrey 在路上花了很长时间，因此到课较晚。到课后，她回答了即兴问题。她最初的回答在大约40秒时结束，我随后提醒并鼓励她再多讲一些。\n\n她需要加强和练习的一个方面，是迅速临场思考的能力，以及把想法解释得更充分、持续讲得更久的能力，尤其是在这类即兴任务中。目标是发展出更完整的回答，让听众能跟上她更多的思考，而不是在简短回应后就结束。\n\n练习建议：说完最初的回答后，她可以问自己“为什么？”或“我能举个例子吗？”，再用这些问题帮助自己继续展开解释。这是帮助她发展更完整回答的练习建议，不是额外的作业要求。"
             }
           ]
+        },
+        {
+          "id": "sun-1330-2026-10-25",
+          "date": "2026-10-25",
+          "time": "13:30–15:00",
+          "status": "held",
+          "classContent": {
+            "en": "◆ Speaking and feedback: The class included impromptu responses. Feedback focused on articulation and volume, clear structure, transition words, pacing, connecting with the audience, and developing examples. Audrey was asked to try another impromptu response after receiving feedback; the result of that next attempt has not yet been recorded.\n\n◆ Hypothetical examples: We discussed how a hypothetical situation can support a point when evidence or a suitable personal example is not available. The aim is to help the audience or judge visualize the speaker’s perspective. The topic was ‘Students should grade their teachers.’ Teresa, Ning and Arthur were assigned the pro side; Audrey and April were assigned the con side.",
+            "zh": "◆【表达与反馈】：课堂包括即兴回答。反馈重点涵盖吐字和音量、清楚的结构、过渡词、节奏、听众交流，以及展开例子。Audrey接受反馈后被请再尝试一次即兴回答；目前尚未记录下一次尝试的表现。\n\n◆【假设情境】：我们讨论了当手头没有证据或合适的亲身例子时，怎样用假设情境支持观点，帮助听众或评委在脑中形成画面、理解演讲者的立场。题目是‘学生应该给老师评分’。Teresa、Ning和Arthur被分配到正方，Audrey和April被分配到反方。"
+          },
+          "homework": {
+            "en": "Topic: ‘Students should grade their teachers.’\n\n◆ Pro side—Teresa, Ning and Arthur: Choose three points for the pro side and write out three hypothetical situations or examples, one to support each point.\n\n◆ Con side—Audrey and April: Choose three points for the con side and write out three hypothetical situations or examples, one to support each point.\n\nUse these imagined situations to help the audience or judge visualize your side. Sometimes we do not have evidence or a suitable personal example from our own lives available; a hypothetical situation can help explain and support the point. Make it clear that the situation is hypothetical.",
+            "zh": "题目：‘学生应该给老师评分。’\n\n◆【正方——Teresa、Ning和Arthur】：选择三个支持正方的观点，并写出三个假设情境或例子，每个情境或例子支持一个观点。\n\n◆【反方——Audrey和April】：选择三个支持反方的观点，并写出三个假设情境或例子，每个情境或例子支持一个观点。\n\n用这些设想的情境，帮助听众或评委在脑中形成画面、理解你方的立场。有时候，我们手头没有可用的证据，或自己生活中合适的亲身例子，就可以用假设情境来解释和支持观点。表达时要清楚说明这是一个假设情境。"
+          },
+          "students": [
+            {
+              "id": "april",
+              "name": "April",
+              "en": "April was our first speaker and gave some good points in her impromptu response. Clarity and articulation remain areas I want her to work on. She needs to speak louder and more clearly so that fumbling over the words does not make her ideas difficult to follow.\n\nShe also became a little more timid when speaking for a longer period. The impromptu topic was quite similar to a debate topic, so clear transition words would help her organize and support her points. Suggested practice: she could use simple transitions such as ‘first,’ ‘another reason’ and ‘for example’ to guide listeners from one point to the next while practising clear, audible delivery.",
+              "zh": "April是第一位上台的学生，她的即兴回答中有一些不错的观点。清晰度和吐字仍然是我希望她加强的地方。她需要讲得更响亮、更清楚，避免因为说话时含糊或磕绊，让听众难以跟上她的想法。\n\n在需要讲得更长一些时，她也变得有些胆怯。这次即兴题目与辩论题目比较相似，因此使用清楚的过渡词，会帮助她组织和支持自己的观点。练习建议：可以使用‘首先’‘另一个理由是’‘例如’这样的简单过渡，引导听众从一个观点跟到下一个观点，同时练习清楚、让人听得见的表达。"
+            },
+            {
+              "id": "ning",
+              "name": "Ning",
+              "en": "Ning was articulate, easy to understand and had a good structure. She reminded me that her response was impromptu, and she spoke for about one minute and thirty seconds. Her timing was good, and she used transition words very well.\n\nThe next step is to practise speaking a little faster while keeping that clarity. Because her delivery was already clear, she can work on taking slightly less time to present the same content. This would leave room to add more content when needed.",
+              "zh": "Ning吐字清楚，表达容易理解，结构也很好。她提醒我，这次回答是即兴的，时长大约一分三十秒。她的时间控制很好，过渡词也用得非常好。\n\n下一步是在保持清晰度的同时，练习稍微加快语速。因为她的表达已经很清楚，可以尝试用稍短的时间讲完同样的内容，这样需要补充更多内容时，就能留出时间。"
+            },
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "teresa",
+              "name": "Teresa",
+              "en": "Teresa connected much better with the audience. I felt she had good control of her delivery, speaking out to the people in front of her rather than simply reading what she had written. Her pacing was good, and she had good content.\n\nThe next step is to include more examples to support her perspective. Hypothetical examples and descriptions that help listeners picture a situation could make that support stronger. Suggested practice: she could take one of her points and develop a clear imagined situation around it, helping the audience visualize what she means and understand how the example supports her perspective.",
+              "zh": "Teresa与听众的交流明显更好了。我觉得她对自己的表达有很好的控制，能够面向眼前的听众讲话，而不只是读自己写下来的内容。她的节奏很好，内容也不错。\n\n下一步是加入更多例子来支持自己的观点。假设性的例子，以及能够帮助听众在脑中形成画面的描述，可以让论点的支持更有力。练习建议：可以选取自己的一个观点，围绕它展开一个清楚的假设情境，帮助听众想象她所表达的意思，并理解这个例子怎样支持她的观点。"
+            },
+            {
+              "id": "audrey",
+              "name": "Audrey",
+              "en": "Audrey’s first impromptu response did not feel completely finished. Overall, her content was pretty good, but she spoke quickly and some of the ideas could have been structured better. I felt she was a little nervous during the response.\n\nThe main next step is to use clear transition words to show exactly what she is trying to express and distinguish the points she wants to make. This would give listeners a clearer path through her ideas. I asked her to try another impromptu response so she could practise applying that feedback.",
+              "zh": "Audrey的第一次即兴回答给人的感觉是还没有完全讲完。整体内容不错，不过语速比较快，有些想法还可以组织得更好。我觉得她在回答时有些紧张。\n\n主要的下一步是使用清楚的过渡词，让听众明白她具体想表达什么，并区分她想讲的各个观点。这样能让听众更清楚地跟上她的思路。我请她再尝试一次即兴回答，练习运用这些反馈。"
+            }
+          ]
         }
       ]
     },
@@ -1986,6 +2078,40 @@
               "name": "Eva",
               "en": "✓ Examples and delivery: Eva is very good at using personal examples and stories to support her points. She speaks clearly and is very steady. I feel she has become much stronger since her national competitions and is able to speak with a lot of authority.\n\n→ Expand the response: She still needs to work on expanding her ideas, because sometimes her speaking is a little short. The next step is to develop the point and the story further, so she gives the audience more to understand while keeping that clarity and steadiness.\n\n→ Emotional expression: I would also encourage her to lean into being more emotionally expressive. Alongside the authority she already brings, she could let more of the feeling behind her ideas come through.\n\n→ Suggested practice: She could take one personal example, explain how it supports her point, and then rehearse expressing the feeling behind it. This would give her more room to develop the answer and explore emotional expression.",
               "zh": "✓【例子与表达】：Eva 很擅长用个人例子和故事来支持自己的论点。她表达清楚，也非常稳定。我觉得，自参加全国比赛以来，她的表现强了很多，讲话时能够展现出很强的笃定和说服力。\n\n→【展开回答】：她仍然需要继续练习把想法展开，因为有些时候，她讲的内容会有一点短。下一步是在保持清晰、稳定的同时，把论点和故事进一步展开，让听众能够理解得更多。\n\n→【情感表达】：我也会鼓励她在表达中更投入一些情感。除了她已经展现出的笃定和说服力，还可以让想法背后的感受更明显地传达出来。\n\n→【练习建议】：她可以选择一个个人例子，解释它怎样支持自己的论点，再练习把其中的感受表达出来。这样既能给她更多空间展开回答，也能练习更丰富的情感表达。"
+            }
+          ]
+        },
+        {
+          "id": "sun-1500-2026-10-25",
+          "date": "2026-10-25",
+          "time": "15:00–16:30",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "max",
+              "name": "Max",
+              "en": "Max spoke very clearly, which was good. His answer was a little short, so the next step is to expand his answers and speak for longer. He can keep that clear delivery while taking more time to develop the ideas he wants to express, giving the audience more content to follow.",
+              "zh": "Max讲得很清楚，这一点很好。他的回答有些短，因此下一步是把回答展开、讲得更长。在保持清晰表达的同时，可以花更多时间发展自己想表达的想法，让听众听到更充分的内容。"
+            },
+            {
+              "id": "celia",
+              "name": "Celia",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "august",
+              "name": "August",
+              "en": "I liked August’s clarity and articulation. She included plenty of detail and was very specific. She was able to put everything together, and she brought notes to help organize her thoughts as she explained her reasoning and ideas. Overall, it was very good and well put together.",
+              "zh": "我很喜欢August表达的清晰度和吐字。她提供了很多细节，讲得非常具体，也能够把这些内容组织在一起。她还带了笔记，帮助自己在解释推理和想法时整理思路。整体来说，表现很好，内容组织得很完整。"
+            },
+            {
+              "id": "eva",
+              "name": "Eva",
+              "en": "I really liked how Eva expanded her answer. Her overall argument for the topic was quite concise. To strengthen the presentation, she could speak with more enthusiasm, pick up the pace a little and share more points. The aim is to develop the content further while keeping her overall argument concise.",
+              "zh": "我很喜欢Eva能够把回答展开。对于这个题目，她的整体论证相当简练。要进一步提升展示，她可以讲得更有热情，稍微加快一点节奏，并分享更多观点。目标是在保持整体论证简练的同时，把内容进一步发展。"
             }
           ]
         }
