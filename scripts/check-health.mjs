@@ -1,33 +1,36 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile, readdir } from 'node:fs/promises';
-const root = new URL('../',import.meta.url);
-const source = await readFile(new URL('public/health/index.html',root),'utf8');
-const css = await readFile(new URL('public/health/styles.css',root),'utf8');
-test('public health shell is explicitly unconfigured and cannot collect credentials or health data', () => {
-  assert.match(source,/data-health-mode="setup-required"/);
-  assert.match(source,/health tracker is not connected to private storage/);
-  assert.match(source,/Nothing is being synced from chat/);
-  assert.match(source,/<button[^>]*disabled[^>]*>Sign-in unavailable/);
-  assert.doesNotMatch(source,/<(?:script|form|input|textarea|select|iframe|object)\b/i);
-  assert.match(source,/script-src 'none'/);
-  assert.match(source,/connect-src 'none'/);
-  assert.match(source,/form-action 'none'/);
-  assert.match(source,/worker-src 'none'/);
-  assert.doesNotMatch(source+css,/supabase\.co|service_role|sb_secret_|localStorage|sessionStorage|indexedDB|serviceWorker|Bearer /i);
-  assert.doesNotMatch(source,/76\.4|21\.8%|Berry oats|1,051|demo-photo|demo-message/);
+import {readFile,readdir} from 'node:fs/promises';
+const root=new URL('../',import.meta.url);
+const read=p=>readFile(new URL(p,root),'utf8');
+const html=await read('public/health/index.html'),js=await read('public/health/app.js'),css=await read('public/health/styles.css');
+test('public journal connects to read-only Supabase data and exposes no privileged key or write control',()=>{
+ assert.match(html,/data-health-mode="public-readonly"/);
+ assert.match(html,/Public journal · Read only/);
+ assert.match(html,/https:\/\/ufxqfgxjsjezjhuyvyqd.supabase.co/);
+ assert.match(js,/sb_publishable_/);
+ assert.doesNotMatch(html+js,/sb_secret_|service_role|Bearer |<form\b|localStorage|sessionStorage|indexedDB/i);
+ assert.doesNotMatch(js,/method\s*:\s*['"](?:POST|PATCH|PUT|DELETE)['"]/i);
+ assert.match(js,/offset\+=500/);
+ assert.match(js,/Eating date unconfirmed/);
 });
-test('setup route contains only allowlisted static assets with mobile layout and no external dependencies', async () => {
-  assert.deepEqual((await readdir(new URL('public/health/',root))).sort(),['index.html','styles.css']);
-  assert.match(css,/@media\(max-width:450px\)/);
-  assert.match(css,/@media\(prefers-reduced-motion:reduce\)/);
-  assert.doesNotMatch(css,/@import|url\(/);
-  assert.match(source,/href="https:\/\/speakkai.com\/health\/"/);
+test('source coverage, incomplete logs and old weight limitations remain explicit',()=>{
+ assert.match(html,/Later device data and the requested Dot export are pending/);
+ assert.match(js,/Older scale series; not a current weight trend/);
+ assert.match(css,/@media\(max-width:450px\)/);
+ assert.match(html,/individual meal associations are unconfirmed/);
 });
-test('built health route keeps the reviewed data-free shell and is not modified by the global theme', {skip: !process.argv.includes('--dist')}, async () => {
-  const built = await readFile(new URL('dist/health/index.html',root),'utf8');
-  const builtCss = await readFile(new URL('dist/health/styles.css',root),'utf8');
-  assert.equal(built,source); assert.equal(builtCss,css);
-  assert.doesNotMatch(built,/editorial-theme\.css/);
-  assert.deepEqual((await readdir(new URL('dist/health/',root))).sort(),['index.html','styles.css']);
+async function paths(dir){let out=[];for(const e of await readdir(new URL(dir,root),{withFileTypes:true})){const p=dir+'/'+e.name;out.push(...(e.isDirectory()?await paths(p):[p]));}return out.sort();}
+test('public asset directory contains only dashboard code and five approved photos',async()=>{
+ const files=await paths('public/health');
+ assert.equal(files.length,8);
+ assert.ok(files.every(p=>/\.(html|css|js|jpg)$/.test(p)));
+ assert.equal(files.filter(p=>p.endsWith('.jpg')).length,5);
 });
+test('built dashboard matches reviewed source assets',{skip:!process.argv.includes('--dist')},async()=>{
+ for(const p of await paths('public/health')){
+ const [source,built]=await Promise.all([readFile(new URL(p,root)),readFile(new URL(p.replace('public/','dist/'),root))]);
+ assert.ok(source.equals(built),p);
+ }
+});
+

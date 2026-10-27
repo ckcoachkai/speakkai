@@ -1,27 +1,23 @@
 <!doctype html>
-<html lang="en" data-health-mode="setup-required" data-health-release="health-shell-v1-20261026">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self' data:; script-src 'none'; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; worker-src 'none'">
-  <meta name="robots" content="noindex,nofollow">
-  <meta name="referrer" content="no-referrer">
-  <meta name="description" content="SpeakKai health journal. Private sign-in and storage setup is not complete. No records are collected on this page.">
-  <title>Health journal · SpeakKai</title>
-  <link rel="canonical" href="https://speakkai.com/health/">
-  <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/health/styles.css?v=health-shell-v1-20261026">
-</head>
-<body>
-  <a class="skip" href="#main">Skip to setup status</a>
-  <header class="header"><a class="brand" href="/" aria-label="SpeakKai home">speak<span>kai</span></a><span class="header-label">HEALTH JOURNAL</span><a class="home-link" href="/">Back to SpeakKai <span aria-hidden="true">↗</span></a></header>
-  <main id="main">
-    <div class="eyebrow"><span aria-hidden="true"></span>YOUR PERSONAL HEALTH SPACE</div>
-    <section class="intro" aria-labelledby="title"><div><h1 id="title">Your health,<br><em>in perspective.</em></h1><p class="lead">A place for your meals, photos, and measurements.<br>One day at a time.</p></div><div class="art" aria-hidden="true"><svg viewBox="0 0 350 280"><circle cx="181" cy="137" r="106" fill="#e4ead7"/><circle cx="181" cy="137" r="75" fill="#f8f8ed" stroke="#cbd7b8"/><path d="M118 162C136 158 139 107 159 126S190 158 210 117S235 112 246 92" fill="none" stroke="#7b975d" stroke-width="4" stroke-linecap="round"/><circle cx="159" cy="126" r="6" fill="#f8f8ed" stroke="#7b975d" stroke-width="3"/><circle cx="210" cy="117" r="6" fill="#f8f8ed" stroke="#7b975d" stroke-width="3"/><path d="M87 197Q49 164 73 131Q105 146 87 197Z" fill="#a7b990"/><path d="M87 197Q120 162 142 184Q125 214 87 197Z" fill="#bccba6"/><path d="M87 197L80 231" stroke="#7b975d" stroke-width="3"/><circle cx="268" cy="61" r="12" fill="#e7d2b5"/></svg></div></section>
-    <section class="setup-card" aria-labelledby="setup-title"><div class="status"><span aria-hidden="true"></span>SETUP REQUIRED</div><div class="setup-grid"><div><h2 id="setup-title">Private sign-in is not ready yet.</h2><p>This page is published, but the health tracker is not connected to private storage. You cannot add, upload, or save records yet.</p><p class="privacy">No health records or photos are stored on this page. Nothing is being synced from chat.</p></div><div class="signin"><span class="lock" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="7" y="14" width="18" height="14" rx="3"/><path d="M11 14V9a5 5 0 0 1 10 0v5"/><path d="M16 20v3"/></svg></span><button type="button" disabled aria-describedby="signin-note">Sign-in unavailable</button><p id="signin-note">Available after owner-only access<br>and private storage are verified.</p></div></div></section>
-    <section class="planned" aria-labelledby="planned-title"><div class="section-label"><h2 id="planned-title">What this space is being prepared for</h2><span>NOT AVAILABLE YET</span></div><div class="features"><article><span class="number">01</span><h3>Meals & macros</h3><p>Food entries, portions, calories, and protein, carbs, and fat. Keep planned meals separate from food consumed.</p></article><article><span class="number">02</span><h3>Weight & trends</h3><p>Weight and body measurements with their original dates, measurement methods, and source confidence.</p></article><article><span class="number">03</span><h3>Photos & context</h3><p>Private meal photos and reviewed updates. Duplicate messages or photos should not add duplicate meals.</p></article></div></section>
-    <aside class="day-note"><span aria-hidden="true">◷</span><div><strong>Days will follow Asia/Shanghai.</strong><p>Original timestamps, incomplete logs, and estimated amounts will stay visible.</p></div></aside>
-    <footer><span>SpeakKai · Health journal</span><span>Public setup page · No health data collected</span></footer>
-  </main>
-</body>
-</html>
+<html lang="en" data-health-mode="public-readonly" data-health-release="health-public-v1-20261027">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self' data:; script-src 'self'; connect-src https://ufxqfgxjsjezjhuyvyqd.supabase.co; base-uri 'none'; object-src 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Kai’s health journal: food, movement, sleep and weight, with original sources and clear coverage.">
+<title>Health journal · SpeakKai</title><link rel="canonical" href="https://speakkai.com/health/"><link rel="icon" href="data:,"><link rel="stylesheet" href="/health/styles.css?v=20261027-public1"><script type="module" src="/health/app.js?v=20261027-public1"></script></head>
+<body><a class="skip" href="#main">Skip to journal</a><header><a class="brand" href="/">speak<span>kai</span></a><span>HEALTH JOURNAL</span><a href="/">Back to SpeakKai ↗</a></header>
+<main id="main"><div class="eyebrow">ONE DAY AT A TIME</div><section class="hero"><div><h1>Your health,<br><em>in perspective.</em></h1><p>Food, movement, sleep, and the bigger picture.</p></div><div class="hero-note"><span class="dot"></span>Public journal · Read only<br><small>Days use Asia/Shanghai</small></div></section>
+<div id="load-status" class="notice" role="status">Connecting to the health journal…</div>
+<section aria-label="Latest observations" id="stats" class="stats"></section>
+<section class="panel"><div class="section-head"><div><div class="eyebrow">THE BIGGER PICTURE</div><h2>Your recorded trends</h2></div><div class="controls"><label>Metric<select id="metric"><option value="steps-daily">Steps</option><option value="sleep-daily-totals">Recorded sleep</option><option value="weight-records">Weight</option><option value="heart-manual-records">Manual heart rate</option><option value="activity-time-daily">Activity time</option><option value="calories-daily">App calories</option></select></label><label>Period<select id="period"><option value="30">Latest 30 days</option><option value="90">Latest 90 days</option><option value="all" selected>All recorded data</option></select></label></div></div><p id="chart-note" class="muted"></p><div id="chart" class="chart" aria-live="polite"></div><p class="caption">Gaps remain gaps. Sleep includes captured naps; wearable calories are separate from food intake. Historical device timezone is unverified.</p></section>
+<section class="panel"><div class="section-head"><div><div class="eyebrow">SMALL THINGS ADD UP</div><h2>Movement log</h2></div><span class="tag">USER REPORTED</span></div><div id="exercise"></div></section>
+<section class="panel"><div class="section-head"><div><div class="eyebrow">AT THE TABLE</div><h2>Food journal</h2></div><span class="tag">INCOMPLETE LOG</span></div><p class="muted">These meals were reported in chat. Eating dates and nutrition totals are not yet confirmed.</p><div id="meals" class="meals"></div></section>
+<section class="panel"><div class="eyebrow">ORIGINAL CONTEXT</div><h2>Food photos</h2><p class="muted">Five recovered chat attachments. Photos are linked to their source conversations; individual meal associations are unconfirmed.</p><div class="gallery">
+<a href="/health/photos/food-1.jpg" target="_blank" rel="noopener"><img src="/health/photos/food-1.jpg" alt="Original food chat attachment 1" loading="lazy" width="640" height="480"></a>
+<a href="/health/photos/food-2.jpg" target="_blank" rel="noopener"><img src="/health/photos/food-2.jpg" alt="Original food chat attachment 2" loading="lazy" width="640" height="480"></a>
+<a href="/health/photos/food-3.jpg" target="_blank" rel="noopener"><img src="/health/photos/food-3.jpg" alt="Original food chat attachment 3" loading="lazy" width="640" height="480"></a>
+<a href="/health/photos/food-4.jpg" target="_blank" rel="noopener"><img src="/health/photos/food-4.jpg" alt="Original food chat attachment 4" loading="lazy" width="640" height="480"></a>
+<a href="/health/photos/food-5.jpg" target="_blank" rel="noopener"><img src="/health/photos/food-5.jpg" alt="Original food chat attachment 5" loading="lazy" width="640" height="480"></a>
+</div></section>
+<details class="panel"><summary>Sources, coverage & missing data</summary><div id="coverage"></div><p class="muted">Mi Fitness capture: October 24, 2026. Partial app history, not a complete account export. Workout history, detailed sleep stages, and continuous heart samples are incomplete. Later device data and the requested Dot export are pending. Food plans and supplements on hand are not counted as consumed meals.</p><p class="muted">Repeated scale and heart readings are preserved. Daily summaries are not additional measurements. Nothing automatically syncs from chat or the phone.</p><button id="download" type="button">Download displayed health records (JSON)</button></details>
+<footer><span>SpeakKai · Kai’s health journal</span><span>Public by owner request · Imports and edits restricted</span></footer></main></body></html>
