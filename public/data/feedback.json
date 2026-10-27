@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-27T09:09:30.210932+00:00",
+  "updatedAt": "2026-10-27T09:32:51.728081+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2681,14 +2681,14 @@
             {
               "id": "alyssa",
               "name": "Alyssa",
-              "en": null,
-              "zh": null
+              "en": "• It was good that Alyssa did not have a script, because that meant she could connect with us a bit more. It felt a bit impromptu. I am guessing it was impromptu because she was not really sure of the question itself either.\n\n• The timing seemed okay: one minute and 17 seconds, a little longer than one minute. So at least that was a bit better in that respect.\n\n• It would be better to have at least bullet points for the points she wants to make, so that she can better organize her thoughts and put them together.",
+              "zh": "• Alyssa没有拿稿子上台，这一点很好，因为这样她能与我们多建立一些联系。听起来有一点像即兴演讲。我猜可能是即兴的，因为她对题目本身也不太确定。\n\n• 时间方面似乎还可以：一分十七秒，比一分钟稍长一些。所以，至少在这一点上好了一些。\n\n• 如果能至少用要点列出自己想讲的内容，会更好一些，这样她能更好地组织思路，把内容串联起来。"
             },
             {
               "id": "ethan-liu",
               "name": "Ethan Liu",
-              "en": "• Ethan Liu wrote the original speech himself and used AI to polish it. He spoke very robotically, as if he were simply reading out AI-polished text. From the first sentence, I could immediately hear what I regarded as AI-style wording because of the long, multi-syllable words.\n\n• He had not asked the AI to humanize the text, vary the sentence lengths, or include conversational dialogue, pauses and rhetorical devices. The way AI was used felt too basic.\n\n• It sounded like a mixture of logic and cold reasoning, which was not enough.",
-              "zh": "• Ethan Liu自己写了原稿，再使用人工智能润色。他讲得非常机械，像是在把人工智能润色过的文字直接念出来。从第一句话开始，我就能从那些音节很长的词中，立刻听出我认为很有人工智能风格的措辞。\n\n• 他没有让人工智能把文本处理得更自然、更像人在说话，没有要求变化句子长短，也没有要求加入交流性的对话、停顿和修辞手法。我觉得这种使用人工智能的方式过于简单。\n\n• 听起来像是逻辑与冷冰冰的推理混在一起，而这还不够。"
+              "en": "• Ethan Liu wrote the original speech himself and used AI to polish it. He spoke very robotically, as if he were simply reading out AI-polished text. From the first sentence, I could immediately hear what I regarded as AI-style wording because of the long, multi-syllable words.\n\n• He had not asked the AI to humanize the text, vary the sentence lengths, or include conversational dialogue, pauses and rhetorical devices. The way AI was used felt too basic.\n\n• It sounded like a mixture of logic and cold reasoning, which was not enough.\n\n• Later classroom behavior: Ethan Liu and Patrick were sitting completely opposite and diagonally apart from each other. Even so, Ethan Liu was giggling and Patrick was giggling too, without anything they were talking about. They then talked across the tables from one side of the room to the other. I do not really know why. Other students were working on their tasks.",
+              "zh": "• Ethan Liu自己写了原稿，再使用人工智能润色。他讲得非常机械，像是在把人工智能润色过的文字直接念出来。从第一句话开始，我就能从那些音节很长的词中，立刻听出我认为很有人工智能风格的措辞。\n\n• 他没有让人工智能把文本处理得更自然、更像人在说话，没有要求变化句子长短，也没有要求加入交流性的对话、停顿和修辞手法。我觉得这种使用人工智能的方式过于简单。\n\n• 听起来像是逻辑与冷冰冰的推理混在一起，而这还不够。\n\n•【之后的课堂表现】：Ethan Liu与Patrick已经坐在完全相对、又呈对角线分开的位置。即使这样，Ethan Liu仍然在咯咯笑，Patrick也在笑，而他们当时并没有在聊什么。随后，他们隔着桌子，从教室的一边向另一边讲话。我也不太清楚为什么。当时其他同学正在做自己的课堂任务。"
             },
             {
               "id": "ethan-jia",
@@ -2699,14 +2699,14 @@
             {
               "id": "harry",
               "name": "Harry",
-              "en": null,
-              "zh": null
+              "en": "• Harry was our first speaker. His body language and voice were okay, but the speech was a little short. He only spoke for one minute.\n\n• I would suggest adding audience-engagement techniques, such as asking questions and using examples to relate to us a bit more. For example, I suggested talking about Alyssa having her snack and how she could share it with all of us. His topic was related to groups.\n\n• Giving a hypothetical situation or a real example would help lengthen his speech and also bring us closer to what he was talking about.",
+              "zh": "• Harry是第一位发言的同学。他的肢体语言和声音都还可以，不过演讲有点短，只讲了一分钟。\n\n• 我建议加入与听众互动的方法，例如提问，以及用例子与我们多建立一些联系。比如，我建议可以谈谈Alyssa有她的零食，以及她可以怎样与我们大家分享。他的主题与小组有关。\n\n• 加入一个假设情境或真实例子，既能帮助他把演讲展开得更长，也能让我们与他所讲的内容产生更紧密的联系。"
             },
             {
               "id": "patrick",
               "name": "Patrick",
-              "en": "• I think Patrick had a pretty good performance—much better than before. He was not shaking as much, and he was not swaying his arms back and forth. His impromptu had an overall structure and logic, and it was pretty clear.\n\n• Sometimes we want to make sure we use our own words and focus on our ability to express ourselves better and keep improving.\n\n• As general guidance on AI, we may potentially use it for polishing when preparing for a competition and to adjust certain things. But ask AI for suggestions; do not actually have it do the polishing for you, because that causes a lot of issues.",
-              "zh": "• 我觉得Patrick这次表现相当不错，比之前好了很多。他没有那么多抖动，也没有把手臂来回摆动。他的即兴演讲有整体结构和逻辑，表达也相当清楚。\n\n• 有时候，我们要确保使用自己的话，把重点放在更好地表达自己，并继续提升这方面的能力上。\n\n• 关于使用人工智能的一般指导是：在准备比赛、调整某些内容时，我们可能会考虑用它来帮助润色。但要向人工智能征求建议，不要真的让它替自己完成润色，因为这样实际上会带来很多问题。"
+              "en": "• I think Patrick had a pretty good performance—much better than before. He was not shaking as much, and he was not swaying his arms back and forth. His impromptu had an overall structure and logic, and it was pretty clear.\n\n• Sometimes we want to make sure we use our own words and focus on our ability to express ourselves better and keep improving.\n\n• As general guidance on AI, we may potentially use it for polishing when preparing for a competition and to adjust certain things. But ask AI for suggestions; do not actually have it do the polishing for you, because that causes a lot of issues.\n\n• Later classroom behavior: Patrick continues to have some difficulty controlling himself. Even though he and Ethan Liu were sitting completely opposite and diagonally apart from each other, Patrick was giggling and Ethan Liu was giggling too, without anything they were talking about. They then talked across the tables from one side of the room to the other. I do not really know why. Other students were working on their tasks.",
+              "zh": "• 我觉得Patrick这次表现相当不错，比之前好了很多。他没有那么多抖动，也没有把手臂来回摆动。他的即兴演讲有整体结构和逻辑，表达也相当清楚。\n\n• 有时候，我们要确保使用自己的话，把重点放在更好地表达自己，并继续提升这方面的能力上。\n\n• 关于使用人工智能的一般指导是：在准备比赛、调整某些内容时，我们可能会考虑用它来帮助润色。但要向人工智能征求建议，不要真的让它替自己完成润色，因为这样实际上会带来很多问题。\n\n•【之后的课堂表现】：Patrick在控制自己这方面仍然有些困难。尽管他与Ethan Liu已经坐在完全相对、又呈对角线分开的位置，Patrick还是在咯咯笑，Ethan Liu也在笑，而他们当时并没有在聊什么。随后，他们隔着桌子，从教室的一边向另一边讲话。我也不太清楚为什么。当时其他同学正在做自己的课堂任务。"
             }
           ]
         }
