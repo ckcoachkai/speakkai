@@ -2,7 +2,7 @@ const API='https://ufxqfgxjsjezjhuyvyqd.supabase.co/rest/v1/health_records';
 const KEY="sb_publishable_AiWOi_ogpJvoZA2jU_jxXQ_enJURjYz";
 const el=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let rows=[];
+let rows=[],loading=false,knownRevision=null;
 const by=d=>rows.filter(r=>r.dataset===d);
 const numeric=(r,key)=>{const v=Number(r.payload[key]);return r.payload[key]!==''&&Number.isFinite(v)?v:null};
 const config={
@@ -16,8 +16,10 @@ const config={
 function latest(dataset){return by(dataset).filter(r=>r.occurred_on).sort((a,b)=>(b.occurred_at_original||b.occurred_on).localeCompare(a.occurred_at_original||a.occurred_on)||Number(a.payload.record_order??0)-Number(b.payload.record_order??0))[0]}
 function stat(name,value,note){return '<article class="stat"><span>'+esc(name)+'</span><strong>'+esc(value)+'</strong><small>'+esc(note)+'</small></article>'}
 function render(){
-const w=latest('weight-records'),s=latest('steps-daily'),sl=latest('sleep-daily-totals'),push=by('exercise-log').filter(r=>r.occurred_on==='2026-10-27').reduce((a,r)=>a+(Number(r.payload.repetitions)||0),0);
-el('stats').innerHTML=stat('Pushups · Oct 27',push,'Completed · user reported')+stat('Latest recorded steps',s?Number(s.payload.value).toLocaleString():'Unknown',s?s.occurred_on+' · partial day':'No record')+stat('Latest captured sleep',sl?(Number(sl.payload.total_duration_minutes)/60).toFixed(1)+' h':'Unknown',sl?sl.occurred_on+' · captured sessions':'No record')+stat('Latest imported weight',w?w.payload.weight_kg+' kg':'Unknown',w?w.occurred_on+' · scale reading':'No record');
+const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai'}).format(new Date());
+const todayLabel=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',month:'short',day:'numeric'}).format(new Date());
+const w=latest('weight-records'),s=latest('steps-daily'),sl=latest('sleep-daily-totals'),push=by('exercise-log').filter(r=>r.occurred_on===today&&r.payload.exercise==='pushup').reduce((a,r)=>a+(Number(r.payload.repetitions)||0),0);
+el('stats').innerHTML=stat('Pushups · '+todayLabel,push||'Not logged',push?'Completed · user reported':'No pushups reported for this day')+stat('Latest recorded steps',s?Number(s.payload.value).toLocaleString():'Unknown',s?s.occurred_on+(s.occurred_on===today?' · day in progress':' · recorded day'):'No record')+stat('Latest captured sleep',sl?(Number(sl.payload.total_duration_minutes)/60).toFixed(1)+' h':'Unknown',sl?sl.occurred_on+' · captured sessions':'No record')+stat('Latest imported weight',w?w.payload.weight_kg+' kg':'Unknown',w?w.occurred_on+' · scale reading':'No record');
 el('exercise').innerHTML=by('exercise-log').map(r=>'<div class="exercise-row"><div><strong>'+esc(r.payload.exercise==='pushup'?r.payload.repetitions+' pushups':r.payload.title||r.payload.exercise)+'</strong><small>'+esc(r.payload.exercise==='pushup'?'Completed · sets, duration and calories not reported':r.payload.duration_minutes+' min · '+r.payload.speed_kmh+' km/h · '+r.payload.incline_percent+'% incline · user reported')+'</small></div><span>'+esc(r.occurred_on||r.payload.date_context||'Date unconfirmed')+'</span></div>').join('')||'<p>No exercise entries imported.</p>';
 el('meals').innerHTML=by('food-log').sort((a,b)=>(b.occurred_on||'').localeCompare(a.occurred_on||'')).map(r=>{const p=r.payload;return '<article class="meal"><span class="eyebrow">'+esc(p.meal)+'</span><h3>'+esc(p.id.replaceAll('-',' '))+'</h3><ul>'+p.items.map(x=>'<li>'+esc(x.food)+(x.amount_g!=null?' · '+esc(x.amount_g)+' g':x.amount_original?' · '+esc(x.amount_original)+' (unit unclear)':x.amount!=null?' · '+esc(x.amount)+' '+esc(x.unit):' · portion unknown')+'</li>').join('')+'</ul>'+nutrition(p)+'<small>'+esc(r.occurred_on||p.date_context||'Eating date unconfirmed')+' · incomplete day</small></article>'}).join('');
 const ds=['steps-daily','calories-daily','activity-time-daily','sleep-sessions','weight-records','heart-manual-records'];
@@ -52,13 +54,14 @@ async function fetchPage(offset){
  throw last;
 }
 async function load(){
+if(loading)return;loading=true;
 try{
 const pending=[];
 for(let offset=0;;offset+=500){const page=await fetchPage(offset);pending.push(...page);if(page.length<500)break}
 rows=pending;
-el('load-status').textContent='Connected to Supabase · Mi Fitness captured October 24 · Dot export merged · 106 conversations · Public read-only journal';
+el('load-status').textContent='Connected to Supabase · New food and exercise reports save from chat · Public read-only journal';
 render();renderDot();renderHistory();renderPhotos();
-}catch(err){el('load-status').textContent='Health records could not be loaded. '+err.message+' Please retry later.';el('load-status').setAttribute('role','alert');}
+}catch(err){el('load-status').textContent='Health records could not be loaded. '+err.message+' Please retry later.';el('load-status').setAttribute('role','alert');}finally{loading=false;}
 }
 el('metric').addEventListener('change',draw);el('period').addEventListener('change',draw);
 el('download').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([JSON.stringify({timezone:'Asia/Shanghai',records:rows},null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='speakkai-health-records.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
@@ -105,3 +108,18 @@ function renderPhotos(){
 }
 el('history-search').addEventListener('input',renderHistory);el('history-category').addEventListener('change',renderHistory);
 el('photo-search').addEventListener('input',()=>{photoLimit=18;renderPhotos()});el('more-photos').addEventListener('click',()=>{photoLimit+=18;renderPhotos()});
+
+async function checkSync(){
+ if(document.visibilityState==='hidden')return;
+ try{
+  const response=await fetch(API.replace('/health_records','/health_sync_status')+'?select=key,state,last_success_at,last_data_date,revision,detail',{headers:{apikey:KEY},cache:'no-store',signal:AbortSignal.timeout(15000)});
+  if(!response.ok)throw Error('Sync status unavailable');
+  const statuses=await response.json();if(!Array.isArray(statuses))return;
+  const journal=statuses.find(x=>x.key==='journal'),mi=statuses.find(x=>x.key==='mifit');
+  const last=mi?.last_success_at?new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(mi.last_success_at)):'Not synced yet';
+  el('sync-status').innerHTML='<article class="sync-card"><strong>FOOD & EXERCISE · AUTOMATIC</strong><p>Save reports from this chat. Background checks every 15 minutes.</p><p>This page checks for changes every minute while open.</p></article><article class="sync-card" data-state="'+esc(mi?.state||'unknown')+'"><strong>MI FITNESS · '+esc((mi?.state||'unknown').replaceAll('_',' ').toUpperCase())+'</strong><p>'+esc(mi?.detail||'Connection status unavailable.')+'</p><p>Last cloud sync: '+esc(last)+(mi?.last_data_date?' · Latest saved date: '+esc(mi.last_data_date):'')+'</p></article>';
+  if(journal){if(knownRevision!==null&&Number(journal.revision)!==knownRevision)await load();knownRevision=Number(journal.revision);}
+ }catch(_){if(!el('sync-status').innerHTML)el('sync-status').textContent='Sync connection status temporarily unavailable.';}
+}
+if(typeof window!=='undefined'){checkSync();setInterval(checkSync,60000);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')checkSync()});}
+
