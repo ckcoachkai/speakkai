@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-26T12:10:08.493700+00:00",
+  "updatedAt": "2026-10-27T07:06:01.391298+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -210,6 +210,12 @@
               "name": "Winston",
               "en": "Winston’s voice sounded a little timid, perhaps because the question was difficult. I do not know whether he had done his homework. It is best to bring the written preparation with him so he can try it out: with harder questions, writing down his thought process can help him work out logically how to answer. Trying to answer entirely impromptu may make those questions more difficult. Suggested practice: he could first write a short outline of his reasoning and then practise speaking from it.",
               "zh": "Winston的声音听起来有些胆怯，可能是因为这道题比较难。我不确定他是否完成了作业。最好把书面准备带来，以便实际试一试：面对更难的问题，把思考过程写下来，可以帮助他从逻辑上理清该怎样回答。如果完全即兴作答，这些题目可能会更难。练习建议：可以先写一个简短的思路提纲，再根据提纲练习表达。"
+            },
+            {
+              "id": "louis",
+              "name": "Louis",
+              "en": null,
+              "zh": null
             }
           ]
         }
@@ -2389,7 +2395,10 @@
           "date": "2026-10-26",
           "time": "15:30–17:30",
           "status": "held",
-          "classContent": null,
+          "classContent": {
+            "en": "• Editing, polishing and writing: In class, we went through another skill within the editing and polishing process, which also applies to writing: thinking about how to make our work easier for the audience to understand, go deeper and improve clarity.\n\n• Variety and language: We looked at the importance of variety in creating curiosity. We also looked at using simple words to help the audience understand, and complex words to show our language abilities.\n\n• Fewer characters, locations and messages: Reduce the number of characters to reduce confusion. Reduce the number of locations to help the audience visualize what is happening. Reduce the number of messages to strengthen the core idea.\n\n• Relatability and the significance of each character: Think about how relatable the location, situation and characters are. If we add more characters, what significance does each character bring?\n\n• Using dialogue: We considered how words we use to describe a scene could instead be spoken by the characters: how can we have the characters say it?\n\n• Story exercise: Think about a friend of yours and a problem that happens. The example prompts were: their hair catches on fire; they get gum on their clothes; they cheated on a test; you argue over who won; or you get blamed for something they did. These were story prompts, not reports of actual incidents. Organize the story by explaining the situation, what happened and what the conclusion was.",
+            "zh": "•【编辑、润色与写作】：课堂上，我们学习了编辑和润色过程中的另一项技巧，这也同样适用于写作：思考怎样让听众更容易理解，让内容更深入，并提高表达的清晰度。\n\n•【变化与用词】：我们讨论了通过变化引起好奇心的重要性，也讨论了用简单的词帮助听众理解，以及用复杂的词展现自己的语言能力。\n\n•【减少人物、地点与信息】：减少人物数量，以减少混淆；减少地点数量，帮助听众想象正在发生的事情；减少想要传达的信息数量，以加强核心观点。\n\n•【共鸣与每个人物的意义】：思考地点、情境和人物能否让听众产生共鸣。如果加入更多人物，每个人物带来了什么意义？\n\n•【运用对话】：我们思考了，原本用来描述场景的那些话，能否改为让故事中的人物说出来：怎样让人物自己说出这些内容？\n\n•【故事练习】：想一想你的一位朋友，以及发生的一个问题。课件提供的示例情境包括：朋友的头发着火了；衣服上沾到了口香糖；朋友考试作弊；你们争论谁赢了；或者你因为朋友做的事而被责怪。这些是故事创作提示，不是真实事件记录。组织故事时，需要交代情境、发生了什么，以及最后的结局。"
+          },
           "homework": null,
           "students": [
             {
@@ -2419,8 +2428,8 @@
             {
               "id": "cynthia",
               "name": "Cynthia",
-              "en": "I suggested that Cynthia also enter competitions. I feel that every homework speech she gives is very well put together, with clear articulation, good clarity, a good message and plenty of rhetorical devices. Overall, her speeches are very well organized, and everything about this presentation was really good.\n\nI would encourage her to go and test it out on a bigger stage, in front of an audience. I would also like to see the script itself from time to time so that we can make small refinements where needed. Otherwise, very good job.",
-              "zh": "我建议Cynthia也去参加比赛。我觉得她每一次作业演讲都组织得很好，吐字清楚、表达清晰，有很好的核心信息，也运用了很多修辞手法。整体来说，她的演讲安排得非常完整，这次展示的各个方面都很好。\n\n我鼓励她去更大的舞台、在更多听众面前试一试。我也希望不时看看她的稿件本身，这样需要时可以做一些小小的润色和调整。除此之外，做得非常好。"
+              "en": "• I suggested that Cynthia also enter competitions. I feel that every homework speech she gives is very well put together, with clear articulation, good clarity, a good message and plenty of rhetorical devices. Overall, her speeches are very well organized, and everything about this presentation was really good.\n\n• I also want to strongly encourage Cynthia to attend competitions, if possible. I feel that she has the ability to craft pretty good content and use verbal devices, structure and logic. She also has clear articulation and clarity. I want her, if possible, to just test it out and see what she can do.\n\n• I would encourage her to go and test it out on a bigger stage, in front of an audience. I would also like to see the script itself from time to time so that we can make small refinements where needed. Otherwise, very good job.",
+              "zh": "• 我建议Cynthia也去参加比赛。我觉得她每一次作业演讲都组织得很好，吐字清楚、表达清晰，有很好的核心信息，也运用了很多修辞手法。整体来说，她的演讲安排得非常完整，这次展示的各个方面都很好。\n\n• 如果可以，我也非常鼓励Cynthia参加比赛。我觉得她有能力创作很不错的内容，运用语言表达技巧，并组织好结构和逻辑。她的吐字和表达也很清晰。如果可以，我希望她就去试一试，看看自己能做到什么。\n\n• 我鼓励她去更大的舞台、在更多听众面前试一试。我也希望不时看看她的稿件本身，这样需要时可以做一些小小的润色和调整。除此之外，做得非常好。"
             },
             {
               "id": "kieran",
