@@ -1,7 +1,9 @@
-import {ALL_ITEM_IDS,ITEM_REGISTRY} from './race3d-item-registry.js?v=20261025-fifty1';
-import {extraIconSvg} from './race3d-item-icons.js?v=20261025-fifty1';
+import {ALL_ITEM_IDS,ITEM_REGISTRY} from './race3d-item-registry.js?v=20261027-midnight';
+import {extraIconSvg} from './race3d-item-icons.js?v=20261027-midnight';
+import {CONCEPT_VEHICLE_PROFILES} from './race3d-concept-profiles.js?v=20261027-midnight';
 // Names identify the loaded representations; ratings and telemetry below are game values.
 export const RACER_CARD_NAMES = Object.freeze({
+  ...Object.fromEntries(Object.entries(CONCEPT_VEHICLE_PROFILES).map(([id,profile])=>[id,profile.vehicleName])),
   'f1-2026':'Qvist 2026 Formula concept', gt3:'Race Car 01 LMGT3',
   'car-concept':'CarConcept sports coupe', 'lamborghini-gallardo':'Lamborghini Gallardo 2010',
   'tesla-roadster':'Tesla Roadster 2020 concept',

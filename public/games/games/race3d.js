@@ -1,23 +1,24 @@
 import * as THREE from '../assets/vendor/three.module.js';
-import { createRaceTrack } from './race3d-track.js?v=20261025-fifty1';
-import { createRaceCars } from './race3d-cars.js?v=20261025-fifty1';
-import { createRaceSimulation } from './race3d-physics.js?v=20261025-fifty1';
-import { createChaseCamera } from './race3d-camera.js?v=20261025-fifty1';
-import { createRaceAudio } from './race3d-audio.js?v=20261025-fifty1';
-import { createRaceUI } from './race3d-ui.js?v=20261025-fifty1';
-import { createRaceEffects } from './race3d-fx.js?v=20261025-fifty1';
-import { createRaceScenery } from './race3d-city.js?v=20261025-fifty1';
-import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261025-fifty1';
-import { createRacePowerups } from './race3d-powerups.js?v=20261025-fifty1';
-import { createRaceRamps } from './race3d-ramps.js?v=20261025-fifty1';
-import { createSkySpirit } from './race3d-sky-spirit.js?v=20261025-fifty1';
-import { assignRacerTypes } from './race3d-roster.js?v=20261025-fifty1';
-import { resolveQuality } from './race3d-quality.js?v=20261025-fifty1';
-import { createContactShadows } from './race3d-quality.js?v=20261025-fifty1';
-import { createCircuitFestival } from './race3d-festival.js?v=20261025-fifty1';
-import {createRaceSelection,SELECTION_SECONDS} from './race3d-selection.js?v=20261025-fifty1';
-import {rampPlaybackTarget,advancePlaybackRate} from './race3d-playback.js?v=20261025-fifty1';
-import {createFrameBudget} from './race3d-frame-budget.js?v=20261025-fifty1';
+import { createRaceTrack } from './race3d-track.js?v=20261027-midnight';
+import { createRaceCars } from './race3d-cars.js?v=20261027-midnight';
+import { createRaceSimulation } from './race3d-physics.js?v=20261027-midnight';
+import { createChaseCamera } from './race3d-camera.js?v=20261027-midnight';
+import { createRaceAudio } from './race3d-audio.js?v=20261027-midnight';
+import { createRaceMusic } from './race3d-music.js?v=20261027-midnight';
+import { createRaceUI } from './race3d-ui.js?v=20261027-midnight';
+import { createRaceEffects } from './race3d-fx.js?v=20261027-midnight';
+import { createRaceScenery } from './race3d-city.js?v=20261027-midnight';
+import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261027-midnight';
+import { createRacePowerups } from './race3d-powerups.js?v=20261027-midnight';
+import { createRaceRamps } from './race3d-ramps.js?v=20261027-midnight';
+import { createSkySpirit } from './race3d-sky-spirit.js?v=20261027-midnight';
+import { assignRacerTypes } from './race3d-roster.js?v=20261027-midnight';
+import { resolveQuality } from './race3d-quality.js?v=20261027-midnight';
+import { createContactShadows } from './race3d-quality.js?v=20261027-midnight';
+import { createCircuitFestival } from './race3d-festival.js?v=20261027-midnight';
+import {createRaceSelection,SELECTION_SECONDS} from './race3d-selection.js?v=20261027-midnight';
+import {rampPlaybackTarget,advancePlaybackRate} from './race3d-playback.js?v=20261027-midnight';
+import {createFrameBudget} from './race3d-frame-budget.js?v=20261027-midnight';
 
 const COLORS = ['#54d7c4', '#f4c65a', '#ff7666', '#a6b1f1', '#79b8ee', '#d2a4dd', '#a9d58b', '#edb987'];
 const STEP = 1 / 60;
@@ -53,7 +54,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   credits.target = '_blank'; credits.rel = 'noopener';
   credits.style.cssText = 'position:absolute;bottom:4px;left:12px;z-index:12;color:#d6e4eb;font:10px/1.5 sans-serif;text-decoration:none;background:#13212a99;padding:2px 5px;border-radius:3px';
   root.appendChild(credits);
-  let renderer, track, scenery, atmosphere, skySpirit, simulation, carModels, chaseCamera, audio, ui, effects, powerups, ramps, frogs, selection;
+  let renderer, track, scenery, atmosphere, skySpirit, simulation, carModels, chaseCamera, audio, music, ui, effects, powerups, ramps, frogs, selection;
   let alive = true, mode = 'idle', elapsed = 0, raceElapsed = 0, previous = null, accumulator = 0, raf = 0;
   let shaderReady = false, pendingStart = false, warmRevision = 0;
   const preparing = document.createElement('div');
@@ -371,6 +372,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
 
   const start = () => {
     if (!alive || mode === 'selecting' || mode === 'countdown' || mode === 'running' || mode === 'finishing' || !players.length) return;
+    music?.start();
     if (!shaderReady) { pendingStart = true; audio?.start(); return; }
     frameBudget.reset();warmFrames=0;detailScale=renderScale=1;
     renderer.setPixelRatio(Math.min(devicePixelRatio||1,quality.dpr));renderer.setSize(size.width,size.height,false);
@@ -443,6 +445,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     countdownElapsed = 0; countdownCue = 3; goAt = -Infinity;
     finishAt = Infinity;
     setPhase('idle');
+    music?.reset();
     chaseCamera?.reset();
     audio?.reset();
     powerups?.reset();
@@ -465,7 +468,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     ++selectionEpoch;
     selection?.dispose();
     ui?.destroy();
-    audio?.destroy();
+    audio?.destroy(); music?.destroy();
     chaseCamera?.dispose();
     effects?.dispose();
     powerups?.dispose();
@@ -507,6 +510,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     festival=createCircuitFestival(THREE,track);festival.group.visible=quality.id!=='low';
     contactShadows=createContactShadows(THREE,track,simulation.cars);
     audio = createRaceAudio({ sound });
+    music = createRaceMusic({ sound, container: root });
     world.add(track.group, scenery.group, carModels.group, effects.group, powerups.group, ramps.group,festival.group,contactShadows.group);
     ui = createRaceUI(root, players, {
       laps, track,qualityMode,cinematicRamps,onCinematic:value=>{cinematicRamps=value;try{localStorage.setItem('race3d-cinematic',String(value));}catch{}},
@@ -579,6 +583,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
           carAssets: carModels?.assetSnapshot?.() || null,
           damageVisuals: carModels?.damageSnapshot?.() || [],
           audio: audio?.snapshot?.() || null,
+          music: music?.snapshot?.() || null,
           frogs: frogs?.stats || null,
           ramps: ramps?.snapshot?.() || (ramps?.layout || []).map(ramp => ({ ...ramp })),
           skySpirit: skySpirit?.group ? {
@@ -621,6 +626,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
             rouletteRemaining:car.rouletteRemaining,itemsCollected:car.itemsCollected,itemsUsed:car.itemsUsed,lastUsedItem:car.lastUsedItem,
             itemDecision:car.itemDecision?{...car.itemDecision}:null,massKg:car.massKg,brakeFactor:car.brakeFactor,powerW:car.powerW,tractionRecovery:car.tractionRecovery||0,
             racerType: car.racerType, vehicleName: car.vehicleName, damageLevel: car.damageLevel,
+            tyreBlowoutRemaining:car.tyreBlowoutRemaining,tyreBlowoutWheel:car.tyreBlowoutWheel,tyreBlowoutSeverity:car.tyreBlowoutSeverity,
             hitPoints: car.hitPoints, replacements: car.replacements, replacementRemaining: car.replacementRemaining,
             id: car.id, name: car.name, distance: car.distance, lateral: car.lateral,
             screen: car.screen ? { ...car.screen } : null,
@@ -663,7 +669,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     ++selectionEpoch;
     selection?.dispose();
     ui?.destroy();
-    audio?.destroy();
+    audio?.destroy(); music?.destroy();
     chaseCamera?.dispose();
     effects?.dispose();
     powerups?.dispose();
@@ -690,7 +696,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   return {
     start,
     reset,
-    setSound(value) { audio?.setSound(value); },
+    setSound(value) { audio?.setSound(value); music?.setSound(value); },
     destroy,
   };
 }

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "concept-obsidian",
+    "label": "Obsidian V12",
+    "url": "assets/race3d-concepts/pack-e/concept-obsidian.glb",
+    "yaw": 0,
+    "length": 5.24,
+    "vehicleSpec": {
+      "massKg": 1510,
+      "powerKW": 650,
+      "torqueNm": 820,
+      "dragCoefficient": 0.33,
+      "frontalAreaM2": 1.95,
+      "downforceCoefficient": 1.38,
+      "brakeDecelMps2": 12.8,
+      "tireGrip": 1.21,
+      "topSpeedKph": 346,
+      "engineType": "Naturally aspirated V12 / rear drive",
+      "rampPreference": 0.36,
+      "priority": 8,
+      "wheelbaseM": 2.9
+    },
+    "fictional": true,
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications."
+  },
+  {
+    "id": "concept-cinder",
+    "label": "Cinder Rally GT",
+    "url": "assets/race3d-concepts/pack-e/concept-cinder.glb",
+    "yaw": 0,
+    "length": 4.94,
+    "vehicleSpec": {
+      "massKg": 1580,
+      "powerKW": 420,
+      "torqueNm": 720,
+      "dragCoefficient": 0.39,
+      "frontalAreaM2": 2.18,
+      "downforceCoefficient": 0.55,
+      "brakeDecelMps2": 11.2,
+      "tireGrip": 1.08,
+      "topSpeedKph": 282,
+      "engineType": "Twin turbo V6 / mechanical all wheel drive",
+      "rampPreference": 0.96,
+      "priority": 7,
+      "wheelbaseM": 2.68
+    },
+    "fictional": true,
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications."
+  },
+  {
+    "id": "concept-meridian",
+    "label": "Meridian Hybrid",
+    "url": "assets/race3d-concepts/pack-e/concept-meridian.glb",
+    "yaw": 0,
+    "length": 5.08,
+    "vehicleSpec": {
+      "massKg": 1670,
+      "powerKW": 740,
+      "torqueNm": 1040,
+      "dragCoefficient": 0.29,
+      "frontalAreaM2": 1.97,
+      "downforceCoefficient": 1.67,
+      "brakeDecelMps2": 13.4,
+      "tireGrip": 1.27,
+      "topSpeedKph": 332,
+      "engineType": "Twin turbo V8 + front electric axle / hybrid AWD",
+      "rampPreference": 0.48,
+      "priority": 9,
+      "wheelbaseM": 2.82
+    },
+    "fictional": true,
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications."
+  }
+]

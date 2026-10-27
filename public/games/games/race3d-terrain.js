@@ -1,7 +1,10 @@
 /** Continuous terrain; caller owns disposal through its scenery group. */
 export function addLandscapeTerrain({ THREE, group, route, groundY, unit = 1, center, radius }) {
-  const extent = radius + 650 * unit;
-  const divisions = 160;
+  // Cover the full enlarged course and the outer mountain ring. Keep roughly
+  // the original mesh spacing as bounds grow, rather than stretching a fixed
+  // grid into coarse triangles beside the road.
+  const extent = radius + 1000 * unit;
+  const divisions = Math.max(160, Math.min(256, Math.ceil(extent * 2 / (20 * unit))));
   const cell = extent * 2 / divisions;
   const smooth = (a, b, x) => { const t = Math.max(0, Math.min(1, (x-a)/(b-a))); return t*t*(3-2*t); };
   // Distance to every closed route segment, not only the nearest sample.
@@ -30,7 +33,12 @@ export function addLandscapeTerrain({ THREE, group, route, groundY, unit = 1, ce
   }
   function heightAt(x,z) {
     const clearance=roadClearance(x,z);
-    return groundY+.018+shape(x,z)*smooth(cell*1.45+10*unit,cell*1.45+65*unit,clearance);
+    const edge=Math.max(Math.abs(x-center.x),Math.abs(z-center.z));
+    // The last 180 m roll into the surrounding meadow with zero slope. This
+    // prevents an exposed vertical cut at the square terrain boundary.
+    const edgeBlend=1-smooth(extent-180*unit,extent,edge);
+    const localHeight=.318+shape(x,z)*smooth(cell*1.45+10*unit,cell*1.45+65*unit,clearance);
+    return groundY-.3+localHeight*edgeBlend;
   }
   const geometry=new THREE.PlaneGeometry(extent*2,extent*2,divisions,divisions);
   geometry.rotateX(-Math.PI/2);
@@ -60,5 +68,5 @@ export function addLandscapeTerrain({ THREE, group, route, groundY, unit = 1, ce
   mesh.name='continuous-grass-earth-rock-landscape';
   mesh.receiveShadow=true;
   group.add(mesh);
-  return {mesh,heightAt,roadClearance};
+  return {mesh,heightAt,roadClearance,bounds:{minX:center.x-extent,maxX:center.x+extent,minZ:center.z-extent,maxZ:center.z+extent,cell,divisions}};
 }

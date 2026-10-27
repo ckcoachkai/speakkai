@@ -1,6 +1,6 @@
-import { addScenicArt } from './race3d-scenic-art.js?v=20261025-fifty1';
-import { createRoadsideBuildings } from './race3d-buildings.js?v=20261025-fifty1';
-import { addLandscapeTerrain } from './race3d-terrain.js?v=20261025-fifty1';
+import { addScenicArt } from './race3d-scenic-art.js?v=20261027-midnight';
+import { createRoadsideBuildings } from './race3d-buildings.js?v=20261027-midnight';
+import { addLandscapeTerrain } from './race3d-terrain.js?v=20261027-midnight';
 /**
  * Warm-day circuit scenery for race3d.
  *

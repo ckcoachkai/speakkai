@@ -1,0 +1,74 @@
+[
+  {
+    "id": "concept-aurora",
+    "label": "Aurora E",
+    "url": "assets/race3d-concepts/pack-d/concept-aurora.glb",
+    "yaw": 0,
+    "length": 5.107,
+    "vehicleSpec": {
+      "massKg": 1930,
+      "powerKW": 510,
+      "torqueNm": 850,
+      "dragCoefficient": 0.21,
+      "frontalAreaM2": 2.03,
+      "downforceCoefficient": 0.52,
+      "brakeDecelMps2": 12.2,
+      "tireGrip": 1.15,
+      "topSpeedKph": 312,
+      "engineType": "electric",
+      "wheelbaseM": 2.98,
+      "rampPreference": 0.72,
+      "priority": 4
+    },
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications.",
+    "fictional": true
+  },
+  {
+    "id": "concept-flux",
+    "label": "Flux R",
+    "url": "assets/race3d-concepts/pack-d/concept-flux.glb",
+    "yaw": 0,
+    "length": 4.547,
+    "vehicleSpec": {
+      "massKg": 1590,
+      "powerKW": 700,
+      "torqueNm": 1120,
+      "dragCoefficient": 0.34,
+      "frontalAreaM2": 1.98,
+      "downforceCoefficient": 1.8,
+      "brakeDecelMps2": 15.6,
+      "tireGrip": 1.46,
+      "topSpeedKph": 294,
+      "engineType": "electric",
+      "wheelbaseM": 2.64,
+      "rampPreference": 0.91,
+      "priority": 4
+    },
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications.",
+    "fictional": true
+  },
+  {
+    "id": "concept-solstice",
+    "label": "Solstice Streamliner",
+    "url": "assets/race3d-concepts/pack-d/concept-solstice.glb",
+    "yaw": 0,
+    "length": 5.387,
+    "vehicleSpec": {
+      "massKg": 1770,
+      "powerKW": 620,
+      "torqueNm": 900,
+      "dragCoefficient": 0.18,
+      "frontalAreaM2": 1.88,
+      "downforceCoefficient": 0.34,
+      "brakeDecelMps2": 11.8,
+      "tireGrip": 1.12,
+      "topSpeedKph": 348,
+      "engineType": "electric",
+      "wheelbaseM": 3.13,
+      "rampPreference": 0.56,
+      "priority": 4
+    },
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications.",
+    "fictional": true
+  }
+]

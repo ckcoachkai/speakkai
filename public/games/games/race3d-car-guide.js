@@ -1,11 +1,11 @@
-import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261025-fifty1';
-import {ALL_ITEM_IDS,ITEM_REGISTRY} from './race3d-item-registry.js?v=20261025-fifty1';
-import {itemThumbnail} from './race3d-ui-catalog.js?v=20261025-fifty1';
+import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261027-midnight';
+import {ALL_ITEM_IDS,ITEM_REGISTRY} from './race3d-item-registry.js?v=20261027-midnight';
+import {itemThumbnail} from './race3d-ui-catalog.js?v=20261027-midnight';
 /** Comparison uses the same game-calibrated parameters as the simulation. */
 export function addCarGuide(root,map,options={}){
  const button=document.createElement('button');button.className='race3d-guide-button';button.textContent='Compare cars';button.type='button';map.append(button);
  const dialog=document.createElement('dialog');dialog.className='race3d-car-guide';dialog.setAttribute('aria-label','Compare car attributes');
- const title=document.createElement('h2');title.textContent='Five cars, different strengths';
+ const title=document.createElement('h2');title.textContent=RACE_ROSTER_TYPES.length+' cars, different strengths';
  const note=document.createElement('p');note.textContent='Mixed-class race calibration: these game power, speed and grip values differ from the source reference estimates. Cars retain mass, suspension and specialist tradeoffs. Fictional driver skills are redrawn each race, independently of car, student name and real ability: reactions, lines, braking, ramp judgment and item confidence affect decisions. One held item slot each; trailing cars have better odds of useful comeback items, never a guaranteed win.';
  const scroll=document.createElement('div');scroll.className='race3d-guide-scroll';const table=document.createElement('table');
  const head=document.createElement('thead'),hr=document.createElement('tr');for(const t of ['Car','Speciality','Mass','Speed ceiling','Power','Tyre grip','Braking','Durability']){const th=document.createElement('th');th.textContent=t;hr.append(th);}head.append(hr);table.append(head);

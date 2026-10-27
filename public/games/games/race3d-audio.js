@@ -1,6 +1,6 @@
-import {audioPeakCurve} from './race3d-finish-fx.js?v=20261025-fifty1';
-import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261025-fifty1';
-import {ALL_ITEM_IDS,ITEM_REGISTRY} from './race3d-item-registry.js?v=20261025-fifty1';
+import {audioPeakCurve} from './race3d-finish-fx.js?v=20261027-midnight';
+import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261027-midnight';
+import {ALL_ITEM_IDS,ITEM_REGISTRY} from './race3d-item-registry.js?v=20261027-midnight';
 /** Recorded driving textures with a procedural fallback. All audio creation and resume calls stay on start/setSound
  * so browsers only unlock the graph from a host user gesture. */
 export function createRaceAudio({ sound = true } = {}) {
@@ -383,16 +383,31 @@ export function createRaceAudio({ sound = true } = {}) {
       tone(430, 0.3, { volume: 0.043 * volume, endFrequency: 100, delay: 0.055, pan });
       noiseHit(0.48, 0.085 * volume, 1900, { type: 'bandpass', endCutoff: 190, attack: 0.065, pan });
       tone(310, 0.29, { volume: 0.035 * volume, endFrequency: 70, delay: 0.17, pan });
+    } else if (/^(tyre|tire)-blowout$/.test(type)) {
+      // Pressure crack then a descending air hiss: separate from a body crash.
+      noiseHit(.075,.19*volume,4800,{endCutoff:1300,type:'highpass',attack:.003,pan});
+      tone(170,.11,{type:'triangle',volume:.07*volume,endFrequency:55,pan});
+      noiseHit(.65,.085*volume,3800,{endCutoff:650,type:'bandpass',attack:.02,delay:.035,pan});
+    } else if (type==='tyre-recovered') {
+      tone(440,.13,{type:'triangle',volume:.04*volume,endFrequency:660,pan});
+      tone(880,.18,{volume:.03*volume,delay:.10,pan});
+    } else if (type==='bomb-bounce') {
+      tone(135,.11,{type:'triangle',volume:.055*volume,endFrequency:52,pan});
+      noiseHit(.07,.045*volume,700,{endCutoff:240,pan});
+    } else if (type==='launch-land') {
+      tone(105,.23,{volume:.065*volume,endFrequency:48,pan});
+      noiseHit(.18,.085*volume,850,{endCutoff:180,pan});
     } else if (/^(launch|rocket|shield|missile|freeze)(-|$)/.test(type)) {
       const ability = type.split('-')[0];
       const cues = {
-        launch: [160, 680, 0.36, 'triangle', 850], rocket: [190, 760, 0.55, 'sawtooth', 1800],
+        launch: [135, 610, 0.48, 'triangle', 850], rocket: [145, 450, 0.65, 'triangle', 1800],
         shield: [520, 1040, 0.48, 'sine', 3200], missile: [1800, 420, 0.32, 'triangle', 2400],
         freeze: [3200, 1600, 0.5, 'sine', 6000],
       };
       const [pitch, end, duration, wave, cutoff] = cues[ability];
       tone(pitch, duration, { type: wave, endFrequency: end, volume: 0.065 * volume, pan });
       noiseHit(duration, 0.075 * volume, cutoff, { type: 'bandpass', endCutoff: cutoff / 2, pan });
+      if(ability==='launch'||ability==='rocket')noiseHit(.42,.10*volume,180,{type:'bandpass',endCutoff:1100,attack:.02,pan});
     } else if (type === 'boost') {
       noiseHit(0.7, 0.15 * volume, 450, { endCutoff: 4400, type: 'bandpass', attack: 0.045, pan });
       tone(160, 0.48, { type: 'triangle', volume: 0.07 * volume, endFrequency: 440, pan });
@@ -463,7 +478,7 @@ export function createRaceAudio({ sound = true } = {}) {
       if(type==='finish-burst'){finishBurst({...space,volume:space.volume*(event.intensity??1)});continue;}
       if(type.startsWith('extra-')&&ITEM_REGISTRY[event.itemType]){const key='extra:'+event.carId;if(now-(eventCooldowns.get(key)??-Infinity)<.18)continue;eventCooldowns.set(key,now);const i=ALL_ITEM_IDS.indexOf(event.itemType),base=170+(i%11)*31,ratio=1.22+(i%5)*.13; tone(base,.09,{type:'triangle',volume:.035*space.volume,pan:space.pan,endFrequency:/hit|burst/.test(type)?base*.7:base*1.1});tone(base*ratio,.13,{type:'sine',volume:.025*space.volume,pan:space.pan,delay:.035});continue;}
       const isSkid = /^(banana-hit|spin|skid|drift|spinout)$/.test(type);
-      const isPower = /^(item-pickup|item-ready|pickup|boost|banana-drop|banana-launch|banana-land|banana-hit|bomb-launch|bomb-explode|ramp-approach|ramp-takeoff|ramp-land|trick-complete)$/.test(type) || /^(launch|rocket|shield|missile|shockwave|freeze|repair)(-|$)/.test(type);
+      const isPower = /^(item-pickup|item-ready|pickup|boost|banana-drop|banana-launch|banana-land|banana-hit|bomb-launch|bomb-bounce|bomb-explode|tyre-blowout|tire-blowout|tyre-recovered|ramp-approach|ramp-takeoff|ramp-land|trick-complete)$/.test(type) || /^(launch|rocket|shield|missile|shockwave|freeze|repair)(-|$)/.test(type);
       if(type==='item-pickup' && primary && event.carId!==primary.id)continue;
       const group = isSkid ? 'skid' : /crash|collision|impact|hit/.test(type) ? 'impact' : type;
       const key = `${group}:${event?.carId ?? 'all'}`;

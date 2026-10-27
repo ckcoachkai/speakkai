@@ -1,8 +1,25 @@
-import {auditStraightCorridor} from './race3d-course-safety.js?v=20261025-fifty1';
+import {auditStraightCorridor} from './race3d-course-safety.js?v=20261027-midnight';
 /** Temporary authored-slot interactions. Never rewrite road geometry. */
 export const TRACK_IDS=Object.freeze(['strip','spring','sweeper','foam','beacon','inverter','reclaim','shift']);
 export const TRACK_TIMERS=Object.freeze(['padBoost','padBrake','foamSlow','beacon']);
 const approvedSlotCache=new WeakMap();
+// Intersect the car's whole step with the patch footprint. Endpoint checks
+// miss short tiles and lateral crossings; testing axes separately gives hits
+// when a car passed alongside a tile and crossed its lane only afterwards.
+export function sweptGroundContact(c,p,gap,longRadius,sideRadius){
+ const previous=Number.isFinite(c.previousProgress)?c.previousProgress:c.distance;
+ const previousLateral=Number.isFinite(c.previousLateral)?c.previousLateral:c.lateral;
+ const x0=gap(previous,p.distance),dx=c.distance-previous;
+ const y0=previousLateral-p.lateral,dy=c.lateral-previousLateral;
+ let enter=0,leave=1;
+ for(const [start,delta,radius]of [[x0,dx,longRadius],[y0,dy,sideRadius]]){
+  if(Math.abs(delta)<1e-12){if(Math.abs(start)>radius)return null;continue;}
+  const a=(-radius-start)/delta,b=(radius-start)/delta;
+  enter=Math.max(enter,Math.min(a,b));leave=Math.min(leave,Math.max(a,b));
+  if(enter>leave)return null;
+ }
+ return enter<=1&&leave>=0?enter:null;
+}
 export function createTrackItems(ctx,{state,emit,patches,newId}){
  const cars=()=>ctx.cars(),length=ctx.track.totalLength,half=(ctx.track.width||16.5)/2;
  const key=length+':'+half+':'+JSON.stringify(ctx.track.hazards||[]);let cached=approvedSlotCache.get(ctx.track);
@@ -27,7 +44,7 @@ export function createTrackItems(ctx,{state,emit,patches,newId}){
  }
  function remove(id){let i=patches.findIndex(p=>p.id===id);if(i>=0){patches.splice(i,1);return;}i=ctx.hazards().findIndex(p=>p.id===id);if(i>=0)ctx.hazards().splice(i,1);}
  function activate(c,type,p){
-  if(['strip','spring','foam'].includes(type))patches.push({id:newId(),type,ownerId:c.id,distance:p.slot.distance,lateral:p.slot.lateral,age:0,ttl:8,radius:type==='foam'?1.4:2,length:type==='foam'?3:14,hits:[],trackPatch:true,inverted:0});
+  if(['strip','spring','foam'].includes(type))patches.push({id:newId(),type,ownerId:c.id,distance:p.slot.distance,lateral:p.slot.lateral,age:0,ttl:16,radius:type==='foam'?1.4:2,length:type==='foam'?3:14,hits:[],trackPatch:true,inverted:0});
   else if(type==='beacon')state(c).beacon=10;
   else if(type==='sweeper'){for(const id of p.trapIds)remove(id);}
   else if(type==='inverter'){const pad=patches.find(x=>x.id===p.padId);if(!pad)return false;pad.pendingInvert=.5;}
@@ -38,10 +55,10 @@ export function createTrackItems(ctx,{state,emit,patches,newId}){
  function step(dt){
   for(const p of [...ctx.hazards(),...patches])if(p.shifting){const s=p.shifting,mid=(s.from+s.to)/2;if(occupied(p.distance,mid,Math.abs(s.to-s.from)/2+1.5))continue;s.elapsed+=dt;p.lateral=s.from+(s.to-s.from)*Math.min(1,s.elapsed/.5);if(s.elapsed>=.5){p.shifting=null;p.armed=true;}}
   for(const p of patches){if(!p.trackPatch)continue;if(p.pendingInvert){p.pendingInvert=Math.max(0,p.pendingInvert-dt);if(!p.pendingInvert){if(occupied(p.distance,p.lateral))p.pendingInvert=.1;else p.inverted=3;}}else p.inverted=Math.max(0,p.inverted-dt);
-   if(p.age<.45)continue;for(const c of cars()){if(c.finished||c.flightRemaining>0||p.hits.includes(c.id)||Math.abs(ctx.gap(c.distance,p.distance))>(p.length||3)/2+1.8||Math.abs(c.lateral-p.lateral)>(p.radius||2))continue;p.hits.push(c.id);const s=state(c);
+   if(p.age<.45)continue;for(const c of cars()){if(c.finished||c.flightRemaining>0||p.hits.includes(c.id)||sweptGroundContact(c,p,ctx.gap,(p.length||3)/2+1.8,p.radius||2)===null)continue;p.hits.push(c.id);const s=state(c);
     if(p.type==='strip'){if(p.inverted>0){if(s.padBrake<=0)s.padBrake=3;}else if(s.padBoost<=0)s.padBoost=1.4;}
     else if(p.type==='spring')ctx.hop(c,Math.max(9,Math.min(14,12*Math.sqrt(1320/c.massKg))),'spring');
-    else if(p.type==='foam'&&c.shieldRemaining<=0){c.speed=Math.max(5,c.speed*.78);if(s.foamSlow<=0)s.foamSlow=3;}
+    else if(p.type==='foam'){if(ctx.blocked(c,'foam'))continue;c.speed=Math.max(5,c.speed*.78);if(s.foamSlow<=0)s.foamSlow=5;}
     emit(p.type+'-hit',c,{ownerId:p.ownerId,inverted:p.inverted>0});
    }
   }

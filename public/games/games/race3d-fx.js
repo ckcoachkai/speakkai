@@ -1,5 +1,5 @@
 /**
- * Restrained, pooled visual effects for the Three.js Grand Prix scene.
+ * Pooled road-scale visual effects for the Three.js Grand Prix scene.
  *
  * emit({type, position, direction, intensity, color}, {track, cars}) accepts
  * world-space points. If position is omitted, a car/distance plus
@@ -201,16 +201,16 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
       .addScaledVector(right, lateral).addScaledVector(tangent, -rear);
 
     if (type === 'skid' || type === 'spin' || type === 'tire-smoke') {
-      const rear = .58;
+      const rear = 1.5;
       for (const side of [-1, 1]) {
-        const wheel = sidePoint(position, side * .31, rear);
+        const wheel = sidePoint(position, side * 1.15, rear);
         for (let n = 0, count = Math.round(2 + intensity * 2); n < count; n++) {
           spawn('smoke', at(wheel, 0, .12 + rand() * .08),
-            new THREE.Vector3((rand() - .5) * .35, .28 + rand() * .3, (rand() - .5) * .35),
-            { life: .7 + rand() * .55, size: .12 + rand() * .12, grow: 2.4, alpha: .7, drag: .12 });
+            new THREE.Vector3((rand() - .5) * 1.4, .5 + rand() * .8, (rand() - .5) * 1.4),
+            { life: .8 + rand() * .6, size: .30 + rand() * .24, grow: 2.7, alpha: .82, drag: .12 });
         }
         wheel.y -= .18;
-        spawn('marks', wheel, new THREE.Vector3(), { life: 5.2, size: .78 + rand() * .3, stretch: .09,
+        spawn('marks', wheel, new THREE.Vector3(), { life: 5.2, size: 1.6 + rand() * .7, stretch: .18,
           alpha: .88, ry: Math.atan2(-tangent.z, tangent.x) });
       }
       return;

@@ -9,31 +9,127 @@ export function createTrack(THREE) {
   group.name = 'race3d-track';
 
   const UP = new THREE.Vector3(0, 1, 0);
-  const ROAD_WIDTH = 16.5;
+  const ROAD_WIDTH = 18;
   const HALF_WIDTH = ROAD_WIDTH / 2;
   const ROAD_LIFT = 0.035;
   const TAU = Math.PI * 2;
   const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
   const wrap = (d, length) => ((d % length) + length) % length;
 
-  // Fictional closed boulevard: long clear launch corridors alternate with a
-  // double dogleg, a broad hairpin and elevation-changing return esses.
-  const anchors = [
-    [-400,.6,300],[-250,.6,300],[-100,.6,300],[100,.6,300],[300,.6,300],
-    [380,.8,280],[420,1.1,220],[420,1.35,80],[420,1.6,-80],[420,1.8,-220],
-    [395,1.9,-280],[350,1.8,-305],[300,1.6,-300],
-    [270,1.4,-245],[215,1.2,-220],[155,1.1,-245],[125,1,-305],
-    [70,.9,-350],[-80,.9,-350],[-230,1,-350],[-380,1.1,-350],
-    [-475,1.3,-325],[-515,1.5,-260],[-500,1.65,-190],
-    [-420,1.8,-145],[-370,2,-70],[-405,2.2,10],
-    [-480,2,70],[-530,1.6,155],[-600,1.2,210],
-    [-625,.9,270],[-605,.7,300],[-550,.6,300]
-  ].map(([x, y, z]) => new THREE.Vector3(x * 1.95, y * 4.5, z * 1.95));
-
-  const courseCurve = new THREE.CatmullRomCurve3(anchors, true, 'catmullrom', 0.45);
-  courseCurve.arcLengthDivisions = 12000;
+  // Prism Grand Circuit: an 11.86 km non-crossing parkland layout. The
+  // original start position and +X launch direction are deliberately fixed.
+  // The western loop and three hairpins add distance without unsupported
+  // overpasses; every visible ribbon and physics sample uses this one spline.
+  const layoutScale = 0.74;
+  const anchorCoordinates = [
+    [-780,2.7,585],
+    [-300,2.7,585],
+    [300,2.7,585],
+    [900,2.7,585],
+    [1180,3,550],
+    [1350,4,400],
+    [1380,5,150],
+    [1380,6,-400],
+    [1380,6,-900],
+    [1280,6,-1110],
+    [1080,6,-1200],
+    [780,6,-1200],
+    [450,6,-1200],
+    [-40,6,-1200],
+    [-180,6,-1140],
+    [-240,6,-1000],
+    [-180,6,-860],
+    [-40,6,-800],
+    [450,6,-800],
+    [720,6,-800],
+    [860,7,-720],
+    [880,9,-560],
+    [800,12,-450],
+    [640,14,-430],
+    [400,17,-430],
+    [270,19,-500],
+    [150,20,-430],
+    [70,18,-280],
+    [0,16,-180],
+    [-200,13,-180],
+    [-400,10,-180],
+    [-560,8,-310],
+    [-550,7,-530],
+    [-650,6,-700],
+    [-850,6,-760],
+    [-1050,6,-700],
+    [-1150,6,-500],
+    [-1150,6,-100],
+    [-1150,6,200],
+    [-1250,5,370],
+    [-1450,4,420],
+    [-1630,3,330],
+    [-1710,3,150],
+    [-1710,3,-400],
+    [-1710,3,-1000],
+    [-1780,3,-1200],
+    [-1930,3,-1240],
+    [-2070,3,-1140],
+    [-2110,3,-950],
+    [-2110,3,-300],
+    [-2110,3,400],
+    [-2040,3,650],
+    [-1840,3,800],
+    [-1500,3,850],
+    [-1350,2.8,830],
+    [-1250,2.7,750],
+    [-1200,2.7,650],
+    [-1100,2.7,600],
+    [-950,2.7,585]
+];
+  // Keep individual straight spline spans below 148 m. Collinear spans then
+  // stay exactly straight for drafting and independently validated jump lanes.
+  const sourceAnchorIndices = [];
+  let splineAnchorCount = 0;
+  const splineCoordinates = anchorCoordinates.flatMap((point, index) => {
+    sourceAnchorIndices.push(splineAnchorCount);
+    const next = anchorCoordinates[(index + 1) % anchorCoordinates.length];
+    const steps = Math.ceil(Math.hypot(next[0] - point[0], next[2] - point[2]) / 200);
+    splineAnchorCount += steps;
+    return Array.from({ length: steps }, (_, step) => point.map((value, axis) => value + (next[axis] - value) * step / steps));
+  });
+  const anchors = splineCoordinates.map(([x, y, z]) => new THREE.Vector3(
+    -780 + (x + 780) * layoutScale, y, 585 + (z - 585) * layoutScale
+  ));
+  const courseCurve = new THREE.CatmullRomCurve3(anchors, true, 'centripetal');
+  courseCurve.arcLengthDivisions = 24000;
   courseCurve.updateArcLengths();
   const totalLength = courseCurve.getLength();
+  const arcLengths = courseCurve.getLengths(courseCurve.arcLengthDivisions);
+  function anchorDistance(index) {
+    const sample = sourceAnchorIndices[index] / anchors.length * courseCurve.arcLengthDivisions;
+    const i = Math.floor(sample), f = sample - i;
+    return arcLengths[i] + (arcLengths[Math.min(i + 1, arcLengths.length - 1)] - arcLengths[i]) * f;
+  }
+  const sectorDefinitions = [
+    [0, 'Prism launch straight', 'drafting'],
+    [4, 'Silver crescent', 'sweeper'],
+    [7, 'East express', 'drafting'],
+    [9, 'North approach', 'braking'],
+    [13, 'Observatory hairpin', 'hairpin'],
+    [17, 'Summit straight', 'drafting'],
+    [20, 'Ridge climb', 'sweeper'],
+    [24, 'Alpine chicane', 'chicane'],
+    [28, 'Valley esses', 'technical'],
+    [32, 'Cedar carousel', 'sweeper'],
+    [36, 'Lake approach', 'drafting'],
+    [38, 'Lakeside hairpin', 'hairpin'],
+    [42, 'Pine avenue', 'drafting'],
+    [44, 'Western hairpin', 'hairpin'],
+    [48, 'Sunset express', 'drafting'],
+    [51, 'Stadium sweep', 'sweeper'],
+    [54, 'Final esses', 'technical']
+  ];
+  const sectors = sectorDefinitions.map(([anchor, name, type], index) => ({
+    id: index + 1, name, type, start: anchorDistance(anchor),
+    end: index + 1 < sectorDefinitions.length ? anchorDistance(sectorDefinitions[index + 1][0]) : totalLength
+  }));
+  const trackBounds = new THREE.Box3().setFromPoints(anchors).expandByScalar(72);
 
   function frameAt(distance) {
     const d = wrap(distance, totalLength);
@@ -188,35 +284,46 @@ export function createTrack(THREE) {
   // strip above a flat floor.
   const GROUND_Y = -1.35;
   const groundMaterial = makeStandard('#405a3e', 1);
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(2900, 2550), groundMaterial);
+  const groundSize = trackBounds.getSize(new THREE.Vector3());
+  const groundCenter = trackBounds.getCenter(new THREE.Vector3());
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(groundSize.x + 320, groundSize.z + 320), groundMaterial);
   ground.name = 'race-course-ground';
   ground.rotation.x = -Math.PI / 2;
-  ground.position.y = GROUND_Y;
+  ground.position.set(groundCenter.x, GROUND_Y, groundCenter.z);
   ground.receiveShadow = true;
   group.add(ground);
 
   const earthPositions = [], earthUvs = [], earthColors = [], earthIndices = [];
-  const earthSections = [-46, -28, -14, 0, 14, 28, 46];
+  const earthSections = [-50, -30, -16, 0, 16, 30, 50];
   const earthSteps = Math.ceil(totalLength / 3.5);
   const earthGrass = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 1, vertexColors: true });
   const greenIn = new THREE.Color('#344e38');
   const greenOut = new THREE.Color('#486445');
-  const earthBankFactor = lateral => clamp((28 - Math.abs(lateral)) / 14, 0, 1);
+  // Tight inside bends cannot carry a 50 m lateral ribbon: its inner edge
+  // would cross the curvature centre. Taper the earthwork there, keeping
+  // the road, runoff and rail apron intact and every skirt triangle upright.
+  const earthWidths = frame => {
+    const outer = clamp(0.78 / Math.max(0.00001, Math.abs(frame.curvature)), 26, 50);
+    return { outer, knee: Math.min(30, outer - 8) };
+  };
   const earthPoint = (distance, lateral) => {
     const frame = frameAt(distance);
+    const { outer, knee } = earthWidths(frame);
     const abs = Math.abs(lateral);
     let drop;
-    if (abs <= 14) drop = -0.32;
-    else if (abs <= 28) drop = -0.32 - (abs - 14) / 14 * 0.52;
-    else drop = -0.84 + (abs - 28) / 18 * (GROUND_Y - frame.position.y + 0.84);
+    if (abs <= 16) drop = -0.32;
+    else if (abs <= knee) drop = -0.32 - (abs - 16) / (knee - 16) * 0.52;
+    else drop = -0.84 + clamp((abs - knee) / (outer - knee), 0, 1) * (GROUND_Y - frame.position.y + 0.84);
     const point = frame.position.clone().addScaledVector(frame.right, lateral);
-    point.y += frame.bank * lateral * earthBankFactor(lateral) + drop;
+    point.y += frame.bank * lateral * clamp((knee - abs) / (knee - 16), 0, 1) + drop;
     return point;
   };
   for (let i = 0; i <= earthSteps; i++) {
     const d = totalLength * i / earthSteps;
+    const { outer, knee } = earthWidths(frameAt(d));
     for (let j = 0; j < earthSections.length; j++) {
-      const lateral = earthSections[j];
+      const section = earthSections[j];
+      const lateral = Math.sign(section) * (Math.abs(section) === 50 ? outer : Math.abs(section) === 30 ? knee : Math.abs(section));
       const p = earthPoint(d, lateral);
       earthPositions.push(p.x, p.y, p.z);
       earthUvs.push(d / 34, j / 3);
@@ -244,11 +351,11 @@ export function createTrack(THREE) {
   const gravelTexture = makeGrainTexture(112, 30, 29117);
   const gravelMaterial = makeStandard('#aaa99c', 0.97, gravelTexture ? { map: gravelTexture } : {});
   if (gravelTexture) gravelTexture.repeat.set(1, 1);
-  addRibbon({ left: -12.9, right: 12.9, step: 1.3, lift: -0.17, material: gravelMaterial, uvScale: 8, name: 'continuous-gravel-runoff' });
+  addRibbon({ left: -15.6, right: 15.6, step: 1.3, lift: -0.17, material: gravelMaterial, uvScale: 8, name: 'continuous-gravel-runoff' });
 
   const asphaltTexture = makeGrainTexture(61, 25, 7813);
   const asphaltMaterial = makeStandard('#b9bcb9', 0.94, asphaltTexture ? { map: asphaltTexture, bumpMap: asphaltTexture, bumpScale: 0.018 } : {});
-  addRibbon({ left: -HALF_WIDTH, right: HALF_WIDTH, step: 0.95, lift: 0, material: asphaltMaterial, uvScale: 3.5, name: 'continuous-asphalt-racing-surface' });
+  addRibbon({ left: -HALF_WIDTH, right: HALF_WIDTH, step: 0.95, lift: ROAD_LIFT, material: asphaltMaterial, uvScale: 3.5, name: 'continuous-asphalt-racing-surface' });
 
   const white = makeStandard('#e8e8df', 0.74, { emissive: '#111111' });
   const centerPaint = makeStandard('#dfe2dc', 0.72);
@@ -259,16 +366,16 @@ export function createTrack(THREE) {
 
   // Raised alternating curbs and crisp edge paint make the track readable at speed.
   for (const side of [-1, 1]) {
-    const inside = side < 0 ? -7.15 : 7.15;
-    const outside = side < 0 ? -8.12 : 8.12;
-    addRibbon({ left: Math.min(inside, outside), right: Math.max(inside, outside), step: 1.2, lift: 0.018, material: curbBase, name: `curb-bed-${side}` });
+    const inside = side * (HALF_WIDTH - 0.95);
+    const outside = side * (HALF_WIDTH - 0.05);
+    addRibbon({ left: Math.min(inside, outside), right: Math.max(inside, outside), step: 1.2, lift: 0.06, material: curbBase, name: `curb-bed-${side}` });
     addRibbon({
-      left: Math.min(inside, outside), right: Math.max(inside, outside), step: 0.9, lift: 0.045, material: curbMaterial,
+      left: Math.min(inside, outside), right: Math.max(inside, outside), step: 0.9, lift: 0.095, material: curbMaterial,
       colors: (_i, d) => Math.floor(wrap(d, totalLength) / 5.5) % 2 ? redCurb : ivoryCurb,
       name: `red-white-rumble-strip-${side}`
     });
-    const edge = side * 6.96;
-    addRibbon({ left: edge - 0.075, right: edge + 0.075, step: 1.0, lift: 0.055, material: white, name: `painted-road-edge-${side}` });
+    const edge = side * (HALF_WIDTH - 1.08);
+    addRibbon({ left: edge - 0.075, right: edge + 0.075, step: 1.0, lift: 0.053, material: white, name: `painted-road-edge-${side}` });
   }
 
   // Bank-following tire deposits and concrete seams are batched into two meshes.
@@ -280,18 +387,18 @@ export function createTrack(THREE) {
     for (const offset of [-0.72, 0.72]) {
       const l = line + offset + Math.sin(d * 0.06) * 0.12;
       rubberQuads.push({ points: [
-        surfacePoint(d, l - 0.13, 0.012), surfacePoint(d + 2.6, l - 0.10, 0.012),
-        surfacePoint(d + 2.6, l + 0.12, 0.012), surfacePoint(d, l + 0.13, 0.012)
+        surfacePoint(d, l - 0.13, 0.047), surfacePoint(d + 2.6, l - 0.10, 0.047),
+        surfacePoint(d + 2.6, l + 0.12, 0.047), surfacePoint(d, l + 0.13, 0.047)
       ] });
     }
   }
   addQuads(rubberQuads, makeStandard('#161918', 0.98, { transparent: true, opacity: 0.24, depthWrite: false }), 'embedded-tire-rubber');
   for (let d = 0; d < totalLength; d += 1.35) {
     for (const side of [-1, 1]) {
-      const a = Math.min(side * 7.2, side * 8.1), b = Math.max(side * 7.2, side * 8.1);
+      const a = Math.min(side * (HALF_WIDTH - 0.92), side * (HALF_WIDTH - 0.08)), b = Math.max(side * (HALF_WIDTH - 0.92), side * (HALF_WIDTH - 0.08));
       curbJoints.push({ points: [
-        surfacePoint(d, a, 0.054), surfacePoint(d + 0.045, a, 0.054),
-        surfacePoint(d + 0.045, b, 0.054), surfacePoint(d, b, 0.054)
+        surfacePoint(d, a, 0.104), surfacePoint(d + 0.045, a, 0.104),
+        surfacePoint(d + 0.045, b, 0.104), surfacePoint(d, b, 0.104)
       ] });
     }
   }
@@ -344,7 +451,7 @@ export function createTrack(THREE) {
   for (let i = 0; i < postCount; i++) {
     const d = totalLength * i / postCount;
     for (const side of [-1, 1]) {
-      const p = surfacePoint(d, side * 12.35, 0.49);
+      const p = surfacePoint(d, side * 14.8, 0.49);
       const frame = frameAt(d);
       dummy.position.set(p.x, p.y, p.z);
       dummy.rotation.set(0, Math.atan2(frame.tangent.x, frame.tangent.z), 0);
@@ -356,7 +463,7 @@ export function createTrack(THREE) {
   group.add(posts);
   for (const side of [-1, 1]) {
     for (const height of [0.94, 1.57]) {
-      const railPath = ribbonPath(side * 12.35, height, 2.4);
+      const railPath = ribbonPath(side * 14.8, height, 2.4);
       const rail = new THREE.Mesh(new THREE.TubeGeometry(railPath, Math.ceil(totalLength / 2.5), height > 1 ? 0.115 : 0.095, 7, true), railMetal);
       rail.name = `continuous-steel-guardrail-${side}-${height}`;
       rail.castShadow = true;
@@ -385,14 +492,12 @@ export function createTrack(THREE) {
   for (let i = 0; i < treeCount; i++) {
     const d = totalLength * (i + random() * 0.45) / treeCount;
     const side = i % 2 ? 1 : -1;
-    const lateral = side * (19 + random() * 26);
+    const lateral = side * (23 + random() * 26);
     const frame = frameAt(d);
     const base = frame.position.clone().addScaledVector(frame.right, lateral);
     const scale = 0.72 + random() * 0.76;
     const yaw = random() * TAU;
-    const abs = Math.abs(lateral);
-    const terrainDrop = abs <= 14 ? -0.32 : abs <= 28 ? -0.32 - (abs - 14) / 14 * 0.52 : -0.84 + (abs - 28) / 18 * (GROUND_Y - frame.position.y + 0.84);
-    const groundY = frame.position.y + frame.bank * lateral * earthBankFactor(lateral) + terrainDrop - 0.08 + random() * 0.12;
+    const groundY = earthPoint(d, lateral).y - 0.08 + random() * 0.12;
     dummy.position.set(base.x, groundY + 1.8 * scale, base.z);
     dummy.rotation.set(0, yaw, 0);
     dummy.scale.set(scale, scale, scale);
@@ -481,7 +586,7 @@ export function createTrack(THREE) {
     group.clear();
   }
 
-  return { group, totalLength, sampleTrack, sampleGround: earthPoint, dispose };
+  return { group, totalLength, width: ROAD_WIDTH, bounds: trackBounds, sectors, sampleTrack, sampleGround: earthPoint, dispose };
 }
 
 export const createRaceTrack = createTrack;

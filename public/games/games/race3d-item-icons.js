@@ -1,4 +1,4 @@
-import {ITEM_REGISTRY} from './race3d-item-registry.js?v=20261025-fifty1';
+import {ITEM_REGISTRY} from './race3d-item-registry.js?v=20261027-midnight';
 /** Original line pictograms. One atlas in 3D; inline accessible names in the UI. */
 export const EXTRA_ICON_PATHS=Object.freeze({
  bolt:'M5 32h50m-12-11 12 11-12 11M17 12v40M33 12v40',

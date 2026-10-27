@@ -1,6 +1,6 @@
-import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261025-fifty1';
-import { inventoryFace } from './race3d-item-rules.js?v=20261025-fifty1';
-import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261025-fifty1';
+import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261027-midnight';
+import { inventoryFace } from './race3d-item-rules.js?v=20261027-midnight';
+import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261027-midnight';
 
 const make = (tag, className, text) => {
   const node = document.createElement(tag);
@@ -101,7 +101,7 @@ export function createRaceExtras(root, players = []) {
       }
       entry.model.textContent = RACER_CARD_NAMES[type];
       entry.model.title = entry.model.textContent;
-      const engines = { 'v6-hybrid':'V6 hybrid', v8:'V8', v10:'V10', electric:'Electric · three motors' };
+      const engines = { 'v6-hybrid':'V6 hybrid', v6:'V6', i4:'Turbo inline-four', v8:'V8', v10:'V10', v12:'V12', electric:'Electric' };
       const basis = car.specBasis || identity.specBasis;
       const sourced = new Set(basis?.referenceFields || []);
       const mark = (key, text) => text + (sourced.has(key) ? '*' : '');

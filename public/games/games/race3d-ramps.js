@@ -4,7 +4,7 @@
  */
 const clamp01 = value => Math.max(0, Math.min(1, value));
 const ROAD_TOP = .035;
-import {safeRampSites} from './race3d-course-safety.js?v=20261025-fifty1';
+import {safeRampSites} from './race3d-course-safety.js?v=20261027-midnight';
 
 export function createRampLayout(track) {
   // A length alone cannot establish geometry safety. Never manufacture an
@@ -54,7 +54,9 @@ export function createRaceRamps(THREE, { track }) {
     materials.push(result);
     return result;
   };
-  const deck = material(0x233e4d, { roughness: .5, metalness: .48, emissive: 0x093741, emissiveIntensity: .12 });
+  // A broad yellow driving surface remains readable from the chase camera;
+  // the deck silhouette, physics height and tyre contact profile stay shared.
+  const deck = material(0xffcf25, { roughness: .64, metalness: .22, emissive: 0x7d4d02, emissiveIntensity: .14 });
   const steel = material(0x96a8b0, { roughness: .32, metalness: .82 });
   const dark = material(0x101c25, { roughness: .66, metalness: .66, side: THREE.DoubleSide });
   const cyan = material(0x60e8ed, { roughness: .28, metalness: .45, emissive: 0x1b8c9a, emissiveIntensity: .62 });

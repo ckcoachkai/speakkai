@@ -1,0 +1,80 @@
+[
+  {
+    "id": "concept-kestrel",
+    "label": "Kestrel Formula",
+    "url": "assets/race3d-concepts/pack-c/concept-kestrel.glb",
+    "yaw": 0,
+    "length": 5.0,
+    "vehicleSpec": {
+      "massKg": 790,
+      "powerKW": 520,
+      "torqueNm": 610,
+      "dragCoefficient": 0.92,
+      "frontalAreaM2": 1.25,
+      "downforceCoefficient": 3.7,
+      "brakeDecelMps2": 19.2,
+      "tireGrip": 1.72,
+      "topSpeedKph": 322,
+      "engineType": "Fictional 2.4L hybrid V10",
+      "wheelbaseM": 2.78,
+      "rampPreference": 0.22,
+      "priority": 9
+    },
+    "family": "openwheelFormula",
+    "fictionalGameCalibration": true,
+    "fictional": true,
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications."
+  },
+  {
+    "id": "concept-apex",
+    "label": "Apex Canopy",
+    "url": "assets/race3d-concepts/pack-c/concept-apex.glb",
+    "yaw": 0,
+    "length": 5.025,
+    "vehicleSpec": {
+      "massKg": 940,
+      "powerKW": 610,
+      "torqueNm": 720,
+      "dragCoefficient": 0.61,
+      "frontalAreaM2": 1.48,
+      "downforceCoefficient": 2.9,
+      "brakeDecelMps2": 17.6,
+      "tireGrip": 1.63,
+      "topSpeedKph": 348,
+      "engineType": "Fictional 4.2L NA V10",
+      "wheelbaseM": 2.8,
+      "rampPreference": 0.38,
+      "priority": 8
+    },
+    "family": "enclosedcanopyprototype",
+    "fictionalGameCalibration": true,
+    "fictional": true,
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications."
+  },
+  {
+    "id": "concept-vector",
+    "label": "Vector Groundforce",
+    "url": "assets/race3d-concepts/pack-c/concept-vector.glb",
+    "yaw": 0,
+    "length": 5.12,
+    "vehicleSpec": {
+      "massKg": 1030,
+      "powerKW": 575,
+      "torqueNm": 850,
+      "dragCoefficient": 0.87,
+      "frontalAreaM2": 1.56,
+      "downforceCoefficient": 4.15,
+      "brakeDecelMps2": 20.1,
+      "tireGrip": 1.78,
+      "topSpeedKph": 306,
+      "engineType": "Fictional twin-turbo V6 hybrid",
+      "wheelbaseM": 2.74,
+      "rampPreference": 0.12,
+      "priority": 10
+    },
+    "family": "groundeffecttrackweapon",
+    "fictionalGameCalibration": true,
+    "fictional": true,
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications."
+  }
+]

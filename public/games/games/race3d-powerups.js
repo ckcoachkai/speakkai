@@ -1,6 +1,6 @@
-import { createRaceItemModels } from './race3d-item-models.js?v=20261025-fifty1';
-import {inventoryFace} from './race3d-item-rules.js?v=20261025-fifty1';
-import {createExtraVisuals} from './race3d-extra-visuals.js?v=20261025-fifty1';
+import { createRaceItemModels } from './race3d-item-models.js?v=20261027-midnight';
+import {inventoryFace} from './race3d-item-rules.js?v=20261027-midnight';
+import {createExtraVisuals} from './race3d-extra-visuals.js?v=20261027-midnight';
 
 /**
  * Pooled kart items. Entity positions, lifetimes and hits belong to the race
@@ -31,7 +31,9 @@ export function createRacePowerups(THREE, { track } = {}) {
   const exhaustRotation = new THREE.Quaternion(), exhaustScale = new THREE.Vector3();
   const exhaustMatrix = new THREE.Matrix4(), inverseEffects = new THREE.Matrix4();
   const exhaustOrigin = new THREE.Vector3(), exhaustDirection = new THREE.Vector3();
-  const itemViewPosition = new THREE.Vector3();
+  const itemViewPosition = new THREE.Vector3(), cameraPosition = new THREE.Vector3(), worldItemPosition = new THREE.Vector3();
+  let viewCamera = null, viewHeight = 720, worldScale = 1;
+  const visibleItems = { bananas: 0, airborneBananas: 0, bombs: 0, missiles: 0, tyreCues: 0, blastCores: 0 };
   const defaultExhaustAnchors = [[-.48, .375, -2.43], [.48, .375, -2.43]];
   const limits = Object.freeze({ pickups: 96, bananas: 96, bombs: 60, missiles: 60, waves: 48, cars: 60, flames: 120, smoke: 120, sparks: 200, trails: 240, shockwaves: 20 });
   const itemTypes = ['launch', 'rocket', 'boost', 'bomb', 'shield', 'banana', 'missile', 'shockwave', 'freeze', 'repair'];
@@ -153,6 +155,8 @@ export function createRacePowerups(THREE, { track } = {}) {
     tips.push(sphere(.072, Math.sin(angle) * 1.183, .49, Math.cos(angle) * 1.183));
   }
   const bananaTips = batch('banana-stem', combine(tips), standard(0x70562e, { roughness: .9, metalness: 0 }), limits.bananas);
+  const bananaMarker = batch('banana-road-warning',new THREE.TorusGeometry(1,.075,6,32).rotateX(Math.PI/2),
+    basic(0xffd62d,{transparent:true,opacity:.8,depthWrite:false,toneMapped:false}),limits.bananas);
 
   const bombBody = batch('bomb-body', new THREE.SphereGeometry(.66, 18, 12), standard(0x272b2e, { roughness: .32, metalness: .75 }), limits.bombs);
   const bombCollar = batch('bomb-bands', combine([
@@ -170,6 +174,8 @@ export function createRacePowerups(THREE, { track } = {}) {
   // between particle emissions. Its transform follows physics, not body spin.
   const bombWake = batch('bomb-forward-wake', new THREE.ConeGeometry(.28, 6, 8).rotateX(-Math.PI / 2).translate(0, 0, -3),
     basic(0xffa442, { transparent: true, opacity: .54, depthWrite: false, toneMapped: false, blending: THREE.AdditiveBlending }), limits.bombs);
+  const bombMarker=batch('bomb-danger-ring',new THREE.TorusGeometry(1,.065,6,40).rotateX(Math.PI/2),
+    basic(0xff7843,{transparent:true,opacity:.85,depthWrite:false,toneMapped:false}),limits.bombs);
 
   const missileBody = batch('missile-body', combine([
     new THREE.CylinderGeometry(.24,.24,1.8,12).rotateX(Math.PI/2),
@@ -335,12 +341,13 @@ export function createRacePowerups(THREE, { track } = {}) {
     opacity: .19, toneMapped: false, blending: THREE.AdditiveBlending
   }));
   const shockAlpha = new THREE.InstancedBufferAttribute(new Float32Array(limits.shockwaves), 1);
-  const shockGeometry = new THREE.TorusGeometry(1, .026, 5, 48).rotateX(Math.PI / 2);
+  const shockGeometry = new THREE.TorusGeometry(1, .075, 6, 48).rotateX(Math.PI / 2);
   shockGeometry.setAttribute('aPowerAlpha', shockAlpha);
   const shockMesh = batch('explosion-shockwave', shockGeometry, fadedMaterial(basic(0xffc46b, {
     opacity: .88, toneMapped: false, blending: THREE.AdditiveBlending
   }), 'shockwave'), limits.shockwaves);
   const shocks = Array.from({ length: limits.shockwaves }, () => ({ live: false, age: 0, radius: 1, position: new THREE.Vector3() }));
+  const blast = particlePool('explosion-fireball',32,basic(0xffffff,{opacity:.84,toneMapped:false}));
   let shockCursor = 0;
   const flameOuter = batch('boost-jet', exhaustGeometry(.18, 1.6), exhaustMaterial('boost', .34), limits.flames);
   const flameCore = batch('boost-hot-core', exhaustGeometry(.073, .55), exhaustMaterial('boost-core', .78, true), limits.flames);
@@ -412,6 +419,15 @@ export function createRacePowerups(THREE, { track } = {}) {
   }
   function stamp(mesh, index, transform = dummy) { transform.updateMatrix(); mesh.setMatrixAt(index, transform.matrix); }
   function count(meshes, n) { for (const mesh of meshes) { mesh.count = n; mesh.instanceMatrix.needsUpdate = true; } }
+  // Scale only the visual silhouette. Simulation positions, hit radii and
+  // trajectories remain untouched. A bounded minimum size survives wide shots.
+  function readableScale(base=1,pixels=32,maximum=3.2,nativeSize=2.25) {
+    if(!viewCamera?.isPerspectiveCamera)return base;
+    worldItemPosition.copy(dummy.position).applyMatrix4(group.matrixWorld);
+    const distance=cameraPosition.distanceTo(worldItemPosition);
+    const worldPerPixel=2*distance*Math.tan(viewCamera.fov*Math.PI/360)/viewHeight;
+    return clamp(pixels*worldPerPixel/(nativeSize*worldScale),base,maximum);
+  }
   function particle(pool, position, velocity, hex, life, size, grow = 0, gravity = 0) {
     const p = pool.particles[pool.cursor];
     pool.cursor = (pool.cursor + 1) % pool.particles.length;
@@ -423,21 +439,22 @@ export function createRacePowerups(THREE, { track } = {}) {
   function spray(position, kind, radius = 1) {
     const explosion = kind === 'explosion';
     const seed = ++burstSerial * 83;
-    const n = explosion ? 25 : 9;
+    const n = explosion ? 34 : 12;
     for (let i = 0; i < n; i++) {
       const angle = jitter(seed + i * 3) * TAU;
       const speed = explosion ? 4 + jitter(seed + i * 7) * 7 : 1.2 + jitter(seed + i * 7) * 2.4;
       offset.set(Math.sin(angle) * speed, (explosion ? 2 : .5) + jitter(seed + i * 9) * (explosion ? 6 : 2), Math.cos(angle) * speed);
       const burstColor = {boost:0x42ffe3,launch:0xb68aff,rocket:0x36edbe,repair:0x74ef9a,shield:0x5bbcff,freeze:0xb8f5ff,shockwave:0xe892ff}[kind] || 0xffe59b;
       particle(sparks, position, offset, explosion ? (i % 3 ? 0xffc261 : 0xff693c) : burstColor,
-        explosion ? .55 + jitter(seed + i) * .48 : .58 + jitter(seed + i) * .38, explosion ? .11 : .08, .4, explosion ? 8 : 2);
+        explosion ? .72 + jitter(seed + i) * .48 : .58 + jitter(seed + i) * .38, explosion ? .20 : .12, .7, explosion ? 8 : 2);
     }
     if (!explosion) return;
     for (let i = 0; i < 14; i++) {
       const angle = jitter(seed + i * 11) * TAU;
       offset.set(Math.sin(angle) * (1 + jitter(seed + i) * 3), 1.4 + jitter(seed + i * 2) * 3.3, Math.cos(angle) * (1 + jitter(seed + i) * 3));
-      particle(smoke, position, offset, i % 3 ? 0x555251 : 0x8d8377, 1.05 + jitter(seed + i * 5) * .8, .36 + jitter(seed + i * 8) * .36, 2.3);
+      particle(smoke, position, offset, i % 3 ? 0x555251 : 0x8d8377, 1.2 + jitter(seed + i * 5) * .8, .70 + jitter(seed + i * 8) * .6, 2.3);
     }
+    for(let i=0;i<5;i++){offset.set((jitter(seed+i*13)-.5)*3,.8+jitter(seed+i*17)*1.9,(jitter(seed+i*19)-.5)*3);particle(blast,position,offset,i%2?0xff5925:0xffc04a,.42+jitter(seed+i)*.24,1.1+jitter(seed+i*7)*.7,2.5);}
     const shock = shocks[shockCursor];
     shockCursor = (shockCursor + 1) % shocks.length;
     shock.live = true; shock.age = 0; shock.radius = clamp(radius, 1, 16);
@@ -478,18 +495,25 @@ export function createRacePowerups(THREE, { track } = {}) {
         const duration = clamp(finite(event.displayDuration, finite(event.duration, 25)) / Math.max(1, finite(event.timeScale, 5)), 4, 7);
         indicators.set(event.carId, { type: event.itemType, at: clock, until: clock + duration });
       }
-      if (!['item-pickup', 'banana-launch', 'banana-land', 'banana-hit', 'bomb-explode', 'boost', 'launch-activate', 'rocket-activate', 'shield-activate',
+      if (!['item-pickup', 'banana-launch', 'banana-land', 'banana-hit', 'bomb-launch', 'bomb-bounce', 'bomb-explode', 'tyre-blowout', 'tire-blowout', 'tyre-recovered', 'trick-complete', 'boost', 'launch-activate', 'rocket-activate', 'shield-activate',
         'missile-launch', 'missile-hit', 'shockwave-launch', 'shockwave-hit', 'freeze-launch', 'freeze-hit',
-        'repair', 'launch-land', 'shield-block'].includes(event.type)) continue;
-      const groundEvent = ['bomb-explode','banana-land','missile-hit','shockwave-hit','freeze-hit','launch-land'].includes(event.type);
+        'repair', 'launch-land', 'shield-block'].includes(event.type) && !event.type.startsWith('extra-')) continue;
+      const groundEvent = ['bomb-explode','bomb-bounce','banana-land','banana-hit','missile-hit','shockwave-hit','freeze-hit','launch-land'].includes(event.type);
       frame({ distance: event.distance ?? car?.distance, lateral: event.lateral ?? car?.lateral }, .65 + (groundEvent ? 0 : Math.max(0,finite(car?.flightHeight))));
       // event coordinates refer to the impact location, not the current shooter.
       if (event.position && typeof event.position === 'object') {
         point.set(finite(event.position.x, point.x), finite(event.position.y, point.y), finite(event.position.z, point.z));
       }
-      const kind = event.type === 'bomb-explode' || event.type === 'missile-hit' ? 'explosion'
+      if(/^(tyre|tire)-blowout$/.test(event.type)){
+        // A short pressure pop, rubber fragments and a dense wheel-level puff.
+        const wheel=clamp(event.wheelIndex,0,3);point.addScaledVector(right,(wheel%2?1:-1)*1.15).addScaledVector(tangent,wheel<2?1.4:-1.4);point.y-=.35;
+        for(let i=0;i<14;i++){const a=i*2.399;offset.set(Math.sin(a)*(2+i%3),1.3+(i%4)*.65,Math.cos(a)*(2+i%3));particle(smoke,point,offset,i%3?0xaeb6bd:0x30363c,.85+i*.025,.5+i%3*.16,3.3);particle(sparks,point,offset,0xffc669,.4,.18,.3,8);}
+        const shock=shocks[shockCursor];shockCursor=(shockCursor+1)%shocks.length;shock.live=true;shock.age=0;shock.radius=3;shock.position.copy(point);shock.position.y=Math.max(.09,shock.position.y-.2);
+        visibleItems.tyreCues++;continue;
+      }
+      const kind = event.type === 'bomb-explode' || event.type === 'missile-hit' || event.type==='extra-charge-burst' ? 'explosion'
         : event.type === 'item-pickup' ? event.itemType
-          : event.type.startsWith('shield') ? 'shield' : event.type.split('-')[0];
+          : event.type.startsWith('shield') ? 'shield' : event.type==='tyre-recovered'?'repair':event.type==='trick-complete'?'boost':event.type.startsWith('extra-')?event.itemType:event.type.split('-')[0];
       spray(point, kind, kind==='explosion'?Math.min(16,(event.radius??2.8)*1.8):(event.radius??1));
     }
   }
@@ -502,6 +526,10 @@ export function createRacePowerups(THREE, { track } = {}) {
     if (lastTime !== null && time < lastTime - .001) reset();
     lastTime = time;
     clock += step;
+    viewCamera=camera;viewHeight=Math.max(320,globalThis.innerHeight||720);
+    group.updateWorldMatrix(true,false);worldScale=Math.max(.001,group.matrixWorld.elements[0]**2+group.matrixWorld.elements[1]**2+group.matrixWorld.elements[2]**2)**.5;
+    camera?.getWorldPosition(cameraPosition);
+    visibleItems.bananas=visibleItems.airborneBananas=visibleItems.bombs=visibleItems.missiles=0;
     authoredItems.beginFrame(clock);
     jellyTime.value=clock;
     exhaustTime.value=reducedMotion?0:clock;
@@ -535,11 +563,15 @@ export function createRacePowerups(THREE, { track } = {}) {
       dummy.rotation.y += finite(hazard.heading) + finite(hazard.id?.toString?.().length, n) * .73 + (airborne?finite(hazard.age)*6:0);
       dummy.rotation.z=airborne?Math.sin(finite(hazard.age)*7)*.22:0;
       const remaining = Math.max(0, finite(hazard.ttl, 18) - finite(hazard.age));
-      dummy.scale.setScalar(Math.min(1, remaining * 2.5));
-      if (!authoredItems.stamp('banana','hazard',n,dummy,{grounded:true})) for (const mesh of [bananaOuter, bananaInner, bananaTips]) stamp(mesh, n);
+      const size=readableScale(1.5,34,3.4)*Math.min(1,remaining*2.5);
+      dummy.scale.setScalar(size);
+      if (!authoredItems.stamp('banana','hazard',n,dummy,{grounded:!airborne})) for (const mesh of [bananaOuter, bananaInner, bananaTips]) stamp(mesh, n);
+      frame(hazard,.075);dummy.scale.set(1.8+Math.sin(clock*5+n)*.08,1,1.8+Math.sin(clock*5+n)*.08);stamp(bananaMarker,n);
+      visibleItems.bananas++;if(airborne)visibleItems.airborneBananas++;
       n++;
     }
     count([bananaOuter, bananaInner, bananaTips], authoredItems.isReady('banana') ? 0 : n);
+    count([bananaMarker],n);
 
     n = 0;
     for (const bomb of source.projectiles || []) {
@@ -554,11 +586,12 @@ export function createRacePowerups(THREE, { track } = {}) {
       frame(bomb, finite(bomb.height, .75 + toss));
       dummy.rotation.y += finite(bomb.heading) + age * 2.6;
       dummy.rotation.z = Math.sin(age * 5) * .18;
-      if (!authoredItems.stamp('bomb','projectile',n,dummy,{scale:.86})) for (const mesh of [bombBody, bombCollar, bombFuse]) stamp(mesh, n);
+      const size=readableScale(1.45,36,3.2);dummy.scale.setScalar(size);
+      if (!authoredItems.stamp('bomb','projectile',n,dummy,{scale:1})) for (const mesh of [bombBody, bombCollar, bombFuse]) stamp(mesh, n);
       const pulse = .75 + .25 * Math.sin(clock * 42 + n);
-      offset.set(.4, 1.04, .03).applyQuaternion(dummy.quaternion);
+      offset.set(.4, 1.04, .03).multiplyScalar(size).applyQuaternion(dummy.quaternion);
       dummy.position.add(offset);
-      dummy.scale.setScalar(pulse);
+      dummy.scale.setScalar(pulse*size*1.3);
       stamp(bombEmber, n);
       if (emitTrail && finite(bomb.fuse, 1) > 0) {
         offset.set(Math.sin(clock * 47 + n) * .7, 1.5, Math.cos(clock * 39 + n) * .7);
@@ -566,20 +599,24 @@ export function createRacePowerups(THREE, { track } = {}) {
         offset.copy(tangent).multiplyScalar(-2.5);offset.y=.3;
         particle(trails,point,offset,0xffb66c,.34,.14,.7);
       }
+      frame(bomb,.10);const warning=1.9+.12*Math.sin(clock*(finite(bomb.fuse)>1?8:20));dummy.scale.set(warning,1,warning);stamp(bombMarker,n);
+      visibleItems.bombs++;
       n++;
     }
-    count([bombBody, bombCollar, bombFuse, bombEmber], authoredItems.isReady('bomb') ? 0 : n);
-    count([bombWake], n);
+    count([bombBody, bombCollar, bombFuse], authoredItems.isReady('bomb') ? 0 : n);
+    count([bombEmber,bombWake,bombMarker], n);
 
     n = 0;
     for (const missile of source.projectiles || []) {
       if (missile.type !== 'missile' || missile.active === false || n >= limits.missiles) continue;
       frame(missile, Math.max(0,finite(missile.height,1.1)));
       dummy.rotation.y += finite(missile.heading);
+      dummy.scale.setScalar(readableScale(1.2,32,2.8));
       if(!authoredItems.stamp('missile','projectile',n,dummy,{scale:1.12})){stamp(missileBody,n);stamp(missileFins,n);}
       dummy.scale.set(1,1,1+.065*Math.sin(clock*49+n));stamp(missileJet,n);stamp(missileCore,n);
       if(emitTrail){offset.copy(tangent).applyAxisAngle(UP,finite(missile.heading)).multiplyScalar(-4);point.addScaledVector(offset,.25);particle(trails,point,offset,0x92b1d8,.18,.055,1.1);}
       n++;
+      visibleItems.missiles++;
     }
     count([missileBody,missileFins],authoredItems.isReady('missile')?0:n);count([missileJet,missileCore],n);
     n=0;let jellyN=0;
@@ -609,6 +646,15 @@ export function createRacePowerups(THREE, { track } = {}) {
     carGroup?.updateWorldMatrix(true, false);
     inverseEffects.copy(group.matrixWorld).invert();
     extraVisuals.update(state,cars,camera,renderedCars);
+    if(emitTrail)for(const car of cars){
+      if(car.finished||!(car.tyreBlowoutRemaining>0)||car.flightRemaining>0)continue;
+      const wheel=clamp(car.tyreBlowoutWheel,0,3),side=wheel%2?1:-1,axle=wheel<2?1:-1,severity=clamp(car.tyreBlowoutSeverity,.15,1);
+      const model=renderedCars.get(car.id),dims=model?.userData.assetDimensions;
+      if(model){point.set(side*(dims?.width||2)*.48,.18,axle*(dims?.length||4.4)*.31).applyMatrix4(model.matrixWorld).applyMatrix4(inverseEffects);}
+      else{frame(car,.14);point.addScaledVector(right,side*1.15).addScaledVector(tangent,axle*1.4);}
+      offset.set(0,.8+severity,0);particle(smoke,point,offset,0x8a9297,.65,.25+severity*.23,2.3);
+      if(Math.floor(clock*14)%3===0){offset.set(side*1.8,.6,-1);particle(sparks,point,offset,0xffc077,.22,.08,.3,5);}
+    }
     activeNitroIds.length=activeRocketIds.length=0;let streakN=0;
     for (const car of cars.slice(0, 60)) {
       const rocketActive=finite(car.rocketRemaining)>0&&!(car.itemEffects?.emp>0);if(rocketActive&&!car.finished)activeRocketIds.push(car.id);
@@ -691,7 +737,7 @@ export function createRacePowerups(THREE, { track } = {}) {
         }
         repairN++;
       }
-      if(car.flightKind==='launch' && finite(car.flightRemaining)>0 && height>.1 && finite(car.flightRemaining)>finite(car.flightDuration)*.46 && !car.finished){
+      if(car.flightKind==='launch' && finite(car.launchBlastRemaining)>0 && !car.finished){
         carFrame(car,.3);const pulse=1+.15*Math.sin(clock*43+launchN);dummy.scale.set(pulse,Math.min(1.6,Math.max(.3,height/6)),pulse);
         stamp(launchPlume,launchN);stamp(launchCore,launchN);launchN++;
         if(emitTrail){offset.set(0,-4,0);particle(trails,point,offset,0x9cb6dd,.24,.12,1.1);}
@@ -710,7 +756,7 @@ export function createRacePowerups(THREE, { track } = {}) {
         dummy.rotation.z=Math.sin(clock*1.7)*.045;
         const age=indicator?Math.max(0,clock-indicator.at):1;
         const pop=1+Math.max(0,1-age/.40)*.24;
-        dummy.scale.setScalar(pop*1.22);
+        dummy.scale.setScalar(pop*readableScale(1.32,34,2.8));
         if(!authoredItems.stamp(type,'held',heldCounts[type],dummy))for(const mesh of held[type])stamp(mesh,heldCounts[type]);heldCounts[type]++;
       }
     }
@@ -721,12 +767,13 @@ export function createRacePowerups(THREE, { track } = {}) {
     updateParticles(smoke, step);
     updateParticles(sparks, step);
     updateParticles(trails, step);
+    updateParticles(blast, step);visibleItems.blastCores=blast.mesh.count;
     n = 0;
     for (const shock of shocks) {
       if (!shock.live) continue;
       shock.age += step;
-      if (shock.age >= .58) { shock.live = false; continue; }
-      const t = shock.age / .58;
+      if (shock.age >= .85) { shock.live = false; continue; }
+      const t = shock.age / .85;
       const radius = .7 + (shock.radius - .7) * (1 - Math.pow(1 - t, 2));
       dummy.position.copy(shock.position); dummy.rotation.set(0, 0, 0);
       dummy.scale.set(radius, 1, radius);
@@ -741,10 +788,11 @@ export function createRacePowerups(THREE, { track } = {}) {
   function reset() {
     if (disposed) return;
     activeNitroIds.length=activeRocketIds.length=0;
+    for(const key in visibleItems)visibleItems[key]=0;
     clock = 0; burstSerial = 0; lastTime = null; shockCursor = 0; emissionTime = 0; indicators.clear();
     authoredItems.reset();
     extraVisuals.reset();
-    for (const pool of [smoke, sparks, trails]) {
+    for (const pool of [smoke, sparks, trails, blast]) {
       pool.cursor = 0;
       for (const p of pool.particles) p.live = false;
       pool.alpha.array.fill(0); pool.alpha.needsUpdate = true;
@@ -766,5 +814,5 @@ export function createRacePowerups(THREE, { track } = {}) {
     group.clear(); geometries.clear(); materials.clear(); textures.clear();
   }
   return { group, update, handleEvents, reset, dispose, limits, assetsReady: authoredItems.ready,
-    snapshot: () => ({nitroIds:[...activeNitroIds],rocketIds:[...activeRocketIds],reducedMotion,extended:extraVisuals.snapshot(),authored:authoredItems.snapshot(),indicators:[...indicators].map(([id,value])=>({id,...value,remaining:Math.max(0,value.until-clock)}))}) };
+    snapshot: () => ({nitroIds:[...activeNitroIds],rocketIds:[...activeRocketIds],reducedMotion,visible:{...visibleItems,shockwaves:shockMesh.count},extended:extraVisuals.snapshot(),authored:authoredItems.snapshot(),indicators:[...indicators].map(([id,value])=>({id,...value,remaining:Math.max(0,value.until-clock)}))}) };
 }

@@ -1,5 +1,5 @@
-import { RACE_VEHICLE_PROFILES, getVehicleProfile } from './race3d-vehicle-specs.js?v=20261025-fifty1';
-import {getRaceVehicleSpec} from './race3d-race-calibration.js?v=20261025-fifty1';
+import { RACE_VEHICLE_PROFILES, getVehicleProfile } from './race3d-vehicle-specs.js?v=20261027-midnight';
+import {getRaceVehicleSpec} from './race3d-race-calibration.js?v=20261027-midnight';
 
 export const RACE_ROSTER_TYPES = Object.freeze(Object.keys(RACE_VEHICLE_PROFILES));
 export function getRacerIdentity(type) {
@@ -8,7 +8,7 @@ export function getRacerIdentity(type) {
 }
 
 /**
- * Assign a fresh car every round from shuffled five-car decks. Every complete
+ * Assign a fresh car every round from shuffled car decks. Every complete
  * deck contains each type once; a partial deck differs by at most one car.
  * Prior racerType, student name, ID and old physics data never pick a car. This
  * also removes stale animals/cheese/trucks/spacecraft from saved player data.

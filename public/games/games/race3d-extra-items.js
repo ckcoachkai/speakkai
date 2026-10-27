@@ -1,6 +1,6 @@
 /** Bounded fixed-step item mechanics. Rendering/audio never decide outcomes. */
-import {createMobilityItems,MOBILITY_IDS,MOBILITY_TIMERS} from './race3d-mobility-items.js?v=20261025-fifty1';
-import {createTrackItems,TRACK_IDS,TRACK_TIMERS} from './race3d-track-items.js?v=20261025-fifty1';
+import {createMobilityItems,MOBILITY_IDS,MOBILITY_TIMERS} from './race3d-mobility-items.js?v=20261027-midnight';
+import {createTrackItems,TRACK_IDS,TRACK_TIMERS,sweptGroundContact} from './race3d-track-items.js?v=20261027-midnight';
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const timers=['ram','deflector','flare','grip','ghost','interceptor','brace','draftbreaker','emp','jammer','pickupBlock','oil','theftImmune','tether',...MOBILITY_TIMERS,...TRACK_TIMERS];
 export const IMPLEMENTED_EXTRA_IDS=Object.freeze(['bolt','emp','oil','ram','tether','jammer','smoke','decoy','draftbreaker','theft','charge','deflector','flare','grip','cleanse','ghost','interceptor','brace',...MOBILITY_IDS,...TRACK_IDS]);
@@ -36,7 +36,7 @@ export function createExtendedItems(ctx){
   return hold('no-benefit');
  }
  function emit(type,c,data={}){ctx.emit('extra-'+type,c,{itemType:type.split('-')[0],...data});}
- function patch(c,type){const p={id:'extra-'+(++serial),type,ownerId:c.id,distance:c.distance-5,lateral:c.lateral,age:0,ttl:type==='smoke'?6:8,radius:type==='emp'?2.4:type==='oil'?2.6:type==='smoke'?4:1.8,hits:[]};patches.push(p);return p;}
+ function patch(c,type){const p={id:'extra-'+(++serial),type,ownerId:c.id,distance:c.distance-5,lateral:c.lateral,age:0,ttl:type==='smoke'?10:16,radius:type==='emp'?2.4:type==='oil'?2.6:type==='smoke'?4:1.8,hits:[]};patches.push(p);return p;}
  function shot(c,type,target){const p={id:'extra-'+(++serial),type,ownerId:c.id,targetId:target?.id||null,distance:c.distance+3,lateral:c.lateral,previousDistance:c.distance+3,previousLateral:c.lateral,height:1.4,previousHeight:1.4,heading:target?Math.atan2(target.lateral-c.lateral,Math.max(5,gap(target.distance,c.distance))):c.heading||0,speed:Math.max(140,c.speed+70),ttl:4,age:0,hits:[],remaining:type==='bolt'?2:1};shots.push(p);return p;}
  function activate(c,type,choice=decision(c,type)){
   if(!choice.use)return false;const s=state(c),target=cars().find(o=>o.id===choice.targetId&&!o.finished);
@@ -44,11 +44,11 @@ export function createExtendedItems(ctx){
   if(TRACK_IDS.includes(type))return trackItems.activate(c,type,choice);
   if(['emp','oil','smoke','decoy'].includes(type))patch(c,type);
   else if(type==='bolt'||type==='theft')shot(c,type,target);
-  else if(type==='jammer'){if(!target||ctx.blocked(target,type))return false;state(target).jammer=3;target._hitImmune=Math.max(target._hitImmune,3.5);emit('jammer-hit',target,{ownerId:c.id});}
+  else if(type==='jammer'){if(!target||ctx.blocked(target,type))return false;state(target).jammer=7.5;target._hitImmune=Math.max(target._hitImmune,3.5);emit('jammer-hit',target,{ownerId:c.id,duration:7.5});}
   else if(type==='tether'){if(!target)return false;s.tether=2.4;links.push({id:'extra-'+(++serial),type,ownerId:c.id,targetId:target.id,age:0,ttl:2.4});}
   else if(type==='charge')c.itemCharge={ownerId:c.id,fuse:5,grace:.5};
   else if(type==='cleanse')cleanse(c);
-  else {s[type]={ram:4,deflector:1.2,flare:6,grip:6,ghost:2.4,interceptor:4,brace:1.6,draftbreaker:6}[type]||0;if(type==='interceptor')c._interceptions=2;if(type==='ghost')c._ghostGrace=0;}
+  else {s[type]={ram:6,deflector:5,flare:8,grip:10,ghost:4,interceptor:6,brace:4,draftbreaker:8}[type]||0;if(type==='interceptor')c._interceptions=2;if(type==='ghost')c._ghostGrace=0;}
   c._nextExtraUse=time()+(['theft','charge'].includes(type)?8:3);emit(type,c,{targetId:target?.id||null});return true;
  }
  function guardProjectile(c,type,p){
@@ -72,10 +72,10 @@ export function createExtendedItems(ctx){
   }
   mobility.step(dt);
   for(let i=links.length-1;i>=0;i--){const l=links[i],o=cars().find(c=>c.id===l.ownerId&&!c.finished),t=cars().find(c=>c.id===l.targetId&&!c.finished);l.age+=dt;if(!o||!t||t.shieldRemaining>0||t.flightRemaining>0||l.age>l.ttl||gap(t.distance,o.distance)<5||gap(t.distance,o.distance)>55||Math.abs(t.lateral-o.lateral)>5||!lockClear(o,t)||!straightPath(o,t)){links.splice(i,1);continue;}o.speed=Math.min(o.attackSpeedCap||Infinity,o.topSpeed+8,o.speed+2*dt);if(t._tetherFrame!==time()){t.speed=Math.max(5,t.speed-2.5*dt);t._tetherFrame=time();}}
-  for(let i=patches.length-1;i>=0;i--){const p=patches[i];p.age+=dt;const owner=cars().find(c=>c.id===p.ownerId);if(p.age>=p.ttl||!owner||owner.finished){patches.splice(i,1);continue;}if(p.type==='smoke'||p.trackPatch||p.shifting||p.age<.45)continue;for(const c of cars()){if(c.finished||c.id===p.ownerId||c.flightRemaining>0||p.hits.includes(c.id)||Math.abs(gap(c.distance,p.distance))>4||Math.abs(c.lateral-p.lateral)>p.radius)continue;const s=state(c);if(c.shieldRemaining>0)continue;if(p.type==='oil'){if(s.grip<=0)s.oil=Math.max(s.oil,.75);}else{p.hits.push(c.id);if(p.type==='emp'&&s.emp<=0)s.emp=3;else if(p.type==='decoy'&&s.pickupBlock<=0)s.pickupBlock=3;emit(p.type+'-hit',c,{ownerId:p.ownerId});}}}
-  for(let i=shots.length-1;i>=0;i--){const p=shots[i];p.age+=dt;p.previousDistance=p.distance;p.previousLateral=p.lateral;p.previousHeight=p.height;p.heading-=ctx.curvature(p.distance)*p.speed*Math.cos(p.heading)*dt;p.distance+=p.speed*Math.cos(p.heading)*dt;p.lateral+=p.speed*Math.sin(p.heading)*dt;const owner=cars().find(c=>c.id===p.ownerId);if(p.age>=p.ttl||Math.abs(p.lateral)>ctx.track.width*.5+2||!owner||owner.finished||intercept(p)){shots.splice(i,1);continue;}
+  for(let i=patches.length-1;i>=0;i--){const p=patches[i];p.age+=dt;const owner=cars().find(c=>c.id===p.ownerId);if(p.age>=p.ttl||!owner){patches.splice(i,1);continue;}if(p.type==='smoke'||p.trackPatch||p.shifting||p.age<.45)continue;for(const c of cars()){if(c.finished||c.id===p.ownerId||c.flightRemaining>0||p.hits.includes(c.id)||sweptGroundContact(c,p,gap,4,p.radius)===null)continue;const s=state(c);p.hits.push(c.id);if(ctx.blocked(c,p.type))continue;const duration=p.type==='oil'?5:7.5;if(p.type==='oil')s.oil=Math.max(s.oil,duration);else if(p.type==='emp')s.emp=Math.max(s.emp,duration);else if(p.type==='decoy')s.pickupBlock=Math.max(s.pickupBlock,duration);emit(p.type+'-hit',c,{ownerId:p.ownerId,duration});}}
+  for(let i=shots.length-1;i>=0;i--){const p=shots[i];p.age+=dt;p.previousDistance=p.distance;p.previousLateral=p.lateral;p.previousHeight=p.height;p.heading-=ctx.curvature(p.distance)*p.speed*Math.cos(p.heading)*dt;p.distance+=p.speed*Math.cos(p.heading)*dt;p.lateral+=p.speed*Math.sin(p.heading)*dt;const owner=cars().find(c=>c.id===p.ownerId);if(p.age>=p.ttl||Math.abs(p.lateral)>ctx.track.width*.5+2||!owner||intercept(p)){shots.splice(i,1);continue;}
    const contacts=[];for(const c of cars()){if(c.finished||c.id===p.ownerId||c.flightRemaining>0||p.hits.includes(c.id))continue;const f=ctx.sweep(c,p,2.8,1.3);if(f!==null)contacts.push({c,f});}contacts.sort((a,b)=>a.f-b.f||a.c.gridPosition-b.c.gridPosition);
-   for(const {c}of contacts){p.hits.push(c.id);if(guardProjectile(c,p.type,p)||c.shieldRemaining>0){p.remaining=0;break;}if(p.type==='theft'){if(!owner.inventoryItem&&c.inventoryItem&&c.inventoryPhase==='ready'&&state(c).theftImmune<=0&&!ctx.blocked(c,'theft')){const item=c.inventoryItem;c.inventoryItem=null;c.inventoryPhase='empty';c.itemUseAt=Infinity;state(c).theftImmune=5;ctx.claim(owner,item);emit('theft-hit',c,{ownerId:owner.id,stolen:item});}}else ctx.hit(c,'missile',p,.65);emit(p.type+'-hit',c,{ownerId:owner.id});if(--p.remaining<=0)break;}
+   for(const {c}of contacts){p.hits.push(c.id);if(guardProjectile(c,p.type,p)||c.shieldRemaining>0){p.remaining=0;break;}if(p.type==='theft'){if(!owner.finished&&!owner.inventoryItem&&c.inventoryItem&&c.inventoryPhase==='ready'&&state(c).theftImmune<=0&&!ctx.blocked(c,'theft')){const item=c.inventoryItem;c.inventoryItem=null;c.inventoryPhase='empty';c.itemUseAt=Infinity;state(c).theftImmune=5;ctx.claim(owner,item);emit('theft-hit',c,{ownerId:owner.id,stolen:item});}}else if(ctx.hit(c,'missile',p,.65))emit(p.type+'-hit',c,{ownerId:owner.id});if(--p.remaining<=0)break;}
    if(p.remaining<=0)shots.splice(i,1);
   }
   trackItems.step(dt);

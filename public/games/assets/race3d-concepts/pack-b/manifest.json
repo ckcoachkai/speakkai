@@ -1,0 +1,74 @@
+[
+  {
+    "id": "concept-vesper",
+    "label": "Vesper GT",
+    "url": "assets/race3d-concepts/pack-b/concept-vesper.glb",
+    "yaw": 0,
+    "length": 5.308,
+    "vehicleSpec": {
+      "massKg": 1420,
+      "powerKW": 530,
+      "torqueNm": 760,
+      "dragCoefficient": 0.25,
+      "frontalAreaM2": 1.86,
+      "downforceCoefficient": 0.72,
+      "brakeDecelMps2": 11.7,
+      "tireGrip": 1.18,
+      "topSpeedKph": 336,
+      "engineType": "Fictional twin-turbo V8 hybrid",
+      "wheelbaseM": 2.93,
+      "rampPreference": 0.73,
+      "priority": 2
+    },
+    "fictional": true,
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications."
+  },
+  {
+    "id": "concept-tempest",
+    "label": "Tempest R",
+    "url": "assets/race3d-concepts/pack-b/concept-tempest.glb",
+    "yaw": 0,
+    "length": 4.988,
+    "vehicleSpec": {
+      "massKg": 1285,
+      "powerKW": 455,
+      "torqueNm": 620,
+      "dragCoefficient": 0.34,
+      "frontalAreaM2": 1.91,
+      "downforceCoefficient": 1.48,
+      "brakeDecelMps2": 13.0,
+      "tireGrip": 1.3,
+      "topSpeedKph": 302,
+      "engineType": "Fictional twin-turbo V6",
+      "wheelbaseM": 2.76,
+      "rampPreference": 0.52,
+      "priority": 3
+    },
+    "fictional": true,
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications."
+  },
+  {
+    "id": "concept-atlas",
+    "label": "Atlas Endurance",
+    "url": "assets/race3d-concepts/pack-b/concept-atlas.glb",
+    "yaw": 0,
+    "length": 5.248,
+    "vehicleSpec": {
+      "massKg": 1580,
+      "powerKW": 485,
+      "torqueNm": 850,
+      "dragCoefficient": 0.32,
+      "frontalAreaM2": 2.02,
+      "downforceCoefficient": 1.01,
+      "brakeDecelMps2": 11.9,
+      "tireGrip": 1.23,
+      "topSpeedKph": 314,
+      "engineType": "Fictional twin-turbo V8",
+      "wheelbaseM": 2.88,
+      "rampPreference": 0.86,
+      "priority": 1
+    },
+    "fictional": true,
+    "calibration": "Original fictional concept; all performance values are simulation inputs, not manufacturer specifications."
+  }
+]

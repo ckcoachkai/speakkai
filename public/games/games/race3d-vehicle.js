@@ -1,6 +1,6 @@
 /** Simplified four-contact arcade chassis, in track metres. Not manufacturer data. */
-import {createRampLayout,rampHeightAt,rampSlopeAt} from './race3d-ramps.js?v=20261025-fifty1';
-import {getRaceVehicleSpec as getVehicleSpec} from './race3d-race-calibration.js?v=20261025-fifty1';
+import {createRampLayout,rampHeightAt,rampSlopeAt} from './race3d-ramps.js?v=20261027-midnight';
+import {getRaceVehicleSpec as getVehicleSpec} from './race3d-race-calibration.js?v=20261027-midnight';
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,Number(v)||0));
 export const VEHICLE_PROFILES=Object.freeze({
  'f1-2026':{wheelbase:3.21581,track:1.44428,front:1.37516,rear:1.84065,cg:.34,frontShare:.45,massKg:760,powerW:140000,brakeFactor:1.06,suspensionHz:3.5,damping:.86},

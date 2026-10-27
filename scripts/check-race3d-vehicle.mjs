@@ -11,7 +11,7 @@ const decks=createRaceRamps(THREE,{track});decks.group.updateMatrixWorld(true);
 const deck=decks.group.getObjectByName('race3d-ramps-composite-driving-decks'),ray=new THREE.Raycaster();
 assert.ok(deck);
 const migrated=assignRacerTypes(Array.from({length:60},(_,i)=>({id:i,name:'Car '+i,racerType:['snail','bear','cheese-brie','x-wing'][i%4]})),()=>.43);
-assert.equal(migrated.length,60);assert.equal(new Set(migrated.map(c=>c.racerType)).size,5);assert.ok(migrated.every(c=>c.category==='car'));assert.deepEqual(Object.keys(RACER_CARD_NAMES).sort(),[...RACE_ROSTER_TYPES].sort());
+assert.equal(migrated.length,60);assert.equal(new Set(migrated.map(c=>c.racerType)).size,RACE_ROSTER_TYPES.length);assert.ok(migrated.every(c=>c.category==='car'));assert.deepEqual(Object.keys(RACER_CARD_NAMES).sort(),[...RACE_ROSTER_TYPES].sort());
 function fixture(type='gt3',side=1,speed=28,rampIndex=0){
  const s=createRaceSimulation({players:[{id:'test',name:'Test',...getRacerIdentity(type)}],track,random:()=>.441,autoItems:false});s.pickups.length=0;
  const c=s.cars[0],r=s.ramps[rampIndex];Object.assign(c,{distance:r.distance-170,previousProgress:r.distance-170,lateral:side*7,preferredLane:side*7,speed,topSpeed:speed,_nextDecision:Infinity,_nextMistake:Infinity});
@@ -21,7 +21,7 @@ function fixture(type='gt3',side=1,speed=28,rampIndex=0){
  return {s,c,r,car,motion};
 }
 let cases=0,contacts=0,maxDeckError=0,flips=0,maxLandingStep=0;const approachEvents=[];
-for(const type of Object.keys(VEHICLE_PROFILES))for(const rampIndex of [0,1])for(const side of [-1,1])for(const speed of [12,25,40]){
+for(const type of RACE_ROSTER_TYPES)for(const rampIndex of [0,1])for(const side of [-1,1])for(const speed of [12,25,40]){
  const f=fixture(type,side,speed,rampIndex),{s,c,r,motion}=f;let approach=false,takeoff=false,landed=false,lastY=null,fullDeck=false;
  for(let i=0;i<3600&&!landed;i++){
   s.update(1/120);motion.update(track,1/120);const pose=motion.snapshot();

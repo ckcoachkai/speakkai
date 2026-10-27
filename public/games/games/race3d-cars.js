@@ -1,9 +1,9 @@
-import {createFinishFX,advanceFinishVisual} from './race3d-finish-fx.js?v=20261025-fifty1';
-import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261025-fifty1';
-import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261025-fifty1';
-import { createCarMotion } from './race3d-car-motion.js?v=20261025-fifty1';
-import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261025-fifty1';
-import { vehicleProfile } from './race3d-vehicle.js?v=20261025-fifty1';
+import {createFinishFX,advanceFinishVisual} from './race3d-finish-fx.js?v=20261027-midnight';
+import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261027-midnight';
+import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261027-midnight';
+import { createCarMotion } from './race3d-car-motion.js?v=20261027-midnight';
+import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261027-midnight';
+import { vehicleProfile } from './race3d-vehicle.js?v=20261027-midnight';
 
 /**
  * Sculpted low-slung GT cars for race3d. All car geometry is authored around
@@ -22,16 +22,29 @@ export function createRaceCars(THREE, racers = [], options = {}) {
   const materialCache = new Map();
   let disposed = false;
   const lateDisposedResources=new WeakSet();
-  const authoredAssets = createAuthoredCarAssets(THREE, {prepareAsset:options.prepareAsset,isDisposed:()=>disposed,registerResource(type,resource){if(!resource)return;if(disposed){if(!lateDisposedResources.has(resource)){lateDisposedResources.add(resource);resource.dispose?.();resource.image?.close?.();}return;}({geometry:geometries,material:materials,texture:textures})[type].add(resource);}});
+  const disposedResources=new WeakSet();
+  const resourceLifecycle={registered:{geometry:0,material:0,texture:0},disposed:{geometry:0,material:0,texture:0},lateDisposed:{geometry:0,material:0,texture:0}};
+  const resourceSet=type=>({geometry:geometries,material:materials,texture:textures})[type];
+  function disposeResource(type,resource,late=false){
+    if(!resource||disposedResources.has(resource))return;
+    disposedResources.add(resource);resource.dispose?.();if(type==='texture')resource.image?.close?.();
+    resourceLifecycle.disposed[type]++;if(late)resourceLifecycle.lateDisposed[type]++;
+  }
+  function registerResource(type,resource){
+    if(!resource)return;
+    if(disposed){if(!lateDisposedResources.has(resource)){lateDisposedResources.add(resource);disposeResource(type,resource,true);}return;}
+    const set=resourceSet(type);if(set&&!set.has(resource)){set.add(resource);resourceLifecycle.registered[type]++;}
+  }
+  const authoredAssets = createAuthoredCarAssets(THREE, {prepareAsset:options.prepareAsset,isDisposed:()=>disposed,registerResource});
 
-  const damageVisuals=createDamageVisuals(THREE,group,(type,resource)=>({geometry:geometries,material:materials,texture:textures})[type].add(resource));
+  const damageVisuals=createDamageVisuals(THREE,group,registerResource);
 
   const cacheGeometry = (key, make) => {
     if (!geometryCache.has(key)) {
       const geometry = make();
       geometry.computeVertexNormals?.();
       geometryCache.set(key, geometry);
-      geometries.add(geometry);
+      registerResource('geometry',geometry);
     }
     return geometryCache.get(key);
   };
@@ -49,7 +62,7 @@ export function createRaceCars(THREE, racers = [], options = {}) {
       const Material = Object.hasOwn(extra, 'clearcoat') ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
       const m = new Material({ color, roughness, metalness, ...extra });
       materialCache.set(key, m);
-      materials.add(m);
+      registerResource('material',m);
     }
     return materialCache.get(key);
   };
@@ -130,7 +143,7 @@ export function createRaceCars(THREE, racers = [], options = {}) {
       merged.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
       merged.setIndex(indices);
       merged.computeBoundingSphere();
-      geometries.add(merged);
+    registerResource('geometry',merged);
       mesh(parent, merged, material, `merged-${parts[0].name}`);
     }
   }
@@ -301,7 +314,7 @@ export function createRaceCars(THREE, racers = [], options = {}) {
     c.fillText(label, 128, 105);
     const texture = new THREE.CanvasTexture(canvas);
     if ('colorSpace' in texture && THREE.SRGBColorSpace) texture.colorSpace = THREE.SRGBColorSpace;
-    textures.add(texture);
+    registerResource('texture',texture);
     return texture;
   }
 
@@ -371,7 +384,7 @@ export function createRaceCars(THREE, racers = [], options = {}) {
     const tex = doorTexture(number, racer.name);
     if (tex && profile!==3) {
       const numberMat = new THREE.MeshStandardMaterial({ map: tex, roughness: .42, metalness: .05, side: THREE.DoubleSide });
-      materials.add(numberMat);
+      registerResource('material',numberMat);
       for (const side of [-1, 1]) {
         mesh(car, plane(.48, .24), numberMat, 'door-number-decal', [side * .991, .67, -.24], [0, side * Math.PI / 2, 0]);
       }
@@ -436,7 +449,7 @@ export function createRaceCars(THREE, racers = [], options = {}) {
     const gap=state=>{const raw=Math.abs(state.racer.distance-(focus?.distance??state.racer.distance))%track.totalLength;return Math.min(raw,track.totalLength-raw);};
     const detailed=new Set([...meshes.values()].filter(s=>s.proxy).sort((a,b)=>gap(a)-gap(b)||a.racer.gridPosition-b.racer.gridPosition).slice(0,view.detailedCars||6));
     const bursts=[];for (const state of meshes.values()) {
-      const distance=gap(state),far=!!state.proxy&&(distance>(view.lodDistance||120)||(distance>35&&!detailed.has(state)));const burst=updateFinishPose(state,track,dt);state.motion.update(track,dt,{detailed:!far||!!state.finishAnimation});if(burst){const f=new THREE.Vector3(0,0,1).applyQuaternion(state.car.quaternion),r=new THREE.Vector3(1,0,0).applyQuaternion(state.car.quaternion),d=state.car.userData.assetDimensions||{};bursts.push({length:d.length||4.4,width:d.width||1.9,forwardX:f.x,forwardZ:f.z,rightX:r.x,rightZ:r.z,carId:state.racer.id,gridPosition:state.racer.gridPosition,color:state.primaryHex,x:state.car.position.x,y:state.car.position.y+.75,z:state.car.position.z,distance:state.visualRacer.distance,lateral:state.visualRacer.lateral,time:state.finishAnimation.age});}if(!far){state.form?.update(dt,state.visualRacer);state.authoredVisuals?.update(state.visualRacer);}
+      const distance=gap(state),far=!!state.proxy&&(distance>(view.lodDistance||120)||(distance>35&&!detailed.has(state)));const burst=updateFinishPose(state,track,dt);state.motion.update(track,dt,{detailed:!far||!!state.finishAnimation});if(burst){const f=new THREE.Vector3(0,0,1).applyQuaternion(state.car.quaternion),r=new THREE.Vector3(1,0,0).applyQuaternion(state.car.quaternion),d=state.car.userData.assetDimensions||{};bursts.push({length:d.length||4.4,width:d.width||1.9,forwardX:f.x,forwardZ:f.z,rightX:r.x,rightZ:r.z,carId:state.racer.id,gridPosition:state.racer.gridPosition,color:state.primaryHex,x:state.car.position.x,y:state.car.position.y+.75,z:state.car.position.z,distance:state.visualRacer.distance,lateral:state.visualRacer.lateral,time:state.finishAnimation.age});}state.authoredParts?.update(state.racer,dt);if(!far){state.form?.update(dt,state.visualRacer);state.authoredVisuals?.update(state.visualRacer);}
       if(state.proxy){state.proxy.visible=far;state.detailGroup.visible=!far;state.car.userData.lod=far?'distant':'detailed';}
     }
     finishEvents.push(...finishFX.emit(bursts));finishFX.update(dt);
@@ -449,14 +462,23 @@ export function createRaceCars(THREE, racers = [], options = {}) {
     finishFX.dispose();finishEvents=[];damageVisuals.dispose();
     for(const state of meshes.values())state.form?.dispose();
     group.removeFromParent();
-    for (const geometry of geometries) geometry.dispose();
-    for (const texture of textures) { texture.dispose(); texture.image?.close?.(); }
-    for (const material of materials) material.dispose();
+    for (const geometry of geometries) disposeResource('geometry',geometry);
+    for (const texture of textures) disposeResource('texture',texture);
+    for (const material of materials) disposeResource('material',material);
     group.clear();
     meshes.clear(); geometries.clear(); textures.clear(); materials.clear(); geometryCache.clear(); materialCache.clear();
   }
 
-  return { group, update, dispose, assetsReady:Promise.all([...meshes.values()].map(state=>state.assetsReady)), assetErrors:authoredAssets.errors,
+  function stateFor(id){return meshes.get(id)||[...meshes.values()].find(state=>String(state.racer.id)===String(id));}
+  const parts={
+    categories:Object.freeze(['body','hood','frontBumper','rearBumper','wings','doors','wheels','calipers','suspension']),
+    snapshot(id){const state=id===undefined?null:stateFor(id);return state?{id:state.racer.id,assetId:state.car.userData.assetId||null,parts:state.authoredParts?.snapshot?.()||null}:[...meshes.values()].map(item=>({id:item.racer.id,assetId:item.car.userData.assetId||null,parts:item.authoredParts?.snapshot?.()||null}));},
+    setVisible(id,kind,key,visible){const state=stateFor(id);return state?.authoredParts?.registry?.setVisible(kind,key,visible)??false;},
+    swap(id,kind,key,sourceId,sourceKey=key){const target=stateFor(id),source=stateFor(sourceId);if(!target?.authoredParts?.registry||!source?.authoredParts?.registry)return {ok:false,reason:'Both cars need an attached authored asset.'};const result=target.authoredParts.registry.swap(kind,key,source.authoredParts.registry,sourceKey);if(result.ok)target.car.userData.wheelRadii=target.wheelSpin.map(w=>w.userData.rollingRadius);return result;},
+    reset(id,kind,key){const state=stateFor(id);if(!state?.authoredParts?.registry)return false;const result=state.authoredParts.registry.reset(kind,key);state.car.userData.wheelRadii=state.wheelSpin.map(w=>w.userData.rollingRadius);return result;},
+  };
+
+  return { group, update, dispose, parts, assetsReady:Promise.all([...meshes.values()].map(state=>state.assetsReady)), assetErrors:authoredAssets.errors,
     reset() { finishFX.reset();finishEvents=[];damageVisuals.reset(); for (const state of meshes.values()) {state.car.scale.setScalar(1);state.car.visible=true;resetVisual(state);state.motion.reset();} },
     drainFinishEvents(){const events=finishEvents;finishEvents=[];return events;},
     finishSnapshot(){const states=[...meshes.values()].filter(s=>s.racer.finished);return {...finishFX.snapshot(),hidden:states.filter(s=>s.finishHidden).length,pending:states.filter(s=>!s.finishHidden).length,complete:states.every(s=>s.finishStage==='cleared')&&finishFX.snapshot().alive===0};},
@@ -467,7 +489,7 @@ export function createRaceCars(THREE, racers = [], options = {}) {
     visualPose(id) {return meshes.get(id)?.visualRacer||null;},
     damageSnapshot() {return damageVisuals.snapshot();},
     snapshot() { return [...meshes.values()].map(state => ({...state.motion.snapshot(),visualDistance:state.visualRacer.distance,visualLateral:state.visualRacer.lateral,visualSpeed:state.visualRacer.speed,finishHidden:!!state.finishHidden,finishStage:state.finishStage||null,racerType:state.racer.racerType||null,vehicleName:state.racer.vehicleName||state.car.userData.assetLabel,form:state.form?.meta||null,assetId:state.car.userData.assetId||null,assetLoaded:!!state.car.userData.assetLoaded,assetDimensions:state.car.userData.assetDimensions||null,authoredWheelCount:state.car.userData.authoredWheelCount||0,finish:state.authoredVisuals?.snapshot()||null})); },
-    assetSnapshot() {return {errors:[...authoredAssets.errors],cars:[...meshes.values()].map(s=>({id:s.racer.id,...s.car.userData,authoredWheelCount:s.car.userData.authoredWheelCount||0}))};},
+    assetSnapshot() {return {errors:[...authoredAssets.errors],resources:{registered:{...resourceLifecycle.registered},disposed:{...resourceLifecycle.disposed},lateDisposed:{...resourceLifecycle.lateDisposed},active:{geometry:geometries.size,material:materials.size,texture:textures.size}},cars:[...meshes.values()].map(s=>({id:s.racer.id,...s.car.userData,authoredWheelCount:s.car.userData.authoredWheelCount||0,parts:s.authoredParts?.snapshot?.()||null}))};},
     setHiddenId(id) { for (const state of meshes.values()) state.car.visible = !state.finishHidden&&(id === null || state.racer.id !== id); },
   };
 }

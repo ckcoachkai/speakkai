@@ -2,7 +2,15 @@
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 export const GROUND_ITEMS=Object.freeze(['launch','boost','bomb','missile','banana','shockwave','freeze']);
 export const ATTACK_LIMITS=Object.freeze({missile:{range:220,speed:82,ttl:4.5,width:8},bomb:{range:700,speed:110,ttl:14,width:7.5},shockwave:{range:480,speed:85,ttl:14,width:4.2},freeze:{range:115,speed:62,ttl:3.6,width:3.8},banana:{range:70,speed:0,ttl:24,width:2.1}});
-export function itemDecision(car,cars,{trackLength=1e6,curvature=()=>0,projectiles=[],waves=[],lockClear=()=>true}={}){
+// Predict the sideways drift of world momentum across the full high jump.
+// A locally gentle bend can still put a five-second flight outside the road.
+export function flightWindow(car,type,curvature,width=()=>16.5){
+ const speed=Math.max(5,Number(car.speed)||0),distance=type==='launch'?Math.max(180,speed*5.5):Math.max(220,speed*6+60),ds=distance/16;
+ let heading=Math.atan2(Number(car.lateralVelocity)||0,speed),lateral=Number(car.lateral)||0;
+ for(let i=0;i<16;i++){const d=car.distance+(i+.5)*ds;heading-=curvature(d)*ds;lateral+=Math.sin(heading)*ds;if(Math.abs(lateral)>width(d)/2-1.3)return false;}
+ return true;
+}
+export function itemDecision(car,cars,{trackLength=1e6,curvature=()=>0,width=()=>16.5,projectiles=[],waves=[],lockClear=()=>true}={}){
  const type=car.inventoryItem,hold=reason=>({use:false,reason,targetId:null});
  if(!type||car.inventoryPhase!=='ready'||car.finished)return hold('not-ready');
  if(GROUND_ITEMS.includes(type)&&(car.flightRemaining>0||car.rampState==='approach'))return hold('needs-contact');
@@ -30,10 +38,12 @@ export function itemDecision(car,cars,{trackLength=1e6,curvature=()=>0,projectil
   const threat=[...projectiles,...waves].some(p=>p.ownerId!==car.id&&Math.abs(p.distance-car.distance)<100&&Math.abs(p.lateral-car.lateral)<7)||opponents.some(o=>Math.abs(gap(o))<14&&Math.abs(o.lateral-car.lateral)<3);
   return threat&&(car.shieldRemaining||0)<.3?{use:true,reason:'incoming-threat'}:hold('no-threat');
  }
- if(type==='boost'||type==='rocket')return (car.attackSlowRemaining||0)<=0&&(car.spin||0)<=0&&(car.freezeRemaining||0)<=0&&(car.brake||0)<.15&&bend<.0065&&car.speed>5?{use:true,reason:'clear-acceleration-window'}:hold('braking-or-turning-or-disrupted');
+ if(type==='boost'||type==='rocket'){
+  return (car.attackSlowRemaining||0)<=0&&(car.spin||0)<=0&&(car.freezeRemaining||0)<=0&&(car.brake||0)<.15&&bend<.0065&&car.speed>5&&(type!=='rocket'||flightWindow(car,type,curvature,width))?{use:true,reason:'clear-acceleration-window'}:hold('braking-or-turning-or-disrupted');
+ }
  if(type==='launch'){
   const traffic=opponents.some(o=>gap(o)>4&&gap(o)<75);
-  return (car.spin>0||car.freezeRemaining>0||traffic)&&bend<.009?{use:true,reason:car.spin>0||car.freezeRemaining>0?'recover-control':'overfly-traffic'}:hold('no-safe-gain');
+  return (car.spin>0||car.freezeRemaining>0||traffic)&&bend<.009&&flightWindow(car,type,curvature,width)?{use:true,reason:car.spin>0||car.freezeRemaining>0?'recover-control':'overfly-traffic'}:hold('no-safe-gain');
  }
  return hold('no-benefit');
 }
