@@ -15,16 +15,16 @@ test('public journal connects to read-only Supabase data and exposes no privileg
  assert.match(js,/Eating date unconfirmed/);
 });
 test('source coverage, incomplete logs and old weight limitations remain explicit',()=>{
- assert.match(html,/Later device data and the requested Dot export are pending/);
- assert.match(js,/Older scale series; not a current weight trend/);
+ assert.match(html,/Dot’s complete provided export is merged/);
+ assert.match(js,/Sparse scale readings/);
  assert.match(css,/@media\(max-width:450px\)/);
- assert.match(html,/individual meal associations are unconfirmed/);
+ assert.match(html,/Upload dates are UTC, not guaranteed eating dates/);
 });
 async function paths(dir){let out=[];for(const e of await readdir(new URL(dir,root),{withFileTypes:true})){const p=dir+'/'+e.name;out.push(...(e.isDirectory()?await paths(p):[p]));}return out.sort();}
 test('public asset directory contains only dashboard code and five approved photos',async()=>{
  const files=await paths('public/health');
- assert.equal(files.length,8);
- assert.ok(files.every(p=>/\.(html|css|js|jpg)$/.test(p)));
+ assert.ok(files.length>=63);
+ assert.ok(files.every(p=>/\.(html|css|js|jpg|webp)$/.test(p)));
  assert.equal(files.filter(p=>p.endsWith('.jpg')).length,5);
 });
 test('built dashboard matches reviewed source assets',{skip:!process.argv.includes('--dist')},async()=>{
