@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-27T07:06:01.398723+00:00",
+  "updatedAt": "2026-10-27T09:09:30.225906+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2169,6 +2169,37 @@
             {
               "name": "Patrick",
               "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-10-20&student=patrick"
+            }
+          ]
+        },
+        {
+          "id": "tue-afternoon-2026-10-27",
+          "date": "2026-10-27",
+          "time": "15:30–17:30",
+          "classContent": [
+            "• Editing, polishing and writing: In class, we went through another skill within the editing and polishing process, which also applies to writing: thinking about how to make our work easier for the audience to understand, go deeper and improve clarity.\n\n• Variety and language: We looked at the importance of variety in creating curiosity. We also looked at using simple words to help the audience understand, and complex words to show our language abilities.\n\n• Fewer characters, locations and messages: Reduce the number of characters to reduce confusion. Reduce the number of locations to help the audience visualize what is happening. Reduce the number of messages to strengthen the core idea.\n\n• Relatability and the significance of each character: Think about how relatable the location, situation and characters are. If we add more characters, what significance does each character bring?\n\n• Using dialogue: We considered how words we use to describe a scene could instead be spoken by the characters: how can we have the characters say it?\n\n• Story exercise: Think about a friend of yours and a problem that happens. The example prompts were: their hair catches on fire; they get gum on their clothes; they cheated on a test; you argue over who won; or you get blamed for something they did. These were story prompts, not reports of actual incidents. Organize the story by explaining the situation, what happened and what the conclusion was.\n\n• Impromptu practice and the message: We worked on expressing ourselves in our own words. I usually ask the other students whether they remember a speaker’s message; if they do not, the message was not clear enough. Repeat the message so that it stays firmly in the audience’s minds.\n\n• General AI guidance: Focus on improving our own ability to express ourselves. AI may potentially be used for polishing when preparing for a competition and to adjust certain things, but ask it for suggestions rather than having it actually do the polishing for you, because that causes a lot of issues."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Alyssa",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-10-27&student=alyssa"
+            },
+            {
+              "name": "Ethan Liu",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-10-27&student=ethan-liu"
+            },
+            {
+              "name": "Ethan Jia",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-10-27&student=ethan-jia"
+            },
+            {
+              "name": "Harry",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-10-27&student=harry"
+            },
+            {
+              "name": "Patrick",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-10-27&student=patrick"
             }
           ]
         }
