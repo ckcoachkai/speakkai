@@ -60,8 +60,8 @@ const pending=[];
 for(let offset=0;;offset+=500){const page=await fetchPage(offset);pending.push(...page);if(page.length<500)break}
 rows=pending;
 el('load-status').textContent='Connected to Supabase · New food and exercise reports save from chat · Public read-only journal';
-render();renderDot();renderHistory();renderPhotos();
-}catch(err){el('load-status').textContent='Health records could not be loaded. '+err.message+' Please retry later.';el('load-status').setAttribute('role','alert');}finally{loading=false;}
+render();renderDot();renderHistory();renderPhotos();return true;
+}catch(err){el('load-status').textContent='Health records could not be loaded. '+err.message+' Please retry later.';el('load-status').setAttribute('role','alert');return false;}finally{loading=false;}
 }
 el('metric').addEventListener('change',draw);el('period').addEventListener('change',draw);
 el('download').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([JSON.stringify({timezone:'Asia/Shanghai',records:rows},null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='speakkai-health-records.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
@@ -118,7 +118,7 @@ async function checkSync(){
   const journal=statuses.find(x=>x.key==='journal'),mi=statuses.find(x=>x.key==='mifit');
   const last=mi?.last_success_at?new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(mi.last_success_at)):'Not synced yet';
   el('sync-status').innerHTML='<article class="sync-card"><strong>FOOD & EXERCISE · AUTOMATIC</strong><p>Save reports from this chat. Background checks every 15 minutes.</p><p>This page checks for changes every minute while open.</p></article><article class="sync-card" data-state="'+esc(mi?.state||'unknown')+'"><strong>MI FITNESS · '+esc((mi?.state||'unknown').replaceAll('_',' ').toUpperCase())+'</strong><p>'+esc(mi?.detail||'Connection status unavailable.')+'</p><p>Last cloud sync: '+esc(last)+(mi?.last_data_date?' · Latest saved date: '+esc(mi.last_data_date):'')+'</p></article>';
-  if(journal){if(knownRevision!==null&&Number(journal.revision)!==knownRevision)await load();knownRevision=Number(journal.revision);}
+  if(journal){const nextRevision=Number(journal.revision);if(!rows.length||(knownRevision!==null&&nextRevision!==knownRevision)){if(loading)return;if(!await load())return;}knownRevision=nextRevision;}
  }catch(_){if(!el('sync-status').innerHTML)el('sync-status').textContent='Sync connection status temporarily unavailable.';}
 }
 if(typeof window!=='undefined'){checkSync();setInterval(checkSync,60000);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')checkSync()});}
