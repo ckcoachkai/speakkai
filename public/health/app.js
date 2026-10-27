@@ -40,9 +40,22 @@ body+='<text x="'+left+'" y="'+(height-10)+'">'+esc(a[0].date)+'</text><text x="
 el('chart').innerHTML='<svg viewBox="0 0 960 280" role="img" aria-label="'+esc(c.name)+' recorded observations from '+a[0].date+' to '+a.at(-1).date+'">'+body+'</svg>';
 el('chart-note').textContent=c.name+' · '+c.unit+' · '+a.length+' observations · '+a[0].date+' to '+a.at(-1).date+(dataset==='weight-records'?' · Sparse scale readings; latest report October 25. Not a continuous weight trend.':dataset==='heart-manual-records'?' · Repeated manual readings, not continuous monitoring.':'');
 }
+async function fetchPage(offset){
+ let last;
+ for(let attempt=0;attempt<3;attempt++){
+  try{
+   const response=await fetch(API+'?select=id,dataset,kind,occurred_on,occurred_at_original,timezone_status,is_derived,payload&order=id&limit=500&offset='+offset,{headers:{apikey:KEY},cache:'no-store',signal:AbortSignal.timeout(15000)});
+   if(!response.ok)throw new Error('Health data request failed ('+response.status+').');
+   const page=await response.json();if(!Array.isArray(page))throw new Error('Unexpected health data response.');return page;
+  }catch(err){last=err;if(attempt<2){el('load-status').textContent='Connection interrupted. Retrying the health journal…';await new Promise(resolve=>setTimeout(resolve,700*(attempt+1)));}}
+ }
+ throw last;
+}
 async function load(){
 try{
-for(let offset=0;;offset+=500){const response=await fetch(API+'?select=id,dataset,kind,occurred_on,occurred_at_original,timezone_status,is_derived,payload&order=id&limit=500&offset='+offset,{headers:{apikey:KEY},cache:'no-store'});if(!response.ok)throw new Error('Health data request failed ('+response.status+').');const page=await response.json();if(!Array.isArray(page))throw new Error('Unexpected health data response.');rows.push(...page);if(page.length<500)break}
+const pending=[];
+for(let offset=0;;offset+=500){const page=await fetchPage(offset);pending.push(...page);if(page.length<500)break}
+rows=pending;
 el('load-status').textContent='Connected to Supabase · Mi Fitness captured October 24 · Dot export merged · 106 conversations · Public read-only journal';
 render();renderDot();renderHistory();renderPhotos();
 }catch(err){el('load-status').textContent='Health records could not be loaded. '+err.message+' Please retry later.';el('load-status').setAttribute('role','alert');}
