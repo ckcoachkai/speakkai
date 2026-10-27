@@ -20,7 +20,7 @@ const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai'}).format(n
 const todayLabel=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',month:'short',day:'numeric'}).format(new Date());
 const w=latest('weight-records'),s=latest('steps-daily'),sl=latest('sleep-daily-totals'),push=by('exercise-log').filter(r=>r.occurred_on===today&&r.payload.exercise==='pushup').reduce((a,r)=>a+(Number(r.payload.repetitions)||0),0);
 el('stats').innerHTML=stat('Pushups · '+todayLabel,push||'Not logged',push?'Completed · user reported':'No pushups reported for this day')+stat('Latest recorded steps',s?Number(s.payload.value).toLocaleString():'Unknown',s?s.occurred_on+(s.occurred_on===today?' · day in progress':' · recorded day'):'No record')+stat('Latest captured sleep',sl?(Number(sl.payload.total_duration_minutes)/60).toFixed(1)+' h':'Unknown',sl?sl.occurred_on+' · captured sessions':'No record')+stat('Latest imported weight',w?w.payload.weight_kg+' kg':'Unknown',w?w.occurred_on+' · scale reading':'No record');
-el('exercise').innerHTML=by('exercise-log').map(r=>'<div class="exercise-row"><div><strong>'+esc(r.payload.exercise==='pushup'?r.payload.repetitions+' pushups':r.payload.title||r.payload.exercise)+'</strong><small>'+esc(r.payload.exercise==='pushup'?'Completed · sets, duration and calories not reported':r.payload.duration_minutes+' min · '+r.payload.speed_kmh+' km/h · '+r.payload.incline_percent+'% incline · user reported')+'</small></div><span>'+esc(r.occurred_on||r.payload.date_context||'Date unconfirmed')+'</span></div>').join('')||'<p>No exercise entries imported.</p>';
+el('exercise').innerHTML=by('exercise-log').sort((a,b)=>(b.occurred_on||'').localeCompare(a.occurred_on||'')).map(r=>'<div class="exercise-row"><div><strong>'+esc(exerciseTitle(r.payload))+'</strong><small>'+esc(exerciseDetails(r.payload))+'</small></div><span>'+esc(r.occurred_on||r.payload.date_context||'Date unconfirmed')+'</span></div>').join('')||'<p>No exercise entries imported.</p>';
 el('meals').innerHTML=by('food-log').sort((a,b)=>(b.occurred_on||'').localeCompare(a.occurred_on||'')).map(r=>{const p=r.payload;return '<article class="meal"><span class="eyebrow">'+esc(p.meal)+'</span><h3>'+esc(p.id.replaceAll('-',' '))+'</h3><ul>'+p.items.map(x=>'<li>'+esc(x.food)+(x.amount_g!=null?' · '+esc(x.amount_g)+' g':x.amount_original?' · '+esc(x.amount_original)+' (unit unclear)':x.amount!=null?' · '+esc(x.amount)+' '+esc(x.unit):' · portion unknown')+'</li>').join('')+'</ul>'+nutrition(p)+'<small>'+esc(r.occurred_on||p.date_context||'Eating date unconfirmed')+' · incomplete day</small></article>'}).join('');
 const ds=['steps-daily','calories-daily','activity-time-daily','sleep-sessions','weight-records','heart-manual-records'];
 el('coverage').innerHTML='<table><thead><tr><th>Source series</th><th>Rows</th><th>Coverage</th></tr></thead><tbody>'+ds.map(d=>{const a=by(d).map(r=>r.occurred_on).filter(Boolean).sort();return '<tr><td>'+esc(d.replaceAll('-',' '))+'</td><td>'+by(d).length+'</td><td>'+esc(a[0])+' → '+esc(a.at(-1))+'</td></tr>'}).join('')+'</tbody></table>';
@@ -122,4 +122,17 @@ async function checkSync(){
  }catch(_){if(!el('sync-status').innerHTML)el('sync-status').textContent='Sync connection status temporarily unavailable.';}
 }
 if(typeof window!=='undefined'){checkSync();setInterval(checkSync,60000);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')checkSync()});}
+
+
+function exerciseTitle(p){return p.exercise==='pushup'&&p.repetitions!=null?p.repetitions+' pushups':p.title||(p.repetitions!=null?p.repetitions+' ':'')+(p.exercise||'Exercise').replaceAll('_',' ')}
+function exerciseDetails(p){
+ const details=[];
+ if(p.duration_minutes!=null)details.push(Number(p.duration_minutes.toFixed?.(1)||p.duration_minutes)+' min');
+ if(p.distance_m!=null)details.push((p.distance_m/1000).toFixed(2)+' km');
+ if(p.speed_kmh!=null)details.push(p.speed_kmh+' km/h');
+ if(p.incline_percent!=null)details.push(p.incline_percent+'% incline');
+ if(p.sets!=null)details.push(p.sets+' sets');
+ details.push(p.status==='device_recorded_workout'?'Mi Fitness workout':'Completed · user reported');
+ return details.join(' · ');
+}
 
