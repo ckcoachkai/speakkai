@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-28T05:23:45.305863+00:00",
+  "updatedAt": "2026-10-28T05:58:49.284563+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -153,7 +153,16 @@
           "classContent": [
             "◆ Personal perspective and persuasion: We focused on sharing a personal perspective using ethos, pathos and logos, then giving supporting details. Students used one of the speech structures to develop their perspective into a speech.\n\n◆ AI and energy discussion: The class prompt asked students to imagine a world where we never have enough energy to support ourselves, while we are in a race to improve AI, which requires a great deal of power: ‘What do you think we should do?’ Discussion directions on the slide included creating more energy, slowing down AI, finding efficient ways to solve the problem, improving technology and creating a consensus. These were ideas to consider, rather than a single prescribed answer.\n\n◆ Organizing the speech: Students could use Cause → Effect → Impact → Solution, or the simpler structure Answer → Reason → Example → Message. The focus was to share a perspective, develop it with supporting details, and use one of these structures to create a speech."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Prepared original oratory speech and topic selection",
+            "steps": [
+              "Return to your prepared speech, or the longer-form speech we worked on, and develop it using the points below. First, confirm what speech topic you want to talk about.",
+              "Remember that original oratory goes along the lines of cause, effect, impact and solution. Find a topic and use your personal voice. This is why we focused so much on personal perspective and persuasion: we want to persuade people.",
+              "Think back to the different topics and examples we discussed. If you have chosen to compete in November or at the beginning of December, we need to get serious about preparing. Sometimes competitions help motivate students and push them to take everything they have been doing more seriously, more quickly.",
+              "Have a topic, but remember that it should not simply be your first-choice topic. You can come up with three topics or five topics, then decide which is more unique. A topic you first think of may be one the judges have already heard a couple of times."
+            ],
+            "prepareFor": "Your prepared speech, or the longer-form speech we worked on."
+          },
           "students": [
             {
               "name": "Kenny",
@@ -287,7 +296,16 @@
           "classContent": [
             "◆ Personal perspective and persuasion: We focused on sharing a personal perspective using ethos, pathos and logos, then giving supporting details. Students used one of the speech structures to develop their perspective into a speech.\n\n◆ AI and energy discussion: The class prompt asked students to imagine a world where we never have enough energy to support ourselves, while we are in a race to improve AI, which requires a great deal of power: ‘What do you think we should do?’ Discussion directions on the slide included creating more energy, slowing down AI, finding efficient ways to solve the problem, improving technology and creating a consensus. These were ideas to consider, rather than a single prescribed answer.\n\n◆ Organizing the speech: Students could use Cause → Effect → Impact → Solution, or the simpler structure Answer → Reason → Example → Message. The focus was to share a perspective, develop it with supporting details, and use one of these structures to create a speech."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Prepared original oratory speech and topic selection",
+            "steps": [
+              "Return to your prepared speech, or the longer-form speech we worked on, and develop it using the points below. First, confirm what speech topic you want to talk about.",
+              "Remember that original oratory goes along the lines of cause, effect, impact and solution. Find a topic and use your personal voice. This is why we focused so much on personal perspective and persuasion: we want to persuade people.",
+              "Think back to the different topics and examples we discussed. If you have chosen to compete in November or at the beginning of December, we need to get serious about preparing. Sometimes competitions help motivate students and push them to take everything they have been doing more seriously, more quickly.",
+              "Have a topic, but remember that it should not simply be your first-choice topic. You can come up with three topics or five topics, then decide which is more unique. A topic you first think of may be one the judges have already heard a couple of times."
+            ],
+            "prepareFor": "Your prepared speech, or the longer-form speech we worked on."
+          },
           "students": [
             {
               "name": "William",
