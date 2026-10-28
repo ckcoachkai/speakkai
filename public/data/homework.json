@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-27T13:20:07.156884+00:00",
+  "updatedAt": "2026-10-28T05:06:18.777907+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -442,7 +442,15 @@
           "classContent": [
             "◆ Impromptu speaking and class focus: Stacey and Liam focused mainly on impromptu speaking. I felt this was a competition area they could enter. There have also been some student switches, so introducing a large amount of new material could be difficult for different students.\n\n◆ Thinking, logic and speaking length: The aim was to strengthen critical thinking and the ability to organize logic and structure, while gradually increasing answers from around 30 seconds toward eventually two minutes. This would help prepare them for other competition opportunities, including TOC impromptu, the recently upgraded WSDA impromptu work mentioned in class, ESTP and similar competitions. These were preparation goals, not a claim that the students already spoke for two minutes or that they had entered a competition.\n\n◆ Developing answers: We focused on building an argument and organizing it with Answer → Reason → Example → Message. We continued exploring ways to develop the logic of answers and speak for longer, with more practice questions to work on. Stacey needed to expand her short answers, while Liam needed to slow down and give more thorough answers."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Three impromptu questions",
+            "steps": [
+              "Continue from Martin Luther King Jr.’s “I have a dream”: what do you wish for the future?",
+              "What would a perfect world look like for you?",
+              "If you could change one thing at your school to make students’ lives better, what would you change, and why?"
+            ],
+            "prepareFor": "Work on the three impromptu questions."
+          },
           "students": [
             {
               "name": "Stacey",
@@ -1698,8 +1706,16 @@
           "id": "sun-1500-2026-10-25",
           "date": "2026-10-25",
           "time": "15:00–16:30",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "• We first reviewed homework. We then used a debate topic to practice back-and-forth rebuttals: one person gives a point, the second rebuts that point, the third rebuts the second person, and the fourth rebuts the third.\n\n• After this, we went over the points for both sides of the TOC debate topic, “Students should be allowed to grade their teachers.” Students on both sides came up with different points and thought about what they could say.\n\n• Max debated against August. Celia debated against Eva and Leo. We practiced one-on-one and one-on-two in preparation for competition, going over their points and working through the entire setup.\n\n• One of the biggest challenges for everyone was speaking for two minutes. They have not yet become used to the time limit, or to organizing all the points they need to talk about.\n\n• Eva helped Leo a little with understanding the basics because he had not attended for a while. Later, we reviewed CREI with Leo: claim, reasoning, example, evidence. We also reviewed the debate format, including cross-examination, opening statement, rebuttals and final focus."
+          ],
+          "homework": {
+            "title": "Competition debate arguments",
+            "steps": [
+              "Write out up to five different arguments for each side of the competition topic, “Students should be allowed to grade their teachers.”"
+            ],
+            "prepareFor": "Both sides of the competition debate."
+          },
           "students": [
             {
               "name": "Max",
@@ -1716,6 +1732,10 @@
             {
               "name": "Eva",
               "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-25&student=eva"
+            },
+            {
+              "name": "Leo",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-25&student=leo"
             }
           ]
         }
