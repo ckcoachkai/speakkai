@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-28T05:06:18.758204+00:00",
+  "updatedAt": "2026-10-28T05:23:45.288180+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -338,7 +338,10 @@
           "date": "2026-10-24",
           "time": "15:00–16:30",
           "status": "held",
-          "classContent": null,
+          "classContent": {
+            "en": "◆ Personal perspective and persuasion: We focused on sharing a personal perspective using ethos, pathos and logos, then giving supporting details. Students used one of the speech structures to develop their perspective into a speech.\n\n◆ AI and energy discussion: The class prompt asked students to imagine a world where we never have enough energy to support ourselves, while we are in a race to improve AI, which requires a great deal of power: ‘What do you think we should do?’ Discussion directions on the slide included creating more energy, slowing down AI, finding efficient ways to solve the problem, improving technology and creating a consensus. These were ideas to consider, rather than a single prescribed answer.\n\n◆ Organizing the speech: Students could use Cause → Effect → Impact → Solution, or the simpler structure Answer → Reason → Example → Message. The focus was to share a perspective, develop it with supporting details, and use one of these structures to create a speech.",
+            "zh": "◆【个人观点与说服】：本节课重点是运用ethos、pathos和logos表达个人观点，再提供支持细节。学生使用其中一种演讲结构，把自己的观点发展成一篇演讲。\n\n◆【人工智能与能源讨论】：课堂题目请学生想象：如果世界上的能源始终不足以支持我们的生活，同时我们仍在竞相发展需要大量能源的人工智能，我们应该怎么办？课件列出的思考方向包括创造更多能源、放慢人工智能的发展、寻找高效的解决办法、改进技术，以及形成共识。这些是供思考的方向，而不是唯一规定的答案。\n\n◆【组织演讲】：学生可以使用‘原因 → 结果 → 影响 → 解决方案’，或者更简单的‘回答 → 理由 → 例子 → 核心信息’结构。重点是先分享自己的观点，再用细节加以支持，并使用其中一种结构组织成演讲。"
+          },
           "homework": null,
           "students": [
             {
@@ -531,8 +534,8 @@
           "time": "16:32–18:30",
           "status": "held",
           "classContent": {
-            "en": "◆ Impromptu speaking and class focus: Stacey and Liam focused mainly on impromptu speaking. I felt this was a competition area they could enter. There have also been some student switches, so introducing a large amount of new material could be difficult for different students.\n\n◆ Thinking, logic and speaking length: The aim was to strengthen critical thinking and the ability to organize logic and structure, while gradually increasing answers from around 30 seconds toward eventually two minutes. This would help prepare them for other competition opportunities, including TOC impromptu, the recently upgraded WSDA impromptu work mentioned in class, ESTP and similar competitions. These were preparation goals, not a claim that the students already spoke for two minutes or that they had entered a competition.\n\n◆ Developing answers: We focused on building an argument and organizing it with Answer → Reason → Example → Message. We continued exploring ways to develop the logic of answers and speak for longer, with more practice questions to work on. Stacey needed to expand her short answers, while Liam needed to slow down and give more thorough answers.",
-            "zh": "◆【即兴演讲与课堂重点】：Stacey和Liam主要练习即兴演讲。我觉得这是他们可以参加的比赛方向。班里也有一些学生调整，因此一次学习大量新内容，对不同学生来说可能会比较困难。\n\n◆【思考、逻辑与演讲长度】：目标是加强批判性思考，以及组织逻辑和结构的能力，同时把回答从大约30秒逐渐延长，最终朝两分钟努力。这能帮助他们为其他比赛机会做准备，包括TOC即兴演讲、课堂提及的近期升级的WSDA即兴演讲内容、ESTP及类似比赛。这些是准备目标，并不代表学生已经讲满两分钟或已经报名参赛。\n\n◆【展开回答】：我们重点练习建立论点，并用‘回答 → 理由 → 例子 → 核心信息’组织内容。我们继续探索怎样把回答的逻辑发展得更完整、讲得更长，并练习更多问题。Stacey需要展开较短的回答，Liam则需要放慢语速，给出更充分的回答。"
+            "en": "◆ Impromptu speaking and class focus: Stacey and Liam focused mainly on impromptu speaking. I felt this was a competition area they could enter. There have also been some student switches, so introducing a large amount of new material could be difficult for different students.\n\n◆ Thinking, logic and speaking length: The aim was to strengthen critical thinking and the ability to organize logic and structure, while gradually increasing answers from around 30 seconds toward eventually two minutes. This would help prepare them for other competition opportunities, including TOC impromptu, the recently upgraded WSDA impromptu work mentioned in class, ESDP and similar competitions. These were preparation goals, not a claim that the students already spoke for two minutes or that they had entered a competition.\n\n◆ Developing answers: We focused on building an argument and organizing it with Answer → Reason → Example → Message. We continued exploring ways to develop the logic of answers and speak for longer, with more practice questions to work on. Stacey needed to expand her short answers, while Liam needed to slow down and give more thorough answers.",
+            "zh": "◆【即兴演讲与课堂重点】：Stacey和Liam主要练习即兴演讲。我觉得这是他们可以参加的比赛方向。班里也有一些学生调整，因此一次学习大量新内容，对不同学生来说可能会比较困难。\n\n◆【思考、逻辑与演讲长度】：目标是加强批判性思考，以及组织逻辑和结构的能力，同时把回答从大约30秒逐渐延长，最终朝两分钟努力。这能帮助他们为其他比赛机会做准备，包括TOC即兴演讲、课堂提及的近期升级的WSDA即兴演讲内容、ESDP及类似比赛。这些是准备目标，并不代表学生已经讲满两分钟或已经报名参赛。\n\n◆【展开回答】：我们重点练习建立论点，并用‘回答 → 理由 → 例子 → 核心信息’组织内容。我们继续探索怎样把回答的逻辑发展得更完整、讲得更长，并练习更多问题。Stacey需要展开较短的回答，Liam则需要放慢语速，给出更充分的回答。"
           },
           "homework": {
             "en": "Work on these three impromptu questions:\n\n1. Continue from Martin Luther King Jr.’s “I have a dream”: what do you wish for the future?\n\n2. What would a perfect world look like for you?\n\n3. If you could change one thing at your school to make students’ lives better, what would you change, and why?",
