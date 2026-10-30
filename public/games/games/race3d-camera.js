@@ -102,8 +102,8 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
 
     // Keep the car visibly in front of the camera while opening the shot a
     // little at speed. The low mount gives a road-level view and a steady horizon.
-    const trailing = clamp(width * (0.86 + speedRatio * 0.13), 12, 22) * chaseMix + 7 * overheadMix - .48 * firstPersonMix;
-    const cameraHeight = clamp(width * (0.30 + speedRatio * 0.035), 4.2, 7.4) * chaseMix + (width * 2.65 + speedRatio * 3) * overheadMix + 1.29 * firstPersonMix;
+    const trailing = clamp(width * (0.70 + speedRatio * 0.10), 10.5, 18) * chaseMix + 7 * overheadMix - .48 * firstPersonMix;
+    const cameraHeight = clamp(width * (0.255 + speedRatio * 0.025), 3.8, 6.3) * chaseMix + (width * 2.65 + speedRatio * 3) * overheadMix + 1.29 * firstPersonMix;
     wantedPosition.copy(samplePosition)
       .addScaledVector(forward, -trailing)
       .addScaledVector(up, cameraHeight);

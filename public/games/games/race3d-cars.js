@@ -1,5 +1,5 @@
 import {createFinishFX,advanceFinishVisual} from './race3d-finish-fx.js?v=20261027-midnight';
-import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261027-midnight';
+import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261030-city';
 import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261027-midnight';
 import { createCarMotion } from './race3d-car-motion.js?v=20261027-midnight';
 import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261027-midnight';

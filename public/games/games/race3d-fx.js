@@ -45,7 +45,7 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     spark: new THREE.CylinderGeometry(.016, .009, 1, 5, 1),
     streak: new THREE.CylinderGeometry(.009, .004, 1, 4, 1),
     confetti: new THREE.BoxGeometry(1, .18, .65),
-    mark: new THREE.BoxGeometry(1, .012, .15)
+    mark: new THREE.BoxGeometry(1, .008, .24)
   };
   const specs = {
     smoke: { capacity: 84, shape: 'puff', opacity: .34, base: 0x999b9d },
@@ -53,7 +53,7 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     sparks: { capacity: 48, shape: 'spark', opacity: .9, base: 0xffc064, metalness: .15 },
     speed: { capacity: 28, shape: 'streak', opacity: .22, base: 0xdce7ed },
     celebration: { capacity: 36, shape: 'confetti', opacity: .78, base: 0xf1c66a, metalness: .18 },
-    marks: { capacity: 48, shape: 'mark', opacity: .28, base: 0x24272a }
+    marks: { capacity: 192, shape: 'mark', opacity: .60, base: 0x171b20 }
   };
   const pools = {};
 
@@ -77,11 +77,15 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     const particles = Array.from({ length: spec.capacity }, () => ({
       live: false, age: 0, life: 1, position: new THREE.Vector3(), velocity: new THREE.Vector3(),
       direction: new THREE.Vector3(0, 1, 0), color: new THREE.Color(spec.base),
-      size: .1, stretch: 1, spin: 0, rotation: new THREE.Vector3(), alpha: 0
+      size: .1, stretch: 1, spin: 0, rotation: new THREE.Vector3(), alpha: 0,
+      orientation: new THREE.Quaternion()
     }));
     return { name, spec, mesh, alpha, particles, cursor: 0 };
   }
   for (const [name, spec] of Object.entries(specs)) pools[name] = makePool(name, spec);
+  const emitted = Object.fromEntries(Object.keys(specs).map(name => [name, 0]));
+  // Only nearby emitters are retained; this map never grows with laps or resets.
+  const tyreHistory = new Map();
 
   function spawn(name, position, velocity, options = {}) {
     const pool = pools[name];
@@ -104,6 +108,9 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     particle.drag = clip(options.drag ?? .35, 0, .99);
     particle.grow = finite(options.grow, 0);
     particle.alpha = clip(options.alpha ?? 1, 0, 1);
+    if (options.orientation) particle.orientation.copy(options.orientation);
+    else particle.orientation.identity();
+    emitted[name]++;
     return particle;
   }
 
@@ -142,8 +149,8 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
         const length = p.size * p.stretch * Math.max(.18, 1 - t * .55);
         tempObject.scale.set(p.size * .12, length, p.size * .12);
       } else if (pool.name === 'marks') {
-        tempObject.rotation.set(0, p.rotation.y, 0);
-        tempObject.scale.set(p.size * (1 + t * .1), 1, 1);
+        tempObject.quaternion.copy(p.orientation);
+        tempObject.scale.set(p.size, 1, 1);
       } else if (pool.name === 'celebration') {
         tempObject.rotation.set(p.rotation.x, p.rotation.y, p.rotation.z);
         const scale = p.size * (.86 + Math.sin(Math.PI * t) * .14);
@@ -165,7 +172,7 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     if (event?.car && typeof event.car === 'object') return event.car;
     const cars = Array.isArray(context?.cars) ? context.cars : [];
     const id = event?.carId ?? event?.id;
-    return cars.find(car => car.id === id) || cars.find(car => car.finished) || null;
+    return cars.find(car => car.id === id) || null;
   }
 
   function frameFor(event, context) {
@@ -186,7 +193,37 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     const tangent = vector(event?.direction || sample?.tangent || car?.direction || forwardFallback, forwardFallback).normalize();
     let right = vector(event?.right || sample?.right);
     if (right.lengthSq() < .001) right.set(tangent.z, 0, -tangent.x).normalize();
-    return { position, tangent, right, car };
+    return { position, tangent, right, car, sample };
+  }
+
+  const grounded = car => car && !car.finished && finite(car.flightHeight) < .03 &&
+    finite(car.rampHeight) < .03 && finite(car.flightRemaining) <= 0 && car.rampState !== 'airborne';
+
+  function tyreBurst(car, track, intensity, length = 1.8, smokeCount = 1) {
+    if (!grounded(car) || !track?.sampleTrack) return;
+    const heading = finite(car.heading) + (finite(car.spin) > 0 ? finite(car.spinAngle) : 0);
+    // Rear axle location projected into course coordinates. Each tyre samples its
+    // own road height, so marks follow both uphill gradients and signed banking.
+    for (const side of [-1, 1]) {
+      const along = -1.35 * Math.cos(heading) - side * .88 * Math.sin(heading);
+      const across = finite(car.lateral) - 1.35 * Math.sin(heading) + side * .88 * Math.cos(heading);
+      const sample = track.sampleTrack(finite(car.distance) + along - length / 2);
+      if (!sample?.position || Math.abs(across) > finite(sample.width, 18) / 2 - .2) continue;
+      const tangent = vector(sample.tangent, forwardFallback).normalize();
+      const right = vector(sample.right, new THREE.Vector3(1,0,0));
+      const wheel = vector(sample.position).addScaledVector(right, across);
+      wheel.y += Math.tan(finite(sample.bank)) * across + .052;
+      right.y = Math.tan(finite(sample.bank));right.normalize();
+      const normal = new THREE.Vector3().crossVectors(tangent, right).normalize();
+      const acrossAxis = new THREE.Vector3().crossVectors(tangent, normal).normalize();
+      const orientation = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(tangent, normal, acrossAxis));
+      spawn('marks', wheel, null, { life: 9, size: length, alpha: clip(.45 + intensity * .4, .45, .95), orientation });
+      // Smoke is attached to the current axle, not the middle of a long deposit.
+      const smokeAt = wheel.clone().addScaledVector(tangent, length / 2);smokeAt.y += .15;
+      for (let n=0;n<smokeCount;n++) spawn('smoke', smokeAt,
+        new THREE.Vector3((rand()-.5)*.8,.65+rand()*.5,(rand()-.5)*.8),
+        {life:.8+rand()*.5,size:.20+intensity*.16,grow:2.1,alpha:.52+intensity*.2,drag:.12});
+    }
   }
 
   function emit(input, context = {}) {
@@ -201,6 +238,12 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
       .addScaledVector(right, lateral).addScaledVector(tangent, -rear);
 
     if (type === 'skid' || type === 'spin' || type === 'tire-smoke') {
+      if (frame.car && context.track?.sampleTrack) {
+        tyreBurst(frame.car, context.track, intensity, 1.8, 2);
+        return;
+      }
+      // Without a known grounded car, smoke remains safe but a road deposit is
+      // not fabricated at an unverified height (e.g. an airborne event).
       const rear = 1.5;
       for (const side of [-1, 1]) {
         const wheel = sidePoint(position, side * 1.15, rear);
@@ -209,9 +252,6 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
             new THREE.Vector3((rand() - .5) * 1.4, .5 + rand() * .8, (rand() - .5) * 1.4),
             { life: .8 + rand() * .6, size: .30 + rand() * .24, grow: 2.7, alpha: .82, drag: .12 });
         }
-        wheel.y -= .18;
-        spawn('marks', wheel, new THREE.Vector3(), { life: 5.2, size: 1.6 + rand() * .7, stretch: .18,
-          alpha: .88, ry: Math.atan2(-tangent.z, tangent.x) });
       }
       return;
     }
@@ -270,15 +310,38 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
   }
 
   let disposed = false;
-  function update(deltaSeconds) {
+  function update(deltaSeconds, context = {}) {
     if (disposed) return;
     const dt = clip(deltaSeconds, 0, .05);
+    if (context.active && context.track?.sampleTrack && context.focusCar && dt > 0) {
+      const low = context.quality === 'low' || context.quality?.id === 'low';
+      const focus = context.focusCar, length = finite(context.track.totalLength, Infinity);
+      const distanceTo = car => {const d=Math.abs(finite(car.distance)-finite(focus.distance));return Math.min(d, Number.isFinite(length)?Math.abs(d%length):d, Number.isFinite(length)?length-d%length:d);};
+      const nearby = (context.cars || []).filter(car => distanceTo(car)<110)
+        .sort((a,b)=>distanceTo(a)-distanceTo(b)).slice(0,low?2:4);
+      const kept = new Set(nearby.map(car=>car.id));
+      for(const id of tyreHistory.keys()) if(!kept.has(id))tyreHistory.delete(id);
+      for(const car of nearby) {
+        const intensity = Math.max(finite(car.brake)>.4?finite(car.brake)*.75:0,
+          clip((Math.abs(finite(car.slip))-.045)*6,0,1),finite(car.spin)>0?1:0);
+        if(!grounded(car)||finite(car.speed)<6||intensity<.12){tyreHistory.delete(car.id);continue;}
+        const prior=tyreHistory.get(car.id)||{distance:finite(car.distance),clock:0};prior.clock+=dt;
+        const interval=low?.075:.04;
+        if(prior.clock>=interval){
+          const travel=Math.abs(finite(car.distance)-prior.distance);
+          tyreBurst(car,context.track,intensity,clip(travel+.25,1.2,12),intensity>.35?1:0);
+          prior.clock=0;prior.distance=finite(car.distance);
+        }
+        tyreHistory.set(car.id,prior);
+      }
+    } else tyreHistory.clear();
     for (const pool of Object.values(pools)) updatePool(pool, dt);
   }
 
   function dispose() {
     if (disposed) return;
     disposed = true;
+    tyreHistory.clear();group.removeFromParent();
     for (const pool of Object.values(pools)) {
       group.remove(pool.mesh);
       pool.mesh.geometry.dispose();
@@ -287,7 +350,22 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     for (const geometry of Object.values(shapes)) geometry.dispose();
   }
 
-  return { group, emit, update, dispose };
+  function reset() {
+    if (disposed) return;
+    tyreHistory.clear();
+    for (const [name, pool] of Object.entries(pools)) {
+      pool.cursor = 0;emitted[name] = 0;
+      for (const particle of pool.particles) {
+        particle.live = false;particle.age = 0;particle.alpha = 0;
+      }
+      // Upload zero-alpha, zero-scale instances immediately; no render tick or
+      // pool replacement is needed when returning to the idle starting grid.
+      updatePool(pool, 0);
+    }
+  }
+
+  function snapshot(){return {disposed,emitters:tyreHistory.size,emitted:{...emitted},pools:Object.fromEntries(Object.entries(pools).map(([name,p])=>[name,{capacity:p.spec.capacity,active:p.particles.filter(p=>p.live).length}]))};}
+  return { group, emit, update, snapshot, reset, dispose };
 }
 
 export default createRaceEffects;

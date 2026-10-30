@@ -1,3 +1,4 @@
+import { createCarDetails } from './race3d-car-details.js?v=20261030-city';
 /** Per-car PBR tuning preserves the authored maps, UVs and vertex normals. */
 export function createCarFinish(THREE, root, spec, primaryHex, registerResource) {
   const cache=new Map(), paint=[], brake=[], headlights=[];
@@ -53,13 +54,15 @@ export function createCarFinish(THREE, root, spec, primaryHex, registerResource)
     cache.set(source,material);return material;
   }
   root.traverse(node=>{if(node.isMesh)node.material=Array.isArray(node.material)?node.material.map(finish):finish(node.material);});
+  const details=createCarDetails(THREE,root,spec,registerResource);
   return {
     update(racer) {
       root.updateWorldMatrix(true,false);liveryInverse.value.copy(root.matrixWorld).invert();
       damage.value=THREE.MathUtils.clamp(Number(racer.damage)||0,0,1);
       const braking=Number(racer.brake)>.08||Number(racer.acceleration)<-3;
+      details.update(braking);
       for(const material of brake)material.emissiveIntensity=braking?4.0:.65;
     },
-    snapshot(){return {paintMaterials:paint.length,rubberMaterials:[...cache.keys()].filter(isRubber).length,brakeMaterials:brake.length,headlightMaterials:headlights.length,damage:damage.value,livery:'original-twin-stripe'};},
+    snapshot(){return {paintMaterials:paint.length,rubberMaterials:[...cache.keys()].filter(isRubber).length,brakeMaterials:brake.length,headlightMaterials:headlights.length,damage:damage.value,livery:'original-twin-stripe',details:details.snapshot()};},
   };
 }

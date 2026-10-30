@@ -1,8 +1,11 @@
 /** A single atmospheric lighting rig; attach directly to scene, outside scaled world. */
 export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, shadowSize=2048,skyWidth=1024 } = {}) {
   const previous = { background: scene.background, environment: scene.environment, fog: scene.fog };
-  const direction = new THREE.Vector3(-0.59, 0.71, 0.38).normalize();
-  const width = skyWidth, height = skyWidth/2;
+  // A lower afternoon sun makes the light direction legible on bodywork and road.
+  const direction = new THREE.Vector3(-0.59, 0.57, 0.57).normalize();
+  const width = Math.max(128, Math.round(Number(skyWidth) || 1024)), height = Math.ceil(width/2);
+  // Keep the sun resolvable on the deliberately small low-quality panorama.
+  const sunRadius = Math.max(.014, Math.PI * 1.35 / width);
   const canvas = document.createElement('canvas');
   canvas.width = width; canvas.height = height;
   const ctx = canvas.getContext('2d');
@@ -25,7 +28,7 @@ export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, s
       let r=202+(65-202)*zenith, g=217+(139-217)*zenith, b=223+(195-223)*zenith;
       if(dy<0) { const t=clamp(-dy*8); r=r*(1-t)+78*t; g=g*(1-t)+87*t; b=b*(1-t)+66*t; }
       const dot=dx*direction.x+dy*direction.y+dz*direction.z;
-      const aureole=Math.pow(Math.max(0,dot),24)*32;
+      const aureole=Math.pow(Math.max(0,dot),36)*34;
       r+=aureole; g+=aureole*0.72; b+=aureole*0.28;
       // Thin high-altitude broken cloud sheets, projected continuously across panorama seam.
       if(dy>0.035) {
@@ -34,7 +37,9 @@ export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, s
         const cloud=smooth(0.54,0.74,n)*smooth(0.035,0.22,dy)*0.76;
         r=r*(1-cloud)+242*cloud; g=g*(1-cloud)+243*cloud; b=b*(1-cloud)+239*cloud;
       }
-      const disc=smooth(0.99992,0.99997,dot);
+      const corona=Math.pow(Math.max(0,dot),320)*24;
+      r+=corona; g+=corona*.75; b+=corona*.32;
+      const disc=smooth(Math.cos(sunRadius*1.4),Math.cos(sunRadius*.75),dot);
       const i=(y*width+x)*4;
       pixels.data[i]=Math.min(255,r*(1-disc)+255*disc);
       pixels.data[i+1]=Math.min(255,g*(1-disc)+253*disc);
@@ -46,7 +51,7 @@ export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, s
   sky.colorSpace=THREE.SRGBColorSpace;
   sky.mapping=THREE.EquirectangularReflectionMapping;
   scene.background=sky;
-  const fog = new THREE.FogExp2(0xcad9df, 0.0028);
+  const fog = new THREE.FogExp2(0xcad9df, 0.0024);
   scene.fog=fog;
   let reflection=null;
   if(renderer) {
@@ -55,23 +60,35 @@ export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, s
     finally { pmrem.dispose(); }
   }
   const group=new THREE.Group(); group.name='race-atmosphere-lighting';
-  const hemi=new THREE.HemisphereLight(0xc6deef,0x716854,0.65);
-  const sun=new THREE.DirectionalLight(0xffedcf,2.65);
-  sun.position.copy(direction).multiplyScalar(160);
+  const hemi=new THREE.HemisphereLight(0xc6deef,0x716854,0.58);
+  const sun=new THREE.DirectionalLight(0xffe5bb,2.85);
+  const sunDistance=120, shadowExtent=32;
+  sun.position.copy(direction).multiplyScalar(sunDistance);
   sun.castShadow=shadows;
-  sun.shadow.mapSize.set(shadowSize,shadowSize);
-  Object.assign(sun.shadow.camera,{left:-65,right:65,top:65,bottom:-65,near:1,far:350});
-  sun.shadow.bias=-0.00012; sun.shadow.normalBias=0.035;
-  sun.shadow.radius=2;
+  const mapSize=Math.max(128,Math.round(Number(shadowSize)||2048));
+  sun.shadow.mapSize.set(mapSize,mapSize);
+  // World scale is .2: this covers a 320 m patch with twice the old texel detail.
+  Object.assign(sun.shadow.camera,{left:-shadowExtent,right:shadowExtent,top:shadowExtent,bottom:-shadowExtent,near:1,far:260});
+  sun.shadow.camera.updateProjectionMatrix();
+  sun.shadow.bias=-0.00008; sun.shadow.normalBias=0.012;
+  sun.shadow.radius=1.5;
   group.add(hemi,sun,sun.target); scene.add(group);
   let disposed=false;
   const focus=new THREE.Vector3();
+  const lightRight=new THREE.Vector3().crossVectors(new THREE.Vector3(0,1,0),direction).normalize();
+  const lightUp=new THREE.Vector3().crossVectors(direction,lightRight).normalize();
+  const texel=shadowExtent*2/mapSize;
   function update(target) {
-    if(disposed || !target) return;
+    if(disposed || !target || !Number.isFinite(target.x) || !Number.isFinite(target.y) || !Number.isFinite(target.z)) return;
     // Input is a scene-space point (e.g. camera position), not unscaled track units.
-    focus.set(Math.round(target.x*8)/8,0,Math.round(target.z*8)/8);
+    // Snap in the light's image plane, including elevation. Snapping world X/Z
+    // alone shimmered on hills and kept the shadow volume at sea level.
+    const horizontal=Math.round((target.x*lightRight.x+target.y*lightRight.y+target.z*lightRight.z)/texel)*texel;
+    const vertical=Math.round((target.x*lightUp.x+target.y*lightUp.y+target.z*lightUp.z)/texel)*texel;
+    const depth=target.x*direction.x+target.y*direction.y+target.z*direction.z;
+    focus.copy(lightRight).multiplyScalar(horizontal).addScaledVector(lightUp,vertical).addScaledVector(direction,depth);
     sun.target.position.copy(focus);
-    sun.position.copy(focus).addScaledVector(direction,160);
+    sun.position.copy(focus).addScaledVector(direction,sunDistance);
   }
   function dispose() {
     if(disposed) return; disposed=true;
@@ -79,7 +96,7 @@ export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, s
     if(scene.background===sky) scene.background=previous.background;
     if(reflection && scene.environment===reflection.texture) scene.environment=previous.environment;
     if(scene.fog===fog) scene.fog=previous.fog;
-    sun.shadow.map?.dispose(); reflection?.dispose(); sky.dispose();
+    sun.shadow.dispose(); reflection?.dispose(); sky.dispose();
   }
   return { group, sun, update, dispose };
 }

@@ -1,5 +1,5 @@
 import { GLTFLoader } from '../assets/vendor/GLTFLoader.js';
-import { createCarFinish } from './race3d-car-finish.js?v=20261027-midnight';
+import { createCarFinish } from './race3d-car-finish.js?v=20261030-city';
 import { RACE3D_CONCEPT_ASSETS } from './race3d-concept-assets.js?v=20261027-midnight';
 
 // Licensed authored meshes. Templates share their GPU buffers/textures across all racers.
