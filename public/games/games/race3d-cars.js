@@ -439,6 +439,7 @@ export function createRaceCars(THREE, racers = [], options = {}) {
   // Finishing is immutable in physics; spin and disassembly are render-only.
   function resetVisual(state){for(const key of Object.keys(state.visualRacer))delete state.visualRacer[key];state.finishAnimation=null;state.finishHidden=false;state.finishStage=null;state.car.visible=true;}
   function updateFinishPose(state,track,dt){
+    if(state.racer.eliminated){state.finishHidden=true;state.finishStage="cleared";state.car.visible=false;return null;}
     if(!state.racer.finished){if(state.finishAnimation)resetVisual(state);return null;}
     const f=advanceFinishVisual(state.finishAnimation,state.racer,dt,reducedMotion);state.finishAnimation=f.state;state.finishHidden=f.hidden;state.finishStage=f.stage;state.car.visible=!f.hidden;Object.assign(state.visualRacer,f.pose,{finishHidden:f.hidden});
     return f.burst?state:null;

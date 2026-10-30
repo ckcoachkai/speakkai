@@ -1,6 +1,8 @@
 /** Original Circuit Prism rules. Seconds here are simulation seconds (5x wall time). */
 import {ALL_ITEM_IDS,BASE_ITEM_IDS,DRAW_ITEM_IDS,ITEM_REGISTRY,EXPANDED_DRAWS} from './race3d-item-registry.js?v=20261027-midnight';
 export const ITEM_TYPES = ALL_ITEM_IDS;
+export const INVENTORY_CAPACITY = 5;
+export const inventoryCount = car => Number(!!car?.inventoryItem)+(car?.inventoryReserves?.length||0);
 export const ROULETTE_DURATION = 4.5;
 export const ITEM_HOLD_MIN = 2.5;
 export const ITEM_HOLD_MAX = 5;

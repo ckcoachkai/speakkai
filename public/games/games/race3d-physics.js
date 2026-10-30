@@ -4,14 +4,14 @@
  * Traffic, slipstreams, errors and items determine the actual first crossing.
  */
 import { createRampLayout, rampHeightAt, rampSlopeAt } from './race3d-ramps.js?v=20261027-midnight';
-import { ITEM_TYPES, drawItem, ROULETTE_DURATION, ITEM_HOLD_MIN, ITEM_HOLD_MAX } from './race3d-item-rules.js?v=20261027-midnight';
+import { ITEM_TYPES, INVENTORY_CAPACITY, inventoryCount, drawItem, ROULETTE_DURATION, ITEM_HOLD_MIN, ITEM_HOLD_MAX } from './race3d-item-rules.js?v=20261030-grid5';
 
 import {vehicleProfile,wheelFootprint,wheelLoads,rampSupport,planRampApproach,roadSurface} from './race3d-vehicle.js?v=20261027-midnight';
 
-import {itemDecision,flightWindow} from './race3d-strategy.js?v=20261030-items';
+import {itemDecision,flightWindow} from './race3d-strategy.js?v=20261030-grid5';
 import {getRaceVehicleSpec as getVehicleSpec} from './race3d-race-calibration.js?v=20261027-midnight';
 import {createDriverSkills,driverControls} from './race3d-drivers.js?v=20261027-midnight';
-import {createExtendedItems} from './race3d-extra-items.js?v=20261030-items';
+import {createExtendedItems} from './race3d-extra-items.js?v=20261030-grid5';
 import {BASE_ITEM_IDS} from './race3d-item-registry.js?v=20261027-midnight';
 import {launchAttitude,advanceAttitude,landingAttitude} from './race3d-flight.js?v=20261027-midnight';
 
@@ -107,7 +107,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
   const roster = Array.from(players).slice(0, MAX_CARS).map((player, index) => {
     const p = typeof player === 'string' ? { name: player } : (player || {});
     const vehicleSpec=p.vehicleSpec||getVehicleSpec(p.racerType);
-    return { id: p.id ?? p.name ?? index, name: String(p.name ?? p.id ?? `Car ${index + 1}`), color: p.color ?? '#f4c35e', index,
+    return { isBot:p.isBot===true, id: p.id ?? p.name ?? index, name: String(p.name ?? p.id ?? `Car ${index + 1}`), color: p.color ?? '#f4c35e', index,
       massKg:finite(p.massKg,vehicleProfile(p).massKg),powerW:finite(p.powerW,vehicleProfile(p).powerW),brakeFactor:finite(p.brakeFactor,vehicleProfile(p).brakeFactor),cg:vehicleProfile(p).cg,suspensionHz:vehicleProfile(p).suspensionHz,
       racerType: p.racerType || null, vehicleName: p.vehicleName || null, category: p.category || null,
       vehicleSpec,vehicleGeometry:p.vehicleGeometry,specBasis:p.specBasis,sources:p.sources,engineType:vehicleSpec?.engineType||'electric',
@@ -182,7 +182,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       Object.assign(car, {
         ...p, gridPosition, distance: -Math.floor(gridPosition / 2) * 6.7,
         lateral: side * 1.55, speed: 0, topSpeed:p.vehicleSpec?p.vehicleSpec.topSpeedKph/3.6:TOP_SPEED*p.speedFactor, maxSpeed:p.vehicleSpec?p.vehicleSpec.topSpeedKph/3.6:TOP_SPEED*p.speedFactor,
-        heading: 0, spin: 0, spinAngle: 0, finished: false,
+        heading: 0, spin: 0, spinAngle: 0, finished: false, eliminated:false,eliminatedAt:null,botWear:p.isBot?.8+rng(strategySeed^0x519E)()*.6:0,
         lateralVelocity: 0, yawRate: 0, slip: 0, targetSpeed: 0,
         length: CAR_LENGTH, width: CAR_WIDTH, preferredLane: side * 1.8,
         spinDirection: side, spinRate:7.2, tractionRecovery:0, _bananaSpin:false, stuckTime: 0, previousProgress: -Math.floor(gridPosition / 2) * 6.7,
@@ -194,7 +194,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
         dragN: 0, downforceN: 0, nitroAcceleration: 0,
         nitro: { reservoir: 1, heat: 0, remaining: 0, cooldown: 0 }, strategySeed,driverSkills,driverControl,_lineError:0,_rampAimError:0,_controlClock:0,_controlThrottle:0,_controlBrake:0,
         offRoad: false, mistakeTimer: 0, mistakeType: null, mistake: null, activeItem: null,
-        inventoryItem: null, inventoryPhase: 'empty', inventorySerial: 0, inventoryReserve: null, _inventorySerial: 0,
+        inventoryItem: null, inventoryPhase: 'empty', inventorySerial: 0, inventoryReserves: [], _inventorySerial: 0,
         rouletteRemaining: 0, rouletteDuration: ROULETTE_DURATION, itemUseAt: Infinity,
         lastUsedItem: null, itemsCollected: 0, itemsUsed: 0,
         _itemRandom: rng(strategySeed ^ 0x51C0F17E),
@@ -212,6 +212,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
         _nextMistake: 7 + driverRandom() * 14, _itemTimer: 0, _hitImmune: 0,
         _lastPassEvent: -10, _wasOffRoad: false, _passUntil: 0, _passLane: 0, _passingId: null,_passSurplus:0,
       });
+      if(car.isBot){car.topSpeed*=.82;car.maxSpeed*=.82;car.accelerationFactor*=.78;car.durabilityFactor*=.48;}
       return car;
     });
     cars.splice(0, cars.length, ...fresh);
@@ -370,11 +371,18 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       emit('damage-stage', car, { previousLevel, damageLevel: level, hitPoints: car.hitPoints, intensity: Math.max(0.2, car.damage) });
     }
     if (level === DAMAGE_LEVELS && car.damage >= 1 && !car.replacementPending && !car.finished) {
+      if(car.isBot){
+        car.eliminated=true;car.eliminatedAt=time;car.finished=true;car.speed=0;car.spin=0;car.flightRemaining=0;car.flightHeight=0;
+        car.inventoryItem=null;car.inventoryReserves.length=0;car.inventoryPhase='empty';car.rouletteRemaining=0;car.itemUseAt=Infinity;
+        car.activeItem=null;car.boost=0;car.nitro.remaining=0;car.rocketRemaining=0;car.shieldRemaining=0;extras?.clearCar(car);
+        emit('bot-explode',car,{intensity:1,eliminated:true});return;
+      }
       car.replacementPending = REPLACEMENT_DELAY;
       emit('replacement-start', car, { damageLevel: level, duration: REPLACEMENT_DELAY, intensity: 1 });
     }
   }
   function advanceDamageState(car, dt) {
+    if(car.isBot&&!car.finished)car.damage+=dt*(.001+Math.max(0,car.speed)/finishDistance*car.botWear);
     refreshDamageState(car);
     if (car.finished) return;
     car.replacementRemaining = Math.max(0, car.replacementRemaining - dt);
@@ -665,28 +673,26 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       if (car.speed < beforeSpeed - 0.25) recordImpact(car, beforeSpeed, 0.035);
     }
   }
-  // Two owned slots, each with its own reveal and event identity. Promotion
-  // preserves those timers; neither pickups nor theft overwrite an owned item.
-  const slotKeys=['inventoryItem','inventoryPhase','inventorySerial','rouletteRemaining','itemUseAt'];
-  function swapReserve(car){
-    const held=Object.fromEntries(slotKeys.map(k=>[k,car[k]]));
-    Object.assign(car,car.inventoryReserve);car.inventoryReserve=held;
-  }
-  function removeHeld(car){
-    if(car.inventoryReserve){Object.assign(car,car.inventoryReserve);car.inventoryReserve=null;}
+  // Five owned slots retain their own reveal timers and event identity.
+  // Removing any reserve leaves the primary and other reserves in FIFO order.
+  function removeHeld(car,index=0){
+    if(index>0){car.inventoryReserves.splice(index-1,1);return;}
+    if(car.inventoryReserves.length)Object.assign(car,car.inventoryReserves.shift());
     else {car.inventoryItem=null;car.inventoryPhase='empty';car.rouletteRemaining=0;car.itemUseAt=Infinity;}
   }
   function queueItem(car, type, pickupId = 'test-opportunity', ready=false) {
-    if (!car || car.finished || car.inventoryItem&&car.inventoryReserve || !ITEM_TYPES.includes(type)) return false;
+    if (!car || car.finished || inventoryCount(car)>=INVENTORY_CAPACITY || !ITEM_TYPES.includes(type)) return false;
     const slot={inventoryItem:type,inventoryPhase:ready?'ready':'rolling',rouletteRemaining:ready?0:ROULETTE_DURATION,inventorySerial:++car._inventorySerial,itemUseAt:time+(ready?.3:ROULETTE_DURATION)};
-    if(car.inventoryItem)car.inventoryReserve=slot;else Object.assign(car,slot);
+    if(car.inventoryItem)car.inventoryReserves.push(slot);else Object.assign(car,slot);
     car.itemsCollected++;
     emit(ready?'item-ready':'item-pickup',car,{itemType:type,pickupId,inventorySerial:slot.inventorySerial,duration:ready?0:ROULETTE_DURATION});
     return true;
   }
-  function deployItem(car) {
-    if (!car || car.finished || car.inventoryPhase!=='ready' || !car.inventoryItem) return false;
-    const type=car.inventoryItem;
+  function deployItem(car,index=0) {
+    if(!car||car.finished||!Number.isInteger(index)||index<0||index>=inventoryCount(car))return false;
+    const slot=index?car.inventoryReserves[index-1]:car;
+    if(slot.inventoryPhase!=='ready'||!slot.inventoryItem)return false;
+    const type=slot.inventoryItem;
     if(time<(car._nextExtraUse||0)||car.itemEffects?.jammer>0&&!['cleanse','repair'].includes(type)||car.itemEffects?.emp>0&&['boost','rocket'].includes(type))return false;
     const extraChoice=BASE_ITEM_IDS.includes(type)?null:extras.decision(car,type);
     if(extraChoice&&!extraChoice.use)return false;
@@ -705,28 +711,29 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     if((type==='shockwave'||type==='freeze')&&waves.length>=MAX_WAVES)return false;
     if(type==='banana'&&hazards.length>=MAX_BANANAS)return false;
     car.itemsUsed++;car.lastUsedItem=type;
-    emit('item-use',car,{itemType:type,inventorySerial:car.inventorySerial});
-    removeHeld(car);
+    emit('item-use',car,{itemType:type,inventorySerial:slot.inventorySerial});
+    removeHeld(car,index);
     if(extraChoice){car.activeItem=type;car._itemTimer=1.1;extras.activate(car,type,extraChoice);}else useItem(car,{type});car._itemAim=null;return true;
   }
   function advanceInventory(car,dt) {
     if(car.finished||!car.inventoryItem)return;
-    for(let index=0;index<(car.inventoryReserve?2:1);index++) {
-      const slot=index?car.inventoryReserve:car;
+    for(let index=0;index<1+car.inventoryReserves.length;index++) {
+      const slot=index?car.inventoryReserves[index-1]:car;
       if(slot.inventoryPhase!=='rolling')continue;
       slot.rouletteRemaining=Math.max(0,slot.rouletteRemaining-dt);
       if(slot.rouletteRemaining<=1e-8){slot.inventoryPhase='ready';emit('item-ready',car,{itemType:slot.inventoryItem,inventorySerial:slot.inventorySerial});}
     }
-    if(autoItems&&(car.inventoryPhase==='ready'||car.inventoryReserve?.inventoryPhase==='ready')&&time>=(car._nextItemThink||0)){
+    if(autoItems&&(car.inventoryPhase==='ready'||car.inventoryReserves.some(s=>s.inventoryPhase==='ready'))&&time>=(car._nextItemThink||0)){
       car._nextItemThink=time+Math.min(.18,car.driverControl.itemThink)+car._timingRandom()*.04;
-      // Prefer the oldest useful item. A situational or capacity-blocked primary
-      // must not trap a useful reserve. Failed attempts restore the slot order.
-      for(let attempt=0;attempt<(car.inventoryReserve?2:1);attempt++){
-      if(attempt)swapReserve(car);
-      const decision=BASE_ITEM_IDS.includes(car.inventoryItem)?itemDecision(car,canonicalCars,{trackLength,curvature:curvatureAt,width:d=>sample(d).width,projectiles,waves,lockClear:extras.lockClear}):extras.decision(car,car.inventoryItem);car.itemDecision=decision;
-      if(car.inventoryPhase==='ready'&&time>=car.itemUseAt&&decision.use){car._itemAim=decision;if(deployItem(car)){car._nextItemThink=time+.35;break;}}
-      car._itemAim=null;
-      if(attempt)swapReserve(car);
+      // Scan oldest first, skipping unavailable/situational items without
+      // rotating the inventory. At most one successful use per think interval.
+      for(let index=0;index<inventoryCount(car);index++){
+        const slot=index?car.inventoryReserves[index-1]:car;
+        if(slot.inventoryPhase!=='ready'||time<slot.itemUseAt)continue;
+        const decision=BASE_ITEM_IDS.includes(slot.inventoryItem)?itemDecision(car,canonicalCars,{itemSlot:slot,trackLength,curvature:curvatureAt,width:d=>sample(d).width,projectiles,waves,lockClear:extras.lockClear}):extras.decision(car,slot.inventoryItem);
+        car.itemDecision=decision;
+        if(decision.use){car._itemAim=decision;if(deployItem(car,index)){car._nextItemThink=time+.35;break;}}
+        car._itemAim=null;
       }
     }
   }
@@ -805,7 +812,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     }
   }
   function collectItems(car) {
-    if (car.finished || car.inventoryItem&&car.inventoryReserve || car._rewindActive || car._towActive || car.itemEffects?.pickupBlock>0 || car.distance < 0 || car.flightHeight > 2.8) return;
+    if (car.finished || inventoryCount(car)>=INVENTORY_CAPACITY || car._rewindActive || car._towActive || car.itemEffects?.pickupBlock>0 || car.distance < 0 || car.flightHeight > 2.8) return;
     for (const pickup of pickups) {
       if (!pickup.active) continue;
       const lap = Math.round((car.distance - pickup.distance) / trackLength); if (lap < 0) continue;
@@ -1018,7 +1025,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
         car.finished = true; car.finishTime = time - dt + dt * car._finishFraction; finishers.push(car);
         recoverTyre(car,'finish');
         extras.clearCar(car);
-        car.inventoryItem=null;car.inventoryReserve=null;car.inventoryPhase='empty';car.rouletteRemaining=0;car.itemUseAt=Infinity;
+        car.inventoryItem=null;car.inventoryReserves.length=0;car.inventoryPhase='empty';car.rouletteRemaining=0;car.itemUseAt=Infinity;
         car.attackSlowRemaining=0;car.attackSpeedCap=Infinity;car.attackSource=null;car.activeItem=null;car._itemTimer=0;car.freezeRemaining=car.rocketRemaining=car.shieldRemaining=car.repairRemaining=car.boost=0;car.nitro.remaining=0;car.launchBlastRemaining=car.rocketVectorThrust=car.rocketLiftAcceleration=car.rocketStabilize=car.rocketAcceleration=car.nitroAcceleration=0;
       }
       if (car.speed < 7 || time - car._lastPassEvent < 0.7) continue;
@@ -1034,10 +1041,11 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       results.push(result);
       emit('car-finish', car, { finishTime: car.finishTime, position: car.finishPosition, finishDistance });
     }
-    if (finishers.length && winnerId === null) {
-      winnerId = finishers[0].id; emit('finish', finishers[0], { finishDistance, finishTime: finishers[0].finishTime });
+    const eligibleFinisher=finishers.find(c=>!c.isBot);
+    if (eligibleFinisher && winnerId === null) {
+      winnerId = eligibleFinisher.id; emit('finish', eligibleFinisher, { finishDistance, finishTime: eligibleFinisher.finishTime });
     }
-    if(cars.length&&results.length===cars.length){hazards.length=0;projectiles.length=0;waves.length=0;extras.finishAll();}
+    if(cars.length&&cars.every(c=>c.finished)){hazards.length=0;projectiles.length=0;waves.length=0;extras.finishAll();}
   }
   function update(dt) {
     if (disposed) return null;
@@ -1048,7 +1056,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     if (winnerId !== null && !winnerWasReturned) { winnerWasReturned = true; return winnerId; }
     return null;
   }
-  extras=createExtendedItems({cars:()=>canonicalCars,time:()=>time,gap:courseGap,track,finishDistance,ramps:()=>ramps,hop:beginHop,curvature:curvatureAt,pickups:()=>pickups,projectiles:()=>projectiles,hazards:()=>hazards,emit,blocked:blockedHit,hit:weaponHit,sweep:sweptContact,claim:(car,type)=>queueItem(car,type,'theft',true),removeHeld});
+  extras=createExtendedItems({cars:()=>canonicalCars,time:()=>time,gap:courseGap,track,finishDistance,ramps:()=>ramps,hop:beginHop,curvature:curvatureAt,pickups:()=>pickups,projectiles:()=>projectiles,hazards:()=>hazards,emit,blocked:blockedHit,hit:weaponHit,sweep:sweptContact,canClaim:car=>inventoryCount(car)<INVENTORY_CAPACITY,claim:(car,type)=>queueItem(car,type,'theft',true),removeHeld});
   createGrid();
   return {
     get cars() { return cars; }, get time() { return time; }, get winner() { return winnerId; }, get finishDistance() { return finishDistance; },
@@ -1056,12 +1064,12 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     get ramps() { return ramps; },
     get extendedItems(){return extras.snapshot();},
     get effectActors(){return extras;},
-    get results() { return results; }, get allFinished() { return cars.length > 0 && results.length === cars.length; },
+    get results() { return results; }, get allFinished() { return cars.length > 0 && cars.every(c=>c.finished); },
     get powerups() { return { pickups, hazards, projectiles, waves, time }; }, update,
     // Shared mechanics entry points for deterministic verification and future
     // human-driver controls. They enforce the same inventory/phase guards.
     awardItem(id,type) { return !disposed && queueItem(cars.find(c=>c.id===id),type); },
-    useHeldItem(id) { return !disposed && deployItem(cars.find(c=>c.id===id)); },
+    useHeldItem(id,index=0) { return !disposed && deployItem(cars.find(c=>c.id===id),index); },
     itemOpportunity(id){const c=cars.find(c=>c.id===id);if(!c)return null;return BASE_ITEM_IDS.includes(c.inventoryItem)?itemDecision(c,canonicalCars,{trackLength,curvature:curvatureAt,width:d=>sample(d).width,projectiles,waves,lockClear:extras.lockClear}):extras.decision(c,c.inventoryItem);},
     reset() { if (!disposed) createGrid(); },
     dispose() {

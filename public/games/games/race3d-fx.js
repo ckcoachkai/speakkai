@@ -23,10 +23,11 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     return fallback ? fallback.clone() : new THREE.Vector3();
   };
 
-  function pooledMaterial(color, opacity, { roughness = 1, metalness = 0 } = {}) {
+  function pooledMaterial(color, opacity, { roughness = 1, metalness = 0, glow = false, shape } = {}) {
     const material = new THREE.MeshStandardMaterial({
       color: 0xffffff, vertexColors: true, roughness, metalness,
-      transparent: true, opacity, depthWrite: false, side: THREE.DoubleSide
+      transparent: true, opacity, depthWrite: false, side: THREE.DoubleSide,
+      emissive:glow?color:0x000000,emissiveIntensity:glow?.65:0,blending:glow?THREE.AdditiveBlending:THREE.NormalBlending
     });
     material.onBeforeCompile = shader => {
       shader.vertexShader = shader.vertexShader
@@ -34,7 +35,7 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
         .replace('#include <begin_vertex>', '#include <begin_vertex>\nvFxAlpha = aFxAlpha;');
       shader.fragmentShader = shader.fragmentShader
         .replace('#include <common>', '#include <common>\nvarying float vFxAlpha;')
-        .replace('#include <opaque_fragment>', 'diffuseColor.a *= vFxAlpha;\n#include <opaque_fragment>');
+        .replace('#include <opaque_fragment>', 'diffuseColor.a *= vFxAlpha'+(shape==='puff'?' * pow(max(0.0, dot(normal, normalize(vViewPosition))), 1.5)':'')+';\n#include <opaque_fragment>');
     };
     material.customProgramCacheKey = () => `race3d-fx-${color}`;
     return material;
@@ -45,9 +46,14 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     spark: new THREE.CylinderGeometry(.016, .009, 1, 5, 1),
     streak: new THREE.CylinderGeometry(.009, .004, 1, 4, 1),
     confetti: new THREE.BoxGeometry(1, .18, .65),
-    mark: new THREE.BoxGeometry(1, .008, .24)
+    mark: new THREE.BoxGeometry(1, .008, .24),
+    ring: new THREE.RingGeometry(.82,1,32).rotateX(-Math.PI/2),
+    shard: new THREE.BoxGeometry(1,.3,.55)
   };
   const specs = {
+    fire: {capacity:32,shape:'puff',opacity:.95,base:0xff7825,glow:true},
+    blast: {capacity:8,shape:'ring',opacity:.85,base:0xffd494,glow:true},
+    debris: {capacity:64,shape:'shard',opacity:1,base:0x586671,metalness:.6},
     smoke: { capacity: 84, shape: 'puff', opacity: .34, base: 0x999b9d },
     dust: { capacity: 36, shape: 'puff', opacity: .32, base: 0x9a8065 },
     sparks: { capacity: 48, shape: 'spark', opacity: .9, base: 0xffc064, metalness: .15 },
@@ -151,7 +157,7 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
       } else if (pool.name === 'marks') {
         tempObject.quaternion.copy(p.orientation);
         tempObject.scale.set(p.size, 1, 1);
-      } else if (pool.name === 'celebration') {
+      } else if (pool.name === 'celebration'||pool.name==='debris') {
         tempObject.rotation.set(p.rotation.x, p.rotation.y, p.rotation.z);
         const scale = p.size * (.86 + Math.sin(Math.PI * t) * .14);
         tempObject.scale.set(scale, scale * .18, scale * .65);
@@ -236,6 +242,20 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     const at = (base, dx = 0, dy = 0, dz = 0) => base.clone().add(new THREE.Vector3(dx, dy, dz));
     const sidePoint = (base, lateral, rear = 0) => base.clone()
       .addScaledVector(right, lateral).addScaledVector(tangent, -rear);
+
+    if(type==='explosion'){
+      const reduced=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+      const count=reduced?4:context.quality?.id==='low'?8:14;
+      spawn('blast',at(position,0,.15),new THREE.Vector3(),{life:reduced?.45:.8,size:1,grow:7,alpha:.8,color:0xffe1a2});
+      for(let i=0;i<(reduced?2:5);i++)spawn('fire',at(position,(rand()-.5)*2,.6+rand(),(rand()-.5)*2),new THREE.Vector3((rand()-.5)*2,2+rand()*2,(rand()-.5)*2),{life:.35+rand()*.5,size:.8+rand(),grow:2,color:i?0xff7722:0xffe6a2,drag:.4});
+      for(let i=0;i<count;i++){
+        const a=rand()*Math.PI*2,v=3+rand()*6;
+        spawn('debris',at(position,0,.9),new THREE.Vector3(Math.cos(a)*v,3+rand()*5,Math.sin(a)*v),{life:1.2+rand()*.8,size:.18+rand()*.4,spin:4+rand()*8,gravity:10,drag:.12,color:i%3?0x4e5e69:0xe7a03c});
+        spawn('sparks',at(position,0,1),new THREE.Vector3(Math.cos(a)*v*1.5,2+rand()*6,Math.sin(a)*v*1.5),{life:.3+rand()*.5,size:.4,stretch:4,gravity:8,color:0xffdc82});
+      }
+      for(let i=0;i<(reduced?3:8);i++)spawn('smoke',at(position,(rand()-.5)*3,.8,(rand()-.5)*3),new THREE.Vector3((rand()-.5),1.8+rand(),(rand()-.5)),{life:1.8+rand(),size:.7+rand()*.7,grow:2.8,color:0x353c46,alpha:.9,drag:.1});
+      return;
+    }
 
     if (type === 'skid' || type === 'spin' || type === 'tire-smoke') {
       if (frame.car && context.track?.sampleTrack) {

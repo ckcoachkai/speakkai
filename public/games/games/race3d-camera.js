@@ -34,6 +34,7 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
   const modes = ['overhead', 'chase', 'first-person'];
   let modeIndex = 1, overheadMix = 0, firstPersonMix = 0;
   let supportHeight = 0;
+  let overview={ids:[],height:0};
 
   const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
   const finite = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
@@ -65,7 +66,7 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
     return current + (goal - current) * amount;
   }
 
-  function update(focusCar, dt = 1 / 60) {
+  function update(focusCar, dt = 1 / 60, cars = []) {
     if (!focusCar) return;
     const step = clamp(finite(dt), 0, 0.05);
     const distance = finite(focusCar.distance);
@@ -128,6 +129,26 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
     desiredLook.y += 1.35;
     wantedTarget.copy(desiredLook);
 
+    if(overheadMix>.001){
+      // Fit a nearby group, not the entire circuit. North-up framing avoids
+      // swinging the overview when one racer spins or changes heading.
+      const points=(cars.length?cars:[focusCar]).filter(c=>!c.eliminated).map(c=>{
+        const s=track.sampleTrack(finite(c.distance));
+        const p=new THREE.Vector3().copy(s.position).addScaledVector(s.right,finite(c.lateral));
+        p.y+=Math.max(0,finite(c.flightHeight))+Math.max(0,finite(c.rampHeight))+1;
+        return {id:c.id,p,d:p.distanceTo(samplePosition)};
+      }).filter(c=>c.d<95||c.id===focusCar.id).sort((a,b)=>a.d-b.d||String(a.id).localeCompare(String(b.id))).slice(0,8);
+      if(points.length){
+        const min=new THREE.Vector3(Infinity,Infinity,Infinity),max=new THREE.Vector3(-Infinity,-Infinity,-Infinity);
+        for(const {p} of points){min.min(p);max.max(p);}
+        const center=min.clone().add(max).multiplyScalar(.5),tan=Math.tan(58*Math.PI/360);
+        const height=clamp(Math.max((max.z-min.z+20)/(2*tan*.58),(max.x-min.x+18)/(2*tan*Math.max(.3,camera.aspect)*.62))+max.y-min.y,55,190);
+        wantedPosition.lerp(center.clone().add(new THREE.Vector3(0,height,-height*.12)),overheadMix);
+        wantedTarget.lerp(center,overheadMix);
+        overview={ids:points.map(p=>p.id),height};
+      }
+    }
+
     const powered=Number(focusCar.boost)>0||Number(focusCar.rocketRemaining)>0;
     const wantedFov = (52 + speedRatio * 8 + (powered?3:0)) * chaseMix + 58 * overheadMix + (67+(powered?2:0)) * firstPersonMix;
     if (!initialized) {
@@ -188,6 +209,7 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
     snapshot: () => ({
       position: { x: position.x, y: position.y, z: position.z },
       target: { x: target.x, y: target.y, z: target.z }, supportHeight,
+      overview,
       horizonUp: { x: up.x, y: up.y, z: up.z },
       ignoresTrickRotation: true, ignoresSpinRotation: true,
     }),

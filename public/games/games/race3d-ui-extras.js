@@ -1,5 +1,6 @@
+import {updateInventoryIcons} from './race3d-inventory-ui.js?v=20261030-grid5';
 import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261027-midnight';
-import { inventoryFace } from './race3d-item-rules.js?v=20261027-midnight';
+
 import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261027-midnight';
 
 const make = (tag, className, text) => {
@@ -24,7 +25,8 @@ export function createRaceExtras(root, players = []) {
   const rouletteIcon = make('span', 'race3d-roulette-icon'); rouletteCube.append(rouletteIcon);
   const rouletteName = make('strong', 'race3d-roulette-name');
   const rouletteTimer = make('span', 'race3d-roulette-timer');
-  roulette.append(rouletteOwner, rouletteCube, rouletteName, rouletteTimer);
+  const rouletteRow=make('div','race3d-inventory-row'),reserveIcons=make('div','race3d-reserve-icons');
+  rouletteRow.append(rouletteCube,reserveIcons);roulette.append(rouletteOwner,rouletteRow,rouletteName,rouletteTimer);
   const effects = make('div', 'race3d-active-effects'); effects.hidden = true;
   effects.setAttribute('aria-label', 'Active power-up effects');
   const compact = make('section', 'race3d-focus-specs'); compact.setAttribute('aria-label', 'Followed car specifications');
@@ -91,7 +93,7 @@ export function createRaceExtras(root, players = []) {
       const entry = cardFor(id, car, index);
       entry.player.textContent = String(car.name ?? 'Racer');
       entry.player.title = entry.player.textContent;
-      entry.rank.textContent = Number.isFinite(car.finishPosition) ? `#${car.finishPosition}` : `P${car.position || index + 1}`;
+      entry.rank.textContent = car.eliminated?'OUT':Number.isFinite(car.finishPosition) ? `#${car.finishPosition}` : `P${car.position || index + 1}`;
       entry.card.classList.toggle('is-focused', id === String(focusedId));
       entry.card.classList.toggle('is-finished', Number.isFinite(car.finishTime));
       entry.card.style.setProperty('--racer-color', String(car.color || '#7bd8c9'));
@@ -126,14 +128,8 @@ export function createRaceExtras(root, players = []) {
         }
       }
       entry.card.dataset.damageLevel = String(clamp(Math.floor(finite(car.damageLevel, finite(car.damage) * 20)), 0, 20));
-      const item = inventoryFace(car,simulationTime);
-      entry.item.hidden = !ITEM_VISUALS[item];
-      entry.item.dataset.phase=car.inventoryPhase||'empty';
-      entry.item.dataset.reserve=String(!!car.inventoryReserve);
-      entry.item.setAttribute('aria-label',car.inventoryPhase==='rolling'?'Choosing an item':ITEM_VISUALS[item]?.[0]||'No held item');
-      if (entry.icon !== item) { entry.icon = item; entry.item.innerHTML = itemThumbnail(item); entry.item.title = ITEM_VISUALS[item]?.[0] || ''; }
-      entry.item.title=(ITEM_VISUALS[item]?.[0]||'')+(car.inventoryReserve?'; reserve: '+(car.inventoryReserve.inventoryPhase==='rolling'?'drawing':ITEM_VISUALS[car.inventoryReserve.inventoryItem]?.[0]||'ready'):'');
-      entry.item.setAttribute('aria-label',entry.item.title);
+      if(car.isBot){entry.priority.textContent=car.eliminated?'BOT · eliminated':'BOT · lower speed, acceleration and durability';entry.notes.textContent+=' Bots use 82% of this model’s top speed, 78% acceleration and 48% durability, with extra wear. Reference specifications above describe the original model.';}
+      updateInventoryIcons(entry.item,car);
     });
     left.hidden = !left.children.length; right.hidden = !right.children.length;
     const focusEntry = cards.get(String(focusedId)) || cards.values().next().value;
@@ -162,10 +158,11 @@ export function createRaceExtras(root, players = []) {
   function updateRoulette(focusedId, cars, now, simulationTime) {
     const target=cars.find(c=>String(c.id)===String(focusedId))||cars[0];
     if(target?.inventoryItem){
-      const item=inventoryFace(target,simulationTime),rolling=target.inventoryPhase==='rolling';
-      const key=`${target.id}:${target.inventorySerial}:${item}:${rolling}:${target.inventoryReserve?.inventoryItem}:${target.inventoryReserve?.inventoryPhase}`;
-      roulette.hidden=false;roulette.title=target.inventoryReserve?'Two items held; the AI uses the first useful ready item.':'One item held; one reserve slot available.';
-      if(shownItemKey!==key){shownItemKey=key;rouletteOwner.textContent=String(target.name||'Racer');rouletteIcon.innerHTML=itemThumbnail(item);rouletteName.textContent=(rolling?'PRISM DRAW':ITEM_VISUALS[item]?.[0]||'Ready')+(target.inventoryReserve?' · +1 '+(target.inventoryReserve.inventoryPhase==='rolling'?'drawing':ITEM_VISUALS[target.inventoryReserve.inventoryItem]?.[0]||'ready'):'');roulette.dataset.rolling=String(rolling);roulette.dataset.item=rolling?'choosing':item;}
+      const item=target.inventoryItem,rolling=target.inventoryPhase==='rolling';
+      const key=target.id+':'+target.inventorySerial+':'+rolling;
+      roulette.hidden=false;roulette.title='Up to five power-ups; the AI uses the first useful ready item.';
+      updateInventoryIcons(reserveIcons,target,{reserveOnly:true});
+      if(shownItemKey!==key){shownItemKey=key;rouletteOwner.textContent=String(target.name||'Racer');rouletteIcon.innerHTML=itemThumbnail(item);rouletteName.textContent=ITEM_VISUALS[item]?.[0]||'Power-up';roulette.dataset.rolling=String(rolling);roulette.dataset.item=item;rouletteCube.setAttribute('role','img');rouletteCube.setAttribute('aria-label','Slot 1: '+rouletteName.textContent+', '+(rolling?'revealing':'ready'));rouletteIcon.querySelector('svg')?.setAttribute('aria-hidden','true');}
       return;
     }
     roulette.hidden=true;shownItemKey='';
@@ -249,9 +246,9 @@ export function createRaceExtras(root, players = []) {
     if (disposed) return;
     const now = performance.now();
     updateCards(cars, focusedId, now, finite(metadata.simulationTime));
-    for(const car of cars){const entry=cards.get(String(car.id));if(!entry)continue;const item=inventoryFace(car,finite(metadata.simulationTime));entry.item.hidden=!item;if(entry.icon!==item){entry.icon=item;entry.item.innerHTML=item?itemThumbnail(item):'';}} layout(now); updateRoulette(focusedId, cars, now, finite(metadata.simulationTime));
+    for(const car of cars){const entry=cards.get(String(car.id));if(entry)updateInventoryIcons(entry.item,car);} layout(now); updateRoulette(focusedId, cars, now, finite(metadata.simulationTime));
     const followed=cars.find(car=>String(car.id)===String(focusedId))||cars[0],compactItem=compact.querySelector('.race3d-card-item');
-    if(compactItem){const face=followed?inventoryFace(followed,finite(metadata.simulationTime)):null;compactItem.hidden=!face;if(compactItem.dataset.face!==String(face)){compactItem.dataset.face=String(face);compactItem.innerHTML=face?itemThumbnail(face):'';}}
+    if(compactItem)updateInventoryIcons(compactItem,followed);
     const phaseChanged=previousPhase!==phase;previousPhase=phase;root.dataset.phase=phase;updateSelection(cars,metadata,phase);updateEffects(focusedId,cars,finite(metadata.effectTimeScale,5));root.dataset.powerup=String(!roulette.hidden||!effects.hidden);
     if (!['idle','selecting','countdown'].includes(phase)) {
       const finishers = cars.filter(car => Number.isFinite(car.finishTime)).slice().sort((a, b) => a.finishTime - b.finishTime || finite(a.finishPosition) - finite(b.finishPosition));

@@ -1,6 +1,6 @@
 import { createRaceItemModels } from './race3d-item-models.js?v=20261027-midnight';
-import {inventoryFace} from './race3d-item-rules.js?v=20261027-midnight';
-import {createExtraVisuals} from './race3d-extra-visuals.js?v=20261027-midnight';
+import {inventoryFace} from './race3d-item-rules.js?v=20261030-grid5';
+import {createExtraVisuals} from './race3d-extra-visuals.js?v=20261030-grid5';
 
 /**
  * Pooled kart items. Entity positions, lifetimes and hits belong to the race

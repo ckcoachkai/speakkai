@@ -10,9 +10,9 @@ export function flightWindow(car,type,curvature,width=()=>16.5){
  for(let i=0;i<16;i++){const d=car.distance+(i+.5)*ds;heading-=curvature(d)*ds;lateral+=Math.sin(heading)*ds;if(Math.abs(lateral)>width(d)/2-1.3)return false;}
  return true;
 }
-export function itemDecision(car,cars,{trackLength=1e6,curvature=()=>0,width=()=>16.5,projectiles=[],waves=[],lockClear=()=>true}={}){
- const type=car.inventoryItem,hold=reason=>({use:false,reason,targetId:null});
- if(!type||car.inventoryPhase!=='ready'||car.finished)return hold('not-ready');
+export function itemDecision(car,cars,{itemSlot=car,trackLength=1e6,curvature=()=>0,width=()=>16.5,projectiles=[],waves=[],lockClear=()=>true}={}){
+ const type=itemSlot.inventoryItem,hold=reason=>({use:false,reason,targetId:null});
+ if(!type||itemSlot.inventoryPhase!=='ready'||car.finished)return hold('not-ready');
  if(GROUND_ITEMS.includes(type)&&(car.flightRemaining>0||car.rampState==='approach'))return hold('needs-contact');
  const gap=o=>{const n=(o.distance-car.distance)%trackLength;return n>trackLength/2?n-trackLength:n< -trackLength/2?n+trackLength:n;};
  const opponents=cars.filter(c=>c.id!==car.id&&!c.finished);

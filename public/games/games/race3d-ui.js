@@ -1,8 +1,9 @@
+import {updateInventoryIcons} from './race3d-inventory-ui.js?v=20261030-grid5';
 import {addCarGuide} from "./race3d-car-guide.js?v=20261027-midnight";
-import { createRaceExtras } from './race3d-ui-extras.js?v=20261030-items';
-import { inventoryFace } from './race3d-item-rules.js?v=20261027-midnight';
-import { ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261027-midnight';
-const STYLE_URL = new URL('./race3d-ui.css?v=20261030-items', import.meta.url).href;
+import { createRaceExtras } from './race3d-ui-extras.js?v=20261030-grid5';
+
+
+const STYLE_URL = new URL('./race3d-ui.css?v=20261030-grid5', import.meta.url).href;
 import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261027-midnight';
 
 function ensureStyles() {
@@ -246,6 +247,7 @@ export function createRaceUI(container, players = [], options = {}) {
 
   function orderedCars(cars) {
     return cars.slice().sort((a, b) => {
+      if(a.eliminated!==b.eliminated)return a.eliminated?1:-1;
       if (Number.isFinite(a.finishTime) || Number.isFinite(b.finishTime)) {
         if (!Number.isFinite(a.finishTime)) return 1;
         if (!Number.isFinite(b.finishTime)) return -1;
@@ -321,6 +323,7 @@ export function createRaceUI(container, players = [], options = {}) {
   function update(cars = [], elapsed = 0, phase = 'idle', focusedId, metadata) {
     if (disposed) return;
     if (metadata) timing = metadata;
+    root.dataset.cameraMode=timing.cameraMode||'chase';
     const countdownText = timing.countdownStep == null ? '' : String(timing.countdownStep);
     const showCountdown = ['3', '2', '1', 'GO'].includes(countdownText);
     countdown.hidden = !showCountdown;
@@ -392,20 +395,13 @@ export function createRaceUI(container, players = [], options = {}) {
             : '';
           const finished = Number.isFinite(car.finishTime), leaderTime = ranking[0]?.finishTime;
           const gap = finished && Number.isFinite(leaderTime) && i > 0 ? ' +' + Math.max(0, crossingTime(car) - crossingTime(ranking[0])).toFixed(3) + 's' : '';
-          entry.detail.textContent = finished ? clock(crossingTime(car)) + gap : clock(now) + ' · L' + getLap(car);
+          entry.detail.textContent = car.eliminated ? 'OUT · exploded' : finished ? clock(crossingTime(car)) + gap : clock(now) + ' · L' + getLap(car);
           entry.row.dataset.finished = String(finished);
           entry.row.setAttribute('aria-label', rank + '. ' + getName(car, entry.racer.name) + (finished ? ', finished in ' : ', elapsed ') + entry.detail.textContent + (winnerId === id ? ', winner and first speaker' : ''));
           entry.name.title = getName(car, entry.racer.name);
           entry.row.classList.toggle('is-winner', winnerId === id);
           if(!entry.item){entry.item=make('span','race3d-row-item');entry.row.append(entry.item);}
-          const face=inventoryFace(car,Number(timing.simulationTime)||0),rolling=car.inventoryPhase==='rolling';
-          entry.item.hidden=!face;
-          entry.item.dataset.phase=car.inventoryPhase||'empty';
-          entry.item.dataset.reserve=String(!!car.inventoryReserve);
-          if(entry.item.dataset.face!==face){entry.item.dataset.face=face||'';entry.item.innerHTML=face?itemThumbnail(face):'';}
-          entry.item.title=rolling?'Choosing independently…':face?ITEM_VISUALS[face]?.[0]+' · ready':'';
-          if(car.inventoryReserve)entry.item.title+='; reserve: '+(car.inventoryReserve.inventoryPhase==='rolling'?'drawing':ITEM_VISUALS[car.inventoryReserve.inventoryItem]?.[0]||'ready');
-          entry.item.setAttribute('aria-label',entry.item.title);
+          updateInventoryIcons(entry.item,car);
           entry.row.style.setProperty('--race-progress', progress);
           // Keep stable rows attached: repeatedly appending the whole board
           // churns the DOM even when no racer has changed position.

@@ -1,6 +1,6 @@
 import {ALL_ITEM_IDS,BASE_ITEM_IDS,ITEM_REGISTRY} from './race3d-item-registry.js?v=20261027-midnight';
 import {EXTRA_ICON_PATHS} from './race3d-item-icons.js?v=20261027-midnight';
-import {inventoryFace} from './race3d-item-rules.js?v=20261027-midnight';
+import {inventoryFace} from './race3d-item-rules.js?v=20261030-grid5';
 /** Original atlas and bounded actors. This module never mutates race outcomes. */
 export function createExtraVisuals(THREE,{track,reducedMotion=false,low=false}){
  const group=new THREE.Group();group.name='race3d-extra-visuals';const resources=[],dummy=new THREE.Object3D(),v=new THREE.Vector3(),q=new THREE.Quaternion(),inv=new THREE.Matrix4(),color=new THREE.Color(),cameraQ=new THREE.Quaternion();let disposed=false,heldCount=0,peak=0;

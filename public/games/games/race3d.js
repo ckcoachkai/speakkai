@@ -1,15 +1,16 @@
+import {createRaceGrid} from './race3d-grid.js?v=20261030-grid5';
 import * as THREE from '../assets/vendor/three.module.js';
 import { createRaceTrack } from './race3d-track.js?v=20261027-midnight';
-import { createRaceCars } from './race3d-cars.js?v=20261030-city';
-import { createRaceSimulation } from './race3d-physics.js?v=20261030-items';
-import { createChaseCamera } from './race3d-camera.js?v=20261030-city';
+import { createRaceCars } from './race3d-cars.js?v=20261030-grid5';
+import { createRaceSimulation } from './race3d-physics.js?v=20261030-grid5';
+import { createChaseCamera } from './race3d-camera.js?v=20261030-grid5';
 import { createRaceAudio } from './race3d-audio.js?v=20261027-midnight';
 import { createRaceMusic } from './race3d-music.js?v=20261027-midnight';
-import { createRaceUI } from './race3d-ui.js?v=20261030-items';
-import { createRaceEffects } from './race3d-fx.js?v=20261030-city';
+import { createRaceUI } from './race3d-ui.js?v=20261030-grid5';
+import { createRaceEffects } from './race3d-fx.js?v=20261030-grid5';
 import { createRaceScenery } from './race3d-city.js?v=20261030-city';
 import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261030-city';
-import { createRacePowerups } from './race3d-powerups.js?v=20261027-midnight';
+import { createRacePowerups } from './race3d-powerups.js?v=20261030-grid5';
 import { createRaceRamps } from './race3d-ramps.js?v=20261027-midnight';
 import { createSkySpirit } from './race3d-sky-spirit.js?v=20261027-midnight';
 import { assignRacerTypes } from './race3d-roster.js?v=20261027-midnight';
@@ -32,7 +33,12 @@ const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 export default function createGame({ container, names = [], onPick, random = Math.random, sound = true }) {
   let laps = 5;
   try { const n = Number(localStorage.getItem('race3d-laps')); if ([1,3,5,10].includes(n)) laps = n; } catch {}
-  const players = assignRacerTypes(names.slice(0, 60).map((player, index) => ({
+  let grid;
+  try{grid=createRaceGrid(names);}catch(error){
+    const notice=document.createElement('div');notice.className='race3d-grid-error';notice.setAttribute('role','alert');notice.textContent=error.message;notice.style.cssText='padding:32px;color:#fff;background:#142936;font:600 18px/1.6 system-ui';container.append(notice);
+    return {start(){return false;},reset(){},setSound(){},destroy(){notice.remove();}};
+  }
+  const players = assignRacerTypes(grid.map((player, index) => ({
     ...player,
     id: player.id,
     name: String(player.name ?? ''),
@@ -121,6 +127,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
 
   const playerFor = id => simulation?.cars.find(car => car.id === id);
   const standings = () => simulation?.cars.slice().sort((a, b) => {
+    if(a.eliminated!==b.eliminated)return a.eliminated?1:-1;
     const aFinished = Number.isFinite(a.finishTime), bFinished = Number.isFinite(b.finishTime);
     if (aFinished || bFinished) {
       if (!aFinished) return 1;
@@ -132,7 +139,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   const focusCar = () => {
     if (cameraTargetId !== null) return playerFor(cameraTargetId) || standings()[0];
     if (winnerId !== null) return playerFor(winnerId) || standings()[0];
-    const order = standings();
+    const order = standings().filter(c=>!c.eliminated);
     if (!order.length) return null;
     const slot = ((cameraOffset % order.length) + order.length) % order.length;
     return order[slot];
@@ -151,7 +158,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       point.project(camera);
       const x = (point.x * 0.5 + 0.5) * size.width;
       const y = (-point.y * 0.5 + 0.5) * size.height;
-      car.screen = { x, y, visible: point.z > -1 && point.z < 1 && x > -80 && x < size.width + 80 && y > -60 && y < size.height + 60 };
+      car.screen = { x, y, visible: !car.eliminated && point.z > -1 && point.z < 1 && x > -80 && x < size.width + 80 && y > -60 && y < size.height + 60 };
       car.position = rank + 1;
       car.speedKmh = Math.max(0, Number(visual.speed ?? visual.velocity ?? 0) * 3.6);
       car.lapCount = Math.min(laps, Math.floor(Math.max(0, car.distance) / track.totalLength) + 1);
@@ -182,9 +189,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
       const position = sample.position.clone().add(sample.right.clone().multiplyScalar(lateral));
       position.y += Math.max(0, Number(car.flightHeight) || 0) + Math.max(0, Number(car.rampHeight) || 0);
       const mapped = {
-        collision: 'collision', spin: 'skid', recovery: 'dust',
+        'bot-explode':'explosion', collision: 'collision', spin: 'skid', recovery: 'dust',
         oil: 'skid', cone: 'dust', gas: 'speed', boost: 'speed',
-        'banana-hit': 'skid', 'bomb-hit': 'collision',
+        'banana-hit': 'skid', 'bomb-hit': 'explosion',
         land: 'dust', 'ramp-land': 'dust', 'trick-complete': 'speed', 'missile-hit': 'collision', repair: 'speed', rocket: 'speed',
         hazard: event.hazardType === 'oil' || event.hazardType === 'water' ? 'skid' : event.hazardType === 'cone' ? 'dust' : 'speed',
       }[event.type];
@@ -196,7 +203,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
         direction: { x: sample.tangent.x, y: 0, z: sample.tangent.z },
         intensity: clamp(Number(event.intensity) || (mapped === 'celebration' ? 1 : 0.58), 0.2, 1.8),
         color: mapped === 'celebration' ? 0xffd470 : undefined,
-      }, { cars: simulation.cars, track });
+      }, { cars: simulation.cars, track,quality });
     }
   };
 
@@ -228,10 +235,10 @@ export default function createGame({ container, names = [], onPick, random = Mat
       focusedId = focused.id;
       let cameraTime = Math.max(0, cameraDt);
       if (mode !== 'running' && mode !== 'finishing') cameraTime *= SIMULATION_RATE;
-      if (!cameraTime) chaseCamera?.update(cameraCar, 0);
+      if (!cameraTime) chaseCamera?.update(cameraCar, 0,simulation?.cars);
       while (cameraTime > 0.00001) {
         const substep = Math.min(0.05, cameraTime);
-        chaseCamera?.update(cameraCar, substep);
+        chaseCamera?.update(cameraCar, substep,simulation?.cars);
         cameraTime -= substep;
       }
       // Chase camera computes against the track's unscaled coordinates; keep
@@ -300,7 +307,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     setPhase('finishing');
     ui?.setWinner(car);
     audio?.finish(car);
-    canvas.setAttribute('aria-label', `${car.name} won the Grand Prix and is the next speaker.`);
+    canvas.setAttribute('aria-label', `${car.name} is the first class finisher and the next speaker.`);
   };
 
   const continueWinner = () => {
@@ -631,13 +638,13 @@ export default function createGame({ container, names = [], onPick, random = Mat
           cars: simulation?.cars.map(car => ({
             itemEffects:{...car.itemEffects},itemCharge:car.itemCharge?{...car.itemCharge}:null,
             driverSkills:car.driverSkills,driverControl:car.driverControl,vehicleSpec:car.vehicleSpec,
-            inventoryItem:car.inventoryItem,inventoryPhase:car.inventoryPhase,inventorySerial:car.inventorySerial,inventoryReserve:car.inventoryReserve?{...car.inventoryReserve}:null,
+            inventoryItem:car.inventoryItem,inventoryPhase:car.inventoryPhase,inventorySerial:car.inventorySerial,inventoryReserves:car.inventoryReserves.map(slot=>({...slot})),
             rouletteRemaining:car.rouletteRemaining,itemsCollected:car.itemsCollected,itemsUsed:car.itemsUsed,lastUsedItem:car.lastUsedItem,
             itemDecision:car.itemDecision?{...car.itemDecision}:null,massKg:car.massKg,brakeFactor:car.brakeFactor,powerW:car.powerW,tractionRecovery:car.tractionRecovery||0,
             racerType: car.racerType, vehicleName: car.vehicleName, damageLevel: car.damageLevel,
             tyreBlowoutRemaining:car.tyreBlowoutRemaining,tyreBlowoutWheel:car.tyreBlowoutWheel,tyreBlowoutSeverity:car.tyreBlowoutSeverity,
             hitPoints: car.hitPoints, replacements: car.replacements, replacementRemaining: car.replacementRemaining,
-            id: car.id, name: car.name, distance: car.distance, lateral: car.lateral,
+            id: car.id, name: car.name,isBot:car.isBot,eliminated:car.eliminated,eliminatedAt:car.eliminatedAt, distance: car.distance, lateral: car.lateral,
             screen: car.screen ? { ...car.screen } : null,
             speed: car.speed ?? car.velocity ?? 0, finished: !!car.finished,
             boost: car.boost || 0, spin: car.spin || 0, brake: car.brake || 0,
