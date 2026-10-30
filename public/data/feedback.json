@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-28T05:58:49.256146+00:00",
+  "updatedAt": "2026-10-30T09:01:56.427028+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1224,6 +1224,34 @@
               "name": "Evan",
               "en": "→ Voice and delivery: Evan presented, but his voice was rather soft compared with how he usually speaks. He quickly went through the whole speech and was reading from his text, so there was not much more I could comment on from this attempt. My main guidance is to speak louder, clearer and slower. Suggested practice: he could rehearse saying the speech at a more deliberate pace, making each word clear and using enough volume for the audience to hear.",
               "zh": "→【声音与表达】：Evan 进行了展示，不过和他平时讲话相比，这次声音比较轻。他很快地把整篇演讲带了过去，而且是在照着文字读，因此就这次尝试而言，我没有太多其他可以评价的地方。最主要的指导是：声音更响亮、表达更清楚、语速更慢。练习建议：可以用更从容的速度练习说出这篇演讲，把每个词说清楚，并用足够的音量让听众听见。"
+            }
+          ]
+        },
+        {
+          "id": "2026-10-30",
+          "date": "2026-10-30",
+          "time": "15:40–17:40",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "wendy",
+              "name": "Wendy",
+              "en": "• Wendy came up to speak without bringing her paper. It was good that she had memorized her speech, and she had some hand gestures.\n• I would have liked her volume to be 10–20% louder. Overall, she got through everything. It shouldn’t have been too difficult a speech to complete.",
+              "zh": "• Wendy 上台演讲时没有带稿纸。她把演讲背下来了，这一点很好，也使用了一些手势。\n• 我希望她的音量能再大 10–20%。总的来说，她把所有内容都讲完了。这篇演讲本身应该不算太难完成。"
+            },
+            {
+              "id": "evan",
+              "name": "Evan",
+              "en": "• Evan was reading through his speech again. There was a lack of emphasis, facial expressions and hand gestures, and he did not add other elements to the delivery. He was just reading from his paper, so I didn’t have much else to comment on.\n• I would challenge Evan to do a bit more. The homework is not just writing in the answers; it is a speech, rather than a reading exercise. If this performance were graded, I would give it a failing grade.",
+              "zh": "• Evan 这次又是在照着稿子读。他缺少重音强调、面部表情和手势，也没有在表达中加入其他元素。他只是在读稿，所以我没有太多其他表现可以评价。\n• 我想挑战 Evan 再多做一些。作业不只是把答案写下来，而是要完成一次演讲，而不是朗读练习。如果这次表现需要评分，我会给不及格。"
+            },
+            {
+              "id": "ray",
+              "name": "Ray",
+              "en": "• Ray looked at his paper and read while holding it with both hands. I felt this was reading rather than giving a speech, so I didn’t have much else to comment on.\n• I would challenge Ray to do a bit more. The homework is not just writing in the answers; it is a speech, rather than a reading exercise. If this performance were graded, I would give it a failing grade.",
+              "zh": "• Ray 看着稿纸，双手拿着稿子朗读。我觉得这属于朗读，还没有呈现出一次演讲，所以我没有太多其他表现可以评价。\n• 我想挑战 Ray 再多做一些。作业不只是把答案写下来，而是要完成一次演讲，而不是朗读练习。如果这次表现需要评分，我会给不及格。"
             }
           ]
         }
