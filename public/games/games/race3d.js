@@ -1,11 +1,11 @@
 import * as THREE from '../assets/vendor/three.module.js';
 import { createRaceTrack } from './race3d-track.js?v=20261027-midnight';
 import { createRaceCars } from './race3d-cars.js?v=20261030-city';
-import { createRaceSimulation } from './race3d-physics.js?v=20261027-midnight';
+import { createRaceSimulation } from './race3d-physics.js?v=20261030-items';
 import { createChaseCamera } from './race3d-camera.js?v=20261030-city';
 import { createRaceAudio } from './race3d-audio.js?v=20261027-midnight';
 import { createRaceMusic } from './race3d-music.js?v=20261027-midnight';
-import { createRaceUI } from './race3d-ui.js?v=20261027-midnight';
+import { createRaceUI } from './race3d-ui.js?v=20261030-items';
 import { createRaceEffects } from './race3d-fx.js?v=20261030-city';
 import { createRaceScenery } from './race3d-city.js?v=20261030-city';
 import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261030-city';
@@ -631,7 +631,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
           cars: simulation?.cars.map(car => ({
             itemEffects:{...car.itemEffects},itemCharge:car.itemCharge?{...car.itemCharge}:null,
             driverSkills:car.driverSkills,driverControl:car.driverControl,vehicleSpec:car.vehicleSpec,
-            inventoryItem:car.inventoryItem,inventoryPhase:car.inventoryPhase,inventorySerial:car.inventorySerial,
+            inventoryItem:car.inventoryItem,inventoryPhase:car.inventoryPhase,inventorySerial:car.inventorySerial,inventoryReserve:car.inventoryReserve?{...car.inventoryReserve}:null,
             rouletteRemaining:car.rouletteRemaining,itemsCollected:car.itemsCollected,itemsUsed:car.itemsUsed,lastUsedItem:car.lastUsedItem,
             itemDecision:car.itemDecision?{...car.itemDecision}:null,massKg:car.massKg,brakeFactor:car.brakeFactor,powerW:car.powerW,tractionRecovery:car.tractionRecovery||0,
             racerType: car.racerType, vehicleName: car.vehicleName, damageLevel: car.damageLevel,

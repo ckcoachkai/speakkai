@@ -129,8 +129,11 @@ export function createRaceExtras(root, players = []) {
       const item = inventoryFace(car,simulationTime);
       entry.item.hidden = !ITEM_VISUALS[item];
       entry.item.dataset.phase=car.inventoryPhase||'empty';
+      entry.item.dataset.reserve=String(!!car.inventoryReserve);
       entry.item.setAttribute('aria-label',car.inventoryPhase==='rolling'?'Choosing an item':ITEM_VISUALS[item]?.[0]||'No held item');
       if (entry.icon !== item) { entry.icon = item; entry.item.innerHTML = itemThumbnail(item); entry.item.title = ITEM_VISUALS[item]?.[0] || ''; }
+      entry.item.title=(ITEM_VISUALS[item]?.[0]||'')+(car.inventoryReserve?'; reserve: '+(car.inventoryReserve.inventoryPhase==='rolling'?'drawing':ITEM_VISUALS[car.inventoryReserve.inventoryItem]?.[0]||'ready'):'');
+      entry.item.setAttribute('aria-label',entry.item.title);
     });
     left.hidden = !left.children.length; right.hidden = !right.children.length;
     const focusEntry = cards.get(String(focusedId)) || cards.values().next().value;
@@ -160,9 +163,9 @@ export function createRaceExtras(root, players = []) {
     const target=cars.find(c=>String(c.id)===String(focusedId))||cars[0];
     if(target?.inventoryItem){
       const item=inventoryFace(target,simulationTime),rolling=target.inventoryPhase==='rolling';
-      const key=`${target.id}:${target.inventorySerial}:${item}:${rolling}`;
-      roulette.hidden=false;
-      if(shownItemKey!==key){shownItemKey=key;rouletteOwner.textContent=String(target.name||'Racer');rouletteIcon.innerHTML=itemThumbnail(item);rouletteName.textContent=rolling?'PRISM DRAW':ITEM_VISUALS[item]?.[0]||'Ready';roulette.dataset.rolling=String(rolling);roulette.dataset.item=rolling?'choosing':item;}
+      const key=`${target.id}:${target.inventorySerial}:${item}:${rolling}:${target.inventoryReserve?.inventoryItem}:${target.inventoryReserve?.inventoryPhase}`;
+      roulette.hidden=false;roulette.title=target.inventoryReserve?'Two items held; the AI uses the first useful ready item.':'One item held; one reserve slot available.';
+      if(shownItemKey!==key){shownItemKey=key;rouletteOwner.textContent=String(target.name||'Racer');rouletteIcon.innerHTML=itemThumbnail(item);rouletteName.textContent=(rolling?'PRISM DRAW':ITEM_VISUALS[item]?.[0]||'Ready')+(target.inventoryReserve?' · +1 '+(target.inventoryReserve.inventoryPhase==='rolling'?'drawing':ITEM_VISUALS[target.inventoryReserve.inventoryItem]?.[0]||'ready'):'');roulette.dataset.rolling=String(rolling);roulette.dataset.item=rolling?'choosing':item;}
       return;
     }
     roulette.hidden=true;shownItemKey='';

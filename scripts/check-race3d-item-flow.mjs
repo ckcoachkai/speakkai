@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict';
+import {createRaceSimulation} from '../public/games/games/race3d-physics.js';
+import {ITEM_TYPES,ROULETTE_DURATION} from '../public/games/games/race3d-item-rules.js';
+import {itemDecision,flightWindow} from '../public/games/games/race3d-strategy.js';
+const track={totalLength:4000,raceDistance:1e7,width:16.5,hazards:[],sampleTrack:d=>({position:{x:0,y:0,z:d},tangent:{x:0,y:0,z:1},right:{x:1,y:0,z:0},width:16.5})};
+const make=(autoItems=false)=>{const s=createRaceSimulation({players:[{id:'a',name:'A'},{id:'b',name:'B'}],track,random:()=>.41,autoItems});s.pickups.length=0;s.ramps.length=0;for(const c of s.cars)Object.assign(c,{_nextMistake:Infinity,_nextDecision:Infinity});return s;};
+const advance=(s,t)=>{for(let n=0;n<t-1e-8;n+=1/120)s.update(Math.min(1/120,t-n));};
+const put=(c,d=100,l=0)=>Object.assign(c,{distance:d,previousProgress:d,lateral:l,preferredLane:l,lateralVelocity:0,speed:25,heading:0,spin:0,flightRemaining:0,rampState:'ground',_hitImmune:0});
+// Every item can occupy either slot, including duplicate draws. Neither slot is overwritten.
+for(const type of ITEM_TYPES){const s=make(),a=s.cars[0];assert.ok(s.awardItem('a',type));advance(s,1);assert.ok(s.awardItem('a',type));assert.equal(s.awardItem('a','boost'),false);assert.equal(a.itemsCollected,2);assert.notEqual(a.inventorySerial,a.inventoryReserve.inventorySerial);advance(s,ROULETTE_DURATION-1+.02);assert.equal(a.inventoryPhase,'ready');assert.equal(a.inventoryReserve.inventoryPhase,'rolling');advance(s,1);assert.equal(a.inventoryReserve.inventoryPhase,'ready');assert.equal(a.inventoryReserve.inventoryItem,type);s.reset();assert.ok(s.cars.every(c=>!c.inventoryItem&&!c.inventoryReserve));s.dispose();}
+// Healthy repair must not block a useful reserve boost; reveal cannot be skipped.
+{const s=make(true),a=s.cars[0];s.cars[1].finished=true;s.awardItem('a','repair');s.awardItem('a','boost');advance(s,ROULETTE_DURATION-.1);assert.equal(a.itemsUsed,0);advance(s,.4);assert.equal(a.itemsUsed,1);assert.equal(a.lastUsedItem,'boost');assert.equal(a.inventoryItem,'repair');assert.equal(a.inventoryReserve,null);assert.ok(a.nitro.remaining>0);s.dispose();}
+// A blocked duplicate boost cannot block the reserve's useful repair.
+{const s=make(true),a=s.cars[0];s.cars[1].finished=true;s.awardItem('a','boost');s.awardItem('a','repair');a.nitro.cooldown=30;a.damage=.4;advance(s,ROULETTE_DURATION+.4);assert.equal(a.lastUsedItem,'repair');assert.equal(a.inventoryItem,'boost');s.dispose();}
+// Useful offensive items fire promptly, never before reveal, and retain target checks.
+for(const type of ['missile','bomb','freeze','shockwave','banana','rocket']){const s=make(true),[a,b]=s.cars;s.awardItem('a',type);advance(s,ROULETTE_DURATION-.1);put(a,200);put(b,type==='banana'?180:260);advance(s,.4);assert.equal(a.lastUsedItem,type,type+' prompt');if(type==='banana'){assert.ok(s.hazards[0].distance<a.distance);assert.equal(s.hazards[0].ownerId,'a');}s.dispose();}
+// Real pickups fill the reserve; saturated and blocked cars leave their gate opportunity intact.
+{const s=make(),a=s.cars[0];s.cars[1].finished=true;s.awardItem('a','shield');s.pickups.push({id:'first',gateId:'first',distance:200,lateral:0,radius:3,active:true});put(a,199);advance(s,.08);assert.equal(a.itemsCollected,2);s.pickups.push({id:'second',gateId:'second',distance:250,lateral:0,radius:3,active:true});put(a,249);advance(s,.08);assert.equal(a.itemsCollected,2);advance(s,5);assert.ok(s.useHeldItem('a'));put(a,249);advance(s,.08);assert.equal(a.itemsCollected,3);s.dispose();}
+// Theft promotes a victim reserve and can fill an owner's reserve; full owners never delete loot.
+for(const full of [false,true]){const s=make(),[a,b]=s.cars;s.awardItem('a','theft');s.awardItem('a','repair');s.awardItem('b','boost');s.awardItem('b','shield');advance(s,5);put(a,100);put(b,140);assert.ok(s.useHeldItem('a'));if(full)s.awardItem('a','banana');advance(s,.5);if(full){assert.equal(b.inventoryItem,'boost');assert.equal(b.inventoryReserve.inventoryItem,'shield');assert.equal(a.inventoryReserve.inventoryItem,'banana');}else{assert.equal(a.inventoryItem,'repair');assert.equal(a.inventoryReserve.inventoryItem,'boost');assert.equal(b.inventoryItem,'shield');assert.equal(b.inventoryReserve,null);}s.dispose();}
+// Ground rocket acceleration is useful on a gentle bend without committing to unsafe flight.
+const car={id:'a',distance:100,lateral:0,speed:30,inventoryItem:'rocket',inventoryPhase:'ready',brake:0};
+assert.equal(flightWindow(car,'rocket',()=>.001),false);
+assert.equal(itemDecision(car,[],{curvature:()=>.001}).use,true);
+for(const change of [{brake:.5},{spin:1},{freezeRemaining:1},{lateral:8},{heading:.5}])assert.equal(itemDecision({...car,...change},[]).use,false);
+assert.equal(itemDecision({...car,inventoryItem:'banana'},[]).use,false);
+{const curved={...track,sampleTrack:d=>({position:{x:(1-Math.cos(d*.001))*1000,y:0,z:Math.sin(d*.001)*1000},tangent:{x:Math.sin(d*.001),y:0,z:Math.cos(d*.001)},right:{x:Math.cos(d*.001),y:0,z:-Math.sin(d*.001)},width:16.5})};const s=createRaceSimulation({players:[{id:'a'}],track:curved,random:()=>.41,autoItems:false});s.pickups.length=0;s.ramps.length=0;s.awardItem('a','rocket');advance(s,5);put(s.cars[0]);assert.ok(s.useHeldItem('a'));assert.ok(s.cars[0].rocketRemaining>0);assert.equal(s.cars[0].flightRemaining,0,'unsafe hop becomes ground thrust');s.dispose();}
+console.log(JSON.stringify({all50BothSlots:true,independentReveals:true,reservePriority:true,blockedPrimaryBypass:true,promptOffense:true,realPickupSaturation:true,atomicTheft:true,safeRocketDecision:true}));

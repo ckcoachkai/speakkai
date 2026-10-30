@@ -1,7 +1,7 @@
 /** Bounded deterministic item choices. Scores estimate opportunities, never guarantee hits. */
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 export const GROUND_ITEMS=Object.freeze(['launch','boost','bomb','missile','banana','shockwave','freeze']);
-export const ATTACK_LIMITS=Object.freeze({missile:{range:220,speed:82,ttl:4.5,width:8},bomb:{range:700,speed:110,ttl:14,width:7.5},shockwave:{range:480,speed:85,ttl:14,width:4.2},freeze:{range:115,speed:62,ttl:3.6,width:3.8},banana:{range:70,speed:0,ttl:24,width:2.1}});
+export const ATTACK_LIMITS=Object.freeze({missile:{range:220,speed:82,ttl:4.5,width:8},bomb:{range:700,speed:110,ttl:14,width:7.5},shockwave:{range:480,speed:85,ttl:14,width:4.2},freeze:{range:115,speed:62,ttl:3.6,width:3.8},banana:{range:110,speed:0,ttl:24,width:2.1}});
 // Predict the sideways drift of world momentum across the full high jump.
 // A locally gentle bend can still put a five-second flight outside the road.
 export function flightWindow(car,type,curvature,width=()=>16.5){
@@ -22,7 +22,7 @@ export function itemDecision(car,cars,{trackLength=1e6,curvature=()=>0,width=()=
    const d=gap(o),behind=type==='banana',closing=behind?Math.max(3,o.speed):speed-o.speed;
    if((behind?(d>=-5||d< -p.range):(d<=5||d>p.range))||closing<=2)return null;
    const t=behind?Math.max(0,(-d-4)/closing):d/closing;
-   if(behind&&(t<.5||t>4))return null;
+   if(behind&&(t<.3||t>7))return null;
    if(t>p.ttl*.82)return null;
    const side=o.lateral+(o.lateralVelocity||0)*Math.min(t,1.5)-car.lateral;
    const steerable=type==='missile'?7.5*t:type==='bomb'?4*t:0;
@@ -39,7 +39,7 @@ export function itemDecision(car,cars,{trackLength=1e6,curvature=()=>0,width=()=
   return threat&&(car.shieldRemaining||0)<.3?{use:true,reason:'incoming-threat'}:hold('no-threat');
  }
  if(type==='boost'||type==='rocket'){
-  return (car.attackSlowRemaining||0)<=0&&(car.spin||0)<=0&&(car.freezeRemaining||0)<=0&&(car.brake||0)<.15&&bend<.0065&&car.speed>5&&(type!=='rocket'||flightWindow(car,type,curvature,width))?{use:true,reason:'clear-acceleration-window'}:hold('braking-or-turning-or-disrupted');
+  return (car.attackSlowRemaining||0)<=0&&(car.spin||0)<=0&&(car.freezeRemaining||0)<=0&&(car.brake||0)<.15&&bend<.0065&&car.speed>5&&Math.abs(car.lateral||0)<width(car.distance)/2-2&&Math.abs(car.heading||0)<.2?{use:true,reason:'clear-acceleration-window'}:hold('braking-or-turning-or-disrupted');
  }
  if(type==='launch'){
   const traffic=opponents.some(o=>gap(o)>4&&gap(o)<75);
