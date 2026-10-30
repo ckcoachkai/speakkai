@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-30T11:52:15.820561+00:00",
+  "updatedAt": "2026-10-30T13:33:36.579814+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1239,6 +1239,12 @@
           "homework": null,
           "students": [
             {
+              "id": "mikaela",
+              "name": "Mikaela",
+              "en": "• Mikaela was our first speaker. We could all hear her now. Her vocal projection was a bit better, and I think we can hear her more and more. Her voice is louder, which is good, and I would say she has improved.\n• Her pacing still sounded like she was reading a speech. I would say that if she can stop relying on paper, or add some hand gestures while practicing her homework speech, it would make her delivery better.\n• Mikaela wants to talk about plants. When we discussed planting flowers, I initially thought it might be too simple a topic. However, it could explore how planting flowers and helping to plant things reminds us to use our hands and get them dirty to help the earth—something we sometimes forget.\n• Now that everything is becoming more digitalized, one problem is that we don’t use our hands enough and aren’t as connected to the earth right in front of us. Going back to this topic might actually be refreshing: talking about the earth, dirt, earthworms and soil. These are possible directions I discussed for developing her topic.",
+              "zh": "• Mikaela 是我们的第一位演讲者。现在大家都能听见她了。她的声音传达比之前好了一点，我觉得我们越来越能听清她的声音。她的声音更响亮了，这很好，我会说她有进步。\n• 她的节奏仍然像是在读一篇演讲稿。我觉得，如果她能不再依赖稿纸，或者在练习作业演讲时加入一些手势，表达就会更好。\n• Mikaela 想谈植物。在讨论种花时，我一开始觉得这个题目可能太简单。不过，它也可以探讨：种花和动手种植，如何提醒我们用自己的双手、把手弄脏，去帮助地球——这些是我们有时会忘记的事情。\n• 现在一切都越来越数字化，一个问题是我们动手的机会不够，也不再那么亲近眼前的土地。重新回到这个主题，谈谈大地、泥土、蚯蚓和土壤，反而可能让人耳目一新。这些是我在讨论中提出的、可以用来发展她的主题的方向。"
+            },
+            {
               "id": "wendy",
               "name": "Wendy",
               "en": "• Wendy came up to speak without bringing her paper. It was good that she had memorized her speech, and she had some hand gestures.\n• I would have liked her volume to be 10–20% louder. Overall, she got through everything. It shouldn’t have been too difficult a speech to complete.",
@@ -1253,8 +1259,14 @@
             {
               "id": "ray",
               "name": "Ray",
-              "en": "• Ray looked at his paper and read while holding it with both hands. I felt this was reading rather than giving a speech, so I didn’t have much else to comment on.\n• I would challenge Ray to do a bit more. The homework is not just writing in the answers; it is a speech, rather than a reading exercise. If this performance were graded, I would give it a failing grade.",
-              "zh": "• Ray 看着稿纸，双手拿着稿子朗读。我觉得这属于朗读，还没有呈现出一次演讲，所以我没有太多其他表现可以评价。\n• 我想挑战 Ray 再多做一些。作业不只是把答案写下来，而是要完成一次演讲，而不是朗读练习。如果这次表现需要评分，我会给不及格。"
+              "en": "• Ray looked at his paper and read while holding it with both hands. I felt this was reading rather than giving a speech, so I didn’t have much else to comment on.\n• I would challenge Ray to do a bit more. The homework is not just writing in the answers; it is a speech, rather than a reading exercise. If this performance were graded, I would give it a failing grade.\n• Ray wants to talk about laser rays as his speech topic.",
+              "zh": "• Ray 看着稿纸，双手拿着稿子朗读。我觉得这属于朗读，还没有呈现出一次演讲，所以我没有太多其他表现可以评价。\n• 我想挑战 Ray 再多做一些。作业不只是把答案写下来，而是要完成一次演讲，而不是朗读练习。如果这次表现需要评分，我会给不及格。\n• Ray 想把激光射线作为自己的演讲主题。"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan Xu",
+              "en": "• At first, Ethan Xu refused to come up on stage to speak. He was drinking something in class again and refused to participate. He did participate later, and the following observations concern his presentation.\n• Ethan used some hand gestures and spoke quite loudly, but he was reading from his paper. It wasn’t bad; it just wasn’t as good as last time. In the past, I’ve seen him speak without his paper, which was better. Sometimes he can speak without anything in his hands, and he has more presence. When he holds the paper, he ends up just reading from it. I don’t find it very useful when he is simply reading off the paper; if possible, I want him to actually talk to the audience.\n• Ethan shared his ‘Metal Man’ speech with us. I think he had good energy overall. Some movements don’t need to be so fast; make them slower. Remember to reduce the number of movements and avoid making them very jerky. Otherwise, it can be a little hard for people to follow along.\n• For a competition, we usually don’t like to start by saying our name and what the speech is about. We want to start with a hook—something that grabs people’s attention. However, I don’t know which competition he is using the speech for, so it depends on the competition.\n• Ethan wants to talk about using Scratch to create video games. He might use this as his next speech topic or for his next speech competition. We’ll create some material related to it.",
+              "zh": "• 一开始，Ethan Xu 拒绝上台讲话。他又在课堂上喝东西，并拒绝参与。后来他参与了展示，下面是对他演讲表现的观察。\n• Ethan 使用了一些手势，声音也比较响亮，但他在照着稿纸读。这次并不差，只是没有上一次好。以前我见过他不看稿纸表达，那样更好。有时候他可以手里什么都不拿地讲话，台上的存在感也更强。但当他拿着稿纸时，就会变成照着稿子读。如果只是读稿，我觉得这样的练习作用不大；如果可以，我希望他真正对着听众讲话。\n• Ethan 为我们展示了他的‘Metal Man’演讲。我觉得他整体上很有活力。有些动作不需要那么快，可以慢一些。记得减少动作的数量，不要做得很突然、生硬，否则听众会有一点难跟上。\n• 对于比赛，我们通常不太希望一开始就说自己的名字，以及演讲要讲什么。我们希望用一个引子开场——用能够抓住听众注意力的内容。不过，我不清楚他要用这篇演讲参加哪一个比赛，所以也要看具体比赛。\n• Ethan 想谈用 Scratch 创作电子游戏。他可能把这个作为下一篇演讲的主题，或者用于下一次演讲比赛。我们会围绕这个方向创作一些相关内容。"
             }
           ]
         }

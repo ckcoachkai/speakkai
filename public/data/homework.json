@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-30T11:52:15.820561+00:00",
+  "updatedAt": "2026-10-30T13:33:36.588754+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1017,6 +1017,10 @@
           "homework": null,
           "students": [
             {
+              "name": "Mikaela",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-30&student=mikaela"
+            },
+            {
               "name": "Wendy",
               "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-30&student=wendy"
             },
@@ -1027,6 +1031,10 @@
             {
               "name": "Ray",
               "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-30&student=ray"
+            },
+            {
+              "name": "Ethan Xu",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-30&student=ethan"
             }
           ]
         }
