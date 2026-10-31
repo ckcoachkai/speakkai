@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-31T05:08:16.543931+00:00",
+  "updatedAt": "2026-10-31T07:39:41.448114+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -181,6 +181,32 @@
               "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-10-24&student=louis"
             }
           ]
+        },
+        {
+          "id": "sat-original-oratory-2026-10-31",
+          "date": "2026-10-31",
+          "time": "13:00–15:00",
+          "classContent": [
+            "• We reviewed two speeches presented from homework and discussed their structure, evidence, impact and connection to the audience. We explored how to make a topic relevant to a wider public and how to develop a speech using cause, effect, impact and solution.\n\n• We first looked at the students’ outlines and topic selection and ran them through different rubrics to see how they might work for competitions. For students who have never competed, the aim was also to gain some experience of what completing everything and going through the competition process involves, including the entire process of writing the speech.\n\n• After checking the homework, we discussed personal connection to the story and topic: how it shows why the speaker cares, how personal experience gives the speaker credibility, and how the message can be relatable to students and adults even when a topic may not always seem directly relevant but is deeply impactful in society today.\n\n• The second part was Wheel of Happiness, using a random question."
+          ],
+          "homework": {
+            "title": "Personal connection and written competition speech",
+            "steps": [
+              "Add a 100–200-word personal story, personal narrative or personal connection to your written speech script, then give it to me so I can look at the whole speech.",
+              "Aim for around 700–1,000 words for the full five-minute speech so that we can go through the polishing and cutting process later."
+            ],
+            "prepareFor": "Written competition speech"
+          },
+          "students": [
+            {
+              "name": "Kailyn",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-10-31&student=kailyn"
+            },
+            {
+              "name": "Winston",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-10-31&student=winston"
+            }
+          ]
         }
       ]
     },
@@ -314,6 +340,31 @@
             {
               "name": "Ivy",
               "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-24&student=ivy"
+            }
+          ]
+        },
+        {
+          "id": "sat-foundations-2026-10-31",
+          "date": "2026-10-31",
+          "time": "15:00–17:00",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Ivy",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-31&student=ivy"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-31&student=william"
+            },
+            {
+              "name": "Kyle",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-31&student=kyle"
+            },
+            {
+              "name": "Neil",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-31&student=neil"
             }
           ]
         }

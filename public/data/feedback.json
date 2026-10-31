@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-31T05:08:16.536124+00:00",
+  "updatedAt": "2026-10-31T07:39:41.443342+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -221,6 +221,34 @@
               "zh": "• 我觉得Louis整体上能够回答这道题。记得在结尾加上想要传达的核心信息。\n\n• 他的肢体语言稍微有些内向。比如，他抱着自己的手臂，有些像是在朝听众那边看。\n\n• 即使是结尾的信息，我们也希望它更贴近现实一点。比如，让每个人都想象自己拥有这个应用，可能会有些难以想象。这是一个给善良程度排名的应用。所以，更重要的是，我们希望把重点放在每个人都应该友善待人这件事上。"
             }
           ]
+        },
+        {
+          "id": "sat-original-oratory-2026-10-31",
+          "date": "2026-10-31",
+          "time": "13:00–15:00",
+          "status": "held",
+          "classContent": {
+            "en": "• We reviewed two speeches presented from homework and discussed their structure, evidence, impact and connection to the audience. We explored how to make a topic relevant to a wider public and how to develop a speech using cause, effect, impact and solution.\n\n• We first looked at the students’ outlines and topic selection and ran them through different rubrics to see how they might work for competitions. For students who have never competed, the aim was also to gain some experience of what completing everything and going through the competition process involves, including the entire process of writing the speech.\n\n• After checking the homework, we discussed personal connection to the story and topic: how it shows why the speaker cares, how personal experience gives the speaker credibility, and how the message can be relatable to students and adults even when a topic may not always seem directly relevant but is deeply impactful in society today.\n\n• The second part was Wheel of Happiness, using a random question.",
+            "zh": "• 我们回顾了两篇作业演讲，讨论了演讲结构、证据、影响以及与听众的联系。我们探讨了如何让主题与更广泛的大众相关，并运用原因、结果、影响和解决办法来发展演讲。\n\n• 我们首先查看学生的演讲提纲和主题选择，用不同的评分标准来判断它们在比赛中可能如何呈现。对于从未参赛的学生，目的也是让他们了解完成各项准备、经历整个比赛过程是什么样的，包括写出演讲全文的完整过程。\n\n• 检查作业之后，我们讨论了与故事和主题的个人联系：个人联系如何说明演讲者为什么在意这个话题，亲身经历如何建立可信度，以及一个看似并不总是与每个人直接相关、但在当今社会影响深远的主题，如何让学生和成年人都能产生共鸣。\n\n• 第二部分是“快乐转盘”，使用一个随机问题。"
+          },
+          "homework": {
+            "en": "• Add a 100–200-word personal story, personal narrative or personal connection to your written speech script, then give it to me so I can look at the whole speech.\n\n• Aim for around 700–1,000 words for the full five-minute speech so that we can go through the polishing and cutting process later.",
+            "zh": "• 在演讲书面稿中加入一段 100–200 词的个人故事、个人叙事或个人联系，然后交给我，让我看看整篇演讲。\n\n• 五分钟演讲全文目标约为 700–1,000 词，以便之后进行润色和删减。"
+          },
+          "students": [
+            {
+              "id": "kailyn",
+              "name": "Kailyn",
+              "en": "• Kailyn’s speech was well structured, with good logic. Her content was quite full.\n\n• The next step is to add more visualizations and evidence, such as actual statistics or facts. We also want to bring in some ideas from debate: the impacts, who is affected, and, most importantly, how the topic connects to the general public.\n\n• For example, I asked a classmate: how afraid are you of avalanches, and how often would they occur in your life? We need to take a step back and consider how the audience can relate to the topic.\n\n• The message could reach beyond avalanches to natural disasters, other major issues, emergency preparation and planning. How can we give people a realistic message that still matters even if the worst-case scenario does not happen? One direction is to encourage people to have a backup plan and be prepared.\n\n• Content suggestion: Her Shanghai flooding example gives her a personal connection to disaster warnings. Her four proposals—faster detection, multiple warning channels, alarms, and education in high-risk areas—give the speech a clear structure. She can strengthen the logic by explaining how information moves from monitoring equipment to a warning that reaches a community, and how each proposal helps people act.\n\n• Content suggestion: Identify the glacier avalanche and check the reported death toll against a reliable source. Investigate what causes warning delays and what AI could realistically help people analyze; do not assume a satellite cannot send information to Earth immediately. Also reconsider saying preparation is the only way to ensure safety: preparation can improve the chance of safety without guaranteeing it.",
+              "zh": "• Kailyn 的演讲结构很好，逻辑清晰，内容也相当充实。\n\n• 下一步是加入更多让人能够想象画面的内容，以及更多证据，例如真实的统计数据或事实。我们还希望加入一些辩论中的思考：事件的影响、受影响的人，以及最重要的，如何让这个主题与普通大众产生联系。\n\n• 例如，我问了一位同学：你有多害怕雪崩？雪崩在你的生活中多久会发生一次？我们需要退一步思考，听众如何能够与这个主题产生联系。\n\n• 这个信息可以从雪崩延伸到自然灾害、其他重大问题，以及应急准备和规划。即使最坏的情况没有发生，我们怎样才能给人们一个仍然有意义、贴近现实的信息？一个方向是鼓励人们准备备用计划，并在这些情况下做好准备。\n\n• 内容建议：她关于上海积水的例子，让她与灾害预警这一更大的议题建立了个人联系。她提出的四项措施——更快的监测、多种预警渠道、警报，以及高风险地区的教育——让演讲结构清楚。她可以解释信息如何从监测设备转化为传达到社区的警报，以及每项措施如何帮助人们采取行动，进一步加强逻辑。\n\n• 内容建议：确认所谈的冰川雪崩事件，并用可靠来源核实提到的死亡人数。调查警报延迟的原因，以及 AI 实际上能够帮助人们分析什么；不要假定卫星无法立即向地球发送信息。还可以重新考虑“准备是确保安全的唯一方法”这一说法：准备可以提高安全机会，但不能保证绝对安全。"
+            },
+            {
+              "id": "winston",
+              "name": "Winston",
+              "en": "• Winston was late again.\n\n• Winston wants to talk about transgender people in sports. I think this is an interesting and quite unique topic. Remember to think about your personal connection to it and emphasize that connection in your speech. He explained that he is interested in sports and has researched a related subject at school, so he already has some personal connection, emotion and prior knowledge that he can use as he develops the speech. He felt his prior research could make writing the script less complicated than starting a completely new topic. He found articles and books he could use for research.\n\n• Consider how the topic applies to people who don’t play sports, people who aren’t transgender, and others who might not feel directly affected. How can the message connect to more people, including different types of judges? One possibility is to take a step back and explore how we view people who are different from us, or the question of unfair advantages. These are possible directions to consider.\n\n• He identified a position he wants to argue. Content suggestion: Make the argument precise—which sport, competition or organization is he discussing, what are its current rules, and what change is he proposing? He noted that different institutions have different rules, so specific, current examples can make his point clearer.\n\n• We discussed cause, effect, impact and solution: what he sees as the current problem, what effects and impacts follow, and what solution he proposes. Content suggestion: Support claims about fairness or advantage with relevant evidence, and consider how the people affected by the rules may experience them.\n\n• The discussion moved into workplace inclusion and protests in France. Content suggestion: Decide which ideas actually support the sports argument so the speech stays focused. Check any specific example or factual claim before using it as evidence.",
+              "zh": "• Winston 又迟到了。\n\n• Winston 想谈跨性别人士参与体育运动。我觉得这是一个很有意思、也相当独特的主题。记得思考自己与这个主题的个人联系，并在演讲中强调出来。他说自己对体育很感兴趣，也曾在学校研究过相关话题，因此已经有一些个人联系、情感和先前知识，可以在构思演讲时运用。他觉得先前的研究可能让写稿比从全新主题开始更容易。他也找到了可以用来研究的文章和书籍。\n\n• 想想这个话题如何与不参加体育运动、不是跨性别者，以及其他可能觉得自己没有直接受到影响的人产生关系。如何让信息联系到更多人，包括不同类型的评委？一种可能是退一步探讨我们如何看待与自己不同的人，或者不公平优势的问题。这些都是可以考虑的发展方向。\n\n• 他已经确定了想要论证的立场。内容建议：让论点更具体——他讨论的是哪项运动、哪场比赛或哪个组织，目前的规则是什么，以及他提出什么改变？他提到不同机构的规则不同，因此具体且最新的例子有助于让观点更清楚。\n\n• 我们讨论了原因、结果、影响和解决办法：他认为目前的问题是什么，会带来什么结果和影响，以及他提出什么解决办法。内容建议：用相关证据支持关于公平或优势的说法，同时考虑受规则影响的人可能有哪些感受和经历。\n\n• 讨论也延伸到了职场多元包容和法国的抗议活动。内容建议：判断哪些想法真正支持体育方面的论点，让演讲保持聚焦；使用具体例子或事实性说法作为证据之前，应先进行核实。"
+            }
+          ]
         }
       ]
     },
@@ -361,6 +389,40 @@
               "name": "Ivy",
               "en": "Ivy was our second speaker. She talked a lot about what she had seen, but the overall message of a speech still needs to be for the audience. It is not only about what she has seen: what can we do to achieve it, and what value or message can she give to the people listening? She slightly slurred some of her words and needs clearer articulation, although she was easier to understand. The next step is to make sure the speech is not all about ‘me, me, me.’ It should also connect with the audience in front of her, helping them understand what they can take away from her experience.",
               "zh": "Ivy是第二位演讲的学生。她讲了很多自己看到的事情，但演讲最终要传达的信息仍然需要面向听众。不能只是讲自己看到了什么，还要进一步思考：我们可以做些什么来实现它？又能为正在听演讲的人带来什么价值或信息？她有些词语略显含糊，吐字和清晰度还需要加强，不过整体更容易理解了。接下来要注意，演讲不能全是‘我、我、我’，也要与面前的听众建立联系，让他们明白能从她的经历中获得什么。"
+            }
+          ]
+        },
+        {
+          "id": "sat-foundations-2026-10-31",
+          "date": "2026-10-31",
+          "time": "15:00–17:00",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "ivy",
+              "name": "Ivy",
+              "en": "• The first speaker was very clear, with good structure and logic.\n\n• Focus on relatability: how does the topic connect to other people? She could talk about her own struggles or include a personal story, then add evidence and other support. We also need to identify what makes this topic unique for the audience.\n\n• One possible direction is to address misuse of ADHD medication and then consider the people who do not misuse it. Take a step back and explore a broader pattern: as a society, including here in China, people may feel driven to win and seek unfair advantages, sometimes pushing themselves in ways that can be harmful to their health to achieve greater results. That drive to go to extremes can be unhealthy.\n\n• My examples of different forms of overdrive were using ADHD medication, drinking coffee to work through the entire night, and sacrificing evenings, weekends and time with family to pursue financial or business success. The broader question is how we push ourselves past what we would normally allow ourselves to do. These were my examples for possible development, not observations that the student does these things.",
+              "zh": "• 第一位演讲者表达非常清楚，结构和逻辑都很好。\n\n• 重点是共鸣：这个主题如何与其他人联系起来？她可以谈谈自己的困难，或加入一点个人故事，然后增加证据及其他支持内容。我们还需要找出这个主题对听众来说有什么独特之处。\n\n• 一个可能的方向是谈 ADHD 药物的误用，再考虑那些没有误用这类药物的人。可以退一步探讨更广泛的现象：作为一个社会，包括在中国，人们可能被求胜的心态驱使，寻求不公平优势，有时为了取得更大成果而以可能损害健康的方式推动自己。这种走向极端的动力可能并不健康。\n\n• 我举出的不同过度推动自己的例子包括使用 ADHD 药物、喝咖啡通宵工作，以及为了财务或事业成功而牺牲晚上、周末和与家人相处的时间。更广泛的问题是，我们如何推动自己超出通常会允许自己的范围。这些是我提出的可能发展方向，不是说学生本人做过这些事情。"
+            },
+            {
+              "id": "william",
+              "name": "William",
+              "en": "• I don’t think William did his homework. He gave what felt like an impromptu talk about what we would see in the future.\n\n• One important thing for William is to stay silent while he is thinking, rather than making Minecraft villager sounds as he thinks out loud.\n\n• For the content, use descriptive, detailed and specific language. Comparisons such as ‘big and bigger’ or ‘this and more of this’ can be very hard for an audience and judges to picture in their minds. We want more specific details to create that visualization, especially when making comparisons.\n\n• Because of the lack of research, some examples he gave were very simple, and the topic needs to be thought through more thoroughly. This was not actually his speech competition topic, so he still needs to think about a topic that he is really interested in sharing. He can also use this topic, with more specific details.",
+              "zh": "• 我觉得 William 可能没有完成作业。他讲的内容感觉像是一段即兴演讲，谈的是我们未来会看到什么。\n\n• 对 William 来说，一个重要的练习是在思考时保持安静，而不是一边大声想、一边发出像《我的世界》村民那样的声音。\n\n• 在内容方面，要使用有描述性、详细而具体的语言。像“大和更大”或“这个和更多的这个”这样的比较，很难让听众和评委在脑海中想象出画面。我们需要更多具体细节来帮助形成画面，尤其是在做比较时。\n\n• 由于缺少研究，他给出的一些例子很简单，对主题也需要进行更周全的思考。这实际上并不是他的演讲比赛主题，因此他仍需要多思考一个自己真正有兴趣分享的主题。他也可以继续使用这个话题，但要加入更多具体细节。"
+            },
+            {
+              "id": "kyle",
+              "name": "Kyle",
+              "en": "• Kyle spoke about the same topic a classmate had discussed: how technology would change in 20–30 years. He still needs to choose a topic for his competition.\n\n• I felt he was quite flexible and his response time was almost instantaneous, or quite fast, because he could respond to what was on the TV. We could see clearly that this was an impromptu speech, made up on the spot.\n\n• He spoke with a lot of confidence and continued talking through his points even after I used AI to check facts and challenged some of them as incorrect. It was good that he still pushed himself to continue the speech and did not get too distracted by what was on the screen.",
+              "zh": "• Kyle 谈了与一位同学相同的话题：科技在未来 20–30 年会如何变化。他仍需要为比赛选择一个主题。\n\n• 我觉得他很灵活，反应几乎是即时的，或者说非常快，因为他能够根据电视上显示的内容作出回应。我们可以清楚看出这是一篇即兴演讲，是当场构思出来的。\n\n• 他讲话很有自信。即使我使用 AI 核查事实并指出他的一些观点不正确，他仍然继续讲述自己的要点。好的一点是，他仍然推动自己把演讲继续下去，也没有被屏幕上的内容过度分散注意力。"
+            },
+            {
+              "id": "neil",
+              "name": "Neil",
+              "en": "• Neil, our last speaker, gave a simple self-introduction. I feel that he probably has not had much public speaking experience before; that is my impression. His answers were rather short.\n\n• What was good, though, was that he went through the introduction without seeming too taken aback. The first step is to expand his answers and try to speak for longer. He can first aim for one minute, then two minutes, then three minutes, and continue from there.",
+              "zh": "• 最后一位演讲者 Neil 做了一个简单的自我介绍。我觉得他以前可能没有太多公开演讲经验；这只是我的印象。他的回答比较简短。\n\n• 不过，好的一点是，他把自我介绍讲了下来，看起来没有因此过于不知所措。第一步是把回答展开，尝试讲得更久。他可以先以一分钟为目标，然后两分钟、三分钟，再逐步增加。"
             }
           ]
         }
