@@ -1,9 +1,9 @@
-import {updateInventoryIcons} from './race3d-inventory-ui.js?v=20261030-grid5';
-import {addCarGuide} from "./race3d-car-guide.js?v=20261027-midnight";
-import { createRaceExtras } from './race3d-ui-extras.js?v=20261030-grid5';
+import {updateInventoryIcons} from './race3d-inventory-ui.js?v=20261031-dimensional';
+import {addCarGuide} from "./race3d-car-guide.js?v=20261031-dimensional";
+import { createRaceExtras } from './race3d-ui-extras.js?v=20261031-dimensional';
 
 
-const STYLE_URL = new URL('./race3d-ui.css?v=20261030-grid5', import.meta.url).href;
+const STYLE_URL = new URL('./race3d-ui.css?v=20261031-dimensional', import.meta.url).href;
 import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261027-midnight';
 
 function ensureStyles() {

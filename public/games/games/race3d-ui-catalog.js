@@ -1,3 +1,4 @@
+import {itemPortrait} from './race3d-item-portraits.js?v=20261031-volume';
 import {ALL_ITEM_IDS,ITEM_REGISTRY} from './race3d-item-registry.js?v=20261027-midnight';
 import {extraIconSvg} from './race3d-item-icons.js?v=20261027-midnight';
 import {CONCEPT_VEHICLE_PROFILES} from './race3d-concept-profiles.js?v=20261027-midnight';
@@ -34,5 +35,5 @@ const BASE_ITEM_VISUALS = {
 export const ITEM_VISUALS=Object.freeze({...BASE_ITEM_VISUALS,...Object.fromEntries(ALL_ITEM_IDS.filter(id=>!BASE_ITEM_VISUALS[id]).map(id=>[id,[ITEM_REGISTRY[id].label,extraIconSvg(id)]]))});
 export function itemThumbnail(type) {
   const body = ITEM_VISUALS[type]?.[1] || '<text x="32" y="48" text-anchor="middle" font-family="system-ui" font-weight="900" font-size="52" fill="#fff4ad">?</text>';
-  return `<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">${body}</svg>`;
+  return itemPortrait(body,ITEM_REGISTRY[type]?.color || '#b8c9ff');
 }

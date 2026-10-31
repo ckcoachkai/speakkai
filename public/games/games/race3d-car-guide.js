@@ -1,6 +1,6 @@
 import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261027-midnight';
 import {ALL_ITEM_IDS,ITEM_REGISTRY} from './race3d-item-registry.js?v=20261027-midnight';
-import {itemThumbnail} from './race3d-ui-catalog.js?v=20261027-midnight';
+import {itemThumbnail} from './race3d-ui-catalog.js?v=20261031-dimensional';
 /** Comparison uses the same game-calibrated parameters as the simulation. */
 export function addCarGuide(root,map,options={}){
  const button=document.createElement('button');button.className='race3d-guide-button';button.textContent='Compare cars';button.type='button';map.append(button);

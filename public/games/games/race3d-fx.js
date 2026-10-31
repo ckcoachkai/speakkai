@@ -37,17 +37,17 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
         .replace('#include <common>', '#include <common>\nvarying float vFxAlpha;')
         .replace('#include <opaque_fragment>', 'diffuseColor.a *= vFxAlpha'+(shape==='puff'?' * pow(max(0.0, dot(normal, normalize(vViewPosition))), 1.5)':'')+';\n#include <opaque_fragment>');
     };
-    material.customProgramCacheKey = () => `race3d-fx-${color}`;
+    material.customProgramCacheKey = () => `race3d-fx-${color}-${shape || 'solid'}-${glow}`;
     return material;
   }
 
   const shapes = {
     puff: new THREE.SphereGeometry(1, 8, 6),
-    spark: new THREE.CylinderGeometry(.016, .009, 1, 5, 1),
+    spark: new THREE.CylinderGeometry(.035, .012, 1, 5, 1),
     streak: new THREE.CylinderGeometry(.009, .004, 1, 4, 1),
     confetti: new THREE.BoxGeometry(1, .18, .65),
     mark: new THREE.BoxGeometry(1, .008, .24),
-    ring: new THREE.RingGeometry(.82,1,32).rotateX(-Math.PI/2),
+    ring: new THREE.TorusGeometry(.94,.055,5,40).rotateX(-Math.PI/2),
     shard: new THREE.BoxGeometry(1,.3,.55)
   };
   const specs = {
@@ -56,7 +56,7 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     debris: {capacity:64,shape:'shard',opacity:1,base:0x586671,metalness:.6},
     smoke: { capacity: 84, shape: 'puff', opacity: .34, base: 0x999b9d },
     dust: { capacity: 36, shape: 'puff', opacity: .32, base: 0x9a8065 },
-    sparks: { capacity: 48, shape: 'spark', opacity: .9, base: 0xffc064, metalness: .15 },
+    sparks: { capacity: 48, shape: 'spark', opacity: .9, base: 0xffc064, metalness: .15, glow: true },
     speed: { capacity: 28, shape: 'streak', opacity: .22, base: 0xdce7ed },
     celebration: { capacity: 36, shape: 'confetti', opacity: .78, base: 0xf1c66a, metalness: .18 },
     marks: { capacity: 192, shape: 'mark', opacity: .60, base: 0x171b20 }
@@ -151,9 +151,13 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
       pool.mesh.setColorAt(i, p.color);
       tempObject.position.copy(p.position);
       if (pool.name === 'sparks' || pool.name === 'speed') {
+        // Sparks follow their ballistic velocity; visible needle widths no longer
+        // get multiplied twice by tiny geometry and particle radii.
+        if (p.velocity.lengthSq() > .001) p.direction.copy(p.velocity).normalize();
         tempObject.quaternion.setFromUnitVectors(up, p.direction);
         const length = p.size * p.stretch * Math.max(.18, 1 - t * .55);
-        tempObject.scale.set(p.size * .12, length, p.size * .12);
+        const width = pool.name === 'sparks' ? .55 + p.size : .8;
+        tempObject.scale.set(width, length * (pool.name === 'sparks' ? 1.7 : 1), width);
       } else if (pool.name === 'marks') {
         tempObject.quaternion.copy(p.orientation);
         tempObject.scale.set(p.size, 1, 1);

@@ -59,6 +59,9 @@ jobs:
           node scripts/check-race3d-disruption.mjs
           node scripts/check-race3d-balance.mjs
           npm run check:race3d-fifty
+          node scripts/check-race3d-extra-models.mjs
+          node scripts/check-race3d-item-portraits.mjs
+          node scripts/check-race3d-powerup-accents.mjs
       - name: Verify Dynamite Mice game and media
         run: |
           node scripts/check-maze.mjs --dist

@@ -1,5 +1,5 @@
-import {updateInventoryIcons} from './race3d-inventory-ui.js?v=20261030-grid5';
-import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261027-midnight';
+import {updateInventoryIcons} from './race3d-inventory-ui.js?v=20261031-dimensional';
+import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261031-dimensional';
 
 import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261027-midnight';
 

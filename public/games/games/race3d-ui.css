@@ -364,3 +364,27 @@
  .race3d-roulette{bottom:175px}.race3d-roulette-cube{width:54px;height:54px}.race3d-roulette-icon{width:44px;height:44px}
  .race3d-camera{width:150px}.race3d-camera-actions{display:grid;grid-template-columns:repeat(4,28px);gap:3px}.race3d-camera-button{width:28px;height:28px}
 }
+
+/* Enamel power-up portraits: lit fronts, extruded edges and contact shadows.
+   Keep each slot a fixed size; presentation never changes inventory ownership. */
+.race3d-item-portrait{overflow:visible}
+.race3d-item-main,.race3d-item-small{position:relative;isolation:isolate}
+.race3d-reserve-icons .race3d-item-small{
+ border:1px solid color-mix(in srgb,var(--item-color,#b8c9ff) 65%,#ffffff);
+ border-radius:10px;background:radial-gradient(ellipse at 28% 0%,#ffffff26,transparent 62%),linear-gradient(145deg,#35435a,#111d30 65%,#080f1e);
+ box-shadow:inset 0 1px 0 #ffffff55,inset 0 -3px 0 #0007,0 3px 0 #07101c,0 5px 10px #0007;
+}
+.race3d-reserve-icons .race3d-item-small::after{content:attr(data-slot);position:absolute;bottom:-5px;right:-3px;min-width:12px;padding:1px 2px;border:1px solid #75869a;border-radius:4px;background:#0e1d2f;color:#e8f4ff;font:800 8px/1 system-ui;text-align:center}
+.race3d-reserve-icons .race3d-item-small[data-phase=rolling]{opacity:.78;border-style:dashed;box-shadow:inset 0 1px 0 #ffffff40,0 2px 0 #07101c}
+.race3d-row-item,.race3d-card-item{background:linear-gradient(150deg,#263c55,#0c192b);border-color:#8ca4bc80;box-shadow:inset 0 1px 0 #ffffff20,0 2px 4px #0005}
+.race3d-row-item .race3d-item-small,.race3d-card-item .race3d-item-small{border-color:color-mix(in srgb,var(--item-color,#b8c9ff) 45%,#30465c);background:linear-gradient(145deg,#354761,#0c192b);box-shadow:inset 0 1px 0 #ffffff30,0 1px 2px #0006}
+.race3d-roulette-cube{position:relative;border-color:#b7cadf;background:radial-gradient(ellipse at 25% 0%,#ffffff38,transparent 58%),linear-gradient(140deg,#426488,#172b46 62%,#0c192b);box-shadow:inset 0 2px 0 #ffffff60,inset 0 -7px 0 #07101c80,0 6px 0 #06101e,0 12px 24px #0008;transform:rotate(-3deg)}
+.race3d-roulette[data-rolling=false] .race3d-roulette-cube{border-color:#e3cf91;box-shadow:inset 0 2px 0 #fff7ce66,inset 0 -7px 0 #07101c80,0 6px 0 #06101e,0 12px 24px #0008,0 0 24px #f8d26930}
+.race3d-roulette-name{border-radius:7px;background:linear-gradient(#203a50f2,#0d1e30f2);box-shadow:0 2px 6px #0005;letter-spacing:.2px}
+@media(max-width:700px){.race3d-reserve-icons .race3d-item-small{border-radius:8px}.race3d-reserve-icons .race3d-item-small::after{font-size:7px;min-width:10px;bottom:-4px;right:-2px}}
+/* Leave room for the raised chest shadow/nameplate above touch camera buttons. */
+@media(max-width:700px) and (min-height:481px){
+ .race3d-roulette{bottom:calc(220px + env(safe-area-inset-bottom,0px))}
+ .race3d-hud[data-powerup=true] .race3d-focus-specs{max-height:calc(100% - var(--focus-top,190px) - 342px)}
+}
+@media(max-width:700px) and (max-height:700px) and (min-height:481px){.race3d-roulette{bottom:200px}}

@@ -1,6 +1,7 @@
+import { createPowerupAccents } from './race3d-powerup-accents.js?v=20261031-dimensional';
 import { createRaceItemModels } from './race3d-item-models.js?v=20261027-midnight';
 import {inventoryFace} from './race3d-item-rules.js?v=20261030-grid5';
-import {createExtraVisuals} from './race3d-extra-visuals.js?v=20261030-grid5';
+import {createExtraVisuals} from './race3d-extra-visuals.js?v=20261031-volume';
 
 /**
  * Pooled kart items. Entity positions, lifetimes and hits belong to the race
@@ -17,6 +18,7 @@ export function createRacePowerups(THREE, { track } = {}) {
   const group = new THREE.Group();
   const reducedMotion=!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const activeNitroIds=[],activeRocketIds=[];
+  const accents=createPowerupAccents(THREE,{reducedMotion,low:(globalThis.innerWidth||1400)<720});group.add(accents.group);
   group.name = 'race3d-powerups';
   const extraVisuals=createExtraVisuals(THREE,{track,reducedMotion,low:(globalThis.innerWidth||1400)<720});group.add(extraVisuals.group);
   const authoredItems = createRaceItemModels(THREE, { parent: group, capacity: 96 });
@@ -105,9 +107,13 @@ export function createRacePowerups(THREE, { track } = {}) {
   const glyphs = [];
   for (let face = 0; face < 4; face++) glyphs.push(question.clone().rotateY(face * Math.PI / 2));
   question.dispose();
-  const pickupCore = batch('pickup-shell', new THREE.BoxGeometry(1.46, 1.46, 1.46), standard(0xffffff, {
-    roughness: .11, metalness: .08, emissive: 0x354c69, emissiveIntensity: .6,
-    transparent: true, opacity: .3, depthWrite: false, side: THREE.DoubleSide
+  // Beveled crystal shell and corner studs catch the sun from every view.
+  const crystalShell=new THREE.BoxGeometry(1.46,1.46,1.46,4,4,4);
+  {const positions=crystalShell.attributes.position,p=new THREE.Vector3(),inner=new THREE.Vector3();for(let i=0;i<positions.count;i++){p.fromBufferAttribute(positions,i);inner.copy(p).clampScalar(-.59,.59);p.sub(inner).normalize().multiplyScalar(.14).add(inner);positions.setXYZ(i,p.x,p.y,p.z);}crystalShell.computeVertexNormals();}
+  for(const x of [-.73,.73])for(const y of [-.73,.73])for(const z of [-.73,.73])edges.push(sphere(.105,x,y,z));
+  const pickupCore = batch('pickup-shell', crystalShell, standard(0xffffff, {
+    roughness: .17, metalness: .2, emissive: 0x243b55, emissiveIntensity: .35,
+    transparent: true, opacity: .38, depthWrite: false, side: THREE.FrontSide
   }), limits.pickups);
   const pickupFrame = batch('pickup-frame', combine(edges), standard(0xd9edee, { roughness: .22, metalness: .72 }), limits.pickups);
   const pickupGlyph = batch('pickup-question', combine(glyphs), standard(0xfff6cd, {
@@ -115,7 +121,7 @@ export function createRacePowerups(THREE, { track } = {}) {
   }), limits.pickups);
   const pickupHalo = batch('pickup-ground-ring', new THREE.TorusGeometry(1.16, .037, 5, 28).rotateX(Math.PI / 2),
     basic(0x91e6e9, { transparent: true, opacity: .52, depthWrite: false }), limits.pickups);
-  const pickupPrism=batch('pickup-prism',new THREE.OctahedronGeometry(.45),standard(0x98dfff,{emissive:0x239ed0,emissiveIntensity:1.8,metalness:.5,roughness:.2}),limits.pickups);
+  const pickupPrism=batch('pickup-prism',combine([new THREE.OctahedronGeometry(.43),new THREE.TorusGeometry(.55,.035,6,24).rotateX(.75),new THREE.TorusGeometry(.55,.035,6,24).rotateY(.75)]),standard(0xa5eaff,{emissive:0x239ed0,emissiveIntensity:.85,metalness:.38,roughness:.23}),limits.pickups);
   const pickupColors = Object.fromEntries(itemTypes.map((type, index) => [type, itemColors[index]]));
 
   // Three broad, curling flaps and their pale inner skin form an actual peel.
@@ -217,9 +223,22 @@ export function createRacePowerups(THREE, { track } = {}) {
     basic(0xfff0ff,{transparent:true,opacity:.9,depthWrite:false,toneMapped:false}),limits.waves);
   const jellyMeshes=[jellyBell,jellyRim,jellyTentacles,jellyCore];
   const shieldBubble = batch('shield-bubble',new THREE.SphereGeometry(2.85,24,16),standard(0x71caff,{
-    roughness:.08,metalness:.12,emissive:0x168cde,emissiveIntensity:.45,transparent:true,opacity:.18,depthWrite:false,
+    roughness:.08,metalness:.12,emissive:0x168cde,emissiveIntensity:.65,transparent:true,opacity:.48,depthWrite:false,
     side:THREE.DoubleSide
   }),limits.cars);
+  // Fresnel-weighted shell reveals the car through the center while giving the
+  // curved silhouette real depth. Fine latitude bands sweep over the surface.
+  shieldBubble.material.onBeforeCompile=shader=>{
+    shader.uniforms.shieldClock=exhaustTime;
+    shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vShieldLocal;').replace('#include <begin_vertex>','#include <begin_vertex>\nvShieldLocal=position;');
+    shader.fragmentShader=shader.fragmentShader.replace('#include <common>','#include <common>\nvarying vec3 vShieldLocal; uniform float shieldClock;').replace('#include <opaque_fragment>',`
+      float rim=pow(1.0-abs(dot(normalize(normal),normalize(vViewPosition))),2.2);
+      float bands=smoothstep(.94,1.0,sin(vShieldLocal.y*12.0-${reducedMotion ? '0.0' : 'shieldClock*1.6'}));
+      diffuseColor.a*=.07+.82*rim+.11*bands;
+      outgoingLight+=vec3(.08,.3,.42)*rim;
+      #include <opaque_fragment>`);
+  };
+  shieldBubble.material.customProgramCacheKey=()=>`race3d-shield-fresnel-${reducedMotion}`;
   const shieldRim = batch('shield-energy-rings',combine([
     new THREE.TorusGeometry(2.83,.043,5,40),new THREE.TorusGeometry(2.83,.043,5,40).rotateX(Math.PI/2),
     new THREE.TorusGeometry(2.83,.025,5,40).rotateY(Math.PI/2)
@@ -307,6 +326,9 @@ export function createRacePowerups(THREE, { track } = {}) {
       shader.fragmentShader = shader.fragmentShader
         .replace('#include <common>', '#include <common>\nvarying float vPowerAlpha;')
         .replace('#include <opaque_fragment>', 'diffuseColor.a *= vPowerAlpha;\n#include <opaque_fragment>');
+      if (key === 'explosion-smoke') {
+        shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>','diffuseColor.a *= .14 + .86 * pow(abs(dot(normalize(normal),normalize(vViewPosition))),1.4);\n#include <opaque_fragment>');
+      }
       if (key === 'boost-trail') {
         shader.vertexShader = shader.vertexShader
           .replace('#include <common>', '#include <common>\nvarying vec3 vExhaustNormal;\nvarying vec3 vExhaustView;')
@@ -439,7 +461,7 @@ export function createRacePowerups(THREE, { track } = {}) {
   function spray(position, kind, radius = 1) {
     const explosion = kind === 'explosion';
     const seed = ++burstSerial * 83;
-    const n = explosion ? 34 : 12;
+    const n = reducedMotion ? (explosion ? 8 : 3) : explosion ? 34 : 12;
     for (let i = 0; i < n; i++) {
       const angle = jitter(seed + i * 3) * TAU;
       const speed = explosion ? 4 + jitter(seed + i * 7) * 7 : 1.2 + jitter(seed + i * 7) * 2.4;
@@ -449,12 +471,12 @@ export function createRacePowerups(THREE, { track } = {}) {
         explosion ? .72 + jitter(seed + i) * .48 : .58 + jitter(seed + i) * .38, explosion ? .20 : .12, .7, explosion ? 8 : 2);
     }
     if (!explosion) return;
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < (reducedMotion ? 4 : 14); i++) {
       const angle = jitter(seed + i * 11) * TAU;
       offset.set(Math.sin(angle) * (1 + jitter(seed + i) * 3), 1.4 + jitter(seed + i * 2) * 3.3, Math.cos(angle) * (1 + jitter(seed + i) * 3));
       particle(smoke, position, offset, i % 3 ? 0x555251 : 0x8d8377, 1.2 + jitter(seed + i * 5) * .8, .70 + jitter(seed + i * 8) * .6, 2.3);
     }
-    for(let i=0;i<5;i++){offset.set((jitter(seed+i*13)-.5)*3,.8+jitter(seed+i*17)*1.9,(jitter(seed+i*19)-.5)*3);particle(blast,position,offset,i%2?0xff5925:0xffc04a,.42+jitter(seed+i)*.24,1.1+jitter(seed+i*7)*.7,2.5);}
+    for(let i=0;i<(reducedMotion?2:5);i++){offset.set((jitter(seed+i*13)-.5)*3,.8+jitter(seed+i*17)*1.9,(jitter(seed+i*19)-.5)*3);particle(blast,position,offset,i%2?0xff5925:0xffc04a,.42+jitter(seed+i)*.24,1.1+jitter(seed+i*7)*.7,2.5);}
     const shock = shocks[shockCursor];
     shockCursor = (shockCursor + 1) % shocks.length;
     shock.live = true; shock.age = 0; shock.radius = clamp(radius, 1, 16);
@@ -514,6 +536,7 @@ export function createRacePowerups(THREE, { track } = {}) {
       const kind = event.type === 'bomb-explode' || event.type === 'missile-hit' || event.type==='extra-charge-burst' ? 'explosion'
         : event.type === 'item-pickup' ? event.itemType
           : event.type.startsWith('shield') ? 'shield' : event.type==='tyre-recovered'?'repair':event.type==='trick-complete'?'boost':event.type.startsWith('extra-')?event.itemType:event.type.split('-')[0];
+      accents.emit(event.type,point,kind);
       spray(point, kind, kind==='explosion'?Math.min(16,(event.radius??2.8)*1.8):(event.radius??1));
     }
   }
@@ -521,6 +544,7 @@ export function createRacePowerups(THREE, { track } = {}) {
   function update(dt = 0, state = {}, { cars = state.cars || [], camera = null } = {}) {
     if (disposed) return;
     const step = clamp(dt, 0, .1);
+    accents.update(step);
     const source = state.powerups || state;
     const time = finite(source.time, clock);
     if (lastTime !== null && time < lastTime - .001) reset();
@@ -540,10 +564,11 @@ export function createRacePowerups(THREE, { track } = {}) {
     let n = 0;
     for (const pickup of source.pickups || []) {
       if (pickup.active === false || n >= limits.pickups) continue;
-      frame(pickup, 1.45 + Math.sin(clock * 2.3 + n * 1.7) * .16);
-      dummy.rotation.y += clock * 1.25 + n * .47;
-      dummy.rotation.z = Math.sin(clock * 1.7 + n) * .07;
-      for (const mesh of [pickupCore, pickupFrame, pickupGlyph,pickupPrism]) stamp(mesh, n);
+      frame(pickup, 1.45 + (reducedMotion?0:Math.sin(clock * 2.3 + n * 1.7) * .16));
+      dummy.rotation.y += (reducedMotion?.45:clock*.75) + n*.47;
+      dummy.rotation.z = reducedMotion?.06:Math.sin(clock*1.7+n)*.07;
+      for (const mesh of [pickupCore, pickupFrame, pickupGlyph]) stamp(mesh, n);
+      dummy.rotation.y-=reducedMotion?0:clock*1.85;dummy.rotation.x=reducedMotion?.35:clock*.65;stamp(pickupPrism,n);
       // All boxes conceal their result. Animated prism faces are original;
       // item selection belongs to each driver's independent inventory.
       color.setHSL((clock*.13+n*.073)%1,.78,.58);
@@ -792,6 +817,7 @@ export function createRacePowerups(THREE, { track } = {}) {
     clock = 0; burstSerial = 0; lastTime = null; shockCursor = 0; emissionTime = 0; indicators.clear();
     authoredItems.reset();
     extraVisuals.reset();
+    accents.reset();
     for (const pool of [smoke, sparks, trails, blast]) {
       pool.cursor = 0;
       for (const p of pool.particles) p.live = false;
@@ -806,6 +832,7 @@ export function createRacePowerups(THREE, { track } = {}) {
     reset(); disposed = true;
     authoredItems.dispose();
     extraVisuals.dispose();
+    accents.dispose();
     group.removeFromParent();
     for (const mesh of batches) mesh.dispose();
     for (const geometry of geometries) geometry.dispose();
@@ -814,5 +841,5 @@ export function createRacePowerups(THREE, { track } = {}) {
     group.clear(); geometries.clear(); materials.clear(); textures.clear();
   }
   return { group, update, handleEvents, reset, dispose, limits, assetsReady: authoredItems.ready,
-    snapshot: () => ({nitroIds:[...activeNitroIds],rocketIds:[...activeRocketIds],reducedMotion,visible:{...visibleItems,shockwaves:shockMesh.count},extended:extraVisuals.snapshot(),authored:authoredItems.snapshot(),indicators:[...indicators].map(([id,value])=>({id,...value,remaining:Math.max(0,value.until-clock)}))}) };
+    snapshot: () => ({accents:accents.snapshot(),nitroIds:[...activeNitroIds],rocketIds:[...activeRocketIds],reducedMotion,visible:{...visibleItems,shockwaves:shockMesh.count},extended:extraVisuals.snapshot(),authored:authoredItems.snapshot(),indicators:[...indicators].map(([id,value])=>({id,...value,remaining:Math.max(0,value.until-clock)}))}) };
 }
