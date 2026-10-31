@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-31T07:39:41.448114+00:00",
+  "updatedAt": "2026-10-31T09:06:40.465359+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -347,7 +347,9 @@
           "id": "sat-foundations-2026-10-31",
           "date": "2026-10-31",
           "time": "15:00–17:00",
-          "classContent": [],
+          "classContent": [
+            "• We considered how to argue a point and identify what we want people to do. The speech structure was cause, effect, impact and solution."
+          ],
           "homework": null,
           "students": [
             {
