@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-30T13:33:36.588754+00:00",
+  "updatedAt": "2026-10-31T05:08:16.543931+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1014,7 +1014,14 @@
           "classContent": [
             "• We discussed possible speech topics. Planting flowers initially seemed to me like a topic that might be too simple. However, it could explore how planting flowers and helping to plant things reminds us to use our hands and get them dirty to help the earth—something we sometimes forget.\n\n• Now that everything is becoming more digitalized, one problem is that we don’t use our hands enough and aren’t as connected to the earth right in front of us. Going back to this topic might actually be refreshing: talking about the earth, dirt, earthworms and soil. These were possibilities I discussed for developing the topic.\n\n• I showed the students two videos of past champions or national finalists so they could listen to the speakers and get a better idea of competition speeches.\n\n• I felt the topics were a little far-fetched or ‘out there.’ However, entering a first competition could help the students get a feel for it. Sometimes you don’t really understand a competition until you go through the process yourself and watch other people speak. Listening to the speakers may give them a better idea.\n\n• If they choose these topics, at least they will have something to try out. The expectation for that first competition would not really be to win, but to experience it, because the topics may not be that suitable.\n\n• They can still go through the process of preparing and writing their speeches, and then choose better topics for their next competition."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Speech structure and speech preparation",
+            "steps": [
+              "Fill out the overall speech structure provided in class and try to construct at least some content for your speech.",
+              "Some students may need a little help from their parents with constructing the speech. The more content or information students can share with me about their lives, the better I can help them construct their speeches if they have trouble."
+            ],
+            "prepareFor": "Speech preparation"
+          },
           "students": [
             {
               "name": "Mikaela",
@@ -1237,7 +1244,15 @@
           "classContent": [
             "• Students presented their speeches. The feedback distinguished reading from the paper from memorized delivery, and addressed hand gestures, speaking loudly and clearly, and enthusiasm when reading English.\n\n• We also worked on organizing thoughts and developing speech-topic ideas. One proposed topic was magic. I suggested that it could explore sleight of hand, what people perceive, and the mystery behind magic: looking at things more closely in life because appearances may be deceiving. This was a possible direction for developing a speech, not content already delivered in a finished speech.\n\n• Some ideas about birds were very simple, staying at the level of ‘I like bird. Bird is great. Thank you.’ In this activity, the students giving those answers did not seem able to express and develop their ideas further. Another student’s ideas were also quite simple.\n\n• We want to give students more practice or more time to expand their answers. Otherwise, we may need to create their speeches completely, because in this activity they did not seem able to write out their ideas."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Speech structure and speech preparation",
+            "steps": [
+              "We wanted to work on constructing speeches in class, but I felt the students had some trouble organizing their ideas themselves, even though I feel they speak quite okay. More input from students will help me support them.",
+              "Choose one of two options: A. Fill out the speech structure; or B. Use the prepared, printed speech and adjust or change some of the content to fit what you want to say.",
+              "It is fine to keep the speech very simple and general, based on those topics, while going through the process of practicing, memorizing and delivering a speech."
+            ],
+            "prepareFor": "Speech preparation"
+          },
           "students": [
             {
               "name": "Zoe",
