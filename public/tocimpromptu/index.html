@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SpeakKai · Impromptu Practice</title><style>:root{color-scheme:light;--paper:#f5f3ed;--card:#fffefa;--ink:#182b2a;--muted:#546764;--line:#ccd4cb;--accent:#176554;--accent-soft:#e7f1e7;--gold:#a55b17;--danger:#ac243a;--radius:22px;font-family:Inter,Segoe UI,Arial,sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}button,input,select,textarea{font:inherit}button,summary,select{cursor:pointer}button,a,input,select,textarea,summary{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #ba650d;outline-offset:4px}button{min-height:46px;border:1px solid var(--line);border-radius:12px;padding:11px 17px;background:var(--card);color:var(--ink);font-weight:700}button:hover{border-color:var(--accent);background:var(--accent-soft)}button:disabled{opacity:.45;cursor:not-allowed}.primary{background:var(--accent);border-color:var(--accent);color:white}.primary:hover{background:#104b3e;color:white}.secondary{background:transparent}.danger{color:var(--danger)}[hidden]{display:none!important}.app{width:min(1200px,100%);margin:auto;padding:28px 28px 40px}.masthead{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:32px}.brand{font-size:17px;font-weight:850;color:var(--accent);text-decoration:none}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}h1{font-size:clamp(27px,4vw,45px);letter-spacing:-.04em;line-height:1.1;margin:10px 0}h2,h3,p{overflow-wrap:anywhere}p{line-height:1.55}.stage-shell{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}.topic-card{min-width:0;border:1px solid var(--line);border-radius:var(--radius);padding:clamp(24px,4vw,46px);background:var(--card);min-height:330px;display:flex;flex-direction:column;justify-content:center;position:relative}.topic-card:before{content:'';width:40px;height:5px;border-radius:8px;background:var(--accent);margin-bottom:22px}.topic{font-size:clamp(28px,3.4vw,48px);line-height:1.2;font-weight:750;letter-spacing:-.035em;overflow-wrap:anywhere;hyphens:auto;margin:14px 0}.translation{font-size:clamp(17px,2vw,23px);line-height:1.6;color:var(--muted);overflow-wrap:anywhere}.timer-panel{background:var(--ink);border-radius:var(--radius);padding:25px;color:white;text-align:center;min-width:0}.timer-panel .eyebrow{color:#c4d9cf}.clock{font-size:clamp(52px,6vw,78px);font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:-.055em;line-height:1.2;margin:14px 0}.timer-status{font-size:14px;min-height:2.8em;line-height:1.45;color:#d4e7dd}.timer-panel .primary{background:#d6edbb;color:var(--ink);border-color:#d6edbb}.timer-panel .secondary{color:white;border-color:#6d8279}.controls{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.timer-panel .controls{justify-content:center}.timer-panel .controls .primary{width:100%}.chip{display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--accent-soft);border-radius:100px;padding:7px 11px;font-size:12px;font-weight:700;line-height:1.3}.disclosure{border:1px solid var(--line);border-radius:16px;background:var(--card);margin-top:16px;padding:0 20px}.disclosure>summary{padding:18px 0;font-size:15px;font-weight:750}.disclosure[open]{padding-bottom:20px}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:16px}.field{display:flex;flex-direction:column;gap:8px;color:var(--muted);font-size:13px;font-weight:700}.field select,.field input,.field textarea{padding:12px;border:1px solid var(--line);border-radius:10px;color:var(--ink);background:white;min-width:0;width:100%;font-size:16px}.checklist{display:grid;gap:12px;padding:0;list-style:none}.checklist label{display:flex;align-items:start;gap:10px;line-height:1.45}.checklist input{width:19px;height:19px;flex-shrink:0;accent-color:var(--accent)}.timeline{padding-left:25px;color:var(--muted);font-size:14px;line-height:1.8}.timeline .active{color:var(--accent);font-weight:800}.notice{border-left:3px solid var(--gold);padding:8px 14px;font-size:14px;line-height:1.5;color:var(--muted);margin:18px 0}.footer{margin-top:28px;font-size:12px;line-height:1.7;color:var(--muted)}.footer a{color:inherit}.warn{color:#ffcf88}.complete{color:#d6edbb}.large .topic{font-size:clamp(34px,5vw,68px)}@media(max-width:760px){.app{padding:18px 14px 28px}.masthead{align-items:flex-start;margin-bottom:22px}.stage-shell{grid-template-columns:minmax(0,1fr);gap:12px}.topic-card{min-height:230px;padding:25px}.timer-panel{padding:18px}.clock{font-size:55px;margin:5px 0}.timer-panel .controls .primary{width:auto;flex:1}.timer-status{min-height:0}.timer-panel .controls{margin-top:12px}.disclosure{padding-left:16px;padding-right:16px}.large .topic{font-size:clamp(34px,8vw,48px)}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}@media print{body{background:white}.app{width:100%;padding:0}.controls,.masthead button,.timer-panel,.fields{display:none!important}.stage-shell{display:block}.topic-card{min-height:0;border-color:#999}.disclosure{break-inside:avoid}.footer{color:#222}}
+
+.topic-card .timer-status{color:var(--muted)}</style></head>
+<body><div class="app"><header class="masthead"><a class="brand" href="https://speakkai.com">SpeakKai</a><div><p class="eyebrow">SPEAKING PRACTICE</p><h1>Impromptu</h1></div><button class="secondary" id="focus" aria-pressed="false">Focus</button></header>
+<p class="notice" id="setupNotice">Solo speaking practice · Adjustable timing, not official TOC event settings.</p>
+<main><section class="stage-shell" aria-label="Speaking practice"><div class="topic-card"><p class="eyebrow" id="stage">READY TO PRACTICE</p><h2 class="topic" id="topic" aria-live="polite">Your topic will appear here.</h2><p class="translation" id="translation" lang="zh">题目将在这里显示。</p><p class="timer-status" id="topicHint">Press Start to reveal a topic and begin preparation.</p></div><section class="timer-panel" aria-label="Practice timer"><p class="eyebrow" id="timerLabel">TIMER</p><div class="clock" id="clock" role="timer" aria-label="Timing not configured">—:—</div><p class="timer-status" id="status" aria-live="polite">Awaiting timing rules</p><div class="controls"><button class="primary" id="start" disabled>Start practice</button><button class="secondary" id="advance" hidden>Begin speech</button><button class="secondary" id="reset">New topic</button><button class="secondary" id="retry" hidden>Retry topic</button></div></section></section>
+<details class="disclosure" id="settings"><summary>Practice settings</summary><div class="fields"><label class="field">Level<select id="level"><option value="junior">Junior</option><option value="middle">Middle</option><option value="high">High</option><option value="all">All levels</option></select></label><label class="field">Category<select id="category"><option value="all">All categories</option><option value="school">School</option><option value="life">Life</option><option value="technology">Technology</option><option value="environment">Environment</option><option value="society">Society</option><option value="values">Values</option></select></label><label class="field">Preparation<select id="prep"><option value="0" >No preparation</option><option value="30" >30 seconds</option><option value="60" selected>60 seconds</option><option value="120" >120 seconds</option><option value="180" >180 seconds</option><option value="300" >300 seconds</option></select></label><label class="field">Speaking<select id="speech"><option value="60" >1 minutes</option><option value="120" selected>2 minutes</option><option value="180" >3 minutes</option><option value="240" >4 minutes</option><option value="300" >5 minutes</option><option value="420" >7 minutes</option></select></label><label class="field">Topic language<select id="language"><option value="en">English</option><option value="both">English + 中文</option></select></label><label class="field">Text size<select id="textSize"><option value="normal">Standard</option><option value="large">Large</option></select></label></div><p class="notice">Default practice: 1 minute preparation + 2 minutes speaking. Change these to match your event. Settings changes begin a new attempt.</p></details>
+<details class="disclosure" id="coach"><summary>Coach tools</summary><h2>Build a clear answer</h2><ol><li>State your main idea.</li><li>Explain why it matters.</li><li>Support it with a specific example.</li><li>Finish by returning to your main idea.</li></ol><h2>Reflect after speaking</h2><div class="checklist"><label><input type="checkbox"> I answered the topic directly.</label><label><input type="checkbox"> My ideas had a clear order.</label><label><input type="checkbox"> I used a specific example.</label><label><input type="checkbox"> I spoke clearly and confidently.</label></div><p class="notice">SpeakKai practice guidance, not an official scoring rubric.</p></details>
+<details class="disclosure"><summary>About this practice tool</summary><p>Solo opinion-speech practice. Official solo event rules have not been verified; timing is fully adjustable.</p><p>These 120 bilingual practice topics are original training material, not an official competition topic bank.</p></details>
+</main><footer class="footer">SpeakKai · Build confidence, one speech at a time.</footer></div>
+<style>.translation{display:none}body.bilingual .translation{display:block}.topic{overflow-wrap:anywhere;min-width:0}body.large .topic{font-size:clamp(2rem,5vw,4.2rem)}body.focus #settings,body.focus #coach,body.focus .footer,body.focus #setupNotice{display:none}button:disabled{opacity:.5;cursor:not-allowed}input,select,button,summary{font:inherit}select{max-width:100%}</style>
+<script>
+'use strict';
+const byId=id=>document.getElementById(id);
+byId('language').addEventListener('change',e=>document.body.classList.toggle('bilingual',e.target.value==='both'));
+byId('textSize').addEventListener('change',e=>document.body.classList.toggle('large',e.target.value==='large'));
+byId('focus').addEventListener('click',()=>{const on=document.body.classList.toggle('focus');byId('focus').textContent=on?'Exit focus':'Focus';byId('focus').setAttribute('aria-pressed',String(on));});
+
+const bank=[
+  {
+    "id": "toc-001",
+    "level": "junior",
+    "category": "school",
+    "en": "Do you agree that schools should give students one homework-free day each week? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应每周安排一天无作业日？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-002",
+    "level": "junior",
+    "category": "school",
+    "en": "Do you agree that students should choose their own seats in class? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学生应自行选择课堂座位？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-003",
+    "level": "junior",
+    "category": "school",
+    "en": "Do you agree that schools should replace individual prizes with team prizes? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应以团队奖代替个人奖？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-004",
+    "level": "junior",
+    "category": "school",
+    "en": "Do you agree that every class should care for a small garden? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：每个班级都应照料一个小花园？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-005",
+    "level": "junior",
+    "category": "school",
+    "en": "Do you agree that students should help choose books for the school library? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学生应参与选择学校图书馆的书籍？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-006",
+    "level": "junior",
+    "category": "school",
+    "en": "Do you agree that schools should have longer breaks between lessons? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应延长课间休息时间？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-007",
+    "level": "junior",
+    "category": "school",
+    "en": "Do you agree that school uniforms should be optional? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学生应可以自行选择是否穿校服？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-008",
+    "level": "junior",
+    "category": "life",
+    "en": "Do you agree that children should earn pocket money by doing extra chores? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：孩子应通过额外家务赚取零花钱？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-009",
+    "level": "junior",
+    "category": "life",
+    "en": "Do you agree that families should let children help plan holidays? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：家庭应让孩子参与假期计划？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-010",
+    "level": "junior",
+    "category": "life",
+    "en": "Do you agree that children should learn to cook before learning to play an instrument? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：孩子应先学做饭，再学乐器？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-011",
+    "level": "junior",
+    "category": "life",
+    "en": "Do you agree that families should have one screen-free evening each week? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：家庭应每周安排一个不用电子屏幕的晚上？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-012",
+    "level": "junior",
+    "category": "life",
+    "en": "Do you agree that it is better to spend birthday money on an experience than on a toy? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：生日礼金用来体验活动比购买玩具更好？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-013",
+    "level": "junior",
+    "category": "life",
+    "en": "Do you agree that children should share a bedroom with their siblings when possible? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：条件允许时，孩子应与兄弟姐妹共用卧室？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-014",
+    "level": "junior",
+    "category": "life",
+    "en": "Do you agree that children should take part in a team sport before an individual sport? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：孩子应先参加团队运动，再参加个人运动？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-015",
+    "level": "junior",
+    "category": "technology",
+    "en": "Do you agree that children should read printed books rather than electronic books? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：孩子应阅读纸质书而非电子书？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-016",
+    "level": "junior",
+    "category": "technology",
+    "en": "Do you agree that schools should use educational games to teach mathematics? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应使用教育游戏教授数学？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-017",
+    "level": "junior",
+    "category": "technology",
+    "en": "Do you agree that families should set the same daily screen-time limit for all children? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：家庭应为所有孩子设定相同的每日屏幕使用时限？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-018",
+    "level": "junior",
+    "category": "technology",
+    "en": "Do you agree that children should learn typing before handwriting practice becomes advanced? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：孩子应在进行进阶书写练习前学习打字？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-019",
+    "level": "junior",
+    "category": "technology",
+    "en": "Do you agree that robots should help with cleaning in schools? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应使用机器人协助清洁？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-020",
+    "level": "junior",
+    "category": "technology",
+    "en": "Do you agree that children should ask a person for help before asking a digital assistant? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：孩子应先向人求助，再向数字助手求助？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-021",
+    "level": "junior",
+    "category": "environment",
+    "en": "Do you agree that schools should stop selling bottled water? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应停止销售瓶装水？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-022",
+    "level": "junior",
+    "category": "environment",
+    "en": "Do you agree that families should buy second-hand toys instead of new toys? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：家庭应购买二手玩具而非新玩具？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-023",
+    "level": "junior",
+    "category": "environment",
+    "en": "Do you agree that school trips should visit nearby places rather than distant places? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校旅行应选择附近地点而非远方地点？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-024",
+    "level": "junior",
+    "category": "environment",
+    "en": "Do you agree that children should walk to school when the route is safe and short? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：路线安全且距离较短时，孩子应步行上学？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-025",
+    "level": "junior",
+    "category": "environment",
+    "en": "Do you agree that parks should leave some grass uncut for wildlife? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：公园应保留部分不修剪的草地供野生动物栖息？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-026",
+    "level": "junior",
+    "category": "environment",
+    "en": "Do you agree that schools should serve one meat-free lunch each week? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应每周提供一次无肉午餐？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-027",
+    "level": "junior",
+    "category": "society",
+    "en": "Do you agree that public libraries should lend toys as well as books? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：公共图书馆除了书籍，也应出借玩具？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-028",
+    "level": "junior",
+    "category": "society",
+    "en": "Do you agree that museums should be free for children? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：博物馆应对儿童免费开放？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-029",
+    "level": "junior",
+    "category": "society",
+    "en": "Do you agree that neighborhoods should turn one parking area into a playground? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：社区应将一处停车区域改为游乐场？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-030",
+    "level": "junior",
+    "category": "society",
+    "en": "Do you agree that children should be allowed to help design public parks? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：儿童应获准参与公共公园设计？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-031",
+    "level": "junior",
+    "category": "society",
+    "en": "Do you agree that local festivals should focus on games rather than performances? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：地方节庆应以游戏而非表演为主？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-032",
+    "level": "junior",
+    "category": "society",
+    "en": "Do you agree that pet owners should be allowed to bring well-behaved pets on buses? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：宠物主人应获准携带行为良好的宠物乘坐公交车？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-033",
+    "level": "junior",
+    "category": "society",
+    "en": "Do you agree that communities should organize toy exchanges instead of toy sales? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：社区应组织玩具交换活动而非玩具销售活动？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-034",
+    "level": "junior",
+    "category": "values",
+    "en": "Do you agree that trying something new is more valuable than getting better at something familiar? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：尝试新事物比精进熟悉的事物更有价值？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-035",
+    "level": "junior",
+    "category": "values",
+    "en": "Do you agree that a good friend should point out your mistakes even when it is uncomfortable? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：好朋友应指出你的错误，即使这令人不舒服？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-036",
+    "level": "junior",
+    "category": "values",
+    "en": "Do you agree that in children's games, having fun matters more than winning? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：儿童游戏中，快乐比获胜更重要？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-037",
+    "level": "junior",
+    "category": "values",
+    "en": "Do you agree that children should be praised more for effort than for results? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：对孩子的表扬应更重视努力而非结果？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-038",
+    "level": "junior",
+    "category": "values",
+    "en": "Do you agree that it is better to give one thoughtful gift than several small gifts? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：送一份用心的礼物比送几份小礼物更好？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-039",
+    "level": "junior",
+    "category": "values",
+    "en": "Do you agree that a team should give every player equal playing time? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：团队应给予每位队员相同的上场时间？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-040",
+    "level": "junior",
+    "category": "values",
+    "en": "Do you agree that keeping a promise is more important than avoiding a small inconvenience? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：遵守承诺比避免一点不便更重要？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-041",
+    "level": "middle",
+    "category": "school",
+    "en": "Do you agree that schools should replace some written exams with projects? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应以项目作业替代部分笔试？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-042",
+    "level": "middle",
+    "category": "school",
+    "en": "Do you agree that students should evaluate their teachers anonymously? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学生应匿名评价教师？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-043",
+    "level": "middle",
+    "category": "school",
+    "en": "Do you agree that secondary schools should start later in the morning? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：中学应推迟早晨上课时间？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-044",
+    "level": "middle",
+    "category": "school",
+    "en": "Do you agree that schools should require students to join at least one club? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应要求学生至少加入一个社团？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-045",
+    "level": "middle",
+    "category": "school",
+    "en": "Do you agree that students should help decide how a portion of the school budget is spent? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学生应参与决定部分学校预算的用途？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-046",
+    "level": "middle",
+    "category": "school",
+    "en": "Do you agree that schools should allow students to redo assignments for a better grade? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应允许学生重做作业以提高成绩？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-047",
+    "level": "middle",
+    "category": "school",
+    "en": "Do you agree that schools should teach financial literacy as a separate subject? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应将财务素养设为独立课程？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-048",
+    "level": "middle",
+    "category": "life",
+    "en": "Do you agree that teenagers should manage a monthly budget instead of receiving money as needed? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：青少年应管理每月预算，而非按需领取钱款？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-049",
+    "level": "middle",
+    "category": "life",
+    "en": "Do you agree that families should include teenagers in major household decisions? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：家庭应让青少年参与重大家庭决策？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-050",
+    "level": "middle",
+    "category": "life",
+    "en": "Do you agree that young people should specialize in one hobby rather than pursue several? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：年轻人应专注一种爱好，而非同时发展多种爱好？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-051",
+    "level": "middle",
+    "category": "life",
+    "en": "Do you agree that teenagers should take a short part-time job during long holidays? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：青少年应在长假期间从事短期兼职？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-052",
+    "level": "middle",
+    "category": "life",
+    "en": "Do you agree that families should prioritize time together over expensive celebrations? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：家庭应优先考虑相处时间，而非昂贵的庆祝活动？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-053",
+    "level": "middle",
+    "category": "life",
+    "en": "Do you agree that teenagers should plan their own study schedules? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：青少年应自行规划学习日程？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-054",
+    "level": "middle",
+    "category": "life",
+    "en": "Do you agree that traveling with friends is more valuable for teenagers than traveling with organized tour groups? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：对青少年而言，与朋友旅行比参加旅行团更有价值？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-055",
+    "level": "middle",
+    "category": "technology",
+    "en": "Do you agree that schools should require phones to be stored away during the school day? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应要求学生在校期间收起手机？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-056",
+    "level": "middle",
+    "category": "technology",
+    "en": "Do you agree that social media platforms should hide public like counts? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：社交媒体平台应隐藏公开点赞数？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-057",
+    "level": "middle",
+    "category": "technology",
+    "en": "Do you agree that students should be allowed to use AI for brainstorming if they disclose its use? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学生应获准使用人工智能构思，但必须说明使用情况？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-058",
+    "level": "middle",
+    "category": "technology",
+    "en": "Do you agree that video games should show players how long they have been playing? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：电子游戏应向玩家显示已游玩时长？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-059",
+    "level": "middle",
+    "category": "technology",
+    "en": "Do you agree that children's apps should use subscriptions instead of advertising? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：儿童应用应采用订阅收费，而非广告盈利？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-060",
+    "level": "middle",
+    "category": "technology",
+    "en": "Do you agree that schools should teach students to repair simple electronic devices? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应教学生维修简单电子设备？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-061",
+    "level": "middle",
+    "category": "environment",
+    "en": "Do you agree that cities should make public transport free for students? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：城市公共交通应对学生免费？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-062",
+    "level": "middle",
+    "category": "environment",
+    "en": "Do you agree that schools should prioritize reducing waste over recycling it? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应优先减少废弃物，而非回收废弃物？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-063",
+    "level": "middle",
+    "category": "environment",
+    "en": "Do you agree that shops should charge for disposable takeaway containers? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：商店应对一次性外卖容器收费？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-064",
+    "level": "middle",
+    "category": "environment",
+    "en": "Do you agree that cities should replace some car lanes with protected bicycle lanes? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：城市应将部分机动车道改为有隔离设施的自行车道？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-065",
+    "level": "middle",
+    "category": "environment",
+    "en": "Do you agree that school cafeterias should offer smaller default portions with free refills? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校食堂应默认提供小份餐食并允许免费添餐？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-066",
+    "level": "middle",
+    "category": "environment",
+    "en": "Do you agree that communities should prioritize planting shade trees over decorative flower beds? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：社区应优先种植遮阴树木，而非建设装饰花坛？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-067",
+    "level": "middle",
+    "category": "society",
+    "en": "Do you agree that teenagers should have seats on local youth advisory councils? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：青少年应在地方青年咨询委员会中拥有席位？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-068",
+    "level": "middle",
+    "category": "society",
+    "en": "Do you agree that public libraries should spend more on community activities than on expanding book collections? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：公共图书馆应将更多资金用于社区活动，而非扩大藏书量？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-069",
+    "level": "middle",
+    "category": "society",
+    "en": "Do you agree that cities should limit the number of short-term holiday rentals in residential neighborhoods? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：城市应限制住宅社区内的短期度假租赁数量？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-070",
+    "level": "middle",
+    "category": "society",
+    "en": "Do you agree that sports clubs should reserve places for beginners? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：体育俱乐部应为初学者预留名额？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-071",
+    "level": "middle",
+    "category": "society",
+    "en": "Do you agree that local governments should fund public sports facilities before large sporting events? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：地方政府应优先资助公共体育设施，而非大型体育赛事？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-072",
+    "level": "middle",
+    "category": "society",
+    "en": "Do you agree that museums should return borrowed school artwork with written feedback from visitors? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：博物馆应在归还借展学生作品时附上观众的书面反馈？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-073",
+    "level": "middle",
+    "category": "society",
+    "en": "Do you agree that communities should require consultation with young residents before closing youth facilities? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：社区关闭青少年设施前应征求年轻居民的意见？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-074",
+    "level": "middle",
+    "category": "values",
+    "en": "Do you agree that being willing to change your mind is more important than defending your first opinion? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：愿意改变看法比坚持最初观点更重要？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-075",
+    "level": "middle",
+    "category": "values",
+    "en": "Do you agree that schools should reward cooperation more than competition? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应更多奖励合作，而非竞争？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-076",
+    "level": "middle",
+    "category": "values",
+    "en": "Do you agree that a leader should prioritize fairness over popularity? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：领导者应优先考虑公平，而非受欢迎程度？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-077",
+    "level": "middle",
+    "category": "values",
+    "en": "Do you agree that students should admit uncertainty rather than give a confident guess? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学生应承认不确定，而非自信地猜测？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-078",
+    "level": "middle",
+    "category": "values",
+    "en": "Do you agree that a sincere apology should include an offer to repair the harm? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：真诚的道歉应包括弥补伤害的提议？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-079",
+    "level": "middle",
+    "category": "values",
+    "en": "Do you agree that team members should share credit equally even when their contributions differ? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：即使贡献不同，团队成员也应平均分享荣誉？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-080",
+    "level": "middle",
+    "category": "values",
+    "en": "Do you agree that choosing a difficult goal is more valuable than choosing a goal you are certain to achieve? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：选择困难目标比选择肯定能完成的目标更有价值？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-081",
+    "level": "high",
+    "category": "school",
+    "en": "Do you agree that universities should reduce the weight of standardized tests in admissions? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：大学招生应降低标准化考试成绩的权重？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-082",
+    "level": "high",
+    "category": "school",
+    "en": "Do you agree that schools should make community service optional rather than a graduation requirement? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应将社区服务设为自愿活动，而非毕业要求？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-083",
+    "level": "high",
+    "category": "school",
+    "en": "Do you agree that students should be allowed to design part of their own curriculum? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学生应获准设计部分个人课程？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-084",
+    "level": "high",
+    "category": "school",
+    "en": "Do you agree that schools should replace class rankings with individual progress reports? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应以个人进步报告替代班级排名？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-085",
+    "level": "high",
+    "category": "school",
+    "en": "Do you agree that universities should prioritize need-based scholarships over merit-based scholarships? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：大学应优先提供助困奖学金，而非择优奖学金？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-086",
+    "level": "high",
+    "category": "school",
+    "en": "Do you agree that secondary schools should teach media literacy across all subjects? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：中学应在各学科中融入媒介素养教育？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-087",
+    "level": "high",
+    "category": "school",
+    "en": "Do you agree that schools should assess group projects partly through individual oral defenses? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应通过个人口头答辩对小组项目进行部分评分？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-088",
+    "level": "high",
+    "category": "life",
+    "en": "Do you agree that young adults should prioritize meaningful work over a higher starting salary? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：年轻成年人应优先选择有意义的工作，而非更高的起薪？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-089",
+    "level": "high",
+    "category": "life",
+    "en": "Do you agree that employers should offer a four-day working week with unchanged weekly pay? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：雇主应提供每周四天工作制并保持周薪不变？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-090",
+    "level": "high",
+    "category": "life",
+    "en": "Do you agree that young adults should live independently before committing to a long-term career? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：年轻成年人应在确定长期职业前尝试独立生活？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-091",
+    "level": "high",
+    "category": "life",
+    "en": "Do you agree that people should prioritize buying fewer durable goods over cheaper goods that need frequent replacement? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：人们应优先购买较少的耐用品，而非需要频繁更换的廉价商品？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-092",
+    "level": "high",
+    "category": "life",
+    "en": "Do you agree that families should discuss financial decisions openly with older teenagers? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：家庭应与年龄较大的青少年公开讨论财务决策？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-093",
+    "level": "high",
+    "category": "life",
+    "en": "Do you agree that young people should take a structured gap year before university? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：年轻人应在大学入学前度过一个有规划的间隔年？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-094",
+    "level": "high",
+    "category": "life",
+    "en": "Do you agree that employers should measure performance by results rather than hours at a desk? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：雇主应根据成果而非坐班时长衡量工作表现？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-095",
+    "level": "high",
+    "category": "technology",
+    "en": "Do you agree that social media platforms should allow users to choose a feed without personalized recommendations? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：社交媒体平台应允许用户选择不含个性化推荐的信息流？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-096",
+    "level": "high",
+    "category": "technology",
+    "en": "Do you agree that schools should assess the process of AI-assisted work as well as the final product? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：学校应同时评价人工智能辅助作业的过程和最终成果？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-097",
+    "level": "high",
+    "category": "technology",
+    "en": "Do you agree that companies should be required to offer a human review of important automated decisions? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：企业应被要求为重要的自动化决策提供人工复核？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-098",
+    "level": "high",
+    "category": "technology",
+    "en": "Do you agree that public institutions should prefer open-source software when practical? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：条件可行时，公共机构应优先使用开源软件？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-099",
+    "level": "high",
+    "category": "technology",
+    "en": "Do you agree that online platforms should label realistic AI-generated media? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：网络平台应标注逼真的人工智能生成媒体内容？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-100",
+    "level": "high",
+    "category": "technology",
+    "en": "Do you agree that technology companies should prioritize repairability over making devices thinner? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：科技公司应优先提高设备可维修性，而非追求更薄的机身？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-101",
+    "level": "high",
+    "category": "environment",
+    "en": "Do you agree that cities should charge private vehicles to enter busy central areas? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：城市应对进入繁忙中心区域的私家车收费？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-102",
+    "level": "high",
+    "category": "environment",
+    "en": "Do you agree that governments should prioritize climate adaptation in vulnerable communities over prestige environmental projects? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：政府应优先支持脆弱社区适应气候变化，而非建设形象性环保项目？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-103",
+    "level": "high",
+    "category": "environment",
+    "en": "Do you agree that airlines should include the environmental cost of flights in ticket prices? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：航空公司应将航班的环境成本计入票价？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-104",
+    "level": "high",
+    "category": "environment",
+    "en": "Do you agree that governments should favor repairing existing buildings over replacing them? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：政府应优先修缮现有建筑，而非拆除重建？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-105",
+    "level": "high",
+    "category": "environment",
+    "en": "Do you agree that companies should be responsible for collecting the packaging they sell? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：企业应负责回收其售出产品的包装？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-106",
+    "level": "high",
+    "category": "environment",
+    "en": "Do you agree that cities should prioritize reliable public transport before encouraging electric car ownership? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：城市应先发展可靠的公共交通，再鼓励购买电动汽车？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-107",
+    "level": "high",
+    "category": "society",
+    "en": "Do you agree that cities should limit tourist numbers at overcrowded cultural sites? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：城市应限制拥挤文化景点的游客数量？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-108",
+    "level": "high",
+    "category": "society",
+    "en": "Do you agree that governments should fund local journalism as a public service? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：政府应将地方新闻视为公共服务并提供资金支持？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-109",
+    "level": "high",
+    "category": "society",
+    "en": "Do you agree that public museums should offer free admission funded by taxation? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：公共博物馆应通过税收资助实行免费入场？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-110",
+    "level": "high",
+    "category": "society",
+    "en": "Do you agree that employers should remove names and photographs from initial job applications? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：雇主应在初步求职筛选中移除姓名与照片？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-111",
+    "level": "high",
+    "category": "society",
+    "en": "Do you agree that cities should prioritize affordable housing over attracting luxury developments? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：城市应优先提供可负担住房，而非吸引豪华地产开发？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-112",
+    "level": "high",
+    "category": "society",
+    "en": "Do you agree that public consultations should use randomly selected citizen panels as well as open meetings? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：公共协商应同时采用随机抽选的公民小组和公开会议？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-113",
+    "level": "high",
+    "category": "society",
+    "en": "Do you agree that sports organizations should distribute broadcasting revenue more equally among participating teams? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：体育组织应在参赛队伍之间更平均地分配转播收入？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-114",
+    "level": "high",
+    "category": "values",
+    "en": "Do you agree that leaders should publicly acknowledge mistakes even when it weakens their authority? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：领导者应公开承认错误，即使这可能削弱其权威？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-115",
+    "level": "high",
+    "category": "values",
+    "en": "Do you agree that society should value reliable everyday contributions more than exceptional fame? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：社会应更重视可靠的日常贡献，而非非凡的名声？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-116",
+    "level": "high",
+    "category": "values",
+    "en": "Do you agree that fair rules should sometimes allow exceptions for unequal circumstances? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：公平的规则有时应为不同处境允许例外？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-117",
+    "level": "high",
+    "category": "values",
+    "en": "Do you agree that people have a responsibility to challenge misleading claims shared by their friends? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：人们有责任质疑朋友传播的误导性说法？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-118",
+    "level": "high",
+    "category": "values",
+    "en": "Do you agree that decision-makers should prioritize preventing serious harm over achieving small benefits for many people? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：决策者应优先防止严重伤害，而非为许多人带来小幅利益？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-119",
+    "level": "high",
+    "category": "values",
+    "en": "Do you agree that forgiveness should not depend on restoring trust? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：原谅不应以恢复信任为前提？请用理由和例子阐述你的看法。"
+  },
+  {
+    "id": "toc-120",
+    "level": "high",
+    "category": "values",
+    "en": "Do you agree that public recognition should focus on a person's contribution rather than their personal story? Explain your view with a reason and an example.",
+    "zh": "你是否赞同以下观点：公开表彰应关注个人贡献，而非其个人经历？请用理由和例子阐述你的看法。"
+  }
+]
+;
+let phase='ready',running=false,remaining=60,deadline=0,handle=0,current=null;
+const $=byId;
+function pool(){return bank.filter(q=>($('level').value==='all'||q.level===$('level').value)&&($('category').value==='all'||q.category===$('category').value))}
+function draw(){const candidates=pool().filter(q=>!current||q.id!==current.id),p=candidates.length?candidates:pool();current=p[Math.floor(Math.random()*p.length)];$('topic').textContent=current.en;$('translation').textContent=current.zh}
+function paint(){const n=Math.ceil(Math.max(0,remaining));$('clock').textContent=String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');$('clock').setAttribute('aria-label',n+' seconds remaining');$('clock').classList.toggle('warn',n<=15&&phase==='speech');$('timerLabel').textContent=phase==='prep'?'PREPARATION':phase==='speech'?'SPEAKING':'PRACTICE TIMER';$('stage').textContent=phase==='ready'?'READY TO PRACTICE':phase==='prep'?'PREPARE YOUR IDEAS':phase==='between'?'READY TO SPEAK':phase==='speech'?'YOUR SPEECH':'ATTEMPT COMPLETE';$('start').textContent=running?'Pause':phase==='done'?'Retry topic':phase==='between'?'Start speech':phase==='ready'?'Start practice':'Resume';$('advance').hidden=!(phase==='prep'||phase==='speech');$('advance').textContent=phase==='prep'?'Begin speech now':'Finish speech';$('retry').hidden=!current||phase==='ready';$('start').disabled=!pool().length}
+function halt(){if(running)remaining=Math.max(0,(deadline-Date.now())/1000);running=false;clearTimeout(handle)}
+function tick(){if(!running)return;remaining=Math.max(0,(deadline-Date.now())/1000);if(remaining<=0){halt();if(phase==='prep'){phase='between';$('status').textContent='Preparation complete. Press Start speech when ready.'}else{phase='done';$('status').textContent='Time is up. Review your speech below.';$('coach').open=true}}paint();if(running)handle=setTimeout(tick,100)}
+function launch(){running=true;deadline=Date.now()+remaining*1000;$('status').textContent=phase==='prep'?'Organize your main idea, reasons and example.':'Speak clearly and develop your answer.';tick()}
+function reset(keep=false){halt();phase='ready';remaining=Number($('prep').value)||Number($('speech').value);if(!keep){current=null;$('topic').textContent='Your topic will appear when you start.';$('translation').textContent='开始后显示题目。'}document.querySelectorAll('#coach input').forEach(x=>x.checked=false);$('status').textContent=pool().length+' practice topics available';$('topicHint').textContent=keep?'Retry this topic with a fresh timer.':'Start reveals one random topic. Preparation ends before you start speaking.';paint()}
+$('start').onclick=()=>{if(running){tick();if(!running)return;halt();$('status').textContent='Paused for coaching';paint();return}if(phase==='done')reset(true);if(phase==='ready'){if(!current)draw();phase=Number($('prep').value)?'prep':'speech';remaining=Number($(phase==='prep'?'prep':'speech').value)}else if(phase==='between'){phase='speech';remaining=Number($('speech').value)}launch()};
+$('advance').onclick=()=>{halt();if(phase==='prep'){phase='speech';remaining=Number($('speech').value);launch()}else{phase='done';$('status').textContent='Speech finished. Reflect and try again.';$('coach').open=true;paint()}};
+$('reset').onclick=()=>reset();$('retry').onclick=()=>reset(true);
+for(const id of ['level','category','prep','speech'])$(id).onchange=()=>reset();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&running){clearTimeout(handle);tick()}});reset();
+
+</script></body></html>
