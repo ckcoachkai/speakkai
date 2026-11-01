@@ -1,5 +1,5 @@
 /** Simplified four-contact arcade chassis, in track metres. Not manufacturer data. */
-import {createRampLayout,rampHeightAt,rampSlopeAt} from './race3d-ramps.js?v=20261027-midnight';
+import {createRampLayout,rampHeightAt,rampSlopeAt} from './race3d-ramps.js?v=20261101-descent';
 import {getRaceVehicleSpec as getVehicleSpec} from './race3d-race-calibration.js?v=20261027-midnight';
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,Number(v)||0));
 export const VEHICLE_PROFILES=Object.freeze({
@@ -26,7 +26,7 @@ export function wheelLoads(car={}){
 }
 /** Both rendering and contact use this exact bank/profile definition. */
 export function roadSurface(track,d,l){const s=track.sampleTrack(d);return {sample:s,y:s.position.y+(s.right?.y||0)*l+Math.tan(s.bank||0)*l+.035};}
-export function rampAtDistance(ramp,d,length){const lap=Math.round((d-ramp.distance-ramp.length/2)/length);return {start:ramp.distance+lap*length,lap};}
+export function rampAtDistance(ramp,d,length,{closed=true}={}){const lap=closed?Math.round((d-ramp.distance-ramp.length/2)/length):0;return {start:ramp.distance+lap*length,lap};}
 // Unilateral support: a tyre may hang over an edge; a high deck cannot push
 // through the chassis when its step exceeds the available suspension travel.
 export function unilateralSupportHeight(wheels,center,pitch,roll){return Math.max(center,...wheels.map(w=>w.height-w.x*Math.sin(roll)*Math.cos(pitch)-w.z*Math.sin(pitch)-.15));}
@@ -44,10 +44,10 @@ export function rampSupport(car,ramp,start,{extendLip=false}={}){
  return {wheels,height:unilateralSupportHeight(wheels,center,pitch,roll),pitch,roll,contacts:wheels.filter(w=>w.on).length};
 }
 /** Plan ahead; never teleport laterally, enter through a side wall or ignore traffic. */
-export function planRampApproach(car,ramps,trackLength,traffic=[],curvature=()=>0){
+export function planRampApproach(car,ramps,trackLength,traffic=[],curvature=()=>0,{closed=true}={}){
  const p=vehicleProfile(car),speed=Math.max(1,Number(car.speed)||0),look=Math.max(95,speed*4.5);
  for(const ramp of ramps){
-  const lap=Math.max(0,Math.ceil((car.distance-ramp.distance-ramp.length-p.rear)/trackLength)),start=ramp.distance+lap*trackLength,ahead=start-car.distance-p.front;
+  const lap=closed?Math.max(0,Math.ceil((car.distance-ramp.distance-ramp.length-p.rear)/trackLength)):0,start=ramp.distance+lap*trackLength,ahead=start-car.distance-p.front;
   if(ahead < -ramp.length-p.wheelbase||ahead>look)continue;
   const key=ramp.id+':'+lap,offset=Math.abs(ramp.lateral-car.lateral),clearance=ramp.width/2-p.track/2-.25;
   let reason=null;
@@ -72,8 +72,10 @@ export function surfaceForWheel(track,car,wheel,{extendLip=false}={}){
  const ramp=(track.ramps||createRampLayout(track)).find(r=>r.id===car.rampId);
  let lift=0,contact=true;
  if(ramp&&car.rampState==='approach'){
-  const {start}=rampAtDistance(ramp,car.distance,track.totalLength),u=(d-start)/ramp.length,inside=Math.abs(l-ramp.lateral)<ramp.width/2;
-  if(inside&&u>=0){if(u<=1)lift=rampHeightAt(ramp,u);else {contact=false;if(extendLip)lift=ramp.height+(d-start-ramp.length)*rampSlopeAt(ramp,1);}}
+  const {start}=rampAtDistance(ramp,car.distance,track.totalLength,{closed:track.closed!==false}),u=(d-start)/ramp.length,inside=Math.abs(l-ramp.lateral)<ramp.width/2;
+  // A stale approach state on an open course must not extend a long-gone lip.
+  const nearLip=track.closed!==false||car.distance<=start+ramp.length+vehicleProfile(car).rear+1;
+  if(inside&&u>=0&&nearLip){if(u<=1)lift=rampHeightAt(ramp,u);else {contact=false;if(extendLip)lift=ramp.height+(d-start-ramp.length)*rampSlopeAt(ramp,1);}}
  }
  return {d,l,y:base.y+lift,roadY:base.y,lift,contact:contact&&!(car.flightRemaining>0),sample:base.sample};
 }

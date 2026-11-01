@@ -4,7 +4,7 @@
  */
 const clamp01 = value => Math.max(0, Math.min(1, value));
 const ROAD_TOP = .035;
-import {safeRampSites} from './race3d-course-safety.js?v=20261027-midnight';
+import {safeRampSites} from './race3d-course-safety.js?v=20261101-descent';
 
 export function createRampLayout(track) {
   // A length alone cannot establish geometry safety. Never manufacture an
@@ -32,7 +32,7 @@ export function sampleRampSurface(track, ramps, distance, lateral = 0) {
   const totalLength = Number(track.totalLength) || 1;
   let rampHeight = 0, rampSlope = 0, rampId = null, progress = 0, deck = null;
   for (const ramp of ramps || []) {
-    const lap = Math.floor((distance - ramp.distance) / totalLength);
+    const lap = track.closed === false ? 0 : Math.floor((distance - ramp.distance) / totalLength);
     if (lap < 0) continue;
     const along = distance - ramp.distance - lap * totalLength;
     if (along < 0 || along > ramp.length || Math.abs(lateral - ramp.lateral) > ramp.width / 2) continue;

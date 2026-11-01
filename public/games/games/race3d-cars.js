@@ -3,7 +3,7 @@ import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261030-city'
 import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261027-midnight';
 import { createCarMotion } from './race3d-car-motion.js?v=20261027-midnight';
 import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261027-midnight';
-import { vehicleProfile } from './race3d-vehicle.js?v=20261027-midnight';
+import { vehicleProfile } from './race3d-vehicle.js?v=20261101-descent';
 
 /**
  * Sculpted low-slung GT cars for race3d. All car geometry is authored around
@@ -447,7 +447,7 @@ export function createRaceCars(THREE, racers = [], options = {}) {
   function update(track, dt = 1 / 60, view = {}) {
     if (disposed || !track?.sampleTrack) return;
     const focus=meshes.get(view.focusedId)?.racer;
-    const gap=state=>{const raw=Math.abs(state.racer.distance-(focus?.distance??state.racer.distance))%track.totalLength;return Math.min(raw,track.totalLength-raw);};
+    const gap=state=>{const raw=Math.abs(state.racer.distance-(focus?.distance??state.racer.distance));if(track.closed===false||!(track.totalLength>0))return raw;const wrapped=raw%track.totalLength;return Math.min(wrapped,track.totalLength-wrapped);};
     const detailed=new Set([...meshes.values()].filter(s=>s.proxy).sort((a,b)=>gap(a)-gap(b)||a.racer.gridPosition-b.racer.gridPosition).slice(0,view.detailedCars||6));
     const bursts=[];for (const state of meshes.values()) {
       const distance=gap(state),far=!!state.proxy&&(distance>(view.lodDistance||120)||(distance>35&&!detailed.has(state)));const burst=updateFinishPose(state,track,dt);state.motion.update(track,dt,{detailed:!far||!!state.finishAnimation});if(burst){const f=new THREE.Vector3(0,0,1).applyQuaternion(state.car.quaternion),r=new THREE.Vector3(1,0,0).applyQuaternion(state.car.quaternion),d=state.car.userData.assetDimensions||{};bursts.push({length:d.length||4.4,width:d.width||1.9,forwardX:f.x,forwardZ:f.z,rightX:r.x,rightZ:r.z,carId:state.racer.id,gridPosition:state.racer.gridPosition,color:state.primaryHex,x:state.car.position.x,y:state.car.position.y+.75,z:state.car.position.z,distance:state.visualRacer.distance,lateral:state.visualRacer.lateral,time:state.finishAnimation.age});}state.authoredParts?.update(state.racer,dt);if(!far){state.form?.update(dt,state.visualRacer);state.authoredVisuals?.update(state.visualRacer);}
@@ -834,3 +834,4 @@ for(const side of [-1,1]) {
 mesh(car,box(.065,.07,1.15),mats.carbon,'gt-exoskeleton',[side*.44,1.40,-.04],[.08,0,0]);
 mesh(car,box(.13,.14,.72),mats.body,'gt-buttress',[side*.48,1.10,-1.02],[.35,0,side*.18]);
 }}
+

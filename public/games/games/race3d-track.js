@@ -1,6 +1,6 @@
 /**
  * Scenic road course for the Three.js Grand Prix picker.
- * All course geometry is built from the same closed, arc-length sampled spline
+ * All course geometry is built from the same open, arc-length sampled spline
  * used by the cars and chase camera.
  */
 
@@ -16,126 +16,54 @@ export function createTrack(THREE) {
   const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
   const wrap = (d, length) => ((d % length) + length) % length;
 
-  // Prism Grand Circuit: an 11.86 km non-crossing parkland layout. The
-  // original start position and +X launch direction are deliberately fixed.
-  // The western loop and three hairpins add distance without unsupported
-  // overpasses; every visible ribbon and physics sample uses this one spline.
-  const layoutScale = 0.74;
-  const anchorCoordinates = [
-    [-780,2.7,585],
-    [-300,2.7,585],
-    [300,2.7,585],
-    [900,2.7,585],
-    [1180,3,550],
-    [1350,4,400],
-    [1380,5,150],
-    [1380,6,-400],
-    [1380,6,-900],
-    [1280,6,-1110],
-    [1080,6,-1200],
-    [780,6,-1200],
-    [450,6,-1200],
-    [-40,6,-1200],
-    [-180,6,-1140],
-    [-240,6,-1000],
-    [-180,6,-860],
-    [-40,6,-800],
-    [450,6,-800],
-    [720,6,-800],
-    [860,7,-720],
-    [880,9,-560],
-    [800,12,-450],
-    [640,14,-430],
-    [400,17,-430],
-    [270,19,-500],
-    [150,20,-430],
-    [70,18,-280],
-    [0,16,-180],
-    [-200,13,-180],
-    [-400,10,-180],
-    [-560,8,-310],
-    [-550,7,-530],
-    [-650,6,-700],
-    [-850,6,-760],
-    [-1050,6,-700],
-    [-1150,6,-500],
-    [-1150,6,-100],
-    [-1150,6,200],
-    [-1250,5,370],
-    [-1450,4,420],
-    [-1630,3,330],
-    [-1710,3,150],
-    [-1710,3,-400],
-    [-1710,3,-1000],
-    [-1780,3,-1200],
-    [-1930,3,-1240],
-    [-2070,3,-1140],
-    [-2110,3,-950],
-    [-2110,3,-300],
-    [-2110,3,400],
-    [-2040,3,650],
-    [-1840,3,800],
-    [-1500,3,850],
-    [-1350,2.8,830],
-    [-1250,2.7,750],
-    [-1200,2.7,650],
-    [-1100,2.7,600],
-    [-950,2.7,585]
-];
-  // Keep individual straight spline spans below 148 m. Collinear spans then
-  // stay exactly straight for drafting and independently validated jump lanes.
-  const sourceAnchorIndices = [];
-  let splineAnchorCount = 0;
-  const splineCoordinates = anchorCoordinates.flatMap((point, index) => {
-    sourceAnchorIndices.push(splineAnchorCount);
-    const next = anchorCoordinates[(index + 1) % anchorCoordinates.length];
-    const steps = Math.ceil(Math.hypot(next[0] - point[0], next[2] - point[2]) / 200);
-    splineAnchorCount += steps;
-    return Array.from({ length: steps }, (_, step) => point.map((value, axis) => value + (next[axis] - value) * step / steps));
+  // Three expanding turns with straight legs and rounded corners. The grid
+  // starts near the summit and the finish lies at the foot of the mountain.
+  const corners = Array.from({ length: 19 }, (_, i) => {
+    const angle = i * Math.PI / 3, radius = 300 + i * 55;
+    return [Math.cos(angle) * radius, Math.sin(angle) * radius];
   });
-  const anchors = splineCoordinates.map(([x, y, z]) => new THREE.Vector3(
-    -780 + (x + 780) * layoutScale, y, 585 + (z - 585) * layoutScale
-  ));
-  const courseCurve = new THREE.CatmullRomCurve3(anchors, true, 'centripetal');
+  const path = [corners[0]];
+  const addLine = (a, b) => {
+    const count = Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]) / 45);
+    for (let j = 1; j <= count; j++) path.push([a[0] + (b[0] - a[0]) * j / count, a[1] + (b[1] - a[1]) * j / count]);
+  };
+  for (let i = 0; i < corners.length - 1; i++) {
+    const a = corners[i], b = corners[i + 1];
+    if (i + 1 === corners.length - 1) { addLine(path.at(-1), b); break; }
+    const c = corners[i + 2], inLength = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const outLength = Math.hypot(c[0] - b[0], c[1] - b[1]);
+    const cut = Math.min(110, inLength * .3, outLength * .3);
+    const entry = [b[0] + (a[0] - b[0]) * cut / inLength, b[1] + (a[1] - b[1]) * cut / inLength];
+    const exit = [b[0] + (c[0] - b[0]) * cut / outLength, b[1] + (c[1] - b[1]) * cut / outLength];
+    addLine(path.at(-1), entry);
+    for (let j = 1; j <= 8; j++) {
+      const t = j / 8, u = 1 - t;
+      path.push([u * u * entry[0] + 2 * u * t * b[0] + t * t * exit[0], u * u * entry[1] + 2 * u * t * b[1] + t * t * exit[1]]);
+    }
+  }
+  let travelled = 0;
+  const anchorCoordinates = path.map(([x, z], i) => {
+    if (i) travelled += Math.hypot(x - path[i - 1][0], z - path[i - 1][1]);
+    return [x, 650 - travelled * .04, z];
+  });
+  const anchors = anchorCoordinates.map(([x, y, z]) => new THREE.Vector3(x, y, z));
+  const courseCurve = new THREE.CatmullRomCurve3(anchors, false, 'centripetal');
   courseCurve.arcLengthDivisions = 24000;
   courseCurve.updateArcLengths();
   const totalLength = courseCurve.getLength();
-  const arcLengths = courseCurve.getLengths(courseCurve.arcLengthDivisions);
-  function anchorDistance(index) {
-    const sample = sourceAnchorIndices[index] / anchors.length * courseCurve.arcLengthDivisions;
-    const i = Math.floor(sample), f = sample - i;
-    return arcLengths[i] + (arcLengths[Math.min(i + 1, arcLengths.length - 1)] - arcLengths[i]) * f;
-  }
-  const sectorDefinitions = [
-    [0, 'Prism launch straight', 'drafting'],
-    [4, 'Silver crescent', 'sweeper'],
-    [7, 'East express', 'drafting'],
-    [9, 'North approach', 'braking'],
-    [13, 'Observatory hairpin', 'hairpin'],
-    [17, 'Summit straight', 'drafting'],
-    [20, 'Ridge climb', 'sweeper'],
-    [24, 'Alpine chicane', 'chicane'],
-    [28, 'Valley esses', 'technical'],
-    [32, 'Cedar carousel', 'sweeper'],
-    [36, 'Lake approach', 'drafting'],
-    [38, 'Lakeside hairpin', 'hairpin'],
-    [42, 'Pine avenue', 'drafting'],
-    [44, 'Western hairpin', 'hairpin'],
-    [48, 'Sunset express', 'drafting'],
-    [51, 'Stadium sweep', 'sweeper'],
-    [54, 'Final esses', 'technical']
-  ];
-  const sectors = sectorDefinitions.map(([anchor, name, type], index) => ({
-    id: index + 1, name, type, start: anchorDistance(anchor),
-    end: index + 1 < sectorDefinitions.length ? anchorDistance(sectorDefinitions[index + 1][0]) : totalLength
+  const sectors = Array.from({ length: 9 }, (_, i) => ({
+    id: i + 1, name: ['Summit launch', 'Upper switchbacks', 'Pine ridge', 'Cloudline', 'Mountain traverse', 'Ridge descent', 'Lower switchbacks', 'Valley approach', 'Valley finish'][i],
+    type: i === 0 || i === 8 ? 'drafting' : 'sweeper', start: i * totalLength / 9, end: (i + 1) * totalLength / 9
   }));
   const trackBounds = new THREE.Box3().setFromPoints(anchors).expandByScalar(72);
 
   function frameAt(distance) {
-    const d = wrap(distance, totalLength);
+    const d = clamp(Number.isFinite(distance) ? distance : 0, 0, totalLength);
     const u = d / totalLength;
     const position = courseCurve.getPointAt(u);
     const tangent = courseCurve.getTangentAt(u).normalize();
+    // Extend the grid and runoff rather than jumping to the other endpoint.
+    if (Number.isFinite(distance)) position.addScaledVector(tangent, distance - d);
     const right = new THREE.Vector3().crossVectors(UP, tangent);
     if (right.lengthSq() < 1e-8) right.set(1, 0, 0);
     else right.normalize();
@@ -143,8 +71,8 @@ export function createTrack(THREE) {
     // A subtle, signed bank helps the road read as a built circuit while
     // preserving a stable world-up frame for cars and the camera.
     const probe = 3.5;
-    const before = courseCurve.getTangentAt(wrap(d - probe, totalLength) / totalLength);
-    const after = courseCurve.getTangentAt(wrap(d + probe, totalLength) / totalLength);
+    const before = courseCurve.getTangentAt(clamp(d - probe, 0, totalLength) / totalLength);
+    const after = courseCurve.getTangentAt(clamp(d + probe, 0, totalLength) / totalLength);
     const turn = before.z * after.x - before.x * after.z;
     const curvature = turn / (probe * 2);
     const bank = clamp(-curvature * 2.0, -0.085, 0.085);
@@ -210,7 +138,7 @@ export function createTrack(THREE) {
     return texture;
   }
 
-  function addRibbon({ left, right, start = 0, length = totalLength, step = 2.1, lift = 0, material, uvScale = 1, colors = null, name = 'course-ribbon' }) {
+  function addRibbon({ left, right, start = -180, length = totalLength + 260, step = 2.1, lift = 0, material, uvScale = 1, colors = null, name = 'course-ribbon' }) {
     const segments = Math.max(2, Math.ceil(length / step));
     const positions = [];
     const uvs = [];
@@ -270,19 +198,42 @@ export function createTrack(THREE) {
   }
 
   function ribbonPath(lateral, height, spacing = 2.6) {
-    const count = Math.ceil(totalLength / spacing);
+    const pathLength = totalLength + 260, count = Math.ceil(pathLength / spacing);
     const points = [];
-    for (let i = 0; i < count; i++) {
-      const d = totalLength * i / count;
+    for (let i = 0; i <= count; i++) {
+      const d = -180 + pathLength * i / count;
       points.push(surfacePoint(d, lateral, height));
     }
-    return new THREE.CatmullRomCurve3(points, true, 'catmullrom', 0.15);
+    return new THREE.CatmullRomCurve3(points, false, 'catmullrom', 0.15);
   }
 
   // A broad, quiet infield gives the circuit a sense of place. A tapered
   // earthwork ribbon follows the grade so the asphalt never reads as a floating
   // strip above a flat floor.
   const GROUND_Y = -1.35;
+  // The lowest nearby road sample at each radius defines a broad mountain
+  // undercut. This keeps the mass below every turn, including the apron.
+  const terrainStep = 10, terrainRadius = 1600, binCount = terrainRadius / terrainStep;
+  const profile = Array(binCount + 1).fill(Infinity);
+  const terrainSamples = Math.ceil((totalLength + 260) / 3);
+  for (let i = 0; i <= terrainSamples; i++) {
+    const p = frameAt(-180 + (totalLength + 260) * i / terrainSamples).position;
+    const bin = clamp(Math.floor(Math.hypot(p.x, p.z) / terrainStep), 0, binCount);
+    profile[bin] = Math.min(profile[bin], p.y - 8);
+  }
+  const occupied = profile.map((v, i) => Number.isFinite(v) ? i : -1).filter(i => i >= 0);
+  for (let i = 0; i <= binCount; i++) {
+    if (Number.isFinite(profile[i])) continue;
+    const left = occupied.filter(j => j < i).at(-1), right = occupied.find(j => j > i);
+    if (left === undefined) profile[i] = profile[right];
+    else if (right === undefined) profile[i] = Math.max(GROUND_Y, profile[left] - (i - left) * 5);
+    else profile[i] = profile[left] + (profile[right] - profile[left]) * (i - left) / (right - left);
+  }
+  const guardedProfile = profile.map((_, i) => Math.min(...profile.slice(Math.max(0, i - 2), Math.min(profile.length, i + 3))));
+  function terrainHeight(x, z) {
+    const n = clamp(Math.hypot(x, z) / terrainStep, 0, binCount), i = Math.floor(n);
+    return Math.max(GROUND_Y, guardedProfile[i] + (guardedProfile[Math.min(binCount, i + 1)] - guardedProfile[i]) * (n - i));
+  }
   const groundMaterial = makeStandard('#405a3e', 1);
   const groundSize = trackBounds.getSize(new THREE.Vector3());
   const groundCenter = trackBounds.getCenter(new THREE.Vector3());
@@ -293,9 +244,28 @@ export function createTrack(THREE) {
   ground.receiveShadow = true;
   group.add(ground);
 
+  const terrainPositions = [], terrainIndices = [], radialSegments = 96;
+  for (let i = 0; i <= binCount; i++) {
+    const radius = i * terrainStep;
+    for (let j = 0; j <= radialSegments; j++) {
+      const angle = j * TAU / radialSegments, x = Math.cos(angle) * radius, z = Math.sin(angle) * radius;
+      terrainPositions.push(x, terrainHeight(x, z), z);
+      if (i < binCount && j < radialSegments) {
+        const a = i * (radialSegments + 1) + j, b = a + radialSegments + 1;
+        terrainIndices.push(a, a + 1, b + 1, a, b + 1, b);
+      }
+    }
+  }
+  const mountainGeometry = new THREE.BufferGeometry();
+  mountainGeometry.setAttribute('position', new THREE.Float32BufferAttribute(terrainPositions, 3));
+  mountainGeometry.setIndex(terrainIndices);
+  mountainGeometry.computeVertexNormals();
+  const mountain = new THREE.Mesh(mountainGeometry, makeStandard('#405b3e', 1));
+  mountain.name = 'mountain-terrain'; mountain.receiveShadow = true; group.add(mountain);
+
   const earthPositions = [], earthUvs = [], earthColors = [], earthIndices = [];
   const earthSections = [-50, -30, -16, 0, 16, 30, 50];
-  const earthSteps = Math.ceil(totalLength / 3.5);
+  const earthSteps = Math.ceil((totalLength + 260) / 3.5);
   const earthGrass = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 1, vertexColors: true });
   const greenIn = new THREE.Color('#344e38');
   const greenOut = new THREE.Color('#486445');
@@ -313,13 +283,17 @@ export function createTrack(THREE) {
     let drop;
     if (abs <= 16) drop = -0.32;
     else if (abs <= knee) drop = -0.32 - (abs - 16) / (knee - 16) * 0.52;
-    else drop = -0.84 + clamp((abs - knee) / (outer - knee), 0, 1) * (GROUND_Y - frame.position.y + 0.84);
+    else {
+      const edge = frame.position.clone().addScaledVector(frame.right, lateral);
+      const groundY = Math.min(frame.position.y - 1, terrainHeight(edge.x, edge.z));
+      drop = -0.84 + clamp((abs - knee) / (outer - knee), 0, 1) * (groundY - frame.position.y + 0.84);
+    }
     const point = frame.position.clone().addScaledVector(frame.right, lateral);
     point.y += frame.bank * lateral * clamp((knee - abs) / (knee - 16), 0, 1) + drop;
     return point;
   };
   for (let i = 0; i <= earthSteps; i++) {
-    const d = totalLength * i / earthSteps;
+    const d = -180 + (totalLength + 260) * i / earthSteps;
     const { outer, knee } = earthWidths(frameAt(d));
     for (let j = 0; j < earthSections.length; j++) {
       const section = earthSections[j];
@@ -422,7 +396,7 @@ export function createTrack(THREE) {
   // Alternate tile meshes in two batched groups.
   const finishLightQuads = [], finishDarkQuads = [];
   for (let row = 0; row < 2; row++) {
-    const d0 = -0.85 + row * 0.85;
+    const d0 = totalLength - 1.7 + row * 0.85;
     const d1 = d0 + 0.85;
     for (let col = 0; col < columns; col++) {
       const l0 = -HALF_WIDTH + col * tileWidth;
@@ -464,7 +438,7 @@ export function createTrack(THREE) {
   for (const side of [-1, 1]) {
     for (const height of [0.94, 1.57]) {
       const railPath = ribbonPath(side * 14.8, height, 2.4);
-      const rail = new THREE.Mesh(new THREE.TubeGeometry(railPath, Math.ceil(totalLength / 2.5), height > 1 ? 0.115 : 0.095, 7, true), railMetal);
+      const rail = new THREE.Mesh(new THREE.TubeGeometry(railPath, Math.ceil((totalLength + 260) / 2.5), height > 1 ? 0.115 : 0.095, 7, false), railMetal);
       rail.name = `continuous-steel-guardrail-${side}-${height}`;
       rail.castShadow = true;
       rail.receiveShadow = true;
@@ -586,7 +560,7 @@ export function createTrack(THREE) {
     group.clear();
   }
 
-  return { group, totalLength, width: ROAD_WIDTH, bounds: trackBounds, sectors, sampleTrack, sampleGround: earthPoint, dispose };
+  return { group, totalLength, closed: false, width: ROAD_WIDTH, bounds: trackBounds, sectors, sampleTrack, sampleGround: earthPoint, terrainHeight, dispose };
 }
 
 export const createRaceTrack = createTrack;

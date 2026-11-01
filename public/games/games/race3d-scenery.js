@@ -1,6 +1,6 @@
 import { addScenicArt } from './race3d-scenic-art.js?v=20261027-midnight';
 import { createRoadsideBuildings } from './race3d-buildings.js?v=20261027-midnight';
-import { addLandscapeTerrain } from './race3d-terrain.js?v=20261027-midnight';
+import { addLandscapeTerrain } from './race3d-terrain.js?v=20261101-descent';
 /**
  * Warm-day circuit scenery for race3d.
  *
@@ -34,7 +34,7 @@ export function createRaceScenery(THREE, track) {
     return v.normalize();
   };
   const sample = (distance) => {
-    const d = ((distance % total) + total) % total;
+    const d = track.closed === false ? clamp(distance, 0, total) : ((distance % total) + total) % total;
     const s = track.sampleTrack(d);
     const p = v3(s?.position);
     const tangent = horizontal(v3(s?.tangent, { x: 1, y: 0, z: 0 }));
@@ -44,7 +44,7 @@ export function createRaceScenery(THREE, track) {
   };
 
   const sampleCount = clamp(Math.ceil(total / 18), 128, 512);
-  const route = Array.from({ length: sampleCount }, (_, i) => sample(total * i / sampleCount));
+  const route = Array.from({ length: sampleCount }, (_, i) => sample(total * i / (track.closed === false ? sampleCount - 1 : sampleCount)));
   const center = new THREE.Vector3();
   for (const q of route) center.add(q.p);
   center.multiplyScalar(1 / route.length);
@@ -82,6 +82,7 @@ export function createRaceScenery(THREE, track) {
       groundY,
       at.p.z + at.right.z * offset * side,
     );
+    if (track.closed === false && track.terrainHeight) object.position.y = track.terrainHeight(object.position.x, object.position.z);
     return sign;
   };
 
@@ -164,7 +165,7 @@ export function createRaceScenery(THREE, track) {
   makeRidge('olive-foothills', 70 * unit, 250 * unit, 64 * unit, '#789166', 0.4);
   makeRidge('blue-distance-mountains', 300 * unit, 470 * unit, 118 * unit, '#71889a', 1.6);
 
-  const terrain = addLandscapeTerrain({ THREE, group, route, groundY, unit, center, radius });
+  const terrain = addLandscapeTerrain({ THREE, group, route, groundY, unit, center, radius, closed: track.closed !== false, terrainHeight: track.closed === false ? track.terrainHeight : undefined });
 
   const buildings = createRoadsideBuildings(THREE, track, { heightAt: terrain.heightAt, roadClearance: terrain.roadClearance, groundY });
   group.add(buildings.group);

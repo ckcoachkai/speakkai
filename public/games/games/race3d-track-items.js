@@ -1,4 +1,4 @@
-import {auditStraightCorridor} from './race3d-course-safety.js?v=20261027-midnight';
+import {auditStraightCorridor} from './race3d-course-safety.js?v=20261101-descent';
 /** Temporary authored-slot interactions. Never rewrite road geometry. */
 export const TRACK_IDS=Object.freeze(['strip','spring','sweeper','foam','beacon','inverter','reclaim','shift']);
 export const TRACK_TIMERS=Object.freeze(['padBoost','padBrake','foamSlow','beacon']);

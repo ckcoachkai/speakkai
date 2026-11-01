@@ -4,7 +4,8 @@ import {RACE_ROSTER_TYPES,getRacerIdentity} from '../public/games/games/race3d-r
 import {itemDecision} from '../public/games/games/race3d-strategy.js';
 const track={totalLength:4000,raceDistance:2000,width:16.5,hazards:[],sampleTrack:d=>({position:{x:0,y:0,z:d},tangent:{x:0,y:0,z:1},right:{x:1,y:0,z:0},width:16.5})};
 function run(type,carType,mode,seed=.413,defenderPower=null){
- const sim=createRaceSimulation({players:['owner','target','chaser'].map(id=>({id,name:id,...getRacerIdentity(carType)})),track,random:()=>seed,autoItems:false});sim.ramps.length=sim.pickups.length=0;
+ // Isolate item penalties from the intentional later catch-up recovery; default-mode caps are checked in pack-physics.
+ const sim=createRaceSimulation({players:['owner','target','chaser'].map(id=>({id,name:id,...getRacerIdentity(carType)})),track,random:()=>seed,autoItems:false,catchup:false});sim.ramps.length=sim.pickups.length=0;
  const by=id=>sim.cars.find(c=>c.id===id),target=by('target');sim.awardItem('owner',type);if(defenderPower)sim.awardItem('target',defenderPower);for(let n=0;n<542;n++)sim.update(1/120);
  const place=()=>{for(const c of sim.cars)Object.assign(c,{distance:c.id==='owner'?(type==='banana'?170:100):c.id==='target'?155:80,previousProgress:c.id==='owner'?(type==='banana'?170:100):c.id==='target'?155:80,lateral:c.id==='chaser'?3.1:0,preferredLane:c.id==='chaser'?3.1:0,speed:35,topSpeed:38,maxSpeed:38,lateralVelocity:0,heading:0,spin:0,damage:0,_hitImmune:0,_nextDecision:Infinity,_nextMistake:Infinity,_pace:1,_brakeTiming:1});};place();
  if(mode==='shield')target.shieldRemaining=60;

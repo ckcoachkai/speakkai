@@ -62,6 +62,10 @@ export function createRaceExtras(root, players = []) {
     const thumb = make('span', 'race3d-card-thumb');
     const model = make('span', 'race3d-card-model'); vehicle.append(thumb, model);
     const engine = make('span', 'race3d-card-engine');
+    const tuning = make('div', 'race3d-card-tuning');
+    const level = make('span', 'race3d-card-level'); level.hidden = true;
+    const balance = make('span', 'race3d-card-balance'); balance.hidden = true;
+    tuning.append(level, balance);
     const label = make('span', 'race3d-card-attributes-label', 'GAME SPECS · * SOURCED');
     const attributes = make('dl', 'race3d-card-attributes');
     const fields = ['Mass', 'Engine power', 'Torque', 'Top speed', '0–100 est.', 'Braking', 'Tire grip', 'Drag Cd', 'Downforce Cᴸ'];
@@ -73,9 +77,9 @@ export function createRaceExtras(root, players = []) {
     const provenance = make('details', 'race3d-card-provenance');
     provenance.append(make('summary', '', 'Spec notes & sources'));
     const notes = make('p', ''); const sources = make('div', 'race3d-card-sources'); provenance.append(notes, sources);
-    card.append(head, vehicle, engine, label, attributes, priority, provenance);
+    card.append(head, tuning, vehicle, engine, label, attributes, priority, provenance);
     (index % 2 ? right : left).append(card);
-    entry = { card, rank, player, thumb, model, engine, label, values, priority, provenance, notes, sources, item, type: null, icon: null };
+    entry = { card, rank, player, thumb, model, engine, tuning, level, balance, label, values, priority, provenance, notes, sources, item, type: null, icon: null };
     cards.set(id, entry);
     return entry;
   }
@@ -93,6 +97,24 @@ export function createRaceExtras(root, players = []) {
       const entry = cardFor(id, car, index);
       entry.player.textContent = String(car.name ?? 'Racer');
       entry.player.title = entry.player.textContent;
+      const skills = car.driverSkills;
+      const tier = Number(skills?.tier);
+      const hasTier = skills?.tier != null && Number.isInteger(tier) && tier >= 1 && tier <= 9;
+      entry.level.hidden = !hasTier;
+      if (hasTier) {
+        const pct = value => Math.round(finite(value, 1) * 100) + '%';
+        entry.level.textContent = 'SIM LEVEL ' + tier + ' · speed ' + pct(skills.speedFactor) + ' · grip ' + pct(skills.gripFactor) + ' · durability ' + pct(skills.durabilityFactor);
+        entry.level.title = 'Fictional driver tuning drawn for this race; not an assessment of the person.';
+      }
+      const adjustment = car.raceCatchup;
+      const multiplier = finite(adjustment?.targetMultiplier, 1);
+      const delta = Math.round((multiplier - 1) * 1000) / 10;
+      entry.balance.hidden = !adjustment || delta === 0;
+      if (!entry.balance.hidden) {
+        entry.balance.dataset.kind = delta < 0 ? 'penalty' : 'catchup';
+        entry.balance.textContent = (delta < 0 ? 'LEADER PENALTY ' : 'CATCH-UP +') + delta + '%';
+        entry.balance.title = 'Live race pace adjustment to target speed.';
+      }
       entry.rank.textContent = car.eliminated?'OUT':Number.isFinite(car.finishPosition) ? `#${car.finishPosition}` : `P${car.position || index + 1}`;
       entry.card.classList.toggle('is-focused', id === String(focusedId));
       entry.card.classList.toggle('is-finished', Number.isFinite(car.finishTime));
@@ -119,7 +141,7 @@ export function createRaceExtras(root, players = []) {
       entry.values.forEach((node, i) => { if (node.textContent !== values[i]) node.textContent = values[i]; });
       entry.priority.textContent = `Focus: ${{corners:'corner speed',grip:'grip & endurance',speed:'straight-line speed',balanced:'balanced pace',launch:'electric acceleration'}[spec.priority] || spec.priority} · ramps ${Math.round(finite(spec.rampPreference) * 100)}%`;
       entry.notes.textContent = `${basis?.notes || 'Simulation values.'} 0–100 is a game estimate from power, operating mass and grip, not a measured road-test time. μ = tire grip; Cd = drag coefficient; Cᴸ = downforce coefficient.`;
-      if(car.driverSkills){entry.priority.textContent+=' · Driver: '+car.driverSkills.label;entry.priority.title='Fictional skills drawn anew each race, not a student assessment. Reaction '+Math.round(car.driverSkills.reaction*100)+'; control '+Math.round(car.driverSkills.control*100)+'; braking '+Math.round(car.driverSkills.braking*100)+'; ramp '+Math.round(car.driverSkills.ramp*100)+'; items '+Math.round(car.driverSkills.items*100)+'.';entry.notes.textContent+=' '+entry.priority.title;}
+      if(car.driverSkills){if(!hasTier || id !== String(focusedId)) entry.priority.textContent+=' · Driver: '+car.driverSkills.label;entry.priority.title='Fictional skills drawn anew each race, not a student assessment. Reaction '+Math.round(car.driverSkills.reaction*100)+'; control '+Math.round(car.driverSkills.control*100)+'; braking '+Math.round(car.driverSkills.braking*100)+'; ramp '+Math.round(car.driverSkills.ramp*100)+'; items '+Math.round(car.driverSkills.items*100)+'.';entry.notes.textContent+=' '+entry.priority.title;}
       if (entry.sourceType !== type) {
         entry.sourceType = type; entry.sources.replaceChildren();
         for (const source of (car.sources || identity.sources || [])) {
@@ -140,6 +162,11 @@ export function createRaceExtras(root, players = []) {
         compact.replaceChildren(copy); compact.dataset.key = key;
       }
       compact.querySelector('.race3d-card-rank').textContent = focusEntry.rank.textContent;
+      // Keep live tuning in sync without closing open specification details.
+      for (const [selector, source] of [['.race3d-card-level', focusEntry.level], ['.race3d-card-balance', focusEntry.balance]]) {
+        const copy = compact.querySelector(selector);
+        if (copy) { copy.hidden = source.hidden; copy.textContent = source.textContent; copy.title = source.title; copy.dataset.kind = source.dataset.kind || ''; }
+      }
     }
 
   }

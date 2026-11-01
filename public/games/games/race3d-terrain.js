@@ -1,5 +1,5 @@
 /** Continuous terrain; caller owns disposal through its scenery group. */
-export function addLandscapeTerrain({ THREE, group, route, groundY, unit = 1, center, radius }) {
+export function addLandscapeTerrain({ THREE, group, route, groundY, unit = 1, center, radius, closed = true, terrainHeight }) {
   // Cover the full enlarged course and the outer mountain ring. Keep roughly
   // the original mesh spacing as bounds grow, rather than stretching a fixed
   // grid into coarse triangles beside the road.
@@ -9,7 +9,7 @@ export function addLandscapeTerrain({ THREE, group, route, groundY, unit = 1, ce
   const smooth = (a, b, x) => { const t = Math.max(0, Math.min(1, (x-a)/(b-a))); return t*t*(3-2*t); };
   // Distance to every closed route segment, not only the nearest sample.
   // Half-cell-diagonal padding ensures interpolated triangles cannot rise into road.
-  const segments = route.map((a, i) => {
+  const segments = (closed ? route : route.slice(0, -1)).map((a, i) => {
     const b = route[(i+1)%route.length];
     return {a:a.p,b:b.p,width:Math.max(a.width,b.width)/2};
   });
@@ -22,6 +22,8 @@ export function addLandscapeTerrain({ THREE, group, route, groundY, unit = 1, ce
     }
     return best;
   }
+  // The descent owns its mountain mesh; share its surface with scenery.
+  if (typeof terrainHeight === 'function') return { heightAt: terrainHeight, roadClearance };
   function shape(x,z) {
     x-=center.x; z-=center.z;
     const r=Math.hypot(x,z);

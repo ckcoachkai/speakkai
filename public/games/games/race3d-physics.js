@@ -3,14 +3,15 @@
  * Bounded, game-balanced vehicle profiles alter speed, grip and durability.
  * Traffic, slipstreams, errors and items determine the actual first crossing.
  */
-import { createRampLayout, rampHeightAt, rampSlopeAt } from './race3d-ramps.js?v=20261027-midnight';
+import { createRampLayout, rampHeightAt, rampSlopeAt } from './race3d-ramps.js?v=20261101-descent';
 import { ITEM_TYPES, INVENTORY_CAPACITY, inventoryCount, drawItem, ROULETTE_DURATION, ITEM_HOLD_MIN, ITEM_HOLD_MAX } from './race3d-item-rules.js?v=20261030-grid5';
 
-import {vehicleProfile,wheelFootprint,wheelLoads,rampSupport,planRampApproach,roadSurface} from './race3d-vehicle.js?v=20261027-midnight';
+import {vehicleProfile,wheelFootprint,wheelLoads,rampSupport,planRampApproach,roadSurface} from './race3d-vehicle.js?v=20261101-descent';
 
-import {itemDecision,flightWindow} from './race3d-strategy.js?v=20261030-grid5';
+import {itemDecision,flightWindow} from './race3d-strategy.js?v=20261101-descent';
 import {getRaceVehicleSpec as getVehicleSpec} from './race3d-race-calibration.js?v=20261027-midnight';
-import {createDriverSkills,driverControls} from './race3d-drivers.js?v=20261027-midnight';
+import {createDriverSkills,driverControls} from './race3d-drivers.js?v=20261101-descent';
+import {createCatchup} from './race3d-catchup.js?v=20261101-pack';
 import {createExtendedItems} from './race3d-extra-items.js?v=20261030-grid5';
 import {BASE_ITEM_IDS} from './race3d-item-registry.js?v=20261027-midnight';
 import {launchAttitude,advanceAttitude,landingAttitude} from './race3d-flight.js?v=20261027-midnight';
@@ -63,10 +64,10 @@ export function raceForceEnvelope({ speed = 0, curvature = 0, draft = 0, offRoad
     rollingAccel: 0.16 + (offRoad ? 2.1 : 0), gripAccel, lateralAccel,
     longitudinalAccel, slip: Math.max(0, lateralAccel / gripAccel - 1) };
 }
-export function raceElectricDrive({ speed = 0, throttle = 0, brake = 0, energyJ = BATTERY_J * 0.8, dt = STEP, longitudinalAccel = 11, accelerationFactor = 1, massKg=MASS, motorPowerW=MOTOR_POWER_W, brakeFactor=1, vehicleSpec } = {}) {
+export function raceElectricDrive({ speed = 0, throttle = 0, brake = 0, energyJ = BATTERY_J * 0.8, dt = STEP, longitudinalAccel = 11, accelerationFactor = 1, raceDriveMultiplier = 1, massKg=MASS, motorPowerW=MOTOR_POWER_W, brakeFactor=1, vehicleSpec } = {}) {
   speed = Math.max(0, finite(speed)); dt = clamp(finite(dt), 0, 0.1);
   throttle = finite(throttle); brake = finite(brake); energyJ = finite(energyJ);
-  const driveFactor = vehicleSpec ? 1 : clamp(finite(accelerationFactor, 1), 0.35, 1.3);
+  const driveFactor = (vehicleSpec ? 1 : clamp(finite(accelerationFactor, 1), 0.35, 1.3)) * clamp(finite(raceDriveMultiplier, 1), .2, 2.2);
   const energy = clamp(energyJ, 0, BATTERY_J), soc = energy / BATTERY_J;
   massKg=clamp(finite(vehicleSpec?.massKg,massKg),500,2600);
   const electric=!vehicleSpec||/electric|hybrid/i.test(vehicleSpec.engineType);
@@ -102,7 +103,7 @@ function stepNitro(car, dt, tractionAcceleration) {
   return acceleration;
 }
 
-export function createRaceSimulation({ players = [], track, random = Math.random, autoItems = true,driverMode='varied' } = {}) {
+export function createRaceSimulation({ players = [], track, random = Math.random, autoItems = true,driverMode='varied',catchup=true } = {}) {
   if (!track || typeof track.sampleTrack !== 'function') throw new TypeError('createRaceSimulation requires sampleTrack(distance)');
   const roster = Array.from(players).slice(0, MAX_CARS).map((player, index) => {
     const p = typeof player === 'string' ? { name: player } : (player || {});
@@ -118,7 +119,9 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     };
   });
   const trackLength = Math.max(1, finite(track.totalLength, 1));
-  const finishDistance = Math.max(1, finite(track.raceDistance, trackLength * 5));
+  const openCourse = track.closed === false;
+  const finishDistance = openCourse ? Math.max(1, Math.min(trackLength, finite(track.raceDistance, trackLength))) : Math.max(1, finite(track.raceDistance, trackLength * 5));
+  const catchupSystem = createCatchup({ enabled: catchup !== false, finishDistance });
   const cars = [], pickups = [], hazards = [], projectiles = [], waves = [], results = [];
   let trafficSnapshot=[],carsById=new Map(),extras=null;
   const ramps = createRampLayout(track);
@@ -129,7 +132,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
   // Static road lookup avoids repeated expensive spline sampling per racer.
   const roadCount = clamp(Math.ceil(trackLength / 3), 32, 4096);
   const roadSpacing = trackLength / roadCount;
-  const road = Array.from({ length: roadCount }, (_, i) => {
+  const road = Array.from({ length: roadCount + (openCourse ? 1 : 0) }, (_, i) => {
     let source;
     try { source = track.sampleTrack(i * roadSpacing); } catch { source = null; }
     const tangent = safeVector(source?.tangent, { x: 1, y: 0, z: 0 });
@@ -138,12 +141,15 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     return { tangent, right, width: Math.max(4, finite(source?.width, finite(track.width, 16))), curvature: 0 };
   });
   road.forEach((point, i) => {
-    const a = road[(i + roadCount - 2) % roadCount].tangent, b = road[(i + 2) % roadCount].tangent;
-    point.curvature = ((b.x - a.x) * point.right.x + (b.z - a.z) * point.right.z) / (roadSpacing * 4);
+    const left = openCourse ? Math.max(0, i - 2) : (i + roadCount - 2) % roadCount;
+    const right = openCourse ? Math.min(roadCount, i + 2) : (i + 2) % roadCount;
+    const a = road[left].tangent, b = road[right].tangent;
+    const span = openCourse ? Math.max(1, right - left) : 4;
+    point.curvature = ((b.x - a.x) * point.right.x + (b.z - a.z) * point.right.z) / (roadSpacing * span);
   });
-  const sample = d => road[Math.floor(wrap(d, trackLength) / roadSpacing) % roadCount];
+  const sample = d => road[openCourse ? Math.min(roadCount, Math.max(0, Math.floor(finite(d) / roadSpacing))) : Math.floor(wrap(d, trackLength) / roadSpacing) % roadCount];
   const curvatureAt = d => sample(d).curvature;
-  const courseGap = (a, b) => wrap(a - b + trackLength / 2, trackLength) - trackLength / 2;
+  const courseGap = (a, b) => openCourse ? a - b : wrap(a - b + trackLength / 2, trackLength) - trackLength / 2;
   function emit(type, car, extra = {}) {
     events.push({ type, time, carId: car?.id ?? null, distance: finite(car?.distance), lateral: finite(car?.lateral), intensity: 1, ...extra });
     if (events.length > MAX_EVENTS) events.splice(0, events.length - MAX_EVENTS);
@@ -212,12 +218,18 @@ export function createRaceSimulation({ players = [], track, random = Math.random
         _nextMistake: 7 + driverRandom() * 14, _itemTimer: 0, _hitImmune: 0,
         _lastPassEvent: -10, _wasOffRoad: false, _passUntil: 0, _passLane: 0, _passingId: null,_passSurplus:0,
       });
+      car.topSpeed *= driverSkills.speedFactor; car.maxSpeed *= driverSkills.speedFactor;
+      car.accelerationFactor *= driverSkills.accelerationFactor;
+      car.gripFactor *= driverSkills.gripFactor;
+      car.durabilityFactor *= driverSkills.durabilityFactor;
+      car.raceCatchup = {targetMultiplier:1,accelerationMultiplier:1,gap:0,rank:null,leaderPenalty:0};
       if(car.isBot){car.topSpeed*=.82;car.maxSpeed*=.82;car.accelerationFactor*=.78;car.durabilityFactor*=.48;}
       return car;
     });
     cars.splice(0, cars.length, ...fresh);
     canonicalCars = [...cars].sort((a, b) => a.gridPosition - b.gridPosition);
     extras?.reset();
+    catchupSystem.reset();
     time = 0; accumulator = 0; winnerId = null; winnerWasReturned = false; serial = 0;
     events = []; lastCollisionAt = new Map(); hazardHits = new Set(); pickupHits = new Set(); rampHits = new Set();
     hazards.length = 0; projectiles.length = 0; waves.length = 0; results.length = 0;
@@ -312,7 +324,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       car._passLane = target; car._passUntil = time + 6; car._passingId = lead.id;car._passSurplus=car.draft*5;
     }
     if (car.mistakeType === 'wide') target = car._mistakeSide * (limit + 2.1);
-    const plan=planRampApproach(car,ramps,trackLength,traffic.all,curvatureAt);
+    const plan=planRampApproach(car,ramps,trackLength,traffic.all,curvatureAt,{closed:!openCourse});
     if(car.rampState==='approach') return ramps.find(r=>r.id===car.rampId)?.lateral??target;
     car.rampPlan=plan;
     if(plan){
@@ -326,7 +338,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     // The wake reduces drag and permits a small speed surplus using existing
     // engine power. The car must move out and complete its pass on momentum.
     const passingSurplus=time<car._passUntil?car._passSurplus:0;
-    let target = car.topSpeed * car._pace + Math.max(car.draft*5,passingSurplus) + bonusScale * (car.trickSpeedBonus + (car.repairRemaining > 0 ? 5 : 0) + (car.boost > 0 ? 12 : 0) + (car.rocketRemaining > 0 ? 18 : 0));
+    let target = car.topSpeed * car._pace * car.raceCatchup.targetMultiplier + Math.max(car.draft*5,passingSurplus) + bonusScale * (car.trickSpeedBonus + (car.repairRemaining > 0 ? 5 : 0) + (car.boost > 0 ? 12 : 0) + (car.rocketRemaining > 0 ? 18 : 0));
     if(car.itemEffects?.overdrive>0)target+=car.topSpeed*.08;
     if(car.itemEffects?.winch>0)target=Math.min(target,5);
     const lateBrake = car.mistakeType === 'late-brake';
@@ -382,7 +394,9 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     }
   }
   function advanceDamageState(car, dt) {
-    if(car.isBot&&!car.finished)car.damage+=dt*(.001+Math.max(0,car.speed)/finishDistance*car.botWear);
+    // A single long descent must not guarantee every bot's destruction from
+    // passive wear alone. Real impacts still use their weaker durability.
+    if(car.isBot&&!car.finished)car.damage+=dt*(openCourse ? .00008 + Math.max(0,car.speed)/finishDistance*car.botWear*.15 : .001+Math.max(0,car.speed)/finishDistance*car.botWear);
     refreshDamageState(car);
     if (car.finished) return;
     car.replacementRemaining = Math.max(0, car.replacementRemaining - dt);
@@ -482,7 +496,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     const p=vehicleProfile(car),foot=wheelFootprint(car),front=Math.max(...foot.map(w=>w.d)),rear=Math.min(...foot.map(w=>w.d));
     car.rampHeight=0;car.rampPitch=0;
     for(const ramp of ramps){
-      const lap=Math.max(0,Math.floor((car.distance+front-ramp.distance)/trackLength)),start=ramp.distance+lap*trackLength,lip=start+ramp.length,key=car.gridPosition+':'+ramp.id+':'+lap;
+      const lap=openCourse?0:Math.max(0,Math.floor((car.distance+front-ramp.distance)/trackLength)),start=ramp.distance+lap*trackLength,lip=start+ramp.length,key=car.gridPosition+':'+ramp.id+':'+lap;
       if(rampHits.has(key)||car.distance+front<start||car.distance+rear>lip+car.speed*STEP+.1)continue;
       const inside=foot.filter(w=>Math.abs(car.lateral+w.l-ramp.lateral)<ramp.width/2-.08).length,aligned=inside===4;
       const engaged=car._rampEngagedKey===key;
@@ -528,7 +542,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     const contactLoads=wheelLoads(car);
     const tireFactor=(car.flightRemaining>0?1:clamp(contactLoads.reduce((n,w)=>n+w.load*(1-.10*Math.abs(w.load/.25-1)),0),.78,1))*(1-.28*car.tyreBlowoutSeverity)*(car.itemEffects?.oil>0&&!(car.itemEffects?.grip>0)?.42:1)*(car.recoveryRemaining>0?clamp(Math.cos(car.landingRoll)*Math.cos(car.landingPitch),.18,1):1);
     car.tireGripFactor=tireFactor;
-    const envelope = raceForceEnvelope({ speed: car.speed, curvature, draft: car.draft, offRoad: Math.abs(car.lateral) + CAR_WIDTH * 0.5 > roadHalf, gripFactor:(car.vehicleSpec?1:car.gripFactor)*tireFactor,massKg:car.massKg,vehicleSpec:car.vehicleSpec });
+    const envelope = raceForceEnvelope({ speed: car.speed, curvature, draft: car.draft, offRoad: Math.abs(car.lateral) + CAR_WIDTH * 0.5 > roadHalf, gripFactor:car.gripFactor*tireFactor,massKg:car.massKg,vehicleSpec:car.vehicleSpec });
     car.dragN = envelope.dragN; car.downforceN = envelope.downforceN;
     car.drag = envelope.dragAccel + envelope.rollingAccel;
     car.rocketAcceleration = car.rocketRemaining > 0 && !(car.itemEffects?.emp>0) ? 9 / (1 + (car.speed / 65) ** 2) : 0;
@@ -571,7 +585,10 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       throttle=car._controlThrottle;car.brake=car._controlBrake;car.throttle=throttle;
       if(car.attackSlowRemaining>0)throttle*=.35;
       const drive = raceElectricDrive({ speed: car.speed, throttle, brake: car.brake,
-        energyJ: car.batteryEnergyJ, dt, longitudinalAccel: envelope.longitudinalAccel, accelerationFactor: car.accelerationFactor,massKg:car.massKg,motorPowerW:car.powerW,brakeFactor:car.brakeFactor,vehicleSpec:car.vehicleSpec });
+        // Overdrive adds a modest engine opportunity as well as its existing
+        // ceiling. raceElectricDrive applies it before the shared grip limit;
+        // nitro, rocket, braking and status speed caps remain independent.
+        energyJ: car.batteryEnergyJ, dt, longitudinalAccel: envelope.longitudinalAccel, accelerationFactor: car.accelerationFactor, raceDriveMultiplier: (car.vehicleSpec ? car.accelerationFactor : 1) * car.raceCatchup.accelerationMultiplier * (car.itemEffects?.overdrive > 0 ? 1.08 : 1),massKg:car.massKg,motorPowerW:car.powerW,brakeFactor:car.brakeFactor,vehicleSpec:car.vehicleSpec });
       car.batteryEnergyJ = drive.energyJ; car.batterySOC = drive.energyJ / BATTERY_J;
       car.motorPowerW = drive.powerW; car.regenW = drive.regenW;
       car.nitroAcceleration = stepNitro(car, dt, car.brake > 0 ? 0 : Math.max(0, envelope.longitudinalAccel - drive.driveN / car.massKg));
@@ -730,7 +747,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       for(let index=0;index<inventoryCount(car);index++){
         const slot=index?car.inventoryReserves[index-1]:car;
         if(slot.inventoryPhase!=='ready'||time<slot.itemUseAt)continue;
-        const decision=BASE_ITEM_IDS.includes(slot.inventoryItem)?itemDecision(car,canonicalCars,{itemSlot:slot,trackLength,curvature:curvatureAt,width:d=>sample(d).width,projectiles,waves,lockClear:extras.lockClear}):extras.decision(car,slot.inventoryItem);
+        const decision=BASE_ITEM_IDS.includes(slot.inventoryItem)?itemDecision(car,canonicalCars,{itemSlot:slot,trackLength,closed:!openCourse,curvature:curvatureAt,width:d=>sample(d).width,projectiles,waves,lockClear:extras.lockClear}):extras.decision(car,slot.inventoryItem);
         car.itemDecision=decision;
         if(decision.use){car._itemAim=decision;if(deployItem(car,index)){car._nextItemThink=time+.35;break;}}
         car._itemAim=null;
@@ -815,7 +832,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     if (car.finished || inventoryCount(car)>=INVENTORY_CAPACITY || car._rewindActive || car._towActive || car.itemEffects?.pickupBlock>0 || car.distance < 0 || car.flightHeight > 2.8) return;
     for (const pickup of pickups) {
       if (!pickup.active) continue;
-      const lap = Math.round((car.distance - pickup.distance) / trackLength); if (lap < 0) continue;
+      const lap = openCourse ? 0 : Math.round((car.distance - pickup.distance) / trackLength); if (lap < 0) continue;
       const at = pickup.distance + lap * trackLength;
       const swept = at >= Math.min(car.previousProgress, car.distance) - CAR_LENGTH * 0.4 && at <= Math.max(car.previousProgress, car.distance) + CAR_LENGTH * 0.4;
       if (!swept || Math.abs(car.lateral - pickup.lateral) > pickup.radius + CAR_WIDTH * 0.45+(car.itemEffects?.magnet>0?4:0)) continue;
@@ -833,8 +850,8 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     if (car.flightRemaining > 0) return;
     const staticHazards = Array.isArray(track.hazards) ? track.hazards : [];
     for (let i = 0; i < staticHazards.length; i++) {
-      const h = staticHazards[i] || {}, base = wrap(finite(h.distance), trackLength);
-      const lap = Math.round((car.distance - base) / trackLength), key = `${car.gridPosition}:${i}:${lap}`;
+      const h = staticHazards[i] || {}, base = openCourse ? clamp(finite(h.distance), 0, trackLength) : wrap(finite(h.distance), trackLength);
+      const lap = openCourse ? 0 : Math.round((car.distance - base) / trackLength), key = `${car.gridPosition}:${i}:${lap}`;
       if (hazardHits.has(key)) continue;
       const radius = Math.max(0.5, finite(h.radius, h.type === 'oil' ? 2.2 : 1.7));
       if (Math.abs(car.distance - (base + lap * trackLength)) > Math.max(1.7, CAR_LENGTH * 0.42)) continue;
@@ -1011,6 +1028,8 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     }
     const snapshot=trafficSnapshot;
     for(let i=0;i<canonicalCars.length;i++){const car=canonicalCars[i],s=snapshot[i];s.distance=car.distance;s.lateral=car.lateral;s.speed=car.speed;s.finished=car.finished;s.draftbreaker=car.itemEffects?.draftbreaker||0;s.ghost=car.itemEffects?.ghost||0;}
+    const catchupValues = catchupSystem.update(canonicalCars, dt);
+    for (const car of canonicalCars) car.raceCatchup = catchupValues.get(car.id);
     for (const car of canonicalCars) integrateCar(car, dt, snapshot);
     for (const car of canonicalCars) advanceInventory(car,dt);
     resolveCollisions();
@@ -1070,7 +1089,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     // human-driver controls. They enforce the same inventory/phase guards.
     awardItem(id,type) { return !disposed && queueItem(cars.find(c=>c.id===id),type); },
     useHeldItem(id,index=0) { return !disposed && deployItem(cars.find(c=>c.id===id),index); },
-    itemOpportunity(id){const c=cars.find(c=>c.id===id);if(!c)return null;return BASE_ITEM_IDS.includes(c.inventoryItem)?itemDecision(c,canonicalCars,{trackLength,curvature:curvatureAt,width:d=>sample(d).width,projectiles,waves,lockClear:extras.lockClear}):extras.decision(c,c.inventoryItem);},
+    itemOpportunity(id){const c=cars.find(c=>c.id===id);if(!c)return null;return BASE_ITEM_IDS.includes(c.inventoryItem)?itemDecision(c,canonicalCars,{trackLength,closed:!openCourse,curvature:curvatureAt,width:d=>sample(d).width,projectiles,waves,lockClear:extras.lockClear}):extras.decision(c,c.inventoryItem);},
     reset() { if (!disposed) createGrid(); },
     dispose() {
       extras.reset();

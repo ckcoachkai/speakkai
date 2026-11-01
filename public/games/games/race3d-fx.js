@@ -379,7 +379,7 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     if (context.active && context.track?.sampleTrack && context.focusCar && dt > 0) {
       const low = context.quality === 'low' || context.quality?.id === 'low';
       const focus = context.focusCar, length = finite(context.track.totalLength, Infinity);
-      const distanceTo = car => {const d=Math.abs(finite(car.distance)-finite(focus.distance));return Math.min(d, Number.isFinite(length)?Math.abs(d%length):d, Number.isFinite(length)?length-d%length:d);};
+      const distanceTo = car => {const d=Math.abs(finite(car.distance)-finite(focus.distance));if(context.track.closed===false||!Number.isFinite(length)||length<=0)return d;const wrapped=d%length;return Math.min(wrapped,length-wrapped);};
       const nearby = (context.cars || []).filter(car => distanceTo(car)<110)
         .sort((a,b)=>distanceTo(a)-distanceTo(b)).slice(0,low?2:4);
       const kept = new Set(nearby.map(car=>car.id));
@@ -432,3 +432,4 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
 }
 
 export default createRaceEffects;
+

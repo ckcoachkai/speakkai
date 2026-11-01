@@ -388,3 +388,13 @@
  .race3d-hud[data-powerup=true] .race3d-focus-specs{max-height:calc(100% - var(--focus-top,190px) - 342px)}
 }
 @media(max-width:700px) and (max-height:700px) and (min-height:481px){.race3d-roulette{bottom:200px}}
+
+/* Fictional simulation tuning and live race adjustment, separate from held items. */
+.race3d-card-tuning{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0 6px}
+.race3d-racer-card:not(.is-focused) .race3d-card-tuning{display:none}
+.race3d-card-level,.race3d-card-balance{display:inline-block;max-width:100%;padding:3px 5px;border:1px solid #7db5c27d;border-radius:5px;background:#142f3d;color:#d6f6f4;font:700 10px/1.35 system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.race3d-card-level[hidden],.race3d-card-balance[hidden]{display:none}
+.race3d-card-balance[data-kind=catchup]{border-color:#8edfa2a8;background:#193c2c;color:#dcffe4}
+.race3d-card-balance[data-kind=penalty]{border-color:#f4b982a8;background:#49301c;color:#fff0d6}
+@media(max-width:700px),(max-height:480px){.race3d-card-tuning{gap:3px;margin:3px 0 5px}.race3d-card-level,.race3d-card-balance{font-size:10px;padding:3px 4px}}
+@media(max-width:700px) and (min-height:481px){.race3d-focus-specs .race3d-card-tuning + .race3d-card-vehicle{margin:2px 0 1px;min-height:0}}
