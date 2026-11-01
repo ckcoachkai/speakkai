@@ -920,7 +920,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
   function explodeBomb(p) {
     const owner = canonicalCars.find(car => car.id === p.ownerId);
     emit('bomb-explode', owner, { projectileId: p.id, distance: p.distance, lateral: p.lateral,
-      distanceTravelled: p.distanceTravelled, maxTravel: p.maxTravel, radius: BLAST_RADIUS, intensity: 1 });
+      distanceTravelled: p.distanceTravelled, maxTravel: p.maxTravel, height:Math.max(0,finite(p.height)), radius: BLAST_RADIUS, intensity: 1 });
     for (const car of canonicalCars) {
       if (car.finished || (car.id === p.ownerId && p.age < 0.7)) continue;
       const gap = courseGap(car.distance, p.distance), side = car.lateral - p.lateral, radius = Math.hypot(gap, side);

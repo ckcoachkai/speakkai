@@ -164,7 +164,10 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
       } else if (pool.name === 'celebration'||pool.name==='debris') {
         tempObject.rotation.set(p.rotation.x, p.rotation.y, p.rotation.z);
         const scale = p.size * (.86 + Math.sin(Math.PI * t) * .14);
-        tempObject.scale.set(scale, scale * .18, scale * .65);
+        // Debris geometry already contains its thickness; applying the
+        // confetti flattening again would make the shards nearly invisible.
+        if (pool.name === 'debris') tempObject.scale.setScalar(scale);
+        else tempObject.scale.set(scale, scale * .18, scale * .65);
       } else {
         tempObject.rotation.set(0, p.rotation.y, p.rotation.z);
         const scale = p.size * (1 + p.grow * t);
@@ -247,17 +250,53 @@ export function createRaceEffects(THREE, { random = Math.random } = {}) {
     const sidePoint = (base, lateral, rear = 0) => base.clone()
       .addScaledVector(right, lateral).addScaledVector(tangent, -rear);
 
-    if(type==='explosion'){
-      const reduced=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
-      const count=reduced?4:context.quality?.id==='low'?8:14;
-      spawn('blast',at(position,0,.15),new THREE.Vector3(),{life:reduced?.45:.8,size:1,grow:7,alpha:.8,color:0xffe1a2});
-      for(let i=0;i<(reduced?2:5);i++)spawn('fire',at(position,(rand()-.5)*2,.6+rand(),(rand()-.5)*2),new THREE.Vector3((rand()-.5)*2,2+rand()*2,(rand()-.5)*2),{life:.35+rand()*.5,size:.8+rand(),grow:2,color:i?0xff7722:0xffe6a2,drag:.4});
-      for(let i=0;i<count;i++){
-        const a=rand()*Math.PI*2,v=3+rand()*6;
-        spawn('debris',at(position,0,.9),new THREE.Vector3(Math.cos(a)*v,3+rand()*5,Math.sin(a)*v),{life:1.2+rand()*.8,size:.18+rand()*.4,spin:4+rand()*8,gravity:10,drag:.12,color:i%3?0x4e5e69:0xe7a03c});
-        spawn('sparks',at(position,0,1),new THREE.Vector3(Math.cos(a)*v*1.5,2+rand()*6,Math.sin(a)*v*1.5),{life:.3+rand()*.5,size:.4,stretch:4,gravity:8,color:0xffdc82});
+    if (type === 'explosion') {
+      const reduced = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+      const low = context.quality === 'low' || context.quality?.id === 'low';
+      const scale = .9 + intensity * .22;
+      const debrisCount = reduced ? 4 : low ? 8 : 14;
+      const fireCount = reduced ? 2 : low ? 5 : 8;
+
+      // A brief hot core and overlapping, outward-moving lobes make one large
+      // fireball rather than a cloud of tiny points. Indexed angles keep the
+      // silhouette spread out even when the supplied random source is constant.
+      for (let i = 0; i < fireCount; i++) {
+        const core = i === 0;
+        const angle = (i - 1) * Math.PI * 2 / Math.max(1, fireCount - 1) + (rand() - .5) * .35;
+        const radius = core ? 0 : (1.1 + rand() * .65) * scale;
+        const x = Math.cos(angle), z = Math.sin(angle);
+        spawn('fire', at(position, x * radius, (core ? 1.15 : .65 + rand() * 1.1) * scale, z * radius),
+          new THREE.Vector3(x * (core ? 0 : 1.1 + rand()), core ? .5 : 1.1 + rand() * 1.5, z * (core ? 0 : 1.1 + rand())),
+          { life: core ? .28 : .48 + rand() * .25, size: (core ? 2.3 : 1.55 + rand() * .6) * scale,
+            grow: core ? .42 : 1.05, alpha: core ? .72 : .8,
+            color: core ? 0xffe6a2 : (i % 3 ? 0xff7926 : 0xffb044), drag: .42 });
       }
-      for(let i=0;i<(reduced?3:8);i++)spawn('smoke',at(position,(rand()-.5)*3,.8,(rand()-.5)*3),new THREE.Vector3((rand()-.5),1.8+rand(),(rand()-.5)),{life:1.8+rand(),size:.7+rand()*.7,grow:2.8,color:0x353c46,alpha:.9,drag:.1});
+      // The ground ring reaches roughly twice a car length but fades quickly;
+      // a second thinner wave adds depth on higher quality settings.
+      spawn('blast', at(position, 0, .18), new THREE.Vector3(),
+        { life: reduced ? .38 : .65, size: 1.25 * scale, grow: 6.2, alpha: .78, color: 0xffd48b });
+      if (!reduced && !low) spawn('blast', at(position, 0, .34), new THREE.Vector3(),
+        { life: .46, size: .85 * scale, grow: 5.4, alpha: .55, color: 0xfff0c4 });
+      for (let i = 0; i < debrisCount; i++) {
+        const angle = i * Math.PI * 2 / debrisCount + (rand() - .5) * .4;
+        const speed = (4.5 + rand() * 6) * scale;
+        spawn('debris', at(position, 0, .9 * scale),
+          new THREE.Vector3(Math.cos(angle) * speed, 3.5 + rand() * 5, Math.sin(angle) * speed),
+          { life: .9 + rand() * .6, size: (.28 + rand() * .36) * scale, spin: 4 + rand() * 8,
+            gravity: 10, drag: .12, color: i % 3 ? 0x4e5e69 : 0xe7a03c });
+        spawn('sparks', at(position, 0, 1 * scale),
+          new THREE.Vector3(Math.cos(angle) * speed * 1.35, 2 + rand() * 6, Math.sin(angle) * speed * 1.35),
+          { life: .28 + rand() * .38, size: .48 * scale, stretch: 4, gravity: 8, color: 0xffdc82 });
+      }
+      const smokeCount = reduced ? 3 : low ? 5 : 8;
+      for (let i = 0; i < smokeCount; i++) {
+        const angle = i * Math.PI * 2 / smokeCount + (rand() - .5) * .4;
+        const radius = (.6 + rand() * 1.1) * scale;
+        spawn('smoke', at(position, Math.cos(angle) * radius, .8 * scale, Math.sin(angle) * radius),
+          new THREE.Vector3(Math.cos(angle) * .6, 1.3 + rand(), Math.sin(angle) * .6),
+          { life: 1.25 + rand() * .55, size: (1.05 + rand() * .55) * scale, grow: 1.3,
+            color: 0x353c46, alpha: .72, drag: .1 });
+      }
       return;
     }
 

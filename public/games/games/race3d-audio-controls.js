@@ -62,6 +62,9 @@ export function audioControls(car, state, { dt = 1 / 60, time = 0, focused = tru
   const p = AUDIO_PROFILES[profile] || AUDIO_PROFILES.electric;
   const gain = focused ? .13 + state.load * .075 : Math.min(.018 / (1 + Math.abs(separation) / 14), Math.max(0, focusGain) * .12);
   const active = enabled && racing && !car.finished;
+  // Timers may continue during EMP or a ground spin without applying thrust.
+  const rocketThrust = num(car.itemEffects?.emp) <= 0 && (num(car.rocketVectorThrust) > .001 ||
+    (num(car.rocketAcceleration) > .001 && (num(car.spin) <= 0 || num(car.flightRemaining) > 0)));
   return {
     gear: state.gear, load: state.load, rpm: state.rpm,
     pitchHz: state.rpm / 30 * p.pitch,
@@ -70,7 +73,7 @@ export function audioControls(car, state, { dt = 1 / 60, time = 0, focused = tru
     tireHz: 850 + state.slipLevel * 1600,
     windGain: active && focused ? Math.min(.035, v * v * .022) : 0,
     turboGain: active && focused && num(car.nitroAcceleration) > .05 ? Math.min(.055, num(car.nitroAcceleration) / 9 * .055) : 0,
-    rocketGain: active && focused && num(car.rocketRemaining) > 0 ? .10 : 0,
+    rocketGain: active && focused && rocketThrust ? .10 : 0,
     shift: active && focused && !changed ? shift : 0,
     brakeChirp: active && focused && brakeChirp,
     skidActive: state.skid,

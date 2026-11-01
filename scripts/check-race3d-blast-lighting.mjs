@@ -1,0 +1,55 @@
+import assert from 'node:assert/strict';
+import * as THREE from '../public/games/assets/vendor/three.module.js';
+import { createBlastLighting } from '../public/games/games/race3d-blast-lighting.js';
+
+const scene = new THREE.Scene(), world = new THREE.Group();
+world.scale.setScalar(.2); scene.add(world);
+const fx = createBlastLighting(THREE, { reducedMotion: false });
+world.add(fx.group);
+const position = { x: 20, y: 3, z: -11 };
+assert.equal(fx.emit({ position, intensity: 1 }), true);
+const lamp = fx.group.children[0];
+assert.equal(lamp.castShadow, false);
+assert.deepEqual(lamp.position.toArray(), [20, 4.2, -11]);
+assert.equal(fx.snapshot().capacity, 1);
+for (let i = 0; i < 100; i++) assert.equal(fx.emit({ position }), false);
+assert.equal(fx.snapshot().active, 1);
+assert.equal(fx.snapshot().suppressed, 100);
+fx.update(.0832, { active: true, quality: { id: 'high' } });
+assert.ok(fx.snapshot().intensity > 17.9);
+assert.equal(lamp.distance, 2.8000000000000003);
+fx.update(.1, { active: true, quality: { id: 'low' } });
+assert.equal(lamp.distance, 2.2);
+assert.ok(fx.snapshot().intensity <= 13);
+fx.update(.4, { active: true });
+assert.equal(fx.snapshot().active, 0);
+assert.equal(lamp.intensity, 0);
+assert.equal(fx.emit({ position }, { quality: 'low' }), true);
+fx.update(.1, { active: false });
+assert.equal(fx.snapshot().active, 0);
+assert.equal(lamp.intensity, 0);
+fx.reset(); assert.equal(fx.snapshot().accepted, 0);
+assert.equal(fx.emit({ position: { x: NaN, z: 1 } }), false);
+fx.dispose(); fx.dispose();
+assert.equal(fx.group.parent, null);
+assert.equal(fx.emit({ position }), false);
+assert.equal(fx.snapshot().disposed, true);
+
+const reduced = createBlastLighting(THREE, { reducedMotion: true });
+assert.equal(reduced.emit({ position }), true);
+let previous = 0, peak = 0, falling = false;
+for (let i = 0; i < 80; i++) {
+  reduced.update(.01, { active: true });
+  const value = reduced.snapshot().intensity;
+  peak = Math.max(peak, value);
+  if (value < previous - 1e-8) falling = true;
+  if (falling) assert.ok(value <= previous + 1e-8, 'reduced envelope must not pulse');
+  previous = value;
+}
+assert.ok(peak <= 18 * .22 + 1e-8);
+assert.equal(reduced.snapshot().active, 0);
+assert.equal(reduced.emit({ position }), false);
+reduced.update(.7, { active: true });
+assert.equal(reduced.emit({ position }), true);
+reduced.reset(); assert.equal(reduced.snapshot().active, 0);
+console.log('PASS: fixed single-light budget, world position, quality, expiry, overlap, reduced motion, reset and disposal');

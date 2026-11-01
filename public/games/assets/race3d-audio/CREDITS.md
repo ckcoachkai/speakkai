@@ -24,3 +24,7 @@ No verified EV/F1/supercar/monster-truck-specific recordings were found in this 
 - bart: https://opengameart.org/content/steam-release-sounds ; direct archive https://opengameart.org/sites/default/files/steam_hisses.zip ; CC0 https://creativecommons.org/publicdomain/zero/1.0/ . Attribution appreciated by creator. 622 kB complete archive retained.
 
 Reviewed/downloaded 2026-10-24. This handoff modifies only `work/race3d-items-ramps/driving-sounds/sources`; it does not itself modify game code or prove live playback.
+
+## Explosion layers added 2026-11-01
+
+`explosion-attack.wav`, `explosion-body.wav`, and `explosion-debris.wav` are original procedural sound-design layers, not recordings of real explosions. See [explosion-credits.md](explosion-credits.md) for synthesis provenance, measurements and the CC0 dedication. Existing driving sound attributions above remain applicable.

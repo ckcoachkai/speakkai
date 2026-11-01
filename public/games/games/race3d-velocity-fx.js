@@ -40,29 +40,35 @@ export function createVelocityEffects(THREE, { camera, reducedMotion = false } =
     const speed = Math.max(0, finite(car?.speed));
     if (reducedMotion || !active || !car || car.finished || car.finishHidden || speed < 6) { clear(); return; }
     const step = clamp(finite(dt), 0, .05);
-    const powered = finite(car.boost) > 0 || finite(car.nitro?.remaining) > 0 || finite(car.rocketRemaining) > 0;
+    // Show propulsion only when it is being applied, not merely when an item
+    // timer is running through a spin, EMP, or an airborne nitro interval.
+    const powered = finite(car.itemEffects?.emp) <= 0 && finite(car.spin) <= 0 &&
+      ((finite(car.rocketRemaining) > 0 && (car.rocketAcceleration == null || finite(car.rocketAcceleration) > .001)) ||
+       ((finite(car.boost) > 0 || finite(car.nitro?.remaining) > 0) && finite(car.flightRemaining) <= 0 && finite(car.nitroAcceleration) > .001));
     const draft = clamp(finite(car.draft, finite(car.drafting)), 0, 1);
     const speedMix = clamp((speed - 22) / 45, 0, 1);
-    const target = clamp(speedMix * .42 + draft * .38 + (powered ? .65 : 0), 0, 1);
+    // Traffic drafting often stays well below one. Give that partial signal a
+    // visible response without turning ordinary top speed into full boost.
+    const target = clamp(speedMix * .30 + Math.sqrt(draft) * .60 + (powered ? .75 : 0), 0, 1);
     const smoothing = 1 - Math.exp(-step / .3);
     intensity += (target - intensity) * smoothing;
     poweredMix += ((powered ? 1 : 0) - poweredMix) * smoothing;
     if (intensity < .008) { group.visible = false; ribbonCount = hoopCount = 0; return; }
     group.visible = true; clock = (clock + step * (.42 + speed / 75 + poweredMix * .65)) % 1000;
     source = powered ? 'nitro' : draft > .15 ? 'slipstream' : 'speed';
-    ribbonCount = qualityId === 'low' ? 28 : qualityId === 'high' ? capacity : 60;
-    hoopCount = qualityId === 'low' || (!powered && draft < .3) ? 0 : qualityId === 'high' ? 3 : 2;
+    ribbonCount = qualityId === 'low' ? 40 : qualityId === 'high' ? capacity : 72;
+    hoopCount = !powered && draft < .2 ? 0 : qualityId === 'low' ? 1 : qualityId === 'high' ? 3 : 2;
     // Use the current projection so optics remain peripheral on portrait screens.
     const halfY = Math.tan(clamp(finite(camera?.fov, 60), 25, 100) * Math.PI / 360);
     const halfX = halfY * clamp(finite(camera?.aspect, 1.6), .3, 4);
     tint.copy(white).lerp(cool, draft).lerp(warm, poweredMix);
-    material.opacity = intensity * .46; hoopMaterial.opacity = intensity * .16;
+    material.opacity = intensity * .78; hoopMaterial.opacity = intensity * .30;
     for (let i = 0; i < ribbonCount; i++) {
       const angle = i * 2.3999632297, a = Math.cos(angle), b = Math.sin(angle);
       const phase = (clock + i * .61803398875) % 1;
-      const edge = .76 + phase * .5;
-      const stretch = .055 + phase * .12 + poweredMix * .075;
-      const thickness = .0015 + (i % 3) * .0007;
+      const edge = .76 + phase * .28;
+      const stretch = .10 + phase * .17 + poweredMix * .10;
+      const thickness = .0035 + (i % 3) * .001;
       const z = 1.4 + (1 - phase) * 3;
       // Fade in/out at recycling boundaries, avoiding a popping or flashing tunnel.
       const fade = Math.sin(phase * Math.PI) * (.35 + (i % 5) * .13);
@@ -75,7 +81,7 @@ export function createVelocityEffects(THREE, { camera, reducedMotion = false } =
     }
     geometry.setDrawRange(0, ribbonCount * 6);
     for (let h = 0; h < hoopCount; h++) {
-      const phase = (clock * .28 + h / hoopCount) % 1, radius = .8 + phase * .55, z = 3;
+      const phase = (clock * .28 + h / hoopCount) % 1, radius = .8 + phase * .32, z = 3;
       const fade = Math.sin(phase * Math.PI);
       for (let s = 0; s < hoopSegments; s++) {
         // Deliberate gaps make a segmented propulsion field rather than a screen border.

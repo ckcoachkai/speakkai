@@ -1,0 +1,60 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+const source = await readFile(new URL('../public/games/games/race3d-slipstream-trails.js', import.meta.url), 'utf8');
+const { createSlipstreamTrails } = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
+class Group { constructor() { this.children = []; this.visible = true; } add(child) { this.children.push(child); } removeFromParent() {} clear() { this.children.length = 0; } }
+class BufferGeometry { constructor() { this.attributes = {}; this.drawRange = {}; } setAttribute(k,v) { this.attributes[k]=v; } setDrawRange(start,count) { this.drawRange={start,count}; } dispose() { this.disposed = true; } }
+class BufferAttribute { constructor(array) { this.array=array; } setUsage() { return this; } }
+class MeshBasicMaterial { constructor(options) { Object.assign(this, options); } dispose() { this.disposed = true; } }
+class Mesh { constructor(geometry,material) { this.geometry=geometry; this.material=material; } }
+const THREE = { Group, BufferGeometry, BufferAttribute, MeshBasicMaterial, Mesh, DynamicDrawUsage: 1, AdditiveBlending: 2, DoubleSide: 2 };
+const track = { sampleTrack(d) { return { position: { x: 0, y: d * .01, z: d }, right: { x: 1, z: 0 }, bank: .05 }; } };
+const follower = { id: 1, distance: 100, lateral: 0, speed: 40, draft: .65 };
+const leader = { id: 2, distance: 130, lateral: .3, speed: 40, draft: 0 };
+const fx = createSlipstreamTrails(THREE);
+const geometry = fx.group.children[0].geometry;
+assert.equal(fx.snapshot().active, false);
+fx.update([follower, leader], track, .016, { quality: { id: 'high' }, active: true });
+assert.equal(fx.snapshot().pairCount, 1);
+assert.equal(fx.snapshot().streakCount, 8);
+assert.equal(geometry.drawRange.count, 48);
+const positions = geometry.attributes.position.array;
+assert.ok([...positions.slice(0, 144)].every(Number.isFinite));
+assert.ok([...positions.slice(0, 144)].some(n => n !== 0));
+assert.ok(positions[2] < leader.distance && positions[2] > follower.distance);
+const first = positions.slice(0, 18);
+fx.update([follower, leader], track, .05, { quality: 'high', active: true });
+assert.equal(fx.group.children[0].geometry, geometry);
+assert.notDeepEqual(positions.slice(0, 18), first);
+fx.update([follower, { ...leader, itemEffects: { draftbreaker: 1 } }], track, .016, { active: true });
+assert.equal(fx.snapshot().streakCount, 0);
+fx.update([{ ...follower, itemEffects: { ghost: 1 } }, leader], track, .016, { active: true });
+assert.equal(fx.snapshot().streakCount, 0);
+fx.update([{ ...follower, draft: 0 }, leader], track, .016, { active: true });
+assert.equal(fx.snapshot().streakCount, 0);
+fx.update([follower, { ...leader, lateral: 4 }], track, .016, { active: true });
+assert.equal(fx.snapshot().streakCount, 0);
+fx.update([{ ...follower, itemEffects: { draftcollector: 1 } }, { ...leader, lateral: 4 }], track, .016, { active: true });
+assert.equal(fx.snapshot().streakCount, 6);
+const many = [];
+for (let i = 0; i < 20; i++) many.push({ id: i, distance: i * 10, lateral: 0, speed: 40, draft: .8 });
+fx.update(many, track, .016, { quality: 'high', active: true });
+assert.equal(fx.snapshot().pairCount, 8);
+assert.equal(fx.snapshot().streakCount, 64);
+fx.update(many, track, .016, { quality: 'low', active: true });
+assert.equal(fx.snapshot().pairCount, 3);
+assert.equal(fx.snapshot().streakCount, 12);
+fx.update(many, track, .016, { active: false });
+assert.equal(fx.snapshot().active, false);
+assert.equal(geometry.drawRange.count, 0);
+fx.dispose(); fx.dispose();
+assert.equal(fx.snapshot().disposed, true);
+const reduced = createSlipstreamTrails(THREE, { reducedMotion: true });
+reduced.update(many, track, .016, { quality: 'high', active: true });
+assert.equal(reduced.snapshot().pairCount, 2);
+assert.equal(reduced.snapshot().streakCount, 8);
+const frozen = reduced.group.children[0].geometry.attributes.position.array.slice();
+reduced.update(many, track, .05, { quality: 'high', active: true });
+assert.deepEqual(reduced.group.children[0].geometry.attributes.position.array, frozen);
+reduced.reset(); assert.equal(reduced.snapshot().active, false); reduced.dispose();
+console.log('slipstream trails: pairing, gating, geometry, motion, quality budgets, reduced motion, reset and disposal passed');

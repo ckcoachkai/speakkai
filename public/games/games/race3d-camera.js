@@ -1,5 +1,6 @@
 /** Smooth third-person chase camera for the race3d course. */
-export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
+export function createChaseCamera({ THREE, camera, track, timeScale = 5,
+  reducedMotion = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false }) {
   if (!THREE?.Vector3 || !camera || !track?.sampleTrack) {
     throw new TypeError('createChaseCamera needs THREE, a camera, and a track sampler');
   }
@@ -95,7 +96,7 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
     const width = clamp(finite(sample.width, finite(track.width, 16)), 8, 40);
     const topSpeed = Math.max(1, finite(focusCar.maxSpeed, 55));
     const speed = Math.max(0, finite(focusCar.speed));
-    const speedRatio = clamp(speed / topSpeed, 0, 1);
+    const speedRatio = reducedMotion ? 0 : clamp(speed / topSpeed, 0, 1);
     const modeAlpha = 1 - Math.exp(-step / Math.max(1, timeScale) / .36);
     overheadMix += ((modeIndex === 0 ? 1 : 0) - overheadMix) * modeAlpha;
     firstPersonMix += ((modeIndex === 2 ? 1 : 0) - firstPersonMix) * modeAlpha;
@@ -149,8 +150,15 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5 }) {
       }
     }
 
-    const powered=Number(focusCar.boost)>0||Number(focusCar.rocketRemaining)>0;
-    const wantedFov = (52 + speedRatio * 8 + (powered?3:0)) * chaseMix + 58 * overheadMix + (67+(powered?2:0)) * firstPersonMix;
+    // Use the focused racer's live signals, including partial drafting. The
+    // existing FOV spring softens both entry and exit; there is no camera shake.
+    const draft = reducedMotion ? 0 : clamp(finite(focusCar.draft, finite(focusCar.drafting)), 0, 1);
+    const powered = !reducedMotion && finite(focusCar.itemEffects?.emp) <= 0 &&
+      (finite(focusCar.rocketRemaining) > 0 ||
+        (finite(focusCar.flightRemaining) <= 0 && finite(focusCar.nitroAcceleration) > .05));
+    const draftCue = Math.sqrt(draft) * clamp(speed / 20, 0, 1);
+    const wantedFov = (52 + speedRatio * 8 + draftCue * 2 + (powered ? 5 : 0)) * chaseMix +
+      58 * overheadMix + (67 + draftCue * 1.5 + (powered ? 3 : 0)) * firstPersonMix;
     if (!initialized) {
       position.copy(wantedPosition);
       target.copy(wantedTarget);

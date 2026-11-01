@@ -1,11 +1,12 @@
 import {audioPeakCurve} from './race3d-finish-fx.js?v=20261027-midnight';
-import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261027-midnight';
+import { audioControls, newAudioState } from './race3d-audio-controls.js?v=20261101-impact';
 import {ALL_ITEM_IDS,ITEM_REGISTRY} from './race3d-item-registry.js?v=20261027-midnight';
 /** Recorded driving textures with a procedural fallback. All audio creation and resume calls stay on start/setSound
  * so browsers only unlock the graph from a host user gesture. */
 export function createRaceAudio({ sound = true } = {}) {
   const MAX_ENGINES = 3;
   const MAX_FX = 12;
+  const MAX_EXPLOSIONS = 3;
   const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
   const smooth = (param, value, time, constant = 0.06) => {
     if (!param) return;
@@ -29,6 +30,9 @@ export function createRaceAudio({ sound = true } = {}) {
     'suspension-thud': new URL('../assets/race3d-audio/suspension-thud.wav', import.meta.url).href,
     'mechanical-click': new URL('../assets/race3d-audio/mechanical-click.wav', import.meta.url).href,
     'pressure-release': new URL('../assets/race3d-audio/pressure-release.wav', import.meta.url).href,
+    'explosion-attack': new URL('../assets/race3d-audio/explosion-attack.wav', import.meta.url).href,
+    'explosion-body': new URL('../assets/race3d-audio/explosion-body.wav', import.meta.url).href,
+    'explosion-debris': new URL('../assets/race3d-audio/explosion-debris.wav', import.meta.url).href,
   };
 
   function makeSampleLoop(id, destination) {
@@ -86,8 +90,10 @@ export function createRaceAudio({ sound = true } = {}) {
 
   let engines = [], effects = new Set(), closeTimer = 0, finishTimer = 0;
   let lastSpin = new Map(), lastCars = new Map(), eventCooldowns = new Map();
+  const heardBombs = new Map();
   let lastCrashAt = -Infinity, lastShiftAt = -Infinity;
   let lastUpdateAt = 0,lastFinishBurstAt=-Infinity,finishBurstsPlayed=0,mergedFinishBursts=0,activeCount=0;
+  let explosionBurstsPlayed = 0, mergedExplosionBursts = 0;
   let previousCountdown = -1;
 
   function makeNoiseBuffer(ctx) {
@@ -214,13 +220,13 @@ export function createRaceAudio({ sound = true } = {}) {
     return true;
   }
 
-  function addEffect(sources, nodes) {
+  function addEffect(sources, nodes, kind = '') {
     if (!context || effects.size >= MAX_FX) {
       for (const source of sources) { try { source.stop(); } catch {} }
       for (const node of nodes) { try { node.disconnect(); } catch {} }
       return false;
     }
-    const effect = { sources, nodes, remaining: sources.length };
+    const effect = { sources, nodes, kind, remaining: sources.length };
     effects.add(effect);
     for (const source of sources) source.onended = () => {
       effect.remaining--;
@@ -238,6 +244,67 @@ export function createRaceAudio({ sound = true } = {}) {
       effects.delete(effect);
       for (const source of effect.sources) { try { source.onended = null; source.stop(); } catch {} }
       for (const node of effect.nodes) { try { node.disconnect(); } catch {} }
+    }
+  }
+
+  // A burst occupies one mixer slot even though its attack, low body and
+  // scattered debris are separate sources. This keeps crowded grids bounded.
+  function explosion(space, intensity = 1) {
+    if (!context || !master || !noiseBuffer || !enabled) return;
+    if ([...effects].filter(effect => effect.kind === 'explosion').length >= MAX_EXPLOSIONS) {
+      mergedExplosionBursts++;
+      return;
+    }
+    const now = context.currentTime, strength = clamp(Number(intensity) || 1, .35, 1.3);
+    const volume = clamp(space.volume * strength, 0, 1.3), pan = clamp(space.pan || 0, -.85, .85);
+    const variation = .93 + Math.random() * .14;
+    const sources = [], nodes = [], starts = [];
+    try {
+      const bus = context.createGain(); bus.gain.value = 1; nodes.push(bus);
+      const panner = typeof context.createStereoPanner === 'function' ? context.createStereoPanner() : null;
+      if (panner) { panner.pan.value = pan; nodes.push(panner); bus.connect(panner).connect(master); }
+      else bus.connect(master);
+      const layers = [
+        { id: 'explosion-attack', duration: .28, gain: .24, delay: 0, cutoff: 3400 },
+        { id: 'explosion-body', duration: .95, gain: .25, delay: .012, cutoff: 220 },
+        { id: 'explosion-debris', duration: .7, gain: .09, delay: .055, cutoff: 2700 },
+      ];
+      for (const layer of layers) {
+        const buffer = sampleBuffers.get(layer.id), at = now + layer.delay;
+        const rate = layer.id === 'explosion-debris' ? 2 - variation : variation;
+        const duration = buffer ? Math.min(layer.duration, buffer.duration / rate) : layer.duration;
+        const gain = context.createGain(); nodes.push(gain);
+        gain.gain.setValueAtTime(.0001, at);
+        gain.gain.exponentialRampToValueAtTime(Math.max(.0002, layer.gain * volume), at + Math.min(.008, duration / 3));
+        gain.gain.setTargetAtTime(.0001, at + duration * .45, Math.max(.015, duration * .14));
+        let source;
+        if (buffer) {
+          source = context.createBufferSource(); source.buffer = buffer; source.playbackRate.value = rate;
+          source.connect(gain);
+        } else if (layer.id === 'explosion-body') {
+          source = context.createOscillator(); source.type = 'sine';
+          source.frequency.setValueAtTime(110 * variation, at);
+          source.frequency.exponentialRampToValueAtTime(30, at + duration);
+          source.connect(gain);
+        } else {
+          source = context.createBufferSource(); source.buffer = noiseBuffer;
+          const filter = context.createBiquadFilter(); nodes.push(filter);
+          filter.type = layer.id === 'explosion-debris' ? 'highpass' : 'lowpass';
+          filter.frequency.setValueAtTime(layer.cutoff * variation, at);
+          filter.frequency.exponentialRampToValueAtTime(layer.id === 'explosion-debris' ? 900 : 230, at + duration);
+          source.connect(filter).connect(gain);
+        }
+        gain.connect(bus); sources.push(source); nodes.push(source); starts.push([source, at, duration]);
+      }
+      reserveEffects(1);
+      if (!addEffect(sources, nodes, 'explosion')) return;
+      for (const [source, at, duration] of starts) { source.start(at); source.stop(at + duration + .02); }
+      explosionBurstsPlayed++;
+    } catch {
+      for (const source of sources) { try { source.stop(); } catch {} }
+      for (const node of nodes) { try { node.disconnect(); } catch {} }
+      // A partially started burst must not retain a mixer slot.
+      for (const effect of effects) if (effect.sources === sources) effects.delete(effect);
     }
   }
 
@@ -300,7 +367,7 @@ export function createRaceAudio({ sound = true } = {}) {
     if (!events) return [];
     if (Array.isArray(events)) return events;
     if (Array.isArray(events.events)) return events.events;
-    const flags = ['crash', 'collision', 'gearshift', 'shift', 'skid', 'pickup', 'boost', 'banana-drop', 'banana-launch', 'banana-land', 'banana-hit', 'bomb-launch', 'bomb-explode', 'ramp-approach', 'ramp-takeoff', 'ramp-land', 'trick-complete', 'repair'];
+    const flags = ['crash', 'collision', 'gearshift', 'shift', 'skid', 'pickup', 'boost', 'banana-drop', 'banana-launch', 'banana-land', 'banana-hit', 'bomb-launch', 'bomb-explode', 'bot-explode', 'ramp-approach', 'ramp-takeoff', 'ramp-land', 'trick-complete', 'repair'];
     const flagged = flags.filter(key => events[key]).map(key => ({ type: key, intensity: events[key]?.intensity ?? events.intensity }));
     if (flagged.length) return flagged;
     return [events];
@@ -328,6 +395,17 @@ export function createRaceAudio({ sound = true } = {}) {
       volume: isPrimary ? 1 : (separation > 180 ? 0 : 0.85 / (1 + separation * 0.035)),
       pan: Number.isFinite(lateral) ? clamp((lateral - scalarSide(primary)) / 10, -0.85, 0.85) : 0,
     };
+  }
+
+  function explosionSpace(event, primary) {
+    const space = eventSpace(event, primary);
+    const distance = Number(event?.distance);
+    // A bomb belongs to its launcher, but its detonation can be far away.
+    if (primary && Number.isFinite(distance)) {
+      const separation = Math.abs(distance - scalarDistance(primary));
+      space.volume = separation > 180 ? 0 : 1 / (1 + separation * .035);
+    }
+    return space;
   }
 
   function powerSound(type, space, itemType) {
@@ -443,10 +521,6 @@ export function createRaceAudio({ sound = true } = {}) {
     } else if (type === 'bomb-launch') {
       noiseHit(0.2, 0.11 * volume, 480, { endCutoff: 2800, type: 'bandpass', attack: 0.025, pan });
       tone(225, 0.16, { type: 'triangle', volume: 0.055 * volume, endFrequency: 95, pan });
-    } else if (type === 'bomb-explode') {
-      noiseHit(0.65, 0.28 * volume, 2200, { endCutoff: 140, pan });
-      tone(100, 0.5, { type: 'triangle', volume: 0.18 * volume, endFrequency: 28, pan });
-      noiseHit(0.13, 0.09 * volume, 5200, { endCutoff: 1200, type: 'highpass', pan });
     }
   }
 
@@ -464,7 +538,8 @@ export function createRaceAudio({ sound = true } = {}) {
     // Nearby explosions take voice priority over the numerous item boxes in a
     // large grid. Every one-shot still uses the same twelve-voice ceiling.
     const focusedPickup = event => primary && event?.carId === primary.id && /^(item-pickup|item-ready|pickup)$/.test(eventType(event));
-    const priority = event => (focusedPickup(event) ? 200 : eventType(event) === 'finish-burst' ? 150 : eventType(event) === 'bomb-explode' ? 100 : 0) + eventSpace(event, primary).volume * 10;
+    const isExplosion = type => type === 'bomb-explode' || type === 'bot-explode';
+    const priority = event => (focusedPickup(event) ? 200 : eventType(event) === 'finish-burst' ? 150 : isExplosion(eventType(event)) ? 100 : 0) + (isExplosion(eventType(event)) ? explosionSpace(event, primary) : eventSpace(event, primary)).volume * 10;
     const list = eventList(events).sort((a, b) => priority(b) - priority(a)).slice(0, 80);
     for (const event of list) {
       const type = eventType(event);
@@ -473,9 +548,14 @@ export function createRaceAudio({ sound = true } = {}) {
         if (seenEvents.has(identity)) continue;
         seenEvents.add(identity);
       }
-      const space = eventSpace(event, primary);
+      const space = isExplosion(type) ? explosionSpace(event, primary) : eventSpace(event, primary);
       if (space.volume < 0.04) continue;
       if(type==='finish-burst'){finishBurst({...space,volume:space.volume*(event.intensity??1)});continue;}
+      if (isExplosion(type)) {
+        if (type === 'bomb-explode' && event?.projectileId != null) heardBombs.set(event.projectileId, now);
+        explosion(space, event?.intensity ?? event?.strength ?? 1); continue;
+      }
+      if (type === 'bomb-hit' && event?.projectileId != null && now - (heardBombs.get(event.projectileId) ?? -Infinity) < .3) continue;
       if(type.startsWith('extra-')&&ITEM_REGISTRY[event.itemType]){const key='extra:'+event.carId;if(now-(eventCooldowns.get(key)??-Infinity)<.18)continue;eventCooldowns.set(key,now);const i=ALL_ITEM_IDS.indexOf(event.itemType),base=170+(i%11)*31,ratio=1.22+(i%5)*.13; tone(base,.09,{type:'triangle',volume:.035*space.volume,pan:space.pan,endFrequency:/hit|burst/.test(type)?base*.7:base*1.1});tone(base*ratio,.13,{type:'sine',volume:.025*space.volume,pan:space.pan,delay:.035});continue;}
       const isSkid = /^(banana-hit|spin|skid|drift|spinout)$/.test(type);
       const isPower = /^(item-pickup|item-ready|pickup|boost|banana-drop|banana-launch|banana-land|banana-hit|bomb-launch|bomb-bounce|bomb-explode|tyre-blowout|tire-blowout|tyre-recovered|ramp-approach|ramp-takeoff|ramp-land|trick-complete)$/.test(type) || /^(launch|rocket|shield|missile|shockwave|freeze|repair)(-|$)/.test(type);
@@ -498,6 +578,7 @@ export function createRaceAudio({ sound = true } = {}) {
     }
     while (seenEvents.size > 512) seenEvents.delete(seenEvents.values().next().value);
     while (eventCooldowns.size > 256) eventCooldowns.delete(eventCooldowns.keys().next().value);
+    for (const [id, at] of heardBombs) if (now - at >= .3) heardBombs.delete(id);
   }
 
   function chooseEngines(cars, focusId) {
@@ -561,16 +642,22 @@ export function createRaceAudio({ sound = true } = {}) {
       smooth(engine.bus.gain, controls.engineGain * (time < engine.shiftUntil ? .5 : 1), time, changedFocus ? .08 : .045);
       if (engine.pan) smooth(engine.pan.pan, clamp((scalarSide(car) - scalarSide(primary)) / 14, -.85, .85), time, .12);
       if (i === 0) {
-        smooth(windFilter.frequency, 180 + normalized * 1800, time, .12);
-        smooth(windGain.gain, controls.windGain, time, .16);
+        const draft = clamp(Number(car.draft ?? car.drafting) || 0, 0, 1);
+        // A live timer can persist while spinning or traction-limited to zero.
+        // The added thrust sound follows force actually being delivered.
+        const nitroActive = (Number(car.nitro?.remaining) > 0 || Number(car.boost) > 0) && Number(car.nitroAcceleration) > .001;
+        const nitroAudioGain = nitroActive ? Math.max(controls.turboGain, .045 + .012 * clamp(normalized, 0, 1)) : controls.turboGain;
+        const draftAudioGain = .018 * draft * clamp(normalized, 0, 1);
+        smooth(windFilter.frequency, 180 + normalized * 1800 + draft * 700, time, .12);
+        smooth(windGain.gain, controls.windGain + draftAudioGain, time, .16);
         smooth(skidFilter.frequency, controls.tireHz, time, .05);
         smooth(skidGain.gain, controls.tireGain * (tireSample ? .12 : 1), time, controls.tireGain ? .035 : .13);
         if (tireSample) {
           smooth(tireSample.gain.gain, controls.tireGain * .85, time, controls.tireGain ? .035 : .13);
           smooth(tireSample.source.playbackRate, .85 + normalized * .3, time, .10);
         }
-        smooth(turboGain.gain, controls.turboGain, time, controls.turboGain ? .04 : .10);
-        smooth(turboFilter.frequency, 650 + normalized * 1900 + controls.load * 500, time, .08);
+        smooth(turboGain.gain, nitroAudioGain, time, nitroAudioGain ? .04 : .10);
+        smooth(turboFilter.frequency, 650 + normalized * 1900 + controls.load * 500 + (nitroActive ? 800 : 0), time, .08);
         smooth(thrustGain.gain, controls.rocketGain, time, .04);
         smooth(thrustFilter.frequency, 1100 + speed * 30, time, .08);
         const skidKey = `skid:${car.id}`;
@@ -581,8 +668,10 @@ export function createRaceAudio({ sound = true } = {}) {
         if (!changedFocus && !skipTransientFrame && controls.load > .72 && previousFocusLoad < .60 && Number(car.acceleration) > 3 && time - lastAccelerationCue > 3) {
           sampleHit('acceleration', .065, { duration: .8, rate: clamp(playbackRate, .8, 1.3) }); lastAccelerationCue = time;
         }
-        if (!changedFocus && !skipTransientFrame && previousTurbo > .012 && controls.turboGain === 0) sampleHit('pressure-release', .04, { duration: .22, rate: 1.2 });
-        previousFocusLoad = controls.load; previousTurbo = controls.turboGain;
+        if (!changedFocus && !skipTransientFrame && previousTurbo <= .012 && nitroActive) noiseHit(.28, .065, 900, { type: 'bandpass', endCutoff: 3600, attack: .025 });
+        if (!changedFocus && !skipTransientFrame && previousTurbo > .012 && nitroAudioGain === 0) sampleHit('pressure-release', .04, { duration: .22, rate: 1.2 });
+        previousFocusLoad = controls.load; previousTurbo = nitroAudioGain;
+        controls.nitroAudioGain = nitroAudioGain; controls.draftAudioGain = draftAudioGain;
       }
       snapshots.push({ id: car.id, profile, ...controls, sampled });
     }
@@ -607,7 +696,7 @@ export function createRaceAudio({ sound = true } = {}) {
     racing = true; finished = false; lastUpdateAt = 0;
     skipTransientFrame = true; focusIdentity = null; seenEvents.clear(); controlsSnapshot = [];
     previousFocusLoad = 0; previousTurbo = 0; lastAccelerationCue = -Infinity;
-    lastSpin.clear(); lastCars.clear(); eventCooldowns.clear(); lastCrashAt = -Infinity; lastShiftAt = -Infinity; previousCountdown = -1;
+    lastSpin.clear(); lastCars.clear(); eventCooldowns.clear(); heardBombs.clear(); lastCrashAt = -Infinity; lastShiftAt = -Infinity; previousCountdown = -1;
     for (const engine of engines) { engine.carId = null; engine.rpm = 950; engine.load = 0.15; engine.controls = newAudioState(); }
     if (!enabled || !unlockFromGesture()) return;
     const now = context.currentTime;
@@ -634,9 +723,15 @@ export function createRaceAudio({ sound = true } = {}) {
     while (lastCars.size > 64) lastCars.delete(lastCars.keys().next().value);
     updateEngines(selected, now, dt);
     skipTransientFrame = false;
-    if(finished&&!activeCount&&pending.some(e=>eventType(e)==='finish-burst')){
-      if(finishTimer)clearTimeout(finishTimer);
-      finishTimer=setTimeout(()=>{finishTimer=0;if(!alive||activeCount||!context)return;master?.gain.setValueAtTime(0,context.currentTime);racing=false;context.suspend()?.catch?.(()=>{});},1450);
+    if (finished && !activeCount) {
+      // The winner's celebration may have played while other racers were
+      // still active. Schedule shutdown as soon as the last one finishes or
+      // is eliminated, and give any late burst its full audible tail.
+      const lateBurst = pending.some(e => /^(finish-burst|bomb-explode|bot-explode)$/.test(eventType(e)));
+      if (!finishTimer || lateBurst) {
+        if (finishTimer) clearTimeout(finishTimer);
+        finishTimer=setTimeout(()=>{finishTimer=0;if(!alive||activeCount||!context)return;master?.gain.setValueAtTime(0,context.currentTime);racing=false;context.suspend()?.catch?.(()=>{});},1450);
+      }
     }
   }
 
@@ -649,9 +744,10 @@ export function createRaceAudio({ sound = true } = {}) {
     if (!alive) return;
     if (finishTimer) { clearTimeout(finishTimer); finishTimer = 0; }
     racing = false; finished = false; lastUpdateAt = 0;lastFinishBurstAt=-Infinity;finishBurstsPlayed=mergedFinishBursts=activeCount=0;
+    explosionBurstsPlayed = mergedExplosionBursts = 0;
     focusIdentity = null; skipTransientFrame = true; controlsSnapshot = []; seenEvents.clear();
     for (const engine of engines) engine.controls = newAudioState();
-    previousCountdown = -1; lastSpin.clear(); lastCars.clear(); eventCooldowns.clear();
+    previousCountdown = -1; lastSpin.clear(); lastCars.clear(); eventCooldowns.clear(); heardBombs.clear();
     cancelEffects();
     if (context && master) {
       const now = context.currentTime;
@@ -667,7 +763,7 @@ export function createRaceAudio({ sound = true } = {}) {
     if (!alive) return;
     enabled = Boolean(value);
     if (!enabled) {
-      cancelEffects(); skipTransientFrame = true;
+      cancelEffects(); heardBombs.clear(); skipTransientFrame = true;
       if (context && master) smooth(master.gain, 0, context.currentTime, 0.04);
       if (closeTimer) clearTimeout(closeTimer);
       closeTimer = setTimeout(() => { closeTimer = 0; disposeGraph(); }, 120);
@@ -691,11 +787,11 @@ export function createRaceAudio({ sound = true } = {}) {
     if (closeTimer) { clearTimeout(closeTimer); closeTimer = 0; }
     if (finishTimer) { clearTimeout(finishTimer); finishTimer = 0; }
     disposeGraph();
-    lastSpin.clear(); lastCars.clear(); eventCooldowns.clear();
+    lastSpin.clear(); lastCars.clear(); eventCooldowns.clear(); heardBombs.clear();
   }
 
   const snapshot = () => ({ enabled, racing, finished, contextState: context?.state || 'none',
-    finishBurstsPlayed,mergedFinishBursts,peakProtected:!!peakLimiter,activeCount,sampleCount: sampleBuffers.size, sampleErrors: [...sampleErrors], loops: sampleLoops.size,
+    finishBurstsPlayed,mergedFinishBursts,explosionBurstsPlayed,mergedExplosionBursts,activeExplosions:[...effects].filter(effect=>effect.kind==='explosion').length,peakProtected:!!peakLimiter,activeCount,sampleCount: sampleBuffers.size, sampleErrors: [...sampleErrors], loops: sampleLoops.size,
     engines: controlsSnapshot.map(value => ({ ...value })), transientVoices: effects.size,
     creditsURL: new URL('../assets/race3d-audio/CREDITS.md', import.meta.url).href });
   return { start, update, finish, reset, setSound, destroy, snapshot };

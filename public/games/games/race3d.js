@@ -2,12 +2,12 @@ import {createRaceGrid} from './race3d-grid.js?v=20261030-grid5';
 import * as THREE from '../assets/vendor/three.module.js';
 import { createRaceTrack } from './race3d-track.js?v=20261027-midnight';
 import { createRaceCars } from './race3d-cars.js?v=20261030-grid5';
-import { createRaceSimulation } from './race3d-physics.js?v=20261030-grid5';
-import { createChaseCamera } from './race3d-camera.js?v=20261030-grid5';
-import { createRaceAudio } from './race3d-audio.js?v=20261027-midnight';
+import { createRaceSimulation } from './race3d-physics.js?v=20261101-impact';
+import { createChaseCamera } from './race3d-camera.js?v=20261101-impact';
+import { createRaceAudio } from './race3d-audio.js?v=20261101-impact';
 import { createRaceMusic } from './race3d-music.js?v=20261027-midnight';
 import { createRaceUI } from './race3d-ui.js?v=20261031-dimensional';
-import { createRaceEffects } from './race3d-fx.js?v=20261031-dimensional';
+import { createRaceEffects } from './race3d-fx.js?v=20261101-impact';
 import { createRaceScenery } from './race3d-city.js?v=20261030-city';
 import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261030-city';
 import { createRacePowerups } from './race3d-powerups.js?v=20261031-dimensional';
@@ -20,7 +20,11 @@ import { createCircuitFestival } from './race3d-festival.js?v=20261027-midnight'
 import {createRaceSelection,SELECTION_SECONDS} from './race3d-selection.js?v=20261027-midnight';
 import {rampPlaybackTarget,advancePlaybackRate} from './race3d-playback.js?v=20261027-midnight';
 import {createFrameBudget} from './race3d-frame-budget.js?v=20261027-midnight';
-import {createVelocityEffects} from './race3d-velocity-fx.js';
+import {createVelocityEffects} from './race3d-velocity-fx.js?v=20261101-impact';
+import {createNitroExhaust} from './race3d-nitro-exhaust.js?v=20261101-impact';
+import {createSlipstreamTrails} from './race3d-slipstream-trails.js?v=20261101-impact';
+import {createBlastLighting} from './race3d-blast-lighting.js?v=20261101-impact';
+import {createPropulsionHud} from './race3d-propulsion-hud.js?v=20261101-impact';
 
 const COLORS = ['#54d7c4', '#f4c65a', '#ff7666', '#a6b1f1', '#79b8ee', '#d2a4dd', '#a9d58b', '#edb987'];
 const STEP = 1 / 60;
@@ -61,7 +65,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   credits.target = '_blank'; credits.rel = 'noopener';
   credits.style.cssText = 'position:absolute;bottom:4px;left:12px;z-index:12;color:#d6e4eb;font:10px/1.5 sans-serif;text-decoration:none;background:#13212a99;padding:2px 5px;border-radius:3px';
   root.appendChild(credits);
-  let renderer, track, scenery, atmosphere, skySpirit, simulation, carModels, chaseCamera, audio, music, ui, effects, velocityEffects, powerups, ramps, frogs, selection;
+  let renderer, track, scenery, atmosphere, skySpirit, simulation, carModels, chaseCamera, audio, music, ui, effects, velocityEffects, nitroExhaust, slipstreamTrails, blastLighting, propulsionHud, powerups, ramps, frogs, selection;
   let alive = true, mode = 'idle', elapsed = 0, raceElapsed = 0, previous = null, accumulator = 0, raf = 0;
   let shaderReady = false, pendingStart = false, warmRevision = 0;
   const preparing = document.createElement('div');
@@ -187,15 +191,19 @@ export default function createGame({ container, names = [], onPick, random = Mat
       const sample = track.sampleTrack(Number.isFinite(event.distance) ? event.distance : car.distance);
       const lateral = Number.isFinite(event.lateral) ? event.lateral : car.lateral || 0;
       const position = sample.position.clone().add(sample.right.clone().multiplyScalar(lateral));
-      position.y += Math.max(0, Number(car.flightHeight) || 0) + Math.max(0, Number(car.rampHeight) || 0);
+      position.y += Math.tan(clamp(Number(sample.bank)||0,-.15,.15))*lateral;
+      // A detonating bomb belongs to its launcher but explodes at the projectile's road position.
+      if(event.type==='bomb-explode')position.y+=Math.max(0,Number(event.height)||0);
+      else position.y += Math.max(0, Number(car.flightHeight) || 0) + Math.max(0, Number(car.rampHeight) || 0);
       const mapped = {
-        'bot-explode':'explosion', collision: 'collision', spin: 'skid', recovery: 'dust',
+        'bot-explode':'explosion', 'bomb-explode':'explosion', collision: 'collision', spin: 'skid', recovery: 'dust',
         oil: 'skid', cone: 'dust', gas: 'speed', boost: 'speed',
-        'banana-hit': 'skid', 'bomb-hit': 'explosion',
+        'banana-hit': 'skid', 'bomb-hit': 'collision',
         land: 'dust', 'ramp-land': 'dust', 'trick-complete': 'speed', 'missile-hit': 'collision', repair: 'speed', rocket: 'speed',
         hazard: event.hazardType === 'oil' || event.hazardType === 'water' ? 'skid' : event.hazardType === 'cone' ? 'dust' : 'speed',
       }[event.type];
       if (!mapped) continue;
+      if(mapped==='explosion') blastLighting?.emit({position:{x:position.x,y:position.y+1,z:position.z},intensity:Number(event.intensity)||1},{quality});
       effects.emit({
         carId: car.id,
         type: mapped,
@@ -209,7 +217,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
 
   const setPhase = phase => {
     mode = phase;
-    if (phase !== 'running') velocityEffects?.update(0,{active:false});
+    if (phase !== 'running') {velocityEffects?.update(0,{active:false});nitroExhaust?.reset();slipstreamTrails?.reset();propulsionHud?.reset();}
+    if(phase==='idle'||phase==='selecting')blastLighting?.reset();
     root.dataset.phase = phase;
   };
 
@@ -220,6 +229,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
     frogs?.update(dt, { cars: simulation?.cars || [], time: simulation?.time || 0 });
     effects?.update(dt, {cars:simulation?.cars||[],track,focusCar:focusCar(),quality,active:mode==='running'||mode==='finishing'});
     velocityEffects?.update(dt,{car:focusCar(),quality,active:mode==='running'});
+    blastLighting?.update(dt,{active:mode==='running'||mode==='finishing',quality});
+    propulsionHud?.update(focusCar(),{active:mode==='running',quality});
     const ordered = standings();
     if (mode === 'selecting') {
       selection?.update(selectionProgress, size, selectionAt === null);
@@ -227,6 +238,8 @@ export default function createGame({ container, names = [], onPick, random = Mat
     } else {
     const focused = focusCar();
     carModels?.update(track, dt,{focusedId:focused?.id,lodDistance:quality.lodDistance*detailScale,detailedCars:Math.max(1,Math.floor(quality.detailedCars*detailScale))});
+    nitroExhaust?.update(simulation?.cars||[],track,dt,{quality,active:mode==='running',visualPose:id=>carModels?.visualPose(id)});
+    slipstreamTrails?.update(simulation?.cars||[],track,dt,{quality,active:mode==='running'});
     audioEvents.push(...(carModels?.drainFinishEvents?.()||[]));
     contactShadows?.update(id=>carModels?.visualPose(id));
     festival?.update(elapsed);
@@ -482,7 +495,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     audio?.destroy(); music?.destroy();
     chaseCamera?.dispose();
     effects?.dispose();
-    velocityEffects?.dispose();
+    velocityEffects?.dispose();nitroExhaust?.dispose();slipstreamTrails?.dispose();blastLighting?.dispose();propulsionHud?.dispose();
     powerups?.dispose();
     ramps?.dispose();
     frogs?.dispose();
@@ -519,6 +532,9 @@ export default function createGame({ container, names = [], onPick, random = Mat
     effects = createRaceEffects(THREE);
     velocityEffects = createVelocityEffects(THREE,{camera,reducedMotion:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches});
     camera.add(velocityEffects.group);
+    const reducedMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    nitroExhaust=createNitroExhaust(THREE,{reducedMotion});slipstreamTrails=createSlipstreamTrails(THREE,{reducedMotion});blastLighting=createBlastLighting(THREE,{reducedMotion,sceneScale:SCENE_SCALE});
+    world.add(nitroExhaust.group,slipstreamTrails.group,blastLighting.group);
     powerups = createRacePowerups(THREE, { track });
     ramps = createRaceRamps(THREE, { track });
     festival=createCircuitFestival(THREE,track);festival.group.visible=quality.id!=='low';
@@ -563,6 +579,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
         render(0, 0.05);
       },
     });
+    propulsionHud=createPropulsionHud(root.querySelector('.race3d-hud'),{reducedMotion});
     resizeObserver = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null;
     resizeObserver?.observe(root);
     window.addEventListener('resize', resize, { passive: true });
@@ -600,6 +617,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
           music: music?.snapshot?.() || null,
           roadEffects: effects?.snapshot?.() || null,
           velocityEffects: velocityEffects?.snapshot?.() || null,
+          nitroExhaust:nitroExhaust?.snapshot(),slipstreamTrails:slipstreamTrails?.snapshot(),blastLighting:blastLighting?.snapshot(),propulsionHud:propulsionHud?.snapshot(),
           frogs: frogs?.stats || null,
           ramps: ramps?.snapshot?.() || (ramps?.layout || []).map(ramp => ({ ...ramp })),
           skySpirit: skySpirit?.group ? {
@@ -688,7 +706,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
     audio?.destroy(); music?.destroy();
     chaseCamera?.dispose();
     effects?.dispose();
-    velocityEffects?.dispose();
+    velocityEffects?.dispose();nitroExhaust?.dispose();slipstreamTrails?.dispose();blastLighting?.dispose();propulsionHud?.dispose();
     powerups?.dispose();
     ramps?.dispose();
     carModels?.dispose();
