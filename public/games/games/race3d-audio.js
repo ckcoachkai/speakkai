@@ -94,6 +94,7 @@ export function createRaceAudio({ sound = true } = {}) {
   let lastCrashAt = -Infinity, lastShiftAt = -Infinity;
   let lastUpdateAt = 0,lastFinishBurstAt=-Infinity,finishBurstsPlayed=0,mergedFinishBursts=0,activeCount=0;
   let explosionBurstsPlayed = 0, mergedExplosionBursts = 0;
+  let lastNitroBurstAt = -Infinity, nitroBurstsPlayed = 0, mergedNitroBursts = 0;
   let previousCountdown = -1;
 
   function makeNoiseBuffer(ctx) {
@@ -539,7 +540,14 @@ export function createRaceAudio({ sound = true } = {}) {
     // large grid. Every one-shot still uses the same twelve-voice ceiling.
     const focusedPickup = event => primary && event?.carId === primary.id && /^(item-pickup|item-ready|pickup)$/.test(eventType(event));
     const isExplosion = type => type === 'bomb-explode' || type === 'bot-explode';
-    const priority = event => (focusedPickup(event) ? 200 : eventType(event) === 'finish-burst' ? 150 : isExplosion(eventType(event)) ? 100 : 0) + (isExplosion(eventType(event)) ? explosionSpace(event, primary) : eventSpace(event, primary)).volume * 10;
+    const soundSpace = event => {
+      // Nitro events identify their car; derive position from this frame.
+      if (eventType(event) !== 'spontaneous-nitro-start') return eventSpace(event, primary);
+      const car = cars.find(candidate => candidate.id === event?.carId);
+      if (!car && primary && event?.carId !== primary.id) return { volume: 0, pan: 0 };
+      return eventSpace(car ? { ...event, distance: car.distance ?? car.progress, lateral: car.lateral ?? car.offset ?? car.x } : event, primary);
+    };
+    const priority = event => (focusedPickup(event) ? 200 : eventType(event) === 'finish-burst' ? 150 : isExplosion(eventType(event)) ? 100 : eventType(event) === 'spontaneous-nitro-start' && event.carId === primary?.id ? 20 : 0) + (isExplosion(eventType(event)) ? explosionSpace(event, primary) : soundSpace(event)).volume * 10;
     const list = eventList(events).sort((a, b) => priority(b) - priority(a)).slice(0, 80);
     for (const event of list) {
       const type = eventType(event);
@@ -548,9 +556,17 @@ export function createRaceAudio({ sound = true } = {}) {
         if (seenEvents.has(identity)) continue;
         seenEvents.add(identity);
       }
-      const space = isExplosion(type) ? explosionSpace(event, primary) : eventSpace(event, primary);
+      const space = isExplosion(type) ? explosionSpace(event, primary) : soundSpace(event);
       if (space.volume < 0.04) continue;
       if(type==='finish-burst'){finishBurst({...space,volume:space.volume*(event.intensity??1)});continue;}
+      if (type === 'spontaneous-nitro-start') {
+        // A cluster shares one quiet voice, without evicting other effects.
+        if (now - lastNitroBurstAt < .22 || effects.size >= MAX_FX) { mergedNitroBursts++; continue; }
+        const strength = clamp(Number.isFinite(Number(event.intensity)) ? Number(event.intensity) : 1, .4, 1.2);
+        lastNitroBurstAt = now; nitroBurstsPlayed++;
+        noiseHit(.24, .05 * space.volume * strength, 650, { type: 'bandpass', endCutoff: 2400, attack: .018, pan: space.pan });
+        continue;
+      }
       if (isExplosion(type)) {
         if (type === 'bomb-explode' && event?.projectileId != null) heardBombs.set(event.projectileId, now);
         explosion(space, event?.intensity ?? event?.strength ?? 1); continue;
@@ -693,7 +709,7 @@ export function createRaceAudio({ sound = true } = {}) {
   function start() {
     if (!alive) return;
     if (finishTimer) { clearTimeout(finishTimer); finishTimer = 0; }
-    racing = true; finished = false; lastUpdateAt = 0;
+    racing = true; finished = false; lastUpdateAt = 0; lastNitroBurstAt = -Infinity;
     skipTransientFrame = true; focusIdentity = null; seenEvents.clear(); controlsSnapshot = [];
     previousFocusLoad = 0; previousTurbo = 0; lastAccelerationCue = -Infinity;
     lastSpin.clear(); lastCars.clear(); eventCooldowns.clear(); heardBombs.clear(); lastCrashAt = -Infinity; lastShiftAt = -Infinity; previousCountdown = -1;
@@ -745,6 +761,7 @@ export function createRaceAudio({ sound = true } = {}) {
     if (finishTimer) { clearTimeout(finishTimer); finishTimer = 0; }
     racing = false; finished = false; lastUpdateAt = 0;lastFinishBurstAt=-Infinity;finishBurstsPlayed=mergedFinishBursts=activeCount=0;
     explosionBurstsPlayed = mergedExplosionBursts = 0;
+    lastNitroBurstAt = -Infinity; nitroBurstsPlayed = mergedNitroBursts = 0;
     focusIdentity = null; skipTransientFrame = true; controlsSnapshot = []; seenEvents.clear();
     for (const engine of engines) engine.controls = newAudioState();
     previousCountdown = -1; lastSpin.clear(); lastCars.clear(); eventCooldowns.clear(); heardBombs.clear();
@@ -763,7 +780,7 @@ export function createRaceAudio({ sound = true } = {}) {
     if (!alive) return;
     enabled = Boolean(value);
     if (!enabled) {
-      cancelEffects(); heardBombs.clear(); skipTransientFrame = true;
+      cancelEffects(); heardBombs.clear(); skipTransientFrame = true; lastNitroBurstAt = -Infinity;
       if (context && master) smooth(master.gain, 0, context.currentTime, 0.04);
       if (closeTimer) clearTimeout(closeTimer);
       closeTimer = setTimeout(() => { closeTimer = 0; disposeGraph(); }, 120);
@@ -791,7 +808,7 @@ export function createRaceAudio({ sound = true } = {}) {
   }
 
   const snapshot = () => ({ enabled, racing, finished, contextState: context?.state || 'none',
-    finishBurstsPlayed,mergedFinishBursts,explosionBurstsPlayed,mergedExplosionBursts,activeExplosions:[...effects].filter(effect=>effect.kind==='explosion').length,peakProtected:!!peakLimiter,activeCount,sampleCount: sampleBuffers.size, sampleErrors: [...sampleErrors], loops: sampleLoops.size,
+    finishBurstsPlayed,mergedFinishBursts,explosionBurstsPlayed,mergedExplosionBursts,nitroBurstsPlayed,mergedNitroBursts,activeExplosions:[...effects].filter(effect=>effect.kind==='explosion').length,peakProtected:!!peakLimiter,activeCount,sampleCount: sampleBuffers.size, sampleErrors: [...sampleErrors], loops: sampleLoops.size,
     engines: controlsSnapshot.map(value => ({ ...value })), transientVoices: effects.size,
     creditsURL: new URL('../assets/race3d-audio/CREDITS.md', import.meta.url).href });
   return { start, update, finish, reset, setSound, destroy, snapshot };

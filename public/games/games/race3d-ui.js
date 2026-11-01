@@ -3,7 +3,7 @@ import {addCarGuide} from "./race3d-car-guide.js?v=20261031-dimensional";
 import { createRaceExtras } from './race3d-ui-extras.js?v=20261101-descent';
 
 
-const STYLE_URL = new URL('./race3d-ui.css?v=20261101-descent', import.meta.url).href;
+const STYLE_URL = new URL('./race3d-ui.css?v=20261101-combined-2x', import.meta.url).href;
 import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261027-midnight';
 
 function ensureStyles() {
@@ -138,6 +138,18 @@ export function createRaceUI(container, players = [], options = {}) {
   const graphics=make('label','race3d-lap-control','Graphics '),qualitySelect=make('select','race3d-lap-select');qualitySelect.setAttribute('aria-label','Graphics quality');
   for(const [value,label] of [['auto','Auto'],['low','Performance'],['medium','Balanced'],['high','Detailed']]){const o=make('option','',label);o.value=value;qualitySelect.append(o);}
   qualitySelect.value=options.qualityMode||'auto';graphics.append(qualitySelect);map.append(graphics);
+  const timeControl=make('label','race3d-lap-control','Time '),timeSelect=make('select','race3d-lap-select');
+  timeSelect.setAttribute('aria-label','Time of day');
+  for(const [value,label] of [['day','Day'],['night','Night']]){const option=make('option','',label);option.value=value;timeSelect.append(option);}
+  let timeOfDay=options.timeOfDay==='night'?'night':'day';timeSelect.value=timeOfDay;
+  const onTime=()=>{const next=timeSelect.value;if(timeSelect.disabled||options.onTimeOfDay?.(next)===false)timeSelect.value=timeOfDay;else timeOfDay=next;};
+  timeSelect.addEventListener('change',onTime);timeControl.append(timeSelect);map.append(timeControl);
+  const courseControl=make('label','race3d-lap-control','Course '),courseSelect=make('select','race3d-lap-select');
+  courseSelect.setAttribute('aria-label','Race course');
+  for(const [value,label] of [['downhill','Mountain descent'],['alpine','Alpine circuit']]){const option=make('option','',label);option.value=value;courseSelect.append(option);}
+  const courseMode=options.courseMode==='alpine'?'alpine':'downhill';courseSelect.value=courseMode;
+  const onCourse=()=>{if(courseSelect.disabled||options.onCourse?.(courseSelect.value)===false)courseSelect.value=courseMode;};
+  courseSelect.addEventListener('change',onCourse);courseControl.append(courseSelect);map.insertBefore(courseControl,graphics);
   const destroyGuide=addCarGuide(root,map,options);
   let qualityMode=qualitySelect.value;
   const onQuality=()=>{const next=qualitySelect.value;if(qualitySelect.disabled||options.onQuality?.(next)===false)qualitySelect.value=qualityMode;else qualityMode=next;};
@@ -340,7 +352,7 @@ export function createRaceUI(container, players = [], options = {}) {
     viewDown.disabled = timing.cameraMode === 'first-person';
     if (focusedId !== undefined) mapFocusId = focusedId;
     select.disabled = openTrack || ['selecting','countdown','running','finishing','finished'].includes(phase);
-    qualitySelect.disabled=phase!=='idle';
+    qualitySelect.disabled=phase!=='idle';timeSelect.disabled=phase!=='idle';courseSelect.disabled=phase!=='idle';
     if (winnerId !== null) {
       const allFinished = timing.allFinished === true || (cars.length > 0 && cars.every(car => Number.isFinite(car.finishTime)));
       const celebrationReady=timing.finishCelebrationComplete!==false;continueButton.disabled=continued||!allFinished||!celebrationReady;
@@ -512,7 +524,7 @@ export function createRaceUI(container, players = [], options = {}) {
     if (disposed) return;
     disposed = true;
     select.removeEventListener('change',onLaps);
-    destroyGuide();qualitySelect.removeEventListener('change',onQuality);
+    courseSelect.removeEventListener('change',onCourse);timeSelect.removeEventListener('change',onTime);destroyGuide();qualitySelect.removeEventListener('change',onQuality);
     prev.removeEventListener('click', onPrevious);
     next.removeEventListener('click', onNext);
     continueButton.removeEventListener('click', onContinue);

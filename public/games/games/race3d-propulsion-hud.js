@@ -47,7 +47,8 @@ export function createPropulsionHud(root, { reducedMotion = false } = {}) {
     // Explicit EMP/air guards avoid stale acceleration values on transitions.
     const emp = num(car.itemEffects?.emp) > 0;
     const airborne = num(car.flightRemaining) > 0;
-    const nitroActive = !emp && !airborne && num(car.nitroAcceleration) > 0.001;
+    const nitroActive = !emp && !airborne &&
+      (num(car.nitroAcceleration) > 0.001 || num(car.spontaneousNitroAcceleration) > 0.001);
     const rocketActive = !emp && (num(car.rocketAcceleration) > 0.001 || num(car.rocketVectorThrust) > 0.001);
     const strength = Math.max(0, Math.min(1, num(car.draft)));
     // Quantization keeps the readout stable at frame rate while remaining useful.

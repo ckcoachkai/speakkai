@@ -1,5 +1,6 @@
 /** A single atmospheric lighting rig; attach directly to scene, outside scaled world. */
-export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, shadowSize=2048,skyWidth=1024 } = {}) {
+export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, shadowSize=2048,skyWidth=1024, timeOfDay='day' } = {}) {
+  const night = timeOfDay === 'night';
   const previous = { background: scene.background, environment: scene.environment, fog: scene.fog };
   // A lower afternoon sun makes the light direction legible on bodywork and road.
   const direction = new THREE.Vector3(-0.59, 0.57, 0.57).normalize();
@@ -40,10 +41,19 @@ export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, s
       const corona=Math.pow(Math.max(0,dot),320)*24;
       r+=corona; g+=corona*.75; b+=corona*.32;
       const disc=smooth(Math.cos(sunRadius*1.4),Math.cos(sunRadius*.75),dot);
+      if(night) {
+        // A readable blue-hour horizon, dark zenith and restrained moon halo.
+        r=48-29*zenith; g=66-36*zenith; b=96-43*zenith;
+        if(dy<0){const earth=clamp(-dy*7);r=r*(1-earth)+22*earth;g=g*(1-earth)+30*earth;b=b*(1-earth)+37*earth;}
+        const halo=Math.pow(Math.max(0,dot),110)*15;
+        r+=halo;g+=halo;b+=halo;
+        // Stable stars: no flashing, drifting or extra reduced-motion workload.
+        if(dy>.14 && hash(x,y)>.9986){r+=65;g+=69;b+=76;}
+      }
       const i=(y*width+x)*4;
-      pixels.data[i]=Math.min(255,r*(1-disc)+255*disc);
-      pixels.data[i+1]=Math.min(255,g*(1-disc)+253*disc);
-      pixels.data[i+2]=Math.min(255,b*(1-disc)+236*disc); pixels.data[i+3]=255;
+      pixels.data[i]=Math.min(255,r*(1-disc)+(night?223:255)*disc);
+      pixels.data[i+1]=Math.min(255,g*(1-disc)+(night?232:253)*disc);
+      pixels.data[i+2]=Math.min(255,b*(1-disc)+(night?246:236)*disc); pixels.data[i+3]=255;
     }
   }
   ctx.putImageData(pixels,0,0);
@@ -51,7 +61,7 @@ export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, s
   sky.colorSpace=THREE.SRGBColorSpace;
   sky.mapping=THREE.EquirectangularReflectionMapping;
   scene.background=sky;
-  const fog = new THREE.FogExp2(0xcad9df, 0.0024);
+  const fog = new THREE.FogExp2(night?0x304260:0xcad9df, night?.0018:.0024);
   scene.fog=fog;
   let reflection=null;
   if(renderer) {
@@ -60,8 +70,8 @@ export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, s
     finally { pmrem.dispose(); }
   }
   const group=new THREE.Group(); group.name='race-atmosphere-lighting';
-  const hemi=new THREE.HemisphereLight(0xc6deef,0x716854,0.58);
-  const sun=new THREE.DirectionalLight(0xffe5bb,2.85);
+  const hemi=new THREE.HemisphereLight(night?0xa1bbef:0xc6deef,night?0x525968:0x716854,night?.70:.58);
+  const sun=new THREE.DirectionalLight(night?0xb9d1ff:0xffe5bb,night?1.15:2.85);
   const sunDistance=120, shadowExtent=32;
   sun.position.copy(direction).multiplyScalar(sunDistance);
   sun.castShadow=shadows;
@@ -98,7 +108,7 @@ export function createRaceAtmosphere(THREE, { scene, renderer, shadows = true, s
     if(scene.fog===fog) scene.fog=previous.fog;
     sun.shadow.dispose(); reflection?.dispose(); sky.dispose();
   }
-  return { group, sun, update, dispose };
+  return { group, sun, update, dispose, timeOfDay:night?'night':'day' };
 }
 export default createRaceAtmosphere;
 

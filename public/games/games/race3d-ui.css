@@ -389,6 +389,49 @@
 }
 @media(max-width:700px) and (max-height:700px) and (min-height:481px){.race3d-roulette{bottom:200px}}
 
+/* Small screens keep the driving view open. Detailed specs remain in Compare cars. */
+@media(max-width:600px){
+ .race3d-focus-specs,.race3d-cards{display:none}
+ .race3d-minimap{top:10px;left:10px;width:calc(50% - 16px);padding:6px;max-height:216px;overflow:auto;overscroll-behavior:contain}
+ .race3d-minimap svg{height:42px;width:100%}
+ .race3d-minimap strong{font-size:8px}
+ .race3d-minimap .race3d-lap-control{margin-top:3px;gap:4px;font-size:10px}
+ .race3d-minimap .race3d-lap-select{width:94px;max-width:68%;min-height:30px;font-size:10px;padding:3px}
+ .race3d-minimap .race3d-guide-button{display:block;width:100%;min-height:36px;margin-top:4px;font-size:10px}
+ .race3d-standings{top:10px;right:10px;width:calc(50% - 16px);max-height:166px;display:flex;flex-direction:column}
+ .race3d-standings-summary{min-height:32px;padding:5px 7px;flex:none}
+ .race3d-roster{max-height:126px;min-height:0;flex:1;overflow:auto}
+ .race3d-roster-row{min-height:30px;padding:3px;row-gap:1px}
+ .race3d-roster-name{font-size:10px}
+ .race3d-continue{flex:none;min-height:32px;margin:3px 5px 5px;font-size:10px}
+ .race3d-stats{left:10px;bottom:max(18px,env(safe-area-inset-bottom));width:calc(50% - 16px);min-height:54px}
+ .race3d-camera{right:10px;bottom:max(18px,env(safe-area-inset-bottom));width:calc(50% - 16px);padding:6px;gap:5px}
+ .race3d-camera-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;width:100%}
+ .race3d-camera-button{width:100%;height:34px;min-width:0}
+ .race3d-camera-title{font-size:7px}.race3d-camera-name{font-size:10px}
+ .race3d-roulette{bottom:calc(132px + env(safe-area-inset-bottom,0px))}
+ .race3d-active-effects{bottom:calc(100px + env(safe-area-inset-bottom,0px));left:10px;right:10px;width:auto;transform:none}
+ /* Locked controls add no information while the race is underway. */
+ .race3d-hud:not([data-phase="idle"]) .race3d-minimap .race3d-lap-control{display:none}
+}
+@media(max-height:480px) and (max-width:1000px){
+ .race3d-focus-specs,.race3d-cards{display:none}
+ .race3d-minimap{top:8px;left:8px;width:170px;padding:5px;max-height:calc(100% - 102px);overflow:auto;overscroll-behavior:contain}
+ .race3d-minimap svg{height:36px;width:100%}
+ .race3d-minimap .race3d-lap-control{font-size:10px;margin-top:3px}
+ .race3d-minimap .race3d-lap-select{min-height:28px;font-size:10px;padding:3px}
+ .race3d-minimap .race3d-guide-button{min-height:32px;font-size:10px;width:100%}
+ .race3d-standings{top:8px;right:8px;width:190px;max-height:152px;display:flex;flex-direction:column}
+ .race3d-standings-summary{min-height:32px;padding:5px 7px;flex:none}
+ .race3d-roster{max-height:112px;min-height:0;flex:1;overflow:auto}
+ .race3d-continue{min-height:30px;margin:3px 5px 5px;flex:none}
+ .race3d-stats{bottom:18px;left:8px;width:190px}
+ .race3d-camera{bottom:18px;right:8px;padding:6px;min-width:190px;max-width:245px}
+ .race3d-camera-actions{display:flex;gap:3px}.race3d-camera-button{width:32px;height:32px}
+ .race3d-roulette{bottom:86px}.race3d-active-effects{bottom:62px}
+ .race3d-hud:not([data-phase="idle"]) .race3d-minimap .race3d-lap-control{display:none}
+}
+
 /* Fictional simulation tuning and live race adjustment, separate from held items. */
 .race3d-card-tuning{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0 6px}
 .race3d-racer-card:not(.is-focused) .race3d-card-tuning{display:none}

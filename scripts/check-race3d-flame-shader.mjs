@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import * as THREE from '../public/games/assets/vendor/three.module.js';
+import { createFlameAssets } from '../public/games/games/race3d-flame-material.js';
+const plume = createFlameAssets(THREE);
+const pos = plume.geometry.getAttribute('position');
+assert.equal(pos.count, 12);
+assert.equal(plume.geometry.index.count, 18);
+assert.equal(plume.geometry.getAttribute('uv').count, pos.count);
+for (let i = 0; i < pos.count; i++) {
+  assert.ok(pos.getZ(i) === 0 || pos.getZ(i) === -1);
+  assert.ok(Math.hypot(pos.getX(i), pos.getY(i)) <= 1.000001);
+}
+assert.equal(plume.material.transparent, true);
+assert.equal(plume.material.depthWrite, false);
+assert.equal(plume.material.blending, THREE.AdditiveBlending);
+plume.update(4.5);
+assert.equal(plume.material.uniforms.uTime.value, 4.5);
+plume.update(NaN);
+assert.equal(plume.material.uniforms.uTime.value, 0);
+const still = createFlameAssets(THREE, { reducedMotion: true });
+still.update(88);
+assert.equal(still.material.uniforms.uTime.value, 0);
+let geometryDisposals = 0, materialDisposals = 0;
+plume.geometry.addEventListener('dispose', () => geometryDisposals++);
+plume.material.addEventListener('dispose', () => materialDisposals++);
+plume.dispose(); plume.dispose();
+assert.equal(geometryDisposals, 1);
+assert.equal(materialDisposals, 1);
+still.dispose();
+console.log('PASS: plume geometry, material configuration, motion and disposal');

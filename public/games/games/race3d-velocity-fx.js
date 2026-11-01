@@ -45,17 +45,19 @@ export function createVelocityEffects(THREE, { camera, reducedMotion = false } =
     const powered = finite(car.itemEffects?.emp) <= 0 && finite(car.spin) <= 0 &&
       ((finite(car.rocketRemaining) > 0 && (car.rocketAcceleration == null || finite(car.rocketAcceleration) > .001)) ||
        ((finite(car.boost) > 0 || finite(car.nitro?.remaining) > 0) && finite(car.flightRemaining) <= 0 && finite(car.nitroAcceleration) > .001));
+    const spontaneous = finite(car.itemEffects?.emp) <= 0 && finite(car.spin) <= 0 &&
+      finite(car.flightRemaining) <= 0 && finite(car.spontaneousNitroAcceleration) > .001;
     const draft = clamp(finite(car.draft, finite(car.drafting)), 0, 1);
     const speedMix = clamp((speed - 22) / 45, 0, 1);
     // Traffic drafting often stays well below one. Give that partial signal a
     // visible response without turning ordinary top speed into full boost.
-    const target = clamp(speedMix * .30 + Math.sqrt(draft) * .60 + (powered ? .75 : 0), 0, 1);
+    const target = clamp(speedMix * .30 + Math.sqrt(draft) * .60 + (powered ? .75 : spontaneous ? .18 : 0), 0, 1);
     const smoothing = 1 - Math.exp(-step / .3);
     intensity += (target - intensity) * smoothing;
-    poweredMix += ((powered ? 1 : 0) - poweredMix) * smoothing;
+    poweredMix += ((powered ? 1 : spontaneous ? .25 : 0) - poweredMix) * smoothing;
     if (intensity < .008) { group.visible = false; ribbonCount = hoopCount = 0; return; }
     group.visible = true; clock = (clock + step * (.42 + speed / 75 + poweredMix * .65)) % 1000;
-    source = powered ? 'nitro' : draft > .15 ? 'slipstream' : 'speed';
+    source = powered || spontaneous ? 'nitro' : draft > .15 ? 'slipstream' : 'speed';
     ribbonCount = qualityId === 'low' ? 40 : qualityId === 'high' ? capacity : 72;
     hoopCount = !powered && draft < .2 ? 0 : qualityId === 'low' ? 1 : qualityId === 'high' ? 3 : 2;
     // Use the current projection so optics remain peripheral on portrait screens.

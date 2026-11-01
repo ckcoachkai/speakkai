@@ -23,6 +23,7 @@ const MAX_EVENTS = 240, MAX_BANANAS = 24, MAX_BOMBS = MAX_CARS, MAX_MISSILES = 1
 const BOOST_DURATION = 6, BLAST_RADIUS = 7.5;
 const RAMP_GRAVITY = 9.81, MAX_TRICK_BONUS = 10, TRICK_BONUS_PER_FLIP = 3;
 const FLIGHT_DURATION = 6, FLIGHT_HEIGHT = 55, ROCKET_DURATION = 6, SHIELD_DURATION = 8, FREEZE_DURATION = 6;
+const IMPACT_DAMAGE_SCALE = 3; // Stronger incidents; replacement and repair still restore mobility.
 const DAMAGE_LEVELS = 20, REPLACEMENT_DELAY = 2, REPLACEMENT_RECOVERY = 8;
 export const RACE_POWER_TYPES = ITEM_TYPES;
 // Fictional competition calibration, never manufacturer specifications. The
@@ -36,6 +37,12 @@ function safeVector(value, fallback) {
   const x = finite(value?.x, fallback.x), y = finite(value?.y, fallback.y), z = finite(value?.z, fallback.z);
   const length = Math.hypot(x, y, z);
   return length > 1e-6 ? { x: x / length, y: y / length, z: z / length } : { ...fallback };
+}
+// Stable per-entrant seed, independent of grid order and other random streams.
+function entrantSeed(seed, id) {
+  let hash = (seed ^ 0xA715C39D) >>> 0;
+  for (const char of String(id)) { hash ^= char.codePointAt(0); hash = Math.imul(hash, 16777619) >>> 0; }
+  return hash;
 }
 function rng(seed) {
   let state = seed >>> 0;
@@ -146,6 +153,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     const a = road[left].tangent, b = road[right].tangent;
     const span = openCourse ? Math.max(1, right - left) : 4;
     point.curvature = ((b.x - a.x) * point.right.x + (b.z - a.z) * point.right.z) / (roadSpacing * span);
+    point.verticalCurvature = (b.y - a.y) / (roadSpacing * span);
   });
   const sample = d => road[openCourse ? Math.min(roadCount, Math.max(0, Math.floor(finite(d) / roadSpacing))) : Math.floor(wrap(d, trackLength) / roadSpacing) % roadCount];
   const curvatureAt = d => sample(d).curvature;
@@ -153,6 +161,39 @@ export function createRaceSimulation({ players = [], track, random = Math.random
   function emit(type, car, extra = {}) {
     events.push({ type, time, carId: car?.id ?? null, distance: finite(car?.distance), lateral: finite(car?.lateral), intensity: 1, ...extra });
     if (events.length > MAX_EVENTS) events.splice(0, events.length - MAX_EVENTS);
+  }
+  // Interruptions end a burst rather than accumulating deferred thrust.
+  function stopSpontaneousNitro(car, reason) {
+    if (car.spontaneousNitroRemaining > 0) {
+      car.spontaneousNitroRemaining = 0;
+      car.spontaneousNitroCooldown = 6 + car._spontaneousNitroRandom() * 8;
+      emit('spontaneous-nitro-end', car, { reason, intensity: 0.5 });
+    }
+    car.spontaneousNitroAcceleration = 0;
+  }
+  function stepSpontaneousNitro(car, dt, traction, eligible) {
+    car.spontaneousNitroAcceleration = 0;
+    if (!eligible) {
+      stopSpontaneousNitro(car, 'interrupted');
+      if (car.spontaneousNitroCooldown > 0) car.spontaneousNitroCooldown = Math.max(0, car.spontaneousNitroCooldown - dt);
+      return 0;
+    }
+    if (car.spontaneousNitroRemaining <= 0) {
+      car.spontaneousNitroCooldown = Math.max(0, car.spontaneousNitroCooldown - dt);
+      if (car.spontaneousNitroCooldown > 0 || traction <= 0.01) return 0;
+      car.spontaneousNitroRemaining = 0.5 + car._spontaneousNitroRandom() * 0.4;
+      emit('spontaneous-nitro-start', car, { duration: car.spontaneousNitroRemaining, intensity: 0.7 });
+    }
+    const active = Math.min(dt, car.spontaneousNitroRemaining);
+    const acceleration = Math.min(Math.max(0, traction), 4.5 / (1 + (car.speed / 55) ** 2)) * active / dt;
+    car.spontaneousNitroRemaining = Math.max(0, car.spontaneousNitroRemaining - active);
+    car.spontaneousNitroAcceleration = acceleration;
+    if (car.spontaneousNitroRemaining < 1e-8) {
+      car.spontaneousNitroRemaining = 0;
+      car.spontaneousNitroCooldown = 6 + car._spontaneousNitroRandom() * 8;
+      emit('spontaneous-nitro-end', car, { reason: 'complete', intensity: 0.5 });
+    }
+    return acceleration;
   }
   function createPickups() {
     pickups.length = 0;
@@ -182,6 +223,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       const side = (gridPosition % 2 ? 1 : -1) * laneSwap;
       const strategySeed = Math.floor(gridRandom() * 4294967296) >>> 0;
       const driverRandom = rng(strategySeed);
+      const spontaneousRandom = rng(entrantSeed(seed, p.id));
       const driverSkills=createDriverSkills(rng(strategySeed^0x194E2B75),driverMode),driverControl=driverControls(driverSkills);
       const car = existing.get(p.id) || {};
       for (const key of Object.keys(car)) delete car[key];
@@ -198,6 +240,8 @@ export function createRaceSimulation({ players = [], track, random = Math.random
         draft: 0, drafting: 0, drag: 0, acceleration: 0,
         propulsion: 'electric', motorPowerW: 0, regenW: 0, batteryEnergyJ: BATTERY_J * 0.8, batterySOC: 0.8,
         dragN: 0, downforceN: 0, nitroAcceleration: 0,
+        spontaneousNitroAcceleration: 0, spontaneousNitroRemaining: 0,
+        spontaneousNitroCooldown: 6 + spontaneousRandom() * 8, _spontaneousNitroRandom: spontaneousRandom,
         nitro: { reservoir: 1, heat: 0, remaining: 0, cooldown: 0 }, strategySeed,driverSkills,driverControl,_lineError:0,_rampAimError:0,_controlClock:0,_controlThrottle:0,_controlBrake:0,
         offRoad: false, mistakeTimer: 0, mistakeType: null, mistake: null, activeItem: null,
         inventoryItem: null, inventoryPhase: 'empty', inventorySerial: 0, inventoryReserves: [], _inventorySerial: 0,
@@ -206,7 +250,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
         _itemRandom: rng(strategySeed ^ 0x51C0F17E),
         _impactRandom:rng(strategySeed^0x21B04F37),_timingRandom:rng(strategySeed^0x710FC21B),
         flightHeight: 0, flightRemaining: 0, flightDuration: FLIGHT_DURATION, verticalVelocity: 0, landingImpulse: 0,
-        flightKind: null, rampState: 'ground', rampId: null, rampHeight: 0, rampPitch: 0,
+        flightKind: null, rampState: 'ground', rampId: null, rampHeight: 0, rampPitch: 0, _crestCooldown: 0,
         trickAngle: 0, trickFlips: 0, completedFlips: 0, trickSpeedBonus: 0, rampTakeoffs: 0,
         airAttitude:null,airRoll:0,landingPitch:0,landingRoll:0,recoveryRemaining:0,farOffRoadTime:0,
         attackSlowRemaining:0,attackSpeedCap:Infinity,attackSource:null,
@@ -238,6 +282,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
   function startSpin(car, direction, strength = 1) {
     if(car.itemEffects?.brace>0)return;
     if (car.finished || car.spin > 0) return;
+    stopSpontaneousNitro(car, 'spin');
     car.spin = clamp(0.6 + strength * 0.12, 0.6, 1.2);car.spinRate=7.2;
     car.spinDirection = direction < 0 ? -1 : 1; car.speed *= 0.68;
     car.lateralVelocity += car.spinDirection * clamp(1 + strength * 0.32, 1, 5.2);
@@ -338,7 +383,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     // The wake reduces drag and permits a small speed surplus using existing
     // engine power. The car must move out and complete its pass on momentum.
     const passingSurplus=time<car._passUntil?car._passSurplus:0;
-    let target = car.topSpeed * car._pace * car.raceCatchup.targetMultiplier + Math.max(car.draft*5,passingSurplus) + bonusScale * (car.trickSpeedBonus + (car.repairRemaining > 0 ? 5 : 0) + (car.boost > 0 ? 12 : 0) + (car.rocketRemaining > 0 ? 18 : 0));
+    let target = car.topSpeed * car._pace * car.raceCatchup.targetMultiplier + Math.max(car.draft*5,passingSurplus) + bonusScale * (car.trickSpeedBonus + (car.repairRemaining > 0 ? 5 : 0) + (car.boost > 0 ? 12 : 0) + (car.rocketRemaining > 0 ? 18 : 0) + ((car.spontaneousNitroRemaining > 0 || car.spontaneousNitroCooldown <= 0) && !(car.itemEffects?.emp > 0) && car.nitro.remaining <= 0 ? 4 : 0));
     if(car.itemEffects?.overdrive>0)target+=car.topSpeed*.08;
     if(car.itemEffects?.winch>0)target=Math.min(target,5);
     const lateBrake = car.mistakeType === 'late-brake';
@@ -386,7 +431,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       if(car.isBot){
         car.eliminated=true;car.eliminatedAt=time;car.finished=true;car.speed=0;car.spin=0;car.flightRemaining=0;car.flightHeight=0;
         car.inventoryItem=null;car.inventoryReserves.length=0;car.inventoryPhase='empty';car.rouletteRemaining=0;car.itemUseAt=Infinity;
-        car.activeItem=null;car.boost=0;car.nitro.remaining=0;car.rocketRemaining=0;car.shieldRemaining=0;extras?.clearCar(car);
+        car.activeItem=null;car.boost=0;car.nitro.remaining=0;car.rocketRemaining=0;car.shieldRemaining=0;stopSpontaneousNitro(car, 'eliminated');extras?.clearCar(car);
         emit('bot-explode',car,{intensity:1,eliminated:true});return;
       }
       car.replacementPending = REPLACEMENT_DELAY;
@@ -418,7 +463,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
   }
   function recordImpact(car, beforeSpeed, amount = 0.1) {
     car._lostSpeed = clamp(car._lostSpeed + Math.max(0, beforeSpeed - car.speed), 0, 22);
-    car.damage = clamp(car.damage + amount / car.durabilityFactor, 0, 1);
+    car.damage = clamp(car.damage + amount * IMPACT_DAMAGE_SCALE / car.durabilityFactor, 0, 1);
     refreshDamageState(car);
   }
   function recoverTyre(car,reason='reinflated'){
@@ -451,11 +496,16 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     car.freezeRemaining = Math.max(0, car.freezeRemaining - dt);
     car.attackSlowRemaining=Math.max(0,car.attackSlowRemaining-dt);if(!car.attackSlowRemaining){car.attackSpeedCap=Infinity;car.attackSource=null;}
     car.landingImpulse = Math.max(0, car.landingImpulse - dt * 0.65);car.tractionRecovery=Math.max(0,car.tractionRecovery-dt);
+    car._crestCooldown=Math.max(0,car._crestCooldown-dt);
     car.recoveryRemaining=Math.max(0,car.recoveryRemaining-dt);
     if(car.flightRemaining<=0){car.landingPitch*=Math.exp(-4*dt);car.landingRoll*=Math.exp(-4*dt);car.airRoll=0;}
-    if (car.flightRemaining > 0 && ['ramp','hop'].includes(car.flightKind)) {
+    if (car.flightRemaining > 0 && ['ramp','hop','crest'].includes(car.flightKind)) {
       car._rampFlightElapsed+=dt;
-      const t=car._rampFlightElapsed,roadY=roadSurface(track,car.distance,car.lateral).y;
+      const crest=car.flightKind==='crest';
+      // Crest flight starts with the downward tangent velocity. Compare at the
+      // end-of-step road position so it doesn't immediately hit its old road.
+      const roadDistance=crest?car.distance+Math.max(0,car.speed*Math.cos(car.heading))*dt:car.distance;
+      const t=car._rampFlightElapsed,roadY=roadSurface(track,roadDistance,car.lateral).y;
       if(car.rocketRemaining>0&&car._rocketLiftBudget>0&&!(car.itemEffects?.emp>0)){const thrust=Math.min(4,car._rocketLiftBudget/dt),pitch=-(car._rampTakeoffPitch||0)+(car.airAttitude?.pitch||0),roll=car.airAttitude?.roll||0;car.rocketVectorThrust=thrust;car.rocketLiftAcceleration=thrust*Math.cos(pitch)*Math.cos(roll);car.lateralVelocity-=Math.sin(roll)*thrust*dt;car.speed=clamp(car.speed+Math.sin(pitch)*Math.cos(roll)*thrust*dt,0,80);car._rocketLiftBudget=Math.max(0,car._rocketLiftBudget-thrust*dt);}
       car._rocketLiftVelocity+=car.rocketLiftAcceleration*dt;car._rocketLiftHeight+=car._rocketLiftVelocity*dt;
       const worldY=car._rampTakeoffWorldY+car._rampTakeoffVelocity*t-.5*RAMP_GRAVITY*t*t+car._rocketLiftHeight;
@@ -464,7 +514,13 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       advanceAttitude(car,dt);
       if(car.rocketRemaining>0&&car.airAttitude&&!(car.itemEffects?.emp>0)){const a=car.airAttitude,torque=clamp(-a.roll*.8-a.rollRate*.5,-.8,.8);a.rollRate+=torque*dt;a.yawRate+=clamp(-car.heading*.6-a.yawRate*.4,-.6,.6)*dt;car.rocketStabilize=torque;}
       car.rampPitch=car._rampTakeoffPitch;
-      if(t>.1&&worldY<=roadY&&car.verticalVelocity<0){
+      if((crest?t>dt*.5:t>.1)&&((worldY<=roadY&&car.verticalVelocity<0)||(crest&&t>=2.5))){
+        if(crest){
+          const impact=Math.max(0,-car.verticalVelocity+car.speed*sample(roadDistance).tangent.y);
+          car.flightRemaining=0;car.flightHeight=0;car.verticalVelocity=0;car.flightKind=null;car.rampState='ground';car.airAttitude=null;
+          car.landingImpulse=clamp(impact/16,0,.35);car._crestCooldown=1.5;
+          emit('crest-land',car,{duration:t,impactSpeed:impact,intensity:car.landingImpulse});
+        } else {
         const impact=-car.verticalVelocity;car.landingImpulse=clamp(impact/16,.2,1);
         car.flightRemaining=0;car.flightHeight=0;car.verticalVelocity=0;
         const landedOnRoad=Math.abs(car.lateral)+car.width*.5<=sample(car.distance).width/2;
@@ -476,6 +532,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
         car.lateralVelocity*=.65;car.heading*=.65;car.speed*=landedOnRoad&&settled?.985:.80;
         emit(hop?'extra-'+car.hopSource+'-land':'ramp-land',car,{itemType:hop?car.hopSource:null,rampId:car.rampId,fullFlips,successful:landedOnRoad&&settled,impactSpeed:impact,trickAngle:car.trickAngle,speedBonus:car.trickSpeedBonus,intensity:car.landingImpulse});
         if(fullFlips)emit('trick-complete',car,{rampId:car.rampId,fullFlips,trickAngle:car.trickAngle,beforeBonus,speedBonus:car.trickSpeedBonus,bonusAdded:car.trickSpeedBonus-beforeBonus,intensity:.9});
+        }
       }
     } else if (car.flightRemaining > 0) {
       car.flightRemaining = Math.max(0, car.flightRemaining - dt);
@@ -526,10 +583,20 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     }
     if(car.rampState==='approach')car.rampState='ground';
   }
+  function updateCrestContact(car) {
+    if (!track.naturalCrests || car.finished || car.flightRemaining>0 || car.spin>0 || car._crestCooldown>0 || car.rampState!=='ground' || car.speed<20 || car.offRoad) return;
+    const surface=sample(car.distance), curvature=surface.verticalCurvature;
+    // Contact force would have to pull downward when v² * curvature exceeds g.
+    if (!(curvature<0 && -curvature*car.speed*car.speed>RAMP_GRAVITY)) return;
+    const velocity=car.speed*surface.tangent.y;
+    Object.assign(car,{flightKind:'crest',flightDuration:2.5,flightRemaining:2.5,flightHeight:0,verticalVelocity:velocity,rampState:'airborne',rampHeight:0,rampPitch:0,airAttitude:null,_rampFlightElapsed:0,_rampTakeoffWorldY:roadSurface(track,car.distance,car.lateral).y,_rampTakeoffVelocity:velocity,_rampTakeoffPitch:0,_rocketLiftVelocity:0,_rocketLiftHeight:0});
+    stopSpontaneousNitro(car,'crest');
+    emit('crest-takeoff',car,{speed:car.speed,verticalVelocity:velocity,verticalCurvature:curvature,intensity:.4});
+  }
   function integrateCar(car, dt, snapshot) {
     advanceStatus(car, dt);
-    if(extras.beforeMotion(car,dt))return;
-    if (car.finished) return;
+    if(extras.beforeMotion(car,dt)){stopSpontaneousNitro(car, 'interrupted');return;}
+    if (car.finished) { stopSpontaneousNitro(car, 'finish'); return; }
     car.previousProgress = car.distance; car.previousLateral = car.lateral; car._finishFraction = null;
     car._hitImmune = Math.max(0, car._hitImmune - dt);
     car._itemTimer = Math.max(0, car._itemTimer - dt); if (!car._itemTimer) car.activeItem = null;
@@ -547,6 +614,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     car.drag = envelope.dragAccel + envelope.rollingAccel;
     car.rocketAcceleration = car.rocketRemaining > 0 && !(car.itemEffects?.emp>0) ? 9 / (1 + (car.speed / 65) ** 2) : 0;
     if (car.flightRemaining > 0) {
+      stepSpontaneousNitro(car, dt, 0, false);
       // A bounded flight follows course progress continuously. Ground contact,
       // tires and pickups cannot teleport it or alter its actual crossing time.
       car.spin = 0; car.spinAngle *= Math.exp(-5 * dt);
@@ -561,6 +629,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       }else car.lateralVelocity*=Math.exp(-.22*dt);
       car.yawRate = car.airAttitude?.yawRate||0;
     } else if (car.spin > 0) {
+      stepSpontaneousNitro(car, dt, 0, false);
       car.spin = Math.max(0, car.spin - dt); car.spinAngle += car.spinDirection * dt * (car.spinRate||7.2);
       car.heading = clamp(car.heading + car.spinDirection * dt * 0.7, -0.65, 0.65);
       car.speed = Math.max(4, car.speed - (5.2 + car.drag * 0.3) * dt);
@@ -595,7 +664,10 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       car.rocketAcceleration *= car.brake > 0 ? 0.25 : 1;
       if(car.attackSlowRemaining>0){car.nitroAcceleration*=.15;car.rocketAcceleration*=.15;}
       car.itemAcceleration=car.brake<=0?extras.acceleration(car,dt,envelope,drive):0;
-      car.speed += (drive.acceleration * (1 - car.damage * 0.15) + (error > 0 && car.brake <= 0 ? Math.min(1.8, car.trickSpeedBonus * 0.18) + (car.repairRemaining > 0 ? 1.7 : 0) : 0) + car.nitroAcceleration + car.rocketAcceleration + car.itemAcceleration - car.drag - gradient - (car.freezeRemaining > 0 ? 3.5 : 0)) * dt;
+      const spareTraction = Math.max(0, envelope.longitudinalAccel - drive.driveN / car.massKg - car.nitroAcceleration - car.rocketAcceleration - Math.max(0, car.itemAcceleration));
+      const spontaneousEligible = car.brake <= 0 && !(car.itemEffects?.emp > 0) && car.nitro.remaining <= 0 && car.nitroAcceleration <= 0 && car.rocketRemaining <= 0 && car.attackSlowRemaining <= 0 && car.freezeRemaining <= 0 && car.replacementPending <= 0 && car.speed < speedLimitFor(car) - 0.01;
+      stepSpontaneousNitro(car, dt, spareTraction, spontaneousEligible);
+      car.speed += (drive.acceleration * (1 - car.damage * 0.15) + (error > 0 && car.brake <= 0 ? Math.min(1.8, car.trickSpeedBonus * 0.18) + (car.repairRemaining > 0 ? 1.7 : 0) : 0) + car.nitroAcceleration + car.spontaneousNitroAcceleration + car.rocketAcceleration + car.itemAcceleration - car.drag - gradient - (car.freezeRemaining > 0 ? 3.5 : 0)) * dt;
       car.speed = clamp(car.speed, 0, speedLimitFor(car));
       const targetLane = laneTargetFor(car, curvature, traffic);
       const sideTarget = clamp((targetLane - car.lateral) * 1.2 - car.lateralVelocity * 0.72, -6.5, 6.5);
@@ -630,6 +702,7 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     car._wasOffRoad = car.offRoad;
     car.distance += Math.max(0,car.speed*Math.cos(car.airAttitude?.headingAtLaunch??car.heading))*(car.rampState==='approach'?Math.cos(car.rampPitch):1)*dt;
     updateRampContact(car);
+    updateCrestContact(car);
     car.wheelLoads=wheelLoads(car);
     car.steeringAngle=clamp(Math.atan(vehicleProfile(car).wheelbase*(curvature+car.yawRate/Math.max(3,car.speed))),-.48,.48);
     if (car.speed < 0.65 && car.distance - car.previousProgress < 0.2) car.stuckTime += dt;
@@ -840,9 +913,14 @@ export function createRaceSimulation({ players = [], track, random = Math.random
       // only after the inexpensive spatial rejection, preserving pickup order.
       const key = `${car.gridPosition}:${pickup.gateId}:${lap}`;
       if (pickupHits.has(key)) continue;
-      const racing=canonicalCars.filter(c=>!c.finished);
-      const position=1+racing.filter(c=>c.id!==car.id&&(c.distance>car.distance||c.distance===car.distance&&c.gridPosition<car.gridPosition)).length;
-      pickupHits.add(key); queueItem(car, drawItem(car._itemRandom,{position,count:racing.length,gap:Math.max(0,...racing.map(c=>c.distance))-car.distance}), pickup.id);
+      const ranked=canonicalCars.filter(c=>!c.eliminated);
+      // A finisher retains their place. Remaining racers do not become first
+      // merely because the leader already crossed the finish line.
+      const position=1+ranked.filter(c=>c.id!==car.id&&(c.finished||c.distance>car.distance||c.distance===car.distance&&c.gridPosition<car.gridPosition)).length;
+      const count=Math.min(position===1?1:2,INVENTORY_CAPACITY-inventoryCount(car));
+      const gap=Math.max(0,...ranked.map(c=>c.distance))-car.distance;
+      pickupHits.add(key);
+      for(let slot=0;slot<count;slot++)queueItem(car,drawItem(car._itemRandom,{position,count:ranked.length,gap}),pickup.id);
       break;
     }
   }
@@ -1036,12 +1114,23 @@ export function createRaceSimulation({ players = [], track, random = Math.random
     for (const car of canonicalCars) if (!car.finished) { applyTrackHazards(car); collectItems(car); }
     updateItems(dt);
     extras.step(dt);
+    for (const car of canonicalCars) {
+      // Collisions and item interactions run after motion integration and may
+      // add speed. A disruption cap remains authoritative for the full step.
+      if (!car.finished && car.attackSlowRemaining > 0) car.speed = Math.min(car.speed, car.attackSpeedCap);
+      if ((car.spontaneousNitroRemaining > 0 || car.spontaneousNitroAcceleration > 0) && (car.finished || car.eliminated || car.spin > 0 || car.itemEffects?.emp > 0 || car.nitro.remaining > 0 || car.brake > 0)) stopSpontaneousNitro(car, 'interrupted');
+    }
     const finishers = [], currentById = carsById;
     for (let i = 0; i < canonicalCars.length; i++) {
       const car = canonicalCars[i]; if (car.finished) continue;
       if (car.previousProgress < finishDistance && car.distance >= finishDistance) {
         car._finishFraction = clamp((finishDistance - car.previousProgress) / Math.max(1e-8, car.distance - car.previousProgress), 0, 1);
         car.finished = true; car.finishTime = time - dt + dt * car._finishFraction; finishers.push(car);
+        if(car.flightKind==='crest'){
+          car.flightKind=null;car.flightRemaining=car.flightHeight=car.verticalVelocity=0;car.rampState='ground';car.airAttitude=null;
+          emit('crest-land',car,{duration:car._rampFlightElapsed,impactSpeed:0,reason:'finish',intensity:0});
+        }
+        stopSpontaneousNitro(car, 'finish');
         recoverTyre(car,'finish');
         extras.clearCar(car);
         car.inventoryItem=null;car.inventoryReserves.length=0;car.inventoryPhase='empty';car.rouletteRemaining=0;car.itemUseAt=Infinity;
@@ -1109,7 +1198,7 @@ export const RACE_PHYSICS = Object.freeze({
   maxBananas: MAX_BANANAS, maxBombs: MAX_BOMBS, maxMissiles: MAX_MISSILES, maxWaves: MAX_WAVES,
   boostDuration: BOOST_DURATION, blastRadius: BLAST_RADIUS, flightDuration: FLIGHT_DURATION, flightHeight: FLIGHT_HEIGHT,
   rocketDuration: ROCKET_DURATION, shieldDuration: SHIELD_DURATION, freezeDuration: FREEZE_DURATION,
-  damageLevels: DAMAGE_LEVELS, replacementDelay: REPLACEMENT_DELAY, replacementRecovery: REPLACEMENT_RECOVERY,
+  impactDamageScale: IMPACT_DAMAGE_SCALE, damageLevels: DAMAGE_LEVELS, replacementDelay: REPLACEMENT_DELAY, replacementRecovery: REPLACEMENT_RECOVERY,
   maxTrickBonus: MAX_TRICK_BONUS, trickBonusPerFlip: TRICK_BONUS_PER_FLIP, rampGravity: RAMP_GRAVITY,
   powerTypes: RACE_POWER_TYPES,
 });

@@ -186,6 +186,16 @@ export function createChaseCamera({ THREE, camera, track, timeScale = 5,
     previousCarPosition.copy(samplePosition);
     previousCarId = focusCar.id;
 
+    // Terrain can rise beside switchbacks and beneath a transitioning camera.
+    // Constrain the final spring position, then check its sightline to the car.
+    if(track.terrainHeight){
+      let minimum=track.terrainHeight(position.x,position.z)+.9;
+      for(let i=1;i<12;i++){
+        const t=i/12,x=position.x+(target.x-position.x)*t,z=position.z+(target.z-position.z)*t;
+        minimum=Math.max(minimum,(track.terrainHeight(x,z)+.35-target.y*t)/(1-t));
+      }
+      if(position.y<minimum){position.y=minimum;positionVelocity.y=Math.max(0,positionVelocity.y);}
+    }
     camera.position.copy(position);
     camera.up.copy(up);
     camera.lookAt(target);

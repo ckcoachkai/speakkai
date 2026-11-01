@@ -1,3 +1,4 @@
+import {refineDownhillBasin} from './race3d-downhill-basin.js';
 /**
  * Scenic road course for the Three.js Grand Prix picker.
  * All course geometry is built from the same open, arc-length sampled spline
@@ -51,6 +52,17 @@ export function createTrack(THREE) {
   courseCurve.arcLengthDivisions = 24000;
   courseCurve.updateArcLengths();
   const totalLength = courseCurve.getLength();
+  // Ten low, smooth convex rolls in the descent. Even the shallow side of
+  // each roll continues downhill; the road itself provides any crest lift.
+  const crestSpacing = totalLength / 11, crestWidth = 11, crestHeight = .44;
+  function crestProfile(d) {
+    const index = Math.round(d / crestSpacing);
+    if (index < 1 || index > 10) return {height:0, slope:0};
+    const x = (d - index * crestSpacing) / crestWidth;
+    if (Math.abs(x) > 5) return {height:0, slope:0};
+    const height = crestHeight * Math.exp(-x*x);
+    return {height, slope:-2*x*height/crestWidth};
+  }
   const sectors = Array.from({ length: 9 }, (_, i) => ({
     id: i + 1, name: ['Summit launch', 'Upper switchbacks', 'Pine ridge', 'Cloudline', 'Mountain traverse', 'Ridge descent', 'Lower switchbacks', 'Valley approach', 'Valley finish'][i],
     type: i === 0 || i === 8 ? 'drafting' : 'sweeper', start: i * totalLength / 9, end: (i + 1) * totalLength / 9
@@ -62,6 +74,10 @@ export function createTrack(THREE) {
     const u = d / totalLength;
     const position = courseCurve.getPointAt(u);
     const tangent = courseCurve.getTangentAt(u).normalize();
+    const crest = crestProfile(d);
+    position.y += crest.height;
+    tangent.y += crest.slope;
+    tangent.normalize();
     // Extend the grid and runoff rather than jumping to the other endpoint.
     if (Number.isFinite(distance)) position.addScaledVector(tangent, distance - d);
     const right = new THREE.Vector3().crossVectors(UP, tangent);
@@ -230,9 +246,16 @@ export function createTrack(THREE) {
     else profile[i] = profile[left] + (profile[right] - profile[left]) * (i - left) / (right - left);
   }
   const guardedProfile = profile.map((_, i) => Math.min(...profile.slice(Math.max(0, i - 2), Math.min(profile.length, i + 3))));
-  function terrainHeight(x, z) {
+  function nativeTerrainHeight(x, z) {
     const n = clamp(Math.hypot(x, z) / terrainStep, 0, binCount), i = Math.floor(n);
     return Math.max(GROUND_Y, guardedProfile[i] + (guardedProfile[Math.min(binCount, i + 1)] - guardedProfile[i]) * (n - i));
+  }
+  const waterBasins=[{x:350,z:-1200,y:82.5,radiusX:38,radiusZ:28}];
+  function terrainHeight(x,z){
+    let height=nativeTerrainHeight(x,z);
+    for(const b of waterBasins){const r=Math.hypot((x-b.x)/b.radiusX,(z-b.z)/b.radiusZ);if(r<1.8){
+      const u=clamp((r-.7)/.3,0,1),bank=b.y-2+3*u*u*(3-2*u),v=clamp((r-1.12)/.68,0,1);height=bank*(1-v*v*(3-2*v))+height*v*v*(3-2*v);
+    }}return height;
   }
   const groundMaterial = makeStandard('#405a3e', 1);
   const groundSize = trackBounds.getSize(new THREE.Vector3());
@@ -259,6 +282,7 @@ export function createTrack(THREE) {
   const mountainGeometry = new THREE.BufferGeometry();
   mountainGeometry.setAttribute('position', new THREE.Float32BufferAttribute(terrainPositions, 3));
   mountainGeometry.setIndex(terrainIndices);
+  refineDownhillBasin(THREE,mountainGeometry,waterBasins[0],terrainHeight);
   mountainGeometry.computeVertexNormals();
   const mountain = new THREE.Mesh(mountainGeometry, makeStandard('#405b3e', 1));
   mountain.name = 'mountain-terrain'; mountain.receiveShadow = true; group.add(mountain);
@@ -560,7 +584,7 @@ export function createTrack(THREE) {
     group.clear();
   }
 
-  return { group, totalLength, closed: false, width: ROAD_WIDTH, bounds: trackBounds, sectors, sampleTrack, sampleGround: earthPoint, terrainHeight, dispose };
+  return { group, totalLength, closed: false, naturalCrests: true, width: ROAD_WIDTH, bounds: trackBounds, sectors, sampleTrack, sampleGround: earthPoint, terrainHeight, waterBasins, dispose };
 }
 
 export const createRaceTrack = createTrack;

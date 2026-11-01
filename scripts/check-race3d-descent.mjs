@@ -20,7 +20,8 @@ for (let i = 0; i <= 3000; i++) {
   }
   maxCurvature = Math.max(maxCurvature, Math.abs(frame.curvature));
 }
-assert(minGrade > .025 && maxGrade < .055, `grade ${minGrade}–${maxGrade}`);
+// The shallow and steep sides of the smooth crest rolls remain downhill.
+assert(minGrade > .003 && maxGrade < .08, `grade ${minGrade}-${maxGrade}`);
 assert(minClearance > 1, `terrain clearance ${minClearance}`);
 assert(maxCurvature < .01, `turn curvature ${maxCurvature}`);
 assert(track.sampleTrack(-100).position.distanceTo(first.position) > 99);

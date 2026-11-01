@@ -1,7 +1,7 @@
 import {createFinishFX,advanceFinishVisual} from './race3d-finish-fx.js?v=20261027-midnight';
 import { createAuthoredCarAssets } from './race3d-car-assets.js?v=20261030-city';
 import { REAL_GT_PROFILE, addRealGT } from './race3d-real-gt.js?v=20261027-midnight';
-import { createCarMotion } from './race3d-car-motion.js?v=20261027-midnight';
+import { createCarMotion } from './race3d-car-motion.js?v=20261101-flames';
 import { createDamageVisuals } from './race3d-damage-visuals.js?v=20261027-midnight';
 import { vehicleProfile } from './race3d-vehicle.js?v=20261101-descent';
 
@@ -487,7 +487,16 @@ export function createRaceCars(THREE, racers = [], options = {}) {
       const state=meshes.get(id);if(!state)return;
       state.car.visible=true;state.car.position.set(x,y,0);state.car.rotation.set(.18,rotation,0);state.car.scale.setScalar(scale);
     },
-    visualPose(id) {return meshes.get(id)?.visualRacer||null;},
+    visualPose(id) {
+      const state=meshes.get(id);if(!state)return null;
+      // The effect groups are siblings of this car group under the scaled
+      // race world, so return a matrix in that common parent's coordinates.
+      const matrix=state.exhaustMatrix||(state.exhaustMatrix=new THREE.Matrix4());
+      state.motion.bodyMatrix(matrix,!state.proxy?.visible);
+      group.updateMatrix();matrix.premultiply(group.matrix);
+      state.visualRacer.exhaustMatrix=matrix;
+      return state.visualRacer;
+    },
     damageSnapshot() {return damageVisuals.snapshot();},
     snapshot() { return [...meshes.values()].map(state => ({...state.motion.snapshot(),visualDistance:state.visualRacer.distance,visualLateral:state.visualRacer.lateral,visualSpeed:state.visualRacer.speed,finishHidden:!!state.finishHidden,finishStage:state.finishStage||null,racerType:state.racer.racerType||null,vehicleName:state.racer.vehicleName||state.car.userData.assetLabel,form:state.form?.meta||null,assetId:state.car.userData.assetId||null,assetLoaded:!!state.car.userData.assetLoaded,assetDimensions:state.car.userData.assetDimensions||null,authoredWheelCount:state.car.userData.authoredWheelCount||0,finish:state.authoredVisuals?.snapshot()||null})); },
     assetSnapshot() {return {errors:[...authoredAssets.errors],resources:{registered:{...resourceLifecycle.registered},disposed:{...resourceLifecycle.disposed},lateDisposed:{...resourceLifecycle.lateDisposed},active:{geometry:geometries.size,material:materials.size,texture:textures.size}},cars:[...meshes.values()].map(s=>({id:s.racer.id,...s.car.userData,authoredWheelCount:s.car.userData.authoredWheelCount||0,parts:s.authoredParts?.snapshot?.()||null}))};},

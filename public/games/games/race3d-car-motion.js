@@ -151,7 +151,24 @@ export function createCarMotion(THREE, { car, racer, wheelSpin = [], wheelMounts
       bodyHeave: chassis.position.y - .47, bodyPitch: motion.pitch, bodyRoll: motion.roll, steering });
     Object.assign(car.userData, { finished: !!racer.finished, speed, flightHeight: flight, motion: pose });
   }
-  return { update, reset, configureWheels, snapshot: () => ({ ...pose, wheels:(pose.wheels||[]).map(w=>({...w})), wheelHeights: wheelMounts.map(wheel => wheel.position.y),
+  // Original body coordinates were shifted down when wrapped in the sprung
+  // chassis. Expose the complete local transform so attached effects follow
+  // the same support, suspension and trick pose as the visible body.
+  const bodyOffset = new THREE.Matrix4().makeTranslation(0, -.47, 0);
+  function bodyMatrix(target, detailed = true) {
+    car.updateMatrix();
+    target.copy(car.matrix);
+    if (detailed) {
+      if (chassis.parent && chassis.parent !== car) {
+        chassis.parent.updateMatrix();
+        target.multiply(chassis.parent.matrix);
+      }
+      chassis.updateMatrix();
+      target.multiply(chassis.matrix).multiply(bodyOffset);
+    }
+    return target;
+  }
+  return { update, reset, configureWheels, bodyMatrix, snapshot: () => ({ ...pose, wheels:(pose.wheels||[]).map(w=>({...w})), wheelHeights: wheelMounts.map(wheel => wheel.position.y),
     wheelRolling: wheelSpin.map(wheel => ({ radius: wheelRadius(wheel), axis: 'x', axle: wheel.userData?.axle || null,
       authoredWheelName: wheel.userData?.authoredWheelName || null, angle: wheel.rotation.x })) }) };
 }

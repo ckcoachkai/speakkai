@@ -46,11 +46,13 @@ export function createArchitecture(THREE,track,models,{id='medium'}={}) {
     const s=track.sampleTrack((i+.28)*track.totalLength/slots),across=(s.width||18)/2+44+(i%3)*2;
     const x=s.position.x+s.right.x*across*side,z=s.position.z+s.right.z*across*side,clear=clearance(x,z);
     // 20m footprint radius plus 22m recovery margin; checks nearby switchbacks too.
-    if(clear<42)continue;
+    if(clear<42 || (track.waterBasins||[]).some(b=>Math.hypot(x-b.x,z-b.z)<Math.max(b.radiusX,b.radiusZ)*1.7+24))continue;
     const type=index++%models.length,key=`${Math.floor(x/160)},${Math.floor(z/160)}`;
     if(!districts.has(key))districts.set(key,{solid:[],glass:[],sign:[]});const buckets=districts.get(key);
     parent.position.set(x,s.position.y-.3,z);parent.rotation.y=Math.atan2(-s.right.x*side,-s.right.z*side);parent.updateMatrix();
-    const foundation={kind:'box',name:'foundation',color:'#aaa49c',x:0,y:-.2,z:0,w:31,h:.4,d:25};
+    const footingBottom=Math.min(...[-22,0,22].flatMap(dx=>[-22,0,22].map(dz=>track.terrainHeight?.(x+dx,z+dz) ?? -1.35)))-.3;
+    const foundationDepth=Math.max(.4,s.position.y-.3-footingBottom);
+    const foundation={kind:'box',name:'foundation',color:'#77756b',x:0,y:-foundationDepth/2,z:0,w:31,h:foundationDepth,d:25};
     for(const p of [foundation,...recipes[type]]){
       part.position.set(p.x,p.y,p.z);part.rotation.set(0,0,p.rz||0);part.scale.set(p.kind==='cylinder'?1:p.w,p.kind==='cylinder'?1:p.h,p.kind==='cylinder'?1:p.d);part.updateMatrix();matrix.multiplyMatrices(parent.matrix,part.matrix);
       const original=geometry(p).clone().applyMatrix4(matrix),g=original.index?original.toNonIndexed():original;if(g!==original)original.dispose();

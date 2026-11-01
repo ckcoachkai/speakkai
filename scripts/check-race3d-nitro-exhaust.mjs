@@ -9,8 +9,8 @@ assert.equal(fx.snapshot().nitroCars, 1); assert.equal(fx.snapshot().instanceCou
 const shell = fx.group.getObjectByName('nitro-exhaust-plumes');
 const m = new THREE.Matrix4(); shell.getMatrixAt(0, m);
 const base = new THREE.Vector3(0,0,0).applyMatrix4(m), tip = new THREE.Vector3(0,0,-1).applyMatrix4(m);
-assert.ok(Math.abs(base.x - 12.52) < 1e-5 && Math.abs(base.y - 2.585) < 1e-5 && Math.abs(base.z - 17.88) < 1e-5);
-assert.ok(tip.z < base.z - 4 && Math.abs(tip.x - base.x) < 1e-5);
+assert.ok(Math.abs(base.x - 12.52) < 1e-5 && Math.abs(base.y - 2.41) < 1e-5 && Math.abs(base.z - 17.571) < 1e-5);
+assert.ok(base.z - tip.z >= 1.2 && base.z - tip.z <= 1.6 && Math.abs(tip.x - base.x) < 1e-5);
 fx.update([{...car, boost:0, nitro:{remaining:0}, nitroAcceleration:0, draft:1}], track, 1/60, {active:true});
 assert.equal(fx.snapshot().active, false, 'draft must not activate exhaust');
 fx.update([{...car, itemEffects:{emp:1}}], track, 1/60, {active:true}); assert.equal(fx.snapshot().active, false);
@@ -30,4 +30,5 @@ reduced.update([car],track,.01,{active:true}); reduced.group.children[0].getMatr
 reduced.update([car],track,.09,{active:true}); reduced.group.children[0].getMatrixAt(0,m);
 assert.deepEqual(m.elements,first.elements,'reduced motion stays steady'); reduced.dispose();
 console.log('PASS: nitro placement/direction, boost vs draft, EMP/flight, rocket, capacity, inactive/reset/dispose, reduced motion');
+
 
