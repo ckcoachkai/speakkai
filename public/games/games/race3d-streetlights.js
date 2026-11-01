@@ -35,11 +35,12 @@ export function createStreetlights(THREE, track, { timeOfDay = 'day', quality = 
     dummy.position.copy(s.position); dummy.position.y += .09; dummy.updateMatrix(); pools.setMatrixAt(i,dummy.matrix);
   }
   group.add(poles,arms,lamps,pools);
-  const lights = Array.from({length:4},()=>{const light=new THREE.PointLight(0xffdc9e,0,sceneScale*34,2);light.castShadow=false;group.add(light);return light;});
+  const lights = Array.from({length:0},()=>{const light=new THREE.PointLight(0xffdc9e,0,sceneScale*34,2);light.castShadow=false;group.add(light);return light;});
   let disposed=false, night=false, budget=0;
-  function setQuality(value){const id=value?.id||value;budget=id==='high'?4:id==='medium'?2:0;}
-  function setMode(value){night=value==='night'; pools.visible=night; bulb.color.setHex(night?0xffe3a6:0xc7c8bb);for(const light of lights)light.intensity=0;}
-  function update(distance=0){if(disposed)return;const closest=sites.map(site=>({site,delta:track.closed===false?Math.abs(site.distance-distance):Math.abs(((site.distance-distance+track.totalLength*1.5)%track.totalLength)-track.totalLength/2)})).sort((a,b)=>a.delta-b.delta);for(let i=0;i<lights.length;i++){lights[i].position.copy(closest[i%closest.length].site.position);lights[i].intensity=night&&i<budget?12:0;}}
+  function setQuality(value){const id=value?.id||value;budget=0;}
+  function setMode(value){night=value==='night'; pools.visible=false; bulb.color.setHex(night?0x887d68:0xc7c8bb);for(const light of lights)light.intensity=0;}
+  // Fixed dim fixtures retain road rhythm without passing pools or reassigned lights.
+  function update(){if(disposed)return;for(const light of lights)light.intensity=0;}
   setQuality(quality);setMode(timeOfDay);
-  return {group,setQuality,setMode,update,snapshot:()=>({fixtures:count,night,lightBudget:night?budget:0,disposed}),dispose(){if(disposed)return;disposed=true;group.removeFromParent();for(const resource of [poleGeometry,armGeometry,lampGeometry,metal,bulb,poolGeometry,poolMaterial,texture])resource.dispose();group.clear();}};
+  return {group,setQuality,setMode,update,snapshot:()=>({fixtures:count,night,lightBudget:0,roadPools:false,disposed}),dispose(){if(disposed)return;disposed=true;group.removeFromParent();for(const resource of [poleGeometry,armGeometry,lampGeometry,metal,bulb,poolGeometry,poolMaterial,texture])resource.dispose();group.clear();}};
 }

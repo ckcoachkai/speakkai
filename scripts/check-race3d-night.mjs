@@ -23,14 +23,16 @@ try{
   const tangent=new THREE.Vector3(0,.12,1).normalize();
   const track={totalLength:1000,sampleTrack(d){return {position:new THREE.Vector3(0,d*.12,d),right:new THREE.Vector3(1,0,0),tangent,bank:.03,width:18};},sampleGround(d,l){return new THREE.Vector3(l,d*.12-.2,d);}};
   const lamps=createStreetlights(THREE,track,{timeOfDay:'night',quality:'high'});
-  lamps.update(999);assert.equal(lamps.snapshot().lightBudget,4);
-  assert.equal(lamps.group.children.filter(c=>c.isPointLight&&c.intensity>0).length,4);
+  lamps.update(999);assert.equal(lamps.snapshot().lightBudget,0);
+  assert.equal(lamps.group.children.filter(c=>c.isPointLight&&c.intensity>0).length,0);
   const pools=lamps.group.getObjectByName('streetlight-road-pools'),m=new THREE.Matrix4();pools.getMatrixAt(1,m);
   const normal=new THREE.Vector3(0,1,0).transformDirection(m);
   assert.ok(Math.abs(normal.dot(tangent))<1e-6,'illumination conforms to road grade');
   assert.ok(normal.x<-.02,'illumination conforms to road bank');
-  lamps.setQuality('low');lamps.update(0);assert.ok(pools.visible);assert.equal(lamps.group.children.filter(c=>c.isPointLight&&c.intensity>0).length,0);
+  lamps.setQuality('low');lamps.update(0);assert.equal(pools.visible,false);assert.equal(lamps.group.children.filter(c=>c.isPointLight&&c.intensity>0).length,0);
+  for(const d of [0,94,95,96,190,999,1001]){lamps.update(d);assert.equal(pools.visible,false);assert.equal(lamps.group.children.filter(c=>c.isPointLight&&c.visible&&c.intensity>0).length,0,'no passing light surges');}
   lamps.setMode('day');assert.equal(pools.visible,false);
   lamps.dispose();lamps.dispose();lamps.update(12);assert.equal(lamps.group.children.length,0);
-  console.log('PASS: low/high moon resolution, day/night distinction, elevated shadow volume, restoration/disposal, bounded light pool, slope/bank road illumination');
+  console.log('PASS: low/high moon resolution, day/night distinction, elevated shadow volume, restoration/disposal, dim steady street fixtures, disabled passing pools/lights');
 }finally{if(originalDocument===undefined)delete globalThis.document;else globalThis.document=originalDocument;}
+
