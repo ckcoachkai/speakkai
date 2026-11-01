@@ -18,6 +18,6 @@ import {buildings as b17} from './race3d-buildings/17.js';
 import {buildings as b18} from './race3d-buildings/18.js';
 import {buildings as b19} from './race3d-buildings/19.js';
 import {buildings as b20} from './race3d-buildings/20.js';
-import {createArchitecture} from './race3d-architecture.js';
+import {createArchitecture} from './race3d-architecture.js?v=20261101-combined-2x';
 export const BUILDING_CATALOG = [...b01,...b02,...b03,...b04,...b05,...b06,...b07,...b08,...b09,...b10,...b11,...b12,...b13,...b14,...b15,...b16,...b17,...b18,...b19,...b20];
 export function createRaceScenery(THREE,track,options={}) { return createArchitecture(THREE,track,BUILDING_CATALOG,options); }
