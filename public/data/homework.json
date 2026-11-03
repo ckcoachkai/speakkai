@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-03T09:32:28.605051+00:00",
+  "updatedAt": "2026-11-03T11:01:51.612934+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1965,6 +1965,35 @@
               "feedbackUrl": "/fb/?class=sun-1500&date=2026-10-25&student=leo"
             }
           ]
+        },
+        {
+          "id": "sun-1500-2026-11-01",
+          "date": "2026-11-01",
+          "time": "15:00–16:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Celia",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-01&student=celia"
+            },
+            {
+              "name": "Eva",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-01&student=eva"
+            },
+            {
+              "name": "Leo",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-01&student=leo"
+            },
+            {
+              "name": "August",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-01&student=august"
+            },
+            {
+              "name": "Max",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-01&student=max"
+            }
+          ]
         }
       ]
     },
@@ -2507,7 +2536,9 @@
           "id": "tue-afternoon-2026-11-03",
           "date": "2026-11-03",
           "time": "15:30–17:30",
-          "classContent": [],
+          "classContent": [
+            "• We explored pop culture references as a way to connect a speech to things the audience already knows and explain why the audience should care. Possible references include superheroes, musicians, actors, popular restaurants, toys, food, scientists, Nobel Prize winners and politicians.\n\n• A longer reference can be developed into a short story; a short reference can be a quick mention or “name throwing.” Choose a reference familiar to around 80% of the audience or judges, but avoid an overused example such as Michael Jordan unless the reference gives the audience new information.\n\n• We also considered unique perspectives: What do most people believe, and what is wrong with that perspective? How can we look at the problem from a new angle, and what new solution can we offer?"
+          ],
           "homework": {
             "title": "Speech preparation",
             "steps": [
@@ -2740,6 +2771,39 @@
             {
               "name": "Sean",
               "feedbackUrl": "/fb/?class=tue-later&date=2026-10-27&student=sean"
+            }
+          ]
+        },
+        {
+          "id": "tue-later-2026-11-03",
+          "date": "2026-11-03",
+          "time": "17:40–19:40",
+          "classContent": [
+            "• We explored pop culture references as a way to connect a speech to things the audience already knows and explain why the audience should care. Possible references include superheroes, musicians, actors, popular restaurants, toys, food, scientists, Nobel Prize winners and politicians.\n\n• A longer reference can be developed into a short story; a short reference can be a quick mention or “name throwing.” Choose a reference familiar to around 80% of the audience or judges, but avoid an overused example such as Michael Jordan unless the reference gives the audience new information.\n\n• We also considered unique perspectives: What do most people believe, and what is wrong with that perspective? How can we look at the problem from a new angle, and what new solution can we offer?\n\n• I am concerned that the topics discussed so far—introducing golf or fishing, or discussing the negative effects of smoking, for example—are too simple for sixth- and seventh-grade students. Even if students keep these topics, a unique perspective and societal impact may make them work. I encourage parents to sign students up for competitions so they can see other students’ speeches and compare how their topics are developed. This experience may help them understand more complex speeches."
+          ],
+          "homework": {
+            "title": "Speech preparation",
+            "steps": [
+              "• Before the next class, submit all the work you have done so far on your speech. Aim for a speech of around 500–600 words. Add a pop culture reference, develop a unique perspective and show the societal impact. Send the latest version as a Word document.\n\n• I will check the work with an AI checker to look for AI use or whether it was written by the student.\n\n• You may keep your phones and other devices, but please have your written work on a laptop, in a notebook or as a printout so that I can see what you have written."
+            ],
+            "prepareFor": "Your speech"
+          },
+          "students": [
+            {
+              "name": "Jayden",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-03&student=jayden"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-03&student=sean"
+            },
+            {
+              "name": "Nelson",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-03&student=nelson"
+            },
+            {
+              "name": "Lyon",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-03&student=lyon"
             }
           ]
         }
