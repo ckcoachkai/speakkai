@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-31T09:06:40.457475+00:00",
+  "updatedAt": "2026-11-03T09:32:28.605051+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -389,19 +389,28 @@
               "name": "Ivy",
               "en": "Ivy was our second speaker. She talked a lot about what she had seen, but the overall message of a speech still needs to be for the audience. It is not only about what she has seen: what can we do to achieve it, and what value or message can she give to the people listening? She slightly slurred some of her words and needs clearer articulation, although she was easier to understand. The next step is to make sure the speech is not all about ‘me, me, me.’ It should also connect with the audience in front of her, helping them understand what they can take away from her experience.",
               "zh": "Ivy是第二位演讲的学生。她讲了很多自己看到的事情，但演讲最终要传达的信息仍然需要面向听众。不能只是讲自己看到了什么，还要进一步思考：我们可以做些什么来实现它？又能为正在听演讲的人带来什么价值或信息？她有些词语略显含糊，吐字和清晰度还需要加强，不过整体更容易理解了。接下来要注意，演讲不能全是‘我、我、我’，也要与面前的听众建立联系，让他们明白能从她的经历中获得什么。"
+            },
+            {
+              "id": "kyle",
+              "name": "Kyle",
+              "en": null,
+              "zh": null
             }
           ]
         },
         {
           "id": "sat-foundations-2026-10-31",
           "date": "2026-10-31",
-          "time": "15:00–17:00",
+          "time": "15:00–16:30",
           "status": "held",
           "classContent": {
-            "en": "• We considered how to argue a point and identify what we want people to do. The speech structure was cause, effect, impact and solution.",
-            "zh": "• 我们思考如何论证一个观点，以及希望听众做什么。演讲结构为：原因、结果、影响和解决办法。"
+            "en": "• We reviewed speeches presented from homework and discussed their structure, evidence, impact and connection to the audience. We explored how to make a topic relevant to a wider public and how to develop a speech using cause, effect, impact and solution.\n\n• We first looked at the students’ outlines and topic selection and ran them through different rubrics to see how they might work for competitions. For students who have never competed, the aim was also to gain some experience of what completing everything and going through the competition process involves, including the entire process of writing the speech.\n\n• After checking the homework, we discussed personal connection to the story and topic: how it shows why the speaker cares, how personal experience gives the speaker credibility, and how the message can be relatable to students and adults even when a topic may not always seem directly relevant but is deeply impactful in society today.\n\n• The second part was Wheel of Happiness, using a random question.\n\n• We considered how to argue a point and identify what we want people to do. The speech structure was cause, effect, impact and solution.\n\n• As in the earlier class, we worked on developing a personal connection to a speech topic. We considered how the topic connects to the speaker and what relationship or experience the speaker has with it. A personal story can follow a structure of problem, solution and realization or change: what did you previously believe, and how did your experience change that belief?",
+            "zh": "• 我们回顾了作业演讲，讨论了演讲结构、证据、影响以及与听众的联系。我们探讨了如何让主题与更广泛的大众相关，并运用原因、结果、影响和解决办法来发展演讲。\n\n• 我们首先查看学生的演讲提纲和主题选择，用不同的评分标准来判断它们在比赛中可能如何呈现。对于从未参赛的学生，目的也是让他们了解完成各项准备、经历整个比赛过程是什么样的，包括写出演讲全文的完整过程。\n\n• 检查作业之后，我们讨论了与故事和主题的个人联系：个人联系如何说明演讲者为什么在意这个话题，亲身经历如何建立可信度，以及一个看似并不总是与每个人直接相关、但在当今社会影响深远的主题，如何让学生和成年人都能产生共鸣。\n\n• 第二部分是“快乐转盘”，使用一个随机问题。\n\n• 我们思考如何论证一个观点，以及希望听众做什么。演讲结构为：原因、结果、影响和解决办法。\n\n• 和前一节课一样，我们练习发展演讲主题中的个人联系。我们思考这个话题与演讲者有什么联系，以及演讲者与这个话题有什么关系或经历。个人故事可以按照问题、解决办法和领悟或改变的结构展开：你原先相信什么，这段经历又如何改变了你的想法？"
           },
-          "homework": null,
+          "homework": {
+            "en": "• Add a 100–200-word personal story, personal narrative or personal connection to your written speech script, then give it to me so I can look at the whole speech.\n\n• Aim for around 700–1,000 words for the full five-minute speech so that we can go through the polishing and cutting process later.\n\n• Kyle and William should make sure they have chosen a topic they want to use for competitions, then develop their personal connection: how does the topic connect to them, and what relationship or experience do they have with it? Organize the story around the problem, solution and realization or change. The beginning could describe their previous belief and how an experience changed it.\n\n• Neil should think about a topic he might like to talk about. I do not have many additional expectations for him at this stage.",
+            "zh": "• 在演讲书面稿中加入一段 100–200 词的个人故事、个人叙事或个人联系，然后交给我，让我看看整篇演讲。\n\n• 五分钟演讲全文目标约为 700–1,000 词，以便之后进行润色和删减。\n\n• Kyle 和 William 要确认自己已经选定希望用于比赛的主题，然后发展与这个主题的个人联系：这个话题与自己有什么联系，自己有什么相关的关系或经历？可以围绕问题、解决办法和领悟或改变来组织故事。开头可以写自己原来的想法，以及一段经历如何改变了这个想法。\n\n• Neil 可以想一想自己可能想谈论什么话题。现阶段我对他没有太多额外要求。"
+          },
           "students": [
             {
               "id": "ivy",
@@ -424,8 +433,8 @@
             {
               "id": "neil",
               "name": "Neil",
-              "en": "• Neil, our last speaker, gave a simple self-introduction. I feel that he probably has not had much public speaking experience before; that is my impression. His answers were rather short.\n\n• What was good, though, was that he went through the introduction without seeming too taken aback. The first step is to expand his answers and try to speak for longer. He can first aim for one minute, then two minutes, then three minutes, and continue from there.\n\n• Neil’s proposed speech topic is table tennis.",
-              "zh": "• 最后一位演讲者 Neil 做了一个简单的自我介绍。我觉得他以前可能没有太多公开演讲经验；这只是我的印象。他的回答比较简短。\n\n• 不过，好的一点是，他把自我介绍讲了下来，看起来没有因此过于不知所措。第一步是把回答展开，尝试讲得更久。他可以先以一分钟为目标，然后两分钟、三分钟，再逐步增加。\n\n• Neil 拟定的演讲主题是乒乓球。"
+              "en": "• Neil, our last speaker, gave a simple self-introduction. I feel that he probably has not had much public speaking experience before; that is my impression. His answers were rather short.\n\n• What was good, though, was that he went through the introduction without seeming too taken aback. The first step is to expand his answers and try to speak for longer. He can first aim for one minute, then two minutes, then three minutes, and continue from there.\n\n• Neil’s proposed speech topic is table tennis.\n\n• Although Neil was a little shy and stumbled over his words a little, he kept pushing himself to speak. One thing he needs is more exposure and practice speaking.",
+              "zh": "• 最后一位演讲者 Neil 做了一个简单的自我介绍。我觉得他以前可能没有太多公开演讲经验；这只是我的印象。他的回答比较简短。\n\n• 不过，好的一点是，他把自我介绍讲了下来，看起来没有因此过于不知所措。第一步是把回答展开，尝试讲得更久。他可以先以一分钟为目标，然后两分钟、三分钟，再逐步增加。\n\n• Neil 拟定的演讲主题是乒乓球。\n\n• 虽然 Neil 有一点害羞，说话时也稍有结巴，但他一直努力让自己继续说下去。他需要更多接触演讲和练习表达的机会。"
             }
           ]
         }
@@ -624,6 +633,28 @@
               "name": "Liam",
               "en": "Liam answered very quickly. He needs to slow down so he can give a more thorough answer, rather than rush through it. We continued with more practice questions. His next step is to work through Answer → Reason → Example → Message at a steadier pace, taking time to explain his reasoning and develop an example. This supports the class goal of building longer, more logically organized answers, gradually from around 30 seconds toward eventually two minutes.",
               "zh": "Liam回答得非常快。他需要放慢速度，给出更充分的回答，而不是匆忙讲完。我们继续用更多问题练习。下一步是以更稳的节奏完成‘回答 → 理由 → 例子 → 核心信息’，花时间解释推理并展开例子。这能帮助他朝课堂目标努力：让回答更长、逻辑组织更清楚，从大约30秒逐渐向两分钟发展。"
+            }
+          ]
+        },
+        {
+          "id": "sat-introductory-2026-10-31",
+          "date": "2026-10-31",
+          "time": "16:30–17:30",
+          "status": "held",
+          "classContent": {
+            "en": "• Stacey was the only student in this session. We explored what a prepared speech for a competition could revolve around, what experiences she has had, and how to shape those experiences into the appropriate expository structure and put the speech together.",
+            "zh": "• 这节课只有 Stacey 一位学生。我们探讨了如果她参加备稿演讲比赛，演讲可以围绕什么展开、她有哪些经历，以及如何把这些经历整理成合适的说明性演讲结构并组合成一篇演讲。"
+          },
+          "homework": {
+            "en": "• Try to remember the speech we wrote or created for her to practise.",
+            "zh": "• 尝试记住我们为她写好或共同创作、供她练习的演讲。"
+          },
+          "students": [
+            {
+              "id": "stacey",
+              "name": "Stacey",
+              "en": null,
+              "zh": null
             }
           ]
         }
@@ -1847,6 +1878,34 @@
               "zh": "Berlingo本次课缺席。"
             }
           ]
+        },
+        {
+          "id": "sun-1130-2026-11-01",
+          "date": "2026-11-01",
+          "time": "11:30–13:00",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "• I think Ethan is a lot more confident and interested in debate. I think he took his homework seriously and completed it very well.\n\n• When he talks about debate-related topics and focuses on this kind of work, Ethan is very steady. He also shared his point of view, which was very good.",
+              "zh": "• 我觉得 Ethan 自信了很多，也对辩论很感兴趣。我觉得他认真对待了作业，而且完成得很好。\n\n• 当他讨论辩论相关话题并专注于这类练习时，Ethan 的表现很稳定。他也分享了自己的观点，这一点很好。"
+            },
+            {
+              "id": "yiyi",
+              "name": "Yiyi",
+              "en": "• Yiyi did not do her homework. She also refused to come up to speak because she was the first person chosen.\n\n• She was sitting on the table with a piece of plastic in her mouth.",
+              "zh": "• Yiyi 没有完成作业。因为她是第一个被选中的人，她也拒绝上台发言。\n\n• 她坐在桌子上，嘴里放着一片塑料。"
+            },
+            {
+              "id": "berlingo",
+              "name": "Berlingo",
+              "en": "• Berlingo is very good at memorizing what he wants to say, and he was able to express himself without paper.\n\n• If possible, I would like him to make his answers slightly longer and share a little more detail for each part. This can help him fill the available time in a debate if he has a lot of time left to speak.",
+              "zh": "• Berlingo 很擅长记住自己想说的内容，也能够脱稿表达。\n\n• 如果可以，我希望他把回答稍微说长一点，每个部分多分享一些细节。这样在辩论中，如果还剩下较多发言时间，他就能更好地利用这些时间。"
+            }
+          ]
         }
       ]
     },
@@ -2072,6 +2131,46 @@
               "name": "Audrey",
               "en": "Audrey’s first impromptu response did not feel completely finished. Overall, her content was pretty good, but she spoke quickly and some of the ideas could have been structured better. I felt she was a little nervous during the response.\n\nThe main next step is to use clear transition words to show exactly what she is trying to express and distinguish the points she wants to make. This would give listeners a clearer path through her ideas. I asked her to try another impromptu response so she could practise applying that feedback.",
               "zh": "Audrey的第一次即兴回答给人的感觉是还没有完全讲完。整体内容不错，不过语速比较快，有些想法还可以组织得更好。我觉得她在回答时有些紧张。\n\n主要的下一步是使用清楚的过渡词，让听众明白她具体想表达什么，并区分她想讲的各个观点。这样能让听众更清楚地跟上她的思路。我请她再尝试一次即兴回答，练习运用这些反馈。"
+            }
+          ]
+        },
+        {
+          "id": "sun-1330-2026-11-01",
+          "date": "2026-11-01",
+          "time": "13:30–15:30",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "teresa",
+              "name": "Teresa",
+              "en": "• Teresa was our first speaker. I think she did a good job: she was organized and read well.\n\n• I felt that some of the answers, hypothetical situations and visualizations could have been a bit better.",
+              "zh": "• Teresa 是我们的第一位演讲者。我觉得她做得很好：内容有条理，朗读得也不错。\n\n• 我觉得部分回答、假设情境和画面呈现还可以再完善一些。"
+            },
+            {
+              "id": "ning",
+              "name": "Ning",
+              "en": "• I felt that some of Ning’s answers, hypothetical situations and visualizations could have been a bit better.",
+              "zh": "• 我觉得 Ning 的部分回答、假设情境和画面呈现还可以再完善一些。"
+            },
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": "• Arthur did not seem to remember his homework, or he was simply talking on stage. I want to remind him that writing out what he wants to say would help him have a clearer picture and better logic while presenting.",
+              "zh": "• Arthur 似乎不记得自己的作业，或者他只是在台上直接说。想提醒他，把自己想说的内容写出来，可以让他在表达时有更清晰的思路和更好的逻辑。"
+            },
+            {
+              "id": "april",
+              "name": "April",
+              "en": "• April successfully completed her homework. Her answer was a little short, so she can try speaking for a slightly longer period.\n\n• Remember to speak loudly and articulate answers clearly. As we go further, improving how quickly she can articulate her answers would make them even better.",
+              "zh": "• April 顺利完成了作业。她的回答稍微短了一些，可以尝试说得更长一点。\n\n• 记得大声说话，清楚地表达回答。随着我们继续练习，如果她能提高清晰表达回答的速度，表现会更好。"
+            },
+            {
+              "id": "audrey",
+              "name": "Audrey",
+              "en": "• Audrey gave very clear and concise hypothetical situations and examples.\n\n• After giving a hypothetical situation or a long explanation, we can also simplify the point into one or two words. For example, teachers might cater to students or let them do whatever they want to receive better scores. They might look for ways to cheat or improve their own scores rather than focusing on what is necessary and important: the students’ improvement and growth.",
+              "zh": "• Audrey 给出的假设情境和例子非常清晰、简洁。\n\n• 在给出假设情境或较长的解释之后，我们也可以用一两个词概括观点。例如，老师可能会迎合学生，或让学生随心所欲，以获得更高的评分。他们可能会寻找作弊或提高自己评分的方法，而不是关注真正必要和重要的事情：学生的进步和成长。"
             }
           ]
         }
@@ -2616,6 +2715,52 @@
               "zh": "Kiran是第一位发言的学生，他带来了很多能量。有能量是好的，不过上下跳动可能会让评委觉得有些过多。他需要稍微控制一下能量，并让表达的强弱有所变化。准备线上展示时，这一点尤其重要，因为与线下相比，可用的空间有限。\n\n我们也需要稍微删减一些演讲内容，以符合时间要求。如果Kiran更喜欢讲得快一些，我建议他正式比赛的演讲稿可以考虑控制在352–370词。他需要更加留意内容量、语速和能量控制之间的配合。"
             }
           ]
+        },
+        {
+          "id": "mon-afternoon-2026-11-02",
+          "date": "2026-11-02",
+          "time": "15:30–17:30",
+          "status": "held",
+          "classContent": {
+            "en": "• We explored pop culture references as a way to connect a speech to things the audience already knows and explain why the audience should care. Possible references include superheroes, musicians, actors, popular restaurants, toys, food, scientists, Nobel Prize winners and politicians.\n\n• A longer reference can be developed into a short story; a short reference can be a quick mention or “name throwing.” Choose a reference familiar to around 80% of the audience or judges, but avoid an overused example such as Michael Jordan unless the reference gives the audience new information.\n\n• We also considered unique perspectives: What do most people believe, and what is wrong with that perspective? How can we look at the problem from a new angle, and what new solution can we offer?",
+            "zh": "• 我们探讨了如何使用流行文化相关内容，把演讲与听众已经熟悉的事物联系起来，并说明听众为什么应该关心这个话题。可引用的对象包括超级英雄、音乐家、演员、热门餐厅、玩具、食物、科学家、诺贝尔奖得主和政治人物。\n\n• 较长的引用可以发展成一个短故事；较短的引用可以快速提及名字。选择大约 80% 的听众或评委都熟悉的对象，但要避免像 Michael Jordan 这样被过度使用的例子，除非引用中能带来听众不知道的新信息。\n\n• 我们还思考了独特视角：大多数人相信什么，这种看法有什么问题？怎样从新的角度看待问题，又能提出什么新的解决办法？"
+          },
+          "homework": {
+            "en": "• Add pop culture references and consider a unique perspective in your speech. Send me the latest updated version of the speech as a Word document. Hopefully the overall length will be around 400–500 words.\n\n• Royce should develop a new speech rather than reuse his previous one, so that we continue developing the ability to write new and improved speeches.",
+            "zh": "• 在演讲中加入流行文化引用，并思考如何从独特的视角切入。请把最新更新的演讲稿以 Word 文档形式发给我。希望全文长度大约为 400–500 词。\n\n• Royce 应该创作一篇新演讲，而不是继续使用之前的演讲，这样我们才能持续发展写出新的、更好的演讲的能力。"
+          },
+          "students": [
+            {
+              "id": "william",
+              "name": "William",
+              "en": "• I think William prepared well overall. He remembered what the homework was and did not need to ask. He has been doing things better and better.\n\n• The main thing to be careful about is his choice of topic. Reduce, reuse and recycle is a common topic and may not feel unique enough. If he talks about not wasting water, how can he approach it from a unique perspective, or change the perspective slightly, so that judges do not feel it is too common?",
+              "zh": "• 我觉得 William 整体准备得不错。他记得作业是什么，不需要再问。他的表现也越来越好。\n\n• 最需要注意的是选题。减少使用、重复使用和回收利用是比较常见的话题，可能不够独特。如果他想谈不浪费水，可以怎样从独特的角度切入，或稍微改变视角，让评委不会觉得话题过于常见？"
+            },
+            {
+              "id": "sean",
+              "name": "Sean",
+              "en": "• Sean gave a good performance; the next focus is the content.\n\n• Do not use ChatGPT to polish or write the script. What you write and what AI writes are completely different. You can ask AI for suggestions, creative ideas or a list of ideas, and ask how to improve, but create the speech yourself.\n\n• When AI helps write, I think it makes mistakes. It can sound conversational and very forward while lacking specific details, making it difficult to visualize the scenes. I do not think it is very good at visualization or oral and vocal speech. Its sentences can stay consistently similar, without the variation found in how we speak. I also think it is not good at producing unique thoughts.\n\n• A topic such as ‘I want to be better’ or ‘I want to be myself’ is not very unique. For very simple speech competitions or other situations AI-written material may be fine, but if you want to do well, I think judges can see through it.",
+              "zh": "• Sean 的表现不错；接下来需要把重点放在内容上。\n\n• 不要让 ChatGPT 润色或代写演讲稿。自己写的内容和 AI 写的内容完全不同。你可以向 AI 要建议、创意或一份点子清单，也可以询问如何改进，但演讲要自己创作。\n\n• 我认为 AI 帮忙写作时会犯一些错误。它可能听起来很口语化、很直接，却缺少具体细节，让人难以想象场景。我觉得它不太擅长画面呈现，也不太擅长适合口头表达和声音呈现的演讲。它的句子可能始终很相似，缺少我们说话时的变化。我也认为它不太擅长提出独特的想法。\n\n• 像“我想变得更好”或“我想做自己”这样的主题不太独特。对于非常简单的演讲比赛或其他场合，AI 写的内容也许可以；但如果想取得好的表现，我觉得评委能够看出来。"
+            },
+            {
+              "id": "royce",
+              "name": "Royce",
+              "en": "• Royce tried to add material to his old competition speech, but we were supposed to prepare a new speech. As he progresses through the year and into the next grade, we want to keep improving his writing skills and the quality of his speeches.\n\n• I do not know what he added, but this was a speech we wanted to retire for now; he can revisit it in the future. We want to practise putting together a new speech, improving it for competition, and testing new material. This also builds a library of different speeches he can take out and practise.\n\n• His presentation was fine. My concern is that the content is not new or unique, and there is also a concern around AI or a topic about AI. We discussed that judges may not want to hear too much about AI.",
+              "zh": "• Royce 尝试给原来的比赛演讲增加内容，但我们本来要准备一篇新演讲。随着他在这一年不断进步并升入下一个年级，我们希望持续提高他的写作能力和演讲质量。\n\n• 我不知道他增加了什么，但这篇演讲是我们想暂时退役的；将来他可以再回来修改。我们希望练习构思一篇新演讲、为比赛改进它，并尝试新的材料。这样也能建立一个包含不同演讲的素材库，以后可以拿出来练习。\n\n• 他的演讲表现没有问题。我担心的是内容不够新颖或独特，也存在与 AI 或 AI 主题有关的顾虑。我们讨论过，评委可能不希望听到太多关于 AI 的内容。"
+            },
+            {
+              "id": "cynthia",
+              "name": "Cynthia",
+              "en": "• Cynthia seemed to have memorized her speech, and overall it was good.\n\n• I have two slight concerns. First, is the AI topic unique enough, and does it change people’s perspectives?\n\n• Second, her memorized delivery was four minutes. For the three-minute competition timing we discussed, she would probably need to cut around 100 words, potentially at least 100, unless she spoke faster. Given her presentation and dramatic expression, I do not think she would want to speak faster: her overall pacing is good. Cutting words is therefore likely the better option.",
+              "zh": "• Cynthia 似乎已经记住了演讲，整体表现不错。\n\n• 我有两个小小的担忧。第一，AI 这个主题是否足够独特，能否改变听众的看法？\n\n• 第二，她脱稿演讲用了四分钟。按照我们讨论的三分钟比赛时长，除非她说得更快，否则可能需要删减大约 100 词，甚至至少 100 词。考虑到她的演讲呈现和戏剧性表达，我觉得她不需要加快语速：整体节奏很好。因此，删减文字可能更合适。"
+            },
+            {
+              "id": "ariel",
+              "name": "Ariel",
+              "en": "• I think Ariel’s topic was good and put together quite well. Its core is swimmers taking drugs, and her personal connection is that she is a swimmer.\n\n• To connect the speech with a wider audience, she can step back from swimmers taking drugs to drug use in sport, and then further out to people in society using unfair advantages to get ahead. The core message can be unethical practices used to gain an advantage.\n\n• I asked how many people in class were swimmers, and how many swimmers take drugs, to show why a narrow focus can make it harder to connect with the rest of the audience. She has a good topic and a personal connection; the next question is how to connect it to everyone, including William.",
+              "zh": "• 我觉得 Ariel 的主题不错，组织得也很好。演讲核心是游泳运动员使用药物，而她与主题的个人联系是她自己也是游泳运动员。\n\n• 为了让演讲与更广泛的听众产生联系，她可以从游泳运动员使用药物退一步，谈体育运动中的药物使用，再进一步谈社会中人们利用不公平优势领先。核心信息可以是为了获得优势而采取不道德的做法。\n\n• 我问了班上有多少人是游泳运动员，以及有多少游泳运动员使用药物，以说明过窄的主题可能更难与其他听众产生联系。她有一个不错的主题，也有个人联系；接下来要思考的是如何让它与包括 William 在内的每个人产生联系。"
+            }
+          ]
         }
       ]
     },
@@ -2888,6 +3033,43 @@
               "name": "Patrick",
               "en": "• I think Patrick had a pretty good performance—much better than before. He was not shaking as much, and he was not swaying his arms back and forth. His impromptu had an overall structure and logic, and it was pretty clear.\n\n• Sometimes we want to make sure we use our own words and focus on our ability to express ourselves better and keep improving.\n\n• As general guidance on AI, we may potentially use it for polishing when preparing for a competition and to adjust certain things. But ask AI for suggestions; do not actually have it do the polishing for you, because that causes a lot of issues.\n\n• Later classroom behavior: Patrick continues to have some difficulty controlling himself. Even though he and Ethan Liu were sitting completely opposite and diagonally apart from each other, Patrick was giggling and Ethan Liu was giggling too, without anything they were talking about. They then talked across the tables from one side of the room to the other. I do not really know why. Other students were working on their tasks.",
               "zh": "• 我觉得Patrick这次表现相当不错，比之前好了很多。他没有那么多抖动，也没有把手臂来回摆动。他的即兴演讲有整体结构和逻辑，表达也相当清楚。\n\n• 有时候，我们要确保使用自己的话，把重点放在更好地表达自己，并继续提升这方面的能力上。\n\n• 关于使用人工智能的一般指导是：在准备比赛、调整某些内容时，我们可能会考虑用它来帮助润色。但要向人工智能征求建议，不要真的让它替自己完成润色，因为这样实际上会带来很多问题。\n\n•【之后的课堂表现】：Patrick在控制自己这方面仍然有些困难。尽管他与Ethan Liu已经坐在完全相对、又呈对角线分开的位置，Patrick还是在咯咯笑，Ethan Liu也在笑，而他们当时并没有在聊什么。随后，他们隔着桌子，从教室的一边向另一边讲话。我也不太清楚为什么。当时其他同学正在做自己的课堂任务。"
+            }
+          ]
+        },
+        {
+          "id": "tue-afternoon-2026-11-03",
+          "date": "2026-11-03",
+          "time": "15:30–17:30",
+          "status": "held",
+          "classContent": null,
+          "homework": {
+            "en": "• Add pop culture references and consider a unique perspective in your speech. Send me the latest updated version of the speech as a Word document. Hopefully the overall length will be around 400–500 words.",
+            "zh": "• 在演讲中加入流行文化引用，并思考如何从独特的视角切入。请把最新更新的演讲稿以 Word 文档形式发给我。希望全文长度大约为 400–500 词。"
+          },
+          "students": [
+            {
+              "id": "ethan-jia",
+              "name": "Ethan Jia",
+              "en": "• Ethan struggled with some of the random questions, so we eventually came up with a simple one. He did not really remember his competition speech or what he was going to use.\n\n• Impromptu speaking is a little harder for him. I think he was just a little tongue-tied today.",
+              "zh": "• Ethan 在回答一些随机问题时有些困难，所以我们最后想出了一个简单的问题。他不太记得自己的比赛演讲，或者自己打算用什么内容。\n\n• 即兴表达对他来说稍微难一些。我觉得他今天只是有点说不出话来。"
+            },
+            {
+              "id": "harry",
+              "name": "Harry",
+              "en": "• Harry wanted a weird question and gave a somewhat unusual answer. Cutting off heads is not very realistic, so even with a random or hypothetical question, we still want to relate the answer to real life. For example, people growing two extra heads is something that would never happen.\n\n• One possible connection I suggested was living with a medical condition: rather than waiting until it is too late, a person might try to address it earlier or take preventive measures. For example, someone might be pre-diabetic or have a family situation involving diabetes. The aim is to connect the answer to real life and give the audience a message that is useful.\n\n• Harry and Alyssa both said they had done their homework, though I did not see it; they wanted to answer impromptu questions. If possible, make impromptu speeches a little longer.",
+              "zh": "• Harry 想要一道奇怪的问题，也给出了一个有些奇特的回答。砍掉头并不太现实，所以即使面对随机或假设问题，我们仍要把回答联系到现实生活。例如，人身上再长出两个头就是不会发生的事情。\n\n• 我提出的一种可能联系是患有疾病的情况：与其等到太晚，一个人可以尝试更早处理，或采取预防措施。例如，一个人可能处于糖尿病前期，或者家里有糖尿病相关情况。目的是把回答联系到现实生活，给听众一个有用的信息。\n\n• Harry 和 Alyssa 都表示他们做了作业，但我没有看到；他们想回答即兴问题。如果可以，即兴演讲可以再长一点。"
+            },
+            {
+              "id": "alyssa",
+              "name": "Alyssa",
+              "en": "• I think Alyssa feels much more comfortable answering these kinds of questions, and she has far fewer nervous tics on stage.\n\n• Today, her vocal projection could be about 10–20% louder. If possible, make impromptu speeches a little longer.\n\n• Alyssa and Harry both said they had done their homework, though I did not see it; they wanted to answer impromptu questions.",
+              "zh": "• 我觉得 Alyssa 回答这类问题时自在了很多，在台上的紧张小动作也少了很多。\n\n• 今天她的声音可以再大约 10%–20%。如果可以，即兴演讲也可以再长一点。\n\n• Alyssa 和 Harry 都表示他们做了作业，但我没有看到；他们想回答即兴问题。"
+            },
+            {
+              "id": "patrick",
+              "name": "Patrick",
+              "en": "• Patrick spoke about his homework and gave a prepared, organized presentation.\n\n• His pacing was slightly robotic. He can sometimes speed up and sometimes slow down a little more.\n\n• For political topics, I would be a little careful if using them for competition-ready material, since politics can be a little more sensitive here.",
+              "zh": "• Patrick 讲了自己的作业，演讲准备充分，也有条理。\n\n• 他的节奏稍微有点机械。他可以有时快一些，有时再慢一些。\n\n• 如果要把政治话题用于准备比赛的材料，我建议稍微谨慎一点，因为政治话题在这里可能更敏感。"
             }
           ]
         }

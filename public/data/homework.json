@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-10-31T09:06:40.465359+00:00",
+  "updatedAt": "2026-11-03T09:32:28.605051+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -340,17 +340,27 @@
             {
               "name": "Ivy",
               "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-24&student=ivy"
+            },
+            {
+              "name": "Kyle",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-24&student=kyle"
             }
           ]
         },
         {
           "id": "sat-foundations-2026-10-31",
           "date": "2026-10-31",
-          "time": "15:00–17:00",
+          "time": "15:00–16:30",
           "classContent": [
-            "• We considered how to argue a point and identify what we want people to do. The speech structure was cause, effect, impact and solution."
+            "• We reviewed speeches presented from homework and discussed their structure, evidence, impact and connection to the audience. We explored how to make a topic relevant to a wider public and how to develop a speech using cause, effect, impact and solution.\n\n• We first looked at the students’ outlines and topic selection and ran them through different rubrics to see how they might work for competitions. For students who have never competed, the aim was also to gain some experience of what completing everything and going through the competition process involves, including the entire process of writing the speech.\n\n• After checking the homework, we discussed personal connection to the story and topic: how it shows why the speaker cares, how personal experience gives the speaker credibility, and how the message can be relatable to students and adults even when a topic may not always seem directly relevant but is deeply impactful in society today.\n\n• The second part was Wheel of Happiness, using a random question.\n\n• We considered how to argue a point and identify what we want people to do. The speech structure was cause, effect, impact and solution.\n\n• As in the earlier class, we worked on developing a personal connection to a speech topic. We considered how the topic connects to the speaker and what relationship or experience the speaker has with it. A personal story can follow a structure of problem, solution and realization or change: what did you previously believe, and how did your experience change that belief?"
           ],
-          "homework": null,
+          "homework": {
+            "title": "Speech preparation",
+            "steps": [
+              "• Add a 100–200-word personal story, personal narrative or personal connection to your written speech script, then give it to me so I can look at the whole speech.\n\n• Aim for around 700–1,000 words for the full five-minute speech so that we can go through the polishing and cutting process later.\n\n• Kyle and William should make sure they have chosen a topic they want to use for competitions, then develop their personal connection: how does the topic connect to them, and what relationship or experience do they have with it? Organize the story around the problem, solution and realization or change. The beginning could describe their previous belief and how an experience changed it.\n\n• Neil should think about a topic he might like to talk about. I do not have many additional expectations for him at this stage."
+            ],
+            "prepareFor": "Your speech"
+          },
           "students": [
             {
               "name": "Ivy",
@@ -532,6 +542,27 @@
             {
               "name": "Liam",
               "feedbackUrl": "/fb/?class=sat-introductory&date=2026-10-24&student=liam"
+            }
+          ]
+        },
+        {
+          "id": "sat-introductory-2026-10-31",
+          "date": "2026-10-31",
+          "time": "16:30–17:30",
+          "classContent": [
+            "• Stacey was the only student in this session. We explored what a prepared speech for a competition could revolve around, what experiences she has had, and how to shape those experiences into the appropriate expository structure and put the speech together."
+          ],
+          "homework": {
+            "title": "Speech practice",
+            "steps": [
+              "• Try to remember the speech we wrote or created for her to practise."
+            ],
+            "prepareFor": "Your speech"
+          },
+          "students": [
+            {
+              "name": "Stacey",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-10-31&student=stacey"
             }
           ]
         }
@@ -1517,6 +1548,27 @@
               "feedbackUrl": "/fb/?class=sun-1130&date=2026-10-25&student=berlingo"
             }
           ]
+        },
+        {
+          "id": "sun-1130-2026-11-01",
+          "date": "2026-11-01",
+          "time": "11:30–13:00",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Ethan",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-01&student=ethan"
+            },
+            {
+              "name": "Yiyi",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-01&student=yiyi"
+            },
+            {
+              "name": "Berlingo",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-01&student=berlingo"
+            }
+          ]
         }
       ]
     },
@@ -1705,6 +1757,35 @@
             {
               "name": "Audrey",
               "feedbackUrl": "/fb/?class=sun-1330&date=2026-10-25&student=audrey"
+            }
+          ]
+        },
+        {
+          "id": "sun-1330-2026-11-01",
+          "date": "2026-11-01",
+          "time": "13:30–15:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Teresa",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-01&student=teresa"
+            },
+            {
+              "name": "Ning",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-01&student=ning"
+            },
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-01&student=arthur"
+            },
+            {
+              "name": "April",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-01&student=april"
+            },
+            {
+              "name": "Audrey",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-01&student=audrey"
             }
           ]
         }
@@ -2152,6 +2233,43 @@
               "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-10-26&student=kieran"
             }
           ]
+        },
+        {
+          "id": "mon-afternoon-2026-11-02",
+          "date": "2026-11-02",
+          "time": "15:30–17:30",
+          "classContent": [
+            "• We explored pop culture references as a way to connect a speech to things the audience already knows and explain why the audience should care. Possible references include superheroes, musicians, actors, popular restaurants, toys, food, scientists, Nobel Prize winners and politicians.\n\n• A longer reference can be developed into a short story; a short reference can be a quick mention or “name throwing.” Choose a reference familiar to around 80% of the audience or judges, but avoid an overused example such as Michael Jordan unless the reference gives the audience new information.\n\n• We also considered unique perspectives: What do most people believe, and what is wrong with that perspective? How can we look at the problem from a new angle, and what new solution can we offer?"
+          ],
+          "homework": {
+            "title": "Speech preparation",
+            "steps": [
+              "• Add pop culture references and consider a unique perspective in your speech. Send me the latest updated version of the speech as a Word document. Hopefully the overall length will be around 400–500 words.\n\n• Royce should develop a new speech rather than reuse his previous one, so that we continue developing the ability to write new and improved speeches."
+            ],
+            "prepareFor": "Your speech"
+          },
+          "students": [
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-02&student=william"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-02&student=sean"
+            },
+            {
+              "name": "Royce",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-02&student=royce"
+            },
+            {
+              "name": "Cynthia",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-02&student=cynthia"
+            },
+            {
+              "name": "Ariel",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-02&student=ariel"
+            }
+          ]
         }
       ]
     },
@@ -2382,6 +2500,37 @@
             {
               "name": "Patrick",
               "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-10-27&student=patrick"
+            }
+          ]
+        },
+        {
+          "id": "tue-afternoon-2026-11-03",
+          "date": "2026-11-03",
+          "time": "15:30–17:30",
+          "classContent": [],
+          "homework": {
+            "title": "Speech preparation",
+            "steps": [
+              "• Add pop culture references and consider a unique perspective in your speech. Send me the latest updated version of the speech as a Word document. Hopefully the overall length will be around 400–500 words."
+            ],
+            "prepareFor": "Your speech"
+          },
+          "students": [
+            {
+              "name": "Ethan Jia",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-03&student=ethan-jia"
+            },
+            {
+              "name": "Harry",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-03&student=harry"
+            },
+            {
+              "name": "Alyssa",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-03&student=alyssa"
+            },
+            {
+              "name": "Patrick",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-03&student=patrick"
             }
           ]
         }
