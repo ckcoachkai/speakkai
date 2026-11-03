@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-03T11:01:51.612934+00:00",
+  "updatedAt": "2026-11-03T12:35:52.055699+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1553,8 +1553,16 @@
           "id": "sun-1130-2026-11-01",
           "date": "2026-11-01",
           "time": "11:30–13:00",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "• We focused on the ESDP Q&A session, working through five different questions, how to give responses, and how to prepare for them."
+          ],
+          "homework": {
+            "title": "Practice and preparation",
+            "steps": [
+              "• If possible, practise at least five questions per day and become comfortable using the Q&A tool. The tool is at https://speakkai.com/esdp/."
+            ],
+            "prepareFor": "Your practice"
+          },
           "students": [
             {
               "name": "Ethan",
@@ -1763,9 +1771,17 @@
         {
           "id": "sun-1330-2026-11-01",
           "date": "2026-11-01",
-          "time": "13:30–15:30",
-          "classContent": [],
-          "homework": null,
+          "time": "13:30–15:00",
+          "classContent": [
+            "• We explored different ways to approach impromptu speaking questions, as the students had reportedly signed up for an impromptu speech competition.\n\n• We used a speech roadmap with the question: “Do you agree that technology companies should prioritize repairability over making devices thinner?” The roadmap asked students to consider:\n\n• Audience engagement: Who is my audience? How can I grab their attention? Why does this matter to them?\n\n• Message: What is my main point? Express it in one clear sentence.\n\n• Call to action: What do I want people to do, think or care about? What can we do next?\n\n• Problem in society: What is the bigger problem? Why is it important, and what are the consequences if we do not address it?\n\n• Personal connection: Do I have a personal experience or story? How does the topic relate to my life, and why do I care?\n\n• Examples: Use a real-life example, a hypothetical “what if” example, evidence or facts, or an example from pop culture."
+          ],
+          "homework": {
+            "title": "Practice and preparation",
+            "steps": [
+              "• Become comfortable using the TOC impromptu questions and these tools to help answer them. The tool is at https://speakkai.com/tocimpromptu/."
+            ],
+            "prepareFor": "Your practice"
+          },
           "students": [
             {
               "name": "Teresa",
@@ -1970,8 +1986,16 @@
           "id": "sun-1500-2026-11-01",
           "date": "2026-11-01",
           "time": "15:00–16:30",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "• With the boys and girls in class, we went through the topic ‘Students should be able to grade their teachers,’ examining the pro and con sides and different arguments for each side.\n\n• We reviewed the homework on practising rebuttals, looked at real case examples, and introduced the importance of input: information about topics that students can use in speeches. Students also worked on understanding timing and practised speaking from both sides."
+          ],
+          "homework": {
+            "title": "Practice and preparation",
+            "steps": [
+              "• Prepare arguments for whichever side you are on, pro or con. Next class we will hold a mock debate."
+            ],
+            "prepareFor": "Your practice"
+          },
           "students": [
             {
               "name": "Celia",
