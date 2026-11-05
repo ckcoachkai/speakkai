@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-03T12:35:52.055699+00:00",
+  "updatedAt": "2026-11-05T09:41:00.064820+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -747,6 +747,39 @@
             {
               "name": "Jarvis",
               "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-10-22&student=jarvis"
+            }
+          ]
+        },
+        {
+          "id": "thu-afternoon-2026-11-05",
+          "date": "2026-11-05",
+          "time": "15:30–17:30",
+          "classContent": [
+            "• We considered the debate topic “Should students be allowed to grade their teachers?” and looked at arguments for and against it. Possible arguments for included teachers improving their classes, bad teachers being punished, and teachers wanting to become better and care for their students. Possible arguments against included teachers punishing students who give them bad grades, teachers focusing on pleasing students instead of teaching well, and teachers experiencing too much stress to teach well.\n\n• Students used a structure to express their own opinion: state whether students should be allowed to grade teachers, give first, second and third reasons, explain what might happen if students are or are not allowed to grade teachers, and finish with a concluding call to action."
+          ],
+          "homework": {
+            "title": "Opinion: students grading teachers",
+            "steps": [
+              "Prepare an opinion on whether students should be allowed to grade their teachers. Write out your opinion piece if possible, and develop it to the length of roughly 200–300 words. You do not need to write that many words: the goal is to be able to speak for that length of time and share your perspective. If writing a lot is difficult, an outline is enough, as long as you have a clear idea of the ideas and opinions you want to express."
+            ],
+            "prepareFor": "Prepare to share your perspective."
+          },
+          "students": [
+            {
+              "name": "Jarvis",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-05&student=jarvis"
+            },
+            {
+              "name": "Elsa",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-05&student=elsa"
+            },
+            {
+              "name": "Owen",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-05&student=owen"
+            },
+            {
+              "name": "Remi",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-05&student=remy"
             }
           ]
         }
@@ -2586,6 +2619,10 @@
             {
               "name": "Patrick",
               "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-03&student=patrick"
+            },
+            {
+              "name": "Ethan Liu",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-03&student=ethan-liu"
             }
           ]
         }

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-03T12:35:52.055699+00:00",
+  "updatedAt": "2026-11-05T09:41:00.064820+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -876,6 +876,46 @@
               "name": "Jarvis",
               "en": "✓ Preparation and speech length: Jarvis did the preparation and homework, and he spoke for longer. This was really good.\n\n→ Develop the intended topic: He repeatedly used the word “die.” The focus should be why people have the habit of doing dangerous things, rather than repeatedly emphasizing death. Many students focused on roller coasters; the teacher wanted examples from their own lives of dangerous things people do, included in the prepared speech, and an explanation of why.\n\n→ Classroom focus and behaviour: Jarvis was playing with toys, picking up forks and spoons and randomly throwing them about. He was also talking and writing on the whiteboard while another student was speaking, which was disruptive. He needs to keep the utensils on the table, put the toys aside and give the speaker his attention. The focus is on these specific actions and on sustaining attention during classmates’ presentations.",
               "zh": "✓【准备与演讲长度】：Jarvis 做了准备、完成了作业，演讲也讲得更长。这一点非常好。\n\n→【展开题目真正要讨论的内容】：他反复使用“die（死亡）”这个词。重点应该是人们为什么会有做危险事情的习惯，而不是反复强调死亡。很多学生集中讲过山车；老师希望他们在准备的演讲里，加入自己生活中人们会做的危险事情，并解释为什么会这样做。\n\n→【课堂专注与行为】：Jarvis 在玩玩具，拿起叉子和勺子，随意把它们扔来扔去。他也在另一位同学演讲时讲话、在白板上写字，造成了干扰。他需要把餐具留在桌上、放下玩具，并把注意力给发言者。重点是改进这些具体行为，并在同学展示时持续专注。"
+            }
+          ]
+        },
+        {
+          "id": "thu-afternoon-2026-11-05",
+          "date": "2026-11-05",
+          "time": "15:30–17:30",
+          "status": "held",
+          "classContent": {
+            "en": "• We considered the debate topic “Should students be allowed to grade their teachers?” and looked at arguments for and against it. Possible arguments for included teachers improving their classes, bad teachers being punished, and teachers wanting to become better and care for their students. Possible arguments against included teachers punishing students who give them bad grades, teachers focusing on pleasing students instead of teaching well, and teachers experiencing too much stress to teach well.\n\n• Students used a structure to express their own opinion: state whether students should be allowed to grade teachers, give first, second and third reasons, explain what might happen if students are or are not allowed to grade teachers, and finish with a concluding call to action.",
+            "zh": "• 我们探讨了辩题“学生是否应该能够给老师评分？”，并考虑了正反两方的论点。支持方可能的论点包括：老师可以改进课堂、不好的老师会受到惩处，以及老师会希望变得更好并关心学生。反对方可能的论点包括：老师可能惩罚给他们低分的学生、老师可能专注于取悦学生而不是好好教学，以及老师可能承受太大压力而难以教好课。\n\n• 学生使用一个结构来表达自己的观点：说明是否应该允许学生给老师评分，给出第一、第二和第三个理由，解释允许或不允许学生给老师评分可能带来的结果，并以总结性的行动呼吁结束。"
+          },
+          "homework": {
+            "en": "Prepare an opinion on whether students should be allowed to grade their teachers. Write out your opinion piece if possible, and develop it to the length of roughly 200–300 words. You do not need to write that many words: the goal is to be able to speak for that length of time and share your perspective. If writing a lot is difficult, an outline is enough, as long as you have a clear idea of the ideas and opinions you want to express.",
+            "zh": "请准备你对“学生是否应该能够给老师评分”的观点。如果可以，可以把观点短文写出来，并将内容拓展到大约 200–300 词的篇幅。你不必写出这么多词：目标是能够讲述相当于这个长度的内容，并分享自己的观点。如果大量写作有困难，只写提纲就足够了，只要你清楚自己想表达的想法和意见即可。"
+          },
+          "students": [
+            {
+              "id": "jarvis",
+              "name": "Jarvis",
+              "en": "• Jarvis answered the impromptu question and I think he thought it through thoroughly. He looked at the audience while speaking. He also used his left hand to play with the watch on his right hand and looked behind him.\n\n• I asked follow-up questions to help him continue. He can try thinking of those questions himself to expand his answers and speak for longer. He spoke for 1 minute 30 seconds.",
+              "zh": "• Jarvis 回答了即兴问题，我觉得他认真、充分地思考了。他讲话时看着观众，同时也用左手摆弄右手上的手表，还向身后看。\n\n• 我问了后续问题帮助他继续表达。他可以试着自己思考这些问题，拓展回答并讲得更久。他讲了1分30秒。"
+            },
+            {
+              "id": "elsa",
+              "name": "Elsa",
+              "en": "• Elsa presented her hot pot speech. It is okay that she did not remember the homework. She spoke from her answers and I felt it was a little short: she spoke for 52 seconds. Her partial story was also good.\n\n• We want to expand her structure. She does not need to write out the entire speech: she can write an outline of her ideas and use complete sentences to develop them while speaking. If writing is difficult or we do not write much, reading only what is on the page can limit what we say. An outline can organize her thoughts without that constraint and help her say more. Practice it a couple of times.",
+              "zh": "• Elsa 展示了她关于火锅的演讲。她不记得作业是什么也没关系。她根据自己的回答来讲，我觉得稍微短了一点：她讲了52秒。她准备的一部分故事也很好。\n\n• 我们希望拓展她的结构。她不需要写出整篇演讲稿：她可以把想法写成提纲，讲话时再用完整句子展开。如果写作比较困难或写得不多，只读纸上的内容可能会限制我们能说的内容。提纲可以帮助她组织思路，不受这个限制，也能帮助她说得更多。至少练习几次。"
+            },
+            {
+              "id": "owen",
+              "name": "Owen",
+              "en": "• Owen had a little trouble with the word ‘admire’; he did not know it, although I thought he would. A classmate suggested that it meant ‘love’. I then gave Owen a simpler question: ‘What place would you like to visit and why?’ Owen chose another response about hotpot spots.\n\n• Owen is always quite confident when speaking and presenting his ideas impromptu. He used some hand gestures. He tended to look at me while speaking, so he can face the audience more. He also had some light fidgeting and movement in his arms and legs that he can control better.\n\n• I would have liked him to do his homework at some point, even once.",
+              "zh": "• Owen 对 admire 这个词有一点困难；他不认识这个词，虽然我原以为他会认识。一位同学说它的意思是“爱”。随后我给了 Owen 一个更简单的问题：“你想去什么地方，为什么？”Owen 选择了另一个关于火锅地点的回答。\n\n• Owen 即兴讲话和表达想法时总是相当自信。他使用了一些手势。他讲话时较多看着我，可以更多地面向观众。他的手臂和腿也有轻微的小动作和移动，可以控制得更好。\n\n• 我希望他能在某个时候做一次作业，哪怕只有一次也好。"
+            },
+            {
+              "id": "remy",
+              "name": "Remi",
+              "en": "• I was really happy with Remi’s speech. He put in a lot of effort, wrote everything down, included many specific details, and completed his homework. As I said before, he did not need to write everything down; an outline is fine, especially as his handwriting can sometimes be difficult for others to read.\n\n• In future, if he can type it out, it will be easier to edit. When we edit handwritten work it can become very messy, yet we want to keep improving the speech.\n\n• I really liked the speech. If he wants to use it for a competition, one issue is that he is introducing a place. He can think about the value he gained from the experience, the message, and what he can share with other people. Rather than simply saying everyone should go in a hot-air balloon or visit Turkey, one possible message is that there are many beautiful places around the world, and only when we go and see them do we begin to appreciate their beauty. We can think about a message at the end.\n\n• Because he completed the assignment and put so much work into writing everything down, I am thinking about how we could bring it together into a possible competition speech.",
+              "zh": "• 我对 Remi 的演讲非常满意。他付出了很多努力，把所有内容都写了下来，包含了很多具体细节，也完成了作业。正如我之前说过的，他不需要把所有内容都写下来；写提纲就很好，尤其是他的字有时可能让别人不太容易看清。\n\n• 以后如果可以把内容打出来，会更方便修改。手写内容修改后可能会变得很乱，而我们又希望不断改进演讲。\n\n• 我真的很喜欢这篇演讲。如果他想把它用于比赛，一个问题是它主要在介绍一个地方。他可以思考自己从这次经历中得到了什么价值、想传达什么信息，以及能与别人分享什么。与其只说每个人都应该坐热气球或去土耳其，一个可能的信息是：世界上有很多美丽的地方，只有亲自去看，我们才开始欣赏它们的美。我们可以考虑在结尾加入一个信息。\n\n• 因为他完成了这项作业，花了这么多工夫把所有内容写下来，我在想如何把它整合成一篇可能用于比赛的演讲。"
             }
           ]
         }
@@ -3131,6 +3171,12 @@
               "name": "Patrick",
               "en": "• Patrick spoke about his homework and gave a prepared, organized presentation.\n\n• His pacing was slightly robotic. He can sometimes speed up and sometimes slow down a little more.\n\n• For political topics, I would be a little careful if using them for competition-ready material, since politics can be a little more sensitive here.",
               "zh": "• Patrick 讲了自己的作业，演讲准备充分，也有条理。\n\n• 他的节奏稍微有点机械。他可以有时快一些，有时再慢一些。\n\n• 如果要把政治话题用于准备比赛的材料，我建议稍微谨慎一点，因为政治话题在这里可能更敏感。"
+            },
+            {
+              "id": "ethan-liu",
+              "name": "Ethan Liu",
+              "en": "• Ethan spoke at the front of the class and used good hand gestures. Even when reading material prepared for class, he should try not to look down continuously and instead occasionally look up at the audience.\n\n• He completed the assignments and spoke on stage. I do not have much more to comment on for that presentation, and his behavior in class was good.\n\n• I am not sure whether Ethan was there at the beginning of class or presented his homework. Normally, if a student has not done the homework, I give them an impromptu question and provide feedback on that, but I do not have either kind of feedback recorded for him from the beginning of class. I am guessing he may not have presented his homework then, but I cannot confirm it.",
+              "zh": "• Ethan 在全班面前发言，手势很好。即使在阅读为课堂准备的材料时，他也应尽量不要一直低头，而是偶尔抬头看观众。\n\n• 他完成了任务并在台上发言。对于那次展示，我没有太多其他可评论的内容；他的课堂表现很好。\n\n• 我不确定 Ethan 上课开始时是否在场，也不确定他是否展示了作业。通常如果学生没有做作业，我会给他们一道即兴问题并就此给出反馈，但关于他在课堂开始时的表现，我没有记录这两种反馈中的任何一种。我猜他当时可能没有展示作业，但无法确认。"
             }
           ]
         }
