@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-05T09:41:00.064820+00:00",
+  "updatedAt": "2026-11-06T11:46:13.818955+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1076,7 +1076,7 @@
               "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-16&student=ethan"
             },
             {
-              "name": "Michaela",
+              "name": "Mikaela",
               "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-16&student=mikaela"
             }
           ]
@@ -1159,6 +1159,43 @@
             {
               "name": "Ethan Xu",
               "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-10-30&student=ethan"
+            }
+          ]
+        },
+        {
+          "id": "fri-afternoon-2026-11-06",
+          "date": "2026-11-06",
+          "time": "15:40–17:40",
+          "classContent": [
+            "• We began with homework presentations and review.\n\n• We then worked on a debate structure: sharing the pros, the cons and our own opinion about a topic. The topic was “Should students be allowed to grade their teachers?” We went over points on both sides.\n\n• We discussed examples of mistreatment of teachers in Korea, including bullying by students or parents. We also considered problems that could arise if students chose teachers mainly because they were popular, as well as situations involving students fighting in classrooms. These examples gave the students issues to consider as they developed and shared their own opinions."
+          ],
+          "homework": {
+            "title": "Debate structure: students grading teachers",
+            "steps": [
+              "• Fill out the worksheet on “Should students be allowed to grade their teachers?” Use the structure of sharing the pros, the cons and your own opinion, and practise giving this kind of speech."
+            ],
+            "prepareFor": "Practise sharing both sides and your own opinion."
+          },
+          "students": [
+            {
+              "name": "Evan",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-06&student=evan"
+            },
+            {
+              "name": "Wendy",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-06&student=wendy"
+            },
+            {
+              "name": "Ethan Xu",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-06&student=ethan"
+            },
+            {
+              "name": "Ray",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-06&student=ray"
+            },
+            {
+              "name": "Mikaela",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-06&student=mikaela"
             }
           ]
         }
@@ -1386,6 +1423,31 @@
             {
               "name": "Molly",
               "feedbackUrl": "/fb/?class=fri-later&date=2026-10-30&student=molly"
+            }
+          ]
+        },
+        {
+          "id": "fri-later-2026-11-06",
+          "date": "2026-11-06",
+          "time": "18:00–20:00",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-06&student=arthur"
+            },
+            {
+              "name": "Merlin",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-06&student=merlin"
+            },
+            {
+              "name": "Zoe",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-06&student=zoey"
+            },
+            {
+              "name": "Molly",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-06&student=molly"
             }
           ]
         }
