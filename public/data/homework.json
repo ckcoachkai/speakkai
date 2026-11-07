@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-06T11:46:13.818955+00:00",
+  "updatedAt": "2026-11-07T07:52:29.713104+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -207,6 +207,29 @@
               "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-10-31&student=winston"
             }
           ]
+        },
+        {
+          "id": "sat-original-oratory-2026-11-07",
+          "date": "2026-11-07",
+          "time": "13:00–15:00",
+          "classContent": [
+            "• Students gave impromptu responses during the homework-review portion of class. They did not have prepared speeches ready. Responses were approximately one to two minutes, which I felt was below the length expected for their middle-school speaking work, and I repeatedly asked follow-up questions to help them develop their answers.\n\n• We focused on adding specific details, explaining societal impact, and using actual examples or first-person stories where possible. The aim is to explain who is affected, why the issue matters and how a concrete example supports the message.\n\n• I am concerned that the class does not seem to be progressing. Attendance has been inconsistent, homework has not been completed, and prepared speeches were not ready. Continued phone use and limited participation made it difficult to move into new material."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Winston",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-07&student=winston"
+            },
+            {
+              "name": "Louis",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-07&student=louis"
+            },
+            {
+              "name": "Kenny",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-07&student=kenny"
+            }
+          ]
         }
       ]
     },
@@ -377,6 +400,33 @@
             {
               "name": "Neil",
               "feedbackUrl": "/fb/?class=sat-foundations&date=2026-10-31&student=neil"
+            }
+          ]
+        },
+        {
+          "id": "sat-foundations-2026-11-07",
+          "date": "2026-11-07",
+          "time": "15:00–16:30",
+          "classContent": [
+            "• We reviewed speeches and topic development. Neil presented a memorized speech about table tennis; William shared substantial information; Kyle discussed device usage and addiction impromptu; and we considered changing Ivy’s topic.\n\n• Coaching focused on natural pacing instead of robotic recitation, fewer words and simpler sentences, louder and slower delivery, clear articulation, transitions and pauses. We also explored unique perspectives, stronger societal impact, and the difference between a written essay and a conversational speech that engages the audience through questions, scenes and first-person experiences."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Neil",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-07&student=neil"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-07&student=william"
+            },
+            {
+              "name": "Kyle",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-07&student=kyle"
+            },
+            {
+              "name": "Ivy",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-07&student=ivy"
             }
           ]
         }
@@ -1430,8 +1480,16 @@
           "id": "fri-later-2026-11-06",
           "date": "2026-11-06",
           "time": "18:00–20:00",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "• We began with homework presentations and review.\n\n• We then worked on a debate structure: sharing the pros, the cons and our own opinion about a topic. The topic was “Should students be allowed to grade their teachers?” We went over points on both sides.\n\n• We discussed examples of mistreatment of teachers in Korea, including bullying by students or parents. We also considered problems that could arise if students chose teachers mainly because they were popular, as well as situations involving students fighting in classrooms. These examples gave the students issues to consider as they developed and shared their own opinions."
+          ],
+          "homework": {
+            "title": "Debate structure: students grading teachers",
+            "steps": [
+              "• Fill out the worksheet on “Should students be allowed to grade their teachers?” Use the structure of sharing the pros, the cons and your own opinion, and practise giving this kind of speech."
+            ],
+            "prepareFor": "Practise sharing both sides and your own opinion."
+          },
           "students": [
             {
               "name": "Arthur",
