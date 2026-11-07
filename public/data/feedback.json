@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-07T07:52:29.705595+00:00",
+  "updatedAt": "2026-11-07T09:02:48.002843+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -723,6 +723,37 @@
               "name": "Stacey",
               "en": null,
               "zh": null
+            }
+          ]
+        },
+        {
+          "id": "sat-introductory-2026-11-07",
+          "date": "2026-11-07",
+          "time": "16:30–18:30",
+          "status": "held",
+          "classContent": {
+            "en": "• Anna, Stacey and Hugo gave self-introductions of approximately one minute each. We heard specific personal examples, including Anna’s description of eating pepper with sugar and rice, and Hugo’s story about falling into a hole.\n\n• Coaching focused on looking toward everyone in the audience rather than only the teacher, slowing down and speaking loudly enough for classmates to hear.",
+            "zh": "• Anna、Stacey 和 Hugo 分别进行了大约一分钟的自我介绍。我们听到了具体的个人例子，包括 Anna 分享把辣椒、糖和米饭一起吃，以及 Hugo 讲自己掉进洞里的故事。\n\n• 指导重点是看向所有听众，而不只是老师；放慢语速，并让声音足够响亮，使同学能够听见。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "anna",
+              "name": "Anna",
+              "en": "• Anna gave a self-introduction lasting approximately one minute. She shared many interesting details and specific examples, including eating pepper with sugar and rice. Those details made the introduction personal and gave us something memorable to learn about her.\n\n• She appeared confident, happy and giggly. I am not sure how much previous speaking experience she has, so I would not assume that she is inexperienced.\n\n• She tended to look at me while speaking. Next time, try to include everyone in the room. Suggestion: Finish a thought while looking at one person, then look toward someone else as she shares the next idea. This can help everyone feel included in the introduction.",
+              "zh": "• Anna 进行了大约一分钟的自我介绍。她分享了很多有趣的细节和具体例子，包括把辣椒、糖和米饭一起吃。这些细节让介绍有个人特色，也让我们对她留下了具体、难忘的印象。\n\n• 她显得自信、开心，也会咯咯地笑。我不确定她以前有多少演讲经验，因此不能直接认定她没有经验。\n\n• 她讲话时较多看着我。下次尽量照顾到房间里的每个人。建议：看着一个人讲完一个想法，分享下一个想法时，再看向另一个人。这可以帮助每个人都感到自己被包括在介绍之中。"
+            },
+            {
+              "id": "stacey",
+              "name": "Stacey",
+              "en": "• Stacey shared several things about herself and spoke for approximately one minute. Overall, she did well.\n\n• She was speaking quite quickly. I would like her to slow down, speak louder and look at the audience while presenting. Project the voice clearly enough for Hugo and Anna to hear and follow what she is saying.\n\n• Suggestion: Share one detail, pause briefly, and then continue. This gives the audience time to understand each point and gives her a moment to look up and include her listeners.",
+              "zh": "• Stacey 分享了一些关于自己的事情，讲了大约一分钟。整体来说，她表现不错。\n\n• 她说得比较快。我希望她慢一点、声音大一点，并在展示时看着观众。要把声音清楚地传出去，让 Hugo 和 Anna 听得见，也跟得上她的内容。\n\n• 建议：讲完一个细节后稍作停顿，再继续。这给听众时间理解每一点，也让她有机会抬头、照顾到听众。"
+            },
+            {
+              "id": "hugo",
+              "name": "Hugo",
+              "en": "• Hugo gave a very interesting self-introduction about falling into a hole. He spoke for approximately one minute, and the introduction was quick.\n\n• That experience gives him a concrete story to share. Suggestion: Develop the scene by explaining where he was, what happened and what happened afterward. These are possible ways to expand the story, rather than details he already included.",
+              "zh": "• Hugo 进行了一个很有意思的自我介绍，讲到自己掉进一个洞里。他讲了大约一分钟，介绍比较快。\n\n• 这个经历给了他一个可以分享的具体故事。建议：可以说明当时在哪里、发生了什么，以及后来怎么样，来展开这个场景。这些是拓展故事的可能方法，不是说他已经讲了这些细节。"
             }
           ]
         }

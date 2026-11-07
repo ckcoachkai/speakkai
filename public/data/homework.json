@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-07T07:52:29.713104+00:00",
+  "updatedAt": "2026-11-07T09:02:48.013223+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -613,6 +613,29 @@
             {
               "name": "Stacey",
               "feedbackUrl": "/fb/?class=sat-introductory&date=2026-10-31&student=stacey"
+            }
+          ]
+        },
+        {
+          "id": "sat-introductory-2026-11-07",
+          "date": "2026-11-07",
+          "time": "16:30–18:30",
+          "classContent": [
+            "• Anna, Stacey and Hugo gave self-introductions of approximately one minute each. We heard specific personal examples, including Anna’s description of eating pepper with sugar and rice, and Hugo’s story about falling into a hole.\n\n• Coaching focused on looking toward everyone in the audience rather than only the teacher, slowing down and speaking loudly enough for classmates to hear."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Anna",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-11-07&student=anna"
+            },
+            {
+              "name": "Stacey",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-11-07&student=stacey"
+            },
+            {
+              "name": "Hugo",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-11-07&student=hugo"
             }
           ]
         }
