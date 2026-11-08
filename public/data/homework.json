@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-08T09:47:58.597499+00:00",
+  "updatedAt": "2026-11-08T21:50:12.024Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -213,9 +213,15 @@
           "date": "2026-11-07",
           "time": "13:00–15:00",
           "classContent": [
-            "• Students gave impromptu responses during the homework-review portion of class. They did not have prepared speeches ready. Responses were approximately one to two minutes, which I felt was below the length expected for their middle-school speaking work, and I repeatedly asked follow-up questions to help them develop their answers.\n\n• We focused on adding specific details, explaining societal impact, and using actual examples or first-person stories where possible. The aim is to explain who is affected, why the issue matters and how a concrete example supports the message.\n\n• I am concerned that the class does not seem to be progressing. Attendance has been inconsistent, homework has not been completed, and prepared speeches were not ready. Continued phone use and limited participation made it difficult to move into new material."
+            "• Students gave impromptu responses during the homework-review portion of class. They did not have prepared speeches ready. Responses were approximately one to two minutes, which I felt was below the length expected for their middle-school speaking work, and I repeatedly asked follow-up questions to help them develop their answers.\n\n• We focused on adding specific details, explaining societal impact, and using actual examples or first-person stories where possible. The aim is to explain who is affected, why the issue matters and how a concrete example supports the message.\n\n• I am concerned that the class does not seem to be progressing. Attendance has been inconsistent, homework has not been completed, and prepared speeches were not ready. Continued phone use and limited participation made it difficult to move into new material.\n\n• We focused on making sure students have an overall structure for their Original Oratory speech. The aim was to refine what they want to say and what they want the speech to do, and to organize that message into the different parts of the speech.\n\n• This structure is especially important for competition preparation, including Winston’s speech."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Original Oratory structure and draft",
+            "steps": [
+              "• Fill out the speech structure and develop the different parts of your Original Oratory speech. Refine what you want to say and what you want to achieve with the speech.\n\n• Print out your current speech script or send me what you have written so far.\n\n• Around 400–600 words is acceptable, although 700–800 words would be preferred. After writing the speech, we also want to work on cutting it down, so a fuller draft gives us material to refine."
+            ],
+            "prepareFor": "Print out or send Coach Kai the current speech draft."
+          },
           "students": [
             {
               "name": "Winston",
@@ -408,9 +414,15 @@
           "date": "2026-11-07",
           "time": "15:00–16:30",
           "classContent": [
-            "• We reviewed speeches and topic development. Neil presented a memorized speech about table tennis; William shared substantial information; Kyle discussed device usage and addiction impromptu; and we considered changing Ivy’s topic.\n\n• Coaching focused on natural pacing instead of robotic recitation, fewer words and simpler sentences, louder and slower delivery, clear articulation, transitions and pauses. We also explored unique perspectives, stronger societal impact, and the difference between a written essay and a conversational speech that engages the audience through questions, scenes and first-person experiences."
+            "• We reviewed speeches and topic development. Neil presented a memorized speech about table tennis; William shared substantial information; Kyle discussed device usage and addiction impromptu; and we considered changing Ivy’s topic.\n\n• Coaching focused on natural pacing instead of robotic recitation, fewer words and simpler sentences, louder and slower delivery, clear articulation, transitions and pauses. We also explored unique perspectives, stronger societal impact, and the difference between a written essay and a conversational speech that engages the audience through questions, scenes and first-person experiences.\n\n• We focused on making sure students have an overall structure for their Original Oratory speech. The aim was to refine what they want to say and what they want the speech to do, and to organize that message into the different parts of the speech.\n\n• This structure is especially important for competition preparation, including Kyle’s speech."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Original Oratory structure and draft",
+            "steps": [
+              "• Fill out the speech structure and develop the different parts of your Original Oratory speech. Refine what you want to say and what you want to achieve with the speech.\n\n• Print out your current speech script or send me what you have written so far.\n\n• Around 400–600 words is acceptable, although 700–800 words would be preferred. After writing the speech, we also want to work on cutting it down, so a fuller draft gives us material to refine."
+            ],
+            "prepareFor": "Print out or send Coach Kai the current speech draft."
+          },
           "students": [
             {
               "name": "Neil",
@@ -621,9 +633,15 @@
           "date": "2026-11-07",
           "time": "16:30–18:30",
           "classContent": [
-            "• Anna, Stacey and Hugo gave self-introductions of approximately one minute each. We heard specific personal examples, including Anna’s description of eating pepper with sugar and rice, and Hugo’s story about falling into a hole.\n\n• Coaching focused on looking toward everyone in the audience rather than only the teacher, slowing down and speaking loudly enough for classmates to hear."
+            "• Anna, Stacey and Hugo gave self-introductions of approximately one minute each. We heard specific personal examples, including Anna’s description of eating pepper with sugar and rice, and Hugo’s story about falling into a hole.\n\n• Coaching focused on looking toward everyone in the audience rather than only the teacher, slowing down and speaking loudly enough for classmates to hear.\n\n• We also worked on the Hero’s Journey and the Pixar Storytelling Structure, focusing on the overall structure of a story."
           ],
-          "homework": null,
+          "homework": {
+            "title": "A real personal journey",
+            "steps": [
+              "• Review the Hero’s Journey.\n\n• Write about a real journey or experience of your own. Aim for around 100–200 words, if possible."
+            ],
+            "prepareFor": "Review the Hero’s Journey and write about a real experience."
+          },
           "students": [
             {
               "name": "Anna",
@@ -1758,8 +1776,16 @@
           "id": "sun-1130-2026-11-08",
           "date": "2026-11-08",
           "time": "11:30–13:00",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "• We went over structures for impromptu speech practice. We also introduced how to handle critics and how to use juxtaposition: “Instead of doing this, we want to do that.” This gives students a way to place two ideas side by side and make the contrast clear."
+          ],
+          "homework": {
+            "title": "Impromptu speaking, Q&A and worksheet",
+            "steps": [
+              "• Continue practising your impromptu speeches. If possible, practise Q&A as well.\n\n• Complete the worksheet you took home to practise the content covered in class."
+            ],
+            "prepareFor": "Continue practising impromptu responses and complete the take-home worksheet."
+          },
           "students": [
             {
               "name": "Berlingo",
@@ -1772,6 +1798,10 @@
             {
               "name": "Charles",
               "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-08&student=charles"
+            },
+            {
+              "name": "Ethan",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-08&student=ethan"
             }
           ]
         }
@@ -2001,6 +2031,43 @@
               "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-01&student=audrey"
             }
           ]
+        },
+        {
+          "id": "sun-1330-2026-11-08",
+          "date": "2026-11-08",
+          "time": "13:30–15:00",
+          "classContent": [
+            "• We focused more on debate, with short one-on-one debates and one-on-four practice to give students experience responding under pressure.\n\n• We also did short impromptu and improvisation activities to practise focusing on specific content.\n\n• We watched footage from this year’s national finals in extemporaneous debate. We looked at how the speakers structured and clearly explained their points of view, and students practised rebuttals. The focus was on logic, clarity and organizing their points to have a stronger impact."
+          ],
+          "homework": {
+            "title": "TOC Impromptu practice and debate videos",
+            "steps": [
+              "• Continue practising with the questions at https://speakkai.com/tocimpromptu/ and answering them aloud.\n\n• If possible, watch a couple of competition debate videos showing people debating one another. The more you immerse yourself in debate, the better you can understand how it works."
+            ],
+            "prepareFor": "Continue answering impromptu questions and, if possible, watch a couple of debate videos."
+          },
+          "students": [
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-08&student=arthur"
+            },
+            {
+              "name": "Audrey",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-08&student=audrey"
+            },
+            {
+              "name": "Ning",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-08&student=ning"
+            },
+            {
+              "name": "Teresa",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-08&student=teresa"
+            },
+            {
+              "name": "April",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-08&student=april"
+            }
+          ]
         }
       ]
     },
@@ -2213,6 +2280,43 @@
             {
               "name": "Max",
               "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-01&student=max"
+            }
+          ]
+        },
+        {
+          "id": "sun-1500-2026-11-08",
+          "date": "2026-11-08",
+          "time": "15:00–16:30",
+          "classContent": [
+            "• Students took part in a first round of debate and then a second round. Afterwards, we worked through worksheet packets covering the overall debate structure, timing and foundational rules that we want students to keep track of."
+          ],
+          "homework": {
+            "title": "Review debate worksheets",
+            "steps": [
+              "• Look over the worksheets we went through in class and review them to understand the material better."
+            ],
+            "prepareFor": "Review the structure, timing and foundational rules in the worksheets."
+          },
+          "students": [
+            {
+              "name": "Leo",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-08&student=leo"
+            },
+            {
+              "name": "Max",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-08&student=max"
+            },
+            {
+              "name": "Celia",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-08&student=celia"
+            },
+            {
+              "name": "August",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-08&student=august"
+            },
+            {
+              "name": "Eva",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-08&student=eva"
             }
           ]
         }

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-08T09:47:58.589162+00:00",
+  "updatedAt": "2026-11-08T21:50:12.024Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -253,10 +253,13 @@
         {
           "date": "2026-11-07",
           "classContent": {
-            "en": "• Students gave impromptu responses during the homework-review portion of class. They did not have prepared speeches ready. Responses were approximately one to two minutes, which I felt was below the length expected for their middle-school speaking work, and I repeatedly asked follow-up questions to help them develop their answers.\n\n• We focused on adding specific details, explaining societal impact, and using actual examples or first-person stories where possible. The aim is to explain who is affected, why the issue matters and how a concrete example supports the message.\n\n• I am concerned that the class does not seem to be progressing. Attendance has been inconsistent, homework has not been completed, and prepared speeches were not ready. Continued phone use and limited participation made it difficult to move into new material.",
-            "zh": "• 在作业回顾环节，学生进行了即兴发言，没有准备好的演讲稿。回答大约持续一至两分钟，我认为这低于他们中学阶段演讲任务应达到的长度。我反复追问，帮助他们展开回答。\n\n• 我们重点关注增加具体细节、解释社会影响，以及在可能的情况下使用真实例子或第一人称故事。目标是说明谁会受到影响、问题为什么重要，以及具体例子如何支持要传达的信息。\n\n• 我担心这个班似乎没有在进步。出勤不稳定，作业没有完成，也没有准备好的演讲。持续看手机、参与不足，让我们难以推进新的学习内容。"
+            "en": "• Students gave impromptu responses during the homework-review portion of class. They did not have prepared speeches ready. Responses were approximately one to two minutes, which I felt was below the length expected for their middle-school speaking work, and I repeatedly asked follow-up questions to help them develop their answers.\n\n• We focused on adding specific details, explaining societal impact, and using actual examples or first-person stories where possible. The aim is to explain who is affected, why the issue matters and how a concrete example supports the message.\n\n• I am concerned that the class does not seem to be progressing. Attendance has been inconsistent, homework has not been completed, and prepared speeches were not ready. Continued phone use and limited participation made it difficult to move into new material.\n\n• We focused on making sure students have an overall structure for their Original Oratory speech. The aim was to refine what they want to say and what they want the speech to do, and to organize that message into the different parts of the speech.\n\n• This structure is especially important for competition preparation, including Winston’s speech.",
+            "zh": "• 在作业回顾环节，学生进行了即兴发言，没有准备好的演讲稿。回答大约持续一至两分钟，我认为这低于他们中学阶段演讲任务应达到的长度。我反复追问，帮助他们展开回答。\n\n• 我们重点关注增加具体细节、解释社会影响，以及在可能的情况下使用真实例子或第一人称故事。目标是说明谁会受到影响、问题为什么重要，以及具体例子如何支持要传达的信息。\n\n• 我担心这个班似乎没有在进步。出勤不稳定，作业没有完成，也没有准备好的演讲。持续看手机、参与不足，让我们难以推进新的学习内容。\n\n• 我们重点确保学生的原创演讲（Original Oratory）有完整的整体结构。目标是进一步明确自己想说什么、希望这篇演讲达到什么目的，并把这些信息组织到演讲的各个部分中。\n\n• 这个结构对比赛准备尤其重要，包括 Winston 的演讲。"
           },
-          "homework": null,
+          "homework": {
+            "en": "• Fill out the speech structure and develop the different parts of your Original Oratory speech. Refine what you want to say and what you want to achieve with the speech.\n\n• Print out your current speech script or send me what you have written so far.\n\n• Around 400–600 words is acceptable, although 700–800 words would be preferred. After writing the speech, we also want to work on cutting it down, so a fuller draft gives us material to refine.",
+            "zh": "• 填写演讲结构，展开原创演讲的各个部分。进一步明确自己想表达什么，以及希望通过演讲达到什么目的。\n\n• 把目前的演讲稿打印出来，或者把已经写好的内容发给我。\n\n• 400–600 词左右可以，不过更希望写到 700–800 词。写完之后，我们还要练习删减和精炼，因此较完整的初稿能够提供更多可以修改的内容。"
+          },
           "students": [
             {
               "id": "winston",
@@ -472,10 +475,13 @@
         {
           "date": "2026-11-07",
           "classContent": {
-            "en": "• We reviewed speeches and topic development. Neil presented a memorized speech about table tennis; William shared substantial information; Kyle discussed device usage and addiction impromptu; and we considered changing Ivy’s topic.\n\n• Coaching focused on natural pacing instead of robotic recitation, fewer words and simpler sentences, louder and slower delivery, clear articulation, transitions and pauses. We also explored unique perspectives, stronger societal impact, and the difference between a written essay and a conversational speech that engages the audience through questions, scenes and first-person experiences.",
-            "zh": "• 我们回顾了演讲和话题的发展。Neil 展示了背诵的乒乓球演讲；William 分享了很多信息；Kyle 即兴讨论了设备使用和成瘾；我们也考虑了调整 Ivy 的话题。\n\n• 指导重点包括：让节奏自然，避免机械背诵；减少字数、简化句子；声音更大、语速更慢；清楚咬字，使用过渡词和停顿。我们也探讨了独特视角、更有力的社会影响，以及书面作文与通过提问、场景和第一人称经历吸引听众的口语演讲之间的区别。"
+            "en": "• We reviewed speeches and topic development. Neil presented a memorized speech about table tennis; William shared substantial information; Kyle discussed device usage and addiction impromptu; and we considered changing Ivy’s topic.\n\n• Coaching focused on natural pacing instead of robotic recitation, fewer words and simpler sentences, louder and slower delivery, clear articulation, transitions and pauses. We also explored unique perspectives, stronger societal impact, and the difference between a written essay and a conversational speech that engages the audience through questions, scenes and first-person experiences.\n\n• We focused on making sure students have an overall structure for their Original Oratory speech. The aim was to refine what they want to say and what they want the speech to do, and to organize that message into the different parts of the speech.\n\n• This structure is especially important for competition preparation, including Kyle’s speech.",
+            "zh": "• 我们回顾了演讲和话题的发展。Neil 展示了背诵的乒乓球演讲；William 分享了很多信息；Kyle 即兴讨论了设备使用和成瘾；我们也考虑了调整 Ivy 的话题。\n\n• 指导重点包括：让节奏自然，避免机械背诵；减少字数、简化句子；声音更大、语速更慢；清楚咬字，使用过渡词和停顿。我们也探讨了独特视角、更有力的社会影响，以及书面作文与通过提问、场景和第一人称经历吸引听众的口语演讲之间的区别。\n\n• 我们重点确保学生的原创演讲（Original Oratory）有完整的整体结构。目标是进一步明确自己想说什么、希望这篇演讲达到什么目的，并把这些信息组织到演讲的各个部分中。\n\n• 这个结构对比赛准备尤其重要，包括 Kyle 的演讲。"
           },
-          "homework": null,
+          "homework": {
+            "en": "• Fill out the speech structure and develop the different parts of your Original Oratory speech. Refine what you want to say and what you want to achieve with the speech.\n\n• Print out your current speech script or send me what you have written so far.\n\n• Around 400–600 words is acceptable, although 700–800 words would be preferred. After writing the speech, we also want to work on cutting it down, so a fuller draft gives us material to refine.",
+            "zh": "• 填写演讲结构，展开原创演讲的各个部分。进一步明确自己想表达什么，以及希望通过演讲达到什么目的。\n\n• 把目前的演讲稿打印出来，或者把已经写好的内容发给我。\n\n• 400–600 词左右可以，不过更希望写到 700–800 词。写完之后，我们还要练习删减和精炼，因此较完整的初稿能够提供更多可以修改的内容。"
+          },
           "students": [
             {
               "id": "neil",
@@ -732,10 +738,13 @@
           "time": "16:30–18:30",
           "status": "held",
           "classContent": {
-            "en": "• Anna, Stacey and Hugo gave self-introductions of approximately one minute each. We heard specific personal examples, including Anna’s description of eating pepper with sugar and rice, and Hugo’s story about falling into a hole.\n\n• Coaching focused on looking toward everyone in the audience rather than only the teacher, slowing down and speaking loudly enough for classmates to hear.",
-            "zh": "• Anna、Stacey 和 Hugo 分别进行了大约一分钟的自我介绍。我们听到了具体的个人例子，包括 Anna 分享把辣椒、糖和米饭一起吃，以及 Hugo 讲自己掉进洞里的故事。\n\n• 指导重点是看向所有听众，而不只是老师；放慢语速，并让声音足够响亮，使同学能够听见。"
+            "en": "• Anna, Stacey and Hugo gave self-introductions of approximately one minute each. We heard specific personal examples, including Anna’s description of eating pepper with sugar and rice, and Hugo’s story about falling into a hole.\n\n• Coaching focused on looking toward everyone in the audience rather than only the teacher, slowing down and speaking loudly enough for classmates to hear.\n\n• We also worked on the Hero’s Journey and the Pixar Storytelling Structure, focusing on the overall structure of a story.",
+            "zh": "• Anna、Stacey 和 Hugo 分别进行了大约一分钟的自我介绍。我们听到了具体的个人例子，包括 Anna 分享把辣椒、糖和米饭一起吃，以及 Hugo 讲自己掉进洞里的故事。\n\n• 指导重点是看向所有听众，而不只是老师；放慢语速，并让声音足够响亮，使同学能够听见。\n\n• 我们还学习了“英雄之旅”和“皮克斯故事结构”，关注一个故事的整体组织方式。"
           },
-          "homework": null,
+          "homework": {
+            "en": "• Review the Hero’s Journey.\n\n• Write about a real journey or experience of your own. Aim for around 100–200 words, if possible.",
+            "zh": "• 复习“英雄之旅”。\n\n• 写一段自己的真实旅程或亲身经历。如果可以，尽量写到 100–200 词左右。"
+          },
           "students": [
             {
               "id": "anna",
@@ -2158,10 +2167,22 @@
               "name": "Charles",
               "en": "• Charles was our last speaker. I think he is good at organizing his logic, and he was able to use the new material we wanted to practice in class today. It was good to see him apply that material in his own response. Clear organization helps the audience follow how his ideas connect.\n\n• He also made full use of his speaking time, which was good. Suggestion: Continue building on this by keeping a clear connection between each point and the next, so that the time is used to develop an answer the audience can follow.\n\n• During class, Charles had taken his socks off and was walking barefoot. He should keep his socks on in class, especially as the weather gets colder and we move into winter, so that his feet do not get cold.",
               "zh": "• Charles 是最后一位发言者。我觉得他善于组织逻辑，也能够运用今天我们想在课堂上练习的新内容。看到他把这些内容用于自己的回答，这一点很好。清楚的组织能够帮助听众理解各个想法之间的联系。\n\n• 他也充分利用了自己的发言时间，这一点很好。建议：继续保持各个要点之间清楚的衔接，让这些时间用于展开一个听众能够跟上的回答。\n\n• 课堂上，Charles 脱掉了袜子，赤脚走路。他应该在课堂上穿着袜子，尤其是天气变冷、进入冬季时，以免脚冷。"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "• I think Ethan was moving around while he was speaking. More controlled body movement is an area to work on.",
+              "zh": "• 我觉得 Ethan 发言时身体有些晃动。更好地控制身体动作，是接下来可以注意的方面。"
             }
           ],
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "• We went over structures for impromptu speech practice. We also introduced how to handle critics and how to use juxtaposition: “Instead of doing this, we want to do that.” This gives students a way to place two ideas side by side and make the contrast clear.",
+            "zh": "• 我们复习了即兴演讲练习的结构，也介绍了如何回应批评者，以及如何使用对照表达：“与其这样做，我们更希望那样做。”这种表达把两个想法放在一起，清楚地呈现它们之间的对比。"
+          },
+          "homework": {
+            "en": "• Continue practising your impromptu speeches. If possible, practise Q&A as well.\n\n• Complete the worksheet you took home to practise the content covered in class.",
+            "zh": "• 继续练习即兴演讲。如果可以，也练习问答。\n\n• 完成带回家的练习单，练习课堂上所学的内容。"
+          },
           "id": "sun-1130-2026-11-08",
           "time": "11:30–13:00",
           "status": "held"
@@ -2438,6 +2459,52 @@
               "zh": "• Audrey 给出的假设情境和例子非常清晰、简洁。\n\n• 在给出假设情境或较长的解释之后，我们也可以用一两个词概括观点。例如，老师可能会迎合学生，或让学生随心所欲，以获得更高的评分。他们可能会寻找作弊或提高自己评分的方法，而不是关注真正必要和重要的事情：学生的进步和成长。\n\n• 建议：讲完例子后，可以给听众一个简短标签，例如“追求评分”，再解释它怎样连接到对学生成长的关注。这个标签只是可选的表达提示，不是她课堂上已经说过的话；它可以帮助听众记住较长情境背后的观点。"
             }
           ]
+        },
+        {
+          "id": "sun-1330-2026-11-08",
+          "date": "2026-11-08",
+          "time": "13:30–15:00",
+          "status": "held",
+          "classContent": {
+            "en": "• We focused more on debate, with short one-on-one debates and one-on-four practice to give students experience responding under pressure.\n\n• We also did short impromptu and improvisation activities to practise focusing on specific content.\n\n• We watched footage from this year’s national finals in extemporaneous debate. We looked at how the speakers structured and clearly explained their points of view, and students practised rebuttals. The focus was on logic, clarity and organizing their points to have a stronger impact.",
+            "zh": "• 本节课更侧重辩论，进行了简短的一对一辩论，也进行了一对四练习，让学生体验在压力下回应。\n\n• 我们还进行了简短的即兴演讲和即兴表达活动，练习围绕具体内容展开。\n\n• 我们观看了今年全国总决赛的即兴辩论片段，观察辩手如何组织观点、清楚地解释立场，并练习反驳。重点是逻辑、清晰度，以及如何组织论点，使表达更有影响力。"
+          },
+          "homework": {
+            "en": "• Continue practising with the questions at https://speakkai.com/tocimpromptu/ and answering them aloud.\n\n• If possible, watch a couple of competition debate videos showing people debating one another. The more you immerse yourself in debate, the better you can understand how it works.",
+            "zh": "• 继续使用 https://speakkai.com/tocimpromptu/ 上的题目练习回答。\n\n• 如果可以，观看几段选手相互辩论的比赛视频。越多接触和沉浸在辩论中，就越能理解辩论是怎样进行的。"
+          },
+          "students": [
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "audrey",
+              "name": "Audrey",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "ning",
+              "name": "Ning",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "teresa",
+              "name": "Teresa",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "april",
+              "name": "April",
+              "en": null,
+              "zh": null
+            }
+          ]
         }
       ]
     },
@@ -2703,6 +2770,52 @@
               "name": "Max",
               "en": "• Max and a classmate are still bickering a little.\n\n• Suggestion: During a classmate’s turn, stop the back-and-forth comments and listen until the idea is finished. If there is a disagreement, save it for an appropriate turn to respond. This is a practical way to keep small arguments from taking attention away from the speaking activity.",
               "zh": "• Max 和一位同学仍然会有一点争吵。\n\n• 建议：同学发言时，先停止来回争嘴，等对方把想法说完。如果有不同意见，留到合适的回应时间再说。这样可以减少小争执把注意力从演讲活动中带走的情况。"
+            }
+          ]
+        },
+        {
+          "id": "sun-1500-2026-11-08",
+          "date": "2026-11-08",
+          "time": "15:00–16:30",
+          "status": "held",
+          "classContent": {
+            "en": "• Students took part in a first round of debate and then a second round. Afterwards, we worked through worksheet packets covering the overall debate structure, timing and foundational rules that we want students to keep track of.",
+            "zh": "• 学生先进行了第一轮辩论，随后进行了第二轮。之后，我们一起学习了练习资料，内容包括辩论的整体结构、时间安排，以及需要牢记的基本规则。"
+          },
+          "homework": {
+            "en": "• Look over the worksheets we went through in class and review them to understand the material better.",
+            "zh": "• 回顾课堂上一起学习的练习资料，加深对其中内容的理解。"
+          },
+          "students": [
+            {
+              "id": "leo",
+              "name": "Leo",
+              "en": "• Leo still struggles sometimes when he goes outside his comfort zone or does something he is not that familiar with. Working with unfamiliar activities remains an area for development.",
+              "zh": "• Leo 有时在走出舒适区，或尝试自己不太熟悉的活动时，仍然会遇到一些困难。面对不熟悉的任务，是他需要继续发展的方面。"
+            },
+            {
+              "id": "max",
+              "name": "Max",
+              "en": "• Max still needs some work on taking more notes.\n\n• Sometimes he is outspoken and expresses his opinions very strongly. I would like him to work on self-control and be more aware of how the way he expresses his views affects his teammates and their ability to work together.",
+              "zh": "• Max 仍需要在多做笔记方面继续下功夫。\n\n• 他有时表达得比较直接，对自己的观点也很坚持。我希望他练习自我控制，更留意自己的表达方式会怎样影响队友，以及大家能否顺利合作。"
+            },
+            {
+              "id": "celia",
+              "name": "Celia",
+              "en": "• Celia was strong in trying to express her point of view. However, she repeated herself a lot and often spoke faster than she was thinking. The focus is to give herself time to organize her thoughts, so that she can explain her point clearly without so much repetition.",
+              "zh": "• Celia 在努力表达自己观点方面表现很强。不过，她重复得比较多，也经常说得比思考更快。接下来要给自己时间组织想法，让观点表达得更清楚，减少不必要的重复。"
+            },
+            {
+              "id": "august",
+              "name": "August",
+              "en": "• August showed a strong ability to organize her thoughts in this class.",
+              "zh": "• August 在这节课中展现了很强的思路组织能力。"
+            },
+            {
+              "id": "eva",
+              "name": "Eva",
+              "en": "• Eva is doing quite well as well.",
+              "zh": "• Eva 的表现也相当不错。"
             }
           ]
         }
