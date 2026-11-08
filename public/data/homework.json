@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-07T09:02:48.013223+00:00",
+  "updatedAt": "2026-11-08T09:47:58.597499+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1751,6 +1751,27 @@
             {
               "name": "Berlingo",
               "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-01&student=berlingo"
+            }
+          ]
+        },
+        {
+          "id": "sun-1130-2026-11-08",
+          "date": "2026-11-08",
+          "time": "11:30–13:00",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Berlingo",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-08&student=berlingo"
+            },
+            {
+              "name": "Yiyi",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-08&student=yiyi"
+            },
+            {
+              "name": "Charles",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-08&student=charles"
             }
           ]
         }
