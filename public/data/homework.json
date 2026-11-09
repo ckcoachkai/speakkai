@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-09T07:36:15.478Z",
+  "updatedAt": "2026-11-09T08:16:50.958123+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2622,6 +2622,37 @@
             {
               "name": "Ariel",
               "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-02&student=ariel"
+            }
+          ]
+        },
+        {
+          "id": "mon-afternoon-2026-11-09",
+          "date": "2026-11-09",
+          "time": "15:30–17:30",
+          "classContent": [
+            "• The central message needs to be tightened for everyone and kept very simple. Word choice is quite important: how can we craft something unique through the words we choose?\n\n• We also need to think about how to dig deeper so that the message is more effective."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-09&student=william"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-09&student=sean"
+            },
+            {
+              "name": "Royce",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-09&student=royce"
+            },
+            {
+              "name": "Cynthia",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-09&student=cynthia"
+            },
+            {
+              "name": "Ariel",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-09&student=ariel"
             }
           ]
         }
