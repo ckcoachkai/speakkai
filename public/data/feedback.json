@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-09T07:36:15.478Z",
+  "updatedAt": "2026-11-09T07:55:26.072647+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2477,8 +2477,8 @@
             {
               "id": "arthur",
               "name": "Arthur",
-              "en": null,
-              "zh": null
+              "en": "• I felt that Arthur was still struggling a little during the practice.\n\n• One thing he needs to work on is to stop repeating himself. Repeating the same point does not give the audience new information.\n\n• We went over the material in class, but I did not observe his practice closely enough this time to give a more detailed performance assessment.",
+              "zh": "• 我感觉 Arthur 在练习时仍然有一点吃力。\n\n• 他需要改进的一点是不要反复重复自己的话。重复同一个观点，并不能给听众带来新的信息。\n\n• 我们在课堂上过了一遍这些内容，不过这次我没有仔细观察他的练习表现，因此暂时没有更多具体的表现评价。"
             },
             {
               "id": "audrey",
@@ -2501,8 +2501,8 @@
             {
               "id": "april",
               "name": "April",
-              "en": null,
-              "zh": null
+              "en": "• I think April was still hesitant when expressing her ideas.\n\n• We went over the material in class, but I did not observe her practice closely enough this time to give a more detailed performance assessment.",
+              "zh": "• 我觉得 April 在表达自己的想法时仍然有些犹豫。\n\n• 我们在课堂上过了一遍这些内容，不过这次我没有仔细观察她的练习表现，因此暂时没有更多具体的表现评价。"
             }
           ]
         }
