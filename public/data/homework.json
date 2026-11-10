@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-10T09:10:41.687562+00:00",
+  "updatedAt": "2026-11-10T10:59:45.210321+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2929,8 +2929,16 @@
           "id": "tue-afternoon-2026-11-10",
           "date": "2026-11-10",
           "time": "15:30–17:30",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "• Keep your message to five words or fewer. It should be unique to your speech. Avoid a cliché such as ‘Just do it’—the audience will hate an overused message.\n\n• After introducing the message that is unique to your speech, define what it means.\n\n• Then add calls to action: show situations in which the audience can use your message. Use the frame: ‘The next time you __________, you should __________.’"
+          ],
+          "homework": {
+            "title": "Continue polishing your speech",
+            "steps": [
+              "• Continue polishing and editing your speech, using the class guidance on a short, unique message, its definition and calls to action.\n\n• I will also polish and edit the speeches and ask follow-up questions to help you keep developing and refining what you want to say."
+            ],
+            "prepareFor": "Further speech development through polishing, editing and teacher follow-up questions."
+          },
           "students": [
             {
               "name": "Ethan Jia",
@@ -3197,6 +3205,31 @@
             {
               "name": "Lyon",
               "feedbackUrl": "/fb/?class=tue-later&date=2026-11-03&student=lyon"
+            }
+          ]
+        },
+        {
+          "id": "tue-later-2026-11-10",
+          "date": "2026-11-10",
+          "time": "17:40–19:40",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Jayden",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-10&student=jayden"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-10&student=sean"
+            },
+            {
+              "name": "Nelson",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-10&student=nelson"
+            },
+            {
+              "name": "Lyon",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-10&student=lyon"
             }
           ]
         }
