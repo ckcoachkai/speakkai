@@ -1,0 +1,36 @@
+const {chromium}=require('playwright');
+const fs=require('node:fs'),path=require('node:path');
+const evidence=process.env.DANCE_EVIDENCE_DIR||fs.mkdtempSync(path.join(require('node:os').tmpdir(),'garden-dance-'));const base=process.env.DANCE_BASE_URL||'http://127.0.0.1:4179/games/';
+(async()=>{
+ const browser=await chromium.launch({headless:true,...(process.env.BROWSER_CHANNEL?{channel:process.env.BROWSER_CHANNEL}:{})});
+ const page=await browser.newPage({viewport:{width:1280,height:900}});let errors=[];
+ page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')console.log('BROWSER_ERROR',m.text())});
+ await page.addInitScript(()=>localStorage.setItem('speaker-arcade-v1',JSON.stringify({roster:[{id:'test-cat',name:'Avery'}],history:[],game:'garden',gardenSpeed:100,animalChoices:{'test-cat':'cat'}})));
+ await page.goto(base);await page.locator('#loading').waitFor({state:'hidden'});
+ await page.locator('#playButton').click();
+ await page.locator('#winnerOverlay').waitFor({state:'visible',timeout:60000});
+ await page.waitForFunction(()=>document.querySelector('#winnerDance3d').dataset.danceState==='ready',{timeout:30000});
+ await page.waitForTimeout(1000);
+ await page.screenshot({path:path.resolve(evidence,'dance-desktop.png')});
+ console.log('READY',await page.locator('#winnerDance3d').evaluate(el=>({state:el.dataset.danceState,width:el.width,height:el.height})));
+ for(const style of ['shuffle','hiphop','disco']){await page.locator('#danceStyle').selectOption(style);await page.waitForTimeout(350);if(await page.locator('#winnerDance3d').getAttribute('data-dance-style')!==style)throw Error('Style did not change');}
+ await page.locator('#danceToggle').click();if(await page.locator('#winnerDance3d').getAttribute('data-paused')!=='true')throw Error('Pause failed');
+ const frozen=await page.locator('#winnerDance3d').screenshot();await page.waitForTimeout(350);if(!frozen.equals(await page.locator('#winnerDance3d').screenshot()))throw Error('Paused character still moves');
+ await page.screenshot({path:path.resolve(evidence,'dance-disco.png')});
+ await page.locator('#danceToggle').click();
+ await page.setViewportSize({width:390,height:844});await page.waitForTimeout(300);
+ await page.screenshot({path:path.resolve(evidence,'dance-mobile.png')});
+ console.log('MOBILE',await page.locator('.winner-card').evaluate(el=>({scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,scrollHeight:el.scrollHeight,clientHeight:el.clientHeight})));
+ await page.emulateMedia({reducedMotion:'reduce'});await page.waitForTimeout(100);const still=await page.locator('#winnerDance3d').screenshot();await page.waitForTimeout(350);if(!still.equals(await page.locator('#winnerDance3d').screenshot()))throw Error('Reduced motion is moving');
+ await page.setViewportSize({width:844,height:390});await page.waitForTimeout(100);await page.screenshot({path:path.resolve(evidence,'dance-landscape.png')});
+ await page.locator('#winnerDance3d').evaluate(el=>el.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext());
+ await page.locator('#winnerPortrait').waitFor({state:'visible'});if(await page.locator('#winnerDance3d').isVisible())throw Error('Lost context remains visible');console.log('CONTEXT_LOSS_FALLBACK_PASS');
+ await page.locator('#nextSpeaker').click();await page.waitForTimeout(200);if(await page.locator('#winnerDance3d').getAttribute('data-dance-state')!=='stopped')throw Error('Cleanup failed');
+ await page.setViewportSize({width:1280,height:900});await page.emulateMedia({reducedMotion:'no-preference'});
+ await page.route('**/cat.glb',route=>route.abort());await page.reload();await page.locator('#loading').waitFor({state:'hidden'});await page.locator('#playButton').click();await page.locator('#winnerOverlay').waitFor({state:'visible'});
+ await page.waitForFunction(()=>document.querySelector('#winnerDance3d').dataset.danceState==='stopped');if(!await page.locator('#winnerPortrait').isVisible())throw Error('Asset failure fallback missing');console.log('ASSET_FAILURE_FALLBACK_PASS');
+ await page.unroute('**/cat.glb');await page.route('**/cat.glb',async route=>{await new Promise(resolve=>setTimeout(resolve,1800));try{await route.continue()}catch{}});
+ await page.reload();await page.locator('#loading').waitFor({state:'hidden'});await page.locator('#playButton').click();await page.locator('#winnerOverlay').waitFor({state:'visible'});await page.waitForFunction(()=>document.querySelector('#winnerDance3d').dataset.danceState==='loading');
+ await page.locator('#nextSpeaker').click();await page.waitForTimeout(2200);if(await page.locator('#winnerDance3d').isVisible()||await page.locator('#winnerOverlay').isVisible())throw Error('Late character attached after Continue');console.log('PENDING_LOAD_CANCELLATION_PASS');
+ if(errors.length)throw Error(JSON.stringify(errors));console.log('DANCE_BROWSER_PASS');await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

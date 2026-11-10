@@ -62,3 +62,22 @@ h2,.brand,.corner-status>strong,.game-tab strong,#winnerName{font-family:'SF Pro
 .panel-bottom:has(.garden-pace:not([hidden])){background:linear-gradient(135deg,#142d29f5,#11201ff5);border-color:#b8f3ce33;box-shadow:0 -16px 70px #071b2050;backdrop-filter:blur(24px)}
 .pace-presets{display:flex;gap:7px;margin-top:12px}.pace-presets button{flex:1;border:1px solid #c9ffe42b;background:#ffffff09;color:#c5e3d9;border-radius:9px;padding:7px 0;font-size:11px;font-weight:650;transition:background .18s,transform .18s}.pace-presets button[aria-pressed=true]{background:#c9f3df;color:#173d31;border-color:#c9f3df}.pace-presets button:hover{transform:translateY(-1px);border-color:#c9f3df}.garden-pace input{height:6px;border-radius:10px;background:linear-gradient(to right,#a9e7ca var(--pace-fill,0%),#ffffff20 var(--pace-fill,0%));accent-color:#bff4da}.garden-pace output{background:#ffffff10;border:1px solid #ffffff18;padding:5px 9px;border-radius:8px;color:#deffeb}.panel-bottom .utility-actions .icon-button.active{box-shadow:0 0 0 2px #9ae0bd55}
 @media(prefers-reduced-motion:reduce){.pace-presets button{transition:none}.pace-presets button:hover{transform:none}}
+
+/* Winner studio: real skinned characters, a lit plinth and room for every move. */
+.garden-result{background:#081517b8;backdrop-filter:blur(8px)}
+.arcade-shell:has(.garden-result:not([hidden])) .quick-play{visibility:hidden;pointer-events:none}
+.garden-result .winner-card{position:relative;width:min(720px,calc(100vw - 28px));height:min(850px,calc(100dvh - 28px));padding:22px 28px 24px;gap:6px;border:1px solid #bcead52a;border-radius:28px;background:radial-gradient(ellipse at 50% 35%,#2b5554 0%,#173b3b 44%,#102729 82%);box-shadow:0 30px 100px #0008;overflow:auto}
+.garden-result .winner-eyebrow{color:#a6dfc5;font-size:10px;letter-spacing:3.5px;flex-shrink:0}
+.garden-result #winnerName{color:#f3f6e9;font-size:clamp(25px,4vw,48px);letter-spacing:-1px;flex-shrink:0}
+.garden-result #winnerMessage{color:#c1d7ca;font-size:12px;max-width:52ch;flex-shrink:0}
+.winner-stage{display:none}.garden-result .winner-stage{position:relative;display:grid;place-items:center;flex:1 1 440px;min-height:150px;width:100%;max-height:520px;isolation:isolate}
+.garden-result .winner-dance-3d{display:block;width:100%;height:100%;min-height:150px;position:absolute;inset:0}
+.garden-result .winner-dance-3d[hidden]{display:none}
+.garden-result .winner-portrait{height:100%;max-height:440px;width:auto;max-width:100%;position:absolute;object-fit:contain}
+.dance-status{display:none}.garden-result .dance-status{display:block;font-size:11px;color:#acd1c0;letter-spacing:.15px;flex-shrink:0;min-height:16px}
+.garden-result .dance-controls{justify-content:center;flex-wrap:wrap;gap:8px;margin-top:7px;flex-shrink:0}
+.garden-result .dance-controls select,.garden-result .dance-controls button{border:1px solid #bdebd02a;background:#ffffff0b;color:#e5f4e9;padding:10px 13px;font-size:12px;min-height:40px}
+.garden-result .dance-controls select{color-scheme:dark}.garden-result .dance-controls #nextSpeaker{background:#c0edb8;color:#163b2b;border-color:transparent;font-weight:700}
+.garden-result .dance-controls :focus-visible{outline:2px solid #d8ff8f;outline-offset:3px}
+@media(max-width:520px){.garden-result .winner-card{padding:18px 14px;border-radius:20px}.garden-result .dance-controls{gap:6px}.garden-result .dance-controls button,.garden-result .dance-controls select{padding:8px 10px;font-size:11px}.garden-result .winner-stage{flex-basis:330px}.garden-result #winnerMessage{font-size:11px}}
+@media(max-height:520px) and (min-width:700px){.garden-result .winner-card{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto 1fr auto;width:min(860px,calc(100vw - 28px));padding:20px}.garden-result .winner-stage{grid-column:1;grid-row:1 / 6;height:100%;min-height:200px}.garden-result .winner-eyebrow,.garden-result #winnerName,.garden-result #winnerMessage,.garden-result .dance-status,.garden-result .dance-controls{grid-column:2}}
