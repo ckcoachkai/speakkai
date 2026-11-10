@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "fps": 30,
+  "bpm": 120,
+  "duration": 8,
+  "characters": [
+    {
+      "species": "cat",
+      "bones": 64,
+      "vertices": 21058,
+      "clips": [
+        "square",
+        "shuffle",
+        "hiphop",
+        "disco"
+      ]
+    },
+    {
+      "species": "dog",
+      "bones": 64,
+      "vertices": 20690,
+      "clips": [
+        "square",
+        "shuffle",
+        "hiphop",
+        "disco"
+      ]
+    },
+    {
+      "species": "rabbit",
+      "bones": 64,
+      "vertices": 20690,
+      "clips": [
+        "square",
+        "shuffle",
+        "hiphop",
+        "disco"
+      ]
+    },
+    {
+      "species": "lion",
+      "bones": 64,
+      "vertices": 23894,
+      "clips": [
+        "square",
+        "shuffle",
+        "hiphop",
+        "disco"
+      ]
+    },
+    {
+      "species": "tiger",
+      "bones": 64,
+      "vertices": 21058,
+      "clips": [
+        "square",
+        "shuffle",
+        "hiphop",
+        "disco"
+      ]
+    },
+    {
+      "species": "panda",
+      "bones": 64,
+      "vertices": 20422,
+      "clips": [
+        "square",
+        "shuffle",
+        "hiphop",
+        "disco"
+      ]
+    },
+    {
+      "species": "cheetah",
+      "bones": 64,
+      "vertices": 21590,
+      "clips": [
+        "square",
+        "shuffle",
+        "hiphop",
+        "disco"
+      ]
+    },
+    {
+      "species": "puma",
+      "bones": 64,
+      "vertices": 20254,
+      "clips": [
+        "square",
+        "shuffle",
+        "hiphop",
+        "disco"
+      ]
+    },
+    {
+      "species": "leopard",
+      "bones": 64,
+      "vertices": 21058,
+      "clips": [
+        "square",
+        "shuffle",
+        "hiphop",
+        "disco"
+      ]
+    },
+    {
+      "species": "eagle",
+      "bones": 64,
+      "vertices": 20160,
+      "clips": [
+        "square",
+        "shuffle",
+        "hiphop",
+        "disco"
+      ]
+    }
+  ]
+}

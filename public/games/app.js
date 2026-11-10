@@ -76,7 +76,7 @@ $('namesForm').onsubmit=e=>{e.preventDefault();const names=$('namesInput').value
 $('helpButton').onclick=()=>$('helpDialog').showModal();
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
 document.querySelectorAll('dialog').forEach(d=>d.onclick=e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});
-$('soundButton').onclick=()=>{state.sound=!state.sound;save();updateSound();engine?.setSound?.(state.sound);gardenCues.setSound(state.sound);if(state.sound&&winnerDancePerson)gardenCues.startDance();else if(state.sound&&state.game!=='garden')sound();};
+$('soundButton').onclick=()=>{state.sound=!state.sound;save();updateSound();engine?.setSound?.(state.sound);gardenCues.setSound(state.sound);if(state.sound&&winnerDancePerson&&!winnerDancePaused)gardenCues.startDance();else if(state.sound&&state.game!=='garden')sound();};
 function updateSound(){$('danceMusic').textContent=state.sound?'Music: on':'Music: off';$('danceMusic').setAttribute('aria-pressed',String(state.sound));$('soundButton').classList.toggle('active',state.sound);$('soundButton').setAttribute('aria-label',state.sound?'Disable sound':'Enable sound');$('soundButton').title=state.sound?'Disable sound':'Enable sound';$('soundButton').setAttribute('aria-pressed',String(state.sound));}
 async function toggleFullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{announce('Fullscreen is unavailable in this browser.');}};
 $('fullscreenButton').onclick=toggleFullscreen;
@@ -89,23 +89,33 @@ document.querySelectorAll('[data-garden-mode]').forEach(b=>b.onclick=()=>{if(run
 $('bearPG').onclick=()=>setBearMode('pg');$('bearHorror').onclick=()=>setBearMode('horror');
 function setBearMode(mode){if(running||loading)return;state.bearMode=mode;save();mount();announce(mode==='pg'?'Candy bear selected.':'Horror bear selected.');}
 
-let winnerDanceFrame=0,winnerDanceStyle='square',winnerDancePerson=null,winnerDancePaused=false;
-function stopWinnerDance(){cancelAnimationFrame(winnerDanceFrame);winnerDanceFrame=0;winnerDancePerson=null;}
+let winnerDanceFrame=0,winnerDanceStyle='square',winnerDancePerson=null,winnerDancePaused=false,winnerDance3D=null,winnerDanceGeneration=0;
+function stopWinnerDance(){winnerDanceGeneration++;cancelAnimationFrame(winnerDanceFrame);winnerDanceFrame=0;winnerDancePerson=null;winnerDance3D?.destroy();winnerDance3D=null;gardenCues.stop();$('winnerDance3d').hidden=true;}
 function paintWinnerPortrait(person){
  stopWinnerDance();winnerDancePerson=person;winnerDancePaused=false;
+ const generation=winnerDanceGeneration,reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
  $('danceToggle').textContent='Pause dance';$('danceToggle').setAttribute('aria-pressed','false');
  const canvas=$('winnerPortrait'),ctx=canvas.getContext('2d');let last=performance.now(),elapsed=0;
+ canvas.hidden=false;$('danceStatus').textContent='Getting the dancer ready…';
  canvas.width=600;canvas.height=640;
  const draw=now=>{
-  if(!winnerDancePerson)return;
-  if(!winnerDancePaused)elapsed+=Math.min(.1,(now-last)/1000);last=now;
+  if(!winnerDancePerson||generation!==winnerDanceGeneration)return;
+  if(!winnerDancePaused&&!document.hidden&&!reducedMotion.matches)elapsed+=Math.min(.1,(now-last)/1000);last=now;
   ctx.clearRect(0,0,canvas.width,canvas.height);ctx.save();ctx.translate(300,620);ctx.scale(2.6,2.6);
-  drawGardenDancer(ctx,{species:animalFor(person),time:elapsed,bpm:120,style:winnerDanceStyle,color:person.color,reducedMotion:false});ctx.restore();
+  drawGardenDancer(ctx,{species:animalFor(person),time:elapsed,bpm:120,style:winnerDanceStyle,color:person.color,reducedMotion:reducedMotion.matches});ctx.restore();
   winnerDanceFrame=requestAnimationFrame(draw);
  };draw(last);
+ import('./games/winner-dance-3d.js?v=20261110-studio').then(({createWinnerDance3D})=>{
+  if(generation!==winnerDanceGeneration)return;
+  winnerDance3D=createWinnerDance3D({canvas:$('winnerDance3d'),species:animalFor(person),color:person.color,
+   onReady:()=>{if(generation!==winnerDanceGeneration)return;cancelAnimationFrame(winnerDanceFrame);canvas.hidden=true;$('danceStatus').textContent='Choose a move. Take the stage.';},
+   onError:()=>{if(generation!==winnerDanceGeneration)return;canvas.hidden=false;$('danceStatus').textContent='Choose a move. Take the stage.';cancelAnimationFrame(winnerDanceFrame);last=performance.now();draw(last);}
+  });
+  winnerDance3D?.setStyle(winnerDanceStyle);winnerDance3D?.setPaused(winnerDancePaused);
+ }).catch(()=>{if(generation===winnerDanceGeneration)$('danceStatus').textContent='Choose a move. Take the stage.';});
 }
-$('danceStyle').onchange=()=>{winnerDanceStyle=$('danceStyle').value;};
-$('danceToggle').onclick=()=>{winnerDancePaused=!winnerDancePaused;$('danceToggle').textContent=winnerDancePaused?'Resume dance':'Pause dance';$('danceToggle').setAttribute('aria-pressed',String(winnerDancePaused));};
+$('danceStyle').onchange=()=>{winnerDanceStyle=$('danceStyle').value;winnerDance3D?.setStyle(winnerDanceStyle);};
+$('danceToggle').onclick=()=>{winnerDancePaused=!winnerDancePaused;winnerDance3D?.setPaused(winnerDancePaused);$('danceToggle').textContent=winnerDancePaused?'Resume dance':'Pause dance';$('danceToggle').setAttribute('aria-pressed',String(winnerDancePaused));if(winnerDancePaused)gardenCues.stop();else if(state.sound)gardenCues.startDance();};
 $('danceMusic').onclick=()=>$('soundButton').click();
 $('nextSpeaker').onclick=()=>{clearTimeout(resetTimer);resetTimer=0;mount();};
 $('loadClassesButton').onclick=async()=>{
