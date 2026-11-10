@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-09T09:16:58.456737+00:00",
+  "updatedAt": "2026-11-10T09:10:41.687562+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -3546,6 +3546,52 @@
               "name": "Ethan Liu",
               "en": "• Ethan spoke at the front of the class and used good hand gestures. Even when reading material prepared for class, he should try not to look down continuously and instead occasionally look up at the audience.\n\n• He completed the assignments and spoke on stage. I do not have much more to comment on for that presentation, and his behavior in class was good.\n\n• I am not sure whether Ethan was there at the beginning of class or presented his homework. Normally, if a student has not done the homework, I give them an impromptu question and provide feedback on that, but I do not have either kind of feedback recorded for him from the beginning of class. I am guessing he may not have presented his homework then, but I cannot confirm it.",
               "zh": "• Ethan 在全班面前发言，手势很好。即使在阅读为课堂准备的材料时，他也应尽量不要一直低头，而是偶尔抬头看观众。\n\n• 他完成了任务并在台上发言。对于那次展示，我没有太多其他可评论的内容；他的课堂表现很好。\n\n• 我不确定 Ethan 上课开始时是否在场，也不确定他是否展示了作业。通常如果学生没有做作业，我会给他们一道即兴问题并就此给出反馈，但关于他在课堂开始时的表现，我没有记录这两种反馈中的任何一种。我猜他当时可能没有展示作业，但无法确认。"
+            }
+          ]
+        },
+        {
+          "id": "tue-afternoon-2026-11-10",
+          "date": "2026-11-10",
+          "time": "15:30–17:30",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "ethan-jia",
+              "name": "Ethan Jia",
+              "en": "• Ethan Jia completed his homework, but he had not actually prepared for his presentation. As I have emphasized again and again, bring the homework to class. The homework is not a writing assignment; it is preparation to present in class the next time. I can only give feedback based on what he actually presents.\n\n• During the allotted two-minute slot, he had difficulty developing his answers and went through three questions. There are many ways to fill two minutes by developing an answer to one question, but his individual answers were too short.\n\n• One option is to give his answer first, explain the reason, give an example and finish with a message. Another option is to organize the answer using ‘first, second, finally.’ These are different ways to develop one answer instead of moving through three questions.\n\n• He had good energy and used emphasis when answering. The main focus is to keep that energy while expanding his answers so that he has more to say about each question.",
+              "zh": "• Ethan Jia 完成了作业，但实际上还没有为课堂展示做好准备。正如我已经反复强调的，要把作业带到课堂上来。作业不是一项写作任务，而是为了准备在下一次课堂上进行展示。我只能根据他实际展示出来的内容给予反馈。\n\n• 在规定的两分钟时间里，他在展开回答方面有困难，一共用了三道题。有很多方法可以把一道题的回答展开到两分钟，但他每道题的回答都太短了。\n\n• 一种方法是先直接回答问题，再说明原因、给出例子，最后传达一个核心信息。另一种方法是用‘第一、第二、最后’来组织回答。这些都是把一道题展开的方法，而不是连续换三道题。\n\n• 他在回答问题时很有活力，也能强调重点。接下来最需要关注的是保留这份活力，同时把回答展开，让每一道题都有更多内容可以分享。"
+            },
+            {
+              "id": "harry",
+              "name": "Harry",
+              "en": "• I was really happy with Harry’s homework presentation today. I felt that his pacing, emphasis and the way he spoke made it sound like he was speaking directly to us. His delivery felt conversational, which was the part I was particularly pleased with.",
+              "zh": "• 我对 Harry 今天的作业展示很满意。我觉得，他的节奏、重点强调和说话方式，让人感觉他是在直接和我们交流。他的表达有一种自然对话的感觉，这是我尤其满意的地方。"
+            },
+            {
+              "id": "alyssa",
+              "name": "Alyssa",
+              "en": "• Alyssa spoke about distractions. A couple of classmates seemed a little distracted while she was speaking, with one classmate giggling repeatedly. The giggling made her presentation a little hard to hear.\n\n• I asked her to put the paper down, and this made her presentation a little better.\n\n• Remember to pause, speak louder and get the audience’s attention. These are important parts of helping people listen and follow what she is saying.\n\n• For example, she can address a distracted classmate by name to get their attention and ask them to be quiet, so that she can continue speaking. This is one way to respond when classmates are not paying attention.",
+              "zh": "• Alyssa 的演讲话题是分心。她发言时，有两位左右的同学似乎有一点分心，其中一位同学反复咯咯笑。咯咯笑的声音让她的展示有一点难以听清。\n\n• 我让她把纸放下，这让她的演讲呈现稍微好了一点。\n\n• 记得运用停顿、提高音量，并吸引听众的注意力。这些都是帮助听众认真听、跟上她的表达的重要部分。\n\n• 例如，她可以叫一位分心同学的名字，把对方的注意力吸引回来，请对方安静下来，让自己能够继续讲。这是在同学没有专心听时可以采用的一种回应方式。"
+            },
+            {
+              "id": "patrick",
+              "name": "Patrick",
+              "en": "• Initially, I was not really sure what Patrick had prepared or whether this was his homework, and I found it confusing. It sounded to me like an AI-created biography of Trump—an introduction to who he is, where he was born and the story of his life. I was left unsure how this related to the presentation he was supposed to prepare.\n\n• I did find the material kind of interesting, although it was a little off topic and was not what we were supposed to do.\n\n• Patrick held the material in his hand and speed-read through it. There was a lack of actual presentation: the focus needs to be on communicating the ideas to the audience, rather than simply reading through the material quickly.\n\n• During roughly the last 10% of the presentation, he was giggling a little. Nobody else was laughing, and the audience was not listening, but he was still having little giggles.\n\n• I offered him a second try, and I had his homework paper with me.\n\n• Suggested next focus: Clarify the purpose of the speech and how it connects to the homework, then practise presenting the ideas at a pace the audience can follow. The goal is to present the material, rather than rush through reading it.",
+              "zh": "• 起初，我不太确定 Patrick 准备的是什么，也不确定这是不是他的作业，整体让我有些困惑。在我听来，这像是一篇由 AI 生成的特朗普传记：介绍他是谁、出生在哪里，以及他的人生经历。我仍然不清楚这些内容与他本来应该准备的课堂展示有什么联系。\n\n• 我确实觉得这些内容有些意思，不过有一点偏题，也不是我们本来要完成的任务。\n\n• Patrick 手里拿着材料，快速地把内容读了过去，缺少真正的演讲呈现。重点应该是把想法传达给听众，而不是只顾着快速读完材料。\n\n• 大约在演讲最后 10% 的部分，他有一点咯咯笑。其他人没有在笑，听众也没有在听，但他仍然有一点咯咯笑。\n\n• 我问他要不要再尝试一次，当时他的作业纸已经在我这里。\n\n• 下一步建议：先明确演讲想传达什么，以及它与作业的联系，再练习用听众能够跟得上的速度来呈现想法。目标是把内容讲给听众，而不是快速把文字读完。"
+            },
+            {
+              "id": "ethan-liu",
+              "name": "Ethan Liu",
+              "en": "• Ethan Liu spoke for a long time, which was good. However, he was speaking too quickly and continued without pauses.\n\n• He was speed-reading through everything. Without pauses, it was a little harder for the audience to keep up with what he was saying and grasp his ideas. The audience needs time to take in each idea.\n\n• We want him to slow down and use both emphasis and pauses. Emphasizing important words and pausing between ideas can make his points clearer and more concrete, rather than rushing straight through them.",
+              "zh": "• Ethan Liu 能够持续讲比较长的时间，这一点很好。不过，他说得太快，而且一直往下讲，没有停顿。\n\n• 他把所有内容都快速读了过去。没有停顿，听众就会稍微更难跟上他的表达，也更难理解他的想法。听众需要时间来消化每一个想法。\n\n• 我们希望他放慢速度，同时运用重音和停顿。强调重要的词语，在不同想法之间留出停顿，可以让他的观点更清楚、更具体，而不是一口气快速讲过去。"
+            },
+            {
+              "id": "john",
+              "name": "John",
+              "en": "• John was our first speaker and is new to the class. While speaking, he giggled quite a bit and had a big smile on his face.\n\n• His arms swung back and forth while he stood in place. Unrelated arm movements can draw attention away from what a speaker is saying.\n\n• He did, at least, keep speaking for two minutes. However, much of what he shared was unconnected information, and he repeated similar points again and again. Being able to continue for two minutes was the positive part of this attempt.\n\n• Suggested next focus: Choose one clear idea and develop it with related details, while keeping his arms settled between purposeful gestures. This may help him turn those two minutes into a message the audience can follow.",
+              "zh": "• John 是本次课的第一位发言者，也是新加入班级的学生。他在说话时笑了不少，脸上也带着大大的笑容。\n\n• 他站在原地时，双臂来回摆动。与表达内容无关的手臂动作，可能会把听众的注意力从讲话内容上移开。\n\n• 至少，他能够持续说满两分钟。不过，他分享的很多信息彼此缺少联系，也会反复重复相似的内容。能够坚持讲满两分钟，是这次尝试中值得肯定的一点。\n\n• 下一步建议：选择一个清楚的核心想法，用相关细节展开；在有目的地使用手势之间，让双臂保持稳定。这可能帮助他把这两分钟发展成一段听众能跟得上的表达。"
             }
           ]
         }
