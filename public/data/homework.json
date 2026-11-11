@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-10T10:59:45.210321+00:00",
+  "updatedAt": "2026-11-11T09:04:15.513884+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2634,9 +2634,15 @@
           "date": "2026-11-09",
           "time": "15:30–17:30",
           "classContent": [
-            "• The central message needs to be tightened for everyone and kept very simple. Word choice is quite important: how can we craft something unique through the words we choose?\n\n• We also need to think about how to dig deeper so that the message is more effective.\n\n• Classroom rule: Students must not use electronic devices during the Monday 15:30–17:30 class. Students have been sitting at the back of the room quite a lot with their iPads or laptops. This makes it hard for me to check whether they are following our discussion or doing other things and becoming distracted."
+            "• We focused on tightening the central message and keeping it very simple: five words or fewer, with wording that is unique to the speech. Word choice is important, and we need to dig deeper to make the message more effective.\n\n• Avoid a cliché such as ‘Just do it’—the audience will hate an overused message. After introducing your own message, define what it means.\n\n• Then add calls to action that show situations in which the audience can use the message. Use the frame: ‘The next time you __________, you should __________.’\n\n• Classroom rule: Students must not use electronic devices during the Monday 15:30–17:30 class. Students have been sitting at the back of the room quite a lot with their iPads or laptops. This makes it hard for me to check whether they are following our discussion or doing other things and becoming distracted."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Wait for teacher edits and feedback",
+            "steps": [
+              "• For now, please wait for my edits and feedback on your speech. I will work on the scripts, identify areas that can be improved or changed, and ask a couple of questions to help you continue editing.\n\n• I will probably have your updated script—or at least comments on how to improve and change it, together with a couple of follow-up questions—ready by the end of today, November 11."
+            ],
+            "prepareFor": "Further speech editing with teacher comments and follow-up questions."
+          },
           "students": [
             {
               "name": "William",
@@ -2934,14 +2940,14 @@
           "date": "2026-11-10",
           "time": "15:30–17:30",
           "classContent": [
-            "• Keep your message to five words or fewer. It should be unique to your speech. Avoid a cliché such as ‘Just do it’—the audience will hate an overused message.\n\n• After introducing the message that is unique to your speech, define what it means.\n\n• Then add calls to action: show situations in which the audience can use your message. Use the frame: ‘The next time you __________, you should __________.’"
+            "• Our focus was making each speech’s central message short, simple and distinctive. Keep it to five words or fewer, choose words that are unique to your speech, and dig deeper so that the message is more effective.\n\n• Stay away from clichés such as ‘Just do it’—the audience will hate an overused message. Introduce your message and then explain clearly what it means.\n\n• Follow this with calls to action, showing when the audience can apply the message: ‘The next time you __________, you should __________.’"
           ],
           "homework": {
-            "title": "Continue polishing your speech",
+            "title": "Wait for teacher edits and feedback",
             "steps": [
-              "• Continue polishing and editing your speech, using the class guidance on a short, unique message, its definition and calls to action.\n\n• I will also polish and edit the speeches and ask follow-up questions to help you keep developing and refining what you want to say."
+              "• For now, please wait for my edits and feedback on your speech. I will work on the scripts, identify areas that can be improved or changed, and ask a couple of questions to help you continue editing.\n\n• I will probably have your updated script—or at least comments on how to improve and change it, together with a couple of follow-up questions—ready by the end of today, November 11."
             ],
-            "prepareFor": "Further speech development through polishing, editing and teacher follow-up questions."
+            "prepareFor": "Further speech editing with teacher comments and follow-up questions."
           },
           "students": [
             {
@@ -3216,8 +3222,16 @@
           "id": "tue-later-2026-11-10",
           "date": "2026-11-10",
           "time": "17:40–19:40",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "• We worked on refining the speech’s core message: it needs to be very simple, no longer than five words, and unique to that speech. The words we choose matter, and we need to explore the idea more deeply to make the message effective.\n\n• A cliché like ‘Just do it’ is not enough—the audience will hate an overused message. Once you have introduced a message of your own, define its meaning.\n\n• Add calls to action linked to situations where the audience could use it. The structure is: ‘The next time you __________, you should __________.’"
+          ],
+          "homework": {
+            "title": "Wait for teacher edits and feedback",
+            "steps": [
+              "• For now, please wait for my edits and feedback on your speech. I will work on the scripts, identify areas that can be improved or changed, and ask a couple of questions to help you continue editing.\n\n• I will probably have your updated script—or at least comments on how to improve and change it, together with a couple of follow-up questions—ready by the end of today, November 11."
+            ],
+            "prepareFor": "Further speech editing with teacher comments and follow-up questions."
+          },
           "students": [
             {
               "name": "Jayden",

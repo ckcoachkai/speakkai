@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-11T05:11:24.143996+00:00",
+  "updatedAt": "2026-11-11T09:04:15.501082+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -3198,10 +3198,13 @@
           "time": "15:30–17:30",
           "status": "held",
           "classContent": {
-            "en": "• The central message needs to be tightened for everyone and kept very simple. Word choice is quite important: how can we craft something unique through the words we choose?\n\n• We also need to think about how to dig deeper so that the message is more effective.\n\n• Classroom rule: Students must not use electronic devices during the Monday 15:30–17:30 class. Students have been sitting at the back of the room quite a lot with their iPads or laptops. This makes it hard for me to check whether they are following our discussion or doing other things and becoming distracted.",
-            "zh": "• 每个人的核心信息都需要进一步收紧，并且表达得非常简单、明确。措辞相当重要：怎样通过词语的选择，表达出独特的内容？\n\n• 我们还需要思考，怎样进一步挖掘，才能让核心信息更有效。\n\n• 课堂规则：周一 15:30–17:30 的课堂上，学生不得使用电子设备。学生有不少时间带着 iPad 或笔记本电脑坐在教室后排，这让我不太容易确认他们是在关注我们的课堂讨论，还是在做其他事情、分散了注意力。"
+            "en": "• We focused on tightening the central message and keeping it very simple: five words or fewer, with wording that is unique to the speech. Word choice is important, and we need to dig deeper to make the message more effective.\n\n• Avoid a cliché such as ‘Just do it’—the audience will hate an overused message. After introducing your own message, define what it means.\n\n• Then add calls to action that show situations in which the audience can use the message. Use the frame: ‘The next time you __________, you should __________.’\n\n• Classroom rule: Students must not use electronic devices during the Monday 15:30–17:30 class. Students have been sitting at the back of the room quite a lot with their iPads or laptops. This makes it hard for me to check whether they are following our discussion or doing other things and becoming distracted.",
+            "zh": "• 我们重点练习收紧演讲的核心信息，让它非常简单：不超过五个词，而且措辞要有这篇演讲独有的特点。词语的选择很重要，我们也需要进一步挖掘，让核心信息更有效。\n\n• 不要使用像‘Just do it’这样的陈词滥调——听众会反感这种被反复使用的信息。提出自己的核心信息后，要解释、定义它到底是什么意思。\n\n• 接下来加入行动呼吁，说明听众可以在什么情境下运用这个信息。可以使用句式：‘下次当你__________时，你应该__________。’\n\n• 课堂规则：周一 15:30–17:30 的课堂上，学生不得使用电子设备。学生有不少时间带着 iPad 或笔记本电脑坐在教室后排，这让我不太容易确认他们是在关注我们的课堂讨论，还是在做其他事情、分散了注意力。"
           },
-          "homework": null,
+          "homework": {
+            "en": "• For now, please wait for my edits and feedback on your speech. I will work on the scripts, identify areas that can be improved or changed, and ask a couple of questions to help you continue editing.\n\n• I will probably have your updated script—or at least comments on how to improve and change it, together with a couple of follow-up questions—ready by the end of today, November 11.",
+            "zh": "• 目前请先等待我对演讲稿的修改和反馈。我会编辑稿件，指出可以改进或调整的地方，并提出几个问题，帮助你们继续修改演讲。\n\n• 我大概会在今天，也就是11月11日结束前，准备好修改后的稿件；或者至少提供关于如何改进、调整的意见，以及几个后续问题。"
+          },
           "students": [
             {
               "id": "william",
@@ -3561,12 +3564,12 @@
           "time": "15:30–17:30",
           "status": "held",
           "classContent": {
-            "en": "• Keep your message to five words or fewer. It should be unique to your speech. Avoid a cliché such as ‘Just do it’—the audience will hate an overused message.\n\n• After introducing the message that is unique to your speech, define what it means.\n\n• Then add calls to action: show situations in which the audience can use your message. Use the frame: ‘The next time you __________, you should __________.’",
-            "zh": "• 核心信息不超过五个词，而且要有与你这篇演讲相关的独特性。不要使用像‘Just do it’这样的陈词滥调——听众会反感这种被反复使用的信息。\n\n• 在提出这篇演讲独有的核心信息之后，要解释、定义它到底是什么意思。\n\n• 接下来加入行动呼吁：说明听众可以在什么情境下运用你的核心信息。可以使用这个句式：‘下次当你__________时，你应该__________。’"
+            "en": "• Our focus was making each speech’s central message short, simple and distinctive. Keep it to five words or fewer, choose words that are unique to your speech, and dig deeper so that the message is more effective.\n\n• Stay away from clichés such as ‘Just do it’—the audience will hate an overused message. Introduce your message and then explain clearly what it means.\n\n• Follow this with calls to action, showing when the audience can apply the message: ‘The next time you __________, you should __________.’",
+            "zh": "• 这节课的重点是让每篇演讲的核心信息简短、简单而独特。核心信息不超过五个词，选择与自己的演讲紧密相关、有独特性的措辞，并进一步深入思考，让信息更有效。\n\n• 避免像‘Just do it’这样的陈词滥调——听众会反感这种被反复使用的信息。先提出核心信息，再清楚地解释它是什么意思。\n\n• 随后加入行动呼吁，说明听众何时可以运用这个信息：‘下次当你__________时，你应该__________。’"
           },
           "homework": {
-            "en": "• Continue polishing and editing your speech, using the class guidance on a short, unique message, its definition and calls to action.\n\n• I will also polish and edit the speeches and ask follow-up questions to help you keep developing and refining what you want to say.",
-            "zh": "• 继续润色、修改自己的演讲，并运用课堂上关于简短而独特的核心信息、核心信息的定义，以及行动呼吁的指导。\n\n• 我也会对演讲进行润色和修改，并提出后续问题，帮助你们继续发展、完善自己想表达的内容。"
+            "en": "• For now, please wait for my edits and feedback on your speech. I will work on the scripts, identify areas that can be improved or changed, and ask a couple of questions to help you continue editing.\n\n• I will probably have your updated script—or at least comments on how to improve and change it, together with a couple of follow-up questions—ready by the end of today, November 11.",
+            "zh": "• 目前请先等待我对演讲稿的修改和反馈。我会编辑稿件，指出可以改进或调整的地方，并提出几个问题，帮助你们继续修改演讲。\n\n• 我大概会在今天，也就是11月11日结束前，准备好修改后的稿件；或者至少提供关于如何改进、调整的意见，以及几个后续问题。"
           },
           "students": [
             {
@@ -3896,8 +3899,14 @@
           "date": "2026-11-10",
           "time": "17:40–19:40",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "• We worked on refining the speech’s core message: it needs to be very simple, no longer than five words, and unique to that speech. The words we choose matter, and we need to explore the idea more deeply to make the message effective.\n\n• A cliché like ‘Just do it’ is not enough—the audience will hate an overused message. Once you have introduced a message of your own, define its meaning.\n\n• Add calls to action linked to situations where the audience could use it. The structure is: ‘The next time you __________, you should __________.’",
+            "zh": "• 我们练习进一步打磨演讲的核心信息：表达要非常简单，不超过五个词，而且要有这篇演讲独有的特点。措辞很重要，我们也需要更深入地挖掘想法，让信息更有效。\n\n• 像‘Just do it’这样的陈词滥调还不够——听众会反感这种被反复使用的信息。提出自己的核心信息之后，要定义、解释它的含义。\n\n• 加入行动呼吁，并联系听众可以运用这个信息的具体情境。句式是：‘下次当你__________时，你应该__________。’"
+          },
+          "homework": {
+            "en": "• For now, please wait for my edits and feedback on your speech. I will work on the scripts, identify areas that can be improved or changed, and ask a couple of questions to help you continue editing.\n\n• I will probably have your updated script—or at least comments on how to improve and change it, together with a couple of follow-up questions—ready by the end of today, November 11.",
+            "zh": "• 目前请先等待我对演讲稿的修改和反馈。我会编辑稿件，指出可以改进或调整的地方，并提出几个问题，帮助你们继续修改演讲。\n\n• 我大概会在今天，也就是11月11日结束前，准备好修改后的稿件；或者至少提供关于如何改进、调整的意见，以及几个后续问题。"
+          },
           "students": [
             {
               "id": "jayden",
@@ -3914,8 +3923,8 @@
             {
               "id": "nelson",
               "name": "Nelson",
-              "en": null,
-              "zh": null
+              "en": "• I felt that Nelson put everything together well. He always takes a lot of notes, and his spoken delivery is a bit better.\n\n• However, he still tends to read from his notes, which is also a concern in this class. I would encourage him to practise speaking without any paper so that he can focus a bit more on his presentation.",
+              "zh": "• 我觉得 Nelson 把各部分内容组织得很好。他总是会做很多笔记，口头表达也比之前好了一些。\n\n• 不过，他仍然倾向于照着笔记读，这也是这个班需要注意的一个问题。我鼓励他尝试不拿任何纸张来练习讲话，这样就能把更多注意力放在演讲的呈现上。"
             },
             {
               "id": "lyon",
