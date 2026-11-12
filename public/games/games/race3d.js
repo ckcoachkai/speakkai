@@ -1,4 +1,4 @@
-import {createCarNeon} from './race3d-car-neon.js?v=20261101-neon-speed-local';
+import {createCarNeon} from './race3d-car-neon.js?v=20261112-performance-cars';
 import {RACE_PLAYBACK_SPEED,PLAYBACK_SPEEDS,resolvePlaybackSpeed,FIXED_CLOCK_EPSILON,raceFrameSeconds,visualFrameSeconds,forEachVisualStep} from './race3d-clock.js?v=20261101-neon-speed-local';
 import {createExhaustLighting} from './race3d-exhaust-lighting.js?v=20261101-neon-speed-local';
 import {createExhaustWake} from './race3d-exhaust-wake.js?v=20261101-neon-speed-local';
@@ -9,21 +9,21 @@ import {createRaceWater} from './race3d-water.js?v=20261101-neon-speed-local';
 import {createRaceGrid} from './race3d-grid.js?v=20261030-grid5';
 import * as THREE from '../assets/vendor/three.module.js';
 import { createRaceTrack } from './race3d-track.js?v=20261101-neon-speed-local';
-import { createRaceCars } from './race3d-cars.js?v=20261101-neon-speed-local';
-import { createRaceSimulation } from './race3d-physics.js?v=20261101-neon-speed-local';
+import { createRaceCars } from './race3d-cars.js?v=20261112-performance-cars';
+import { createRaceSimulation } from './race3d-physics.js?v=20261112-performance-cars';
 import { createChaseCamera } from './race3d-camera.js?v=20261101-neon-speed-local';
 import { createRaceAudio } from './race3d-audio.js?v=20261101-neon-speed-local';
 import { createRaceMusic } from './race3d-music.js?v=20261027-midnight';
-import { createRaceUI } from './race3d-ui.js?v=20261101-neon-speed-local';
+import { createRaceUI } from './race3d-ui.js?v=20261112-performance-cars';
 import { createRaceEffects } from './race3d-fx.js?v=20261101-descent';
 import { createRaceScenery } from './race3d-city.js?v=20261101-neon-speed-local';
 import { createRaceAtmosphere } from './race3d-atmosphere.js?v=20261101-neon-speed-local';
 import { createRacePowerups } from './race3d-powerups.js?v=20261031-dimensional';
 import { createRaceRamps } from './race3d-ramps.js?v=20261101-descent';
 import { createSkySpirit } from './race3d-sky-spirit.js?v=20261027-midnight';
-import { assignRacerTypes } from './race3d-roster.js?v=20261027-midnight';
-import { resolveQuality } from './race3d-quality.js?v=20261101-neon-speed-local';
-import { createContactShadows } from './race3d-quality.js?v=20261101-neon-speed-local';
+import { assignRacerTypes } from './race3d-roster.js?v=20261112-performance-cars';
+import { resolveQuality } from './race3d-quality.js?v=20261112-performance-cars';
+import { createContactShadows } from './race3d-quality.js?v=20261112-performance-cars';
 import { createCircuitFestival } from './race3d-festival.js?v=20261027-midnight';
 import {createRaceSelection,SELECTION_SECONDS} from './race3d-selection.js?v=20261027-midnight';
 import {rampPlaybackTarget,advancePlaybackRate} from './race3d-playback.js?v=20261027-midnight';
@@ -262,7 +262,6 @@ function createRaceSession({ container, names = [], onPick, random = Math.random
     slipstreamTrails?.update(simulation?.cars||[],track,dt,{quality,active:mode==='running'});
     roadRabbits?.update(simulation?.cars||[],dt,{quality,active:mode==='running'||mode==='finishing'});
     audioEvents.push(...(carModels?.drainFinishEvents?.()||[]));
-    contactShadows?.update(id=>carModels?.visualPose(id));
     festival?.update(visualElapsed);
     if (focused) {
       const cameraCar = carModels?.visualPose?.(focused.id) || focused;
@@ -287,9 +286,14 @@ function createRaceSession({ container, names = [], onPick, random = Math.random
       hazards: simulation?.hazards || [], waves: simulation?.waves || [], time: simulation?.time || 0,
       effectActors:simulation?.effectActors,
     }, { cars: simulation?.cars || [], camera });
-    projectCars(ordered);
     }
     });
+    // Projection and shadow instance uploads are consumed only by the final draw.
+    // Keep time-dependent animation substeps, but do not repeat these per substep.
+    if (mode !== 'selecting') {
+      contactShadows?.update(id=>carModels?.visualPose(id));
+      projectCars(ordered);
+    }
     ui?.update(ordered, raceElapsed, mode, focusedId, {
       events: uiEvents,
       results: simulation?.results || [], allFinished: !!simulation?.allFinished,finishCelebrationComplete:carModels?.finishSnapshot?.().complete!==false,
@@ -405,7 +409,7 @@ function createRaceSession({ container, names = [], onPick, random = Math.random
       }
     }
     render(visualDelta, cameraDelta || visualDelta * SIMULATION_RATE);
-    if(qualityMode==='auto'&&(mode==='running'||mode==='finishing')&&++warmFrames>180){
+    if(qualityMode==='auto'&&(mode==='running'||mode==='finishing')&&++warmFrames>30){
       const next=frameBudget.sample(rawFrameMs,performance.now()-cpuStart);
       if(next){detailScale=next.detail;if(renderScale!==next.scale){renderScale=next.scale;renderer.setPixelRatio(Math.min(devicePixelRatio||1,quality.dpr)*renderScale);renderer.setSize(size.width,size.height,false);}}
     }

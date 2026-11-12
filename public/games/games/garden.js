@@ -1,3 +1,4 @@
+import { nearestLivingMob, runSimulationSlice } from './garden-performance.js?v=20261112-performance-cars';
 import {gardenWeaponOrigin} from './garden-weapon-motion.js';
 import {SOURCE_CATALOG} from './garden-source-catalog.js';
 import {TRUMP_CAST_TYPES} from './garden-trump-cast.js?v=20261022-trump30';
@@ -768,7 +769,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
   }
   function recruitCherry(lane) {
     if (lane.eaten || (lane.bomb && !lane.bomb.spent)) return;
-    const nearest = lane.mobs.filter(mob => !mob.dead).sort((a, b) => a.x - b.x)[0];
+    const nearest = nearestLivingMob(lane.mobs);
     lane.bomb = { uid: 'cherry-' + (++serial), position: clamp(nearest?.x ?? .76, .54, .94), bornAt: simTime, fuseAt: simTime + PICKER_VISUAL_TIMING.cherryFuse, fuseFirstSeenWall: null, spent: false, explodedAt: null, burstFirstSeenWall: null, kills: 0 };
     addLog({ type: 'cherryPlanted', ownerId: lane.entry.id, bombId: lane.bomb.uid, fuseAt: lane.bomb.fuseAt }); playSfx('plant', lane);
   }
@@ -851,7 +852,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       }
       lane.perception=perceiveGardenLane(lane,wallTime);for(const mob of lane.mobs){if(mob.type.giant){const g=giantGeometry(lane,mob);const o=gardenWeaponOrigin(mob.monsterId,{x:g.x,y:g.y,scale:g.scale*2.24});mob.weaponOrigin={x:(o.x-lane.plantX)/lane.travel,y:o.y};}}spells.update(lane,simTime,wallTime,dt,shots);anime.update(lane,simTime,wallTime);
       for(const defender of livingDefenders(lane)){if(defender.weapon==='trooper'){const goal=(58+(defender.guardOffset||0))*lane.spriteScale/lane.travel;if(defender.entering){const elapsed=Math.max(0,Math.min(.06,(wallTime-(defender.motionWall??wallTime))/1000));defender.motionWall=wallTime;defender.position=Math.min(goal,defender.position+elapsed*55/lane.travel);if(defender.position>=goal)defender.entering=false;}else defender.position=goal;}if(defender.weapon==='clonesword'){
-        const nearest=lane.mobs.filter(m=>!m.dead&&m.x>=defender.position-.025).sort((a,b)=>a.x-b.x)[0];
+        const nearest=nearestLivingMob(lane.mobs, defender.position - .025);
         const visualDt=Math.min(.05,Math.max(0,(wallTime-(defender.motionWall??wallTime))/1000));defender.motionWall=wallTime;
         const swinging=wallTime-(defender.swingWall??-Infinity)<1200;
         const formation=livingDefenders(lane).filter(d=>d.weapon==='clonesword').indexOf(defender);defender.formation=formation;
@@ -879,7 +880,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       if(allies.has('goblin')&&lane.hp>0&&livingDefenders(lane).length&&simTime>=lane.nextGoblin){lane.nextGoblin=simTime+12;lane.runners.push({uid:'g'+(++serial),x:.16,born:simTime});}
       for(const runner of lane.runners){
         const before=runner.x;runner.x+=dt*.18;
-        const target=lane.mobs.filter(m=>!m.dead&&m.x>=before-.02&&m.x<=runner.x+.02).sort((a,b)=>a.x-b.x)[0];
+        const target=nearestLivingMob(lane.mobs, before - .02, runner.x + .02);
         if(target){runner.x=target.x;runner.done=true;for(const mob of lane.mobs){if(!mob.dead&&Math.abs(mob.x-runner.x)<=.11){launchMob(mob,wallTime);hit(lane,mob,{ownerId:lane.entry.id,attackerId:runner.uid,damage:360,weapon:'goblin',penetration:0});}}support.burst(lane,runner.x,wallTime,'goblin');impactCue(lane,'explosion');particle(lane,runner.x,'#ffbd45',16);addLog({type:'goblinExplosion',ownerId:lane.entry.id,x:runner.x,radius:.11,damage:360});}
       }
       lane.runners=lane.runners.filter(r=>!r.done&&r.x<1.15);
@@ -1572,9 +1573,7 @@ export default function createGame({ container, names = [], onPick, random = Mat
       simulationBudget += Math.max(0, (timestamp - (clockAt ?? timestamp)) / 1000) * Math.min(clockRate, effectiveTempo()); clockAt = timestamp;
       // Rate only changes the clock, never attack statistics or RNG. Hot speed
       // changes preserve the previous interval and cannot jump past old time.
-      while (phase === 'running' && simulationBudget + 1e-8 >= .04) {
-        simulationBudget -= .04; step(.04);
-      }
+      simulationBudget = runSimulationSlice(simulationBudget, step, () => phase === 'running');
       clockRate = effectiveTempo();
       if (phase !== 'running') simulationBudget = 0;
     } else if (phase === 'result') advanceEffects(visualDt);
@@ -1653,4 +1652,5 @@ export default function createGame({ container, names = [], onPick, random = Mat
   raf = requestAnimationFrame(frame);
   return { start, reset, destroy, setSound, setSpeed, getState };
 }
+
 

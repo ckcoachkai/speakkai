@@ -1,3 +1,4 @@
+import {FAMILIAR_ASSETS} from './race3d-familiar-models.js?v=20261112-performance-cars';
 import { GLTFLoader } from '../assets/vendor/GLTFLoader.js';
 import { createCarFinish } from './race3d-car-finish.js?v=20261030-city';
 import { RACE3D_CONCEPT_ASSETS } from './race3d-concept-assets.js?v=20261027-midnight';
@@ -7,10 +8,11 @@ const standardWheelNodes=Object.freeze({FL:'WheelFrontL',FR:'WheelFrontR',RL:'Wh
 export const RACE_CAR_ASSETS = Object.freeze([
   { id:'lamborghini-gallardo', label:'Lamborghini Gallardo 2010', url:new URL('../assets/race3d-cars/lamborghini-gallardo.glb',import.meta.url).href, yaw:0, length:4.45, wheelPattern:/^Wheel(Front|Rear)[LR]$/i, wheelNodes:standardWheelNodes },
   { id:'tesla-roadster', label:'Tesla Roadster 2020 concept', url:new URL('../assets/race3d-cars/tesla-roadster.glb',import.meta.url).href, yaw:0, length:4.7, wheelPattern:/^Wheel(Front|Rear)[LR]$/i, wheelNodes:standardWheelNodes },
-  { id:'f1-2026', label:'Qvist 2026 Formula concept', url:new URL('../assets/race3d-cars/f1.glb',import.meta.url).href, yaw:Math.PI/2, length:5.1, wheelPattern:/^(wheel|tyre|tire)[_-]?(fl|fr|rl|rr|front|rear|left|right)|wheel.*(front|rear)|^(front|rear).*wheel/i, wheelNodes:{FL:'front-left-wheel',FR:'front-right-wheel',RL:'rear-left-wheel',RR:'rear-right-wheel'} },
+  { id:'f1-2026', label:'Formula race car', url:new URL('../assets/race3d-cars/f1.glb',import.meta.url).href, yaw:Math.PI/2, length:5.1, wheelPattern:/^(wheel|tyre|tire)[_-]?(fl|fr|rl|rr|front|rear|left|right)|wheel.*(front|rear)|^(front|rear).*wheel/i, wheelNodes:{FL:'front-left-wheel',FR:'front-right-wheel',RL:'rear-left-wheel',RR:'rear-right-wheel'} },
   { id:'gt3', label:'Race Car 01 LMGT3', url:new URL('../assets/race3d-cars/gt3.glb',import.meta.url).href, yaw:0, length:4.7, wheelPattern:/^Wheel(Front|Rear)[LR]$/i, wheelNodes:standardWheelNodes },
   { id:'car-concept', label:'CarConcept sports coupe', url:new URL('../assets/race3d-cars/supercar.glb',import.meta.url).href, yaw:0, length:4.6, wheelPattern:/^Wheel(Front|Rear)[LR]$/i, wheelNodes:standardWheelNodes },
   ...RACE3D_CONCEPT_ASSETS,
+  ...FAMILIAR_ASSETS,
 ]);
 
 export function createAuthoredCarAssets(THREE, { isDisposed, registerResource, prepareAsset }) {

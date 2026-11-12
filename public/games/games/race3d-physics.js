@@ -6,10 +6,10 @@
 import { createRampLayout, rampHeightAt, rampSlopeAt } from './race3d-ramps.js?v=20261101-descent';
 import { ITEM_TYPES, INVENTORY_CAPACITY, inventoryCount, drawItem, ROULETTE_DURATION, ITEM_HOLD_MIN, ITEM_HOLD_MAX } from './race3d-item-rules.js?v=20261030-grid5';
 
-import {vehicleProfile,wheelFootprint,wheelLoads,rampSupport,planRampApproach,roadSurface} from './race3d-vehicle.js?v=20261101-descent';
+import {vehicleProfile,wheelFootprint,wheelLoads,rampSupport,planRampApproach,roadSurface} from './race3d-vehicle.js?v=20261112-performance-cars';
 
 import {itemDecision,flightWindow} from './race3d-strategy.js?v=20261101-descent';
-import {getRaceVehicleSpec as getVehicleSpec} from './race3d-race-calibration.js?v=20261027-midnight';
+import {getRaceVehicleSpec as getVehicleSpec} from './race3d-race-calibration.js?v=20261112-performance-cars';
 import {createDriverSkills,driverControls} from './race3d-drivers.js?v=20261101-descent';
 import {createCatchup} from './race3d-catchup.js?v=20261101-pack';
 import {createExtendedItems} from './race3d-extra-items.js?v=20261030-grid5';

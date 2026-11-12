@@ -1,7 +1,7 @@
-import {updateInventoryIcons} from './race3d-inventory-ui.js?v=20261031-dimensional';
-import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261031-dimensional';
+import {updateInventoryIcons} from './race3d-inventory-ui.js?v=20261112-performance-cars';
+import { RACER_CARD_NAMES, racerThumbnail, ITEM_VISUALS, itemThumbnail } from './race3d-ui-catalog.js?v=20261112-performance-cars';
 
-import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261027-midnight';
+import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261112-performance-cars';
 
 const make = (tag, className, text) => {
   const node = document.createElement(tag);

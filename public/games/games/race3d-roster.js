@@ -1,7 +1,8 @@
-import { RACE_VEHICLE_PROFILES, getVehicleProfile } from './race3d-vehicle-specs.js?v=20261027-midnight';
-import {getRaceVehicleSpec} from './race3d-race-calibration.js?v=20261027-midnight';
+import {FAMILIAR_MODELS} from './race3d-familiar-models.js?v=20261112-performance-cars';
+import { RACE_VEHICLE_PROFILES, getVehicleProfile } from './race3d-vehicle-specs.js?v=20261112-performance-cars';
+import {getRaceVehicleSpec} from './race3d-race-calibration.js?v=20261112-performance-cars';
 
-export const RACE_ROSTER_TYPES = Object.freeze(Object.keys(RACE_VEHICLE_PROFILES));
+export const RACE_ROSTER_TYPES = Object.freeze(['lamborghini-gallardo','tesla-roadster','f1-2026',...FAMILIAR_MODELS.map(m=>m.id)]);
 export function getRacerIdentity(type) {
   const profile = getVehicleProfile(type);
   return profile ? { ...profile,vehicleSpec:getRaceVehicleSpec(type),referenceSpec:profile.vehicleSpec,specBasis:{...profile.specBasis,kind:'mixed-class-race-calibration',referenceFields:profile.specBasis.referenceFields.filter(k=>!['powerKW','torqueNm','topSpeedKph'].includes(k)),notes:'Mixed-class game calibration: power, speed, grip and braking are tuned for competitive racing; they are not manufacturer performance claims. Reference notes: '+profile.specBasis.notes}, racerType: type, category: 'car', ratingsKind: 'mixed-class-race-calibration' } : null;

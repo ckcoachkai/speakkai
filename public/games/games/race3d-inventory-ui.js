@@ -1,5 +1,5 @@
 import {ITEM_REGISTRY} from './race3d-item-registry.js?v=20261027-midnight';
-import {ITEM_VISUALS,itemThumbnail} from './race3d-ui-catalog.js?v=20261031-dimensional';
+import {ITEM_VISUALS,itemThumbnail} from './race3d-ui-catalog.js?v=20261112-performance-cars';
 export function updateInventoryIcons(node,car,{reserveOnly=false}={}){
   const slots=car?.inventoryItem?[car,...(car.inventoryReserves||[])]:[];
   const shown=reserveOnly?slots.slice(1):slots;

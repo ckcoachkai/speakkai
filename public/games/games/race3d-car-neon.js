@@ -1,4 +1,4 @@
-import {roadShadowFrame} from './race3d-quality.js';
+import {roadShadowFrame} from './race3d-quality.js?v=20261112-performance-cars';
 
 export function createCarNeon(THREE,{timeOfDay='day',quality='high',reducedMotion=false,sceneScale=.2}={}){
  const group=new THREE.Group();group.name='race3d-car-neon';const capacity=60;

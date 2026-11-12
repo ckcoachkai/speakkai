@@ -1,0 +1,65 @@
+[
+  {
+    "id": "familiar-sedan",
+    "label": "Family sedan",
+    "length": 4.6,
+    "wheelbase": 2.6975799481417453,
+    "front": 1.3487899740708726,
+    "rear": 1.3487899740708726,
+    "track": 1.717545375972342
+  },
+  {
+    "id": "familiar-suv",
+    "label": "SUV",
+    "length": 4.7,
+    "wheelbase": 2.7577443927211176,
+    "front": 1.3788721963605588,
+    "rear": 1.3788721963605588,
+    "track": 1.8330596699111301
+  },
+  {
+    "id": "familiar-hatchback",
+    "label": "Sports hatchback",
+    "length": 4.1,
+    "wheelbase": 2.3967858869018843,
+    "front": 1.1983929434509422,
+    "rear": 1.1983929434509422,
+    "track": 1.6931077815369742
+  },
+  {
+    "id": "familiar-pickup",
+    "label": "Pickup truck",
+    "length": 5.1,
+    "wheelbase": 2.9984173505275495,
+    "front": 1.4992086752637748,
+    "rear": 1.4992086752637748,
+    "track": 1.8654161781946073
+  },
+  {
+    "id": "familiar-taxi",
+    "label": "Taxi",
+    "length": 4.6,
+    "wheelbase": 2.6975799481417453,
+    "front": 1.3487899740708726,
+    "rear": 1.3487899740708726,
+    "track": 1.717545375972342
+  },
+  {
+    "id": "familiar-police",
+    "label": "Police car",
+    "length": 4.6,
+    "wheelbase": 2.6975799481417453,
+    "front": 1.3487899740708726,
+    "rear": 1.3487899740708726,
+    "track": 1.717545375972342
+  },
+  {
+    "id": "familiar-van",
+    "label": "Family van",
+    "length": 4.9,
+    "wheelbase": 2.8780780170662332,
+    "front": 1.4390390085331166,
+    "rear": 1.4390390085331166,
+    "track": 1.854075579032913
+  }
+]

@@ -1,9 +1,10 @@
 /** Rendering choices never alter simulation, odds, inventory or race timing. */
 export const QUALITY_MODES=Object.freeze(['auto','low','medium','high']);
+// CPU core count does not predict integrated GPU throughput. Auto starts at medium.
 // Medium retains the instanced tire-contact shadows below, avoiding the second
 // geometry pass of dynamic sun shadows. High remains an explicit visual option.
 export function resolveQuality(mode='auto',{width=1280,cores=8,racers=8}={}){
-  const id=mode==='auto'?(width<700||cores<=4?'low':racers>16?'medium':'high'):QUALITY_MODES.includes(mode)?mode:'medium';
+  const id=mode==='auto'?(width<700||cores<=4?'low':'medium'):QUALITY_MODES.includes(mode)?mode:'medium';
   return Object.freeze({id,...({low:{dpr:1,shadows:false,shadowSize:512,lodDistance:65,detailedCars:2,authoredModels:false,skyWidth:256},medium:{dpr:1.25,shadows:false,shadowSize:1024,lodDistance:120,detailedCars:3,authoredModels:true,skyWidth:512},high:{dpr:1.65,shadows:true,shadowSize:2048,lodDistance:210,detailedCars:6,authoredModels:true,skyWidth:1024}}[id])});
 }
 

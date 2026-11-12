@@ -11,7 +11,7 @@ const decks=createRaceRamps(THREE,{track});decks.group.updateMatrixWorld(true);
 const deck=decks.group.getObjectByName('race3d-ramps-composite-driving-decks'),ray=new THREE.Raycaster();
 assert.ok(deck);
 const migrated=assignRacerTypes(Array.from({length:60},(_,i)=>({id:i,name:'Car '+i,racerType:['snail','bear','cheese-brie','x-wing'][i%4]})),()=>.43);
-assert.equal(migrated.length,60);assert.equal(new Set(migrated.map(c=>c.racerType)).size,RACE_ROSTER_TYPES.length);assert.ok(migrated.every(c=>c.category==='car'));assert.deepEqual(Object.keys(RACER_CARD_NAMES).sort(),[...RACE_ROSTER_TYPES].sort());
+assert.equal(migrated.length,60);assert.equal(new Set(migrated.map(c=>c.racerType)).size,RACE_ROSTER_TYPES.length);assert.ok(migrated.every(c=>c.category==='car'));assert.ok(RACE_ROSTER_TYPES.every(type=>RACER_CARD_NAMES[type]),'all active cars have labels; legacy labels remain available');
 function fixture(type='gt3',side=1,speed=28,rampIndex=0){
  const s=createRaceSimulation({players:[{id:'test',name:'Test',...getRacerIdentity(type)}],track,random:()=>.441,autoItems:false});s.pickups.length=0;
  const c=s.cars[0],r=s.ramps[rampIndex];Object.assign(c,{distance:r.distance-170,previousProgress:r.distance-170,lateral:side*7,preferredLane:side*7,speed,topSpeed:speed,_nextDecision:Infinity,_nextMistake:Infinity});
@@ -81,3 +81,4 @@ assert.ok(front({acceleration:8})<front({acceleration:0}));assert.ok(front({acce
 {const {s,c,motion}=fixture();c.distance=0;c.lateral=0;c.rampState='ground';c.rampId=null;c.speed=12;c.acceleration=7;motion.reset();motion.update(track,1/60);c.distance=2;motion.update(track,1/60);let p=motion.snapshot();assert.ok(p.wheels.every(w=>Math.abs(w.angle-2/.35)<.001));const old=p.wheels[0].angle;motion.update(track,1/60);assert.equal(motion.snapshot().wheels[0].angle,old);assert.ok(p.bodyPitch<0);c.steeringAngle=.3;motion.update(track,1/60);p=motion.snapshot();assert.ok(p.wheels.filter(w=>w.axle==='front').every(w=>w.steering>0));assert.ok(p.wheels.filter(w=>w.axle==='rear').every(w=>!w.steering));c.acceleration=-8;for(let i=0;i<100;i++)motion.update(track,1/60);assert.ok(motion.snapshot().bodyPitch>0);s.dispose();}
 decks.dispose();
 console.log(JSON.stringify({carsOnly:60,rampCases:cases,actualDeckRayContacts:contacts,maxDeckError,maxLandingStep,completedFlips:flips,plannerGuards:7,rampItemInteractions:10,fourWheelLoads:true,rollingAndSteering:true,speeds:approachEvents.map(e=>Number(e.actualSpeed.toFixed(1)))}));
+

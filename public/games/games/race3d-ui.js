@@ -1,10 +1,10 @@
-import {updateInventoryIcons} from './race3d-inventory-ui.js?v=20261031-dimensional';
-import {addCarGuide} from "./race3d-car-guide.js?v=20261031-dimensional";
-import { createRaceExtras } from './race3d-ui-extras.js?v=20261101-descent';
+import {updateInventoryIcons} from './race3d-inventory-ui.js?v=20261112-performance-cars';
+import {addCarGuide} from "./race3d-car-guide.js?v=20261112-performance-cars";
+import { createRaceExtras } from './race3d-ui-extras.js?v=20261112-performance-cars';
 
 
 const STYLE_URL = new URL('./race3d-ui.css?v=20261101-neon-speed-local', import.meta.url).href;
-import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261027-midnight';
+import {RACE_ROSTER_TYPES,getRacerIdentity} from './race3d-roster.js?v=20261112-performance-cars';
 
 function ensureStyles() {
   if (document.querySelector('link[data-race3d-ui-style]')) return;

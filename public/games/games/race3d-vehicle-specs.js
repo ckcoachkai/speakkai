@@ -1,3 +1,4 @@
+import {FAMILIAR_PROFILES} from './race3d-familiar-models.js?v=20261112-performance-cars';
 import { CONCEPT_VEHICLE_PROFILES } from './race3d-concept-profiles.js?v=20261027-midnight';
 /**
  * SI vehicle inputs for the race simulation, not homologation data for the models.
@@ -78,8 +79,9 @@ function deepFreeze(value) {
  */
 export const RACE_VEHICLE_PROFILES = deepFreeze({
   ...CONCEPT_VEHICLE_PROFILES,
+  ...FAMILIAR_PROFILES,
   'f1-2026': {
-    vehicleName: 'Qvist 2026 Formula concept',
+    vehicleName: 'Formula race car',
     speedFactor: 1.08, accelerationFactor: 1.12, gripFactor: 1.16, durabilityFactor: .78,
     vehicleSpec: {
       massKg: 800, powerKW: 720, torqueNm: 650,

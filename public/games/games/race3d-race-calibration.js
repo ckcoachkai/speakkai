@@ -1,4 +1,4 @@
-import {getVehicleSpec} from './race3d-vehicle-specs.js?v=20261027-midnight';
+import {getVehicleSpec} from './race3d-vehicle-specs.js?v=20261112-performance-cars';
 /** Fictional mixed-class race tuning. Source reference specs remain unmodified. */
 export const RACE_CALIBRATION=Object.freeze({
  'f1-2026':{topSpeedKph:165,powerKW:148,torqueNm:370,tireGrip:1.20,downforceCoefficient:1.7,brakeDecelMps2:13.5,launchAccelMps2:10.1},
