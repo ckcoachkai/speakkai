@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-11T09:04:15.513884+00:00",
+  "updatedAt": "2026-11-12T08:58:37.985201+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -871,6 +871,33 @@
             {
               "name": "Remi",
               "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-05&student=remy"
+            }
+          ]
+        },
+        {
+          "id": "thu-afternoon-2026-11-12",
+          "date": "2026-11-12",
+          "time": "15:30–17:30",
+          "classContent": [
+            "• Students practised impromptu responses and shared a prepared personal-experience speech. We discussed the importance of coming to speech class with some preparation.\n\n• I have not required students to write a particular amount. Writing a lot or a little is not the main point; what matters is doing the homework and coming with some preparation. Even five minutes spent writing a few notes about what to say or how to present it is better than no preparation, because it helps organise ideas.\n\n• This is also what I do for many lower-level adult speech competitions: I write down the three things I want to talk about. Even a small amount of preparation beforehand can help you speak better."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Jarvis",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-12&student=jarvis"
+            },
+            {
+              "name": "Elsa",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-12&student=elsa"
+            },
+            {
+              "name": "Owen",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-12&student=owen"
+            },
+            {
+              "name": "Remi",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-12&student=remy"
             }
           ]
         }
