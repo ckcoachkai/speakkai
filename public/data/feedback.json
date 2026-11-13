@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-12T08:58:37.972202+00:00",
+  "updatedAt": "2026-11-13T09:01:19.658885+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1597,6 +1597,46 @@
               "name": "Mikaela",
               "en": "• I was happy with Mikaela’s performance because her voice was louder. I could hear her completely and understand what she was saying. Each time it is almost like one percent louder, but those small changes are adding up. I think she is making improvements, and that is good.\n\n• In her later speaking, I again noticed that her voice was slightly louder. She is getting better and better and making continuous progress in being heard and understood. She still takes some time to think, but that is getting better too.\n\n• For Mikaela, I would say: just keep going at it. Suggestion: Keep that audible voice through the whole sentence, including after a thinking pause. She does not need to rush the thinking time; the useful focus is to make sure her next idea reaches the listeners clearly.",
               "zh": "• 我对 Mikaela 的表现很满意，因为她的声音更响亮了。我能够完整地听到，也能听懂她在说什么。每次就像只大声了百分之一，但这些小变化正在不断累积。我觉得她在进步，这很好。\n\n• 后面的发言中，我又注意到她的声音稍微更响亮了。她越来越好，在让人听见、听懂这方面持续进步。她仍然需要一些时间思考，不过这一点也在变好。\n\n• 对 Mikaela，我想说的是：继续保持。建议：让整句话都保持听得见的音量，包括思考停顿之后的部分。不需要为了减少思考时间而着急；有用的重点是让下一个想法清楚地传达到听众那里。"
+            }
+          ]
+        },
+        {
+          "id": "fri-afternoon-2026-11-13",
+          "date": "2026-11-13",
+          "time": "15:40–17:40",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "evan",
+              "name": "Evan",
+              "en": "• I felt that Evan put his content together reasonably well. He had his arguments, supported them, and was willing to speak and share his content.\n\n• For this activity, the focus was on his content rather than his presentation. The task was simply to state an argument and then explain his opinion about that argument.",
+              "zh": "• 我觉得 Evan 把内容组织得还不错。他提出了论点，也给出了支持，并且愿意开口分享自己的内容。\n\n• 这次活动更关注内容，而不是演讲的呈现方式。任务就是先提出一个论点，再说明自己对这个论点的看法。"
+            },
+            {
+              "id": "wendy",
+              "name": "Wendy",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan Xu",
+              "en": "• Ethan used a lot of hand gestures and moved around a lot while speaking. He also included strong puns and used a very varied range of sentences, which was really good.\n\n• Overall, he gave a good performance.",
+              "zh": "• Ethan 演讲时使用了很多手势，身体移动也很多。他还运用了有力的双关语，句式非常多样，这一点很好。\n\n• 整体来说，他的表现不错。"
+            },
+            {
+              "id": "ray",
+              "name": "Ray",
+              "en": "• I initially thought Ray might not be able to speak today, but he still wanted to present his homework. He had written a lot of content for what he wanted to say, and I felt that he had put a lot of effort into preparing it.\n\n• Even when something makes speaking more difficult, being willing to talk and share our opinions is really good. Good job, Ray.\n\n• Given his circumstances today, I am not focusing on the usual delivery comments, such as slowing down or speaking louder.",
+              "zh": "• 我原本以为 Ray 今天可能无法发言，但他仍然想展示自己的作业。他为想说的内容写了很多，我觉得他在准备上投入了很多努力。\n\n• 即使遇到让讲话变得更困难的情况，仍然愿意开口、分享自己的看法，也是很好的表现。Ray，做得好。\n\n• 考虑到他今天的情况，我不会把重点放在平时关于放慢速度、提高音量等呈现方面的建议上。"
+            },
+            {
+              "id": "mikaela",
+              "name": "Mikaela",
+              "en": "• Mikaela was our first speaker. Her volume varies: sometimes she speaks a little louder, and sometimes a little softer. Today, she spoke more softly, and we could not clearly hear what she was saying.\n\n• She needs to raise her volume so that everyone can hear her words and follow what she wants to share.",
+              "zh": "• Mikaela 是今天第一位演讲者。她的音量有时稍大、有时稍小。今天她说话偏轻，我们无法清楚听见她说的内容。\n\n• 她需要把音量提高一些，让大家能听清她的话，跟上她想分享的内容。"
             }
           ]
         }
