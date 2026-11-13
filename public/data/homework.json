@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-13T09:01:19.670220+00:00",
+  "updatedAt": "2026-11-13T11:00:45.225265+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1603,6 +1603,33 @@
             {
               "name": "Molly",
               "feedbackUrl": "/fb/?class=fri-later&date=2026-11-06&student=molly"
+            }
+          ]
+        },
+        {
+          "id": "fri-later-2026-11-13",
+          "date": "2026-11-13",
+          "time": "18:00–20:00",
+          "classContent": [
+            "• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• I also noticed that the students were very well behaved today, which was good to see."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-13&student=arthur"
+            },
+            {
+              "name": "Merlin",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-13&student=merlin"
+            },
+            {
+              "name": "Zoe",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-13&student=zoey"
+            },
+            {
+              "name": "Molly",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-13&student=molly"
             }
           ]
         }

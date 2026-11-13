@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-13T09:01:19.658885+00:00",
+  "updatedAt": "2026-11-13T11:00:45.214071+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1954,6 +1954,43 @@
               "name": "Molly",
               "en": "• Molly spoke for a very long time today: 3 minutes 20 seconds.",
               "zh": "• Molly 今天讲了很长时间：3分20秒。"
+            }
+          ]
+        },
+        {
+          "id": "fri-later-2026-11-13",
+          "date": "2026-11-13",
+          "time": "18:00–20:00",
+          "status": "held",
+          "classContent": {
+            "en": "• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• I also noticed that the students were very well behaved today, which was good to see.",
+            "zh": "• 我们讨论了“学生应该给老师评分吗？”这一问题的要点和不同立场。学生分享了自己的看法，以及支持这些看法的理由。\n\n• 任务就是先说明赞成或不赞成，再解释原因。可以写得多，也可以写得少，只要支持自己的观点即可，不需要把任务弄得过于复杂。如果不明白作业，就应该直接说自己不明白。\n\n• 我还注意到学生今天的课堂表现很守规矩，看到这一点很好。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": "• Arthur gave a pretty good response. He had written a lot and presented it, sharing his point of view on whether students should grade their teachers.\n\n• We had already gone over the points and different sides of the topic in class. As I keep reminding the students, the task is simply to explain their own view. Arthur did that, which was good.",
+              "zh": "• Arthur 的回答相当不错。他写了很多内容，并把它展示出来，分享了自己对学生是否应该给老师评分的看法。\n\n• 我们已经在课堂上讨论过这个话题的要点和不同立场。正如我一直提醒学生的，任务就是说明自己的看法。Arthur 做到了，这一点很好。"
+            },
+            {
+              "id": "merlin",
+              "name": "Merlin",
+              "en": "• Merlin spoke last and shared a lot about his topic. I felt that he put in good effort. Good job, Merlin.",
+              "zh": "• Merlin 最后一个上台，围绕自己的话题分享了很多内容。我觉得他付出了很好的努力。Merlin，做得好。"
+            },
+            {
+              "id": "zoey",
+              "name": "Zoe",
+              "en": "• Zoe’s response was very well put together, and I was pleasantly surprised. She shared her point of view on whether students should grade their teachers, which was good.\n\n• As I explained, she can write a lot or a little, as long as she supports her points. The task is to share what she believes and explain why; she does not need to make it unnecessarily complicated.\n\n• I mentioned that this topic has already been used in WSDA debate competitions for Grades 1–6. The aim here is simply to understand the question, express an opinion and support it with reasons.",
+              "zh": "• Zoe 的回答组织得很好，让我感到惊喜。她分享了自己对学生是否应该给老师评分的看法，这一点很好。\n\n• 正如我所解释的，她可以写得多，也可以写得少，只要能支持自己的观点就可以。任务是分享自己的看法并解释原因，不需要把它弄得过于复杂。\n\n• 我在课堂上提到，这个题目已经用于 WSDA 面向一至六年级的辩论比赛。这里的目的就是理解问题、表达观点，并用理由支持它。"
+            },
+            {
+              "id": "molly",
+              "name": "Molly",
+              "en": "• Molly spoke first. If she does not understand the homework, I want her to say so rather than leave the uncertainty unresolved.\n\n• The task was straightforward: “Do you think students should grade their teachers?” Give a yes-or-no answer, then explain the reasons behind that opinion. She does not need to make it very complex or difficult. Once she understands what the question means, she can focus on answering it and explaining why.",
+              "zh": "• Molly 第一个上台。如果她不明白作业，我希望她直接说自己不明白，而不是让疑问一直没有解决。\n\n• 任务本身很直接：“你认为学生应该给老师评分吗？”先回答赞成或不赞成，再解释自己的理由。她不需要把任务弄得很复杂、很困难。只要理解了问题的意思，就可以专注于回答，并说明为什么。"
             }
           ]
         }
