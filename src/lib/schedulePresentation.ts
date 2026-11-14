@@ -57,19 +57,17 @@ export function bookingGrade(label: string) {
 }
 
 export function publicBookingPresentation(label: string) {
-  if (label === 'CAT TMC meeting') return {kind:'tmc',title:label};
-  // These two event labels were explicitly authorized for public display by Kai.
-  if (label === 'Sharing at Zhangjiang Toastmasters Club') return {kind:'tmc',title:label};
-  if (label === 'Sharing at DPS') return {kind:'reserved',title:label};
-  const originalKind = calendarDisplayEventKind(label);
-  if (/\bTMC\b|\(TMC\)/i.test(label)) return { kind: "tmc", title: "TMC booked" };
-  // Private sessions remain anonymous, including their area and grade.
-  if (originalKind === "vip") return { kind: "vip", title: "VIP 1-to-1 booked" };
-  if (originalKind === "group" || originalKind === "sas") {
-    const details = [bookingArea(label)].filter(Boolean);
-    return { kind: "group", title: ['Class booked', ...details].join(' · ') };
-  }
-  return { kind: "reserved", title: "Time booked" };
+  // Kai approved showing schedule names and class details publicly on 2026-11-14.
+  // Keep contact details and meeting links out of the schedule display.
+  const title = internalBookingLabel(label)
+    .replace(/https?:\/\/\S+|\bwww\.\S+/gi, " ")
+    .replace(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/gi, " ")
+    .replace(/\+?\d[\d\s()-]{6,}\d/g, " ")
+    .replace(/\s+/g, " ").trim() || "Reserved time";
+  const originalKind = calendarDisplayEventKind(title);
+  const kind = /\bTMC\b|\(TMC\)/i.test(title) ? "tmc"
+    : originalKind === "sas" ? "group" : originalKind;
+  return { kind, title };
 }
 
 export function publicScheduleCell(value: string) {

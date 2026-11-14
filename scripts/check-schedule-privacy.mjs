@@ -15,7 +15,7 @@ const internalSchedule = JSON.parse(await readFile(internalSchedulePath, "utf8")
 
 assertCalendarDisplayPublicSchedule(publicSchedule);
 for(const sheet of publicSchedule.sheets)for(const row of sheet.rows)for(const cell of row.cells) {
-  assert.equal(cell.value, publicScheduleCell(cell.value), 'Public schedule contains a raw/private booking label');
+  assert.equal(cell.value, publicScheduleCell(cell.value), 'Public schedule contains an unformatted label or contact details');
 }
 assertCalendarDisplayPublicSchedule(internalSchedule);
 assert.deepEqual(publicSchedule.sheets.map((sheet) => sheet.title), ["October 2026", "November 2026", "December 2026"]);

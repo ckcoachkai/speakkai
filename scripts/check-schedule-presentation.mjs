@@ -5,19 +5,19 @@ import { calendarDisplayEventKind, publicBookingPresentation, scheduleStartMinut
 import { weeklyScheduleBlocks } from '../src/lib/weeklySchedule.ts';
 import { sanitizeCalendarCell } from './schedule-privacy.mjs';
 
-test('only the two explicitly authorized sharing labels stay public', () => {
+test('sharing and named sessions retain their approved labels', () => {
   for (const [label,kind] of [['Sharing at DPS','reserved'],['Sharing at Zhangjiang Toastmasters Club','tmc'],['CAT TMC meeting','tmc']]) {
     assert.deepEqual(publicBookingPresentation(label),{kind,title:label});
     assert.equal(calendarDisplayEventKind(label),kind);
     assert.equal(publicScheduleCell(`20\nLimited availability\n20:30–21:30 · ${label}`),`20\nLimited availability\n20:30–21:30 · ${label}`);
   }
-  assert.equal(publicBookingPresentation('Sharing with Lily Online 1-1').title,'VIP 1-to-1 booked');
+  assert.equal(publicBookingPresentation('Sharing with Lily Online 1-1').title,'Sharing with Lily Online 1-1');
 });
 
-test('holiday boot camps are anonymous group bookings', () => {
+test('holiday boot camps retain their names and group category', () => {
   for (const label of ['Grade 1 SDG boot camp', 'Grades 6–7 competition boot camp']) {
     assert.equal(calendarDisplayEventKind(label), 'group');
-    assert.deepEqual(publicBookingPresentation(label), {kind: 'group', title: 'Class booked'});
+    assert.deepEqual(publicBookingPresentation(label), {kind: 'group', title: label});
   }
 });
 
@@ -44,43 +44,34 @@ test('rescheduled Sunday classes retain the notice and override holiday unavaila
   assert.equal(sanitizeCalendarCell('20\nSchedule notice: unapproved private note'), '20\nLimited availability');
 });
 
-test('Sunday STCC lessons are regular classes; individual lessons stay VIP', () => {
-  assert.deepEqual(publicBookingPresentation('STCC'), { kind: 'group', title: 'Class booked · 威宁路' });
+test('class and private-session details remain visible with their categories', () => {
   for (const label of ['Yilan Online 1-1', 'Kunshan 1-on-1 class', 'JAC VIP', '龙柏 - Victoria']) {
-    assert.deepEqual(publicBookingPresentation(label), { kind: 'vip', title: 'VIP 1-to-1 booked' });
+    assert.deepEqual(publicBookingPresentation(label), {kind:'vip', title:label});
   }
-  assert.equal(calendarDisplayEventKind('井亭大厦 - 二年级 Logan 班'), 'group');
-  assert.deepEqual(publicBookingPresentation('Booked'), { kind: 'reserved', title: 'Time booked' });
-  assert.deepEqual(publicBookingPresentation('SAS Class'), { kind: 'group', title: 'Class booked · 华漕' });
-  assert.deepEqual(publicBookingPresentation('SHNo.1分享(TMC)'), { kind: 'tmc', title: 'TMC booked' });
-});
-
-test('public group labels expose only allowlisted areas without grade levels', () => {
   for (const [raw, title] of [
-    ['SAS - 五年级', 'Class booked · 华漕'],
-    ['井亭大厦 - 二年级 Logan 班', 'Class booked · 龙柏'],
-    ['井亭大厦 - 二三年级', 'Class booked · 龙柏'],
-    ['古北1699 - 八九年级', 'Class booked · 古北'],
-    ['虹桥天地 三年级', 'Class booked · 华漕'],
-    ['STCC', 'Class booked · 威宁路'],
-    ['Unknown student 班课', 'Class booked'],
+    ['SAS - 五年级', 'SAS · 华漕 - 五年级'],
+    ['井亭大厦 - 二年级 Logan 班', '龙柏 - 二年级 Logan 班'],
+    ['古北1699 - 八九年级', '古北 - 八九年级'],
+    ['STCC', 'STCC · 威宁路'],
   ]) {
-    assert.deepEqual(publicBookingPresentation(raw), {kind:'group', title});
-    assert.deepEqual(publicBookingPresentation(title), {kind:'group', title});
+    assert.deepEqual(publicBookingPresentation(raw), {kind:'group',title});
+    assert.deepEqual(publicBookingPresentation(title), {kind:'group',title});
   }
+  assert.deepEqual(publicBookingPresentation('Booked'), {kind:'reserved',title:'Booked'});
+  assert.deepEqual(publicBookingPresentation('SHNo.1分享(TMC)'), {kind:'tmc',title:'SHNo.1分享(TMC)'});
+  const cell = publicScheduleCell('26\nHoliday\n19:00–20:00 · Claire Online 1-1\n20:00–21:00 · 井亭大厦 二年级 Logan 班');
+  assert.match(cell, /Claire Online 1-1/);
+  assert.match(cell, /龙柏 二年级 Logan 班/);
+  assert.equal(publicScheduleCell(cell), cell);
   assert.equal(bookingGrade('十一年级'),'G11');
   assert.equal(bookingGrade('G12'),'G12');
   assert.equal(bookingGrade('古北1699'),'');
-  const safe=publicScheduleCell('26\nHoliday\n19:00–20:00 · Claire Online 1-1\n20:00–21:00 · 井亭大厦 二年级 Logan 班');
-  assert.doesNotMatch(safe,/Claire|Logan|井亭大厦/);
-  assert.match(safe,/19:00–20:00 · VIP 1-to-1 booked/);
-  assert.match(safe,/20:00–21:00 · Class booked · 龙柏/);
-  assert.doesNotMatch(safe, /年级|\bG\d|\bGrades?\s*\d/i);
-  assert.equal(publicScheduleCell('18\n15:40–17:40 · Class booked · 龙柏 · G2–3'), '18\n15:40–17:40 · Class booked · 龙柏');
-  assert.equal(publicScheduleCell(safe),safe);
-  const internal=internalBookingLabel('SAS - 五年级');
-  assert.equal(internal,'SAS · 华漕 - 五年级');
-  assert.equal(internalBookingLabel(internal),internal);
+});
+
+test('showing event titles does not expose contact details or meeting links', () => {
+  const result = publicBookingPresentation('Claire Online 1-1 claire@example.com https://meet.example.com/private +86 138 0013 8000');
+  assert.equal(result.title, 'Claire Online 1-1');
+  assert.equal(result.kind, 'vip');
 });
 
 test('explicit online all-day availability overrides a holiday and excludes Claire booking', () => {
