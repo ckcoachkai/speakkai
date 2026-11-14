@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-14T07:02:08.386130+00:00",
+  "updatedAt": "2026-11-14T08:37:10.792036+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1061,10 +1061,13 @@
           "time": "15:30–17:30",
           "status": "held",
           "classContent": {
-            "en": "• Students practised impromptu responses and shared a prepared personal-experience speech. We discussed the importance of coming to speech class with some preparation.\n\n• I have not required students to write a particular amount. Writing a lot or a little is not the main point; what matters is doing the homework and coming with some preparation. Even five minutes spent writing a few notes about what to say or how to present it is better than no preparation, because it helps organise ideas.\n\n• This is also what I do for many lower-level adult speech competitions: I write down the three things I want to talk about. Even a small amount of preparation beforehand can help you speak better.",
-            "zh": "• 学生练习了即兴回答，也分享了准备好的个人经历演讲。我们讨论了来演讲课前做一些准备的重要性。\n\n• 我没有要求学生必须写多少。写得多或少不是重点，重要的是完成作业，并带着一些准备来上课。哪怕花五分钟写几个要点，想清楚要讲什么、怎样呈现，也比完全没有准备好，因为这能帮助组织思路。\n\n• 我参加许多较低级别的成人演讲比赛时，也会这样做：写下自己要讲的三个要点。提前做一点准备，也能帮助你讲得更好。"
+            "en": "• Students practised impromptu responses and shared a prepared personal-experience speech. We discussed the importance of coming to speech class with some preparation.\n\n• I have not required students to write a particular amount. Writing a lot or a little is not the main point; what matters is doing the homework and coming with some preparation. Even five minutes spent writing a few notes about what to say or how to present it is better than no preparation, because it helps organise ideas.\n\n• This is also what I do for many lower-level adult speech competitions: I write down the three things I want to talk about. Even a small amount of preparation beforehand can help you speak better.\n\n• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home.",
+            "zh": "• 学生练习了即兴回答，也分享了准备好的个人经历演讲。我们讨论了来演讲课前做一些准备的重要性。\n\n• 我没有要求学生必须写多少。写得多或少不是重点，重要的是完成作业，并带着一些准备来上课。哪怕花五分钟写几个要点，想清楚要讲什么、怎样呈现，也比完全没有准备好，因为这能帮助组织思路。\n\n• 我参加许多较低级别的成人演讲比赛时，也会这样做：写下自己要讲的三个要点。提前做一点准备，也能帮助你讲得更好。\n\n• 我们讨论了“学生应该给老师评分吗？”这一问题的要点和不同立场。学生分享了自己的看法，以及支持这些看法的理由。\n\n• 任务就是先说明赞成或不赞成，再解释原因。可以写得多，也可以写得少，只要支持自己的观点即可，不需要把任务弄得过于复杂。如果不明白作业，就应该直接说自己不明白。\n\n• 我们开始发展更严肃话题的演讲。我们观看了2013年世界冠军关于换轮胎的演讲，其核心信息是“Reach out”，随后学生选择了自己想分享的话题。\n\n• 我们思考听众是谁、他们的人群特征是什么，以及他们为什么会关心这个话题。你的核心信息是什么？为什么想把它告诉别人？你的父母为什么会关心？\n\n• 我没有让学生先把所有内容写下来，而是希望他们先思考选定的话题，再尽可能多地用口头表达出来。之后我们可以一起稍作润色和修改，让学生回家后继续发展这些内容。"
           },
-          "homework": null,
+          "homework": {
+            "en": "• Practise speaking about your chosen topic at home, using the content we developed in class.\n\n• Consider whether you would like to add any personal stories or anything else to develop what you already have.",
+            "zh": "• 在家练习讲述自己选定的话题，运用课堂上已经发展的内容。\n\n• 思考是否想加入个人故事，或补充其他内容，进一步完善已有的演讲。"
+          },
           "students": [
             {
               "id": "jarvis",
@@ -1249,58 +1252,6 @@
               "attendance": "absent",
               "en": "Absent, as last explicitly confirmed by the teacher.",
               "zh": "根据老师最近一次明确的出勤确认，本次缺席。"
-            }
-          ]
-        },
-        {
-          "id": "thu-later-2026-11-12",
-          "date": "2026-11-12",
-          "time": "18:15–20:15",
-          "status": "held",
-          "classContent": {
-            "en": "• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home.",
-            "zh": "• 我们开始发展更严肃话题的演讲。我们观看了2013年世界冠军关于换轮胎的演讲，其核心信息是“Reach out”，随后学生选择了自己想分享的话题。\n\n• 我们思考听众是谁、他们的人群特征是什么，以及他们为什么会关心这个话题。你的核心信息是什么？为什么想把它告诉别人？你的父母为什么会关心？\n\n• 我没有让学生先把所有内容写下来，而是希望他们先思考选定的话题，再尽可能多地用口头表达出来。之后我们可以一起稍作润色和修改，让学生回家后继续发展这些内容。"
-          },
-          "homework": {
-            "en": "• Practise speaking about your chosen topic at home, using the content we developed in class.\n\n• Consider whether you would like to add any personal stories or anything else to develop what you already have.",
-            "zh": "• 在家练习讲述自己选定的话题，运用课堂上已经发展的内容。\n\n• 思考是否想加入个人故事，或补充其他内容，进一步完善已有的演讲。"
-          },
-          "students": [
-            {
-              "id": "ary",
-              "name": "Ary",
-              "en": null,
-              "zh": null
-            },
-            {
-              "id": "molly",
-              "name": "Molly",
-              "en": null,
-              "zh": null
-            },
-            {
-              "id": "whistler",
-              "name": "Whistler",
-              "en": null,
-              "zh": null
-            },
-            {
-              "id": "richard",
-              "name": "Richard",
-              "en": null,
-              "zh": null
-            },
-            {
-              "id": "evelyn",
-              "name": "Evelyn",
-              "en": null,
-              "zh": null
-            },
-            {
-              "id": "candy",
-              "name": "Candy",
-              "en": null,
-              "zh": null
             }
           ]
         }
@@ -1685,8 +1636,14 @@
           "date": "2026-11-13",
           "time": "15:40–17:40",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "• Students practised impromptu responses and shared a prepared personal-experience speech. We discussed the importance of coming to speech class with some preparation.\n\n• I have not required students to write a particular amount. Writing a lot or a little is not the main point; what matters is doing the homework and coming with some preparation. Even five minutes spent writing a few notes about what to say or how to present it is better than no preparation, because it helps organise ideas.\n\n• This is also what I do for many lower-level adult speech competitions: I write down the three things I want to talk about. Even a small amount of preparation beforehand can help you speak better.\n\n• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home.",
+            "zh": "• 学生练习了即兴回答，也分享了准备好的个人经历演讲。我们讨论了来演讲课前做一些准备的重要性。\n\n• 我没有要求学生必须写多少。写得多或少不是重点，重要的是完成作业，并带着一些准备来上课。哪怕花五分钟写几个要点，想清楚要讲什么、怎样呈现，也比完全没有准备好，因为这能帮助组织思路。\n\n• 我参加许多较低级别的成人演讲比赛时，也会这样做：写下自己要讲的三个要点。提前做一点准备，也能帮助你讲得更好。\n\n• 我们讨论了“学生应该给老师评分吗？”这一问题的要点和不同立场。学生分享了自己的看法，以及支持这些看法的理由。\n\n• 任务就是先说明赞成或不赞成，再解释原因。可以写得多，也可以写得少，只要支持自己的观点即可，不需要把任务弄得过于复杂。如果不明白作业，就应该直接说自己不明白。\n\n• 我们开始发展更严肃话题的演讲。我们观看了2013年世界冠军关于换轮胎的演讲，其核心信息是“Reach out”，随后学生选择了自己想分享的话题。\n\n• 我们思考听众是谁、他们的人群特征是什么，以及他们为什么会关心这个话题。你的核心信息是什么？为什么想把它告诉别人？你的父母为什么会关心？\n\n• 我没有让学生先把所有内容写下来，而是希望他们先思考选定的话题，再尽可能多地用口头表达出来。之后我们可以一起稍作润色和修改，让学生回家后继续发展这些内容。"
+          },
+          "homework": {
+            "en": "• Practise speaking about your chosen topic at home, using the content we developed in class.\n\n• Consider whether you would like to add any personal stories or anything else to develop what you already have.",
+            "zh": "• 在家练习讲述自己选定的话题，运用课堂上已经发展的内容。\n\n• 思考是否想加入个人故事，或补充其他内容，进一步完善已有的演讲。"
+          },
           "students": [
             {
               "id": "evan",
@@ -1697,8 +1654,9 @@
             {
               "id": "wendy",
               "name": "Wendy",
-              "en": null,
-              "zh": null
+              "en": "• Wendy was absent from this class.",
+              "zh": "• Wendy 本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "ethan",
@@ -2043,8 +2001,8 @@
           "time": "18:00–20:00",
           "status": "held",
           "classContent": {
-            "en": "• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• I also noticed that the students were very well behaved today, which was good to see.\n\n• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home.",
-            "zh": "• 我们讨论了“学生应该给老师评分吗？”这一问题的要点和不同立场。学生分享了自己的看法，以及支持这些看法的理由。\n\n• 任务就是先说明赞成或不赞成，再解释原因。可以写得多，也可以写得少，只要支持自己的观点即可，不需要把任务弄得过于复杂。如果不明白作业，就应该直接说自己不明白。\n\n• 我还注意到学生今天的课堂表现很守规矩，看到这一点很好。\n\n• 我们开始发展更严肃话题的演讲。我们观看了2013年世界冠军关于换轮胎的演讲，其核心信息是“Reach out”，随后学生选择了自己想分享的话题。\n\n• 我们思考听众是谁、他们的人群特征是什么，以及他们为什么会关心这个话题。你的核心信息是什么？为什么想把它告诉别人？你的父母为什么会关心？\n\n• 我没有让学生先把所有内容写下来，而是希望他们先思考选定的话题，再尽可能多地用口头表达出来。之后我们可以一起稍作润色和修改，让学生回家后继续发展这些内容。"
+            "en": "• Students practised impromptu responses and shared a prepared personal-experience speech. We discussed the importance of coming to speech class with some preparation.\n\n• I have not required students to write a particular amount. Writing a lot or a little is not the main point; what matters is doing the homework and coming with some preparation. Even five minutes spent writing a few notes about what to say or how to present it is better than no preparation, because it helps organise ideas.\n\n• This is also what I do for many lower-level adult speech competitions: I write down the three things I want to talk about. Even a small amount of preparation beforehand can help you speak better.\n\n• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home.\n\n• I also noticed that the students were very well behaved today, which was good to see.",
+            "zh": "• 学生练习了即兴回答，也分享了准备好的个人经历演讲。我们讨论了来演讲课前做一些准备的重要性。\n\n• 我没有要求学生必须写多少。写得多或少不是重点，重要的是完成作业，并带着一些准备来上课。哪怕花五分钟写几个要点，想清楚要讲什么、怎样呈现，也比完全没有准备好，因为这能帮助组织思路。\n\n• 我参加许多较低级别的成人演讲比赛时，也会这样做：写下自己要讲的三个要点。提前做一点准备，也能帮助你讲得更好。\n\n• 我们讨论了“学生应该给老师评分吗？”这一问题的要点和不同立场。学生分享了自己的看法，以及支持这些看法的理由。\n\n• 任务就是先说明赞成或不赞成，再解释原因。可以写得多，也可以写得少，只要支持自己的观点即可，不需要把任务弄得过于复杂。如果不明白作业，就应该直接说自己不明白。\n\n• 我们开始发展更严肃话题的演讲。我们观看了2013年世界冠军关于换轮胎的演讲，其核心信息是“Reach out”，随后学生选择了自己想分享的话题。\n\n• 我们思考听众是谁、他们的人群特征是什么，以及他们为什么会关心这个话题。你的核心信息是什么？为什么想把它告诉别人？你的父母为什么会关心？\n\n• 我没有让学生先把所有内容写下来，而是希望他们先思考选定的话题，再尽可能多地用口头表达出来。之后我们可以一起稍作润色和修改，让学生回家后继续发展这些内容。\n\n• 我还注意到学生今天的课堂表现很守规矩，看到这一点很好。"
           },
           "homework": {
             "en": "• Practise speaking about your chosen topic at home, using the content we developed in class.\n\n• Consider whether you would like to add any personal stories or anything else to develop what you already have.",

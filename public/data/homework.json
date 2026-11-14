@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-14T07:02:08.397684+00:00",
+  "updatedAt": "2026-11-14T08:37:10.803665+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -900,9 +900,15 @@
           "date": "2026-11-12",
           "time": "15:30–17:30",
           "classContent": [
-            "• Students practised impromptu responses and shared a prepared personal-experience speech. We discussed the importance of coming to speech class with some preparation.\n\n• I have not required students to write a particular amount. Writing a lot or a little is not the main point; what matters is doing the homework and coming with some preparation. Even five minutes spent writing a few notes about what to say or how to present it is better than no preparation, because it helps organise ideas.\n\n• This is also what I do for many lower-level adult speech competitions: I write down the three things I want to talk about. Even a small amount of preparation beforehand can help you speak better."
+            "• Students practised impromptu responses and shared a prepared personal-experience speech. We discussed the importance of coming to speech class with some preparation.\n\n• I have not required students to write a particular amount. Writing a lot or a little is not the main point; what matters is doing the homework and coming with some preparation. Even five minutes spent writing a few notes about what to say or how to present it is better than no preparation, because it helps organise ideas.\n\n• This is also what I do for many lower-level adult speech competitions: I write down the three things I want to talk about. Even a small amount of preparation beforehand can help you speak better.\n\n• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Practise and develop your speech topic",
+            "steps": [
+              "• Practise speaking about your chosen topic at home, using the content we developed in class.\n\n• Consider whether you would like to add any personal stories or anything else to develop what you already have."
+            ],
+            "prepareFor": "Continued development of the selected speech topic."
+          },
           "students": [
             {
               "name": "Jarvis",
@@ -1039,47 +1045,6 @@
             {
               "name": "Candy",
               "feedbackUrl": "/fb/?class=thu-later&date=2026-09-24&student=candy"
-            }
-          ]
-        },
-        {
-          "id": "thu-later-2026-11-12",
-          "date": "2026-11-12",
-          "time": "18:15–20:15",
-          "classContent": [
-            "• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home."
-          ],
-          "homework": {
-            "title": "Practise and develop your speech topic",
-            "steps": [
-              "• Practise speaking about your chosen topic at home, using the content we developed in class.\n\n• Consider whether you would like to add any personal stories or anything else to develop what you already have."
-            ],
-            "prepareFor": "Continued development of the selected speech topic."
-          },
-          "students": [
-            {
-              "name": "Ary",
-              "feedbackUrl": "/fb/?class=thu-later&date=2026-11-12&student=ary"
-            },
-            {
-              "name": "Molly",
-              "feedbackUrl": "/fb/?class=thu-later&date=2026-11-12&student=molly"
-            },
-            {
-              "name": "Whistler",
-              "feedbackUrl": "/fb/?class=thu-later&date=2026-11-12&student=whistler"
-            },
-            {
-              "name": "Richard",
-              "feedbackUrl": "/fb/?class=thu-later&date=2026-11-12&student=richard"
-            },
-            {
-              "name": "Evelyn",
-              "feedbackUrl": "/fb/?class=thu-later&date=2026-11-12&student=evelyn"
-            },
-            {
-              "name": "Candy",
-              "feedbackUrl": "/fb/?class=thu-later&date=2026-11-12&student=candy"
             }
           ]
         }
@@ -1383,8 +1348,16 @@
           "id": "fri-afternoon-2026-11-13",
           "date": "2026-11-13",
           "time": "15:40–17:40",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "• Students practised impromptu responses and shared a prepared personal-experience speech. We discussed the importance of coming to speech class with some preparation.\n\n• I have not required students to write a particular amount. Writing a lot or a little is not the main point; what matters is doing the homework and coming with some preparation. Even five minutes spent writing a few notes about what to say or how to present it is better than no preparation, because it helps organise ideas.\n\n• This is also what I do for many lower-level adult speech competitions: I write down the three things I want to talk about. Even a small amount of preparation beforehand can help you speak better.\n\n• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home."
+          ],
+          "homework": {
+            "title": "Practise and develop your speech topic",
+            "steps": [
+              "• Practise speaking about your chosen topic at home, using the content we developed in class.\n\n• Consider whether you would like to add any personal stories or anything else to develop what you already have."
+            ],
+            "prepareFor": "Continued development of the selected speech topic."
+          },
           "students": [
             {
               "name": "Evan",
@@ -1673,7 +1646,7 @@
           "date": "2026-11-13",
           "time": "18:00–20:00",
           "classContent": [
-            "• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• I also noticed that the students were very well behaved today, which was good to see.\n\n• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home."
+            "• Students practised impromptu responses and shared a prepared personal-experience speech. We discussed the importance of coming to speech class with some preparation.\n\n• I have not required students to write a particular amount. Writing a lot or a little is not the main point; what matters is doing the homework and coming with some preparation. Even five minutes spent writing a few notes about what to say or how to present it is better than no preparation, because it helps organise ideas.\n\n• This is also what I do for many lower-level adult speech competitions: I write down the three things I want to talk about. Even a small amount of preparation beforehand can help you speak better.\n\n• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home.\n\n• I also noticed that the students were very well behaved today, which was good to see."
           ],
           "homework": {
             "title": "Practise and develop your speech topic",
