@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-14T08:37:10.792036+00:00",
+  "updatedAt": "2026-11-14T08:58:15.161805+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -539,6 +539,40 @@
           "id": "sat-foundations-2026-11-07",
           "time": "15:00–16:30",
           "status": "held"
+        },
+        {
+          "id": "sat-foundations-2026-11-14",
+          "date": "2026-11-14",
+          "time": "15:00–16:30",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "neil",
+              "name": "Neil",
+              "en": "• Neil was our third speaker. I felt that he was mainly reading through his content, whereas I wanted the students to focus more on writing and expressing their own ideas.\n• He looked at the audience sometimes while speaking. He also spoke clearly and with energy, which was good.\n• I would like Neil to use the paper as a guide rather than simply read through it. The next step is to share more of his own thoughts and develop what he personally wants to say. Our focus is on speaking to the audience and connecting with them; even a strong written speech needs his own thinking to come through.\n• His speech is also missing a personal story. Why does he care about this topic? What has happened in his own life that makes it matter to him? Bringing in that personal connection would help us hear more of Neil’s perspective.\n• My strongest suggested direction is: “I opened my phone for a reason—why am I still here?” He could explore how a quick check becomes an hour of scrolling, how app design and our habits influence us, and how we can regain control of our attention. This is a possible direction to develop through his own experience, rather than an assumption about what has happened to him.",
+              "zh": "• Neil 是第三位演讲者。我觉得他主要是在朗读内容，而我希望学生更多关注自己写作、表达自己的想法。\n\n• 他讲话时偶尔会看向听众。他也说得清楚、有精神，这一点很好。\n\n• 我希望 Neil 把纸上的内容当作提示，而不是只是照着读。下一步是多分享自己的想法，发展自己真正想说的内容。我们的重点是对听众讲话、与他们建立联系；即使书面稿很好，也需要通过讲解和分享，让 Neil 自己的思考表现出来。\n\n• 他的演讲还缺少一个个人故事。为什么他在乎这个话题？自己的生活中发生了什么，让这个话题对他有意义？加入这样的个人联系，能让我们更多听到 Neil 自己的视角。\n\n• 我最推荐的方向是：“我打开手机本来是有目的的——为什么还在这里？”他可以探讨一次快速查看如何变成刷了一个小时，应用的设计和我们的习惯怎样影响我们，以及如何重新掌握自己的注意力。这是一个可以结合自身经历发展的方向，不是认定这些事情已经发生在他身上。"
+            },
+            {
+              "id": "william",
+              "name": "William",
+              "en": "• William was our second speaker. He was still mumbling through his speech, and his wording was not always clear. He also lacked basic signposting words such as “cause,” “effect,” “impact” and “solution.” Fortunately, I captured everything he said, so we can organise his thoughts and simplify his language.\n• Two priorities are developing his solutions and improving audience comprehension. Everyone should be able to understand what he is saying. He also needs more specific details to make the speech visual: use proper nouns, concrete details and clear transitions so listeners can picture what he means and follow the argument.\n• He can connect his ideas with situations the audience recognises. For example: “Have you ever felt pressure?” or “Have you ever felt stressed because your parents gave you too much work?”\n• I suggested using inner dialogue, dialogue between characters, humour and exaggeration. A deliberately exaggerated line could be: “Hey, William, study for another twelve hours! Don’t sleep—work until morning!” Another example I proposed was: “My parents wanted me to write a thousand pages about how to be more efficient at homework because I hadn’t done my homework. It was crazy!” These are examples to explore, not things William reported happening.\n• We will work on this today in three steps: first, simplify and clarify what he wants to say; second, add clear transition words; and third, experiment with these techniques to make the speech more engaging and connected to the audience.\n• My strongest suggested direction is: “When encouragement starts sounding like ‘You are never enough.’” Focus on the gap between parents’ intentions and a child’s experience. One detailed conversation could show how words intended to motivate can instead discourage learning. He could then explore what more helpful encouragement would sound like. This is my strongest choice because it creates an emotional conflict without turning parents into villains.",
+              "zh": "• William 是第二位演讲者。他仍然有含糊不清的情况，措辞也并非总是清楚。他还缺少“原因”“结果”“影响”“解决方案”等基本的路标词。好在我记录下了他说的全部内容，可以帮助他组织思路、简化语言。\n\n• 两个重点是发展解决方案，以及提高听众的理解程度。每个人都应该能理解他在讲什么。他还需要更具体的细节，让演讲有画面：加入专有名词、具体细节和清楚的过渡，让听众能想象情境、跟上论证。\n\n• 他可以把想法与听众熟悉的情境联系起来，例如：“你有没有感到压力？”或“你有没有因为父母给了太多任务而感到压力？”\n\n• 我建议尝试内心独白、人物对话、幽默和夸张。例如可以故意夸张地说：“William，再学十二个小时！不要睡觉，一直学到早上！”另一个我提出的例子是：“因为我没做作业，父母要我写一千页关于如何提高作业效率的文章。太疯狂了！”这些是供他探索的例子，不是 William 报告真实发生过的事情。\n\n• 我们今天会分三步练习：先简化、澄清想说的内容，再加入清楚的过渡词，最后尝试运用这些技巧，让演讲更吸引人、更贴近听众。\n\n• 我最推荐的方向是：“当鼓励听起来变成‘你永远不够好’。”重点是父母的初衷与孩子实际感受之间的差距。可以用一段细节充分的对话，展示原本想激励孩子的话，如何反而削弱学习的动力，再探讨更有帮助的鼓励可以是什么样。这是我最推荐的选择，因为它能创造情感冲突，同时不把父母写成反面人物。"
+            },
+            {
+              "id": "kyle",
+              "name": "Kyle",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "ivy",
+              "name": "Ivy",
+              "en": "• Ivy’s overall speech was pretty good. She spoke for 4 minutes and 43 seconds, and I felt that the timing was good as well.\n• One area to rethink is the solutions section. Her advice focused on ADHD medication and not taking medicine that was not prescribed for the listener. However, if audience members do not misuse medication in the first place, that advice does not give them something they can change. We need to step back and ask: How does this topic affect more people around the world, including those who do not misuse medication?\n• One possible direction is to broaden the message to unfair or inappropriate shortcuts. We may focus on the benefits of gaining an advantage without considering the disadvantages, the negative effects on ourselves, or other consequences.\n• I suggested examples she could explore, rather than examples she had already included: cheating or hacking in a video game to win every round, or the marathon participant I described who rode on the back of a bicycle, waved while people took photographs, and was later disqualified. I also asked questions about using AI for homework or writing as another possible way into a discussion about appropriate help and unfair shortcuts. The aim is to find situations more listeners recognise, so the message connects with more people and has a stronger impact.\n• My strongest suggested direction is: “When does self-improvement become self-harm?” Keep the request for a pill as the opening, then widen the question: how far will we push ourselves to become “better”? She could connect this to sacrificing sleep, skipping meals and ignoring exhaustion, then explore how to recognise when ambition starts damaging the person it is supposed to help. This is my strongest choice because wanting to improve—and struggling to know when to stop—is something a broad audience can relate to.\n• Another possible direction is: “Can we resist an advantage when everyone else seems to have one?” Make “Everyone does it” the central line. Explore how comparison can pressure people to cross their own boundaries through borrowed medication, cheating or other harmful shortcuts. The solutions could focus on deciding beforehand what we will refuse and how to respond when someone pressures us.",
+              "zh": "• Ivy 的整体演讲相当不错。她讲了4分43秒，我觉得时间掌握也不错。\n\n• 需要重新思考的是解决方案部分。她的建议围绕 ADHD 药物，以及不要服用并非为自己开具的药物。不过，如果听众本来就不滥用药物，这种建议就没有给他们可以改变的行动。我们需要退一步思考：这个话题怎样影响世界各地的更多人，包括不滥用药物的人？\n\n• 一个可能的方向，是把信息拓展到不公平或不恰当的捷径。我们可能只看到获得优势的好处，却没有考虑缺点、对自己的负面影响及其他后果。\n\n• 我提出的是供她探索的例子，不是她已经写进演讲的例子：在电子游戏里作弊或开挂，让自己每一局都赢；还有我讲述的那位马拉松参赛者，她坐在自行车后座上完成后面的路程，拍照时还挥手，后来因作弊被取消资格。我也通过关于使用 AI 帮助完成作业或写作的问题，引出对适当帮助和不公平捷径的讨论。目的是找到更多听众熟悉的情境，让信息与更多人产生联系，有更强的影响力。\n\n• 我最推荐的方向是：“自我提升何时变成自我伤害？”保留开头请求一片药的情节，然后把问题拓宽：为了变得“更好”，我们会把自己逼到什么程度？她可以联系牺牲睡眠、不吃饭、忽略疲惫等情况，再探讨如何识别：追求进步何时开始伤害原本应该受益的自己。这是我最推荐的选择，因为想进步、又不知道何时该停下来，是广泛听众都可能有共鸣的事情。\n\n• 另一个可能的方向是：“当别人似乎都有优势时，我们能拒绝那份优势吗？”把“大家都这样做”作为核心句，探讨比较如何迫使人越过自己的界限，例如借用别人的药物、作弊，或采用其他有害的捷径。解决方案可以聚焦于提前决定哪些事自己不会做，以及受到压力时如何回应。"
+            }
+          ]
         }
       ]
     },
@@ -791,6 +825,34 @@
               "name": "Hugo",
               "en": "• Hugo gave a very interesting self-introduction about falling into a hole. He spoke for approximately one minute, and the introduction was quick.\n\n• That experience gives him a concrete story to share. Suggestion: Develop the scene by explaining where he was, what happened and what happened afterward. These are possible ways to expand the story, rather than details he already included.",
               "zh": "• Hugo 进行了一个很有意思的自我介绍，讲到自己掉进一个洞里。他讲了大约一分钟，介绍比较快。\n\n• 这个经历给了他一个可以分享的具体故事。建议：可以说明当时在哪里、发生了什么，以及后来怎么样，来展开这个场景。这些是拓展故事的可能方法，不是说他已经讲了这些细节。"
+            }
+          ]
+        },
+        {
+          "id": "sat-introductory-2026-11-14",
+          "date": "2026-11-14",
+          "time": "16:30–18:30",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "anna",
+              "name": "Anna",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "stacey",
+              "name": "Stacey",
+              "en": "• Stacey spoke first and completed her homework. She delivered her speech about her boat-ride experience, which was good.\n\n• I think she needs to add more details to develop the experience she is sharing.",
+              "zh": "• Stacey 第一个上台，完成了作业，并展示了关于自己乘船经历的演讲，这一点很好。\n\n• 我觉得她还需要加入更多细节，进一步展开自己分享的经历。"
+            },
+            {
+              "id": "hugo",
+              "name": "Hugo",
+              "en": "• Although Hugo had not prepared for his homework presentation, he spoke at length and shared a detailed story about a boat trip.\n\n• I felt that the story was well put together, with a lot of specific details.\n\n• His next step is to add a clear message: what does he want the audience to take away from the experience, and how can that message connect with the people listening?",
+              "zh": "• 虽然 Hugo 没有为作业展示做准备，但他讲了很多，分享了一次乘船经历的详细故事。\n\n• 我觉得故事组织得很好，有很多具体细节。\n\n• 下一步是加入清楚的核心信息：他希望听众从这段经历中得到什么？这个信息怎样与听众建立联系？"
             }
           ]
         }

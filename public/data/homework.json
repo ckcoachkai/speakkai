@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-14T08:37:10.803665+00:00",
+  "updatedAt": "2026-11-14T08:58:15.174321+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -462,6 +462,31 @@
               "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-07&student=ivy"
             }
           ]
+        },
+        {
+          "id": "sat-foundations-2026-11-14",
+          "date": "2026-11-14",
+          "time": "15:00–16:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Neil",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-14&student=neil"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-14&student=william"
+            },
+            {
+              "name": "Kyle",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-14&student=kyle"
+            },
+            {
+              "name": "Ivy",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-14&student=ivy"
+            }
+          ]
         }
       ]
     },
@@ -675,6 +700,27 @@
             {
               "name": "Hugo",
               "feedbackUrl": "/fb/?class=sat-introductory&date=2026-11-07&student=hugo"
+            }
+          ]
+        },
+        {
+          "id": "sat-introductory-2026-11-14",
+          "date": "2026-11-14",
+          "time": "16:30–18:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Anna",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-11-14&student=anna"
+            },
+            {
+              "name": "Stacey",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-11-14&student=stacey"
+            },
+            {
+              "name": "Hugo",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-11-14&student=hugo"
             }
           ]
         }
