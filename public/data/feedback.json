@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-13T11:00:45.214071+00:00",
+  "updatedAt": "2026-11-14T07:02:08.386130+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -283,6 +283,34 @@
           "id": "sat-original-oratory-2026-11-07",
           "time": "13:00–15:00",
           "status": "held"
+        },
+        {
+          "id": "sat-original-oratory-2026-11-14",
+          "date": "2026-11-14",
+          "time": "13:00–15:00",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "winston",
+              "name": "Winston",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "louis",
+              "name": "Louis",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "kenny",
+              "name": "Kenny",
+              "en": "• Overall, Kenny did well. He completed the worksheet and all its sections, then presented his speech about preserving the benefits of flying while reducing its environmental cost.\n\n• His speech had an opening scene, introduced the problem, explored causes and effects, and moved into possible solutions. He finished by asking the audience to consider whether there is a cleaner way to travel.\n\n• The speech was a little short, and its credibility still needs some work. His points need stronger support so the audience has more reason to believe the argument.\n\n• I also reminded him to speak louder so that everyone could hear him.",
+              "zh": "• 整体来说，Kenny 表现不错。他完成了练习单的所有部分，随后展示了关于如何保留飞行的好处、同时减少环境代价的演讲。\n\n• 他的演讲用一个场景开头，引出问题，探讨原因和影响，再提出可能的解决办法。最后，他请听众思考是否有更环保的出行方式。\n\n• 演讲稍微短了一些，可信度也还需要加强。他的观点需要更有力的支持，让听众更有理由相信他的论证。\n\n• 我也提醒他提高音量，让所有人都能听见。"
+            }
+          ]
         }
       ]
     },
@@ -1223,6 +1251,58 @@
               "zh": "根据老师最近一次明确的出勤确认，本次缺席。"
             }
           ]
+        },
+        {
+          "id": "thu-later-2026-11-12",
+          "date": "2026-11-12",
+          "time": "18:15–20:15",
+          "status": "held",
+          "classContent": {
+            "en": "• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home.",
+            "zh": "• 我们开始发展更严肃话题的演讲。我们观看了2013年世界冠军关于换轮胎的演讲，其核心信息是“Reach out”，随后学生选择了自己想分享的话题。\n\n• 我们思考听众是谁、他们的人群特征是什么，以及他们为什么会关心这个话题。你的核心信息是什么？为什么想把它告诉别人？你的父母为什么会关心？\n\n• 我没有让学生先把所有内容写下来，而是希望他们先思考选定的话题，再尽可能多地用口头表达出来。之后我们可以一起稍作润色和修改，让学生回家后继续发展这些内容。"
+          },
+          "homework": {
+            "en": "• Practise speaking about your chosen topic at home, using the content we developed in class.\n\n• Consider whether you would like to add any personal stories or anything else to develop what you already have.",
+            "zh": "• 在家练习讲述自己选定的话题，运用课堂上已经发展的内容。\n\n• 思考是否想加入个人故事，或补充其他内容，进一步完善已有的演讲。"
+          },
+          "students": [
+            {
+              "id": "ary",
+              "name": "Ary",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "molly",
+              "name": "Molly",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "whistler",
+              "name": "Whistler",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "richard",
+              "name": "Richard",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "evelyn",
+              "name": "Evelyn",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "candy",
+              "name": "Candy",
+              "en": null,
+              "zh": null
+            }
+          ]
         }
       ]
     },
@@ -1963,10 +2043,13 @@
           "time": "18:00–20:00",
           "status": "held",
           "classContent": {
-            "en": "• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• I also noticed that the students were very well behaved today, which was good to see.",
-            "zh": "• 我们讨论了“学生应该给老师评分吗？”这一问题的要点和不同立场。学生分享了自己的看法，以及支持这些看法的理由。\n\n• 任务就是先说明赞成或不赞成，再解释原因。可以写得多，也可以写得少，只要支持自己的观点即可，不需要把任务弄得过于复杂。如果不明白作业，就应该直接说自己不明白。\n\n• 我还注意到学生今天的课堂表现很守规矩，看到这一点很好。"
+            "en": "• We went over the points and different sides of the question “Should students grade their teachers?” Students shared their own views and the reasons supporting them.\n\n• The task is to give a yes-or-no position and explain why. Students can write a lot or a little, as long as they support their points; they do not need to make the task unnecessarily complex. If the homework is unclear, they should say that they do not understand it.\n\n• I also noticed that the students were very well behaved today, which was good to see.\n\n• We began developing speeches on more serious topics. We watched the 2013 World Champion speech about changing a tire, with the message “Reach out,” and students chose a topic they wanted to share.\n\n• We considered the audience: Who are they? What are their demographics? Why would they care about this topic? What is your message, and why do you want to tell people about it? Why would your parents care?\n\n• Rather than writing everything down first, I wanted students to think about their chosen topic and say as much as they could about it aloud. We could then polish and edit that content together, giving them something to continue developing at home.",
+            "zh": "• 我们讨论了“学生应该给老师评分吗？”这一问题的要点和不同立场。学生分享了自己的看法，以及支持这些看法的理由。\n\n• 任务就是先说明赞成或不赞成，再解释原因。可以写得多，也可以写得少，只要支持自己的观点即可，不需要把任务弄得过于复杂。如果不明白作业，就应该直接说自己不明白。\n\n• 我还注意到学生今天的课堂表现很守规矩，看到这一点很好。\n\n• 我们开始发展更严肃话题的演讲。我们观看了2013年世界冠军关于换轮胎的演讲，其核心信息是“Reach out”，随后学生选择了自己想分享的话题。\n\n• 我们思考听众是谁、他们的人群特征是什么，以及他们为什么会关心这个话题。你的核心信息是什么？为什么想把它告诉别人？你的父母为什么会关心？\n\n• 我没有让学生先把所有内容写下来，而是希望他们先思考选定的话题，再尽可能多地用口头表达出来。之后我们可以一起稍作润色和修改，让学生回家后继续发展这些内容。"
           },
-          "homework": null,
+          "homework": {
+            "en": "• Practise speaking about your chosen topic at home, using the content we developed in class.\n\n• Consider whether you would like to add any personal stories or anything else to develop what you already have.",
+            "zh": "• 在家练习讲述自己选定的话题，运用课堂上已经发展的内容。\n\n• 思考是否想加入个人故事，或补充其他内容，进一步完善已有的演讲。"
+          },
           "students": [
             {
               "id": "arthur",
