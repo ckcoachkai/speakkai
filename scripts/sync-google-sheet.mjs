@@ -317,9 +317,9 @@ async function fetchPublishedSheet(feed) {
 async function main() {
   const feeds = await resolveFeeds();
   const sheets = await Promise.all(feeds.map(fetchPublishedSheet));
-  const publicMonth = process.env.GOOGLE_PUBLIC_SCHEDULE_MONTH?.trim() || "2026-10";
+  const publicMonth = process.env.GOOGLE_PUBLIC_SCHEDULE_MONTH?.trim() || "2026-11";
   const publicMonthKey = parseStartMonth(publicMonth);
-  const publicEndMonth = process.env.GOOGLE_PUBLIC_SCHEDULE_END_MONTH?.trim() || "2026-12";
+  const publicEndMonth = process.env.GOOGLE_PUBLIC_SCHEDULE_END_MONTH?.trim() || "2027-01";
   const publicEndMonthKey = parseStartMonth(publicEndMonth);
   if (publicEndMonthKey < publicMonthKey) throw new Error("Public schedule end month precedes its start month.");
   const effectiveSheets = applyFallScheduleOverrides(sheets);
