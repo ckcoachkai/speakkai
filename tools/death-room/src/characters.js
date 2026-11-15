@@ -1674,6 +1674,9 @@ export async function createCharacterSystem({ scene, maxActors = 9, assetBase = 
   // Assets are optional and same-origin. Network loss or a missing downloaded
   // model always leaves the self-contained articulated fallback available.
   if (typeof window !== 'undefined' && typeof fetch !== 'undefined') {
+    // Share identical external texture requests/bitmaps across simultaneous GLB loads.
+    const previousCacheEnabled = THREE.Cache.enabled;
+    THREE.Cache.enabled = true;
     try {
       const base = new URL(assetBase, window.location.href);
       const loader = new GLTFLoader();
@@ -1695,9 +1698,8 @@ export async function createCharacterSystem({ scene, maxActors = 9, assetBase = 
           return requiredCount && usable.length !== requiredCount ? [] : usable;
         } catch { return []; }
       };
-      const cast = await loadRosterManifest('cast/manifest.json', 8);
-      if (cast.length === 8) { realAssets.push(...cast); castKind = 'individual-cast'; }
-      else { realAssets.push(...await loadRosterManifest('uniforms/manifest.json')); if (realAssets.length) castKind = 'uniform-fallback'; }
+      // Fetch the independent guest concurrently with the eight participant rigs.
+      const vipLoad = (async () => {
         // The guest is optional; if its distinct asset is unavailable, the male
         // uniform model still gives the permanent NPC the correct clothes.
         try {
@@ -1712,6 +1714,11 @@ export async function createCharacterSystem({ scene, maxActors = 9, assetBase = 
             }
           }
         } catch { /* A procedural or regular uniform male remains available. */ }
+      })();
+      const cast = await loadRosterManifest('cast/manifest.json', 8);
+      if (cast.length === 8) { realAssets.push(...cast); castKind = 'individual-cast'; }
+      else { realAssets.push(...await loadRosterManifest('uniforms/manifest.json')); if (realAssets.length) castKind = 'uniform-fallback'; }
+      await vipLoad;
         for (const asset of [...realAssets, ...(vipAsset ? [vipAsset] : [])]) asset.scene.traverse((object) => {
           if (object.geometry) sharedGeometry.add(object.geometry);
           const materials = object.material ? Array.isArray(object.material) ? object.material : [object.material] : [];
@@ -1722,6 +1729,8 @@ export async function createCharacterSystem({ scene, maxActors = 9, assetBase = 
         });
     } catch {
       // The procedural system does not depend on downloading or loading assets.
+    } finally {
+      THREE.Cache.enabled = previousCacheEnabled;
     }
   }
   const quality = { ...characterQuality, kind: realAssets.length ? 'skinned-realistic-human' : 'articulated-human', modelCount: realAssets.length, cast: castKind, uniforms: true, uniqueNumbers: true, dedicatedGuest: Boolean(vipAsset) };
