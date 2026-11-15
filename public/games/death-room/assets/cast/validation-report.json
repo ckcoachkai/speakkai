@@ -1,0 +1,144 @@
+{
+  "passed": true,
+  "models": [
+    {
+      "id": "aiko",
+      "pass": true,
+      "bytes": 3846504,
+      "sha256": "f897c987516a982a6e8382b18d07261e49e532828398543becf36e8577aa3172",
+      "triangles": 27048,
+      "primitives": 4,
+      "morphs": 12,
+      "animations": [
+        "Idle",
+        "Run"
+      ],
+      "neutralWeightsZero": true,
+      "locomotionWeightChannels": 0,
+      "albedoSha256": "b645e37842d2a410d5fb401dd891eee527f2b25311506e0bec0aab9392e78827",
+      "positionSha256": "04f4de96f9dea319b97e0612fbd855545f0dd1519db4bd56b1fc5d2a3611693d"
+    },
+    {
+      "id": "minjun",
+      "pass": true,
+      "bytes": 3239476,
+      "sha256": "0e471e074d879f50b6c8933e9d81cde427929f987908beda763cdaa07ba51814",
+      "triangles": 26734,
+      "primitives": 3,
+      "morphs": 12,
+      "animations": [
+        "Idle",
+        "Run"
+      ],
+      "neutralWeightsZero": true,
+      "locomotionWeightChannels": 0,
+      "albedoSha256": "a8319810861ae587779ebc1b6b810d394a3441bd1817f9b8df3690087ecbc570",
+      "positionSha256": "f3325292da87832111bd087ae826571dc568f0153ff06e150b3bbc94a610533b"
+    },
+    {
+      "id": "lin",
+      "pass": true,
+      "bytes": 3857236,
+      "sha256": "63287e1115416dca1098533b37107c535c63a5384328c3ae9594805cc0309929",
+      "triangles": 27048,
+      "primitives": 4,
+      "morphs": 12,
+      "animations": [
+        "Idle",
+        "Run"
+      ],
+      "neutralWeightsZero": true,
+      "locomotionWeightChannels": 0,
+      "albedoSha256": "e87946f1bee8a9607f0adf2d86c04dabdb8bb7d2807c4c905527f264025d6be8",
+      "positionSha256": "81b178c8bbb7fe956b08b22166ba26a489340aa58d1d7b1750d9c357a6cb74b7"
+    },
+    {
+      "id": "wei",
+      "pass": true,
+      "bytes": 3232724,
+      "sha256": "fb046fcf50c3a6e498323e224d5439b0730981ae65828c800278caf99d36975f",
+      "triangles": 26734,
+      "primitives": 3,
+      "morphs": 12,
+      "animations": [
+        "Idle",
+        "Run"
+      ],
+      "neutralWeightsZero": true,
+      "locomotionWeightChannels": 0,
+      "albedoSha256": "d7c7ca3d4135206ebdc64891d1e3da7f3b6ee5b78fd0d96bc08150bad0a35be9",
+      "positionSha256": "aee302cb2cb4104a366db7f40ec31f5fc0c8f2c65637cb1835d69748b836e7ff"
+    },
+    {
+      "id": "sari",
+      "pass": true,
+      "bytes": 3849160,
+      "sha256": "3729363e3fe3e597f8eb5b63d8ca41ea589e9c7003e2ee7560c26df480a2138a",
+      "triangles": 27048,
+      "primitives": 4,
+      "morphs": 12,
+      "animations": [
+        "Idle",
+        "Run"
+      ],
+      "neutralWeightsZero": true,
+      "locomotionWeightChannels": 0,
+      "albedoSha256": "e9b630fcd1a25398e2ef7ee705309a68c47e69aea5ebce104b0c886c010b6ae5",
+      "positionSha256": "fe83b6ddf425600fd6bb6aca08611d608595912f3262bd7db52f2c56a09006e0"
+    },
+    {
+      "id": "danial",
+      "pass": true,
+      "bytes": 3241820,
+      "sha256": "07ae17ddaeb5ac33ca1db071fc146cd041b97151e35c27cea05dcfee13d0c714",
+      "triangles": 26734,
+      "primitives": 3,
+      "morphs": 12,
+      "animations": [
+        "Idle",
+        "Run"
+      ],
+      "neutralWeightsZero": true,
+      "locomotionWeightChannels": 0,
+      "albedoSha256": "997c83748fb14a1451dbf0a770045696f915cb65177413bed875f804222b5973",
+      "positionSha256": "fe97f43d661835bac3f2e375e0ba7f033bd53f6a48126c6d935c2f2816c0f3ad"
+    },
+    {
+      "id": "anaya",
+      "pass": true,
+      "bytes": 3942824,
+      "sha256": "20a635e6f3d6266d5b54fb45e15f86d617b7dfb75e50ce39e3a36ef11251d6f1",
+      "triangles": 29352,
+      "primitives": 5,
+      "morphs": 12,
+      "animations": [
+        "Idle",
+        "Run"
+      ],
+      "neutralWeightsZero": true,
+      "locomotionWeightChannels": 0,
+      "albedoSha256": "20cfe91644e2ec9de6d9d3fb6be82a5b2184f60fac3bae9a73cfc0d3ce72740a",
+      "positionSha256": "3202a912ada25e19c015f37a5d3b8a532126c1f0554d989e60149e9e6519d868"
+    },
+    {
+      "id": "arjun",
+      "pass": true,
+      "bytes": 3245876,
+      "sha256": "0d9df47dbdb73a8bed141aa0579d07c1aee743975da5c669b4996df5d716f616",
+      "triangles": 26734,
+      "primitives": 3,
+      "morphs": 12,
+      "animations": [
+        "Idle",
+        "Run"
+      ],
+      "neutralWeightsZero": true,
+      "locomotionWeightChannels": 0,
+      "albedoSha256": "44d0ba562b3ade6bba4462e09940860d03886474d67deb6122ff46eec41b4787",
+      "positionSha256": "686aa449761483adc5568d7f3fb61e7023fa1c67d7953e08ebd4c4b91bd4113c"
+    }
+  ],
+  "totalBytes": 28455620,
+  "totalTriangles": 217432,
+  "totalPrimitives": 29
+}

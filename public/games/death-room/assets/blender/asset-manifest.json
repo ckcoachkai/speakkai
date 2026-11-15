@@ -1,0 +1,39 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "asset": "industrial-props.glb",
+  "revision": 4,
+  "license": "CC0-1.0",
+  "origin": "Original geometry, native Blender layered procedural PBR bakes, and original native vector artwork",
+  "units": "metres",
+  "gltf_up_axis": "+Y",
+  "placement": "Pre-positioned for room x \u00b17, z \u00b16, y 0..7; open front at +Z",
+  "draw_meshes": 16,
+  "triangles": 158110,
+  "sha256": "0d09fdddac8c19a22386655e27454fe80d29e100004cdafe1f36145903e106f0",
+  "material_upgrade": "4K enamel and braided-sleeve atlas; 2K directionally machined steel; physically distinct paint, exposed metal, oxidation and oil layers; thin protective gauge glass; weighted corner normals; 2K native dial and screen typography",
+  "texture_sources": "Six native Cycles-baked surface images plus two original native Blender vector renders; procedural source graphs retained in .blend; no downloaded photographs",
+  "texture_resolution": {
+    "enamel_atlas": [
+      4096,
+      4096
+    ],
+    "steel": [
+      2048,
+      2048
+    ],
+    "pressure_dial": [
+      2048,
+      2048
+    ],
+    "service_screen": [
+      2048,
+      1024
+    ]
+  },
+  "geometry": "Pressure vessels, compressor, control cabinet, gauges, bolted flanges, service pipes, vents, suspended fluorescent fixtures, tool crates",
+  "export_includes_floor_or_walls": false,
+  "blend_preview_collection": "Preview setup is excluded from GLB; includes ground, camera and lights",
+  "runtime": "Self-contained GLB embeds textures. No external runtime downloads.",
+  "limits": "Static decorative props; collision and hazard animation are handled by the game. Shader texture maps are authored procedural detail rather than scanned photographic materials.",
+  "gauge_glass": "Thin neutral-tinted alpha-blended PBR reflection; roughness 0.1, opacity 0.13, no full-scene transmission pass"
+}

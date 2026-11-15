@@ -1,0 +1,82 @@
+{
+  "version": 2,
+  "license": "MIT",
+  "copyright": "Avatar Copyright (c) 2020 Microsoft. Tracksuit geometry created for The Death Room.",
+  "source": "https://github.com/microsoft/Microsoft-Rocketbox",
+  "licenseFile": "LICENSE-Microsoft-Rocketbox.txt",
+  "models": [
+    {
+      "file": "runner-male-uniform.glb",
+      "label": "Male green tracksuit",
+      "heightMeters": 1.813,
+      "scale": 1,
+      "forwardRotationY": 0,
+      "floorOffset": 0,
+      "animations": {
+        "idle": "Idle",
+        "run": "Run"
+      },
+      "bytes": 21618144,
+      "vertexCount": 19003,
+      "sha256": "af50987a2fab4a349ec25abc3d6fc42cf251f45254a4c6ccc19111688f1418fd",
+      "triangles": 28174,
+      "primitives": 4,
+      "morphTargets": [
+        "Blink",
+        "eyeBlinkLeft",
+        "eyeBlinkRight",
+        "JawOpen",
+        "BrowFurrow",
+        "browInnerUp",
+        "mouthFrownLeft",
+        "mouthFrownRight",
+        "Scream",
+        "Cry",
+        "Fear",
+        "Dead"
+      ],
+      "materialRevision": 4,
+      "stitchSegments": 720,
+      "textureCount": 9
+    },
+    {
+      "file": "runner-female-uniform.glb",
+      "label": "Female green tracksuit",
+      "heightMeters": 1.737,
+      "scale": 1,
+      "forwardRotationY": 0,
+      "floorOffset": 0.004,
+      "animations": {
+        "idle": "Idle",
+        "run": "Run"
+      },
+      "bytes": 25583296,
+      "vertexCount": 18970,
+      "sha256": "3191fd986c86ff4c791f428708b6445dbcb82b0799dee88a246a2b2b0e2a0a39",
+      "triangles": 27964,
+      "primitives": 5,
+      "morphTargets": [
+        "Blink",
+        "eyeBlinkLeft",
+        "eyeBlinkRight",
+        "JawOpen",
+        "BrowFurrow",
+        "browInnerUp",
+        "mouthFrownLeft",
+        "mouthFrownRight",
+        "Scream",
+        "Cry",
+        "Fear",
+        "Dead"
+      ],
+      "materialRevision": 4,
+      "stitchSegments": 458,
+      "textureCount": 10
+    }
+  ],
+  "expressionsFile": "expressions.json",
+  "materialRevision": 4,
+  "materialNotes": "Native Blender baked skin pores/roughness, fabric twill and clean garment wear; bounded skinned seam stitches. Existing facial/rig/animation data retained.",
+  "materialValidationFile": "material-validation-v4.json",
+  "materialSource": "../uniforms/pbr-v4/material-authoring.blend"
+}

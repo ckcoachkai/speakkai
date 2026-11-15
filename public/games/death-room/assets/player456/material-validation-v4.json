@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "addedRuntimeTriangles": 10864,
+  "nativeBakeSource": "uniforms/pbr-v4/material-authoring.blend",
+  "textureResolutions": {
+    "skin": 2048,
+    "cloth": 2048,
+    "handAndFootwearGrain": 1024
+  },
+  "models": [
+    {
+      "id": "player456",
+      "folder": "player456",
+      "file": "player456.glb",
+      "bytes": 15798396,
+      "sha256": "c514c7ddda691ebe5e81d106fdc83f75ed07234cdcfa2070d4d802a32355ee1c",
+      "beforeSha256": "b26eb4daa9ea3145b8b5463d2b7b177194f6755047109c5e43e94173f6b84034",
+      "triangles": 73999,
+      "primitives": 11,
+      "stitchSegments": 720,
+      "textureImages": 10,
+      "materialRevision": 4,
+      "passed": true,
+      "originalAccessorsUnchanged": 586,
+      "rigAndClipsUnchanged": true,
+      "facialTargetsAndNeutralWeightsUnchanged": true,
+      "skinColorFactorsUnchanged": true,
+      "addedDrawPrimitives": 1
+    }
+  ]
+}

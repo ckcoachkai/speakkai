@@ -1,0 +1,13 @@
+Death Room original industrial props
+
+All meshes, material configurations, generated texture pixels and the Blender
+authoring script in this bundle were created for this project. No third-party
+models, photographs, scanned surfaces or fonts were downloaded. Letter shapes
+in the exported model use Blender's built-in font.
+
+Original project assets are dedicated to the public domain under CC0 1.0:
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Blender itself is third-party software under its own GNU GPL licensing and is
+not distributed in this bundle. The use of Blender does not impose the GPL
+on original artistic output. This file does not relicense Blender itself.

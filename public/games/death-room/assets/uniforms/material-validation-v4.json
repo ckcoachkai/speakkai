@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "addedRuntimeTriangles": 10864,
+  "nativeBakeSource": "uniforms/pbr-v4/material-authoring.blend",
+  "textureResolutions": {
+    "skin": 2048,
+    "cloth": 2048,
+    "handAndFootwearGrain": 1024
+  },
+  "models": [
+    {
+      "id": "runner-male-uniform",
+      "folder": "uniforms",
+      "file": "runner-male-uniform.glb",
+      "bytes": 21618144,
+      "sha256": "af50987a2fab4a349ec25abc3d6fc42cf251f45254a4c6ccc19111688f1418fd",
+      "beforeSha256": "99c9904f7dd2dbe8450f4bb29280763a7dee49553fe4702ca43f8ee369ec3f74",
+      "triangles": 28174,
+      "primitives": 4,
+      "stitchSegments": 720,
+      "textureImages": 9,
+      "materialRevision": 4,
+      "passed": true,
+      "originalAccessorsUnchanged": 547,
+      "rigAndClipsUnchanged": true,
+      "facialTargetsAndNeutralWeightsUnchanged": true,
+      "skinColorFactorsUnchanged": true,
+      "addedDrawPrimitives": 1
+    },
+    {
+      "id": "runner-female-uniform",
+      "folder": "uniforms",
+      "file": "runner-female-uniform.glb",
+      "bytes": 25583296,
+      "sha256": "3191fd986c86ff4c791f428708b6445dbcb82b0799dee88a246a2b2b0e2a0a39",
+      "beforeSha256": "bf01c0ac9a9d877e87979031d949029f6fa690c47829c4a664431d5b9c7dc6d0",
+      "triangles": 27964,
+      "primitives": 5,
+      "stitchSegments": 458,
+      "textureImages": 10,
+      "materialRevision": 4,
+      "passed": true,
+      "originalAccessorsUnchanged": 589,
+      "rigAndClipsUnchanged": true,
+      "facialTargetsAndNeutralWeightsUnchanged": true,
+      "skinColorFactorsUnchanged": true,
+      "addedDrawPrimitives": 1
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "valid_glb_container": true,
+  "embedded_images": 8,
+  "meshes": 16,
+  "triangles": 158110,
+  "vertices": 177933,
+  "world_bounds_metres_y_up": {
+    "min": [
+      -6.940000772476196,
+      0.007499992847442627,
+      -5.969999835745918
+    ],
+    "max": [
+      6.940000057220459,
+      6.819999496244973,
+      0.6070209270281621
+    ]
+  },
+  "bytes": 45895268,
+  "sha256": "0d09fdddac8c19a22386655e27454fe80d29e100004cdafe1f36145903e106f0",
+  "normal_map_materials": [
+    "Braided protective cable sleeves | woven PBR",
+    "Brushed gunmetal | baked machining and sparse oxidation",
+    "Worn green enamel | layered edge wear and grease"
+  ],
+  "roughness_metallic_map_materials": [
+    "Braided protective cable sleeves | woven PBR",
+    "Brushed gunmetal | baked machining and sparse oxidation",
+    "Worn green enamel | layered edge wear and grease"
+  ],
+  "materials": 16,
+  "embedded_png_dimensions": {
+    "enamel-normal": [
+      4096,
+      4096
+    ],
+    "enamel-original": [
+      4096,
+      4096
+    ],
+    "enamel-rough-metal": [
+      4096,
+      4096
+    ],
+    "steel-normal": [
+      2048,
+      2048
+    ],
+    "steel-original": [
+      2048,
+      2048
+    ],
+    "steel-rough-metal": [
+      2048,
+      2048
+    ],
+    "service-screen-original": [
+      2048,
+      1024
+    ],
+    "pressure-dial-original": [
+      2048,
+      2048
+    ]
+  },
+  "thin_alpha_glass_materials": [
+    "Thin protective instrument glass"
+  ],
+  "transmission_pass_required": false,
+  "atlas_uv_ranges": {
+    "Braided protective cable sleeves | woven PBR": {
+      "min": [
+        0.7620000243186951,
+        0.012000024318695068
+      ],
+      "max": [
+        0.9879999756813049,
+        0.9879999756813049
+      ]
+    },
+    "Worn green enamel | layered edge wear and grease": {
+      "min": [
+        0.012000000104308128,
+        0.012000024318695068
+      ],
+      "max": [
+        0.7379999756813049,
+        0.9879999756813049
+      ]
+    }
+  },
+  "budgets": {
+    "max_triangles": 160000,
+    "max_meshes": 16,
+    "max_embedded_images": 8
+  }
+}
