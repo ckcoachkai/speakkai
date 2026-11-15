@@ -1427,9 +1427,12 @@ function animateRealRig(actor, dt, elapsed, state) {
   const rightArm = rig.bones.bip01rupperarm;
   const leftForearm = rig.bones.bip01lforearm;
   const rightForearm = rig.bones.bip01rforearm;
-  const special = ['crouch', 'swim', 'celebrate'].includes(action);
-  rig.pose = lerp(rig.pose, special ? 1 : 0, alpha);
-  const amount = rig.pose;
+  // Retain each outgoing pose while the incoming pose fades in. A single
+  // shared weight with action-gated offsets snapped limbs back to idle.
+  const poses = rig.poseWeights ||= { crouch: 0, swim: 0, celebrate: 0 };
+  for (const name of ['crouch', 'swim', 'celebrate']) {
+    poses[name] = lerp(poses[name], action === name ? 1 : 0, alpha);
+  }
   if (moving) {
     const lean = clamp(-actor._turnRate * speed * 0.025, -0.17, 0.17);
     sideTilt = lean * 0.55;
@@ -1440,8 +1443,9 @@ function animateRealRig(actor, dt, elapsed, state) {
     poseBone(rig, rig.bones.bip01lclavicle, 'y', clamp(actor._turnRate * 0.016, -0.045, 0.045));
     poseBone(rig, rig.bones.bip01rclavicle, 'y', clamp(actor._turnRate * 0.016, -0.045, 0.045));
   }
-  if (action === 'crouch') {
-    lower = -0.34;
+  if (poses.crouch > 0.0001) {
+    const amount = poses.crouch;
+    lower += -0.34 * amount;
     poseBone(rig, spine, 'x', 0.34 * amount);
     for (const side of ['l', 'r']) {
       poseBone(rig, rig.bones[`bip01${side}thigh`], 'x', -0.87 * amount);
@@ -1452,19 +1456,23 @@ function animateRealRig(actor, dt, elapsed, state) {
     poseBone(rig, rightArm, 'x', -0.68 * amount);
     poseBone(rig, leftForearm, 'x', -0.72 * amount);
     poseBone(rig, rightForearm, 'x', -0.72 * amount);
-  } else if (swimming) {
-    lower = -0.08 + Math.sin(p) * 0.025;
-    tilt = 0.16;
+  }
+  if (poses.swim > 0.0001) {
+    const amount = poses.swim;
+    lower += (-0.08 + Math.sin(p) * 0.025) * amount;
+    tilt += 0.16 * amount;
     poseBone(rig, leftArm, 'x', (-0.80 + Math.sin(p) * 0.45) * amount);
     poseBone(rig, rightArm, 'x', (-0.80 - Math.sin(p) * 0.45) * amount);
     poseBone(rig, leftArm, 'z', 0.85 * amount);
     poseBone(rig, rightArm, 'z', -0.85 * amount);
     poseBone(rig, leftForearm, 'x', -0.75 * amount);
     poseBone(rig, rightForearm, 'x', -0.75 * amount);
-    poseBone(rig, rig.bones.bip01lthigh, 'x', Math.sin(p) * 0.20);
-    poseBone(rig, rig.bones.bip01rthigh, 'x', -Math.sin(p) * 0.20);
-  } else if (action === 'celebrate') {
-    lower = Math.abs(Math.sin(p * 1.2)) * 0.08;
+    poseBone(rig, rig.bones.bip01lthigh, 'x', Math.sin(p) * 0.20 * amount);
+    poseBone(rig, rig.bones.bip01rthigh, 'x', -Math.sin(p) * 0.20 * amount);
+  }
+  if (poses.celebrate > 0.0001) {
+    const amount = poses.celebrate;
+    lower += Math.abs(Math.sin(p * 1.2)) * 0.08 * amount;
     poseBone(rig, leftArm, 'z', (2.45 + Math.sin(p) * 0.16) * amount);
     poseBone(rig, rightArm, 'z', (-2.45 - Math.cos(p) * 0.16) * amount);
     poseBone(rig, leftForearm, 'x', -0.3 * amount);
@@ -1867,6 +1875,7 @@ export async function createCharacterSystem({ scene, maxActors = 9, assetBase = 
         freezeInPlace(reason = 'cold') {
           if (this.invincible || this._frozenPose || !this.alive) return;
           this._frozenPose = { reason: reason === 'impale' ? 'impale' : 'cold', lockedAt: simulationTime };
+          this._steeringRate = 0;
           this.action = 'frozen'; this._vx = this._vz = this._motionSpeed = this._turnRate = this._acceleration = 0;
           this._autoActionUntil = 0;
           if (reason !== 'impale') this._freezing.amount = 1;
@@ -2073,7 +2082,11 @@ export async function createCharacterSystem({ scene, maxActors = 9, assetBase = 
       if (movable && Math.hypot(desiredX, desiredZ) > 0.1) {
         const heading = Math.atan2(desiredX, desiredZ);
         actor._headingError = shortestAngle(actor.root.rotation.y, heading);
-        const turn = clamp(actor._headingError * (1 - Math.exp(-dt * 8)), -actor.personality.turnSpeed * dt, actor.personality.turnSpeed * dt);
+        const targetTurnRate = clamp(actor._headingError * 8, -actor.personality.turnSpeed, actor.personality.turnSpeed);
+        actor._steeringRate = lerp(actor._steeringRate || 0, targetTurnRate, 1 - Math.exp(-dt * 14));
+        // Ease angular acceleration, but never overshoot the intended heading.
+        const turn = Math.sign(actor._headingError) === Math.sign(actor._steeringRate)
+          ? Math.sign(actor._headingError) * Math.min(Math.abs(actor._headingError), Math.abs(actor._steeringRate) * dt) : 0;
         actor.root.rotation.y += turn;
         actor._turnRate = lerp(actor._turnRate, turn / dt, 1 - Math.exp(-dt * 10));
         // Slow into sharp turns rather than running sideways while the torso
@@ -2082,6 +2095,7 @@ export async function createCharacterSystem({ scene, maxActors = 9, assetBase = 
         desiredX *= turnSpeed; desiredZ *= turnSpeed;
       } else {
         actor._headingError = 0;
+        actor._steeringRate = lerp(actor._steeringRate || 0, 0, smooth);
         actor._turnRate = lerp(actor._turnRate, 0, smooth);
       }
       let accelX = (desiredX - actor._vx) * smooth, accelZ = (desiredZ - actor._vz) * smooth;

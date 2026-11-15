@@ -184,9 +184,29 @@ diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.006,.008,.009)*(0.68+deathN*.7),deat
       }
     });
   }
+
+  // Non-graphic contact cues: one pooled draw call, no lights or texture downloads.
+  const cueLimit = 96, cuePool = Array.from({length: cueLimit}, () => ({life:0, duration:1, p:new THREE.Vector3(), v:new THREE.Vector3(), color:new THREE.Color(), size:.03, gravity:0}));
+  const cueGeometry = ownGeometry(new THREE.OctahedronGeometry(1,0));
+  const cueMaterial = ownMaterial(new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.7,depthWrite:false}));
+  const cueMesh = new THREE.InstancedMesh(cueGeometry,cueMaterial,cueLimit);
+  cueMesh.name='non-graphic-contact-cues';cueMesh.count=0;cueMesh.frustumCulled=false;root.add(cueMesh);
+  const cueDummy=new THREE.Object3D(), cueLast=new Map();let cuesCreated=0;
+  const reducedMotion = typeof matchMedia==='function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+  function addContactCue(actor, kind='impact', payload={}) {
+    if(!enabled||!bloodEnabled||disposed||!living(actor)||reducedMotion?.matches)return;
+    const category = /cold|freeze|frost/.test(kind)?'frost':/electric|laser/.test(kind)?'spark':/water|drown/.test(kind)?'water':/heat|fire/.test(kind)?'heat':/gas|poison/.test(kind)?'gas':'dust';
+    const key=actor.id+':'+category;if(elapsed-(cueLast.get(key)??-99)<.55)return;cueLast.set(key,elapsed);
+    const palette={frost:0xaeeaff,spark:0xffe49a,water:0x77c9ef,heat:0xffb16a,gas:0xb5ccb0,dust:0xd8c6a1};
+    setPoint(scratchPosition,payload.position,actor.position);if(!payload.position)scratchPosition.y+=1.15;
+    let count=0;for(const c of cuePool){if(c.life>0)continue;const angle=count*2.399963+elapsed;c.duration=c.life=category==='gas'?.8:.55;c.p.copy(scratchPosition);c.v.set(Math.cos(angle)*.65,.3+(count%3)*.14,Math.sin(angle)*.65);c.gravity=category==='spark'?-2.8:category==='gas'?.25:-.6;c.size=category==='spark'?.028:.04;c.color.setHex(palette[category]);count++;cuesCreated++;if(count===6)break;}
+  }
+  function updateContactCues(dt){let count=0;for(const c of cuePool){if(c.life<=0)continue;c.life=Math.max(0,c.life-dt);if(!c.life)continue;c.v.y+=c.gravity*dt;c.p.addScaledVector(c.v,dt);cueDummy.position.copy(c.p);cueDummy.rotation.set(c.life*2,c.life*3,0);cueDummy.scale.setScalar(c.size*Math.min(1,c.life/.18));cueDummy.updateMatrix();cueMesh.setMatrixAt(count,cueDummy.matrix);cueMesh.setColorAt(count,c.color);count++;}cueMesh.count=count;cueMesh.visible=enabled&&bloodEnabled&&!reducedMotion?.matches;if(count){cueMesh.instanceMatrix.needsUpdate=true;cueMesh.instanceColor.needsUpdate=true;}}
+
   function applyInjury(actor, info = {}) {
     if (disposed || !living(actor)) return { accepted: false };
     const record = burnActor(actor), kind = info.kind || actor.health?.lastKind || 'impact';
+    addContactCue(actor,kind,info);
     const ratio = clamp(Number.isFinite(info.ratio) ? info.ratio : actor.health?.ratio ?? 1, 0, 1);
     const severity = 1 - ratio, intensity = clamp(info.intensity ?? severity, 0, 1);
     const stage = info.stage || actor.health?.stage || (ratio < .28 ? 'critical' : ratio < .6 ? 'wounded' : ratio < .94 ? 'hurt' : 'healthy');
@@ -432,6 +452,7 @@ diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.006,.008,.009)*(0.68+deathN*.7),deat
     if (immune(actor)) { ignoredEvents++; if (actor) blockedGuestEvents++; return { accepted: false }; }
     if (['drowned', 'impale', 'gas-face-burst'].includes(type) ? !eligible(actor) : !living(actor)) { ignoredEvents++; return { accepted: false }; }
     acceptedEvents++;
+    if (!['injury','bruise','gas-face-burst','drowned'].includes(type) && payload.phase !== 'hold') addContactCue(actor,type,payload);
     if (type === 'gas-face-burst') {
       if (state.scenarioId !== 'gas' || actor.health?.current !== 0 || payload.fatal !== true) return { accepted: false };
       return { accepted: true, burst: burstFace(actor) };
@@ -539,6 +560,7 @@ diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.006,.008,.009)*(0.68+deathN*.7),deat
   function update(dt, nextState = {}) {
     if (disposed) return;
     dt = clamp(Number.isFinite(dt) ? dt : 0, 0, 0.1); elapsed += dt; state = nextState;
+    updateContactCues(dt);
     for (const burn of burns.values()) {
       if (!burn.finalized) burn.target = Math.min(MAX_LIVING_SCORCH, burn.target);
       burn.amount += (burn.target - burn.amount) * (1 - Math.exp(-dt * 9)); burn.uniform.value = enabled ? burn.amount : 0;
@@ -579,9 +601,10 @@ diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.006,.008,.009)*(0.68+deathN*.7),deat
       wound.mesh.visible = enabled && bloodEnabled && (wound.body ? wound.body.wrapper.visible : wound.actor?.root.visible !== false && wound.actor?.alive !== false);
     }
   }
-  function setBloodEnabled(value) { bloodEnabled = Boolean(value); if (!bloodEnabled) { faceParticles.length = 0; faceBurstMesh.count = 0; faceBurstMesh.visible = false; } for (const wound of wounds) wound.mesh.visible = enabled && bloodEnabled && (wound.body ? wound.body.wrapper.visible : wound.actor?.root.visible !== false && wound.actor?.alive !== false); }
+  function setBloodEnabled(value) { bloodEnabled = Boolean(value); if (!bloodEnabled) { for(const c of cuePool)c.life=0;cueMesh.count=0;cueMesh.visible=false; faceParticles.length = 0; faceBurstMesh.count = 0; faceBurstMesh.visible = false; } for (const wound of wounds) wound.mesh.visible = enabled && bloodEnabled && (wound.body ? wound.body.wrapper.visible : wound.actor?.root.visible !== false && wound.actor?.alive !== false); }
   function setEnabled(value) { enabled = Boolean(value); root.visible = enabled; for (const burn of burns.values()) { burn.uniform.value = enabled ? burn.amount : 0; for (const [key, uniform] of Object.entries(burn.injury)) uniform.value = enabled ? burn.injuryTargets[key] : 0; } }
   function reset() {
+    for(const c of cuePool)c.life=0;cueMesh.count=0;cueLast.clear();cuesCreated=0;
     for (const burn of burns.values()) releaseBurn(burn); burns.clear();
     for (const wound of wounds) wound.mesh.removeFromParent(); wounds.length = 0;
     for (const body of bodies) { for (const eye of body.eyes) eye.mesh.removeFromParent(); for (const g of body.eyeGeometries) { g.dispose(); geometries.delete(g); } body.clone.dispose(); body.wrapper.removeFromParent(); }
@@ -594,7 +617,7 @@ diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.006,.008,.009)*(0.68+deathN*.7),deat
     if (disposed) return; reset(); disposed = true;
     ripples.dispose(); faceBurstMesh.dispose(); geometries.forEach(g => g.dispose()); materials.forEach(m => m.dispose()); textures.forEach(t => t.dispose()); root.removeFromParent(); root.clear();
   }
-  function getstats() { return { enabled, bloodEnabled, burns: [...burns.values()].filter(b => b.target > 0).length, wounds: wounds.length, woundsByActor: actors.map(a => ({ actorId: a.id, count: wounds.filter(w => w.actor === a).length, visible: wounds.filter(w => w.actor === a && w.mesh.visible).length })), corpses: bodies.filter(b => b.revealed && !b.ambient).length, ambientCorpses: bodies.filter(b => b.ambient).length, preparedCorpses: prepared.size, acceptedEvents, ignoredEvents, blockedGuestEvents, gasFaceBursts: [...gasBursts], impaleContactActors: [...impaleContacts], activeFaceParticles: faceParticles.length, maxFaceParticles: MAX_FACE_PARTICLES, burnAmounts: [...burns].map(([actorId, b]) => ({ actorId, amount: b.amount, target: b.target, strikes: b.strikes })), injuryActors: [...burns].map(([actorId, b]) => ({ actorId, stage: b.stage, ratio: b.ratio, gasFaceFlush: THREE.MathUtils.smoothstep(b.injury.poison.value,.035,.48), gasFaceBlue: THREE.MathUtils.smoothstep(b.injury.poison.value,.48,.96), facialBleeds: b.faceMarks.size, visibleFacialBleeds: wounds.filter(w => w.actor === b.actor && w.facial && w.mesh.visible).length, faceMaterials: b.owned.filter(m => m.userData.deathInjurySurface?.face).length, frost: b.injury.cold.value, ...Object.fromEntries(Object.entries(b.injury).map(([key, uniform]) => [key, uniform.value])) })), floodObstacles: getFloodObstacles(), bodyDimensions: bodies.map(b => ({ uuid: b.wrapper.uuid, propId: b.propId, actorId: b.actorId, ambient: b.ambient, type: b.type, dimensions: [...b.dimensions], position: b.wrapper.position.toArray(), createdAt: b.created, revealedAt: b.revealedAt, waterLevel: b.waterLevel, floorY: b.floorY, floating: b.floating, sinking: b.sinking, sinkStartedAt: b.sinkStartedAt, posePreserved: Boolean(b.posePreserved), heldPose: Boolean(b.holdPose), holdReason: b.holdReason, handoffCenter: b.handoffCenter?.toArray(), eyesVisible: b.eyes.filter(e => e.mesh.visible).length, visible: b.wrapper.visible })) }; }
+  function getstats() { return { enabled, bloodEnabled, contactCues:cueMesh.count, contactCueLimit:cueLimit, cuesCreated, reducedMotion:Boolean(reducedMotion?.matches), burns: [...burns.values()].filter(b => b.target > 0).length, wounds: wounds.length, woundsByActor: actors.map(a => ({ actorId: a.id, count: wounds.filter(w => w.actor === a).length, visible: wounds.filter(w => w.actor === a && w.mesh.visible).length })), corpses: bodies.filter(b => b.revealed && !b.ambient).length, ambientCorpses: bodies.filter(b => b.ambient).length, preparedCorpses: prepared.size, acceptedEvents, ignoredEvents, blockedGuestEvents, gasFaceBursts: [...gasBursts], impaleContactActors: [...impaleContacts], activeFaceParticles: faceParticles.length, maxFaceParticles: MAX_FACE_PARTICLES, burnAmounts: [...burns].map(([actorId, b]) => ({ actorId, amount: b.amount, target: b.target, strikes: b.strikes })), injuryActors: [...burns].map(([actorId, b]) => ({ actorId, stage: b.stage, ratio: b.ratio, gasFaceFlush: THREE.MathUtils.smoothstep(b.injury.poison.value,.035,.48), gasFaceBlue: THREE.MathUtils.smoothstep(b.injury.poison.value,.48,.96), facialBleeds: b.faceMarks.size, visibleFacialBleeds: wounds.filter(w => w.actor === b.actor && w.facial && w.mesh.visible).length, faceMaterials: b.owned.filter(m => m.userData.deathInjurySurface?.face).length, frost: b.injury.cold.value, ...Object.fromEntries(Object.entries(b.injury).map(([key, uniform]) => [key, uniform.value])) })), floodObstacles: getFloodObstacles(), bodyDimensions: bodies.map(b => ({ uuid: b.wrapper.uuid, propId: b.propId, actorId: b.actorId, ambient: b.ambient, type: b.type, dimensions: [...b.dimensions], position: b.wrapper.position.toArray(), createdAt: b.created, revealedAt: b.revealedAt, waterLevel: b.waterLevel, floorY: b.floorY, floating: b.floating, sinking: b.sinking, sinkStartedAt: b.sinkStartedAt, posePreserved: Boolean(b.posePreserved), heldPose: Boolean(b.holdPose), holdReason: b.holdReason, handoffCenter: b.handoffCenter?.toArray(), eyesVisible: b.eyes.filter(e => e.mesh.visible).length, visible: b.wrapper.visible })) }; }
   return { emit, applyInjury, update, onEliminated, reset, getFloodObstacles, setEnabled, setBloodEnabled, dispose, getstats, get stats() { return getstats(); } };
 }
 
