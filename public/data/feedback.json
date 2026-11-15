@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-15T07:13:03.230730+00:00",
+  "updatedAt": "2026-11-15T08:51:20.707486+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2754,6 +2754,52 @@
               "name": "April",
               "en": "• I think April was still hesitant when expressing her ideas.\n\n• We went over the material in class, but I did not observe her practice closely enough this time to give a more detailed performance assessment.",
               "zh": "• 我觉得 April 在表达自己的想法时仍然有些犹豫。\n\n• 我们在课堂上过了一遍这些内容，不过这次我没有仔细观察她的练习表现，因此暂时没有更多具体的表现评价。"
+            }
+          ]
+        },
+        {
+          "id": "sun-1330-2026-11-15",
+          "date": "2026-11-15",
+          "time": "13:30–15:00",
+          "status": "held",
+          "classContent": {
+            "en": "• We practised developing spoken answers and managing the speaking time. A focus was finding ways to expand an answer. I noted that speaking without preparation can sometimes continue for seven minutes, and used my own speaking as an example. This was an illustration of developing content, not a new time requirement.\n\n• A shared focus for our class is to connect more directly with the audience or judge. Many responses focused on “I,” with too few audience-connection phrases. Try addressing listeners directly with “Dear friends” or “Have you ever…?”, and consider “we,” “us,” and “in our society” where they fit. Think about the people listening and how they can see themselves in what you are saying.",
+            "zh": "• 我们练习展开口头回答，并掌握发言时间。一个重点是思考怎样把回答展开。我提到，有时即使没有准备，也能持续讲到七分钟，并以自己的发言为例。这是用来说明如何展开内容，并不是新增的时长要求。\n\n• 全班共同需要注意的是，更直接地与听众或评委建立联系。很多回答更多围绕“我”，与听众建立联系的表达还不够。可以尝试用“亲爱的朋友们”或“你有没有……？”直接对听众说话，并在适合的地方使用“我们”“我们大家”“在我们的社会中”等表达。要想到正在听你讲话的人，让他们能在你说的内容中看到与自己有关的部分。"
+          },
+          "homework": {
+            "en": "• Practise answering at least five to ten prompts from the printed set before next class. The handout contains 83 prompts from Stanford, Harvard, and NSDA topics. Each response does not need to take very long.",
+            "zh": "• 下次上课前，至少练习回答打印材料中的五至十道题目。这份材料包含来自 Stanford、Harvard 和 NSDA 话题的83道提示题。每道题的回答并不需要花很长时间。"
+          },
+          "students": [
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": "• I think Arthur also had a little difficulty managing the time limit.\n\n• A shared focus for our class is to connect more directly with the audience or judge. Many responses focused on “I,” with too few audience-connection phrases. Try addressing listeners directly with “Dear friends” or “Have you ever…?”, and consider “we,” “us,” and “in our society” where they fit. Think about the people listening and how they can see themselves in what you are saying.",
+              "zh": "• 我觉得 Arthur 在掌握发言时间限制方面也有一点困难。\n\n• 全班共同需要注意的是，更直接地与听众或评委建立联系。很多回答更多围绕“我”，与听众建立联系的表达还不够。可以尝试用“亲爱的朋友们”或“你有没有……？”直接对听众说话，并在适合的地方使用“我们”“我们大家”“在我们的社会中”等表达。要想到正在听你讲话的人，让他们能在你说的内容中看到与自己有关的部分。"
+            },
+            {
+              "id": "audrey",
+              "name": "Audrey",
+              "en": "• I think Audrey’s presentation was really good. She consistently used her hands and even danced slightly while talking, which I felt worked well. She also gave lots of details and stories.\n\n• A shared focus for our class is to connect more directly with the audience or judge. Many responses focused on “I,” with too few audience-connection phrases. Try addressing listeners directly with “Dear friends” or “Have you ever…?”, and consider “we,” “us,” and “in our society” where they fit. Think about the people listening and how they can see themselves in what you are saying.",
+              "zh": "• 我觉得 Audrey 的展示很好。她讲话时一直配合手部动作，甚至带着一点轻轻舞动的感觉，我觉得这样的表现很好。她也分享了很多细节和故事。\n\n• 全班共同需要注意的是，更直接地与听众或评委建立联系。很多回答更多围绕“我”，与听众建立联系的表达还不够。可以尝试用“亲爱的朋友们”或“你有没有……？”直接对听众说话，并在适合的地方使用“我们”“我们大家”“在我们的社会中”等表达。要想到正在听你讲话的人，让他们能在你说的内容中看到与自己有关的部分。"
+            },
+            {
+              "id": "ning",
+              "name": "Ning",
+              "en": "• Ning was able to speak for four minutes thirty seconds out of the usual five-minute speaking time. Her next focus is to work out how to expand her answers further.\n\n• A shared focus for our class is to connect more directly with the audience or judge. Many responses focused on “I,” with too few audience-connection phrases. Try addressing listeners directly with “Dear friends” or “Have you ever…?”, and consider “we,” “us,” and “in our society” where they fit. Think about the people listening and how they can see themselves in what you are saying.",
+              "zh": "• 在通常五分钟的发言时间中，Ning 能够讲到四分三十秒。她接下来需要思考怎样进一步展开自己的回答。\n\n• 全班共同需要注意的是，更直接地与听众或评委建立联系。很多回答更多围绕“我”，与听众建立联系的表达还不够。可以尝试用“亲爱的朋友们”或“你有没有……？”直接对听众说话，并在适合的地方使用“我们”“我们大家”“在我们的社会中”等表达。要想到正在听你讲话的人，让他们能在你说的内容中看到与自己有关的部分。"
+            },
+            {
+              "id": "teresa",
+              "name": "Teresa",
+              "en": "• I think having a clear direction would help Teresa. She also needs to work on her creativity and think of her own examples rather than reuse the teacher’s examples. The example I gave in class was only an illustration; it would not be suitable material for a competition.\n\n• A shared focus for our class is to connect more directly with the audience or judge. Many responses focused on “I,” with too few audience-connection phrases. Try addressing listeners directly with “Dear friends” or “Have you ever…?”, and consider “we,” “us,” and “in our society” where they fit. Think about the people listening and how they can see themselves in what you are saying.",
+              "zh": "• 我觉得有一个清楚的方向会对 Teresa 有帮助。她也需要练习自己的创造力，想出自己的例子，而不是重复使用老师的例子。我在课堂上举的那个例子只是用来说明意思，并不适合用在比赛中。\n\n• 全班共同需要注意的是，更直接地与听众或评委建立联系。很多回答更多围绕“我”，与听众建立联系的表达还不够。可以尝试用“亲爱的朋友们”或“你有没有……？”直接对听众说话，并在适合的地方使用“我们”“我们大家”“在我们的社会中”等表达。要想到正在听你讲话的人，让他们能在你说的内容中看到与自己有关的部分。"
+            },
+            {
+              "id": "april",
+              "name": "April",
+              "en": "• April’s answers were fine, but she was a little hesitant and had some difficulty expanding them. Developing her answers a little more is an area she can improve on.\n\n• A shared focus for our class is to connect more directly with the audience or judge. Many responses focused on “I,” with too few audience-connection phrases. Try addressing listeners directly with “Dear friends” or “Have you ever…?”, and consider “we,” “us,” and “in our society” where they fit. Think about the people listening and how they can see themselves in what you are saying.",
+              "zh": "• April 的回答本身没有问题，不过她有一点犹豫，进一步展开回答时也有些困难。把回答再展开一些，是她可以继续改进的地方。\n\n• 全班共同需要注意的是，更直接地与听众或评委建立联系。很多回答更多围绕“我”，与听众建立联系的表达还不够。可以尝试用“亲爱的朋友们”或“你有没有……？”直接对听众说话，并在适合的地方使用“我们”“我们大家”“在我们的社会中”等表达。要想到正在听你讲话的人，让他们能在你说的内容中看到与自己有关的部分。"
             }
           ]
         }

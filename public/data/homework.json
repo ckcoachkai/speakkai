@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-15T07:13:03.242541+00:00",
+  "updatedAt": "2026-11-15T08:51:20.724984+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2261,6 +2261,43 @@
             {
               "name": "April",
               "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-08&student=april"
+            }
+          ]
+        },
+        {
+          "id": "sun-1330-2026-11-15",
+          "date": "2026-11-15",
+          "time": "13:30–15:00",
+          "classContent": [
+            "• We practised developing spoken answers and managing the speaking time. A focus was finding ways to expand an answer. I noted that speaking without preparation can sometimes continue for seven minutes, and used my own speaking as an example. This was an illustration of developing content, not a new time requirement.\n\n• A shared focus for our class is to connect more directly with the audience or judge. Many responses focused on “I,” with too few audience-connection phrases. Try addressing listeners directly with “Dear friends” or “Have you ever…?”, and consider “we,” “us,” and “in our society” where they fit. Think about the people listening and how they can see themselves in what you are saying."
+          ],
+          "homework": {
+            "title": "Printed impromptu prompt practice",
+            "steps": [
+              "• Practise answering at least five to ten prompts from the printed set before next class. The handout contains 83 prompts from Stanford, Harvard, and NSDA topics. Each response does not need to take very long."
+            ],
+            "prepareFor": "Before next class"
+          },
+          "students": [
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-15&student=arthur"
+            },
+            {
+              "name": "Audrey",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-15&student=audrey"
+            },
+            {
+              "name": "Ning",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-15&student=ning"
+            },
+            {
+              "name": "Teresa",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-15&student=teresa"
+            },
+            {
+              "name": "April",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-15&student=april"
             }
           ]
         }
