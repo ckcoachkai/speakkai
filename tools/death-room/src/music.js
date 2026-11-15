@@ -62,6 +62,11 @@ export function createMusic({ assetBase = '/assets/music/' } = {}) {
   let desiredKey = '';
   let desiredSlot = null;
   let ready;
+  let context=null, analyser=null, samples=null, envelope=0, baseline=0, pulse=0, lastOnset=-99, rhythmTime=0;
+  let rhythm={active:false,time:0,energy:0,beatPulse:0,bpm:0,phase:0};
+  function connectAudio(slot){if(!context||slot.source)return;try{slot.source=context.createMediaElementSource(slot.audio);slot.source.connect(analyser);}catch{ /* Keep ordinary media playback if analysis is unavailable. */ }}
+  function unlockAnalysis(){try{if(!context){const AC=globalThis.AudioContext||globalThis.webkitAudioContext;if(!AC)return;context=new AC();analyser=context.createAnalyser();analyser.fftSize=1024;analyser.smoothingTimeConstant=.5;analyser.connect(context.destination);samples=new Float32Array(analyser.fftSize);for(const slot of slots)connectAudio(slot);}context.resume().catch(()=>{});}catch{}}
+  function updateRhythm(dt){const audible=slots.filter(s=>s.track&&!s.audio.paused&&s.audio.readyState>=2&&s.weight>.001).sort((a,b)=>b.weight-a.weight);const current=audible[0];const active=!!current&&!disposed&&!muted&&!paused&&volume>.001&&context?.state==='running';const time=finite(current?.audio.currentTime);const bpm=Number(current?.track?.style.match(/(\d+(?:\.\d+)?)\s*BPM/i)?.[1])||0;let rms=0;if(active&&analyser){analyser.getFloatTimeDomainData(samples);for(const v of samples)rms+=v*v;rms=Math.sqrt(rms/samples.length);}const target=clamp(rms*8);envelope+=(target-envelope)*(1-Math.exp(-dt*14));baseline+=(target-baseline)*(1-Math.exp(-dt*2));rhythmTime+=dt;pulse*=Math.exp(-dt*9);if(active&&target>.025&&target>baseline*1.28+.012&&rhythmTime-lastOnset>.18){pulse=1;lastOnset=rhythmTime;}if(!active){envelope=0;pulse=0;}rhythm={active,time,energy:envelope,beatPulse:pulse,bpm,phase:bpm?(time*bpm/60)%1:0};}
   const slots = [];
   const errors = new Map();
   const keyFor = track => track ? `${track.scenarioId}|${track.url}` : '';
@@ -102,6 +107,7 @@ export function createMusic({ assetBase = '/assets/music/' } = {}) {
     audio.playsInline = true;
     const slot = { audio, track: null, key: '', weight: 0, generation: 0, loadedAt: 0, playPromise: null, wantsPlay: false, blocked: false, failed: '', loading: false, interruptRetries: 0, listeners: [] };
     slots.push(slot);
+    connectAudio(slot);
     return slot;
   }
   function startTransition(slot) {
@@ -262,6 +268,7 @@ export function createMusic({ assetBase = '/assets/music/' } = {}) {
   function unlock() {
     if (disposed) return Promise.resolve(false);
     unlocked = true;
+    unlockAnalysis();
     // play() is invoked synchronously within this call when a track is loaded,
     // retaining the caller's real user activation. Later rejection is exposed.
     selectTrack();
@@ -318,6 +325,7 @@ export function createMusic({ assetBase = '/assets/music/' } = {}) {
       if (slot.track && slot.loading && !slot.failed && now() - slot.loadedAt > 25000) failSlot(slot, `Music loading timed out: ${slot.track.file}`);
     }
     applyLevels();
+    updateRhythm(step);
   }
   function dispose() {
     if (disposed) return;
@@ -329,6 +337,9 @@ export function createMusic({ assetBase = '/assets/music/' } = {}) {
     manifestTimer = null;
     transition = null;
     for (const slot of slots) stopSlot(slot, true);
+    for(const slot of slots)slot.source?.disconnect();
+    analyser?.disconnect();context?.close().catch(()=>{});
+    rhythm={active:false,time:0,energy:0,beatPulse:0,bpm:0,phase:0};
     slots.length = 0;
     tracks.clear();
     errors.clear();
@@ -370,5 +381,5 @@ export function createMusic({ assetBase = '/assets/music/' } = {}) {
   }
   ready = reloadManifest();
   return { unlock, setMuted, setVolume, update, dispose, reloadManifest,
-    get ready() { return ready; }, get status() { return getStatus(); } };
+    get rhythm() { return {...rhythm,active:rhythm.active&&!muted&&!paused&&!disposed&&volume>0}; }, get ready() { return ready; }, get status() { return getStatus(); } };
 }

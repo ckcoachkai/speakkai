@@ -460,7 +460,7 @@ export async function createStaff({ scene, room = {} } = {}) {
       tube(head, webbing, [[s * .070, 1.553, .132], [s * .066, 1.518, .109], [s * .070, 1.486, .074]], .002, 20);
       rod(head, metal, [s * .070, 1.486, .074], [s * .071, 1.475, .073], .0028, 8);
     }
-    staff.push({ root, upper, head, phase: index * 1.73 });
+    staff.push({ root, upper, lower, head, phase: index * 1.73, index, baseY: root.position.y });
   }
 
   function catwalk(side) {
@@ -521,6 +521,52 @@ export async function createStaff({ scene, room = {} } = {}) {
     for (const object of person.head.children) object.geometry.translate(0, -1.51, 0);
     person.upper.position.y = 1; person.head.position.y = 1.51;
   }
+  // Skin the existing continuous garments, seams, pockets and gloves together.
+  // This keeps their material batches/draw calls unchanged and avoids torn sleeves.
+  const smooth = (a, b, x) => THREE.MathUtils.smoothstep(x, a, b);
+  for (const person of staff) {
+    const base = new THREE.Bone(); base.name = 'Staff pelvis'; person.root.add(base);
+    const torso = new THREE.Bone(); torso.name = 'Staff dancing torso'; torso.position.y=1; base.add(torso);
+    const bones = [base,torso], limbs = [];
+    for (const side of [-1, 1]) {
+      const chain = (kind, x, y, childX, childY) => {
+        const joint = new THREE.Bone(), bend = new THREE.Bone();
+        joint.name = kind + ' ' + side; bend.name = kind + ' bend ' + side;
+        joint.position.set(side*x,y,0); bend.position.set(side*(childX-x),childY-y,0);
+        base.add(joint);joint.add(bend);const index=bones.length;bones.push(joint,bend);
+        return {joint,bend,index};
+      };
+      limbs.push({side,arm:chain('shoulder',.20,1.39,.28,1.11),leg:chain('hip',.113,.86,.125,.49)});
+    }
+    person.root.updateMatrixWorld(true);
+    for (const limb of limbs) torso.attach(limb.arm.joint);
+    person.root.updateMatrixWorld(true);
+    const skeleton = new THREE.Skeleton(bones);
+    for (const parent of [person.upper,person.lower]) for (const mesh of [...parent.children]) {
+      if (!mesh.isMesh) continue;
+      const positions=mesh.geometry.attributes.position, indices=[], weights=[];
+      for(let i=0;i<positions.count;i++) {
+        const x=positions.getX(i), y=positions.getY(i)+parent.position.y;
+        const limb=limbs[x<0?0:1];
+        const arm=parent===person.upper;
+        const influence=arm ? smooth(.16,y<1.02?.205:.255,Math.abs(x))*(1-smooth(1.36,1.47,y)) : 1-smooth(.73,.96,y);
+        const bend=arm ? 1-smooth(1.04,1.19,y) : 1-smooth(.43,.56,y);
+        const index=(arm?limb.arm:limb.leg).index;
+        indices.push(arm?1:0,index,index+1,0);weights.push(1-influence,influence*(1-bend),influence*bend,0);
+      }
+      mesh.geometry.setAttribute('skinIndex',new THREE.Uint16BufferAttribute(indices,4));
+      mesh.geometry.setAttribute('skinWeight',new THREE.Float32BufferAttribute(weights,4));
+      const skinned=new THREE.SkinnedMesh(mesh.geometry,mesh.material);
+      skinned.name=mesh.name;skinned.castShadow=mesh.castShadow;skinned.receiveShadow=mesh.receiveShadow;
+      parent.remove(mesh);parent.add(skinned);person.root.updateMatrixWorld(true);skinned.bind(skeleton);
+      // Small animated limbs remain inside a fixed conservative local bound.
+      skinned.boundingSphere=new THREE.Sphere(new THREE.Vector3(0,.6,0),2);
+    }
+    person.skeleton=skeleton;person.limbs=limbs;person.torso=torso;person.danceWeight=0;
+  }
+  const reducedMotion=typeof matchMedia==='function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+  const danceStats={active:false,energy:0,beatPulse:0,styles:['jazz','hip-hop','modern','jazz'],articulatedJoints:36};
+  group.userData.dance=danceStats;
   group.userData.staffCount = staff.length;
   group.userData.staffRoots = staff.map(s => s.root);
   group.userData.modelVersion = 2;
@@ -528,9 +574,18 @@ export async function createStaff({ scene, room = {} } = {}) {
 
   return {
     group,
-    update(dt, _state = {}) {
+    update(dt, _state = {}, rhythm = { active:false, time:0, energy:0, beatPulse:0, bpm:120, phase:0 }) {
       if (disposed) return;
-      elapsed += Math.min(.1, Math.max(0, Number.isFinite(dt) ? dt : 0));
+      dt=Math.min(.1,Math.max(0,Number.isFinite(dt)?dt:0));
+      if (!dt || _state.phase==='paused' || _state.paused) return;
+      elapsed += dt;
+      const active=!!rhythm.active;
+      const energy=THREE.MathUtils.clamp(Number.isFinite(rhythm.energy)?rhythm.energy:0,0,1);
+      const pulse=THREE.MathUtils.clamp(Number.isFinite(rhythm.beatPulse)?rhythm.beatPulse:0,0,1);
+      const time=Number.isFinite(rhythm.time)?rhythm.time:elapsed;
+      const bpm=THREE.MathUtils.clamp(Number.isFinite(rhythm.bpm)?rhythm.bpm:120,40,220);
+      const beat=time*bpm/60;
+      danceStats.active=active;danceStats.energy=energy;danceStats.beatPulse=pulse;
       for (const person of staff) {
         const breath = Math.sin(elapsed * (1.15 + Math.sin(person.phase) * .07) + person.phase);
         const weight = Math.sin(elapsed * .22 + person.phase) * .006 + Math.sin(elapsed * .091 + person.phase * .7) * .002;
@@ -545,11 +600,39 @@ export async function createStaff({ scene, room = {} } = {}) {
         person.head.rotation.x = Math.sin(elapsed * .27 + person.phase) * .012;
         person.head.rotation.z = weight * .45;
         person.head.position.set(weight * .25 - Math.sin(weight) * .51, 1.51 + breath * .0014 + (Math.cos(weight) - 1) * .51, 0);
+        const target=active ? (reducedMotion?.matches ? .22 : 1)*(.55+energy*.45) : 0;
+        person.danceWeight=THREE.MathUtils.lerp(person.danceWeight,target,1-Math.exp(-dt*(active?5:4)));
+        const w=person.danceWeight, p=beat*Math.PI*2+person.index*.42;
+        // Crossfade choreography every 32 beats; observers stay on their platforms.
+        const phrase=beat/32+person.index, current=Math.floor(phrase)%3, next=(current+1)%3;
+        const blend=smooth(.80,1,phrase%1), mix=[0,0,0];mix[current]=1-blend;mix[next]=blend;
+        danceStats.styles[person.index]=['jazz','hip-hop','modern'][blend>.5?next:current];
+        const jazz=mix[0],hip=mix[1],modern=mix[2];
+        const sway=Math.sin(p*.5), step=Math.sin(p), groove=Math.sin(p-Math.PI*.25);
+        person.root.position.y=person.baseY+w*(.018*(1-Math.cos(p))*jazz+.026*pulse*hip+.025*(1+Math.sin(p*.25))*modern);
+        person.upper.rotation.x=w*(.09*groove*hip+.05*Math.sin(p*.5)*modern);
+        person.upper.rotation.y=w*(.13*sway*jazz+.19*groove*hip+.16*Math.sin(p*.25)*modern);
+        person.upper.rotation.z+=w*(.07*sway*jazz+.065*step*hip+.10*Math.sin(p*.25)*modern);
+        person.torso.rotation.copy(person.upper.rotation);
+        person.head.rotation.x+=w*(.09*pulse*hip-.04*step*jazz);
+        person.head.rotation.y+=w*.10*sway;
+        for(const limb of person.limbs){
+          const side=limb.side, alternate=Math.sin(p+(side<0?Math.PI:0));
+          limb.arm.joint.rotation.set(w*(-.45*alternate*jazz+(-.35-.30*groove)*hip+(-.7-.5*Math.sin(p*.25+side))*modern),w*.10*sway,
+            w*side*(.48*jazz+.30*hip+(.85+.40*Math.sin(p*.25+side))*modern));
+          limb.arm.bend.rotation.x=-w*(jazz*(.55+.35*alternate)+hip*(1.0+.45*alternate)+modern*(.35+.23*sway));
+          limb.leg.joint.rotation.x=w*(.22*alternate*jazz+.16*alternate*hip+.12*Math.sin(p*.5+side)*modern);
+          limb.leg.joint.rotation.z=w*side*(.035*jazz+.045*hip+.04*modern)*(1+sway);
+          limb.leg.bend.rotation.x=w*Math.max(0,-alternate)*(.32*jazz+.26*hip+.18*modern);
+        }
+        person.root.userData.danceStyle=danceStats.styles[person.index];
+        person.root.userData.danceWeight=w;
       }
     },
     dispose() {
       if (disposed) return;
       disposed = true; group.removeFromParent();
+      for (const person of staff) person.skeleton?.dispose();
       for (const geometry of geometries) geometry.dispose();
       for (const material of materials) material.dispose();
       for (const texture of textures) texture.dispose();
@@ -561,3 +644,4 @@ export async function createStaff({ scene, room = {} } = {}) {
 }
 
 export default createStaff;
+
