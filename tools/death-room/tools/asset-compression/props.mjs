@@ -1,0 +1,21 @@
+import {NodeIO} from '@gltf-transform/core';
+import {ALL_EXTENSIONS} from '@gltf-transform/extensions';
+import {meshopt,textureCompress,getBounds} from '@gltf-transform/functions';
+import {MeshoptEncoder,MeshoptDecoder} from 'meshoptimizer';
+import sharp from 'sharp';import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url)), root=path.resolve(here,'../../public/assets/blender');
+await MeshoptEncoder.ready;await MeshoptDecoder.ready;
+const io=new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({'meshopt.encoder':MeshoptEncoder,'meshopt.decoder':MeshoptDecoder});
+const input=path.join(root,'industrial-props.glb'),out=path.join(root,'fast-props');fs.mkdirSync(out,{recursive:true});
+const d=await io.read(input);
+const inspect=doc=>{const r=doc.getRoot();return {nodes:r.listNodes().length,meshes:r.listMeshes().length,materials:r.listMaterials().length,textures:r.listTextures().length,animations:r.listAnimations().length,primitives:r.listMeshes().reduce((n,m)=>n+m.listPrimitives().length,0),triangles:r.listMeshes().reduce((n,m)=>n+m.listPrimitives().reduce((a,p)=>a+(p.getIndices()?.getCount()||p.getAttribute('POSITION')?.getCount()||0)/3,0),0)};};
+const before=inspect(d), beforeBounds=d.getRoot().listScenes().map(scene=>getBounds(scene));
+await d.transform(textureCompress({encoder:sharp,targetFormat:'webp',resize:[1024,1024],slots:/baseColorTexture|emissiveTexture/,quality:94,effort:6}),textureCompress({encoder:sharp,targetFormat:'webp',resize:[1024,1024],slots:/normalTexture|metallicRoughnessTexture|occlusionTexture/,lossless:true,effort:6}),meshopt({encoder:MeshoptEncoder,level:'medium'}));
+const output=path.join(out,'industrial-props.gltf');await io.write(output,d);const json=JSON.parse(fs.readFileSync(output));fs.writeFileSync(output,JSON.stringify(json));
+const files=new Set(['industrial-props.gltf',...(json.buffers||[]).map(b=>b.uri),...(json.images||[]).map(i=>i.uri)].filter(Boolean));let bytes=0;for(const f of files)bytes+=fs.statSync(path.join(out,f)).size;
+const restored=await io.read(output),after=inspect(restored);const textures=[];for(const texture of restored.getRoot().listTextures()){const m=await sharp(texture.getImage()).metadata();textures.push({width:m.width,height:m.height,format:m.format});}
+if(before.triangles!==after.triangles||before.nodes!==after.nodes||before.materials!==after.materials)throw Error('Structural mismatch');if(textures.some(t=>t.width>1024||t.height>1024))throw Error('Oversized texture');
+const afterBounds=restored.getRoot().listScenes().map(scene=>getBounds(scene));
+const maxBoundsError=Math.max(...beforeBounds.flatMap((b,i)=>[...b.min.map((v,k)=>Math.abs(v-afterBounds[i].min[k])),...b.max.map((v,k)=>Math.abs(v-afterBounds[i].max[k]))]));
+if(maxBoundsError>.01)throw Error('Bounds drift exceeds1cm: '+maxBoundsError);
+const report={beforeBounds,afterBounds,maxBoundsError,originalBytes:fs.statSync(input).size,optimizedBytes:bytes,reductionPercent:100*(1-bytes/fs.statSync(input).size),before,after,textures,files:[...files],extensions:json.extensionsRequired};fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));

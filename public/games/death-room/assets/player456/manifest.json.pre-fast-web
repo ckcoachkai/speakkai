@@ -1,0 +1,74 @@
+{
+  "file": "web/player456.glb",
+  "bytes": 4900148,
+  "heightMeters": 1.823,
+  "scale": 1,
+  "forwardRotationY": 0,
+  "floorOffset": 0,
+  "animations": {
+    "idle": "Idle",
+    "run": "Run"
+  },
+  "clips": [
+    "Idle",
+    "Run"
+  ],
+  "skinCount": 1,
+  "jointCounts": [
+    80
+  ],
+  "meshCount": 4,
+  "textureCount": 10,
+  "headVerticesSculpted": 8283,
+  "hairVertices": 25950,
+  "hairQuads": 15570,
+  "sourceUniformBlend": "C:\\Users\\86080\\Documents\\Codex\\2026-11-14\\plan-out-a-game-for-name\\work\\upgrade-v2\\uniforms\\runner-male-uniform.blend",
+  "sourceUniformModified": 1794643766.9117079,
+  "appearance": "Approximate likeness from supplied photo; original shortened swept 3D hair and generated facial atlas, not a digital scan.",
+  "version": 2,
+  "morphs": {
+    "Blink": [
+      0,
+      1
+    ],
+    "JawOpen": [
+      0,
+      0.7
+    ],
+    "BrowFurrow": [
+      0,
+      1
+    ],
+    "Scream": [
+      0,
+      1
+    ],
+    "Cry": [
+      0,
+      1
+    ]
+  },
+  "bones": {
+    "head": "Bip01 Head",
+    "leftEye": "Bip01 LEye",
+    "rightEye": "Bip01 REye"
+  },
+  "facialVertices": 8283,
+  "description": "Refined middle-aged reference-informed face, almond eyelids, downturned nose tip, slimmer jaw, dark ivory-sclera eyes, baked skin micro-normal and individual swept hair fibers.",
+  "uniformVersion": 2,
+  "eyeDetail": {
+    "eyelidBoundaryVertices": 0,
+    "detailFibers": 194,
+    "lashFibers": 64,
+    "browFibers": 130
+  },
+  "sha256": "c514c7ddda691ebe5e81d106fdc83f75ed07234cdcfa2070d4d802a32355ee1c",
+  "triangles": 73999,
+  "primitives": 11,
+  "materialRevision": 4,
+  "stitchSegments": 720,
+  "materialNotes": "Native Blender baked skin pores/roughness, fabric twill and clean garment wear; bounded skinned seam stitches. Existing facial/rig/animation data retained.",
+  "vertexCount": 53019,
+  "materialValidationFile": "material-validation-v4.json",
+  "materialSource": "../uniforms/pbr-v4/material-authoring.blend"
+}

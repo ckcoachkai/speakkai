@@ -1,0 +1,111 @@
+{
+  "beforeBounds": [
+    {
+      "min": [
+        -6.940000772476196,
+        0.007499992847442627,
+        -5.969999835745917
+      ],
+      "max": [
+        6.940000057220459,
+        6.819999496244973,
+        0.6070209270281621
+      ]
+    }
+  ],
+  "afterBounds": [
+    {
+      "min": [
+        -6.940000772476196,
+        0.007450621086135367,
+        -5.969631570352524
+      ],
+      "max": [
+        6.940000057220459,
+        6.820083739990829,
+        0.6070913337612542
+      ]
+    }
+  ],
+  "maxBoundsError": 0.0003682653933934077,
+  "originalBytes": 45895268,
+  "optimizedBytes": 5008551,
+  "reductionPercent": 89.08699912156521,
+  "before": {
+    "nodes": 16,
+    "meshes": 16,
+    "materials": 16,
+    "textures": 8,
+    "animations": 0,
+    "primitives": 16,
+    "triangles": 158110
+  },
+  "after": {
+    "nodes": 16,
+    "meshes": 16,
+    "materials": 16,
+    "textures": 8,
+    "animations": 0,
+    "primitives": 16,
+    "triangles": 158110
+  },
+  "textures": [
+    {
+      "width": 1024,
+      "height": 1024,
+      "format": "webp"
+    },
+    {
+      "width": 1024,
+      "height": 1024,
+      "format": "webp"
+    },
+    {
+      "width": 1024,
+      "height": 1024,
+      "format": "webp"
+    },
+    {
+      "width": 1024,
+      "height": 1024,
+      "format": "webp"
+    },
+    {
+      "width": 1024,
+      "height": 1024,
+      "format": "webp"
+    },
+    {
+      "width": 1024,
+      "height": 1024,
+      "format": "webp"
+    },
+    {
+      "width": 1024,
+      "height": 512,
+      "format": "webp"
+    },
+    {
+      "width": 1024,
+      "height": 1024,
+      "format": "webp"
+    }
+  ],
+  "files": [
+    "industrial-props.gltf",
+    "industrial-props.bin",
+    "normal_1.webp",
+    "baseColor_1.webp",
+    "metallicRoughness_1.webp",
+    "normal_2.webp",
+    "baseColor_2.webp",
+    "metallicRoughness_2.webp",
+    "baseColor_3.webp",
+    "baseColor_4.webp"
+  ],
+  "extensions": [
+    "EXT_meshopt_compression",
+    "EXT_texture_webp",
+    "KHR_mesh_quantization"
+  ]
+}

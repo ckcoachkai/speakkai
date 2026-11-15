@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
 
 // Every fallback figure is a complete 3-D articulated person. Detail is merged
@@ -1661,7 +1662,7 @@ function createShadowTexture() {
   return texture;
 }
 
-export async function createCharacterSystem({ scene, maxActors = 9, assetBase = '/assets/' } = {}) {
+export async function createCharacterSystem({ scene, maxActors = 9, assetBase = '/assets/', loadingBudgetMs = 14000, onLoadProgress } = {}) {
   if (!scene?.add) throw new TypeError('createCharacterSystem requires a Three.js scene.');
   const actors = [];
   const group = new THREE.Group();
@@ -1679,66 +1680,85 @@ export async function createCharacterSystem({ scene, maxActors = 9, assetBase = 
   const realAssets = [];
   let vipAsset = null;
   let castKind = 'procedural';
-  // Assets are optional and same-origin. Network loss or a missing downloaded
-  // model always leaves the self-contained articulated fallback available.
+  // One wall-clock budget covers manifests AND GLB/texture decoding. A stalled
+  // optional asset must never prevent the classroom game from opening.
   if (typeof window !== 'undefined' && typeof fetch !== 'undefined') {
-    // Share identical external texture requests/bitmaps across simultaneous GLB loads.
     const previousCacheEnabled = THREE.Cache.enabled;
     THREE.Cache.enabled = true;
+    const budget = clamp(Number.isFinite(loadingBudgetMs) ? loadingBudgetMs : 14000, 100, 15000);
+    const deadline = performance.now() + budget;
+    const controller = new AbortController();
+    const assetManager = new THREE.LoadingManager();
+    const participants = [], uniforms = [];
+    let accepting = true, timer;
+    const progress = () => { try { onLoadProgress?.({ loaded: participants.filter(Boolean).length + (vipAsset ? 1 : 0), total: 9, remainingMs: Math.max(0, deadline-performance.now()) }); } catch {} };
+    // Do not close shared ImageBitmaps: another retained model may use them.
+    const discard = asset => asset?.scene?.traverse(object => {
+      object.geometry?.dispose(); object.skeleton?.dispose();
+      for (const material of object.material ? Array.isArray(object.material) ? object.material : [object.material] : []) {
+        for (const value of Object.values(material)) if (value?.isTexture) value.dispose();
+        material.dispose();
+      }
+    });
     try {
       const base = new URL(assetBase, window.location.href);
-      const loader = new GLTFLoader();
-      const loadRosterManifest = async (relative, requiredCount = 0) => {
-        try {
-          const url = new URL(relative, base);
-          const response = await fetch(url, { signal: AbortSignal.timeout(7000) });
-          if (!response.ok || !response.headers.get('content-type')?.includes('json')) return [];
-          const manifest = await response.json();
-          const entries = (manifest.models || []).slice(0, 8);
-          if (!entries.length || requiredCount && entries.length !== requiredCount) return [];
-          if (requiredCount && new Set(entries.map(entry => entry.id)).size !== requiredCount) return [];
-          const loaded = await Promise.allSettled(entries.map(async entry => {
-            const modelUrl = new URL(entry.file, url);
-            if (modelUrl.origin !== window.location.origin) throw new Error('Character assets must be local.');
-            const asset = await loader.loadAsync(modelUrl.href); asset.characterMeta = entry; return asset;
-          }));
-          const usable = loaded.filter(result => result.status === 'fulfilled').map(result => result.value);
-          return requiredCount && usable.length !== requiredCount ? [] : usable;
-        } catch { return []; }
+      assetManager.onProgress = (url,loaded,total) => {
+        if (!accepting) return;
+        try { THREE.DefaultLoadingManager.onProgress?.(url,loaded,total); } catch {}
+        progress();
       };
-      // Fetch the independent guest concurrently with the eight participant rigs.
-      const vipLoad = (async () => {
-        // The guest is optional; if its distinct asset is unavailable, the male
-        // uniform model still gives the permanent NPC the correct clothes.
+      const loader = new GLTFLoader(assetManager).setMeshoptDecoder(MeshoptDecoder);
+      const manifest = async relative => {
+        const url = new URL(relative, base);
+        const response = await fetch(url, { signal: controller.signal });
+        if (!response.ok || !response.headers.get('content-type')?.includes('json')) throw new Error('Unavailable character manifest');
+        return { url, data: await response.json() };
+      };
+      const loadModel = async (url, meta, accept) => {
+        if (!accepting || url.origin !== window.location.origin) return;
+        const asset = await loader.loadAsync(url.href);
+        if (!accepting || performance.now() >= deadline) { discard(asset); return; }
+        asset.characterMeta = meta; accept(asset); progress();
+      };
+      const roster = async (relative, target, requiredCount = 0) => {
         try {
-          const vipManifestUrl = new URL('player456/manifest.json', base);
-          const vipResponse = await fetch(vipManifestUrl, { signal: AbortSignal.timeout(5000) });
-          if (vipResponse.ok && vipResponse.headers.get('content-type')?.includes('json')) {
-            const vipMeta = await vipResponse.json();
-            const vipUrl = new URL(vipMeta.file || vipMeta.models?.[0]?.file || 'player456.glb', vipManifestUrl);
-            if (vipUrl.origin === window.location.origin) {
-              vipAsset = await loader.loadAsync(vipUrl.href);
-              vipAsset.characterMeta = vipMeta.models?.[0] || vipMeta;
-            }
-          }
-        } catch { /* A procedural or regular uniform male remains available. */ }
+          const {url,data} = await manifest(relative);
+          const entries = (data.models || []).slice(0,8);
+          if (requiredCount && (entries.length!==requiredCount || new Set(entries.map(e=>e.id)).size!==requiredCount)) return;
+          await Promise.allSettled(entries.map((entry,i) => loadModel(new URL(entry.file,url),entry,asset=>{target[i]=asset;})));
+        } catch { /* Optional assets never block procedural actors. */ }
+      };
+      const vipLoad = (async()=>{
+        try {
+          const {url,data}=await manifest('player456/manifest.json');
+          await loadModel(new URL(data.file || data.models?.[0]?.file || 'player456.glb',url),data.models?.[0]||data,asset=>{vipAsset=asset;});
+        } catch {}
       })();
-      const cast = await loadRosterManifest('cast/manifest.json', 8);
-      if (cast.length === 8) { realAssets.push(...cast); castKind = 'individual-cast'; }
-      else { realAssets.push(...await loadRosterManifest('uniforms/manifest.json')); if (realAssets.length) castKind = 'uniform-fallback'; }
-      await vipLoad;
-        for (const asset of [...realAssets, ...(vipAsset ? [vipAsset] : [])]) asset.scene.traverse((object) => {
-          if (object.geometry) sharedGeometry.add(object.geometry);
-          const materials = object.material ? Array.isArray(object.material) ? object.material : [object.material] : [];
-          for (const mat of materials) {
-            sharedMaterials.add(mat);
-            for (const value of Object.values(mat)) if (value?.isTexture) sharedTextures.add(value);
-          }
-        });
-    } catch {
-      // The procedural system does not depend on downloading or loading assets.
-    } finally {
-      THREE.Cache.enabled = previousCacheEnabled;
+      const castLoad = (async()=>{
+        await roster('cast/manifest.json',participants,8);
+        // Do not start another large download after spending the startup budget.
+        if (!participants.some(Boolean) && accepting && deadline-performance.now()>1500) await roster('uniforms/manifest.json',uniforms);
+      })();
+      const timeout = new Promise(resolve=>{timer=setTimeout(resolve,budget);});
+      await Promise.race([Promise.allSettled([castLoad,vipLoad]),timeout]);
+      accepting=false;
+      const selected=participants.filter(Boolean);
+      realAssets.push(...(selected.length?selected:uniforms.filter(Boolean)));
+      if (realAssets.length) castKind=selected.length===8?'individual-cast':selected.length?'partial-cast':'uniform-fallback';
+      for (const asset of [...realAssets,...(vipAsset?[vipAsset]:[])]) asset.scene.traverse(object=>{
+        if(object.geometry)sharedGeometry.add(object.geometry);
+        for(const material of object.material?Array.isArray(object.material)?object.material:[object.material]:[]){
+          sharedMaterials.add(material);
+          for(const value of Object.values(material))if(value?.isTexture)sharedTextures.add(value);
+        }
+      });
+    } catch { /* Procedural rigs remain fully playable. */ }
+    finally {
+      accepting=false;clearTimeout(timer);controller.abort();
+      // Dedicated manager only: never abort unrelated room or audio requests.
+      assetManager.abort();
+      THREE.Cache.enabled=previousCacheEnabled;
+      progress();
     }
   }
   const quality = { ...characterQuality, kind: realAssets.length ? 'skinned-realistic-human' : 'articulated-human', modelCount: realAssets.length, cast: castKind, uniforms: true, uniqueNumbers: true, dedicatedGuest: Boolean(vipAsset) };
@@ -2134,3 +2154,4 @@ export async function createCharacterSystem({ scene, maxActors = 9, assetBase = 
 }
 
 export default createCharacterSystem;
+
