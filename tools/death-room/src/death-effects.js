@@ -1,3 +1,4 @@
+import {createBoilerFarewell} from './boiler-farewell.js';
 import * as THREE from 'three';
 import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
 
@@ -12,6 +13,7 @@ export function createDeathEffects({ scene, actors, room, blood } = {}) {
   if (!scene?.add || !Array.isArray(actors)) throw new TypeError('Death effects require scene and actors.');
   const chamber = room || { halfWidth: 7, halfDepth: 6, height: 7, floorY: 0 };
   const root = new THREE.Group(); root.name = 'death-effects-owned'; scene.add(root);
+  const boilerFarewells=new Map();
   const burns = new Map(), prepared = new Map(), bodyByActor = new Map();
   const wounds = [], bodies = [];
   const geometries = new Set(), materials = new Set(), textures = new Set();
@@ -501,6 +503,7 @@ diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.006,.008,.009)*(0.68+deathN*.7),deat
     if (disposed || immune(actor) || !eligible(actor, givenState)) return { accepted: false };
     // A collapsed refuge has no remaining floor. Keep the actual fall below it.
     if (givenState.scenarioId === 'collapse') { prepared.delete(actor.id); return { accepted: true, corpse: null, suppressed: 'below-floor' }; }
+    if(givenState.scenarioId==='boiler'){if(!boilerFarewells.has(actor.id)&&boilerFarewells.size<1)boilerFarewells.set(actor.id,createBoilerFarewell({scene:root,actor,floorY:chamber.floorY||0}));prepared.delete(actor.id);return {accepted:true,corpse:null,cinematic:'boiler-farewell'};}
     const pending = prepared.get(actor.id);
     const type = givenState.scenarioId === 'freeze' ? 'frozen' : givenState.scenarioId === 'spikes' ? 'impaled' : pending?.type || (givenState.scenarioId === 'flood' ? 'drowned' : givenState.scenarioId === 'electric' || (burns.get(actor.id)?.target || 0) > .3 ? 'electric-strike' : 'impact');
     if (type === 'electric-strike') { const burn = burnActor(actor); burn.amount = burn.target = 1; burn.uniform.value = enabled ? 1 : 0; burn.finalized = true; }
@@ -561,6 +564,7 @@ diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.006,.008,.009)*(0.68+deathN*.7),deat
     if (disposed) return;
     dt = clamp(Number.isFinite(dt) ? dt : 0, 0, 0.1); elapsed += dt; state = nextState;
     updateContactCues(dt);
+    for(const effect of boilerFarewells.values())effect.update(dt,enabled&&state.scenarioId==='boiler');
     for (const burn of burns.values()) {
       if (!burn.finalized) burn.target = Math.min(MAX_LIVING_SCORCH, burn.target);
       burn.amount += (burn.target - burn.amount) * (1 - Math.exp(-dt * 9)); burn.uniform.value = enabled ? burn.amount : 0;
@@ -604,6 +608,7 @@ diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.006,.008,.009)*(0.68+deathN*.7),deat
   function setBloodEnabled(value) { bloodEnabled = Boolean(value); if (!bloodEnabled) { for(const c of cuePool)c.life=0;cueMesh.count=0;cueMesh.visible=false; faceParticles.length = 0; faceBurstMesh.count = 0; faceBurstMesh.visible = false; } for (const wound of wounds) wound.mesh.visible = enabled && bloodEnabled && (wound.body ? wound.body.wrapper.visible : wound.actor?.root.visible !== false && wound.actor?.alive !== false); }
   function setEnabled(value) { enabled = Boolean(value); root.visible = enabled; for (const burn of burns.values()) { burn.uniform.value = enabled ? burn.amount : 0; for (const [key, uniform] of Object.entries(burn.injury)) uniform.value = enabled ? burn.injuryTargets[key] : 0; } }
   function reset() {
+    for(const effect of boilerFarewells.values())effect.dispose();boilerFarewells.clear();
     for(const c of cuePool)c.life=0;cueMesh.count=0;cueLast.clear();cuesCreated=0;
     for (const burn of burns.values()) releaseBurn(burn); burns.clear();
     for (const wound of wounds) wound.mesh.removeFromParent(); wounds.length = 0;
@@ -617,8 +622,8 @@ diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.006,.008,.009)*(0.68+deathN*.7),deat
     if (disposed) return; reset(); disposed = true;
     ripples.dispose(); faceBurstMesh.dispose(); geometries.forEach(g => g.dispose()); materials.forEach(m => m.dispose()); textures.forEach(t => t.dispose()); root.removeFromParent(); root.clear();
   }
-  function getstats() { return { enabled, bloodEnabled, contactCues:cueMesh.count, contactCueLimit:cueLimit, cuesCreated, reducedMotion:Boolean(reducedMotion?.matches), burns: [...burns.values()].filter(b => b.target > 0).length, wounds: wounds.length, woundsByActor: actors.map(a => ({ actorId: a.id, count: wounds.filter(w => w.actor === a).length, visible: wounds.filter(w => w.actor === a && w.mesh.visible).length })), corpses: bodies.filter(b => b.revealed && !b.ambient).length, ambientCorpses: bodies.filter(b => b.ambient).length, preparedCorpses: prepared.size, acceptedEvents, ignoredEvents, blockedGuestEvents, gasFaceBursts: [...gasBursts], impaleContactActors: [...impaleContacts], activeFaceParticles: faceParticles.length, maxFaceParticles: MAX_FACE_PARTICLES, burnAmounts: [...burns].map(([actorId, b]) => ({ actorId, amount: b.amount, target: b.target, strikes: b.strikes })), injuryActors: [...burns].map(([actorId, b]) => ({ actorId, stage: b.stage, ratio: b.ratio, gasFaceFlush: THREE.MathUtils.smoothstep(b.injury.poison.value,.035,.48), gasFaceBlue: THREE.MathUtils.smoothstep(b.injury.poison.value,.48,.96), facialBleeds: b.faceMarks.size, visibleFacialBleeds: wounds.filter(w => w.actor === b.actor && w.facial && w.mesh.visible).length, faceMaterials: b.owned.filter(m => m.userData.deathInjurySurface?.face).length, frost: b.injury.cold.value, ...Object.fromEntries(Object.entries(b.injury).map(([key, uniform]) => [key, uniform.value])) })), floodObstacles: getFloodObstacles(), bodyDimensions: bodies.map(b => ({ uuid: b.wrapper.uuid, propId: b.propId, actorId: b.actorId, ambient: b.ambient, type: b.type, dimensions: [...b.dimensions], position: b.wrapper.position.toArray(), createdAt: b.created, revealedAt: b.revealedAt, waterLevel: b.waterLevel, floorY: b.floorY, floating: b.floating, sinking: b.sinking, sinkStartedAt: b.sinkStartedAt, posePreserved: Boolean(b.posePreserved), heldPose: Boolean(b.holdPose), holdReason: b.holdReason, handoffCenter: b.handoffCenter?.toArray(), eyesVisible: b.eyes.filter(e => e.mesh.visible).length, visible: b.wrapper.visible })) }; }
-  return { emit, applyInjury, update, onEliminated, reset, getFloodObstacles, setEnabled, setBloodEnabled, dispose, getstats, get stats() { return getstats(); } };
+  function getstats() { return { enabled, bloodEnabled, boilerFarewells:[...boilerFarewells.values()].map(e=>e.stats), contactCues:cueMesh.count, contactCueLimit:cueLimit, cuesCreated, reducedMotion:Boolean(reducedMotion?.matches), burns: [...burns.values()].filter(b => b.target > 0).length, wounds: wounds.length, woundsByActor: actors.map(a => ({ actorId: a.id, count: wounds.filter(w => w.actor === a).length, visible: wounds.filter(w => w.actor === a && w.mesh.visible).length })), corpses: bodies.filter(b => b.revealed && !b.ambient).length, ambientCorpses: bodies.filter(b => b.ambient).length, preparedCorpses: prepared.size, acceptedEvents, ignoredEvents, blockedGuestEvents, gasFaceBursts: [...gasBursts], impaleContactActors: [...impaleContacts], activeFaceParticles: faceParticles.length, maxFaceParticles: MAX_FACE_PARTICLES, burnAmounts: [...burns].map(([actorId, b]) => ({ actorId, amount: b.amount, target: b.target, strikes: b.strikes })), injuryActors: [...burns].map(([actorId, b]) => ({ actorId, stage: b.stage, ratio: b.ratio, gasFaceFlush: THREE.MathUtils.smoothstep(b.injury.poison.value,.035,.48), gasFaceBlue: THREE.MathUtils.smoothstep(b.injury.poison.value,.48,.96), facialBleeds: b.faceMarks.size, visibleFacialBleeds: wounds.filter(w => w.actor === b.actor && w.facial && w.mesh.visible).length, faceMaterials: b.owned.filter(m => m.userData.deathInjurySurface?.face).length, frost: b.injury.cold.value, ...Object.fromEntries(Object.entries(b.injury).map(([key, uniform]) => [key, uniform.value])) })), floodObstacles: getFloodObstacles(), bodyDimensions: bodies.map(b => ({ uuid: b.wrapper.uuid, propId: b.propId, actorId: b.actorId, ambient: b.ambient, type: b.type, dimensions: [...b.dimensions], position: b.wrapper.position.toArray(), createdAt: b.created, revealedAt: b.revealedAt, waterLevel: b.waterLevel, floorY: b.floorY, floating: b.floating, sinking: b.sinking, sinkStartedAt: b.sinkStartedAt, posePreserved: Boolean(b.posePreserved), heldPose: Boolean(b.holdPose), holdReason: b.holdReason, handoffCenter: b.handoffCenter?.toArray(), eyesVisible: b.eyes.filter(e => e.mesh.visible).length, visible: b.wrapper.visible })) }; }
+  return { getBoilerFarewell(){return boilerFarewells.values().next().value?.stats||null}, emit, applyInjury, update, onEliminated, reset, getFloodObstacles, setEnabled, setBloodEnabled, dispose, getstats, get stats() { return getstats(); } };
 }
 
 export default createDeathEffects;

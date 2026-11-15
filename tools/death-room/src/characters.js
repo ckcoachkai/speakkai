@@ -1492,6 +1492,50 @@ function animateRealRig(actor, dt, elapsed, state) {
   actor._shadow.position.y = 0.018 - actor.position.y;
 }
 
+const accentRegions = new Set(['head','chest','shoulders','leftHand','rightHand','leftFoot','rightFoot','feet']);
+const accentMotionPreference = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+function applyInjuryAccents(actor) {
+  const accents=actor._injuryAccents;
+  if(!accents?.length)return;
+  if(actor.invincible||!actor.alive||actor._frozenPose||['fall','dead'].includes(actor.action)){accents.length=0;return;}
+  const rig=actor._rig;
+  const rotate=(bone,axis,value)=>{if(!bone)return;if(rig.realistic)poseBone(rig,bone,axis,value);else bone.rotation[axis]+=value;};
+  for(let i=accents.length-1;i>=0;i--){
+    const a=accents[i],t=(actor._animationClock-a.start)/a.duration;
+    if(t>=1){accents.splice(i,1);continue;}
+    if(accentMotionPreference?.matches)continue;
+    // Smooth attack and release, analytic in time and independent of frame rate.
+    const envelope=Math.sin(Math.PI*clamp(t,0,1))**2;
+    const q=envelope*a.intensity, side=a.region.startsWith('left')?-1:1;
+    const twist=['spiral','orbit','pinwheel','sweep','twist'].includes(a.style);
+    const jolt=['zigzag','ladder','burst','scatter','jolt'].includes(a.style);
+    const guard=['sheet','fan','halo','cross','guard'].includes(a.style);
+    const tremor=jolt?Math.sin(t*Math.PI*6)*.07:0;
+    saveSecondaryPose(rig);
+    const spine=rig.realistic?(rig.bones.bip01spine2||rig.bones.bip01spine1):rig.chest;
+    const head=rig.realistic?rig.bones.bip01head:rig.head;
+    if(a.region==='head'){
+      rotate(head,'x',q*(guard?.16:-.13));rotate(head,twist?'y':'z',q*(twist?.22:.09+tremor));
+    }else if(a.region==='chest'||a.region==='shoulders'){
+      rotate(spine,'x',q*(guard?.16:-.10));rotate(spine,twist?'y':'z',q*(twist?.20:.07+tremor));
+      if(a.region==='shoulders')for(const sign of [-1,1]){
+        const arm=rig.realistic?rig.bones[sign<0?'bip01lupperarm':'bip01rupperarm']:rig.arms.find(x=>x.side===sign)?.upper;
+        rotate(arm,'z',sign*q*.18);
+      }
+    }else{
+      const hand=a.region.endsWith('Hand'), signs=a.region==='feet'?[-1,1]:[side];
+      for(const sign of signs){const key=sign<0?'l':'r',chain=hand?rig.arms:rig.legs;
+        const fallback=rig.realistic?null:chain.find(x=>x.side===sign);
+        const upper=rig.realistic?rig.bones['bip01'+key+(hand?'upperarm':'thigh')]:fallback?.upper;
+        const lower=rig.realistic?rig.bones['bip01'+key+(hand?'forearm':'calf')]:fallback?.lower;
+        const end=rig.realistic?rig.bones['bip01'+key+(hand?'hand':'foot')]:hand?fallback?.hand:fallback?.foot;
+        rotate(upper,'x',-q*(hand?.30:.17));rotate(upper,twist?'y':'z',sign*q*(twist?.22:.13));
+        rotate(lower,'x',q*(hand?-(guard?.48:.30):.25));rotate(end,twist?'y':'x',q*(.16+tremor));
+      }
+    }
+  }
+}
+
 function animateRig(actor, dt, elapsed, state) {
   const rig = actor._rig;
   if (actor._frozenPose) {
@@ -1499,6 +1543,7 @@ function animateRig(actor, dt, elapsed, state) {
     return;
   }
   if (!actor.alive || actor.action === 'fall' || actor.action === 'dead') {
+    actor._injuryAccents.length=0;
     animateDeathPose(actor, dt, state);
     constrainFloodHeight(actor, state);
     return;
@@ -1509,6 +1554,7 @@ function animateRig(actor, dt, elapsed, state) {
     animateRealRig(actor, dt, elapsed, state);
     applyInjuryPose(actor);
     applyAwarenessPose(actor);
+    applyInjuryAccents(actor);
     constrainFloodHeight(actor, state);
     return;
   }
@@ -1632,6 +1678,7 @@ function animateRig(actor, dt, elapsed, state) {
   }
   applyInjuryPose(actor);
   applyAwarenessPose(actor);
+  applyInjuryAccents(actor);
   constrainFloodHeight(actor, state);
 }
 
@@ -1895,6 +1942,7 @@ export async function createCharacterSystem({ scene, maxActors = 9, assetBase = 
         freezeInPlace(reason = 'cold') {
           if (this.invincible || this._frozenPose || !this.alive) return;
           this._frozenPose = { reason: reason === 'impale' ? 'impale' : 'cold', lockedAt: simulationTime };
+          this._injuryAccents.length=0;
           this._steeringRate = 0;
           this.action = 'frozen'; this._vx = this._vz = this._motionSpeed = this._turnRate = this._acceleration = 0;
           this._autoActionUntil = 0;
@@ -1937,7 +1985,17 @@ export async function createCharacterSystem({ scene, maxActors = 9, assetBase = 
           this._expression.until = Number.isFinite(duration) ? simulationTime + clamp(duration, 0.06, 8) : Infinity;
           if (changed && (!this.invincible || type === 'neutral' || type === 'fear')) this.onExpression?.(type, nextIntensity);
         },
+        _injuryAccents: [],
+        setInjuryAccent(region, style, intensity = .5, duration = .6) {
+          if(this.invincible||this.id==='vip-456'||!this.alive||this._frozenPose||['fall','dead'].includes(this.action)||accentMotionPreference?.matches||!accentRegions.has(region)||!Number.isFinite(intensity)||!Number.isFinite(duration))return false;
+          const accents=this._injuryAccents, existing=accents.findIndex(a=>a.region===region);
+          if(existing>=0)accents.splice(existing,1);
+          if(accents.length>=3)accents.shift();
+          accents.push({region,style:String(style),intensity:clamp(intensity,0,.8),duration:clamp(duration,.18,1.2),start:this._animationClock});
+          return true;
+        },
         clearReactions() {
+          this._injuryAccents.length=0;
           if (this._autoActionUntil > simulationTime && this.action === this._autoAction) this.action = 'run';
           for (const type of characterQuality.reactions) {
             this._reactions[type].weight = this._reactions[type].intensity = this._reactions[type].until = 0;

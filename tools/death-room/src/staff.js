@@ -565,7 +565,7 @@ export async function createStaff({ scene, room = {} } = {}) {
     person.skeleton=skeleton;person.limbs=limbs;person.torso=torso;person.danceWeight=0;
   }
   const reducedMotion=typeof matchMedia==='function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
-  const danceStats={active:false,energy:0,beatPulse:0,styles:['jazz','hip-hop','modern','jazz'],articulatedJoints:36};
+  const danceStats={active:false,energy:0,beatPulse:0,styles:['jazz','hip-hop','modern','jazz'],articulatedJoints:36, choreography:'puppet-helicopter', maxLift:0.16};
   group.userData.dance=danceStats;
   group.userData.staffCount = staff.length;
   group.userData.staffRoots = staff.map(s => s.root);
@@ -609,21 +609,34 @@ export async function createStaff({ scene, room = {} } = {}) {
         danceStats.styles[person.index]=['jazz','hip-hop','modern'][blend>.5?next:current];
         const jazz=mix[0],hip=mix[1],modern=mix[2];
         const sway=Math.sin(p*.5), step=Math.sin(p), groove=Math.sin(p-Math.PI*.25);
-        person.root.position.y=person.baseY+w*(.018*(1-Math.cos(p))*jazz+.026*pulse*hip+.025*(1+Math.sin(p*.25))*modern);
-        person.upper.rotation.x=w*(.09*groove*hip+.05*Math.sin(p*.5)*modern);
-        person.upper.rotation.y=w*(.13*sway*jazz+.19*groove*hip+.16*Math.sin(p*.25)*modern);
-        person.upper.rotation.z+=w*(.07*sway*jazz+.065*step*hip+.10*Math.sin(p*.25)*modern);
+        person.root.position.y=person.baseY+w*(.055*(1-Math.cos(p))+.045*pulse); // anchored hopping, never translates off the deck
+        person.upper.rotation.x=w*(.12*groove*hip+.10*Math.sin(p*.5)*modern);
+        person.upper.rotation.y=w*(.22*sway*jazz+.28*groove*hip+.24*Math.sin(p*.25)*modern);
+        person.upper.rotation.z+=w*(.12*sway*jazz+.11*step*hip+.14*Math.sin(p*.25)*modern);
         person.torso.rotation.copy(person.upper.rotation);
         person.head.rotation.x+=w*(.09*pulse*hip-.04*step*jazz);
         person.head.rotation.y+=w*.10*sway;
         for(const limb of person.limbs){
           const side=limb.side, alternate=Math.sin(p+(side<0?Math.PI:0));
-          limb.arm.joint.rotation.set(w*(-.45*alternate*jazz+(-.35-.30*groove)*hip+(-.7-.5*Math.sin(p*.25+side))*modern),w*.10*sway,
-            w*side*(.48*jazz+.30*hip+(.85+.40*Math.sin(p*.25+side))*modern));
-          limb.arm.bend.rotation.x=-w*(jazz*(.55+.35*alternate)+hip*(1.0+.45*alternate)+modern*(.35+.23*sway));
-          limb.leg.joint.rotation.x=w*(.22*alternate*jazz+.16*alternate*hip+.12*Math.sin(p*.5+side)*modern);
-          limb.leg.joint.rotation.z=w*side*(.035*jazz+.045*hip+.04*modern)*(1+sway);
-          limb.leg.bend.rotation.x=w*Math.max(0,-alternate)*(.32*jazz+.26*hip+.18*modern);
+          // Puppet strings alternately yank each wrist well above the hood,
+          // then release it into a loose bent-elbow swing. Continuous trig
+          // curves avoid angular discontinuities at musical phrase boundaries.
+          const lift=.5+.5*alternate;
+          limb.arm.joint.rotation.set(
+            w*(-.35-.55*Math.cos(p+side)+.18*modern*sway),
+            w*(.30*Math.sin(p*.5+side)+.15*hip*groove),
+            w*side*(.22+2.35*lift+.15*jazz*Math.sin(p*.5)));
+          limb.arm.bend.rotation.x=-w*(.20+.85*(1-lift)+.25*hip*pulse);
+          // Alternating helicopter sweeps: extend one leg through a broad
+          // forward/outward orbit while the other folds under the pelvis.
+          // Positive lift envelope keeps the foot from sweeping below deck.
+          const kick=Math.max(0,alternate), orbit=p*.5+side*.8;
+          limb.leg.joint.rotation.set(
+            -w*kick*(.85+.40*Math.cos(orbit)),
+            w*kick*.75*Math.sin(orbit),
+            w*side*kick*(.38+.42*(.5+.5*Math.sin(orbit))));
+          limb.leg.bend.rotation.x=w*(.12+.62*(1-kick))*(.65+.35*hip);
+
         }
         person.root.userData.danceStyle=danceStats.styles[person.index];
         person.root.userData.danceWeight=w;
