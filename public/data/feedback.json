@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-14T08:58:15.161805+00:00",
+  "updatedAt": "2026-11-15T07:13:03.230730+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2403,6 +2403,40 @@
           "id": "sun-1130-2026-11-08",
           "time": "11:30–13:00",
           "status": "held"
+        },
+        {
+          "id": "sun-1130-2026-11-15",
+          "date": "2026-11-15",
+          "time": "11:30–13:00",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "berlingo",
+              "name": "Berlingo",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "yiyi",
+              "name": "Yiyi",
+              "en": "• Yiyi practised continuously for about five to ten minutes when she came up to speak. That was very good.\n\n• She needs to use more hand gestures and vary her sentences a little more to add depth to what she says.",
+              "zh": "• Yiyi 上台后连续练习了大约五到十分钟，这一点很好。\n\n• 她需要多使用一些手势，也需要让句式更有变化，让自己表达的内容更有深度。"
+            },
+            {
+              "id": "charles",
+              "name": "Charles",
+              "en": "• Charles took the task seriously and was able to speak clearly.\n\n• I would like him to use a few more hand gestures and speak a little louder. Since he is reading what he prepared for homework, and the content is not too long or difficult, he can focus more on practising his presentation.",
+              "zh": "• Charles 认真对待了这项任务，也能够表达得很清楚。\n\n• 我希望他多用一些手势，声音再大一点。因为他是在朗读自己为作业准备的内容，而内容并不太长或太难，所以他可以把更多注意力放在展示方面，多练习演讲的呈现。"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "• On Ethan’s first speaking attempt, he was running around and circling rather than keeping his movements controlled.\n\n• On his second attempt, his delivery was again restless rather than controlled.\n\n• On his third attempt, he used a very high-pitched voice and continued moving around the room.\n\n• I felt he was not taking these attempts seriously, and this was taking up everyone’s practice time. He needs to take the speaking practice seriously and work on controlling his movements and voice.",
+              "zh": "• Ethan 第一次发言时跑来跑去、转来转去，没有控制好自己的动作。\n\n• 第二次尝试时，他的表现仍然比较躁动，没有控制好自己的表达。\n\n• 第三次尝试时，他用了很尖、很高的声音，并继续在教室里走动。\n\n• 我觉得他没有认真对待这几次尝试，也占用了大家的练习时间。他需要认真对待发言练习，注意控制自己的动作和声音。"
+            }
+          ]
         }
       ]
     },
