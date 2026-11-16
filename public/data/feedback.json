@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-15T08:51:20.707486+00:00",
+  "updatedAt": "2026-11-16T09:03:10.760403+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -3532,6 +3532,52 @@
               "name": "Ariel",
               "en": "• I think Ariel added to and expanded her speech, including more evidence. This is good, and the overall presentation was good as well.\n\n• The part that needs more thought is the ending message: ‘Don’t cheat.’ For most people in the world, either they already cheat and may not listen to that message, or perhaps they do not cheat in the first place. Because of that, I think the message’s effectiveness would be a little weaker, even though the overall presentation was good.",
               "zh": "• 我觉得 Ariel 给演讲增加并扩展了内容，也加入了更多证据。这很好，整体的演讲呈现也不错。\n\n• 还需要进一步思考的是结尾的核心信息：‘不要作弊。’对世界上的大多数人来说，要么他们已经在作弊，可能不会听从这句话；要么他们也许本来就不作弊。因此，我觉得这个信息的实际效果会稍弱一些，尽管整体的演讲呈现是好的。"
+            }
+          ]
+        },
+        {
+          "id": "mon-afternoon-2026-11-16",
+          "date": "2026-11-16",
+          "time": "15:30–17:30",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "william",
+              "name": "William",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "sean",
+              "name": "Sean",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "royce",
+              "name": "Royce",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "cynthia",
+              "name": "Cynthia",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "ariel",
+              "name": "Ariel",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "john",
+              "name": "John",
+              "en": "• John joined our Monday 3:30–5:30 class. He spent an hour and a half last night writing a speech that ran for six minutes. There was a lot of good content, but it was too long. We would need to cut about half of what he said to fit the speaking time.\n\n• His topic was a bit general—essentially, “Let’s stop climate problems” or “Let’s stop the weather.” He needs something more specific, because one person cannot make that whole change.\n\n• One memorable point was his comparison that people produce a lot of gas, but planes produce more. I would not expect a plane to produce less gas than a person, so this comparison needs more development to make a useful point.",
+              "zh": "• John 加入了我们周一15:30–17:30的课堂。他昨晚花了一个半小时写出一篇讲起来长达六分钟的演讲。里面有很多不错的内容，但篇幅太长了。为了符合发言时间，我们需要删去大约一半的内容。\n\n• 他的主题有一点宽泛，基本上是“让我们阻止气候问题”或“让我们阻止天气变化”。他需要更具体的切入点，因为一个人无法完成这样整个层面的改变。\n\n• 一个令人记住的点是他的比较：人会产生很多气体，但飞机产生的更多。我不会认为一架飞机产生的气体会比一个人更少，因此这个比较还需要进一步展开，才能表达一个有用的观点。"
             }
           ]
         }
