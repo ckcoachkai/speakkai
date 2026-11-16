@@ -564,8 +564,30 @@ export async function createStaff({ scene, room = {} } = {}) {
     }
     person.skeleton=skeleton;person.limbs=limbs;person.torso=torso;person.danceWeight=0;
   }
+  // Four shared vector face plates: no downloaded textures and only one visible
+  // emissive mesh per observer. Faces replace symbols with readable emotions.
+  const faceMoods=['happy','sad','excited','surprised'];
+  const faceColors=[0x33ffbd,0x52aaff,0xffdc36,0xff72ed];
+  const faceShapes=faceMoods.map((mood,index)=>{
+    const parts=[];
+    const stroke=points=>parts.push(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p))),20,.0037,5,false));
+    for(const side of [-1,1]){
+      const x=side*.031;
+      if(mood==='excited')stroke([[x-.012,.027,0],[x,.041,0],[x+.012,.027,0]]);
+      else stroke([[x,.019,0],[x,.041,0]]);
+    }
+    if(mood==='surprised'){
+      const points=[];for(let i=0;i<=24;i++){const a=i/24*Math.PI*2;points.push([Math.cos(a)*.016,-.025+Math.sin(a)*.023,0]);}stroke(points);
+    }else{
+      const points=[];for(let i=0;i<=20;i++){const x=(i/20-.5)*.090;points.push([x,-.016+(mood==='sad'?-1:1)*(.025*((x/.045)**2-1)),0]);}stroke(points);
+    }
+    const geometry=mergeGeometries(parts,false);parts.forEach(p=>p.dispose());geometries.add(geometry);
+    const material=makeMaterial('Neon '+mood+' expression',{color:faceColors[index],emissive:faceColors[index],emissiveIntensity:2.4,roughness:.4,toneMapped:false});
+    return {geometry,material};
+  });
+  for(const person of staff){person.faces=faceShapes.map(({geometry,material},i)=>{const mesh=new THREE.Mesh(geometry,material);mesh.name='Neon '+faceMoods[i]+' face';mesh.position.set(0,.149,.169);mesh.visible=i===person.index%4;person.head.add(mesh);return mesh;});person.lookYaw=0;}
   const reducedMotion=typeof matchMedia==='function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
-  const danceStats={active:false,energy:0,beatPulse:0,styles:['jazz','hip-hop','modern','jazz'],articulatedJoints:36, choreography:'puppet-helicopter', maxLift:0.16};
+  const danceStats={active:false,energy:0,beatPulse:0,styles:['jazz','hip-hop','modern','jazz'],articulatedJoints:36, choreography:'puppet-helicopter', maxLift:0.16, expressiveFaces:true, moods:[], lookingAtPlayers:false};
   group.userData.dance=danceStats;
   group.userData.staffCount = staff.length;
   group.userData.staffRoots = staff.map(s => s.root);
@@ -574,7 +596,7 @@ export async function createStaff({ scene, room = {} } = {}) {
 
   return {
     group,
-    update(dt, _state = {}, rhythm = { active:false, time:0, energy:0, beatPulse:0, bpm:120, phase:0 }) {
+    update(dt, _state = {}, rhythm = { active:false, time:0, energy:0, beatPulse:0, bpm:120, phase:0 }, actors = []) {
       if (disposed) return;
       dt=Math.min(.1,Math.max(0,Number.isFinite(dt)?dt:0));
       if (!dt || _state.phase==='paused' || _state.paused) return;
@@ -585,6 +607,9 @@ export async function createStaff({ scene, room = {} } = {}) {
       const time=Number.isFinite(rhythm.time)?rhythm.time:elapsed;
       const bpm=THREE.MathUtils.clamp(Number.isFinite(rhythm.bpm)?rhythm.bpm:120,40,220);
       const beat=time*bpm/60;
+      const visiblePlayers=actors.filter(a=>a.alive!==false&&a.root?.visible!==false);
+      const selectedPlayers=visiblePlayers.filter(a=>a.isVictim);
+      const gazeCandidates=selectedPlayers.length?selectedPlayers:visiblePlayers;
       danceStats.active=active;danceStats.energy=energy;danceStats.beatPulse=pulse;
       for (const person of staff) {
         const breath = Math.sin(elapsed * (1.15 + Math.sin(person.phase) * .07) + person.phase);
@@ -596,7 +621,15 @@ export async function createStaff({ scene, room = {} } = {}) {
         const t = THREE.MathUtils.clamp((watchTime % 8.6 - 4.2) / 2.1, 0, 1), ease = t * t * (3 - 2 * t);
         const from = Math.sin((watchCycle - 1) * 1.618 + person.phase) * .105;
         const to = Math.sin(watchCycle * 1.618 + person.phase) * .105;
-        person.head.rotation.y = THREE.MathUtils.lerp(from, to, ease);
+        let player=null, nearest=Infinity;
+        for(const candidate of gazeCandidates){const position=candidate.position||candidate.root?.position;if(!position)continue;const distance=(position.x-person.root.position.x)**2+(position.z-person.root.position.z)**2;if(distance<nearest){nearest=distance;player=candidate;}}
+        let look=THREE.MathUtils.lerp(from,to,ease);
+        if(player){const target=player.position||player.root.position;const dx=target.x-person.root.position.x,dz=target.z-person.root.position.z;look=Math.atan2(dx,dz)-person.root.rotation.y;look=Math.atan2(Math.sin(look),Math.cos(look));look=THREE.MathUtils.clamp(look,-1.15,1.15);}
+        person.lookYaw=THREE.MathUtils.lerp(person.lookYaw,look,1-Math.exp(-dt*3));
+        person.head.rotation.y=person.lookYaw;danceStats.lookingAtPlayers=!!player;
+        const moodIndex=reducedMotion?.matches?0:active?(Math.floor(beat/8)+person.index)%4:person.index%4;
+        person.faces.forEach((face,i)=>{face.visible=i===moodIndex;});
+        person.root.userData.faceMood=faceMoods[moodIndex];danceStats.moods[person.index]=faceMoods[moodIndex];
         person.head.rotation.x = Math.sin(elapsed * .27 + person.phase) * .012;
         person.head.rotation.z = weight * .45;
         person.head.position.set(weight * .25 - Math.sin(weight) * .51, 1.51 + breath * .0014 + (Math.cos(weight) - 1) * .51, 0);
@@ -621,7 +654,10 @@ export async function createStaff({ scene, room = {} } = {}) {
           // Puppet strings alternately yank each wrist well above the hood,
           // then release it into a loose bent-elbow swing. Continuous trig
           // curves avoid angular discontinuities at musical phrase boundaries.
-          const lift=.5+.5*alternate;
+          const jazzLift=.5+.5*alternate;
+          const hipLift=.5+.5*Math.sin(p+Math.sin(p*.5)*.6); // two-arm pump
+          const modernLift=.5+.5*Math.sin(p*.5+side*1.3); // slow opposed waves
+          const lift=jazz*jazzLift+hip*hipLift+modern*modernLift;
           limb.arm.joint.rotation.set(
             w*(-.35-.55*Math.cos(p+side)+.18*modern*sway),
             w*(.30*Math.sin(p*.5+side)+.15*hip*groove),
@@ -630,7 +666,7 @@ export async function createStaff({ scene, room = {} } = {}) {
           // Alternating helicopter sweeps: extend one leg through a broad
           // forward/outward orbit while the other folds under the pelvis.
           // Positive lift envelope keeps the foot from sweeping below deck.
-          const kick=Math.max(0,alternate), orbit=p*.5+side*.8;
+          const kick=Math.max(0,jazz*alternate+hip*Math.sin(p+side*.7)+modern*Math.sin(p*.5+side)), orbit=p*.5+side*.8;
           limb.leg.joint.rotation.set(
             -w*kick*(.85+.40*Math.cos(orbit)),
             w*kick*.75*Math.sin(orbit),
@@ -657,4 +693,5 @@ export async function createStaff({ scene, room = {} } = {}) {
 }
 
 export default createStaff;
+
 

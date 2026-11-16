@@ -418,7 +418,8 @@ export default function createScenario(ctx) {
       if (actor.alive !== false && !protectedActor(actor)) victims.push(actor);
     }
     const focus = isPreview ? 0 : smooth(0.015, 0.075, progress);
-    const contactPhase = phase === 'running' && progress >= 0.055;
+    // Reveal still needs real mouth contact to resolve the selected participant.
+    const contactPhase = (phase === 'running' || phase === 'reveal') && progress >= 0.055;
     const firstWave = isPreview ? 8 : Math.max(16, victims.length * 3);
     const activeCount = Math.min(count, Math.floor(firstWave + (count - firstWave) * smooth(0.025, 0.65, progress)));
     lastActiveCount = activeCount;
@@ -718,3 +719,4 @@ export default function createScenario(ctx) {
 
   return { update, dispose, get stats() { return { activeRats: lastActiveCount, biteInterval, students: [...contactStats.values()].map(record => ({ ...record, lastPosition: record.lastPosition?.slice() ?? null })) }; } };
 }
+
