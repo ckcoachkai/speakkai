@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-17T09:39:59.617031+00:00",
+  "updatedAt": "2026-11-17T11:09:44.170746+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -3562,6 +3562,31 @@
             {
               "name": "Lyon",
               "feedbackUrl": "/fb/?class=tue-later&date=2026-11-10&student=lyon"
+            }
+          ]
+        },
+        {
+          "id": "tue-later-2026-11-17",
+          "date": "2026-11-17",
+          "time": "17:40–19:40",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Jayden",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-17&student=jayden"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-17&student=sean"
+            },
+            {
+              "name": "Nelson",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-17&student=nelson"
+            },
+            {
+              "name": "Lyon",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-17&student=lyon"
             }
           ]
         }
