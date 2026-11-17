@@ -25,7 +25,7 @@ import SiteFooter from '../../components/SiteFooter.astro';
  let month=now.slice(0,7), records=[], selected=null, pinned=null, busy=false,feedbackLoaded=false;const feedbackSessions=new Map();let activeStudent=null,studentLang='en';
  const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=tr(text);if(cls)e.className=cls;return e};
  const dateLabel=d=>new Intl.DateTimeFormat(lang==='zh'?'zh-CN':'en',{dateStyle:'full',timeZone:'UTC'}).format(new Date(d+'T12:00:00Z'));
- const groupLabel=id=>id.split('-').map(x=>(lang==='zh'?{mon:'周一',tue:'周二',wed:'周三',thu:'周四',fri:'周五',sat:'周六',sun:'周日',afternoon:'下午',later:'晚班',introductory:'入门',foundations:'基础',original:'原创',oratory:'演讲'}:{mon:'Monday',tue:'Tuesday',wed:'Wednesday',thu:'Thursday',fri:'Friday',sat:'Saturday',sun:'Sunday'})[x]||x).join(' · ');
+ const groupLabel=id=>id.split('-').map(x=>(lang==='zh'?{mon:'周一',tue:'周二',wed:'周三',thu:'周四',fri:'周五',sat:'周六',sun:'周日',afternoon:'下午',later:'晚班',introductory:'入门',foundations:'基础',original:'原创',oratory:'演讲',debate:'双人辩论练习'}:{mon:'Monday',tue:'Tuesday',wed:'Wednesday',thu:'Thursday',fri:'Friday',sat:'Saturday',sun:'Sunday'})[x]||x).join(' · ');
  function studentReport(r,z){const id=studentIdentity(r,z.feedbackUrl);return id?feedbackSessions.get(r.key)?.students?.find(report=>report.id===id):null;}
  function isAbsent(r,z){return studentReport(r,z)?.attendance==='absent';}
  function studentLabel(r,z){return z.name+(isAbsent(r,z)?(lang==='zh'?' · 缺席':' · Absent'):'');}

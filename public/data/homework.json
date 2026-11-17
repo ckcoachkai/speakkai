@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-17T12:58:18.196355+00:00",
+  "updatedAt": "2026-11-17T14:47:17.132507+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -242,7 +242,7 @@
           "date": "2026-11-14",
           "time": "13:00–15:00",
           "classContent": [
-            "We worked on the students’ competition speeches, reviewing their speeches, core messages and calls to action, and how we could go deeper. We looked through and polished their content, then tried rearranging parts of their speeches."
+            "We worked on the students’ competition speeches, reviewing their speeches, core messages and calls to action, and how we could go deeper. We looked through and polished their content, then tried rearranging parts of their speeches.\n\nWe also worked on making sure the speeches had cause, effect, impact and solution. I helped Neil, Kyle and Ivy in the 15:00 class, and Kenny and Kailyn in the 13:00 class, organise their existing content within those categories without changing very much. This helped them understand the categories and identify missing parts that they needed to add to their speeches."
           ],
           "homework": {
             "title": "Continue polishing your competition speech · 继续润色比赛演讲",
@@ -481,7 +481,7 @@
           "date": "2026-11-14",
           "time": "15:00–16:30",
           "classContent": [
-            "We worked on the students’ competition speeches, reviewing their speeches, core messages and calls to action, and how we could go deeper. We looked through and polished their content, then tried rearranging parts of their speeches."
+            "We worked on the students’ competition speeches, reviewing their speeches, core messages and calls to action, and how we could go deeper. We looked through and polished their content, then tried rearranging parts of their speeches.\n\nWe also worked on making sure the speeches had cause, effect, impact and solution. I helped Neil, Kyle and Ivy in the 15:00 class, and Kenny and Kailyn in the 13:00 class, organise their existing content within those categories without changing very much. This helped them understand the categories and identify missing parts that they needed to add to their speeches."
           ],
           "homework": {
             "title": "Continue polishing your competition speech · 继续润色比赛演讲",
@@ -729,7 +729,9 @@
           "id": "sat-introductory-2026-11-14",
           "date": "2026-11-14",
           "time": "16:30–18:30",
-          "classContent": [],
+          "classContent": [
+            "This class helped the students become more comfortable figuring out exactly what message they wanted to share, how to use a call to action, and how to connect with different types of people. We worked on making sure their speeches fitted that purpose and connected with other people. We used the two-page worksheet below.\n\nFIND YOUR MESSAGE\nFrom a personal topic to a powerful speech\n\nBIG IDEA: Your story is your own. Your message is for your audience.\nWEAK: “I hate tests.”\nSTRONGER: “Tests should measure learning, not just memorization.”\n\n1. What is your speech topic?\n2. Why do you care about this topic?\n3. What is your message?\nHint: “I want my audience to understand that…”\n\nMAKE YOUR AUDIENCE CARE\nTurn your personal experience into a message for others\n\nAsk yourself: Why does this matter? Why should other people care?\n4. Why do you want to tell people about it?\n5. Why would your parents care?\n6. Why would your classmates or teachers care?\n7. What do you want people to think, feel, or do?\n\nMY FINAL MESSAGE\nChecklist: Personal connection; audience relevance; clear takeaway."
+          ],
           "homework": null,
           "students": [
             {
@@ -2291,14 +2293,14 @@
           "date": "2026-11-15",
           "time": "13:30–15:00",
           "classContent": [
-            "• We practised developing spoken answers and managing the speaking time. A focus was finding ways to expand an answer. I noted that speaking without preparation can sometimes continue for seven minutes, and used my own speaking as an example. This was an illustration of developing content, not a new time requirement.\n\n• A shared focus for our class is to connect more directly with the audience or judge. Many responses focused on “I,” with too few audience-connection phrases. Try addressing listeners directly with “Dear friends” or “Have you ever…?”, and consider “we,” “us,” and “in our society” where they fit. Think about the people listening and how they can see themselves in what you are saying."
+            "• We practised developing spoken answers and managing the speaking time. A focus was finding ways to expand an answer. I noted that speaking without preparation can sometimes continue for seven minutes, and used my own speaking as an example. This was an illustration of developing content, not a new time requirement.\n\n• A shared focus for our class is to connect more directly with the audience or judge. Many responses focused on “I,” with too few audience-connection phrases. Try addressing listeners directly with “Dear friends” or “Have you ever…?”, and consider “we,” “us,” and “in our society” where they fit. Think about the people listening and how they can see themselves in what you are saying.\n\n• The class also wanted to focus more on the seven-minute speech competition. We used real questions and dissected how to respond to quotations. The first step was to understand and unpack a quotation to figure out exactly what it contained, before deciding how to answer it."
           ],
           "homework": {
-            "title": "Printed impromptu prompt practice",
+            "title": "Prompt and quotation speech practice",
             "steps": [
-              "• Practise answering at least five to ten prompts from the printed set before next class. The handout contains 83 prompts from Stanford, Harvard, and NSDA topics. Each response does not need to take very long."
+              "• Practise answering at least five to ten prompts from the printed set before next class. The handout contains 83 prompts from Stanford, Harvard, and NSDA topics. Each response does not need to take very long.\n\n• Quote practice: work out what a quotation means, then craft and record yourself giving a three- to five-minute speech based on it. Five original practice quotations:\n\n1. “The comfort that protects us today can become the wall that confines us tomorrow.”\n\n2. “A person may win an argument and still lose the chance to understand.”\n\n3. “The price of belonging is too high when it requires us to disappear.”\n\n4. “We measure progress poorly when we count only what can be counted.”\n\n5. “A door opened for us becomes a responsibility when others are still waiting outside.”"
             ],
-            "prepareFor": "Before next class"
+            "prepareFor": "Next class"
           },
           "students": [
             {
@@ -2575,6 +2577,41 @@
             {
               "name": "James",
               "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-08&student=james"
+            }
+          ]
+        },
+        {
+          "id": "sun-1500-2026-11-15",
+          "date": "2026-11-15",
+          "time": "15:00–16:30",
+          "classContent": [
+            "• One area all the students struggled with was final focus: speaking directly to the audience and judge, and convincing the judge why their side had won.\n\n• We worked on different types of impacts and how to practise this part of a debate, including giving the judge information. We also looked back at their competition to identify areas they needed to improve."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Leo",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-15&student=leo"
+            },
+            {
+              "name": "Max",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-15&student=max"
+            },
+            {
+              "name": "Celia",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-15&student=celia"
+            },
+            {
+              "name": "August",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-15&student=august"
+            },
+            {
+              "name": "Eva",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-15&student=eva"
+            },
+            {
+              "name": "James",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-15&student=james"
             }
           ]
         }
@@ -2925,14 +2962,14 @@
           "date": "2026-11-16",
           "time": "15:30–17:30",
           "classContent": [
-            "1. Stories That Feel Real\nSlow motion\nDialogue within the scene\nWriting that helps listeners see the moment and care about the people in it.\n\n2. Why some speech stories feel distant\nA SUMMARY\n“I was nervous. I walked onto the stage and gave my speech.”\nWHAT THE AUDIENCE MISSES\nWhat did the room feel like? What happened in those seconds? Who was there? What did someone say?\n\n3. Slow motion: stretch a meaningful second\nA speech may cover weeks in one sentence, then spend twenty seconds on the moment that changed everything.\nTHE TECHNIQUE\nChoose one tiny moment. Follow small actions in order. Add a specific sensation and a thought. Let the audience experience the moment before revealing the result.\n\n4. One second, two versions\nFAST SUMMARY\n“I dropped the glass and it broke.”\nSLOW MOTION\n“The rim slid past my fingertips. I reached for it, but my hand closed around empty air. One drop of water caught the light. Then the glass struck the floor.”\n\n5. The slow-motion lens\nWHAT TO ZOOM IN ON\n1. A tiny action: fingers tighten around a microphone.\n\n2. A sensory detail: the room goes quiet.\n\n3. An immediate thought: “What if I forget?”\n\n4. A change: the first word finally comes out.\n\n6. Practice: three seconds onstage\nBasic line: “I was nervous before my presentation.”\nBUILD THE SCENE\nWhat does your hand do?\nWhat do you hear in the room?\nWhat thought crosses your mind?\nWhich exact moment changes the feeling?\nTASK  ·  Write 5–6 sentences about only three seconds.\n\n7. Dialogue gives the moment a voice\nA short exchange can reveal a relationship, a decision, or a feeling that a summary cannot.\n\n8. Three kinds of dialogue\nINNER DIALOGUE\nYour private thought: “I can’t do this.”\nCHARACTER DIALOGUE\nWords exchanged with someone in the story: “You’re ready,” my coach said.\nAUDIENCE DIALOGUE\nSpeaking directly to listeners: “Have you ever felt everyone watching you?”\n\n9. Before a character speaks, make us care\nGive listeners a brief reason this person matters to you or to the moment.\nWITHOUT CONTEXT\n“You can do it,” she told me.\nWITH CONTEXT\n“My coach, Ms. Chen, had stayed late every Friday to help me practise. At the door, she squeezed my shoulder. ‘You can do it,’ she said.”\n\n10. Character dialogue: words plus action\nFLAT\n“Are you ready?” my friend asked. “No,” I said.\nMORE VIVID\n“My friend Daniel waited beside the curtain. He had heard me rehearse the same opening twenty times.\n\n‘Ready?’ he whispered.\n\nI stared at the microphone. ‘Not even close.’”\n\n11. Practice: give the speaker a reason to matter\nScene: Someone speaks to you just before a difficult moment.\nPLAN\nWho are they? Why do you care about their opinion?\nWhat do they do before speaking?\nWhat exact words would they say?\nHow do you react?\nTASK  ·  Write 6–8 lines. Introduce the person before their first line.\n\n12. Combine the two techniques\nMODEL SCENE\n“My dad had never missed one of my speeches. That morning, he sat in the back row, holding his phone perfectly still.\n\nI stepped toward the microphone. My palms were damp. The first sentence vanished from my mind.\n\nDad caught my eye and mouthed, ‘Breathe.’\n\nI took one breath. Then another. And I began.”\nDISCUSS  ·  Where does time slow? Why does Dad’s line matter?\n\n13. Speech revision challenge\nFind one important moment in your current speech. Rewrite it as a scene that lasts 15–30 seconds when spoken.\nSUCCESS CRITERIA\n• The moment matters to your message.\n• Listeners can picture small, precise actions.\n• A character is introduced before speaking.\n• Dialogue reveals a feeling or a change.\n• The story still moves forward."
+            "1. Stories That Feel Real\nSlow motion\nDialogue within the scene\nWriting that helps listeners see the moment and care about the people in it.\n\n2. Why some speech stories feel distant\nA SUMMARY\n“I was nervous. I walked onto the stage and gave my speech.”\nWHAT THE AUDIENCE MISSES\nWhat did the room feel like? What happened in those seconds? Who was there? What did someone say?\n\n3. Slow motion: stretch a meaningful second\nA speech may cover weeks in one sentence, then spend twenty seconds on the moment that changed everything.\nTHE TECHNIQUE\nChoose one tiny moment. Follow small actions in order. Add a specific sensation and a thought. Let the audience experience the moment before revealing the result.\n\n4. One second, two versions\nFAST SUMMARY\n“I dropped the glass and it broke.”\nSLOW MOTION\n“The rim slid past my fingertips. I reached for it, but my hand closed around empty air. One drop of water caught the light. Then the glass struck the floor.”\n\n5. The slow-motion lens\nWHAT TO ZOOM IN ON\n1. A tiny action: fingers tighten around a microphone.\n\n2. A sensory detail: the room goes quiet.\n\n3. An immediate thought: “What if I forget?”\n\n4. A change: the first word finally comes out.\n\n6. Practice: three seconds onstage\nBasic line: “I was nervous before my presentation.”\nBUILD THE SCENE\nWhat does your hand do?\nWhat do you hear in the room?\nWhat thought crosses your mind?\nWhich exact moment changes the feeling?\nTASK  ·  Write 5–6 sentences about only three seconds.\n\n7. Dialogue gives the moment a voice\nA short exchange can reveal a relationship, a decision, or a feeling that a summary cannot.\n\n8. Three kinds of dialogue\nINNER DIALOGUE\nYour private thought: “I can’t do this.”\nCHARACTER DIALOGUE\nWords exchanged with someone in the story: “You’re ready,” my coach said.\nAUDIENCE DIALOGUE\nSpeaking directly to listeners: “Have you ever felt everyone watching you?”\n\n9. Before a character speaks, make us care\nGive listeners a brief reason this person matters to you or to the moment.\nWITHOUT CONTEXT\n“You can do it,” she told me.\nWITH CONTEXT\n“My coach, Ms. Chen, had stayed late every Friday to help me practise. At the door, she squeezed my shoulder. ‘You can do it,’ she said.”\n\n10. Character dialogue: words plus action\nFLAT\n“Are you ready?” my friend asked. “No,” I said.\nMORE VIVID\n“My friend Daniel waited beside the curtain. He had heard me rehearse the same opening twenty times.\n\n‘Ready?’ he whispered.\n\nI stared at the microphone. ‘Not even close.’”\n\n11. Practice: give the speaker a reason to matter\nScene: Someone speaks to you just before a difficult moment.\nPLAN\nWho are they? Why do you care about their opinion?\nWhat do they do before speaking?\nWhat exact words would they say?\nHow do you react?\nTASK  ·  Write 6–8 lines. Introduce the person before their first line.\n\n12. Combine the two techniques\nMODEL SCENE\n“My dad had never missed one of my speeches. That morning, he sat in the back row, holding his phone perfectly still.\n\nI stepped toward the microphone. My palms were damp. The first sentence vanished from my mind.\n\nDad caught my eye and mouthed, ‘Breathe.’\n\nI took one breath. Then another. And I began.”\nDISCUSS  ·  Where does time slow? Why does Dad’s line matter?\n\n13. Speech revision challenge\nFind one important moment in your current speech. Rewrite it as a scene that lasts 15–30 seconds when spoken.\nSUCCESS CRITERIA\n• The moment matters to your message.\n• Listeners can picture small, precise actions.\n• A character is introduced before speaking.\n• Dialogue reveals a feeling or a change.\n• The story still moves forward.\n\n• We focused on two main aspects. The first was slowing down the moment: zooming out to show the societal impact, and zooming in on tiny, specific, descriptive details of one moment or instance in time. Set the scene and describe what happened as if the moment were in slow motion, helping the audience visualise it. We want to add at least two or three such scenes to the speech.\n\n• The second was adding dialogue with an important character to move the story forward. This could be a parent, teacher, student, or someone else who plays an important role in the speech. We want part of the content to be a story, and to add at least two or three dialogue exchanges. Each exchange may be only two or three sentences, but it can still play a vital role."
           ],
           "homework": {
-            "title": "Add slow motion and important-character dialogue",
+            "title": "Add slow-motion scenes and important-character dialogue",
             "steps": [
-              "• Add the details from the two worksheets, “Slowing Down the Moment” and “Dialogue with an Important Character,” into your speeches."
+              "• Complete the worksheets on “Slowing Down the Moment” and “Dialogue with an Important Character,” and refer to them when adding these details to your written speech script.\n\n• Add at least two or three slow-motion scenes and at least two or three dialogue exchanges with important characters, as practised in class.\n\n• In your written script, highlight the additions or use a different colour so that we can see where you have applied these skills in your final speech."
             ],
-            "prepareFor": "Your existing speech"
+            "prepareFor": "Your final speech"
           },
           "students": [
             {
@@ -3276,14 +3313,14 @@
           "date": "2026-11-17",
           "time": "15:30–17:30",
           "classContent": [
-            "1. Stories That Feel Real\nSlow motion\nDialogue within the scene\nWriting that helps listeners see the moment and care about the people in it.\n\n2. Why some speech stories feel distant\nA SUMMARY\n“I was nervous. I walked onto the stage and gave my speech.”\nWHAT THE AUDIENCE MISSES\nWhat did the room feel like? What happened in those seconds? Who was there? What did someone say?\n\n3. Slow motion: stretch a meaningful second\nA speech may cover weeks in one sentence, then spend twenty seconds on the moment that changed everything.\nTHE TECHNIQUE\nChoose one tiny moment. Follow small actions in order. Add a specific sensation and a thought. Let the audience experience the moment before revealing the result.\n\n4. One second, two versions\nFAST SUMMARY\n“I dropped the glass and it broke.”\nSLOW MOTION\n“The rim slid past my fingertips. I reached for it, but my hand closed around empty air. One drop of water caught the light. Then the glass struck the floor.”\n\n5. The slow-motion lens\nWHAT TO ZOOM IN ON\n1. A tiny action: fingers tighten around a microphone.\n\n2. A sensory detail: the room goes quiet.\n\n3. An immediate thought: “What if I forget?”\n\n4. A change: the first word finally comes out.\n\n6. Practice: three seconds onstage\nBasic line: “I was nervous before my presentation.”\nBUILD THE SCENE\nWhat does your hand do?\nWhat do you hear in the room?\nWhat thought crosses your mind?\nWhich exact moment changes the feeling?\nTASK  ·  Write 5–6 sentences about only three seconds.\n\n7. Dialogue gives the moment a voice\nA short exchange can reveal a relationship, a decision, or a feeling that a summary cannot.\n\n8. Three kinds of dialogue\nINNER DIALOGUE\nYour private thought: “I can’t do this.”\nCHARACTER DIALOGUE\nWords exchanged with someone in the story: “You’re ready,” my coach said.\nAUDIENCE DIALOGUE\nSpeaking directly to listeners: “Have you ever felt everyone watching you?”\n\n9. Before a character speaks, make us care\nGive listeners a brief reason this person matters to you or to the moment.\nWITHOUT CONTEXT\n“You can do it,” she told me.\nWITH CONTEXT\n“My coach, Ms. Chen, had stayed late every Friday to help me practise. At the door, she squeezed my shoulder. ‘You can do it,’ she said.”\n\n10. Character dialogue: words plus action\nFLAT\n“Are you ready?” my friend asked. “No,” I said.\nMORE VIVID\n“My friend Daniel waited beside the curtain. He had heard me rehearse the same opening twenty times.\n\n‘Ready?’ he whispered.\n\nI stared at the microphone. ‘Not even close.’”\n\n11. Practice: give the speaker a reason to matter\nScene: Someone speaks to you just before a difficult moment.\nPLAN\nWho are they? Why do you care about their opinion?\nWhat do they do before speaking?\nWhat exact words would they say?\nHow do you react?\nTASK  ·  Write 6–8 lines. Introduce the person before their first line.\n\n12. Combine the two techniques\nMODEL SCENE\n“My dad had never missed one of my speeches. That morning, he sat in the back row, holding his phone perfectly still.\n\nI stepped toward the microphone. My palms were damp. The first sentence vanished from my mind.\n\nDad caught my eye and mouthed, ‘Breathe.’\n\nI took one breath. Then another. And I began.”\nDISCUSS  ·  Where does time slow? Why does Dad’s line matter?\n\n13. Speech revision challenge\nFind one important moment in your current speech. Rewrite it as a scene that lasts 15–30 seconds when spoken.\nSUCCESS CRITERIA\n• The moment matters to your message.\n• Listeners can picture small, precise actions.\n• A character is introduced before speaking.\n• Dialogue reveals a feeling or a change.\n• The story still moves forward."
+            "1. Stories That Feel Real\nSlow motion\nDialogue within the scene\nWriting that helps listeners see the moment and care about the people in it.\n\n2. Why some speech stories feel distant\nA SUMMARY\n“I was nervous. I walked onto the stage and gave my speech.”\nWHAT THE AUDIENCE MISSES\nWhat did the room feel like? What happened in those seconds? Who was there? What did someone say?\n\n3. Slow motion: stretch a meaningful second\nA speech may cover weeks in one sentence, then spend twenty seconds on the moment that changed everything.\nTHE TECHNIQUE\nChoose one tiny moment. Follow small actions in order. Add a specific sensation and a thought. Let the audience experience the moment before revealing the result.\n\n4. One second, two versions\nFAST SUMMARY\n“I dropped the glass and it broke.”\nSLOW MOTION\n“The rim slid past my fingertips. I reached for it, but my hand closed around empty air. One drop of water caught the light. Then the glass struck the floor.”\n\n5. The slow-motion lens\nWHAT TO ZOOM IN ON\n1. A tiny action: fingers tighten around a microphone.\n\n2. A sensory detail: the room goes quiet.\n\n3. An immediate thought: “What if I forget?”\n\n4. A change: the first word finally comes out.\n\n6. Practice: three seconds onstage\nBasic line: “I was nervous before my presentation.”\nBUILD THE SCENE\nWhat does your hand do?\nWhat do you hear in the room?\nWhat thought crosses your mind?\nWhich exact moment changes the feeling?\nTASK  ·  Write 5–6 sentences about only three seconds.\n\n7. Dialogue gives the moment a voice\nA short exchange can reveal a relationship, a decision, or a feeling that a summary cannot.\n\n8. Three kinds of dialogue\nINNER DIALOGUE\nYour private thought: “I can’t do this.”\nCHARACTER DIALOGUE\nWords exchanged with someone in the story: “You’re ready,” my coach said.\nAUDIENCE DIALOGUE\nSpeaking directly to listeners: “Have you ever felt everyone watching you?”\n\n9. Before a character speaks, make us care\nGive listeners a brief reason this person matters to you or to the moment.\nWITHOUT CONTEXT\n“You can do it,” she told me.\nWITH CONTEXT\n“My coach, Ms. Chen, had stayed late every Friday to help me practise. At the door, she squeezed my shoulder. ‘You can do it,’ she said.”\n\n10. Character dialogue: words plus action\nFLAT\n“Are you ready?” my friend asked. “No,” I said.\nMORE VIVID\n“My friend Daniel waited beside the curtain. He had heard me rehearse the same opening twenty times.\n\n‘Ready?’ he whispered.\n\nI stared at the microphone. ‘Not even close.’”\n\n11. Practice: give the speaker a reason to matter\nScene: Someone speaks to you just before a difficult moment.\nPLAN\nWho are they? Why do you care about their opinion?\nWhat do they do before speaking?\nWhat exact words would they say?\nHow do you react?\nTASK  ·  Write 6–8 lines. Introduce the person before their first line.\n\n12. Combine the two techniques\nMODEL SCENE\n“My dad had never missed one of my speeches. That morning, he sat in the back row, holding his phone perfectly still.\n\nI stepped toward the microphone. My palms were damp. The first sentence vanished from my mind.\n\nDad caught my eye and mouthed, ‘Breathe.’\n\nI took one breath. Then another. And I began.”\nDISCUSS  ·  Where does time slow? Why does Dad’s line matter?\n\n13. Speech revision challenge\nFind one important moment in your current speech. Rewrite it as a scene that lasts 15–30 seconds when spoken.\nSUCCESS CRITERIA\n• The moment matters to your message.\n• Listeners can picture small, precise actions.\n• A character is introduced before speaking.\n• Dialogue reveals a feeling or a change.\n• The story still moves forward.\n\n• We focused on two main aspects. The first was slowing down the moment: zooming out to show the societal impact, and zooming in on tiny, specific, descriptive details of one moment or instance in time. Set the scene and describe what happened as if the moment were in slow motion, helping the audience visualise it. We want to add at least two or three such scenes to the speech.\n\n• The second was adding dialogue with an important character to move the story forward. This could be a parent, teacher, student, or someone else who plays an important role in the speech. We want part of the content to be a story, and to add at least two or three dialogue exchanges. Each exchange may be only two or three sentences, but it can still play a vital role."
           ],
           "homework": {
-            "title": "Add slow motion and important-character dialogue",
+            "title": "Add slow-motion scenes and important-character dialogue",
             "steps": [
-              "• Add the details from the two worksheets, “Slowing Down the Moment” and “Dialogue with an Important Character,” into your speeches."
+              "• Complete the worksheets on “Slowing Down the Moment” and “Dialogue with an Important Character,” and refer to them when adding these details to your written speech script.\n\n• Add at least two or three slow-motion scenes and at least two or three dialogue exchanges with important characters, as practised in class.\n\n• In your written script, highlight the additions or use a different colour so that we can see where you have applied these skills in your final speech."
             ],
-            "prepareFor": "Your existing speech"
+            "prepareFor": "Your final speech"
           },
           "students": [
             {
@@ -3305,10 +3342,6 @@
             {
               "name": "Ethan Liu",
               "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-17&student=ethan-liu"
-            },
-            {
-              "name": "John",
-              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-17&student=john"
             }
           ]
         }
@@ -3591,8 +3624,16 @@
           "id": "tue-later-2026-11-17",
           "date": "2026-11-17",
           "time": "17:40–19:40",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "• We focused on two main aspects. The first was slowing down the moment: zooming out to show the societal impact, and zooming in on tiny, specific, descriptive details of one moment or instance in time. Set the scene and describe what happened as if the moment were in slow motion, helping the audience visualise it. We want to add at least two or three such scenes to the speech.\n\n• The second was adding dialogue with an important character to move the story forward. This could be a parent, teacher, student, or someone else who plays an important role in the speech. We want part of the content to be a story, and to add at least two or three dialogue exchanges. Each exchange may be only two or three sentences, but it can still play a vital role."
+          ],
+          "homework": {
+            "title": "Add slow-motion scenes and important-character dialogue",
+            "steps": [
+              "• Complete the worksheets on “Slowing Down the Moment” and “Dialogue with an Important Character,” and refer to them when adding these details to your written speech script.\n\n• Add at least two or three slow-motion scenes and at least two or three dialogue exchanges with important characters, as practised in class.\n\n• In your written script, highlight the additions or use a different colour so that we can see where you have applied these skills in your final speech."
+            ],
+            "prepareFor": "Your final speech"
+          },
           "students": [
             {
               "name": "Jayden",
@@ -3925,6 +3966,30 @@
             {
               "name": "Charlotte",
               "feedbackUrl": "/fb/?class=national-holiday-sdg-camp&date=2026-10-06&student=charlotte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sun-debate",
+      "sessions": [
+        {
+          "id": "sun-debate-2026-11-15",
+          "date": "2026-11-15",
+          "time": "16:30–18:00",
+          "classContent": [
+            "• August and Celia continued in a two-student debate practice lesson until 18:00. Their main focus was impacts, because they were having trouble making the connections in their arguments.\n\n• They debated against me and won narrowly. They then debated one-on-one against each other on different topics, focusing on checking their opening statements and rebuttals.\n\n• At times, they had difficulty understanding cross-examination and wanted to launch into a rant sharing their own ideas. The reminder was that cross-examination is about asking questions."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "August",
+              "feedbackUrl": "/fb/?class=sun-debate&date=2026-11-15&student=august"
+            },
+            {
+              "name": "Celia",
+              "feedbackUrl": "/fb/?class=sun-debate&date=2026-11-15&student=celia"
             }
           ]
         }
