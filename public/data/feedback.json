@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-17T11:09:44.154195+00:00",
+  "updatedAt": "2026-11-17T12:58:18.186347+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -289,26 +289,40 @@
           "date": "2026-11-14",
           "time": "13:00–15:00",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "We worked on the students’ competition speeches, reviewing their speeches, core messages and calls to action, and how we could go deeper. We looked through and polished their content, then tried rearranging parts of their speeches.",
+            "zh": "我们围绕学生的比赛演讲展开练习，回顾演讲内容、核心信息和行动呼吁，并思考如何把内容讲得更深入。我们一起查看、润色内容，也尝试重新安排演讲的部分内容和顺序。"
+          },
+          "homework": {
+            "en": "• Add in the details we worked on in class and continue polishing your speech and script.\n\n• Keep the speech to three minutes for Grade 6, five minutes for Grades 7 and 8, and ten minutes if you are competing as a Grade 9 student.",
+            "zh": "• 把课堂上一起完善的细节加入演讲，继续润色自己的演讲和稿子。\n\n• 六年级的演讲为三分钟，七、八年级为五分钟；如果以九年级学生身份参赛，则为十分钟。"
+          },
           "students": [
             {
               "id": "winston",
               "name": "Winston",
-              "en": null,
-              "zh": null
+              "en": "Absent from this class, as confirmed by the teacher.",
+              "zh": "教师确认本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "louis",
               "name": "Louis",
-              "en": null,
-              "zh": null
+              "en": "Absent from this class, as confirmed by the teacher.",
+              "zh": "教师确认本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "kenny",
               "name": "Kenny",
               "en": "• Overall, Kenny did well. He completed the worksheet and all its sections, then presented his speech about preserving the benefits of flying while reducing its environmental cost.\n\n• His speech had an opening scene, introduced the problem, explored causes and effects, and moved into possible solutions. He finished by asking the audience to consider whether there is a cleaner way to travel.\n\n• The speech was a little short, and its credibility still needs some work. His points need stronger support so the audience has more reason to believe the argument.\n\n• I also reminded him to speak louder so that everyone could hear him.",
               "zh": "• 整体来说，Kenny 表现不错。他完成了练习单的所有部分，随后展示了关于如何保留飞行的好处、同时减少环境代价的演讲。\n\n• 他的演讲用一个场景开头，引出问题，探讨原因和影响，再提出可能的解决办法。最后，他请听众思考是否有更环保的出行方式。\n\n• 演讲稍微短了一些，可信度也还需要加强。他的观点需要更有力的支持，让听众更有理由相信他的论证。\n\n• 我也提醒他提高音量，让所有人都能听见。"
+            },
+            {
+              "id": "kailyn",
+              "name": "Kailyn",
+              "en": null,
+              "zh": null
             }
           ]
         }
@@ -545,8 +559,14 @@
           "date": "2026-11-14",
           "time": "15:00–16:30",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "We worked on the students’ competition speeches, reviewing their speeches, core messages and calls to action, and how we could go deeper. We looked through and polished their content, then tried rearranging parts of their speeches.",
+            "zh": "我们围绕学生的比赛演讲展开练习，回顾演讲内容、核心信息和行动呼吁，并思考如何把内容讲得更深入。我们一起查看、润色内容，也尝试重新安排演讲的部分内容和顺序。"
+          },
+          "homework": {
+            "en": "• Add in the details we worked on in class and continue polishing your speech and script.\n\n• Keep the speech to three minutes for Grade 6, five minutes for Grades 7 and 8, and ten minutes if you are competing as a Grade 9 student.",
+            "zh": "• 把课堂上一起完善的细节加入演讲，继续润色自己的演讲和稿子。\n\n• 六年级的演讲为三分钟，七、八年级为五分钟；如果以九年级学生身份参赛，则为十分钟。"
+          },
           "students": [
             {
               "id": "neil",
@@ -557,8 +577,9 @@
             {
               "id": "william",
               "name": "William",
-              "en": "• William was our second speaker. He was still mumbling through his speech, and his wording was not always clear. He also lacked basic signposting words such as “cause,” “effect,” “impact” and “solution.” Fortunately, I captured everything he said, so we can organise his thoughts and simplify his language.\n• Two priorities are developing his solutions and improving audience comprehension. Everyone should be able to understand what he is saying. He also needs more specific details to make the speech visual: use proper nouns, concrete details and clear transitions so listeners can picture what he means and follow the argument.\n• He can connect his ideas with situations the audience recognises. For example: “Have you ever felt pressure?” or “Have you ever felt stressed because your parents gave you too much work?”\n• I suggested using inner dialogue, dialogue between characters, humour and exaggeration. A deliberately exaggerated line could be: “Hey, William, study for another twelve hours! Don’t sleep—work until morning!” Another example I proposed was: “My parents wanted me to write a thousand pages about how to be more efficient at homework because I hadn’t done my homework. It was crazy!” These are examples to explore, not things William reported happening.\n• We will work on this today in three steps: first, simplify and clarify what he wants to say; second, add clear transition words; and third, experiment with these techniques to make the speech more engaging and connected to the audience.\n• My strongest suggested direction is: “When encouragement starts sounding like ‘You are never enough.’” Focus on the gap between parents’ intentions and a child’s experience. One detailed conversation could show how words intended to motivate can instead discourage learning. He could then explore what more helpful encouragement would sound like. This is my strongest choice because it creates an emotional conflict without turning parents into villains.",
-              "zh": "• William 是第二位演讲者。他仍然有含糊不清的情况，措辞也并非总是清楚。他还缺少“原因”“结果”“影响”“解决方案”等基本的路标词。好在我记录下了他说的全部内容，可以帮助他组织思路、简化语言。\n\n• 两个重点是发展解决方案，以及提高听众的理解程度。每个人都应该能理解他在讲什么。他还需要更具体的细节，让演讲有画面：加入专有名词、具体细节和清楚的过渡，让听众能想象情境、跟上论证。\n\n• 他可以把想法与听众熟悉的情境联系起来，例如：“你有没有感到压力？”或“你有没有因为父母给了太多任务而感到压力？”\n\n• 我建议尝试内心独白、人物对话、幽默和夸张。例如可以故意夸张地说：“William，再学十二个小时！不要睡觉，一直学到早上！”另一个我提出的例子是：“因为我没做作业，父母要我写一千页关于如何提高作业效率的文章。太疯狂了！”这些是供他探索的例子，不是 William 报告真实发生过的事情。\n\n• 我们今天会分三步练习：先简化、澄清想说的内容，再加入清楚的过渡词，最后尝试运用这些技巧，让演讲更吸引人、更贴近听众。\n\n• 我最推荐的方向是：“当鼓励听起来变成‘你永远不够好’。”重点是父母的初衷与孩子实际感受之间的差距。可以用一段细节充分的对话，展示原本想激励孩子的话，如何反而削弱学习的动力，再探讨更有帮助的鼓励可以是什么样。这是我最推荐的选择，因为它能创造情感冲突，同时不把父母写成反面人物。"
+              "en": "Absent from this class, as confirmed by the teacher.",
+              "zh": "教师确认本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "kyle",
@@ -839,8 +860,9 @@
             {
               "id": "anna",
               "name": "Anna",
-              "en": null,
-              "zh": null
+              "en": "Absent from this class, as confirmed by the teacher.",
+              "zh": "教师确认本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "stacey",

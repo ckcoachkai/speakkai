@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-17T11:09:44.170746+00:00",
+  "updatedAt": "2026-11-17T12:58:18.196355+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -241,8 +241,17 @@
           "id": "sat-original-oratory-2026-11-14",
           "date": "2026-11-14",
           "time": "13:00–15:00",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "We worked on the students’ competition speeches, reviewing their speeches, core messages and calls to action, and how we could go deeper. We looked through and polished their content, then tried rearranging parts of their speeches."
+          ],
+          "homework": {
+            "title": "Continue polishing your competition speech · 继续润色比赛演讲",
+            "steps": [
+              "• Add in the details we worked on in class and continue polishing your speech and script.\n\n• Keep the speech to three minutes for Grade 6, five minutes for Grades 7 and 8, and ten minutes if you are competing as a Grade 9 student.",
+              "• 把课堂上一起完善的细节加入演讲，继续润色自己的演讲和稿子。\n\n• 六年级的演讲为三分钟，七、八年级为五分钟；如果以九年级学生身份参赛，则为十分钟。"
+            ],
+            "prepareFor": "Your competition speech · 自己的比赛演讲"
+          },
           "students": [
             {
               "name": "Winston",
@@ -255,6 +264,10 @@
             {
               "name": "Kenny",
               "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-14&student=kenny"
+            },
+            {
+              "name": "Kailyn",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-14&student=kailyn"
             }
           ]
         }
@@ -467,8 +480,17 @@
           "id": "sat-foundations-2026-11-14",
           "date": "2026-11-14",
           "time": "15:00–16:30",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "We worked on the students’ competition speeches, reviewing their speeches, core messages and calls to action, and how we could go deeper. We looked through and polished their content, then tried rearranging parts of their speeches."
+          ],
+          "homework": {
+            "title": "Continue polishing your competition speech · 继续润色比赛演讲",
+            "steps": [
+              "• Add in the details we worked on in class and continue polishing your speech and script.\n\n• Keep the speech to three minutes for Grade 6, five minutes for Grades 7 and 8, and ten minutes if you are competing as a Grade 9 student.",
+              "• 把课堂上一起完善的细节加入演讲，继续润色自己的演讲和稿子。\n\n• 六年级的演讲为三分钟，七、八年级为五分钟；如果以九年级学生身份参赛，则为十分钟。"
+            ],
+            "prepareFor": "Your competition speech · 自己的比赛演讲"
+          },
           "students": [
             {
               "name": "Neil",
