@@ -1,0 +1,7 @@
+[
+  {"date":"2026-11-14","endDate":"2026-11-14","competition":"WSDA","completed":true,"students":[{"name":"winston dai","class":"周六 13:00","grade":"8","format":"未注明 / Not specified"}]},
+  {"date":"2026-11-27","endDate":"2026-11-28","competition":"SSDI","completed":false,"students":[{"name":"Sean Liu","class":"周一 3:30","grade":"G5","format":"线下 / In person"}]},
+  {"date":"2026-12-06","endDate":"2026-12-06","competition":"WSDA","completed":false,"students":[{"name":"Alyssa","class":"周二 3:30","grade":"G5","format":"线上 / Online"},{"name":"Ariel Kwong","class":"周一","grade":"5","format":"未注明 / Not specified"},{"name":"Royce","class":"周一 3:30","grade":"G4","format":"线下 / In person"},{"name":"Harry","class":"周二","grade":"G5","format":"线上 / Online"},{"name":"William","class":"周一","grade":"","format":"未注明 / Not specified"},{"name":"Remi","class":"周四 3:30","grade":"G3","format":"未注明 / Not specified"}]},
+  {"date":"2026-12-26","endDate":"2026-12-26","competition":"WSDA","completed":false,"students":[{"name":"Patrick","class":"周二 3:30","grade":"G4","format":"未注明 / Not specified"},{"name":"Ivy","class":"周六 3:00","grade":"G7","format":"线下 · 原创演讲 / In person · Original Oratory"}]},
+  {"date":"2027-01-10","endDate":"2027-01-10","competition":"WSDA","completed":false,"students":[{"name":"Ethan","class":"周五 15:40 班级","grade":"Grade 1","format":"上海线下 / Shanghai · In person"},{"name":"Patrick","class":"周二 3:30","grade":"G4","format":"未注明 / Not specified"}]}
+]

@@ -1,0 +1,67 @@
+---
+import events from '../data/hat-competitions.json';
+import BrandLogo from '../components/BrandLogo.astro';
+import '@fontsource/manrope/400.css';
+import '@fontsource/manrope/700.css';
+const month = (date: string) => new Intl.DateTimeFormat('en', { month: 'short', timeZone: 'UTC' }).format(new Date(date+'T12:00:00Z'));
+const weekday = (date: string) => new Intl.DateTimeFormat('en', { weekday: 'long', timeZone: 'UTC' }).format(new Date(date+'T12:00:00Z'));
+---
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <meta name="description" content="SpeakKai student competition dates, November 2026 to January 2027." />
+  <link rel="canonical" href="https://speakkai.com/hat/" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <title>Competition dates · 比赛日程 | SpeakKai</title>
+</head>
+<body>
+  <header><a href="/" aria-label="SpeakKai home"><BrandLogo compact /></a><span>STUDENT COMPETITIONS · 学生比赛</span><a href="/fb/">Feedback ↗</a></header>
+  <main>
+    <section class="opening">
+      <p class="eyebrow">NOVEMBER 2026 — JANUARY 2027</p>
+      <h1>Competition dates<span>比赛日程</span></h1>
+      <div class="intro"><p>WSDA & SSDI<br /><span>学生参赛日期一览</span></p><div class="total"><strong>11</strong><span>students · 位学生</span></div></div>
+    </section>
+    <section aria-label="Find a competition" class="controls">
+      <label for="search">Find a student · 查找学生<input id="search" type="search" placeholder="Name / 姓名" autocomplete="off" /></label>
+      <label for="status">Show · 显示<select id="status"><option value="all">All dates · 全部日期</option><option value="upcoming">Upcoming · 待参赛</option><option value="completed">Completed · 已结束</option></select></label>
+      <p id="results" role="status">5 dates · 5 组日期</p>
+    </section>
+    <div class="timeline">
+      {events.map(event => <article class:list={['event', { completed: event.completed }]} data-completed={String(event.completed)} data-search={event.students.map(s=>s.name).join(' ').toLowerCase()}>
+        <div class="date"><span>{month(event.date)} {event.date.slice(0,4)}</span><strong>{Number(event.date.slice(-2))}{event.endDate !== event.date && <small>–{Number(event.endDate.slice(-2))}</small>}</strong><span>{weekday(event.date)}{event.endDate !== event.date && ' – Saturday'}</span><time datetime={event.date}>{event.date}{event.endDate !== event.date && ` — ${event.endDate}`}</time></div>
+        <div class="entries"><div class="event-heading"><h2>{event.competition}</h2>{event.completed ? <span class="badge done">Completed · 已结束</span> : <span class="badge">Competition · 比赛</span>}</div>
+          <div class="table"><div class="table-head"><span>Student · 学生</span><span>Class · 班级</span><span>Grade · 年级</span><span>Format · 参赛形式</span></div>
+            {event.students.map(s=><div class="student" data-name={s.name.toLowerCase()}><strong>{s.name}</strong><span data-label="Class · 班级">{s.class}</span><span data-label="Grade · 年级">{s.grade || '未注明 / Not specified'}</span><span data-label="Format · 形式">{s.format}</span></div>)}
+          </div>
+        </div>
+      </article>)}
+    </div>
+    <p id="empty" hidden>No matching students or dates. · 没有找到相应学生或日期。</p>
+    <footer><p>具体比赛时间待确认。未注明的参赛形式保持未注明。<br />Event times are to be confirmed. Unspecified formats are left open.</p><p>报名表更新 · Registration sheet: 17 Nov 2026</p><p>未标注年份的日期按本赛季列为 2026 年；1 月 10 日为 2027 年。<br />Dates without a year are shown in the 2026 season; 10 January is in 2027.</p></footer>
+  </main>
+  <script>
+    const search = document.querySelector<HTMLInputElement>('#search')!;
+    const status = document.querySelector<HTMLSelectElement>('#status')!;
+    function filter() {
+      const query=search.value.trim().toLowerCase();let count=0;
+      document.querySelectorAll<HTMLElement>('.event').forEach(event=>{
+        const matchesStatus=status.value==='all'||(status.value==='completed')===(event.dataset.completed==='true');
+        const matchesName=(event.dataset.search||'').includes(query);
+        event.hidden=!(matchesStatus&&matchesName);if(!event.hidden)count++;
+        event.querySelectorAll<HTMLElement>('.student').forEach(row=>{row.hidden=!row.dataset.name!.includes(query);});
+      });
+      document.querySelector('#results')!.textContent=`${count} ${count===1?'date':'dates'} · ${count} 组日期`;
+      (document.querySelector('#empty') as HTMLElement).hidden=count!==0;
+    }
+    search.addEventListener('input',filter);status.addEventListener('change',filter);
+  </script>
+  <style is:global>
+    *{box-sizing:border-box}body{margin:0;color:#172c42;background:#fff;font-family:Manrope,'Microsoft YaHei',sans-serif;font-size:14px}a{color:inherit}header{max-width:1280px;margin:auto;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dedfdc;gap:20px}header>a:first-child{display:block;width:126px}header svg,header img{max-width:100%;height:auto}header>span{font-size:10px;letter-spacing:.12em}header>a:last-child{font-size:12px;text-decoration:none}main{max-width:1200px;margin:auto;padding:64px 32px 32px}.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;color:#637286;margin:0 0 20px}h1{font:normal clamp(44px,6vw,76px)/1.08 Georgia,'Songti SC',serif;margin:0;letter-spacing:-.04em}h1>span{display:block;font-size:.52em;margin-top:16px;letter-spacing:.04em}.intro{display:flex;justify-content:space-between;align-items:end;margin-top:32px}.intro p{line-height:1.8;color:#365071;margin:0}.intro p>span{color:#637286}.total{display:flex;align-items:center;gap:16px}.total strong{font:54px/1 Georgia,serif}.total span{font-size:12px;color:#637286}.controls{margin-top:38px;padding:22px 0;border-top:1px solid #d8dce1;border-bottom:1px solid #d8dce1;display:flex;align-items:end;gap:22px}.controls label{display:flex;flex-direction:column;gap:8px;font-size:11px;font-weight:bold}input,select{font:inherit;font-size:14px;padding:12px;border:1px solid #b6c0cd;border-radius:3px;background:white;color:#172c42;min-height:44px}input{width:280px}.controls p{margin:0 0 12px auto;font-size:12px;color:#637286}.timeline{margin-top:12px}.event{display:grid;grid-template-columns:155px minmax(0,1fr);gap:34px;padding:34px 0;border-bottom:1px solid #d8dce1}.date{display:flex;flex-direction:column;align-items:start;gap:8px}.date>span:first-child{text-transform:uppercase;font-weight:700;font-size:12px;letter-spacing:.1em;color:#365071}.date strong{white-space:nowrap;font:58px/1 Georgia,serif;letter-spacing:-.06em}.date small{font-size:40px}.date>span{font-size:12px}.date time{font-size:10px;color:#637286;margin-top:8px}.event-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}h2{font-size:21px;margin:0}.badge{font-size:10px;color:#315373;background:#edf3f7;border-radius:3px;padding:6px 9px}.done{color:#74584e;background:#f4eeea}.table{display:block;width:100%}.table-head,.student{display:grid;grid-template-columns:1.15fr 1fr .8fr 1.55fr;gap:16px}.table-head{font-size:10px;color:#637286;padding-bottom:10px;border-bottom:1px solid #d8dce1}.student{padding:17px 0;border-bottom:1px solid #edf0f2;line-height:1.7}.student:last-child{border-bottom:0}.student strong{font-size:15px}.student>span{font-size:12px}.completed .date{color:#6d7480}footer{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:30px;color:#637286;font-size:11px;line-height:1.8}footer p:last-child{width:100%;margin-top:0;font-size:10px}#empty{padding:40px 0}[hidden]{display:none!important}:focus-visible{outline:3px solid #85aee0;outline-offset:3px}
+    @media(max-width:700px){header{padding:16px 20px}header>span{display:none}main{padding:38px 20px 24px}.intro{margin-top:26px}.total{gap:9px}.total strong{font-size:40px}.total span{min-width:85px;font-size:10px}.controls{flex-wrap:wrap;gap:16px}.controls label:first-child{width:100%}input{width:100%}.controls p{font-size:11px}.event{grid-template-columns:1fr;gap:20px;padding:28px 0}.date{display:grid;grid-template-columns:155px 1fr;gap:6px 18px}.date strong{grid-column:1;grid-row:2/4;font-size:48px}.date>span:nth-of-type(2){grid-column:2;grid-row:2;align-self:end}.date time{grid-column:2;margin-top:0}.table-head{display:none}.student{grid-template-columns:1fr;gap:5px;padding:20px 0}.student strong{font-size:17px;margin-bottom:5px}.student>span:before{content:attr(data-label);display:inline-block;min-width:105px;color:#748092;font-size:10px}.student>span{font-size:12px}footer{display:block}footer p{margin-bottom:20px}}
+  </style>
+</body>
+</html>
