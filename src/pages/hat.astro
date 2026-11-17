@@ -3,6 +3,7 @@ import events from '../data/hat-competitions.json';
 import BrandLogo from '../components/BrandLogo.astro';
 import '@fontsource/manrope/400.css';
 import '@fontsource/manrope/700.css';
+const studentCount = new Set(events.flatMap(event => event.students.map(student => student.name))).size;
 const month = (date: string) => new Intl.DateTimeFormat('en', { month: 'short', timeZone: 'UTC' }).format(new Date(date+'T12:00:00Z'));
 const weekday = (date: string) => new Intl.DateTimeFormat('en', { weekday: 'long', timeZone: 'UTC' }).format(new Date(date+'T12:00:00Z'));
 ---
@@ -23,19 +24,19 @@ const weekday = (date: string) => new Intl.DateTimeFormat('en', { weekday: 'long
     <section class="opening">
       <p class="eyebrow">NOVEMBER 2026 — JANUARY 2027</p>
       <h1>Competition dates<span>比赛日程</span></h1>
-      <div class="intro"><p>WSDA & SSDI<br /><span>学生参赛日期一览</span></p><div class="total"><strong>11</strong><span>students · 位学生</span></div></div>
+      <div class="intro"><p>WSDA · SSDI · TOC · ESDP<br /><span>学生参赛日期一览</span></p><div class="total"><strong>{studentCount}</strong><span>students · 位学生</span></div></div>
     </section>
     <section aria-label="Find a competition" class="controls">
       <label for="search">Find a student · 查找学生<input id="search" type="search" placeholder="Name / 姓名" autocomplete="off" /></label>
       <label for="status">Show · 显示<select id="status"><option value="all">All dates · 全部日期</option><option value="upcoming">Upcoming · 待参赛</option><option value="completed">Completed · 已结束</option></select></label>
-      <p id="results" role="status">5 dates · 5 组日期</p>
+      <p id="results" role="status">{events.length} events · {events.length} 场比赛</p>
     </section>
     <div class="timeline">
       {events.map(event => <article class:list={['event', { completed: event.completed }]} data-completed={String(event.completed)} data-search={event.students.map(s=>s.name).join(' ').toLowerCase()}>
         <div class="date"><span>{month(event.date)} {event.date.slice(0,4)}</span><strong>{Number(event.date.slice(-2))}{event.endDate !== event.date && <small>–{Number(event.endDate.slice(-2))}</small>}</strong><span>{weekday(event.date)}{event.endDate !== event.date && ' – Saturday'}</span><time datetime={event.date}>{event.date}{event.endDate !== event.date && ` — ${event.endDate}`}</time></div>
         <div class="entries"><div class="event-heading"><h2>{event.competition}</h2>{event.completed ? <span class="badge done">Completed · 已结束</span> : <span class="badge">Competition · 比赛</span>}</div>
           <div class="table"><div class="table-head"><span>Student · 学生</span><span>Class · 班级</span><span>Grade · 年级</span><span>Format · 参赛形式</span></div>
-            {event.students.map(s=><div class="student" data-name={s.name.toLowerCase()}><strong>{s.name}</strong><span data-label="Class · 班级">{s.class}</span><span data-label="Grade · 年级">{s.grade || '未注明 / Not specified'}</span><span data-label="Format · 形式">{s.format}</span></div>)}
+            {event.students.map(s=><div class="student" data-name={s.name.toLowerCase()}><strong>{s.name}</strong><span data-label="Class · 班级">{s.class || '未注明 / Not specified'}</span><span data-label="Grade · 年级">{s.grade || '未注明 / Not specified'}</span><span data-label="Format · 形式">{s.format}</span></div>)}
           </div>
         </div>
       </article>)}
@@ -54,7 +55,7 @@ const weekday = (date: string) => new Intl.DateTimeFormat('en', { weekday: 'long
         event.hidden=!(matchesStatus&&matchesName);if(!event.hidden)count++;
         event.querySelectorAll<HTMLElement>('.student').forEach(row=>{row.hidden=!row.dataset.name!.includes(query);});
       });
-      document.querySelector('#results')!.textContent=`${count} ${count===1?'date':'dates'} · ${count} 组日期`;
+      document.querySelector('#results')!.textContent=`${count} ${count===1?'event':'events'} · ${count} 场比赛`;
       (document.querySelector('#empty') as HTMLElement).hidden=count!==0;
     }
     search.addEventListener('input',filter);status.addEventListener('change',filter);
