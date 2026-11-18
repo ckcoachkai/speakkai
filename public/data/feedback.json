@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-17T14:47:17.121507+00:00",
+  "updatedAt": "2026-11-18T07:41:55.197218+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -321,8 +321,8 @@
             {
               "id": "kailyn",
               "name": "Kailyn",
-              "en": null,
-              "zh": null
+              "en": "• Kailyn came up to speak, and I could feel that she was much more confident than before. She looked at the audience sometimes while delivering her speech, and she was thinking critically. I’d like her to expand on her answers a bit more at times. More specific details would make them better.",
+              "zh": "• Kailyn 上台发言时，我能感觉到她比以前自信了许多。她演讲时有时会看向听众，也在进行批判性思考。我希望她有时能把回答再展开一点，加入更具体的细节会更好。"
             }
           ]
         }
@@ -584,8 +584,8 @@
             {
               "id": "kyle",
               "name": "Kyle",
-              "en": null,
-              "zh": null
+              "en": "• I feel Kyle is getting more comfortable in this class, and I could see that in his speech. He spoke with a bit more confidence, his delivery was a little more fluid, and his ideas connected a bit better. He can still work on adding a bit more emphasis to what he says as he speaks.",
+              "zh": "• 我觉得 Kyle 在这个班里越来越自在了，从他的演讲中就能看出来。他说得更自信了一点，表达也更流畅，内容之间衔接得更好。他还可以练习在讲话时多强调一些内容。"
             },
             {
               "id": "ivy",
@@ -858,7 +858,10 @@
             "en": "This class helped the students become more comfortable figuring out exactly what message they wanted to share, how to use a call to action, and how to connect with different types of people. We worked on making sure their speeches fitted that purpose and connected with other people. We used the two-page worksheet below.\n\nFIND YOUR MESSAGE\nFrom a personal topic to a powerful speech\n\nBIG IDEA: Your story is your own. Your message is for your audience.\nWEAK: “I hate tests.”\nSTRONGER: “Tests should measure learning, not just memorization.”\n\n1. What is your speech topic?\n2. Why do you care about this topic?\n3. What is your message?\nHint: “I want my audience to understand that…”\n\nMAKE YOUR AUDIENCE CARE\nTurn your personal experience into a message for others\n\nAsk yourself: Why does this matter? Why should other people care?\n4. Why do you want to tell people about it?\n5. Why would your parents care?\n6. Why would your classmates or teachers care?\n7. What do you want people to think, feel, or do?\n\nMY FINAL MESSAGE\nChecklist: Personal connection; audience relevance; clear takeaway.",
             "zh": "这节课帮助学生逐渐熟悉如何明确自己到底想分享什么信息、如何使用行动呼吁，以及如何与不同类型的人建立联系。我们检查演讲是否符合这个目的，能否与其他人产生联系，并使用了下面这份两页的练习单。\n\n找到你的核心信息\n从个人话题发展成有力量的演讲\n\n核心理念：故事属于你自己，信息是讲给听众的。\n较弱：“我讨厌考试。”\n更有力：“考试应该衡量学习，而不只是记忆。”\n\n1. 你的演讲话题是什么？\n2. 你为什么在乎这个话题？\n3. 你想传达什么信息？\n提示：“我希望听众明白……”\n\n让听众在乎\n把你的个人经历转化为对他人有意义的信息\n\n问问自己：这为什么重要？其他人为什么应该在乎？\n4. 你为什么想把这件事讲给大家听？\n5. 你的父母为什么会在乎？\n6. 你的同学或老师为什么会在乎？\n7. 你希望人们思考什么、感受到什么，或采取什么行动？\n\n我最终想传达的信息\n检查：与自己的联系；与听众的关联；清楚的收获。"
           },
-          "homework": null,
+          "homework": {
+            "en": "• For next class, use the work from “Find Your Message” and “Make Your Audience Care” to add both parts to your speech. This may add around 50–100 words.",
+            "zh": "• 下次上课前，把“找到你的核心信息”和“让听众在乎”两部分练习的内容都加入你的演讲。这两部分可能会让演讲稿增加约50–100个英文单词。"
+          },
           "students": [
             {
               "id": "anna",
@@ -2434,8 +2437,14 @@
           "date": "2026-11-15",
           "time": "11:30–13:00",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "• We first went over the homework, then practised more impromptu speeches. We worked on handling different kinds of quotations because students may get quotations that are very hard to understand in the semifinals and finals. We practised understanding and defining a quotation, deciding how to respond to it, and giving an answer within the time available.\n\n• We also did some improv practice and a spot-the-difference exercise to build self-awareness and notice areas we need to fix while speaking.",
+            "zh": "• 我们先回顾了作业，然后继续练习即兴演讲。我们练习了如何处理不同类型的引言，因为学生在半决赛和决赛中可能遇到很难理解的引言。我们练习先理解并解释引言的含义，再思考如何回应，并在规定时间内给出回答。\n\n• 我们也做了一些即兴表演练习和找不同练习，培养自我觉察，留意自己讲话时有哪些地方需要改进。"
+          },
+          "homework": {
+            "en": "• Write down five historical figures you look up to or find interesting or really cool. Get to know their stories and what they did.\n\n• For each person, prepare two or three sentences you could use in a speech. If you find a quotation from that person, you can include it too.",
+            "zh": "• 写下五位你敬佩、觉得有意思或觉得很酷的历史人物。了解他们的故事，以及他们做过什么。\n\n• 为每位人物准备两三句可以放进演讲里的话。如果能找到那位人物说过的一句名言，也可以一并记下来。"
+          },
           "students": [
             {
               "id": "berlingo",
@@ -3615,8 +3624,8 @@
           "time": "15:30–17:30",
           "status": "held",
           "classContent": {
-            "en": "1. Stories That Feel Real\nSlow motion\nDialogue within the scene\nWriting that helps listeners see the moment and care about the people in it.\n\n2. Why some speech stories feel distant\nA SUMMARY\n“I was nervous. I walked onto the stage and gave my speech.”\nWHAT THE AUDIENCE MISSES\nWhat did the room feel like? What happened in those seconds? Who was there? What did someone say?\n\n3. Slow motion: stretch a meaningful second\nA speech may cover weeks in one sentence, then spend twenty seconds on the moment that changed everything.\nTHE TECHNIQUE\nChoose one tiny moment. Follow small actions in order. Add a specific sensation and a thought. Let the audience experience the moment before revealing the result.\n\n4. One second, two versions\nFAST SUMMARY\n“I dropped the glass and it broke.”\nSLOW MOTION\n“The rim slid past my fingertips. I reached for it, but my hand closed around empty air. One drop of water caught the light. Then the glass struck the floor.”\n\n5. The slow-motion lens\nWHAT TO ZOOM IN ON\n1. A tiny action: fingers tighten around a microphone.\n\n2. A sensory detail: the room goes quiet.\n\n3. An immediate thought: “What if I forget?”\n\n4. A change: the first word finally comes out.\n\n6. Practice: three seconds onstage\nBasic line: “I was nervous before my presentation.”\nBUILD THE SCENE\nWhat does your hand do?\nWhat do you hear in the room?\nWhat thought crosses your mind?\nWhich exact moment changes the feeling?\nTASK  ·  Write 5–6 sentences about only three seconds.\n\n7. Dialogue gives the moment a voice\nA short exchange can reveal a relationship, a decision, or a feeling that a summary cannot.\n\n8. Three kinds of dialogue\nINNER DIALOGUE\nYour private thought: “I can’t do this.”\nCHARACTER DIALOGUE\nWords exchanged with someone in the story: “You’re ready,” my coach said.\nAUDIENCE DIALOGUE\nSpeaking directly to listeners: “Have you ever felt everyone watching you?”\n\n9. Before a character speaks, make us care\nGive listeners a brief reason this person matters to you or to the moment.\nWITHOUT CONTEXT\n“You can do it,” she told me.\nWITH CONTEXT\n“My coach, Ms. Chen, had stayed late every Friday to help me practise. At the door, she squeezed my shoulder. ‘You can do it,’ she said.”\n\n10. Character dialogue: words plus action\nFLAT\n“Are you ready?” my friend asked. “No,” I said.\nMORE VIVID\n“My friend Daniel waited beside the curtain. He had heard me rehearse the same opening twenty times.\n\n‘Ready?’ he whispered.\n\nI stared at the microphone. ‘Not even close.’”\n\n11. Practice: give the speaker a reason to matter\nScene: Someone speaks to you just before a difficult moment.\nPLAN\nWho are they? Why do you care about their opinion?\nWhat do they do before speaking?\nWhat exact words would they say?\nHow do you react?\nTASK  ·  Write 6–8 lines. Introduce the person before their first line.\n\n12. Combine the two techniques\nMODEL SCENE\n“My dad had never missed one of my speeches. That morning, he sat in the back row, holding his phone perfectly still.\n\nI stepped toward the microphone. My palms were damp. The first sentence vanished from my mind.\n\nDad caught my eye and mouthed, ‘Breathe.’\n\nI took one breath. Then another. And I began.”\nDISCUSS  ·  Where does time slow? Why does Dad’s line matter?\n\n13. Speech revision challenge\nFind one important moment in your current speech. Rewrite it as a scene that lasts 15–30 seconds when spoken.\nSUCCESS CRITERIA\n• The moment matters to your message.\n• Listeners can picture small, precise actions.\n• A character is introduced before speaking.\n• Dialogue reveals a feeling or a change.\n• The story still moves forward.\n\n• We focused on two main aspects. The first was slowing down the moment: zooming out to show the societal impact, and zooming in on tiny, specific, descriptive details of one moment or instance in time. Set the scene and describe what happened as if the moment were in slow motion, helping the audience visualise it. We want to add at least two or three such scenes to the speech.\n\n• The second was adding dialogue with an important character to move the story forward. This could be a parent, teacher, student, or someone else who plays an important role in the speech. We want part of the content to be a story, and to add at least two or three dialogue exchanges. Each exchange may be only two or three sentences, but it can still play a vital role.",
-            "zh": "1. 让故事有真实感\n放慢一个瞬间。\n在场景中加入对话。\n通过写作，让听众看见那个时刻，并在乎其中的人物。\n\n2. 为什么有些演讲故事让人觉得遥远\n概括式表达：“我很紧张。我走上舞台，完成了演讲。”\n听众没有听到的内容：房间里是什么感觉？那几秒钟发生了什么？谁在那里？有人说了什么？\n\n3. 慢镜头：展开一个有意义的瞬间\n一篇演讲可以用一句话带过几个星期，却花二十秒讲述改变一切的那个时刻。\n方法：选择一个很小的瞬间，按顺序描写细微动作，加入一种具体感受和一个念头。先让听众经历这个时刻，再揭示结果。\n\n4. 同一秒钟，两种写法\n快速概括：“我把玻璃杯掉在地上，它碎了。”\n慢镜头：“杯沿从我的指尖滑过。我伸手去接，手却只握住了空气。一滴水映着光。接着，玻璃杯砸在地板上。”\n\n5. 慢镜头的观察镜头\n可以放大的细节：\n一个细微动作：手指握紧麦克风。\n一个感官细节：房间安静下来。\n一个即时念头：“如果我忘词了怎么办？”\n一个变化：第一个词终于说了出来。\n\n6. 练习：舞台上的三秒钟\n基础句：“展示前，我很紧张。”\n构建场景：你的手做了什么？你听到房间里有什么声音？脑海中闪过了什么念头？具体是哪一刻改变了这种感觉？\n课堂练习任务：只描写这三秒钟，写五至六句话。\n\n7. 第二部分：让对话为那个时刻发声\n一小段交流可以表现人物关系、一个决定或一种感受，而这些内容往往难以通过概括式叙述呈现。\n\n8. 三种对话\n内心独白：自己心里的念头，例如：“我做不到。”\n人物对话：与故事中人物交流的话，例如：“你准备好了。”我的教练说。\n听众对话：直接对听众讲话，例如：“你有没有感觉所有人都在看着你？”\n\n9. 在人物开口之前，先让听众在乎这个人\n用简短的背景，说明这个人为什么对你或对这个时刻很重要。\n没有背景：“你能做到的。”她告诉我。\n有背景：“我的教练陈老师（Ms. Chen）每周五都会留到很晚，帮助我练习。在门口，她握了握我的肩膀，说：‘你能做到的。’”\n\n10. 人物对话：话语配合动作\n平淡的表达：“你准备好了吗？”朋友问。“没有。”我说。\n更生动的表达：“我的朋友 Daniel 在幕布旁等着。他已经听我排练同一个开头二十次了。\n‘准备好了？’他轻声问。\n我盯着麦克风说：‘还差得远。’”\n\n11. 练习：让开口说话的人值得在乎\n场景：在你面对一个困难时刻之前，有人对你说话。\n计划：这个人是谁？为什么你在乎对方的看法？对方开口之前做了什么？对方具体会说哪些话？你怎样回应？\n课堂练习任务：写六至八行，在这个人物说第一句话之前，先介绍这个人。\n\n12. 把两种技巧结合起来\n示范场景：“爸爸从没缺席过我的任何一次演讲。那天早上，他坐在最后一排，稳稳地拿着手机，一动不动。\n我向麦克风走去，手心潮湿。第一句话忽然从我的脑海中消失了。\n爸爸与我目光相遇，用口型说：‘呼吸。’\n我吸了一口气，又吸了一口。然后，我开始了。”\n讨论：时间在哪里放慢了？为什么爸爸的那句话很重要？\n\n13. 演讲修改挑战\n在自己当前的演讲中找到一个重要时刻，把它改写成一个说出来需要十五至三十秒的场景。\n成功标准：这个时刻与演讲要传达的信息有关；听众能够想象细小而准确的动作；人物在开口说话前已得到介绍；对话表现出一种感受或一个变化；故事仍然继续向前推进。\n\n• 我们重点练习两个方面。第一是“放慢瞬间”：把镜头拉远，展示对社会的影响；也把镜头拉近，描写某一个时刻、某一个瞬间中细小、具体、有画面感的细节。先设置场景，再像慢动作一样描述发生了什么，帮助听众在脑海中形成画面。我们希望在演讲中至少加入两到三个这样的场景。\n\n• 第二是加入与重要人物的对话，推动故事向前发展。这个人物可以是父母、老师、学生，或其他在演讲中扮演重要角色的人。我们希望所分享的内容中有一部分是故事，并至少加入两到三处对话。每一处可能只有两三句话，但仍然能够发挥重要作用。"
+            "en": "• We first went over the students’ speeches. I had helped most of them make some small edits. Some chose to use their original speech, while others wanted to look at the edited version.\n\n1. Stories That Feel Real\nSlow motion\nDialogue within the scene\nWriting that helps listeners see the moment and care about the people in it.\n\n2. Why some speech stories feel distant\nA SUMMARY\n“I was nervous. I walked onto the stage and gave my speech.”\nWHAT THE AUDIENCE MISSES\nWhat did the room feel like? What happened in those seconds? Who was there? What did someone say?\n\n3. Slow motion: stretch a meaningful second\nA speech may cover weeks in one sentence, then spend twenty seconds on the moment that changed everything.\nTHE TECHNIQUE\nChoose one tiny moment. Follow small actions in order. Add a specific sensation and a thought. Let the audience experience the moment before revealing the result.\n\n4. One second, two versions\nFAST SUMMARY\n“I dropped the glass and it broke.”\nSLOW MOTION\n“The rim slid past my fingertips. I reached for it, but my hand closed around empty air. One drop of water caught the light. Then the glass struck the floor.”\n\n5. The slow-motion lens\nWHAT TO ZOOM IN ON\n1. A tiny action: fingers tighten around a microphone.\n\n2. A sensory detail: the room goes quiet.\n\n3. An immediate thought: “What if I forget?”\n\n4. A change: the first word finally comes out.\n\n6. Practice: three seconds onstage\nBasic line: “I was nervous before my presentation.”\nBUILD THE SCENE\nWhat does your hand do?\nWhat do you hear in the room?\nWhat thought crosses your mind?\nWhich exact moment changes the feeling?\nTASK  ·  Write 5–6 sentences about only three seconds.\n\n7. Dialogue gives the moment a voice\nA short exchange can reveal a relationship, a decision, or a feeling that a summary cannot.\n\n8. Three kinds of dialogue\nINNER DIALOGUE\nYour private thought: “I can’t do this.”\nCHARACTER DIALOGUE\nWords exchanged with someone in the story: “You’re ready,” my coach said.\nAUDIENCE DIALOGUE\nSpeaking directly to listeners: “Have you ever felt everyone watching you?”\n\n9. Before a character speaks, make us care\nGive listeners a brief reason this person matters to you or to the moment.\nWITHOUT CONTEXT\n“You can do it,” she told me.\nWITH CONTEXT\n“My coach, Ms. Chen, had stayed late every Friday to help me practise. At the door, she squeezed my shoulder. ‘You can do it,’ she said.”\n\n10. Character dialogue: words plus action\nFLAT\n“Are you ready?” my friend asked. “No,” I said.\nMORE VIVID\n“My friend Daniel waited beside the curtain. He had heard me rehearse the same opening twenty times.\n\n‘Ready?’ he whispered.\n\nI stared at the microphone. ‘Not even close.’”\n\n11. Practice: give the speaker a reason to matter\nScene: Someone speaks to you just before a difficult moment.\nPLAN\nWho are they? Why do you care about their opinion?\nWhat do they do before speaking?\nWhat exact words would they say?\nHow do you react?\nTASK  ·  Write 6–8 lines. Introduce the person before their first line.\n\n12. Combine the two techniques\nMODEL SCENE\n“My dad had never missed one of my speeches. That morning, he sat in the back row, holding his phone perfectly still.\n\nI stepped toward the microphone. My palms were damp. The first sentence vanished from my mind.\n\nDad caught my eye and mouthed, ‘Breathe.’\n\nI took one breath. Then another. And I began.”\nDISCUSS  ·  Where does time slow? Why does Dad’s line matter?\n\n13. Speech revision challenge\nFind one important moment in your current speech. Rewrite it as a scene that lasts 15–30 seconds when spoken.\nSUCCESS CRITERIA\n• The moment matters to your message.\n• Listeners can picture small, precise actions.\n• A character is introduced before speaking.\n• Dialogue reveals a feeling or a change.\n• The story still moves forward.\n\n• We focused on two main aspects. The first was slowing down the moment: zooming out to show the societal impact, and zooming in on tiny, specific, descriptive details of one moment or instance in time. Set the scene and describe what happened as if the moment were in slow motion, helping the audience visualise it. We want to add at least two or three such scenes to the speech.\n\n• The second was adding dialogue with an important character to move the story forward. This could be a parent, teacher, student, or someone else who plays an important role in the speech. We want part of the content to be a story, and to add at least two or three dialogue exchanges. Each exchange may be only two or three sentences, but it can still play a vital role.",
+            "zh": "• 我们先一起看了学生的演讲稿。我帮大部分学生稍微修改了演讲稿。有些学生选择用原来的演讲稿，有些则想看看修改后的版本。\n\n1. 让故事有真实感\n放慢一个瞬间。\n在场景中加入对话。\n通过写作，让听众看见那个时刻，并在乎其中的人物。\n\n2. 为什么有些演讲故事让人觉得遥远\n概括式表达：“我很紧张。我走上舞台，完成了演讲。”\n听众没有听到的内容：房间里是什么感觉？那几秒钟发生了什么？谁在那里？有人说了什么？\n\n3. 慢镜头：展开一个有意义的瞬间\n一篇演讲可以用一句话带过几个星期，却花二十秒讲述改变一切的那个时刻。\n方法：选择一个很小的瞬间，按顺序描写细微动作，加入一种具体感受和一个念头。先让听众经历这个时刻，再揭示结果。\n\n4. 同一秒钟，两种写法\n快速概括：“我把玻璃杯掉在地上，它碎了。”\n慢镜头：“杯沿从我的指尖滑过。我伸手去接，手却只握住了空气。一滴水映着光。接着，玻璃杯砸在地板上。”\n\n5. 慢镜头的观察镜头\n可以放大的细节：\n一个细微动作：手指握紧麦克风。\n一个感官细节：房间安静下来。\n一个即时念头：“如果我忘词了怎么办？”\n一个变化：第一个词终于说了出来。\n\n6. 练习：舞台上的三秒钟\n基础句：“展示前，我很紧张。”\n构建场景：你的手做了什么？你听到房间里有什么声音？脑海中闪过了什么念头？具体是哪一刻改变了这种感觉？\n课堂练习任务：只描写这三秒钟，写五至六句话。\n\n7. 第二部分：让对话为那个时刻发声\n一小段交流可以表现人物关系、一个决定或一种感受，而这些内容往往难以通过概括式叙述呈现。\n\n8. 三种对话\n内心独白：自己心里的念头，例如：“我做不到。”\n人物对话：与故事中人物交流的话，例如：“你准备好了。”我的教练说。\n听众对话：直接对听众讲话，例如：“你有没有感觉所有人都在看着你？”\n\n9. 在人物开口之前，先让听众在乎这个人\n用简短的背景，说明这个人为什么对你或对这个时刻很重要。\n没有背景：“你能做到的。”她告诉我。\n有背景：“我的教练陈老师（Ms. Chen）每周五都会留到很晚，帮助我练习。在门口，她握了握我的肩膀，说：‘你能做到的。’”\n\n10. 人物对话：话语配合动作\n平淡的表达：“你准备好了吗？”朋友问。“没有。”我说。\n更生动的表达：“我的朋友 Daniel 在幕布旁等着。他已经听我排练同一个开头二十次了。\n‘准备好了？’他轻声问。\n我盯着麦克风说：‘还差得远。’”\n\n11. 练习：让开口说话的人值得在乎\n场景：在你面对一个困难时刻之前，有人对你说话。\n计划：这个人是谁？为什么你在乎对方的看法？对方开口之前做了什么？对方具体会说哪些话？你怎样回应？\n课堂练习任务：写六至八行，在这个人物说第一句话之前，先介绍这个人。\n\n12. 把两种技巧结合起来\n示范场景：“爸爸从没缺席过我的任何一次演讲。那天早上，他坐在最后一排，稳稳地拿着手机，一动不动。\n我向麦克风走去，手心潮湿。第一句话忽然从我的脑海中消失了。\n爸爸与我目光相遇，用口型说：‘呼吸。’\n我吸了一口气，又吸了一口。然后，我开始了。”\n讨论：时间在哪里放慢了？为什么爸爸的那句话很重要？\n\n13. 演讲修改挑战\n在自己当前的演讲中找到一个重要时刻，把它改写成一个说出来需要十五至三十秒的场景。\n成功标准：这个时刻与演讲要传达的信息有关；听众能够想象细小而准确的动作；人物在开口说话前已得到介绍；对话表现出一种感受或一个变化；故事仍然继续向前推进。\n\n• 我们重点练习两个方面。第一是“放慢瞬间”：把镜头拉远，展示对社会的影响；也把镜头拉近，描写某一个时刻、某一个瞬间中细小、具体、有画面感的细节。先设置场景，再像慢动作一样描述发生了什么，帮助听众在脑海中形成画面。我们希望在演讲中至少加入两到三个这样的场景。\n\n• 第二是加入与重要人物的对话，推动故事向前发展。这个人物可以是父母、老师、学生，或其他在演讲中扮演重要角色的人。我们希望所分享的内容中有一部分是故事，并至少加入两到三处对话。每一处可能只有两三句话，但仍然能够发挥重要作用。"
           },
           "homework": {
             "en": "• Complete the worksheets on “Slowing Down the Moment” and “Dialogue with an Important Character,” and refer to them when adding these details to your written speech script.\n\n• Add at least two or three slow-motion scenes and at least two or three dialogue exchanges with important characters, as practised in class.\n\n• In your written script, highlight the additions or use a different colour so that we can see where you have applied these skills in your final speech.",
@@ -3626,38 +3635,38 @@
             {
               "id": "william",
               "name": "William",
-              "en": null,
-              "zh": null
+              "en": "• William updated his script, and I thought it was better than before. I had him read a version I had changed slightly, and his mom was making some more edits. It was nice to see his progress.",
+              "zh": "• William 更新了演讲稿，我觉得比之前更好了。我让他读了我稍作修改的版本，他妈妈也在继续做一些调整。看到他的进步，我觉得很开心。"
             },
             {
               "id": "sean",
               "name": "Sean",
-              "en": null,
-              "zh": null
+              "en": "• Sean had a lot of energy. I thought he did a good job of keeping that energy under control a bit more.",
+              "zh": "• Sean 很有活力。我觉得他比之前更能把握好自己的这股劲儿。"
             },
             {
               "id": "royce",
               "name": "Royce",
-              "en": null,
-              "zh": null
+              "en": "• Royce still had his familiar loud voice. At times his delivery was a little too forceful. I’d like him to work on sounding a bit more genuine.",
+              "zh": "• Royce 的声音还是一如既往地响亮。有时他的表达稍微用力过猛了些。我希望他练习怎样讲得更真诚一点。"
             },
             {
               "id": "cynthia",
               "name": "Cynthia",
-              "en": null,
-              "zh": null
+              "en": "• Cynthia preferred her original speech and spoke with a lot of enthusiasm. My concern is what might happen if the content still relies on AI.",
+              "zh": "• Cynthia 更喜欢原来的演讲稿，讲的时候也很有热情。我担心的是，如果内容仍然依赖 AI，可能会有什么影响。"
             },
             {
               "id": "ariel",
               "name": "Ariel",
-              "en": null,
-              "zh": null
+              "en": "• Ariel read the new script. I thought she showed real persistence. She wanted to try it a couple of times to get more familiar with it.",
+              "zh": "• Ariel 朗读了新稿。我觉得她很有毅力，愿意多试一两遍，让自己更熟悉这份稿子。"
             },
             {
               "id": "john",
               "name": "John",
-              "en": "• John joined our Monday 3:30–5:30 class. He spent an hour and a half last night writing a speech that ran for six minutes. There was a lot of good content, but it was too long. We would need to cut about half of what he said to fit the speaking time.\n\n• His topic was a bit general—essentially, “Let’s stop climate problems” or “Let’s stop the weather.” He needs something more specific, because one person cannot make that whole change.\n\n• One memorable point was his comparison that people produce a lot of gas, but planes produce more. I would not expect a plane to produce less gas than a person, so this comparison needs more development to make a useful point.",
-              "zh": "• John 加入了我们周一15:30–17:30的课堂。他昨晚花了一个半小时写出一篇讲起来长达六分钟的演讲。里面有很多不错的内容，但篇幅太长了。为了符合发言时间，我们需要删去大约一半的内容。\n\n• 他的主题有一点宽泛，基本上是“让我们阻止气候问题”或“让我们阻止天气变化”。他需要更具体的切入点，因为一个人无法完成这样整个层面的改变。\n\n• 一个令人记住的点是他的比较：人会产生很多气体，但飞机产生的更多。我不会认为一架飞机产生的气体会比一个人更少，因此这个比较还需要进一步展开，才能表达一个有用的观点。"
+              "en": "• John joined our Monday 3:30–5:30 class. He spent an hour and a half last night writing a speech that ran for six minutes. There was a lot of good content, but it was too long. We would need to cut about half of what he said to fit the speaking time.\n\n• His topic was a bit general—essentially, “Let’s stop climate problems” or “Let’s stop the weather.” He needs something more specific, because one person cannot make that whole change.\n\n• One memorable point was his comparison that people produce a lot of gas, but planes produce more. I would not expect a plane to produce less gas than a person, so this comparison needs more development to make a useful point.\n\n• John shared his own speech, and I could see how much effort he had put into it. I asked him to practise shortening the content because his speech ran about twice as long as would be suitable for a typical expository competition speech.",
+              "zh": "• John 加入了我们周一15:30–17:30的课堂。他昨晚花了一个半小时写出一篇讲起来长达六分钟的演讲。里面有很多不错的内容，但篇幅太长了。为了符合发言时间，我们需要删去大约一半的内容。\n\n• 他的主题有一点宽泛，基本上是“让我们阻止气候问题”或“让我们阻止天气变化”。他需要更具体的切入点，因为一个人无法完成这样整个层面的改变。\n\n• 一个令人记住的点是他的比较：人会产生很多气体，但飞机产生的更多。我不会认为一架飞机产生的气体会比一个人更少，因此这个比较还需要进一步展开，才能表达一个有用的观点。\n\n• John 分享了自己写的演讲，我能看出他投入了很多心力。我请他练习精简内容，因为他的演讲时长大约是一般说明类比赛演讲合适时长的两倍。"
             }
           ]
         }
