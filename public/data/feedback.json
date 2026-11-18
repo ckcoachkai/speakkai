@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-18T07:41:55.197218+00:00",
+  "updatedAt": "2026-11-18T07:50:02.074204+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -3165,45 +3165,48 @@
             {
               "id": "leo",
               "name": "Leo",
-              "en": null,
-              "zh": null
+              "en": "• I felt the practice went well overall, with the teams put together more randomly. Leo sometimes got stumped and wondered why things worked one way or another. I’d like him to become a little more flexible as he practises.",
+              "zh": "• 这次分组比较随机，我觉得整体练习进行得不错。Leo 有时会卡住，想弄清楚为什么是这样，或为什么是那样。我希望他在练习时再灵活一些。"
             },
             {
               "id": "max",
               "name": "Max",
-              "en": null,
-              "zh": null
+              "en": "• Max is starting to have a little difficulty paying attention, and he needs a lot of help in this area. In debate, you need to listen carefully to the opposing side and write down some of what they say. Without that, it is hard to respond to their arguments. This matters especially in final focus, when you need to work out what your team and the opposing team did well or poorly.",
+              "zh": "• Max 最近开始有点难以集中注意力，在这方面还需要较多帮助。辩论时，要认真听对方的发言，并记下他们说的一些要点。否则就很难回应他们的论点。这在最终总结陈词中特别重要，因为你需要弄清自己这方和对方分别有哪些地方做得好，哪些地方做得不够好。"
             },
             {
               "id": "celia",
               "name": "Celia",
-              "en": null,
-              "zh": null
+              "en": "• Celia picked up the individual points I made when I debated against the students. I deliberately included a number of flaws so they could spot points that were not quite true. She showed some insight, and she seemed to be pushing herself to take good notes and analyse what I had said.",
+              "zh": "• 我和学生们对辩时，Celia 能抓住我提出的各个要点。我特意在论证中放入了不少漏洞，让学生找出哪些说法不太站得住脚。她有一些自己的见解，也似乎在更努力地做好笔记，分析我讲了什么。"
             },
             {
               "id": "august",
               "name": "August",
-              "en": null,
-              "zh": null
+              "en": "• August picked up the individual points I made when I debated against the students. I deliberately included a number of flaws so they could spot points that were not quite true. He showed some insight, and he seemed to be pushing himself to take good notes and analyse what I had said.",
+              "zh": "• 我和学生们对辩时，August 能抓住我提出的各个要点。我特意在论证中放入了不少漏洞，让学生找出哪些说法不太站得住脚。他有一些自己的见解，也似乎在更努力地做好笔记，分析我讲了什么。"
             },
             {
               "id": "eva",
               "name": "Eva",
-              "en": null,
-              "zh": null
+              "en": "• Eva was beginning to understand the concept of final focus. I think it was still new to her, and she needed more time to grasp exactly what she needed to do.",
+              "zh": "• Eva 已经开始理解最终总结陈词的概念。我觉得这对她来说还是比较新的，她还需要多一点时间来弄清楚自己具体需要做什么。"
             },
             {
               "id": "james",
               "name": "James",
-              "en": null,
-              "zh": null
+              "en": "• I feel James is always very calm. He did okay in this practice, though his analysis could go deeper. I’d like him to speak with a little more passion and assertiveness, so his delivery is less soft when he puts his points together.",
+              "zh": "• 我觉得 James 一向很冷静。这次练习整体还可以，不过分析可以再深入一些。我希望他发言时多一点热情和力度，这样在把各个论点串起来时，表达就不会显得太轻柔。"
             }
           ],
           "classContent": {
-            "en": "• One area all the students struggled with was final focus: speaking directly to the audience and judge, and convincing the judge why their side had won.\n\n• We worked on different types of impacts and how to practise this part of a debate, including giving the judge information. We also looked back at their competition to identify areas they needed to improve.",
-            "zh": "• 全班都感到有困难的一个部分是最终总结陈词（final focus）：直接对听众和评委说话，并说服评委为什么自己这一方获胜。\n\n• 我们讨论了不同类型的影响，以及怎样练习辩论的这个部分，包括向评委提供信息。我们也回顾了他们的比赛，找出需要改进的地方。"
+            "en": "• One area all the students struggled with was final focus: speaking directly to the audience and judge, and convincing the judge why their side had won.\n\n• We worked on different types of impacts and how to practise this part of a debate, including giving the judge information. We also looked back at their competition to identify areas they needed to improve.\n\n• We put the students into two teams and had them practise final focus by facing off against me. I deliberately made several flawed points so they could practise picking out claims that were not quite true.",
+            "zh": "• 全班都感到有困难的一个部分是最终总结陈词（final focus）：直接对听众和评委说话，并说服评委为什么自己这一方获胜。\n\n• 我们讨论了不同类型的影响，以及怎样练习辩论的这个部分，包括向评委提供信息。我们也回顾了他们的比赛，找出需要改进的地方。\n\n• 我们把学生分成两队，让他们通过和我对辩来练习最终总结陈词。我特意提出了几个有漏洞的论点，让他们练习找出不太站得住脚的说法。"
           },
-          "homework": null
+          "homework": {
+            "en": "• If possible, find a debate on a WSDA channel or elsewhere and watch for examples of final focus. Write down which side you think won, why you think they won, and what each side did well or poorly. Watching other people debate can help you learn skills for your own debates and see more clearly what each side did.",
+            "zh": "• 如果可以，在 WSDA 频道或其他地方找一场辩论观看，留意最终总结陈词的例子。写下你认为哪一方获胜、为什么获胜，以及双方各有哪些地方做得好或做得不够好。观看别人的辩论可以帮助你学习能用在自己辩论中的技巧，也能让你更清楚地看出双方各自做了什么。"
+          }
         }
       ]
     },
@@ -4845,21 +4848,24 @@
             {
               "id": "august",
               "name": "August",
-              "en": null,
-              "zh": null
+              "en": "• In the debate practice with Celia, August seemed a little overwhelmed when they faced off against me. I think they became more comfortable as they practised. In debate, you will often face people with a lot more practice, so it is good to keep calm under pressure and continue trying your best.",
+              "zh": "• 和 Celia 一起练习辩论时，August 在两人对阵我的时候显得有些不知所措。我觉得随着练习进行，他们变得更自在了一些。辩论时，你常常会遇到练习经验丰富得多的对手，所以要在压力下保持冷静，继续尽力。"
             },
             {
               "id": "celia",
               "name": "Celia",
-              "en": null,
-              "zh": null
+              "en": "• In the debate practice with August, Celia seemed a little overwhelmed when they faced off against me. I think they became more comfortable as they practised. In debate, you will often face people with a lot more practice, so it is good to keep calm under pressure and continue trying your best.",
+              "zh": "• 和 August 一起练习辩论时，Celia 在两人对阵我的时候显得有些不知所措。我觉得随着练习进行，他们变得更自在了一些。辩论时，你常常会遇到练习经验丰富得多的对手，所以要在压力下保持冷静，继续尽力。"
             }
           ],
           "classContent": {
             "en": "• August and Celia continued in a two-student debate practice lesson until 18:00. Their main focus was impacts, because they were having trouble making the connections in their arguments.\n\n• They debated against me and won narrowly. They then debated one-on-one against each other on different topics, focusing on checking their opening statements and rebuttals.\n\n• At times, they had difficulty understanding cross-examination and wanted to launch into a rant sharing their own ideas. The reminder was that cross-examination is about asking questions.",
             "zh": "• August 和 Celia 随后继续参加双人辩论练习课，直到18:00。他们主要练习影响分析，因为他们在把论证中的联系讲清楚方面还有困难。\n\n• 他们一起与我辩论，并以微弱优势获胜。之后，他们围绕不同话题相互进行一对一辩论，重点检查开篇陈词和反驳。\n\n• 有时，他们对盘问（cross-examination）的理解还有困难，想长篇讲述自己的想法。课堂提醒是：盘问的重点是提出问题。"
           },
-          "homework": null
+          "homework": {
+            "en": "• Practise cross-examination. If you have a chance to watch other WSDA competitions on their channels, practise writing down questions you could ask.",
+            "zh": "• 练习盘问。如果有机会在 WSDA 的频道上观看其他比赛，可以练习写下你可以提出的问题。"
+          }
         }
       ]
     }

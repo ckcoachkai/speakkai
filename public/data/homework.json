@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-18T07:41:55.216222+00:00",
+  "updatedAt": "2026-11-18T07:50:02.090304+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2599,9 +2599,15 @@
           "date": "2026-11-15",
           "time": "15:00–16:30",
           "classContent": [
-            "• One area all the students struggled with was final focus: speaking directly to the audience and judge, and convincing the judge why their side had won.\n\n• We worked on different types of impacts and how to practise this part of a debate, including giving the judge information. We also looked back at their competition to identify areas they needed to improve."
+            "• One area all the students struggled with was final focus: speaking directly to the audience and judge, and convincing the judge why their side had won.\n\n• We worked on different types of impacts and how to practise this part of a debate, including giving the judge information. We also looked back at their competition to identify areas they needed to improve.\n\n• We put the students into two teams and had them practise final focus by facing off against me. I deliberately made several flawed points so they could practise picking out claims that were not quite true."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Watch a debate and analyse the final focus",
+            "steps": [
+              "• If possible, find a debate on a WSDA channel or elsewhere and watch for examples of final focus. Write down which side you think won, why you think they won, and what each side did well or poorly. Watching other people debate can help you learn skills for your own debates and see more clearly what each side did."
+            ],
+            "prepareFor": "Debate practice"
+          },
           "students": [
             {
               "name": "Leo",
@@ -3995,7 +4001,13 @@
           "classContent": [
             "• August and Celia continued in a two-student debate practice lesson until 18:00. Their main focus was impacts, because they were having trouble making the connections in their arguments.\n\n• They debated against me and won narrowly. They then debated one-on-one against each other on different topics, focusing on checking their opening statements and rebuttals.\n\n• At times, they had difficulty understanding cross-examination and wanted to launch into a rant sharing their own ideas. The reminder was that cross-examination is about asking questions."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Practise cross-examination questions",
+            "steps": [
+              "• Practise cross-examination. If you have a chance to watch other WSDA competitions on their channels, practise writing down questions you could ask."
+            ],
+            "prepareFor": "Debate practice"
+          },
           "students": [
             {
               "name": "August",
