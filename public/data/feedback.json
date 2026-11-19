@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-18T07:50:02.074204+00:00",
+  "updatedAt": "2026-11-19T02:14:50.467Z",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -577,15 +577,15 @@
             {
               "id": "william",
               "name": "William",
-              "en": "Absent from this class, as confirmed by the teacher.",
-              "zh": "教师确认本次课缺席。",
-              "attendance": "absent"
+              "en": "• I feel William is getting more comfortable in this class, and I could see that in his speech. He spoke with a bit more confidence, his delivery was a little more fluid, and his ideas connected a bit better. He can still work on adding a bit more emphasis to what he says as he speaks.\n• William still needs to speak more clearly, slow down a bit, and emphasize key words. I told him that he often uses long, complex sentences to explain simple ideas. Sometimes it’s better to use simpler words and pause more often.\n• Once his speech is clearer and easier to follow, he can start working on facial expressions and hand gestures.",
+              "zh": "• 我觉得 William 在这个班里越来越自在了，从他的演讲中就能看出来。他说得更自信了一点，表达也更流畅，内容之间衔接得更好。他还可以练习在讲话时多强调一些内容。\n• William 还是需要把话说得更清楚，语速放慢一点，并强调关键词。我跟他说过，他经常用又长又复杂的句子来解释简单的想法。有时候用更简单的词、多停顿几次，反而更容易让听众听懂。\n• 等他说得更清楚、听众更容易跟上之后，再开始练习面部表情和手势。"
             },
             {
               "id": "kyle",
               "name": "Kyle",
-              "en": "• I feel Kyle is getting more comfortable in this class, and I could see that in his speech. He spoke with a bit more confidence, his delivery was a little more fluid, and his ideas connected a bit better. He can still work on adding a bit more emphasis to what he says as he speaks.",
-              "zh": "• 我觉得 Kyle 在这个班里越来越自在了，从他的演讲中就能看出来。他说得更自信了一点，表达也更流畅，内容之间衔接得更好。他还可以练习在讲话时多强调一些内容。"
+              "en": "Absent from this class, as confirmed by the teacher.",
+              "zh": "教师确认本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "ivy",
