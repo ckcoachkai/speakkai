@@ -32,6 +32,8 @@
   let screen = screenFromHash();
   let offset = 0;
   let rewardKind = null;
+  let praiseOffset = 0;
+  let praiseLine = null;
   let confirmDate = '';
   let lastFocus = null;
   let toastTimer;
@@ -134,7 +136,14 @@
     uiSounds.stop();
     if (!sound) return;
     audio.pause();
-    audio.src = 'assets/' + kind + '.mp3';
+    const voiced = praiseLine && praiseLine.recorded && rewardKind === kind;
+    audio.onerror = voiced ? () => {
+      audio.onerror = null;
+      if (!sound || document.hidden || !popup.open || rewardKind !== kind) return;
+      audio.src = 'assets/' + kind + '.mp3';
+      audio.play().catch(() => {});
+    } : null;
+    audio.src = voiced ? 'assets/voice/' + praiseLine.id + '.mp3' : 'assets/' + kind + '.mp3';
     try {
       const handled = audio.play();
       if (handled) handled.catch(() => {});
@@ -142,6 +151,7 @@
   }
   function stopCelebration() {
     window.DiaryEffects.stop();
+    audio.onerror = null;
     audio.pause();
   }
   function closePopup() {if (popup.open) popup.close();}
@@ -153,9 +163,11 @@
   }
   function celebrate(kind,preview) {
     rewardKind = kind;
+    praiseOffset = 0;
+    praiseLine = window.BeibeiPraise.pick(kind,today,praiseOffset);
     confirmDate = '';
     const earned = window.DiaryPages.earned(entries,today);
-    show(window.DiaryDialog.reward(kind,{preview,unlocked:Boolean(earned[kind])}));
+    show(window.DiaryDialog.reward(kind,{preview,unlocked:Boolean(earned[kind]),line:praiseLine}));
     playSound(kind);
     window.DiaryEffects.play(kind,popup.querySelector('#reward-fx'));
   }
@@ -278,6 +290,14 @@
       case 'cancel': closePopup(); uiSounds.play('close'); break;
       case 'view-reward': celebrate(el.dataset.kind,true); break;
       case 'today-reward': celebrate(model.reward(entries,today),false); break;
+      case 'next-praise':
+        if (rewardKind && popup.open) {
+          praiseLine = window.BeibeiPraise.pick(rewardKind,today,++praiseOffset);
+          popup.querySelector('.beibei-line').textContent = praiseLine.text;
+          if (praiseLine.recorded) playSound(rewardKind);
+          else uiSounds.play('tap');
+        }
+        break;
       case 'replay': if (rewardKind) {playSound(rewardKind);window.DiaryEffects.play(rewardKind,popup.querySelector('#reward-fx'));} break;
       case 'prev-week': offset++; uiSounds.play('navigate'); draw(); break;
       case 'next-week': offset=Math.max(0,offset-1); uiSounds.play('navigate'); draw(); break;
@@ -286,7 +306,7 @@
   popup.addEventListener('cancel',() => uiSounds.play('close'));
   popup.addEventListener('close',() => {
     if (popup.open) return;
-    confirmDate = '';rewardKind = null;stopCelebration();
+    confirmDate = '';rewardKind = null;praiseLine = null;stopCelebration();
     const target = lastFocus?.isConnected ? lastFocus : main.querySelector('[data-action="today-reward"]');
     target?.focus({preventScroll:true});
   });

@@ -62,10 +62,11 @@
       '<span class="dg-edition" aria-hidden="true">' + data.edition + '</span></div>' +
       '<div class="dg-body"><div class="dg-medal" aria-hidden="true">' + asset(data.badge) + '</div>' +
       '<div class="dg-labels"><span class="dg-stage">' + data.stage + '</span><span class="dg-status">' + status + '</span></div>' +
-      '<h2 id="diary-dialog-title">' + data.title + '</h2><p>' + data.words + '</p>' +
+      '<h2 id="diary-dialog-title">' + data.title + '</h2><p class="beibei-line" aria-live="polite">' + (options.line ? options.line.text : data.words) + '</p>' +
       '<div class="dg-actions"><button type="button" class="dg-main" data-action="cancel">' +
       (options.preview ? '看完啦' : '收下夸夸！') + '</button>' +
-      '<button type="button" class="dg-sub" data-action="replay">' + icon('party-popper', 17) + '再看一次特效</button></div></div>' +
+      '<div class="praise-controls"><button type="button" class="dg-sub" data-action="replay">' + icon('party-popper', 17) + '重播庆祝</button>' +
+      '<button type="button" class="dg-sub" data-action="next-praise">' + icon('sparkles', 16) + '换一句夸夸</button></div></div></div>' +
       '<div class="dg-particles" id="reward-fx" aria-hidden="true"></div></article>';
   }
 
