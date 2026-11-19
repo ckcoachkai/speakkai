@@ -203,6 +203,7 @@
   let tabFocus = false;
   const canHover = window.matchMedia('(any-hover: hover)');
   let touchEndedAt = -Infinity;
+  let mouseX, mouseY, hoveredControl = null;
   document.addEventListener('pointerdown', event => {
     tabFocus = false;
     if (event.pointerType === 'touch') touchEndedAt = performance.now();
@@ -212,12 +213,19 @@
     if (event.pointerType === 'touch') touchEndedAt = performance.now();
     if (event.pointerType !== 'mouse') uiSounds.unlock();
   });
-  document.addEventListener('pointerover', event => {
-    if (event.pointerType !== 'mouse' || event.buttons || !canHover.matches ||
-        event.sourceCapabilities?.firesTouchEvents || performance.now()-touchEndedAt < 750) return;
+  // A dialog disappearing can send pointerover to the button beneath a stationary mouse.
+  // Sound follows physical movement into a control, including a move across its children.
+  document.addEventListener('pointermove', event => {
+    if (event.pointerType !== 'mouse' || !canHover.matches || event.sourceCapabilities?.firesTouchEvents) return;
+    if (event.clientX === mouseX && event.clientY === mouseY) return;
+    mouseX = event.clientX;
+    mouseY = event.clientY;
     const control = interactive(event.target);
-    if (control && !control.contains(event.relatedTarget)) uiSounds.play('hover');
+    if (control === hoveredControl) return;
+    hoveredControl = control;
+    if (control && !event.buttons && performance.now()-touchEndedAt >= 750) uiSounds.play('hover');
   });
+  document.documentElement.addEventListener('pointerleave', () => { hoveredControl = null; });
   document.addEventListener('keydown', event => {
     if (event.repeat) return;
     uiSounds.unlock();
