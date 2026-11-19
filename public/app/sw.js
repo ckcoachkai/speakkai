@@ -1,11 +1,11 @@
 /* Bump the version whenever a packaged file changes. */
-const VERSION = '3';
+const VERSION = '4';
 const scope = new URL(self.registration.scope);
 const cachePrefix = 'princess-diary|' + encodeURIComponent(scope.href) + '|';
 const cacheName = cachePrefix + VERSION;
 const coreFiles = [
   'index.html', 'style.css', 'app.js', 'chart.js', 'effects.js', 'icons.js',
-  'pages.js', 'pages.css', 'dialog.js', 'dialog.css',
+  'pages.js', 'pages.css', 'dialog.js', 'dialog.css', 'ui-sounds.js',
   'manifest.webmanifest', 'assets/diary.js', 'assets/hero.jpg'
 ];
 const extras = [
@@ -15,7 +15,9 @@ const extras = [
   'assets/clap.png', 'assets/heart.png', 'assets/sparkles.png',
   'assets/icon-192.png', 'assets/icon-512.png', 'assets/apple-touch-icon.png',
   'assets/first.mp3', 'assets/three.mp3', 'assets/seven.mp3',
-  'assets/return.mp3', 'assets/daily.mp3'
+  'assets/return.mp3', 'assets/daily.mp3',
+  'assets/ui-hover.mp3', 'assets/ui-check.mp3', 'assets/ui-uncheck.mp3',
+  'assets/ui-navigate.mp3', 'assets/ui-open.mp3', 'assets/ui-close.mp3', 'assets/ui-tap.mp3'
 ];
 const absolute = file => new URL(file, scope).href;
 const urls = new Set([...coreFiles, ...extras].map(absolute));

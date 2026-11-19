@@ -39,6 +39,9 @@
   let storageFailed = false;
 
   try {sound = localStorage.getItem(preferenceKey) !== 'off';} catch (_) {}
+  const uiSounds = window.createDiaryUiSounds(() => sound,
+    () => toast('轻点页面一下，再移到按钮上，就能听见水晶铃声啦。'));
+  uiSounds.prepare();
   function screenFromHash() {
     const id = location.hash.slice(1);
     return screens.some(item => item[0] === id) ? id : 'today';
@@ -128,6 +131,7 @@
     else main.innerHTML = home();
   }
   function playSound(kind) {
+    uiSounds.stop();
     if (!sound) return;
     audio.pause();
     audio.src = 'assets/' + kind + '.mp3';
@@ -190,7 +194,45 @@
     draw(); celebrate(model.reward(entries,today),false);
   }
 
+  function interactive(target) {
+    const control = target?.closest?.('button, a[href], [role="button"]');
+    if (!control || control.matches(':disabled,[aria-disabled="true"]') ||
+        (popup.open && !popup.contains(control))) return null;
+    return control;
+  }
+  let tabFocus = false;
+  const canHover = window.matchMedia('(any-hover: hover)');
+  let touchEndedAt = -Infinity;
+  document.addEventListener('pointerdown', event => {
+    tabFocus = false;
+    if (event.pointerType === 'touch') touchEndedAt = performance.now();
+    if (event.pointerType === 'mouse') uiSounds.unlock();
+  });
+  document.addEventListener('pointerup', event => {
+    if (event.pointerType === 'touch') touchEndedAt = performance.now();
+    if (event.pointerType !== 'mouse') uiSounds.unlock();
+  });
+  document.addEventListener('pointerover', event => {
+    if (event.pointerType !== 'mouse' || event.buttons || !canHover.matches ||
+        event.sourceCapabilities?.firesTouchEvents || performance.now()-touchEndedAt < 750) return;
+    const control = interactive(event.target);
+    if (control && !control.contains(event.relatedTarget)) uiSounds.play('hover');
+  });
+  document.addEventListener('keydown', event => {
+    if (event.repeat) return;
+    uiSounds.unlock();
+    tabFocus = event.key === 'Tab';
+    if (['Enter',' '].includes(event.key) && interactive(event.target)?.closest('#time-chart')) uiSounds.play('tap');
+  });
+  document.addEventListener('keyup', event => { if (event.key === 'Tab') tabFocus = false; });
+  document.addEventListener('focusin', event => {
+    if (tabFocus && interactive(event.target)) uiSounds.play('hover');
+    tabFocus = false;
+  });
   document.addEventListener('click',event => {
+    const control = interactive(event.target);
+    if (control?.matches('a[href^="#"]') && control.hash.slice(1) !== screen) uiSounds.play('navigate');
+    if (control?.closest('#time-chart')) uiSounds.play('tap');
     const el = event.target.closest('[data-action]');
     if (!el || el.disabled) return;
     if (refreshDay()) {toast('新的一天开始啦，请重新确认今天的清单。');return;}
@@ -198,13 +240,15 @@
     switch (action) {
       case 'sound':
         sound = !sound;
-        if (!sound) audio.pause();
+        if (!sound) { audio.pause(); uiSounds.stop(); }
+        else { uiSounds.prepare(); uiSounds.play('tap'); }
         try {localStorage.setItem(preferenceKey,sound ? 'on' : 'off');} catch (_) {}
         updateSound(); break;
       case 'task': {
         const id = el.dataset.id;
         if (todayEntry()) break;
         if (selected.has(id)) selected.delete(id); else selected.add(id);
+        uiSounds.play(selected.has(id) ? 'check' : 'uncheck');
         saveDraft();
         el.setAttribute('aria-checked',String(selected.has(id)));
         el.querySelector('.checkmark').innerHTML = selected.has(id) ? icon('check',15) : '';
@@ -216,19 +260,22 @@
       case 'request-check':
         if (storageFailed) {load();if (storageFailed) {toast('请开启浏览器的网站数据储存，再来盖爪印。');break;}}
         if (selected.size < foods.length) {
+          uiSounds.play('tap');
           toast('先勾选今天做到的三件事，再盖爪印喵！');
           main.querySelector('[aria-checked=false]')?.focus({preventScroll:true}); break;
         }
+        uiSounds.play('open');
         confirmDate = today; rewardKind = null; show(window.DiaryDialog.confirm()); break;
       case 'confirm': checkIn(); break;
-      case 'cancel': closePopup(); break;
+      case 'cancel': closePopup(); uiSounds.play('close'); break;
       case 'view-reward': celebrate(el.dataset.kind,true); break;
       case 'today-reward': celebrate(model.reward(entries,today),false); break;
       case 'replay': if (rewardKind) {playSound(rewardKind);window.DiaryEffects.play(rewardKind,popup.querySelector('#reward-fx'));} break;
-      case 'prev-week': offset++; draw(); break;
-      case 'next-week': offset=Math.max(0,offset-1); draw(); break;
+      case 'prev-week': offset++; uiSounds.play('navigate'); draw(); break;
+      case 'next-week': offset=Math.max(0,offset-1); uiSounds.play('navigate'); draw(); break;
     }
   });
+  popup.addEventListener('cancel',() => uiSounds.play('close'));
   popup.addEventListener('close',() => {
     if (popup.open) return;
     confirmDate = '';rewardKind = null;stopCelebration();
@@ -238,18 +285,25 @@
   popup.addEventListener('click',e => {
     if (e.target !== popup) return;
     const b = popup.getBoundingClientRect();
-    if (e.clientX < b.left || e.clientX > b.right || e.clientY < b.top || e.clientY > b.bottom) closePopup();
+    if (e.clientX < b.left || e.clientX > b.right || e.clientY < b.top || e.clientY > b.bottom) {
+      closePopup(); uiSounds.play('close');
+    }
   });
   window.addEventListener('hashchange',() => {
     screen = screenFromHash();offset = 0;closePopup();refreshDay();draw();window.scrollTo(0,0);
   });
   window.addEventListener('storage',e => {
-    if (e.key === preferenceKey) {sound=e.newValue!=='off';if(!sound) audio.pause();updateSound();}
+    if (e.key === preferenceKey) {
+      sound=e.newValue!=='off';
+      if (!sound) {audio.pause(); uiSounds.stop();}
+      else uiSounds.prepare();
+      updateSound();
+    }
     else if (!e.key || e.key.startsWith(entryPrefix)) {load();draw();}
   });
   function onResume() {
     if (!document.hidden) {refreshDay();load();draw();planMidnight();}
-    else stopCelebration();
+    else { stopCelebration(); uiSounds.stop(); }
   }
   window.addEventListener('pageshow',onResume);
   document.addEventListener('visibilitychange',onResume);
