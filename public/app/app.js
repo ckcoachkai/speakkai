@@ -101,14 +101,14 @@
     return `<div class="dateline"><strong>Daily Edition</strong><span class="rule"></span><span class="issue-date">${icon('calendar-days',14)} ${dateLabel}</span></div>
       <div class="home-grid">
         <section class="cover" aria-label="今日封面"><div class="cover-frame">
-          <img class="cover-plate" src="assets/hero.jpg" alt="戴着爱心宝石皇冠的奶牛猫贝贝，睁着星星眼向你举起双爪">
+          <img class="cover-plate" src="assets/hero.jpg" alt="奶牛猫贝贝戴着小皇冠，睁着星星眼举起双爪，身旁的粉钻和银钻正闪着光">
           <div class="cover-veil"></div>
           <span class="cover-tag">${icon('star',12)} 本日封面</span>
           <div class="cover-copy"><h1><span class="cover-first">今天又是</span><span class="cover-main">控糖甜妹</span></h1><div class="cover-script" lang="en">Sweet Girl!</div></div>
           <span class="issue-no" aria-hidden="true">SUGAR DIARY ✦ ${today.slice(5).replace('-',' / ')}</span>
           <i class="starshine s1"></i><i class="starshine s2"></i><i class="starshine s3"></i>
         </div><div class="cat-quote"><b>贝贝说</b><span>${quote}</span></div></section>
-        <section class="paper quest"><div class="section-headline"><div><div class="section-kicker">Daily Check-in</div><h2 class="section-title">今日控糖清单</h2></div><div class="count" aria-label="已勾选 ${saved?3:selected.size} 项"><b>${saved?3:selected.size}</b> / 3</div></div>
+        <section class="paper quest"><div class="section-headline"><div><div class="section-kicker">Daily Check-in</div><h2 class="section-title">今日控糖清单<span class="gem-pair" aria-hidden="true"><i>✦</i></span></h2></div><div class="count" aria-label="已勾选 ${saved?3:selected.size} 项"><b>${saved?3:selected.size}</b> / 3</div></div>
           <div class="todo-list">${tasks}</div><button class="primary" data-action="${saved?'today-reward':'request-check'}">${icon(saved?'party-popper':'paw-print',19)} ${saved ? `${saved.time} 已打卡 · 再听夸夸` : '盖下今日爪印'}</button>
         </section>
         <section class="paper week-card"><div class="section-headline"><div><div class="section-kicker">Weekly Streak</div><h2 class="section-title">本周爪印</h2></div><div class="streak-tag">${icon('flame',15)} 连续 <b>${summary.current}</b> 天</div></div><ol class="week-list">${stampCells}</ol></section>

@@ -1,10 +1,10 @@
 (function (global) {
   'use strict';
 
-  const gold = ['#fff9db', '#ffe797', '#ffd050', '#e6a527'];
-  const silver = ['#ffffff', '#edf5ff', '#bed2e5', '#e9c9f1'];
-  const pink = ['#ffffff', '#ffb9df', '#ff78ad', '#ff4b98'];
-  const jewel = ['#fff5c0', '#ffafd8', '#fff', '#ffdc68'];
+  const gold = ['#fff9ed', '#fae7c8', '#efd4aa', '#caa377'];
+  const silver = ['#ffffff', '#eaf9ff', '#c3dce9', '#8b9bb5'];
+  const pink = ['#fff2f8', '#f6d9e6', '#e8acc9', '#bc829f'];
+  const jewel = ['#f7e6d0', '#efd2e1', '#c9e2ef', '#d6d2e7'];
   const tau = 2 * Math.PI;
   let active = null;
 
@@ -65,6 +65,57 @@
     ctx.fill();
   }
 
+  function diamond(ctx, radius, face, glint) {
+    // A brilliant cut with a wide table, short girdle and cool, shaded pavilion.
+    ctx.save();
+    ctx.scale(radius, radius);
+    ctx.beginPath();
+    ctx.moveTo(-1, -.19);
+    ctx.lineTo(-.55, -.66);
+    ctx.lineTo(.55, -.66);
+    ctx.lineTo(1, -.19);
+    ctx.lineTo(0, 1);
+    ctx.closePath();
+    ctx.fillStyle = '#8b94af';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(-1, -.19);
+    ctx.lineTo(-.55, -.66);
+    ctx.lineTo(.55, -.66);
+    ctx.lineTo(1, -.19);
+    ctx.closePath();
+    ctx.fillStyle = '#f1faff';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(-.55, -.66);
+    ctx.lineTo(-.4, -.19);
+    ctx.lineTo(.4, -.19);
+    ctx.lineTo(.55, -.66);
+    ctx.closePath();
+    ctx.fillStyle = face;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(-.4, -.19);
+    ctx.lineTo(.4, -.19);
+    ctx.lineTo(0, 1);
+    ctx.closePath();
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(.4, -.19);
+    ctx.lineTo(1, -.19);
+    ctx.lineTo(0, 1);
+    ctx.closePath();
+    ctx.fillStyle = '#b8cde0';
+    ctx.fill();
+    if (glint > 0) {
+      ctx.translate(.58, -.51);
+      ctx.fillStyle = '#ffffff';
+      star(ctx, .95 * glint, 4);
+    }
+    ctx.restore();
+  }
+
   function makeParticle(x, y, vx, vy, life, size, shape, color, gravity) {
     return {
       x, y, vx, vy, life, size, shape, color, gravity,
@@ -85,16 +136,18 @@
       for (let i = 0; i < amount; i++) {
         const angle = offset + (i + between(-.2, .2)) * tau / amount;
         const speed = between(95, 180) * scale;
-        const shape = i % 4 === 0 ? 'star' : 'streak';
+        const crystal = i % (scene.finale ? 4 : 8) === 1;
+        const shape = crystal ? 'diamond' : i % 4 === 0 ? 'star' : 'streak';
+        const size = crystal ? between(4.3, 6.5) : between(2, 4.6);
         particles.push(makeParticle(x, y, Math.cos(angle) * speed, Math.sin(angle) * speed,
-          between(.8, 1.6), between(2, 4.6) * scale, shape, pick(palette), 93 * scale));
+          between(.8, 1.6), size * scale, shape, pick(palette), 93 * scale));
       }
-      particles.push(makeParticle(x, y, 0, 0, .34, 14 * scale, 'spark', '#fff7d9', 0));
+      particles.push(makeParticle(x, y, 0, 0, .34, 14 * scale, 'spark', '#fff4e5', 0));
     } else if (style === 'hearts') {
       for (let i = 0; i < 9; i++) {
         particles.push(makeParticle(x + between(-15, 15), y, between(-39, 39) * scale,
           between(-122, -63) * scale, between(1, 1.9), between(5, 13) * scale,
-          i % 3 ? 'heart' : 'spark', pick(pink), -12 * scale));
+          i === 6 ? 'diamond' : i % 3 ? 'heart' : 'spark', pick(pink), -12 * scale));
       }
     } else {
       const clap = style !== 'sparkle';
@@ -102,7 +155,8 @@
         const angle = between(-Math.PI, .12);
         const speed = between(30, 98) * scale;
         particles.push(makeParticle(x, y, Math.cos(angle) * speed, Math.sin(angle) * speed,
-          between(.6, 1.15), between(3, 6) * scale, 'spark', pick(jewel), 36 * scale));
+          between(.6, 1.15), between(3, 6) * scale, i % 6 === 1 ? 'diamond' : 'spark',
+          pick(jewel), 36 * scale));
       }
       if (clap) {
         particles.push(makeParticle(x, y, rx < .5 ? 12 : -12, -56 * scale,
@@ -136,8 +190,14 @@
         -(p.vy * Math.exp(-drag * age) + p.gravity * age) * visibleTrail);
       ctx.lineTo(0, 0);
       ctx.stroke();
-      ctx.fillStyle = '#fffbe4';
+      ctx.fillStyle = '#fffafa';
       ctx.fillRect(-.6, -.6, 1.2, 1.2);
+    } else if (p.shape === 'diamond') {
+      ctx.rotate(p.tilt + p.spin * age * .26);
+      // Facets roll gently through a narrow reflection rather than flashing in unison.
+      const roll = Math.cos(age * 4.4 + p.phase);
+      ctx.scale(.8 + .2 * roll, 1);
+      diamond(ctx, p.size, p.color, Math.max(0, (roll - .6) / .4));
     } else if (p.shape === 'heart' || p.shape === 'clap' || p.shape === 'paw') {
       ctx.rotate(p.tilt * .5 + Math.sin(age * 7) * .14);
       ctx.font = Math.round(p.size * (p.shape === 'heart' ? 1.65 : 1.35)) +
@@ -166,7 +226,7 @@
     const y = scene.height * ry + scene.scale * 98 * remaining;
     ctx.save();
     ctx.globalAlpha = Math.min(1, flight * 4);
-    ctx.strokeStyle = style === 'silver' ? '#eef7ff' : '#ffe299';
+    ctx.strokeStyle = style === 'silver' ? '#d8eaf5' : '#f6e1c5';
     ctx.lineWidth = 2.5;
     ctx.beginPath();
     ctx.moveTo(x + (rx < .5 ? -5 : 5), y + 16);
@@ -184,10 +244,15 @@
     marks.slice(0, kind === 'seven' ? 6 : 4).forEach(([x,y], i) => {
       ctx.save();
       ctx.translate(scene.width * x, scene.height * y);
-      ctx.fillStyle = kind === 'return' ? pink[i % pink.length] : (i % 2 ? silver : gold)[2];
-      star(ctx, (i % 2 ? 7 : 11) * scene.scale, i % 2 ? 4 : 5);
-      ctx.fillStyle = '#fff';
-      star(ctx, 3 * scene.scale, 4);
+      const face = kind === 'return' ? pink[i % pink.length] : (i % 2 ? silver : gold)[2];
+      if (i % 2 === 0) {
+        diamond(ctx, 7 * scene.scale, face, .9);
+      } else {
+        ctx.fillStyle = face;
+        star(ctx, 7 * scene.scale, 4);
+        ctx.fillStyle = '#fff';
+        star(ctx, 3 * scene.scale, 4);
+      }
       ctx.restore();
     });
   }
@@ -212,7 +277,7 @@
     ctx.lineCap = 'round';
     const events = Object.prototype.hasOwnProperty.call(scenes, kind) ? scenes[kind] : scenes.daily;
     const scene = {
-      canvas, ctx, width, height, events, particles: [], frame: 0, timeout: 0,
+      canvas, ctx, width, height, events, finale: kind === 'seven', particles: [], frame: 0, timeout: 0,
       scale: Math.max(.72, Math.min(1.55, width / 390, height / 670)),
       onHide: () => { if (document.hidden) stop(); }
     };
