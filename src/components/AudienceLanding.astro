@@ -1,11 +1,12 @@
 ---
-import { audiencePages } from '../data/audiencePages';
+import { audiencePages, courseSlug } from '../data/audiencePages';
 import type { SiteLanguage } from '../data/homeCopy';
 import { serviceCopy } from '../data/services';
 import VoiceStage from './VoiceStage.astro';
 import '../styles/audience.css';
 const { slug, language = 'en' } = Astro.props as {slug:string;language?:SiteLanguage};
-const page = audiencePages.find(a=>a.slug===slug)![language];
+const stage = audiencePages.find(a=>a.slug===slug)!;
+const page = stage[language];
 const zh = language === 'zh-CN'; const c = serviceCopy[language];
 const home = zh ? '/zh/' : '/';
 const contact = `${zh?'/zh':''}/contact/?audience=${slug==='adults'?'companies':'coaching'}`;
@@ -18,7 +19,7 @@ const focuses = [...new Set(page.courses.map(c=>c.focus))];
   <section class="audience-courses wrap" id="courses" aria-labelledby="courses-title"><div class="course-heading"><div><p class="chapter-label">{zh?'为你的阶段设计':'BUILT FOR YOUR STAGE'}</p><h2 id="courses-title">{zh?'选择你的表达方向。':'Choose your direction.'}</h2></div><p>{page.fit}</p></div>
     <nav class="course-filters" aria-label={zh?'课程方向':'Course direction'}><a href="?focus=all#courses" data-course-filter="all" aria-current="true">{zh?'本阶段全部课程':'All courses for this group'}</a>{focuses.map(f=><a href={`?focus=${f}#courses`} data-course-filter={f}>{c.services.find(s=>s.id===f)!.title}</a>)}</nav>
     <p class="filter-status" role="status" data-filter-status hidden data-prefix={zh?'当前方向：':'Showing: '}></p>
-    <div class="landing-course-grid">{page.courses.map((course,i)=><article class="landing-course" data-course-focus={course.focus} data-reveal><div class="course-top"><span class="chapter-label">0{i+1}</span><span class="course-tag">{course.tag}</span></div><h3>{course.title}</h3><p class="course-aim">{course.aim}</p><ul>{course.points.map(p=><li><span aria-hidden="true">↗</span>{p}</li>)}</ul><a class="quiet-link" href="#connect">{zh?'讨论这类辅导':'Discuss this coaching'} <span aria-hidden="true">↗</span></a></article>)}</div>
+    <div class="landing-course-grid">{page.courses.map((course,i)=><article class="landing-course" data-course-focus={course.focus} data-reveal><div class="course-top"><span class="chapter-label">0{i+1}</span><span class="course-tag">{course.tag}</span></div><h3>{course.title}</h3><p class="course-aim">{course.aim}</p><ul>{course.points.map(p=><li><span aria-hidden="true">↗</span>{p}</li>)}</ul><a class="quiet-link" href={`${contact}&stage=${slug}&course=${courseSlug(stage.en.courses[i].title)}`}>{zh?'讨论这类辅导':'Discuss this coaching'} <span aria-hidden="true">↗</span></a></article>)}</div>
     <noscript><p>{zh?'下方展示本阶段全部课程，可直接阅读或联系 Kai。':'All courses for this group are available below. Explore them or contact Kai directly.'}</p></noscript>
   </section>
   <section class="lesson-example" aria-labelledby="example-title"><div class="wrap"><p class="chapter-label">{zh?'练习示例 · 根据学员调整':'AN EXAMPLE OF THE PRACTICE · ADAPTED TO THE LEARNER'}</p><h2 id="example-title">{page.example.title}</h2><div class="lesson-steps">{page.example.steps.map((step,i)=><article data-reveal><span class="step-number">0{i+1}</span><h3>{step[0]}</h3><p>{step[1]}</p></article>)}</div></div></section>

@@ -94,3 +94,7 @@ export const audiencePages: Audience[] = [
 ];
 export const audienceSlugs = audiencePages.map(a => a.slug);
 export const audienceHref = (slug: string, language: SiteLanguage) => `${language === 'zh-CN' ? '/zh' : ''}/for/${slug}/`;
+
+export function courseSlug(englishTitle: string) {
+  return englishTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
