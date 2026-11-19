@@ -1,5 +1,5 @@
 /* Bump the version whenever a packaged file changes. */
-const VERSION = '2';
+const VERSION = '3';
 const scope = new URL(self.registration.scope);
 const cachePrefix = 'princess-diary|' + encodeURIComponent(scope.href) + '|';
 const cacheName = cachePrefix + VERSION;
@@ -11,7 +11,7 @@ const coreFiles = [
 const extras = [
   'assets/cover-cn.woff2', 'assets/cover-script.woff2', 'assets/weekly.jpg',
   'assets/tea.png', 'assets/cake.png', 'assets/dessert.png',
-  'assets/gem.png', 'assets/trophy.png', 'assets/crown.png',
+  'assets/gem.png', 'assets/crystal.png', 'assets/trophy.png', 'assets/crown.png',
   'assets/clap.png', 'assets/heart.png', 'assets/sparkles.png',
   'assets/icon-192.png', 'assets/icon-512.png', 'assets/apple-touch-icon.png',
   'assets/first.mp3', 'assets/three.mp3', 'assets/seven.mp3',

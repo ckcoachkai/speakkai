@@ -4,8 +4,8 @@
 
   const svgNamespace = 'http://www.w3.org/2000/svg';
   const colors = {
-    ink: '#674154', muted: '#805e70', grid: '#edcddf',
-    pink: '#b81569', gold: '#ffdb79', halo: '#f5a4ce'
+    ink: '#604b5e', muted: '#776375', grid: '#e4d6e2',
+    pink: '#9a627e', gold: '#f4e1ba', halo: '#ceb6d7'
   };
 
   function svgNode(tag, attributes, text) {
@@ -38,7 +38,7 @@
     });
     figure.appendChild(graph);
     const caption = document.createElement('figcaption');
-    caption.style.cssText = 'font-size:13px;line-height:1.5;text-align:center;font-variant-numeric:tabular-nums;color:#674154;margin-top:3px;';
+    caption.style.cssText = 'font-size:13px;line-height:1.5;text-align:center;font-variant-numeric:tabular-nums;color:#604b5e;margin-top:3px;';
     caption.setAttribute('aria-live', 'polite');
     figure.appendChild(caption);
 
@@ -102,8 +102,9 @@
         visibility: 'hidden', 'aria-hidden': true
       });
       target.appendChild(halo);
-      target.appendChild(svgNode('circle', {
-        cx, cy, r: 4.9, fill: colors.gold, stroke: colors.pink, 'stroke-width': 2.1
+      target.appendChild(svgNode('polygon', {
+        points: `${cx},${cy - 5.1} ${cx + 5.1},${cy} ${cx},${cy + 5.1} ${cx - 5.1},${cy}`,
+        fill: colors.gold, stroke: colors.pink, 'stroke-width': 1.9, 'stroke-linejoin': 'round'
       }));
       // Nearly full-column, tall hit target for comfortable one-handed tapping.
       const hitLeft = index === 0 ? left - 15 : (x(index - 1) + cx) / 2;
