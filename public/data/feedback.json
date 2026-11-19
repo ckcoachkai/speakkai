@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-19T09:19:29.503072+00:00",
+  "updatedAt": "2026-11-19T11:54:00.346649+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1189,10 +1189,13 @@
           "id": "thu-afternoon-2026-11-19",
           "date": "2026-11-19",
           "time": "15:30–17:30",
-          "classContent": null,
+          "classContent": {
+            "en": "• We went over the updated versions of the students’ speeches. Since I had only a little information to work with, I followed a standard speech structure and suggested one direction for each speech that might be interesting to explore.\n\n• Remi was talking about how quickly technology moves. One direction I suggested was to explore how technology can speed things up without making people themselves move any faster.\n\n• Jarvis was talking about Formula 1 racing. I suggested asking when you feel the adrenaline rush in a race and what brings it on. From there, he could explore how we get that feeling from racing and why some other kinds of adrenaline rushes in everyday life may be less positive.\n\n• Owen was talking about games like Minecraft and GTA. One possible question was why people sometimes get so absorbed in video games. He could explore what happened around the launch of GTA, or he might choose to focus on exploration within Minecraft itself. The direction would depend on what he wanted to talk about.",
+            "zh": "• 我们一起看了学生更新后的演讲稿。因为他们给我的信息比较有限，我先按照常见的演讲结构整理，再为每篇演讲提出一个可能有意思、可以继续探索的方向。\n\n• Remi 讲的是科技发展得有多快。我建议他探讨一个方向：科技可以让很多事情变快，但人的速度本身并不会因此变快。\n\n• Jarvis 讲的是一级方程式赛车（F1）。我建议他想一想：赛车时，什么时候会感到肾上腺素飙升？是什么带来了这种感觉？他可以从赛车带来的刺激感讲起，再谈谈为什么日常生活中有些让人肾上腺素飙升的体验可能没那么好。\n\n• Owen 讲到了《Minecraft》和《GTA》这类游戏。一个可以探讨的问题是：为什么人们有时会这么沉迷于电子游戏？他可以看看《GTA》推出时发生了什么，也可以选择专注于《Minecraft》本身的探索体验。具体讲哪个方向，取决于他自己想讲什么。"
+          },
           "homework": {
-            "en": "• Prepare for the presentation and come to class ready to present.",
-            "zh": "• 提前准备好展示，上课时做好上台展示的准备。"
+            "en": "• Read through your updated speech and see which parts you like and which parts you’d like to change. You can keep this version if it works for you.\n\n• Remi: Start practising your updated speech and make sure you’re familiar with the wording before the competitions.\n\n• If you have a printed script, you can mark changes directly on it. If you’d like an editable Word version, you can take a photo of the script and ask AI to transcribe it so you can edit the text in Word.",
+            "zh": "• 通读更新后的演讲稿，看看哪些地方你喜欢，哪些地方你想改。如果你觉得这个版本合适，可以保留。\n\n• Remi：开始练习更新后的演讲，确保参赛前熟悉稿子里的用词和表达。\n\n• 如果你拿到的是纸质稿，可以直接在上面标出想改的地方。如果想转成可编辑的 Word 文档，可以拍下稿子，请 AI 把文字转录出来，再放进 Word 修改。"
           },
           "status": "held",
           "students": [
@@ -1205,8 +1208,9 @@
             {
               "id": "elsa",
               "name": "Elsa",
-              "en": null,
-              "zh": null
+              "en": "Absent from this class, as confirmed by the teacher.",
+              "zh": "教师确认本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "owen",

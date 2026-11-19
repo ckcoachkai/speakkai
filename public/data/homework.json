@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-19T08:59:18.520188+00:00",
+  "updatedAt": "2026-11-19T11:54:00.404792+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1008,13 +1008,15 @@
           "id": "thu-afternoon-2026-11-19",
           "date": "2026-11-19",
           "time": "15:30–17:30",
-          "classContent": [],
+          "classContent": [
+            "• We went over the updated versions of the students’ speeches. Since I had only a little information to work with, I followed a standard speech structure and suggested one direction for each speech that might be interesting to explore.\n\n• Remi was talking about how quickly technology moves. One direction I suggested was to explore how technology can speed things up without making people themselves move any faster.\n\n• Jarvis was talking about Formula 1 racing. I suggested asking when you feel the adrenaline rush in a race and what brings it on. From there, he could explore how we get that feeling from racing and why some other kinds of adrenaline rushes in everyday life may be less positive.\n\n• Owen was talking about games like Minecraft and GTA. One possible question was why people sometimes get so absorbed in video games. He could explore what happened around the launch of GTA, or he might choose to focus on exploration within Minecraft itself. The direction would depend on what he wanted to talk about."
+          ],
           "homework": {
-            "title": "Prepare for your presentation",
+            "title": "Review your updated speech",
             "steps": [
-              "• Prepare for the presentation and come to class ready to present."
+              "• Read through your updated speech and see which parts you like and which parts you’d like to change. You can keep this version if it works for you.\n\n• Remi: Start practising your updated speech and make sure you’re familiar with the wording before the competitions.\n\n• If you have a printed script, you can mark changes directly on it. If you’d like an editable Word version, you can take a photo of the script and ask AI to transcribe it so you can edit the text in Word."
             ],
-            "prepareFor": "Class presentation"
+            "prepareFor": "Presentation practice"
           },
           "students": [
             {
