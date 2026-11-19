@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-18T07:50:02.090304+00:00",
+  "updatedAt": "2026-11-19T08:59:18.520188+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1001,6 +1001,37 @@
             {
               "name": "Remi",
               "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-12&student=remy"
+            }
+          ]
+        },
+        {
+          "id": "thu-afternoon-2026-11-19",
+          "date": "2026-11-19",
+          "time": "15:30–17:30",
+          "classContent": [],
+          "homework": {
+            "title": "Prepare for your presentation",
+            "steps": [
+              "• Prepare for the presentation and come to class ready to present."
+            ],
+            "prepareFor": "Class presentation"
+          },
+          "students": [
+            {
+              "name": "Jarvis",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-19&student=jarvis"
+            },
+            {
+              "name": "Elsa",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-19&student=elsa"
+            },
+            {
+              "name": "Owen",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-19&student=owen"
+            },
+            {
+              "name": "Remi",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-19&student=remy"
             }
           ]
         }

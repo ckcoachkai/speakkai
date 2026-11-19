@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-19T02:14:50.467Z",
+  "updatedAt": "2026-11-19T08:59:18.439102+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1182,6 +1182,43 @@
               "name": "Remi",
               "en": "• Remi shared a personal experience, and his speech was well put together. He had written it all out, which was really good. Having the content written down is one of the easiest and best ways to keep improving the speech as we work through different speaking skills.\n\n• If possible, typing the script would make continued editing easier. With a handwritten script, there may not be enough space between the lines to make changes comfortably. A typed version is easier to revise as we develop the speech.",
               "zh": "• Remi 分享了自己的亲身经历，演讲整体组织得很好。他把内容全部写了出来，这一点很好。随着我们学习不同的演讲技巧，把内容写下来是持续改进演讲最简单、最有效的方法之一。\n\n• 如果可以，把稿件打出来会更方便后续修改。手写稿的行间可能没有足够空间来调整内容，而电子稿更容易随着演讲的完善不断编辑。"
+            }
+          ]
+        },
+        {
+          "id": "thu-afternoon-2026-11-19",
+          "date": "2026-11-19",
+          "time": "15:30–17:30",
+          "classContent": null,
+          "homework": {
+            "en": "• Prepare for the presentation and come to class ready to present.",
+            "zh": "• 提前准备好展示，上课时做好上台展示的准备。"
+          },
+          "status": "held",
+          "students": [
+            {
+              "id": "jarvis",
+              "name": "Jarvis",
+              "en": "• I had trouble following Jarvis’s point. He kept saying he needed something “fancy, fancy, fancy.” After he finished, he said himself that he didn’t know what he had been talking about. That’s why I want him to prepare his presentation, know what he wants to say, and bring it to class.",
+              "zh": "• 我没太听明白 Jarvis 想表达什么。他反复说自己需要一个“fancy, fancy, fancy”的东西。讲完后，他自己也说不知道刚才在讲什么。这就是为什么我希望他提前准备展示，想清楚自己要讲什么，并把准备好的内容带到课堂上。"
+            },
+            {
+              "id": "elsa",
+              "name": "Elsa",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "owen",
+              "name": "Owen",
+              "en": "• Earlier in class, Owen kept rocking in his chair. I’m concerned he could fall and hit his teeth, chin, or head. I want him to stop rocking and keep the chair steady.\n\n• Owen came prepared for his speech this time. He brought his homework to class and presented it. This was the first time he had brought it in and presented it, and I was really happy to see that progress. I think it was a big improvement, and it showed. The structure and logic were much better organised than they sometimes are when he speaks impromptu.\n\n• As I said before, recording your ideas by voice makes preparation much easier. If you don’t like writing, you don’t need to type everything out. With enough practice, you can just say what you want to say aloud.\n\n• Some parts sounded a little technical, and I felt Owen wasn’t quite familiar enough with those parts yet. I’d suggest practising once or twice at home before presenting in class. That gives him a chance to adjust the wording and make those parts simpler and easier for the audience to understand.",
+              "zh": "• 在前面的课堂活动中，Owen 一直坐在椅子上摇晃。我担心他可能会摔倒，磕到牙齿、下巴或头部。我希望他停止摇晃，把椅子坐稳。\n\n• Owen 这次为演讲做了准备。他把作业带到了课堂上，也上台讲了。这是他第一次把作业带来并在课堂上展示，我真的很高兴看到这个进步。我觉得这是一次很大的进步，而且听得出来。和他有时即兴发言相比，这次演讲的结构和逻辑都更有条理。\n\n• 就像我之前说过的，用语音把自己的想法录下来，准备起来会轻松很多。如果不喜欢写，可以不用把所有内容都打出来。练习得够多，就可以直接把自己想说的话讲出来。\n\n• 有些部分听起来稍微有点专业，我感觉 Owen 对这些部分还不够熟悉。我建议他在课堂展示之前，先在家练习一两遍。这样就有机会调整措辞，把这些地方讲得更简单，让听众更容易理解。"
+            },
+            {
+              "id": "remy",
+              "name": "Remi",
+              "en": "• During class, Remi repeatedly put orange in his mouth, pretended it was a pacifier, and made baby-like sounds. I’d like him to stop doing this in class and bring his attention back to the lesson.",
+              "zh": "• Remi 今天上课时多次把橙子放进嘴里，当成奶嘴，还模仿婴儿发出咿咿呀呀的声音。我希望他上课时停止这样做，把注意力放回课堂上。"
             }
           ]
         }
