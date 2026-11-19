@@ -29,6 +29,8 @@
 .dg-card h2 { margin: 8px 0 9px; color: #523a4c; font-size: clamp(21px, 5.9vw, 26px); line-height: 1.3; font-weight: 900; letter-spacing: -.055em; }
 .dg-card p { margin: 0; color: #6b5262; font-size: 15px; line-height: 1.7; text-align: left; }
 .dg-actions { display: grid; margin-top: 19px; gap: 2px; }
+.praise-controls { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 4px; }
+.dg-card .praise-controls button { min-height: 44px; }
 .dg-card .dg-main, .dg-card .dg-sub {
   display: flex; justify-content: center; align-items: center; gap: 7px; width: 100%;
   min-height: 44px; padding: 8px 12px; border-radius: 14px; font-weight: 750;
