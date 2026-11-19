@@ -1,11 +1,20 @@
 ---
 import WechatQR from "./WechatQR.astro";
 import FlagshipLayout from "../layouts/FlagshipLayout.astro";
+import { audiencePages, courseSlug } from "../data/audiencePages";
 import { schoolDirections, schoolDirectionsChinese } from "../lib/inquiry.mjs";
 interface Props { language?: "en" | "zh-CN"; }
 const {language = "en"} = Astro.props;
 const chinese = language === "zh-CN";
 const tr = (en: string, zh: string) => chinese ? zh : en;
+const courseOptions = audiencePages.flatMap(stage => stage[language].courses.map((course, index) => ({
+  stage: stage.slug,
+  id: courseSlug(stage.en.courses[index].title),
+  message: tr(
+    `I’m interested in “${course.title}” (${stage[language].name}).`,
+    `我想了解「${stage[language].name}」的「${course.title}」课程。`,
+  ),
+})));
 const formCopy = {
   groupLabels: [tr("Learner’s age or grade (optional)","学生年龄或年级（可选）"),tr("Age range or group size (optional)","年龄范围或大致人数（可选）")],
   groupExamples: [tr("For example: Grade 2","例如：二年级"),tr("For example: around 20 participants","例如：约 20 人")],
@@ -168,6 +177,7 @@ const formCopy = {
       </div>
     </aside>
   </div>
+<script id="course-options" type="application/json" is:inline set:html={JSON.stringify(courseOptions).replaceAll("<", "\\u003c")} />
 <script id="inquiry-copy" type="application/json" is:inline set:html={JSON.stringify(formCopy).replaceAll("<", "\\u003c")} />
 </FlagshipLayout>
 <script>
@@ -204,9 +214,24 @@ const formCopy = {
   schoolDirection.value = audience.value === "schools"
     ? normalizeSchoolDirection(new URLSearchParams(window.location.search).get("schoolDirection"))
     : "";
+  const params = new URLSearchParams(location.search);
+  const catalog: Array<{stage: string; id: string; message: string}> =
+    JSON.parse(document.querySelector("#course-options")!.textContent!);
+  const selected = catalog.find(course =>
+    course.stage === params.get("stage") && course.id === params.get("course")
+  );
+  if (selected) goal.value = selected.message;
+  for (const link of document.querySelectorAll<HTMLAnchorElement>(".site-language a")) {
+    const url = new URL(link.href);
+    for (const key of ["audience", "schoolDirection", "stage", "course"]) {
+      const value = params.get(key);
+      if (value) url.searchParams.set(key, value);
+    }
+    link.href = url.href;
+  }
   updateAudience();
   audience.addEventListener("change", updateAudience);
-  document.querySelector("#build-inquiry")!.addEventListener("click", () => {
+  function buildDraft(focusPreview: boolean) {
     preview.value = buildInquiry({
       audience: audience.value,
       schoolDirection: schoolDirection.value,
@@ -221,8 +246,10 @@ const formCopy = {
     document.querySelector<HTMLButtonElement>("#build-inquiry")!.textContent =
       labels.rebuild;
     status.textContent = labels.ready;
-    preview.focus();
-  });
+    if (focusPreview) preview.focus();
+  }
+  document.querySelector("#build-inquiry")!.addEventListener("click", () => buildDraft(true));
+  if (selected) buildDraft(false);
   copyButton.addEventListener("click", async () => {
     copyButton.disabled = true;
     const result = await copyInquiry(preview.value, (text: string) => navigator.clipboard.writeText(text), language);

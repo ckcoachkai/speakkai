@@ -1,0 +1,39 @@
+name: Pre-merge checks
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Check committed schedule offline
+        run: |
+          pnpm check:schedule-privacy
+          node --test scripts/check-schedule-presentation.mjs
+      - name: Check public teaching pages and bilingual inquiries
+        run: |
+          node --test scripts/check-feedback.mjs scripts/check-homework.mjs scripts/check-inquiry.mjs
+          node scripts/check-audience-pages.mjs
+          node scripts/check-site-languages.mjs
+          node scripts/check-course-languages.mjs
+          node scripts/check-flagship.mjs
+      - name: Exercise course links in mobile Chromium
+        run: |
+          pnpm exec playwright install --with-deps chromium
+          python3 -m http.server 4322 --bind 127.0.0.1 --directory dist >/tmp/speakkai-preview.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          curl --retry 10 --retry-connrefused --retry-delay 1 --fail --silent --output /dev/null http://127.0.0.1:4322/
+          node scripts/check-course-links.mjs

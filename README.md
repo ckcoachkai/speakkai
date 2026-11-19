@@ -4,11 +4,11 @@ Astro website for `speakkai.com`, prepared for GitHub Pages and Porkbun DNS.
 
 ## Local setup
 
-Install Node.js, then run:
+Use Node.js 24 and the pnpm version pinned in package.json, then run:
 
 ```powershell
-npm install
-npm run dev
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
 ## Publish to GitHub Pages
