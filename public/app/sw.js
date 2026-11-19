@@ -1,5 +1,5 @@
 /* Bump the version whenever a packaged file changes. */
-const VERSION = '1';
+const VERSION = '2';
 const scope = new URL(self.registration.scope);
 const cachePrefix = 'princess-diary|' + encodeURIComponent(scope.href) + '|';
 const cacheName = cachePrefix + VERSION;
