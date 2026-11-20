@@ -1,7 +1,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-// CAT, health and the interactive games own their presentation. Keep their colors intact.
-const protectedRoute = route => /(^|\/)(cat[^/]*|logopitch|logo-pitch)(\/|$)/i.test(route) || /^(health|games|gumball|maze|wardogs)(\/|$)/i.test(route);
+// Keep self-themed pages independent of the shared editorial palette.
+const protectedRoute = route => /(^|\/)(cat[^/]*|logopitch|logo-pitch)(\/|$)/i.test(route) || /^(ck|health|games|gumball|maze|wardogs)(\/|$)/i.test(route);
 let themed = 0, protectedCount = 0;
 async function visit(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {

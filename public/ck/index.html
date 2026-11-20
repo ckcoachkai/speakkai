@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#fff8f7">
   <title>Charis &amp; Kai · Our Calendar</title>
   <style>
-    :root{color-scheme:light;color-scheme:only light;--paper:#fff8f7;--white:#fffdfc;--ink:#462b3b;--muted:#735264;--line:#ebd7df;--accent:#8e345d;--pink:#e878a6;--rose:#ffddeb;--rose-ink:#742044;--rose-edge:#b84673;--rose-strong:#8b2c56;--blue:#d8edff;--blue-ink:#102f50;--blue-edge:#3678ae;--blue-strong:#245781;--gold:#fbefce;--gold-ink:#664015;--gold-edge:#a97524;--shadow:0 3px 0 #b9688b12,0 12px 34px #8c476516}
+    :root{color-scheme:light;color-scheme:only light;--paper:#fff8f7;--white:#fffdfc;--ink:#462b3b;--muted:#735264;--line:#ebd7df;--accent:#8e345d;--pink:#e878a6;--rose:#ffddeb;--rose-ink:#742044;--rose-edge:#b84673;--rose-strong:#8b2c56;--kai-blue:#d8edff;--kai-blue-ink:#102f50;--kai-blue-edge:#3678ae;--kai-blue-strong:#245781;--gold:#fbefce;--gold-ink:#664015;--gold-edge:#a97524;--shadow:0 3px 0 #b9688b12,0 12px 34px #8c476516}
     *,*::before,*::after{box-sizing:border-box}
     body{margin:0;color:var(--ink);font:16px/1.5 system-ui,"Microsoft YaHei",sans-serif;background-color:var(--paper);background-image:repeating-linear-gradient(0deg,transparent 0 13px,#d88aaa0d 13px 26px),repeating-linear-gradient(90deg,transparent 0 13px,#d88aaa0d 13px 26px)}
     button,input,select{font:inherit;color:inherit}
@@ -48,7 +48,7 @@
     .legend span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
     .dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none;border:1px solid #0002}
     .dot.charis{background:var(--rose-edge)}
-    .dot.kai{background:var(--blue-edge);border-radius:2px}
+    .dot.kai{background:var(--kai-blue-edge);border-radius:2px}
     .dot.both{background:var(--gold-edge);border-radius:2px;transform:rotate(45deg)}
     .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
     .weekday{text-align:center;color:var(--muted);font-size:.81rem;font-weight:730;padding:3px 0 8px}
@@ -69,8 +69,8 @@
     .day-schedule{display:grid;gap:3px;width:100%;min-width:0}
     .calendar-entry{min-width:0;padding:3px 5px;border-radius:5px;font-size:.76rem;font-weight:720;line-height:1.19}
     .calendar-entry.charis{background:var(--rose);color:var(--rose-ink);box-shadow:inset 2px 0 var(--rose-edge);border-radius:8px}
-    .calendar-entry.kai{background:var(--blue);color:var(--blue-ink);box-shadow:inset 2px 0 var(--blue-edge)}
-    .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.kai{background:var(--blue-strong);color:#fff}
+    .calendar-entry.kai{background:var(--kai-blue);color:var(--kai-blue-ink);box-shadow:inset 2px 0 var(--kai-blue-edge)}
+    .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.kai{background:var(--kai-blue-strong);color:#fff}
     .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.charis{background:var(--rose-strong);color:#fff}
     .calendar-entry.both{background:var(--gold);color:var(--gold-ink);box-shadow:inset 2px 0 var(--gold-edge)}
     .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.both{background:#765015;color:white}
@@ -90,7 +90,7 @@
     .foot a{color:var(--accent)}
     .pill{display:inline-block;border-radius:6px;font-size:.71rem;font-weight:730;padding:2px 6px;line-height:1.35;white-space:nowrap}
     .pill.charis{background:var(--rose);color:var(--rose-ink)}
-    .pill.kai{background:var(--blue);color:var(--blue-ink)}
+    .pill.kai{background:var(--kai-blue);color:var(--kai-blue-ink)}
     .pill.both{background:var(--gold);color:var(--gold-ink)}
     .preview{position:fixed;z-index:5;width:min(318px,calc(100vw - 20px));max-height:min(64vh,380px);overflow:auto;overscroll-behavior:contain;padding:13px 15px;background:var(--white);border:1px solid #d7a5bb;border-radius:15px;box-shadow:0 8px 32px #68344f35}
     .day-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 9px}
