@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-19T11:54:00.404792+00:00",
+  "updatedAt": "2026-11-20T11:01:54.507405+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1489,6 +1489,43 @@
               "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-13&student=mikaela"
             }
           ]
+        },
+        {
+          "id": "fri-afternoon-2026-11-20",
+          "date": "2026-11-20",
+          "time": "15:40–17:40",
+          "classContent": [
+            "• The students delivered speeches. Since Ethan and Wendy are both taking part in ESDP, we spent more time preparing through impromptu practice, using 90 seconds as the practice target.\n\n• We focused on ESDP impromptu speaking strategies. We went through how to build a clear answer using “First, Second, Finally” to give three points, then sum up, leave the audience with a message if possible, and finish with “Thank you.” We also went through storytelling connectors, called “magical connectors” in the handout, and transition words that help listeners follow the sequence: how the story begins, what happens next, what surprises you, what you decide to do, and how it ends. Examples include “A moment later,” “To my surprise,” “So I decided to,” and “In the end.” The 10-page printed handout has five pages introducing the skills and five pages for practice. The handout also covers expressing opinions and feelings, putting the actions in a brief scene in order and adding a detail, and connecting with the audience."
+          ],
+          "homework": {
+            "title": "ESDP impromptu speaking practice",
+            "steps": [
+              "• Complete pages 6 and 7 of the printed handout. Page 6 is about giving a full answer with three ideas, a summary and a message. Page 7 is about using connectors to link the parts of a story. If you haven’t finished page 2, complete it as well; it introduces the storytelling connectors."
+            ],
+            "prepareFor": "Impromptu speaking practice"
+          },
+          "students": [
+            {
+              "name": "Evan",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-20&student=evan"
+            },
+            {
+              "name": "Wendy",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-20&student=wendy"
+            },
+            {
+              "name": "Ethan Xu",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-20&student=ethan"
+            },
+            {
+              "name": "Ray",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-20&student=ray"
+            },
+            {
+              "name": "Mikaela",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-20&student=mikaela"
+            }
+          ]
         }
       ]
     },
@@ -1780,6 +1817,39 @@
             {
               "name": "Molly",
               "feedbackUrl": "/fb/?class=fri-later&date=2026-11-13&student=molly"
+            }
+          ]
+        },
+        {
+          "id": "fri-later-2026-11-20",
+          "date": "2026-11-20",
+          "time": "18:00–20:00",
+          "classContent": [
+            "• We focused on ESDP impromptu speaking strategies. We went through how to build a clear answer using “First, Second, Finally” to give three points, then sum up, leave the audience with a message if possible, and finish with “Thank you.” We also went through storytelling connectors, called “magical connectors” in the handout, and transition words that help listeners follow the sequence: how the story begins, what happens next, what surprises you, what you decide to do, and how it ends. Examples include “A moment later,” “To my surprise,” “So I decided to,” and “In the end.” The 10-page printed handout has five pages introducing the skills and five pages for practice. The handout also covers expressing opinions and feelings, putting the actions in a brief scene in order and adding a detail, and connecting with the audience."
+          ],
+          "homework": {
+            "title": "ESDP impromptu speaking practice",
+            "steps": [
+              "• Complete pages 6 and 7 of the printed handout. Page 6 is about giving a full answer with three ideas, a summary and a message. Page 7 is about using connectors to link the parts of a story. If you haven’t finished page 2, complete it as well; it introduces the storytelling connectors."
+            ],
+            "prepareFor": "Impromptu speaking practice"
+          },
+          "students": [
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-20&student=arthur"
+            },
+            {
+              "name": "Merlin",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-20&student=merlin"
+            },
+            {
+              "name": "Zoe",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-20&student=zoey"
+            },
+            {
+              "name": "Molly",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-20&student=molly"
             }
           ]
         }

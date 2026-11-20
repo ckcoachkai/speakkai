@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-19T11:54:00.346649+00:00",
+  "updatedAt": "2026-11-20T11:01:54.507405+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1808,6 +1808,52 @@
               "zh": "• Mikaela 是今天第一位演讲者。她的音量有时稍大、有时稍小。今天她说话偏轻，我们无法清楚听见她说的内容。\n\n• 她需要把音量提高一些，让大家能听清她的话，跟上她想分享的内容。"
             }
           ]
+        },
+        {
+          "id": "fri-afternoon-2026-11-20",
+          "date": "2026-11-20",
+          "time": "15:40–17:40",
+          "status": "held",
+          "classContent": {
+            "en": "• The students delivered speeches. Since Ethan and Wendy are both taking part in ESDP, we spent more time preparing through impromptu practice, using 90 seconds as the practice target.\n\n• We focused on ESDP impromptu speaking strategies. We went through how to build a clear answer using “First, Second, Finally” to give three points, then sum up, leave the audience with a message if possible, and finish with “Thank you.” We also went through storytelling connectors, called “magical connectors” in the handout, and transition words that help listeners follow the sequence: how the story begins, what happens next, what surprises you, what you decide to do, and how it ends. Examples include “A moment later,” “To my surprise,” “So I decided to,” and “In the end.” The 10-page printed handout has five pages introducing the skills and five pages for practice. The handout also covers expressing opinions and feelings, putting the actions in a brief scene in order and adding a detail, and connecting with the audience.",
+            "zh": "• 学生练习了上台演讲。因为 Ethan 和 Wendy 都会参加 ESDP，我们多安排了一些即兴演讲练习，帮助他们做好准备，并以 90 秒为练习目标。\n\n• 这两节课的重点是 ESDP 即兴演讲技巧。我们讲了如何用 “First, Second, Finally”（首先、其次、最后）提出三个要点，让回答更清楚，再做简短总结，尽可能给听众留下一条明确的信息，最后说 “Thank you”（谢谢）。我们也讲了讲故事时用到的衔接语（讲义里称为“魔法连接词”）和过渡词，帮助听众跟上事情发展的顺序：故事怎么开始、接下来发生了什么、有什么出乎意料的事、你决定怎么做，以及最后结果如何。例如 “A moment later”（过了一会儿）、“To my surprise”（让我意外的是）、“So I decided to”（所以我决定）和 “In the end”（最后）。纸质讲义共 10 页：前 5 页介绍技巧，后 5 页是练习。讲义还包括表达观点和感受、按顺序描述一个简短场景并加入细节，以及如何和听众建立联系。"
+          },
+          "homework": {
+            "en": "• Complete pages 6 and 7 of the printed handout. Page 6 is about giving a full answer with three ideas, a summary and a message. Page 7 is about using connectors to link the parts of a story. If you haven’t finished page 2, complete it as well; it introduces the storytelling connectors.",
+            "zh": "• 完成纸质讲义第 6、7 页。第 6 页练习给出完整回答，包括三个要点、总结和想传达的信息；第 7 页练习用衔接语把故事的各个部分串起来。如果第 2 页还没做完，也请完成；这一页介绍讲故事时用到的衔接语。"
+          },
+          "students": [
+            {
+              "id": "evan",
+              "name": "Evan",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "wendy",
+              "name": "Wendy",
+              "en": "• Wendy spoke next in the impromptu round. Her question was “Would you rather be rich or smart?” She answered and shared some ideas, finishing in about 40–50 seconds. For the ESDP practice run, I’d like her to aim for 90 seconds.",
+              "zh": "• Wendy 在即兴演讲环节接着上台。她回答的问题是：“你更愿意有钱，还是更愿意聪明？”她分享了一些想法，大约讲了 40–50 秒。在 ESDP 模拟练习中，我希望她以 90 秒为目标。"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan Xu",
+              "en": "• Ethan came to the front and spoke loudly. Overall, he did well. At times, he pronounced the words as if he were reading them aloud. I'd like him to let his voice rise and fall more and to pause and start again naturally. When he keeps the same pace throughout, it can sound more like reading aloud than speaking naturally.\n\n• Ethan did a bit better in the impromptu round and spoke for 1 minute 25 seconds, five seconds short of the 90-second practice target.\n\n• While a classmate was speaking, Ethan played hide-and-seek with another classmate. Ethan can be a bit disruptive in class, and playing during someone else's speech was disrespectful to the speaker. I expect him to stay seated and listen when a classmate is speaking.",
+              "zh": "• Ethan 上台时声音洪亮，整体表现不错。有时他说话的方式还是有点像在念稿。我希望他的语调更有起伏，能自然地停顿，再接着说。如果从头到尾都用同样的节奏，听起来就更像朗读，少了一些自然说话的感觉。\n\n• Ethan 在即兴演讲环节表现得更好了一些，讲了 1 分 25 秒，离 90 秒的练习目标只差 5 秒。\n\n• 一位同学发言时，Ethan 和另一位同学玩起了捉迷藏。Ethan 平时有时会干扰课堂，在别人发言时玩耍是对发言同学的不尊重。我希望他在同学发言时坐在座位上，认真听讲。"
+            },
+            {
+              "id": "ray",
+              "name": "Ray",
+              "en": "• Ray spoke in a very loud voice for his entire speech, which lasted about two minutes. He has a strong, commanding voice, which is useful outdoors and in other settings where he needs to project. Starting loudly can grab everyone’s attention, but if he stays at that volume for two minutes, the audience may feel like he’s shouting at them.\n\n• I’d like Ray to notice his own volume and practise switching between a loud and a soft voice. One classmate has a loud voice but softens it at times; another usually speaks very softly and is starting to speak louder. The goal is to use a mix of both and be able to choose when to use each.\n\n• Ray played hide-and-seek with a classmate while another classmate was speaking. I wasn’t expecting that from Ray. At around 4:08 p.m., I raised my voice to tell him to sit down, and he did. Playing during the speech was disrespectful to the speaker. I expect Ray to stay seated and listen when a classmate is speaking.",
+              "zh": "• Ray 这次演讲大约讲了两分钟，从头到尾声音都很大。他的声音洪亮、有气势，在户外或其他需要把声音传远的场合是个优势。开场时声音大一点可以抓住大家的注意力，但如果整整两分钟都保持同样大的音量，听众就可能觉得他一直在朝大家喊。\n\n• 我希望 Ray 留意自己的音量，练习在大声和轻声之间切换。一位同学的声音也很洪亮，但有时会放轻；另一位同学平时说话很轻，现在也开始越说越响亮了。目标是两种音量都能用，并且知道什么时候该用哪一种。\n\n• 一位同学发言时，Ray 和另一位同学玩起了捉迷藏。我没想到 Ray 会这样做。大约在下午 4:08，我提高声音让他坐下，他就坐下了。在别人发言时玩耍，是对发言同学的不尊重。我希望 Ray 在同学发言时坐在座位上，认真听讲。"
+            },
+            {
+              "id": "mikaela",
+              "name": "Mikaela",
+              "en": "• Mikaela was the first to come up and give her speech. This was the loudest I’ve heard her speak so far in this class, and I think everyone could hear her. She’s almost at a good classroom volume; another 10–20% louder would bring her to the usual classroom level. Very nice job, Mikaela!",
+              "zh": "• Mikaela 第一个上台演讲。这是目前我在这个班听到她声音最响亮的一次，我觉得大家都能听见她。她的音量已经接近合适的课堂音量了，再提高大约 10%–20%，就能达到平常在教室里发言的音量。Mikaela，做得很好！"
+            }
+          ]
         }
       ]
     },
@@ -2163,6 +2209,46 @@
               "name": "Molly",
               "en": "• Molly spoke first. If she does not understand the homework, I want her to say so rather than leave the uncertainty unresolved.\n\n• The task was straightforward: “Do you think students should grade their teachers?” Give a yes-or-no answer, then explain the reasons behind that opinion. She does not need to make it very complex or difficult. Once she understands what the question means, she can focus on answering it and explaining why.",
               "zh": "• Molly 第一个上台。如果她不明白作业，我希望她直接说自己不明白，而不是让疑问一直没有解决。\n\n• 任务本身很直接：“你认为学生应该给老师评分吗？”先回答赞成或不赞成，再解释自己的理由。她不需要把任务弄得很复杂、很困难。只要理解了问题的意思，就可以专注于回答，并说明为什么。"
+            }
+          ]
+        },
+        {
+          "id": "fri-later-2026-11-20",
+          "date": "2026-11-20",
+          "time": "18:00–20:00",
+          "status": "held",
+          "classContent": {
+            "en": "• We focused on ESDP impromptu speaking strategies. We went through how to build a clear answer using “First, Second, Finally” to give three points, then sum up, leave the audience with a message if possible, and finish with “Thank you.” We also went through storytelling connectors, called “magical connectors” in the handout, and transition words that help listeners follow the sequence: how the story begins, what happens next, what surprises you, what you decide to do, and how it ends. Examples include “A moment later,” “To my surprise,” “So I decided to,” and “In the end.” The 10-page printed handout has five pages introducing the skills and five pages for practice. The handout also covers expressing opinions and feelings, putting the actions in a brief scene in order and adding a detail, and connecting with the audience.",
+            "zh": "• 这两节课的重点是 ESDP 即兴演讲技巧。我们讲了如何用 “First, Second, Finally”（首先、其次、最后）提出三个要点，让回答更清楚，再做简短总结，尽可能给听众留下一条明确的信息，最后说 “Thank you”（谢谢）。我们也讲了讲故事时用到的衔接语（讲义里称为“魔法连接词”）和过渡词，帮助听众跟上事情发展的顺序：故事怎么开始、接下来发生了什么、有什么出乎意料的事、你决定怎么做，以及最后结果如何。例如 “A moment later”（过了一会儿）、“To my surprise”（让我意外的是）、“So I decided to”（所以我决定）和 “In the end”（最后）。纸质讲义共 10 页：前 5 页介绍技巧，后 5 页是练习。讲义还包括表达观点和感受、按顺序描述一个简短场景并加入细节，以及如何和听众建立联系。"
+          },
+          "homework": {
+            "en": "• Complete pages 6 and 7 of the printed handout. Page 6 is about giving a full answer with three ideas, a summary and a message. Page 7 is about using connectors to link the parts of a story. If you haven’t finished page 2, complete it as well; it introduces the storytelling connectors.",
+            "zh": "• 完成纸质讲义第 6、7 页。第 6 页练习给出完整回答，包括三个要点、总结和想传达的信息；第 7 页练习用衔接语把故事的各个部分串起来。如果第 2 页还没做完，也请完成；这一页介绍讲故事时用到的衔接语。"
+          },
+          "students": [
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": "• Arthur spoke with enthusiasm, which was good. He didn’t pause much while speaking, so his delivery felt a little fast. The main thing I’d like him to work on is pausing between ideas so the audience has time to take in what he’s saying.",
+              "zh": "• Arthur 讲得很有热情，这一点很好。他在表达时停顿比较少，所以听起来有点快。接下来我最希望他练习的是在不同的观点之间稍作停顿，给听众一点时间理解他刚才讲的内容。"
+            },
+            {
+              "id": "merlin",
+              "name": "Merlin",
+              "en": "• Merlin spoke first and did a very good job. His delivery sounded a little robotic, but he kept a steady pace, spoke very loudly, and finished everything he wanted to say.",
+              "zh": "• Merlin 第一个上台，整体表现很好。他说话时听起来有一点机械，但语速很稳定，声音也很响亮，而且把自己想说的内容都讲完了。"
+            },
+            {
+              "id": "zoey",
+              "name": "Zoe",
+              "en": "• I really like that Zoe always brings her own printed materials. She had a lot to share and seemed familiar with her content. Her pronunciation was good, she spoke clearly, and her ideas were well organized.",
+              "zh": "• Zoe 每次都会带上自己打印好的资料，这一点很好。她这次分享了不少内容，听得出来她对自己要讲的内容比较熟悉。她的发音不错，表达清楚，内容也组织得很好。"
+            },
+            {
+              "id": "molly",
+              "name": "Molly",
+              "en": "• Molly spoke clearly, confidently, and loudly. She could use a few hand gestures to mark her main points and make it easier for the audience to follow what she wants to say. At the end, remember to say “Thank you” so everyone knows the speech is finished. If it ends in silence, listeners may wonder whether she still has more to say.",
+              "zh": "• Molly 讲得很清楚，很有自信，声音也很响亮。她可以用一些手势来标示主要观点，让听众更容易跟上她想表达的内容。演讲结束时，记得说一声 “Thank you”（谢谢），让大家知道已经讲完了。如果最后只是停下来，听众可能会以为她还有话要说。"
             }
           ]
         }
