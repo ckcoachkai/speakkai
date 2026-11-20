@@ -174,8 +174,8 @@
       <div class="header-glitter" aria-hidden="true"><span class="glimmer">✦</span><span class="glimmer">✧</span><span class="glimmer">✦</span><span class="glimmer">✧</span><span class="glimmer">✦</span></div>
       <img class="header-sticker" src="strawberry-bow.webp" alt="" width="320" height="320">
       <div class="tools">
-        <button class="outline" id="sounds" type="button" aria-label="Sparkle sounds" aria-pressed="false"><span class="sound-star" aria-hidden="true">✦</span> Chimes</button>
-        <button class="outline" id="music-toggle" type="button" aria-label="Background music" aria-pressed="false"><span class="bling-icon" aria-hidden="true">♫</span> Music</button>
+        <button class="outline" id="sounds" type="button" aria-label="Sparkle sounds" aria-pressed="true"><span class="sound-star" aria-hidden="true">✦</span> Chimes</button>
+        <button class="outline" id="music-toggle" type="button" aria-label="Background music" aria-pressed="true"><span class="bling-icon" aria-hidden="true">♫</span> Music</button>
         <button class="outline" id="manage" type="button">Share plans</button>
       </div>
     </header>
@@ -201,7 +201,7 @@
       <button class="outline glitter-toggle" id="glitter-toggle" type="button" aria-pressed="true">Animated glitter</button>
       <img class="footer-sticker" src="heart-cupcake.webp" alt="" width="320" height="320">
     </div>
-    <audio id="background-music" preload="none" loop src="pink-daydream.mp3"></audio>
+    <audio id="background-music" preload="none" loop src="pink-daydream-soft.mp3"></audio>
     <p class="sub" id="notice" role="status"></p>
   </main>
   <div class="preview" id="preview" role="tooltip" hidden>
@@ -291,7 +291,17 @@
     let previewAnchor = null;
     let previewTimer = 0;
     let chimeTimer = 0;
-    let soundEnabled = false;
+    const chimePreference = 'speakkai.ck.chimes';
+    const musicPreference = 'speakkai.ck.music';
+    function audioEnabled(key) {
+      try {return localStorage.getItem(key)!=='off';}
+      catch {return true;}
+    }
+    function setAudioPreference(key, enabled) {
+      try {localStorage.setItem(key,enabled ? 'on' : 'off');}
+      catch {}
+    }
+    let soundEnabled = audioEnabled(chimePreference);
     let audioContext;
     let lastChime = -Infinity;
     let lastChimeDate = null;
@@ -512,7 +522,7 @@
         oscillator.type = 'sine';
         oscillator.frequency.value = pitch;
         gain.gain.setValueAtTime(.0001,at);
-        gain.gain.exponentialRampToValueAtTime(.033/(index+1),at+.012);
+        gain.gain.exponentialRampToValueAtTime(.015/(index+1),at+.012);
         gain.gain.exponentialRampToValueAtTime(.0001,at+.11);
         oscillator.connect(gain);
         gain.connect(audioContext.destination);
@@ -526,19 +536,25 @@
       setTimeout(() => star.classList.remove('twinkle'),290);
     }
 
+    async function armChimes() {
+      if (!soundEnabled) return;
+      const Audio = window.AudioContext || window.webkitAudioContext;
+      if (!Audio) throw new Error('Web Audio is unavailable');
+      audioContext ??= new Audio();
+      if (audioContext.state!=='running') await audioContext.resume();
+    }
+
     async function toggleSounds() {
       soundEnabled = !soundEnabled;
       $('sounds').setAttribute('aria-pressed',String(soundEnabled));
+      setAudioPreference(chimePreference,soundEnabled);
       if (!soundEnabled) {
         clearTimeout(chimeTimer);
         for (const oscillator of activeTones) oscillator.stop();
         return;
       }
       try {
-        const Audio = window.AudioContext || window.webkitAudioContext;
-        if (!Audio) throw new Error('No audio');
-        audioContext ??= new Audio();
-        if (audioContext.state!=='running') await audioContext.resume();
+        await armChimes();
         playChime('sample');
       } catch {
         soundEnabled = false;
@@ -673,7 +689,7 @@
     grid.addEventListener('click',event => {
       const button = event.target.closest('button[data-date]');
       if (!button) return;
-      playChime(button.dataset.date);
+      if (soundEnabled) armChimes().then(() => playChime(button.dataset.date)).catch(() => {});
       openDay(button);
     });
     $('close-day').addEventListener('click',() => $('day-dialog').close());
@@ -683,23 +699,41 @@
       hidePreview();
       renderSelected();
     });
+    $('sounds').setAttribute('aria-pressed',String(soundEnabled));
     $('sounds').addEventListener('click',toggleSounds);
     const music = $('background-music');
     const musicToggle = $('music-toggle');
-    music.volume = .54;
-    music.addEventListener('play',() => musicToggle.setAttribute('aria-pressed','true'));
-    music.addEventListener('pause',() => musicToggle.setAttribute('aria-pressed','false'));
-    musicToggle.addEventListener('click',async () => {
-      if (!music.paused) {
-        music.pause();
-        return;
-      }
+    let musicEnabled = audioEnabled(musicPreference);
+    music.volume = .50;
+    musicToggle.setAttribute('aria-pressed',String(musicEnabled));
+
+    async function startMusic(reportError=false) {
+      if (!musicEnabled || !music.paused) return;
       try {
         await music.play();
       } catch (error) {
-        if (error.name !== 'AbortError') $('notice').textContent = 'Music could not be played on this device.';
+        if (reportError && error.name!=='AbortError') $('notice').textContent = 'Music could not be played on this device.';
       }
+    }
+
+    musicToggle.addEventListener('click',() => {
+      musicEnabled = !musicEnabled;
+      musicToggle.setAttribute('aria-pressed',String(musicEnabled));
+      setAudioPreference(musicPreference,musicEnabled);
+      if (musicEnabled) startMusic(true);
+      else music.pause();
     });
+
+    function startAudioAfterInteraction(event) {
+      if (!event.isTrusted || navigator.userActivation?.isActive===false) return;
+      const control = event.target.closest?.('#music-toggle,#sounds');
+      if (control?.id!=='sounds') armChimes().catch(() => {});
+      if (control?.id!=='music-toggle') startMusic();
+    }
+
+    document.addEventListener('pointerup',startAudioAfterInteraction,true);
+    document.addEventListener('keydown',startAudioAfterInteraction,true);
+    startMusic();
     $('glitter-toggle').addEventListener('click',event => {
       const paused = document.documentElement.classList.toggle('glitter-paused');
       event.currentTarget.setAttribute('aria-pressed',String(!paused));
