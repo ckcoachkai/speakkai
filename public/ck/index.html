@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#fff8f7">
   <title>Charis &amp; Kai · Our Calendar</title>
   <style>
-    :root{color-scheme:light;--paper:#fff8f7;--white:#fffdfc;--ink:#462b3b;--muted:#735264;--line:#ebd7df;--accent:#8e345d;--pink:#e878a6;--rose:#fde6ee;--rose-ink:#8c3155;--blue:#e0efff;--blue-ink:#20517b;--gold:#f8ecd0;--gold-ink:#694416;--shadow:0 3px 0 #b9688b12,0 12px 34px #8c476516}
+    :root{color-scheme:light;--paper:#fff8f7;--white:#fffdfc;--ink:#462b3b;--muted:#735264;--line:#ebd7df;--accent:#8e345d;--pink:#e878a6;--rose:#ffddeb;--rose-ink:#742044;--rose-edge:#b84673;--rose-strong:#8b2c56;--blue:#d8edff;--blue-ink:#102f50;--blue-edge:#3678ae;--blue-strong:#245781;--gold:#fbefce;--gold-ink:#664015;--gold-edge:#a97524;--shadow:0 3px 0 #b9688b12,0 12px 34px #8c476516}
     *,*::before,*::after{box-sizing:border-box}
     body{margin:0;color:var(--ink);font:16px/1.5 system-ui,"Microsoft YaHei",sans-serif;background-color:var(--paper);background-image:repeating-linear-gradient(0deg,transparent 0 13px,#d88aaa0d 13px 26px),repeating-linear-gradient(90deg,transparent 0 13px,#d88aaa0d 13px 26px)}
     button,input,select{font:inherit;color:inherit}
@@ -45,24 +45,26 @@
     .legend,.hint,.sub,.status,.foot{color:var(--muted);font-size:.81rem}
     .legend span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
     .dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none;border:1px solid #0002}
-    .dot.charis{background:#d95c91}
-    .dot.kai{background:#4682bb}
-    .dot.both{background:#b67d25}
+    .dot.charis{background:var(--rose-edge)}
+    .dot.kai{background:var(--blue-edge)}
+    .dot.both{background:var(--gold-edge)}
     .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
     .weekday{text-align:center;color:var(--muted);font-size:.81rem;font-weight:730;padding:3px 0 8px}
     #days{gap:4px}
     .day,.blank{border:1px solid #f0e0e6;border-radius:11px;min-width:0;min-height:clamp(47px,6.25vw,81px);padding:6px 7px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;background:#fffcfd;text-align:left}
     .blank{background:#fff8fa;border-color:transparent}
     .weekend{background:#fff3f8}
-    .day:hover,.day[data-active=true]{background:#fce4ee;border-color:#d88eae}
+    .day:hover,.day[data-active=true]{background:#f9f0f6;border-color:#be8fa8}
     .day:focus-visible{outline-offset:0;z-index:1}
     .number{min-width:26px;padding:0 3px;text-align:center;line-height:26px;font-size:1.05rem;font-weight:730;font-variant-numeric:tabular-nums;border-radius:50%}
     .today .number{background:var(--accent);color:white}
     .day-schedule{display:grid;gap:3px;width:100%;min-width:0}
     .calendar-entry{min-width:0;padding:3px 5px;border-radius:5px;font-size:.76rem;font-weight:720;line-height:1.19}
-    .calendar-entry.charis{background:var(--rose);color:var(--rose-ink)}
-    .calendar-entry.kai{background:var(--blue);color:var(--blue-ink)}
-    .calendar-entry.both{background:var(--gold);color:var(--gold-ink)}
+    .calendar-entry.charis{background:var(--rose);color:var(--rose-ink);box-shadow:inset 2px 0 var(--rose-edge)}
+    .calendar-entry.kai{background:var(--blue);color:var(--blue-ink);box-shadow:inset 2px 0 var(--blue-edge)}
+    .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.kai{background:var(--blue-strong);color:#fff}
+    .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.charis{background:var(--rose-strong);color:#fff}
+    .calendar-entry.both{background:var(--gold);color:var(--gold-ink);box-shadow:inset 2px 0 var(--gold-edge)}
     .cell-text{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .slot-hours{display:flex;flex-wrap:wrap;font-variant-numeric:tabular-nums;white-space:nowrap}
     .cell-compact{display:none}
