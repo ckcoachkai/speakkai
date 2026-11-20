@@ -169,6 +169,15 @@
       ['2027-09-15','2027-09-15','Mid-Autumn Festival','中秋节'],
       ['2027-10-01','2027-10-07','National Day','国庆节'],
     ];
+    const kaiWeek = [
+      ['11:30–16:30','Usually booked','Possible extension to 18:00'],
+      ['15:30–17:30','Usually booked'],
+      ['15:30–19:40','Usually booked'],
+      ['', 'Usually free'],
+      ['15:30–17:30','Usually booked'],
+      ['15:30–20:00','Usually booked'],
+      ['13:00–21:00','Current Saturday hours'],
+    ];
     const storageKey = 'speakkai.ck.plans.v1';
     const limit = 3000;
     let plans = [];
@@ -206,9 +215,18 @@
     function entriesFor(key) {
       const entries = [];
       const holiday = holidays.find(([start,end]) => start <= key && key <= end);
+      const weekday = toDate(key).getUTCDay();
       const busy = availability.get(key);
-      if (holiday) entries.push({person:'charis', title:`${holiday[2]} · ${holiday[3]}`, short:holiday[2], compact:'Off'});
-      if (busy) entries.push({person:'kai',...busy});
+      if (holiday) {
+        entries.push({person:'charis',title:`${holiday[2]} · ${holiday[3]}`,short:holiday[2],compact:'Off'});
+      } else if (weekday === 5) {
+        entries.push({person:'charis',title:'Usually works from home',short:'Work from home',compact:'WFH'});
+      } else if (weekday === 6 || weekday === 0) {
+        entries.push({person:'charis',title:'Regular day off',short:'Day off',compact:'Off'});
+      }
+      const [hours,routine,note] = kaiWeek[weekday];
+      if (busy) entries.push({person:'kai',...busy,title:`Published · ${busy.title}`});
+      entries.push({person:'kai',title:routine,short:hours || routine,compact:hours ? 'Booked' : 'Free',time:hours,note,detailOnly:Boolean(busy)});
       const personal = plans.filter(plan => !plan.deleted && plan.date === key).sort((a,b) => a.time.localeCompare(b.time));
       return entries.concat(personal);
     }
@@ -234,11 +252,12 @@
         button.setAttribute('aria-pressed',String(key===selected));
         if (key===today) button.setAttribute('aria-current','date');
         button.append(make('span','number',String(number)));
-        for (const entry of entries.slice(0,2)) {
+        const visibleEntries = entries.filter(entry => !entry.detailOnly);
+        for (const entry of visibleEntries.slice(0,2)) {
           button.append(make('span',`pill ${entry.person} wide`,entry.short || entry.title));
           button.append(make('span',`pill ${entry.person} compact`,entry.compact || people[entry.person]));
         }
-        if (entries.length>2) button.append(make('span','sub',`+${entries.length-2}`));
+        if (visibleEntries.length>2) button.append(make('span','sub',`+${visibleEntries.length-2}`));
         cells.push(button);
       }
       const focusKey = document.activeElement?.dataset.date;
@@ -261,6 +280,7 @@
         }
         row.append(make('span',`pill ${entry.person}`,people[entry.person]),make('span','item-title',entry.time ? `${entry.time} · ${entry.title}` : entry.title));
         if (entry.windows?.length) row.append(make('p','sub',entry.windows.join(' · ')));
+        if (entry.note) row.append(make('p','sub',entry.note));
         return row;
       }));
     }
@@ -273,7 +293,7 @@
 
     function renderFeed() {
       const hasMonth = availability.has(months[monthIndex].key);
-      $('feed').textContent = feedState === 'loading' ? 'Loading Kai’s published availability…' : feedState === 'failed' ? 'Kai’s published availability could not be loaded.' : hasMonth ? 'Unmarked days may still have commitments.' : 'Kai has no published schedule for this month.';
+      $('feed').textContent = feedState === 'loading' ? 'Loading Kai’s published availability…' : feedState === 'failed' ? 'Kai’s published availability could not be loaded.' : hasMonth ? 'Published entries show date-specific availability. Weekly hours are a guide.' : 'Showing Kai’s usual weekly hours. No published schedule for this month.';
     }
 
     function showMonth(index, key, focusTab=false) {
