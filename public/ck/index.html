@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#fff8f7">
   <title>Charis &amp; Kai · Our Calendar</title>
   <style>
-    :root{color-scheme:light;--paper:#fff8f7;--white:#fffdfc;--ink:#462b3b;--muted:#735264;--line:#ebd7df;--accent:#8e345d;--pink:#e878a6;--rose:#fde6ee;--rose-ink:#8c3155;--lav:#ece6fa;--lav-ink:#553b79;--gold:#f8ecd0;--gold-ink:#694416;--shadow:0 3px 0 #b9688b12,0 12px 34px #8c476516}
+    :root{color-scheme:light;--paper:#fff8f7;--white:#fffdfc;--ink:#462b3b;--muted:#735264;--line:#ebd7df;--accent:#8e345d;--pink:#e878a6;--rose:#fde6ee;--rose-ink:#8c3155;--blue:#e0efff;--blue-ink:#20517b;--gold:#f8ecd0;--gold-ink:#694416;--shadow:0 3px 0 #b9688b12,0 12px 34px #8c476516}
     *,*::before,*::after{box-sizing:border-box}
     body{margin:0;color:var(--ink);font:16px/1.5 system-ui,"Microsoft YaHei",sans-serif;background-color:var(--paper);background-image:repeating-linear-gradient(0deg,transparent 0 13px,#d88aaa0d 13px 26px),repeating-linear-gradient(90deg,transparent 0 13px,#d88aaa0d 13px 26px)}
     button,input,select{font:inherit;color:inherit}
@@ -46,7 +46,7 @@
     .legend span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
     .dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none;border:1px solid #0002}
     .dot.charis{background:#d95c91}
-    .dot.kai{background:#8a68b2}
+    .dot.kai{background:#4682bb}
     .dot.both{background:#b67d25}
     .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
     .weekday{text-align:center;color:var(--muted);font-size:.81rem;font-weight:730;padding:3px 0 8px}
@@ -61,7 +61,7 @@
     .day-schedule{display:grid;gap:3px;width:100%;min-width:0}
     .calendar-entry{min-width:0;padding:3px 5px;border-radius:5px;font-size:.76rem;font-weight:720;line-height:1.19}
     .calendar-entry.charis{background:var(--rose);color:var(--rose-ink)}
-    .calendar-entry.kai{background:var(--lav);color:var(--lav-ink)}
+    .calendar-entry.kai{background:var(--blue);color:var(--blue-ink)}
     .calendar-entry.both{background:var(--gold);color:var(--gold-ink)}
     .cell-text{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .slot-hours{display:flex;flex-wrap:wrap;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -78,7 +78,7 @@
     .foot a{color:var(--accent)}
     .pill{display:inline-block;border-radius:6px;font-size:.71rem;font-weight:730;padding:2px 6px;line-height:1.35;white-space:nowrap}
     .pill.charis{background:var(--rose);color:var(--rose-ink)}
-    .pill.kai{background:var(--lav);color:var(--lav-ink)}
+    .pill.kai{background:var(--blue);color:var(--blue-ink)}
     .pill.both{background:var(--gold);color:var(--gold-ink)}
     .preview{position:fixed;z-index:5;width:min(318px,calc(100vw - 20px));max-height:min(64vh,380px);overflow:auto;overscroll-behavior:contain;padding:13px 15px;background:var(--white);border:1px solid #d7a5bb;border-radius:15px;box-shadow:0 8px 32px #68344f35}
     .day-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 9px}
@@ -140,15 +140,27 @@
     @media(max-width:700px){.masthead{min-height:0;padding:8px 12px 12px;gap:10px}.tools{gap:5px}.header-glitter .glimmer:nth-child(2){left:auto;right:2.4%;bottom:4px}}
     @media(max-width:555px){.masthead{display:grid}.tools{justify-content:flex-start}.tools .outline{padding-inline:10px;font-size:.8rem}.hero .kitty{margin-left:-4px}.footer-line{gap:0}}
     @media(max-width:350px){.masthead{padding-inline:8px}.tools .outline{padding-inline:8px}}
+    .bling-rail .rail-cupcake{width:86%;transform:rotate(10deg)}
+    .bling-rail .rail-bow{width:83%;transform:rotate(-11deg)}
+    .header-sticker{position:absolute;z-index:-1;left:57%;top:50%;width:clamp(68px,9vw,114px);height:auto;transform:translate(-50%,-50%) rotate(-9deg);pointer-events:none;filter:drop-shadow(0 3px 4px #a03b6730)}
+    .footer-sticker{display:none}
+    @media(max-width:1180px){
+      .footer-sticker{display:block;width:75px;height:auto;justify-self:end}
+      .footer-line{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px}
+      .footer-line .foot{grid-column:1/-1}
+      .footer-line .glitter-toggle{justify-self:start}
+    }
+    @media(max-width:810px){.header-sticker{left:54%;width:75px;opacity:.48}}
+    @media(max-width:555px){.header-sticker{left:auto;right:2px;top:auto;bottom:0;transform:rotate(11deg);width:68px;opacity:.54}}
   </style>
 </head>
 <body>
   <div class="bling-rail left" aria-hidden="true">
     <span class="glimmer">✦</span><img src="kitty-glitter.webp" alt="" width="384" height="384">
-    <span class="bling-heart">♡</span><span class="glimmer">✧</span><span class="glimmer">✦</span>
+    <span class="bling-heart">♡</span><img class="rail-cupcake" src="heart-cupcake.webp" alt="" width="320" height="320"><span class="glimmer">✧</span>
   </div>
   <div class="bling-rail right" aria-hidden="true">
-    <span class="glimmer">✧</span><span class="bling-heart">♡</span><span class="glimmer">✦</span>
+    <span class="glimmer">✧</span><img class="rail-bow" src="strawberry-bow.webp" alt="" width="320" height="320"><span class="glimmer">✦</span>
     <img src="kitty-glitter.webp" alt="" width="384" height="384"><span class="glimmer">✧</span>
   </div>
   <main class="shell">
@@ -158,6 +170,7 @@
         <div><h1 id="title">Charis &amp; Kai</h1><p class="period">November 2026 – December 2027</p></div>
       </div>
       <div class="header-glitter" aria-hidden="true"><span class="glimmer">✦</span><span class="glimmer">✧</span><span class="glimmer">✦</span><span class="glimmer">✧</span><span class="glimmer">✦</span></div>
+      <img class="header-sticker" src="strawberry-bow.webp" alt="" width="320" height="320">
       <div class="tools">
         <button class="outline" id="sounds" type="button" aria-label="Sparkle sounds" aria-pressed="false"><span class="sound-star" aria-hidden="true">✦</span> Chimes</button>
         <button class="outline" id="music-toggle" type="button" aria-label="Background music" aria-pressed="false"><span class="bling-icon" aria-hidden="true">♫</span> Music</button>
@@ -184,6 +197,7 @@
     <div class="footer-line">
       <p class="foot">Shanghai time · Plans are saved in this browser. Kai’s dated bookings come from the <a id="schedule-link" href="/schedule/">SpeakKai schedule</a>.</p>
       <button class="outline glitter-toggle" id="glitter-toggle" type="button" aria-pressed="true">Animated glitter</button>
+      <img class="footer-sticker" src="heart-cupcake.webp" alt="" width="320" height="320">
     </div>
     <audio id="background-music" preload="none" loop src="pink-daydream.mp3"></audio>
     <p class="sub" id="notice" role="status"></p>
