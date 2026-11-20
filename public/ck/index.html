@@ -75,6 +75,7 @@
     .calendar-entry.both{background:var(--gold);color:var(--gold-ink);box-shadow:inset 2px 0 var(--gold-edge)}
     .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.both{background:#765015;color:white}
     .cell-text{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .charis-label{display:block;white-space:normal;overflow-wrap:anywhere}
     .slot-hours{display:flex;flex-wrap:wrap;font-variant-numeric:tabular-nums;white-space:nowrap}
     .cell-compact{display:none}
     @media(min-width:950px){.slot-hours{font-size:.875rem;line-height:1.23}}
@@ -147,7 +148,17 @@
       @keyframes glimmer{0%,100%{opacity:.42;transform:scale(.8) rotate(-12deg)}48%{opacity:.92;transform:scale(1.13) rotate(11deg)}}
       @keyframes date-spark{from{opacity:.15;transform:translate(-2px,3px) scale(.65)}56%{opacity:1;transform:translate(0,-2px) scale(1.2)}to{opacity:.82;transform:translate(0,0) scale(1)}}
     }
-    @media(prefers-reduced-motion:reduce){.glitter-toggle{display:none}}
+    .sparkle-layer{position:fixed;inset:0;z-index:15;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:transparent;overflow:hidden;pointer-events:none}
+    .sparkle-layer::backdrop{background:transparent;pointer-events:none}
+    .sparkle-particle{position:absolute;display:block;pointer-events:none;color:#cb3683;font-size:var(--spark-size);line-height:1;text-shadow:0 0 2px #fff,0 0 7px #f4b5df;animation:particle-shimmer var(--spark-duration) ease-out both}
+    .sparkle-particle.gold{color:#a97119;text-shadow:0 0 3px #fff5c0,0 0 8px #ffd67b}
+    .sparkle-particle.lilac{color:#8056ba;text-shadow:0 0 3px white,0 0 8px #e0c2ff}
+    @keyframes particle-shimmer{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}
+      24%{opacity:1;transform:translate(calc(-50% + var(--spark-x)*.28),calc(-50% + var(--spark-y)*.28)) rotate(16deg) scale(1.18)}
+      100%{opacity:0;transform:translate(calc(-50% + var(--spark-x)),calc(-50% + var(--spark-y))) rotate(65deg) scale(.24)}
+    }
+    @media(prefers-reduced-motion:reduce){.glitter-toggle,.sparkle-layer{display:none}}
     @media(max-width:1180px){.bling-rail{display:none}}
     @media(max-width:700px){.masthead{min-height:0;padding:8px 12px 12px;gap:10px}.tools{gap:5px}.header-glitter .glimmer:nth-child(2){left:auto;right:2.4%;bottom:4px}}
     @media(max-width:555px){.masthead{display:grid}.tools{justify-content:flex-start}.tools .outline{padding-inline:10px;font-size:.8rem}.hero .kitty{margin-left:-4px}.footer-line{gap:0}}
@@ -226,6 +237,7 @@
     <p class="sub" id="day-notice" role="status"></p>
     <div class="actions"><button class="primary" id="add" type="button">+ Add plan</button></div>
   </dialog>
+  <div class="sparkle-layer" id="sparkles" popover="manual" aria-hidden="true" inert></div>
   <dialog id="editor" aria-labelledby="editor-title">
     <form id="entry-form">
       <h3 id="editor-title">Add a plan</h3>
@@ -363,11 +375,11 @@
       const weekday = toDate(key).getUTCDay();
       const bookings = publishedDays.get(key);
       if (holiday) {
-        entries.push({person:'charis',summary:'Off',title:`${holiday[2]} · ${holiday[3]}`});
+        entries.push({person:'charis',title:`${holiday[2]} · ${holiday[3]}`});
       } else if (weekday === 5) {
-        entries.push({person:'charis',title:'Usually works from home',summary:'WFH'});
+        entries.push({person:'charis',title:'Usually works from home',summary:'Work from home'});
       } else if (weekday === 6 || weekday === 0) {
-        entries.push({person:'charis',title:'Regular day off',summary:'Off'});
+        entries.push({person:'charis',title:'Regular day off',summary:'Day off'});
       }
       const [hours,routine,note] = kaiWeek[weekday];
       if (bookings) {
@@ -394,9 +406,11 @@
         }
         row.append(hours);
         if (entry.note) row.append(make('span','cell-text tentative-time','18:00?'));
-      } else {
-        const wide = entry.summary==='WFH' ? 'Work from home' : entry.summary || entry.title;
-        row.append(make('span','cell-text cell-wide',wide),make('span','cell-text cell-compact',entry.summary || 'Plan'));
+      }
+      if (entry.person==='charis') {
+        row.append(make('span','charis-label',entry.summary || entry.title));
+      } else if (!entry.time) {
+        row.append(make('span','cell-text cell-wide',entry.summary || entry.title),make('span','cell-text cell-compact',entry.summary || 'Plan'));
       }
       return row;
     }
@@ -814,9 +828,74 @@
     startMusic();
     const glitterPreference = 'speakkai.ck.glitter';
     const glitterToggle = $('glitter-toggle');
+    const sparkleLayer = $('sparkles');
+    const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+    const supportsPopover = typeof sparkleLayer.showPopover==='function';
+    let lastTrail = -Infinity;
+    let trailX = -100;
+    let trailY = -100;
+    if (!supportsPopover) sparkleLayer.removeAttribute('popover');
+
+    function clearSparkles() {
+      sparkleLayer.replaceChildren();
+      if (supportsPopover && sparkleLayer.matches(':popover-open')) sparkleLayer.hidePopover();
+    }
+
+    function emitSparkles(x,y,burst) {
+      if (glitterToggle.getAttribute('aria-pressed')!=='true' || motionPreference.matches) return;
+      if (supportsPopover) {
+        if (burst && sparkleLayer.matches(':popover-open')) sparkleLayer.hidePopover();
+        if (!sparkleLayer.matches(':popover-open')) sparkleLayer.showPopover();
+      }
+      const count = burst ? 9 : 2;
+      while (sparkleLayer.children.length+count>36) sparkleLayer.firstElementChild.remove();
+      const shades = ['','gold','lilac'];
+      for (let i=0;i<count;i++) {
+        const direction = burst ? i*2*Math.PI/count : 1.4+i*1.65;
+        const distance = burst ? 34+i%3*11 : 15+i*11;
+        const spark = make('span',`sparkle-particle ${shades[i%3]}`,i%3===1 ? '✧' : '✦');
+        spark.style.left = x+'px';
+        spark.style.top = y+'px';
+        spark.style.setProperty('--spark-x',Math.round(Math.cos(direction)*distance)+'px');
+        spark.style.setProperty('--spark-y',Math.round(Math.sin(direction)*distance)+'px');
+        spark.style.setProperty('--spark-size',(burst ? 18+i%4*2 : 12+i*3)+'px');
+        spark.style.setProperty('--spark-duration',burst ? '640ms' : '480ms');
+        sparkleLayer.append(spark);
+      }
+    }
+
+    sparkleLayer.addEventListener('animationend',event => {
+      if (!event.target.matches('.sparkle-particle')) return;
+      event.target.remove();
+      if (!sparkleLayer.firstElementChild) clearSparkles();
+    });
+    motionPreference.addEventListener('change',() => {
+      if (motionPreference.matches) clearSparkles();
+    });
+    document.addEventListener('pointermove',event => {
+      if (event.pointerType!=='mouse' || !event.target.closest?.('main,dialog')) return;
+      const now = performance.now();
+      const {clientX:x,clientY:y} = event;
+      if (now-lastTrail<55 || Math.hypot(x-trailX,y-trailY)<9) return;
+      lastTrail = now;
+      trailX = x;
+      trailY = y;
+      emitSparkles(x,y,false);
+    },{passive:true});
+    document.addEventListener('click',event => {
+      if (!event.isTrusted) return;
+      const button = event.target.closest?.('button:not(:disabled)');
+      if (!button) return;
+      const rect = button.getBoundingClientRect();
+      const x = event.detail===0 ? rect.left+rect.width/2 : event.clientX;
+      const y = event.detail===0 ? rect.top+rect.height/2 : event.clientY;
+      // Run after the button's action so a newly opened dialog stays beneath the sparkles.
+      setTimeout(() => emitSparkles(x,y,true),0);
+    },true);
     function setGlitter(enabled) {
       document.documentElement.classList.toggle('glitter-paused',!enabled);
       glitterToggle.setAttribute('aria-pressed',String(enabled));
+      if (!enabled) clearSparkles();
     }
     setGlitter(preferenceEnabled(glitterPreference));
     glitterToggle.addEventListener('click',() => {
