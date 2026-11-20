@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f7f5ef">
+  <title>Charis &amp; Kai · Our Calendar</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f5ef;--white:#fffefa;--ink:#232b25;--muted:#5d675d;--line:#dfdfd4;--green:#254337;--rose:#f5e3dd;--rose-ink:#873e34;--sage:#e5ece2;--gold:#f6ebcd;--gold-ink:#674a13}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+    button,input,select{font:inherit;color:inherit}
+    button{cursor:pointer}
+    button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #28765e;outline-offset:2px}
+    .shell{max-width:1320px;margin:auto;padding:38px clamp(16px,4vw,64px) 24px}
+    .masthead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+    .wordmark{font-weight:750;letter-spacing:.03em;color:var(--green)}
+    .wordmark span{font:italic 1.15em Georgia,serif}
+    .outline,.nav,.primary{border:1px solid var(--line);border-radius:9px;background:var(--white);padding:8px 12px;font-weight:650}
+    .outline:hover,.nav:hover{background:var(--sage)}
+    .primary{border-color:var(--green);background:var(--green);color:white}
+    .primary:hover{background:#365b4a}
+    .hero{background:var(--green);color:#fffdf3;border-radius:19px;padding:clamp(24px,4.1vw,52px);position:relative;overflow:hidden;isolation:isolate}
+    .hero::after{content:"";position:absolute;right:-70px;top:-180px;width:470px;height:470px;z-index:-1;background:repeating-radial-gradient(ellipse at center,transparent 0 14px,#c6d9bb30 15px 16px,transparent 17px 27px);border-radius:50%;mask-image:linear-gradient(100deg,transparent,#000)}
+    .period{font-size:.73rem;letter-spacing:.15em;text-transform:uppercase;color:#d8e3d3;font-weight:700}
+    h1,h2,h3,p{margin:0}
+    h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:400}
+    h1{font-size:clamp(2.75rem,6vw,5.5rem);line-height:1.03;margin:8px 0 12px;letter-spacing:-.05em}
+    .hero p{color:#e0e6d9}
+    .tabs{display:flex;gap:5px;overflow-x:auto;padding:5px 3px 9px;margin:20px 0 15px;scrollbar-width:thin}
+    .tab{background:none;border:1px solid transparent;border-radius:9px;min-width:64px;padding:6px 8px;font-weight:700;line-height:1.25}
+    .tab small{display:block;font-size:.67rem;font-weight:600;color:var(--muted);margin-top:3px}
+    .tab:hover{background:#eeeee5}
+    .tab[aria-selected=true]{border-color:#bccbbf;background:var(--sage);color:var(--green)}
+    .workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(246px,300px);gap:18px;align-items:start}
+    .card{background:var(--white);border:1px solid var(--line);border-radius:15px;min-width:0}
+    .calendar{padding:clamp(9px,1.65vw,20px)}
+    .monthbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px;padding:0 3px}
+    h2{font-size:clamp(1.53rem,3vw,2.25rem);letter-spacing:-.03em;line-height:1.15}
+    .arrows{display:flex;gap:5px}
+    .nav{width:36px;height:36px;padding:0;font-size:1.25rem}
+    .nav:disabled{opacity:.34;cursor:default;background:transparent}
+    .legend{display:flex;gap:6px 11px;flex-wrap:wrap;margin:0 0 13px;padding:0 3px}
+    .pill{display:inline-block;border-radius:5px;font-size:.69rem;font-weight:700;line-height:1.27;padding:3px 5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+    .charis{background:var(--rose);color:var(--rose-ink)}
+    .kai{background:var(--sage);color:var(--green)}
+    .both{background:var(--gold);color:var(--gold-ink)}
+    .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+    .weekday{text-align:center;color:var(--muted);font-size:.73rem;font-weight:700;padding:4px 0 7px}
+    #days{border-left:1px solid var(--line);border-top:1px solid var(--line);border-radius:8px;overflow:hidden}
+    .day,.blank{border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:0;min-height:clamp(57px,7vw,91px);padding:5px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;background:var(--white);text-align:left}
+    .blank,.weekend{background:#f7f7f1}
+    .day:hover,.day[aria-pressed=true]{background:#edf3e9}
+    .day[aria-pressed=true]{box-shadow:inset 0 0 0 2px #4a6d56}
+    .day:focus-visible{outline-offset:-3px;z-index:1}
+    .number{min-width:23px;text-align:center;font-size:.81rem;font-weight:700;border-radius:50%}
+    .today .number{background:var(--green);color:white}
+    .compact{display:none}
+    .side{display:grid;gap:14px}
+    .side .card{padding:18px}
+    .day-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:13px}
+    h3{font-size:1.28rem;line-height:1.2}
+    .items{list-style:none;margin:0;padding:0}
+    .items li{padding:9px 0;border-top:1px solid var(--line);overflow-wrap:anywhere}
+    .item-title{display:block;font-weight:650;margin-top:3px}
+    .sub,.status{color:var(--muted);font-size:.79rem}
+    .status{margin-top:14px;min-height:1.3em}
+    .edit{border:0;background:none;color:var(--green);padding:0 0 0 8px;text-decoration:underline;float:right}
+    .holidays h3{margin-bottom:8px}
+    .holiday-link{border:0;background:none;color:var(--rose-ink);text-align:left;padding:0;font-weight:650}
+    .holiday-link:hover{text-decoration:underline}
+    .foot{margin-top:16px;color:var(--muted);font-size:.78rem}
+    .foot a{color:var(--green)}
+    dialog{width:min(92vw,420px);max-height:90vh;border:1px solid var(--line);border-radius:15px;padding:23px;background:var(--white);color:var(--ink)}
+    dialog::backdrop{background:#1c2b23a0}
+    dialog form{display:grid;gap:12px}
+    dialog label{display:grid;gap:4px;font-weight:650}
+    dialog input,dialog select{width:100%;padding:8px;border:1px solid #a9b6aa;border-radius:7px;background:white}
+    .actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:3px}
+    #remove{margin-right:auto;color:var(--rose-ink)}
+    [hidden]{display:none!important}
+    @media(max-width:850px){.workspace{grid-template-columns:minmax(0,1fr) minmax(218px,30%)}.day .wide{display:none}.day .compact{display:inline-block}}
+    @media(max-width:650px){.shell{padding-top:19px}.masthead{margin-bottom:14px}.workspace{grid-template-columns:minmax(0,1fr)}.tabs{margin:13px 0 8px}.side{gap:10px}.day{padding:3px}.day .pill{font-size:.62rem;padding:2px 3px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead"><div class="wordmark">Charis <span>&amp;</span> Kai</div><button class="outline" id="manage" type="button">Share plans</button></header>
+    <section class="hero" aria-labelledby="title">
+      <div class="period">November 2026 – December 2027</div>
+      <h1 id="title">Our calendar</h1>
+      <p>See when we’re busy, when we’re off, and what we’re planning together.</p>
+    </section>
+    <div class="tabs" id="tabs" role="tablist" aria-label="Calendar months"></div>
+    <div class="workspace" id="month-panel" role="tabpanel" tabindex="0">
+      <section class="card calendar" aria-labelledby="month-heading">
+        <div class="monthbar"><h2 id="month-heading"></h2><div class="arrows"><button class="nav" id="previous" type="button" aria-label="Previous month">‹</button><button class="nav" id="next" type="button" aria-label="Next month">›</button></div></div>
+        <div class="legend"><span class="pill charis">Charis</span><span class="pill kai">Kai</span><span class="pill both">Together</span></div>
+        <div class="grid" aria-hidden="true"><span class="weekday">Mon</span><span class="weekday">Tue</span><span class="weekday">Wed</span><span class="weekday">Thu</span><span class="weekday">Fri</span><span class="weekday">Sat</span><span class="weekday">Sun</span></div>
+        <div class="grid" id="days" aria-label="Days of the month"></div>
+        <p class="status" id="feed" role="status"></p>
+      </section>
+      <aside class="side" aria-label="Selected day and holidays">
+        <section class="card">
+          <div class="day-head"><h3 id="day-heading"></h3><button class="primary" id="add" type="button">+ Add plan</button></div>
+          <ul class="items" id="day-items" aria-labelledby="day-heading"></ul>
+          <p class="sub" id="empty">No entries for this day.</p>
+        </section>
+        <section class="card holidays" id="holiday-card" hidden>
+          <h3 id="holiday-heading">Charis’s holidays</h3><ul class="items" id="month-holidays" aria-labelledby="holiday-heading"></ul>
+        </section>
+      </aside>
+    </div>
+    <p class="foot">Shanghai time · Plans are saved in this browser. Kai’s published availability comes from the <a id="schedule-link" href="/schedule/">SpeakKai schedule</a>.</p>
+    <p class="sub" id="notice" role="status"></p>
+  </main>
+  <dialog id="editor" aria-labelledby="editor-title">
+    <form id="entry-form">
+      <h3 id="editor-title">Add a plan</h3>
+      <label>Plan<input id="entry-title" required maxlength="100" autocomplete="off"></label>
+      <label>For<select id="entry-person"><option value="both">Together</option><option value="charis">Charis</option><option value="kai">Kai</option></select></label>
+      <label>Date<input id="entry-date" type="date" min="2026-11-01" max="2027-12-31" required></label>
+      <label>Time (optional)<input id="entry-time" type="time"></label>
+      <p class="sub" id="editor-message" role="status"></p>
+      <div class="actions"><button class="outline" id="remove" type="button" hidden>Delete</button><button class="outline" id="cancel" type="button">Cancel</button><button class="primary" type="submit">Save plan</button></div>
+    </form>
+  </dialog>
+  <dialog id="sharing" aria-labelledby="share-heading">
+    <form method="dialog">
+      <h3 id="share-heading">Share plans</h3>
+      <p>Export your plans and send the file to each other. Import it on another device to merge the edits into that browser. The file includes your plan details.</p>
+      <input id="import-file" type="file" accept=".json,application/json" hidden>
+      <p class="sub" id="share-message" role="status"></p>
+      <div class="actions"><button class="outline" id="download" type="button">Export</button><button class="outline" id="upload" type="button">Import</button><button class="primary">Done</button></div>
+    </form>
+  </dialog>
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const make = (tag, className, value) => {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (value) node.textContent = value;
+      return node;
+    };
+    const people = {charis:'Charis',kai:'Kai',both:'Together'};
+    const monthName = new Intl.DateTimeFormat('en',{month:'long',year:'numeric',timeZone:'UTC'});
+    const dayName = new Intl.DateTimeFormat('en',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'});
+    const today = new Intl.DateTimeFormat('sv-SE',{year:'numeric',month:'2-digit',day:'2-digit',timeZone:'Asia/Shanghai'}).format(new Date());
+    const toDate = key => new Date(`${key}T00:00:00Z`);
+    const pad = value => String(value).padStart(2,'0');
+    const months = Array.from({length:14},(_,i) => {
+      const date = new Date(Date.UTC(2026,10+i,1));
+      const key = date.toISOString().slice(0,7);
+      return {key,date,title:monthName.format(date),count:new Date(Date.UTC(date.getUTCFullYear(),date.getUTCMonth()+1,0)).getUTCDate()};
+    });
+    const validDay = key => {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(key) || key < '2026-11-01' || key > '2027-12-31') return false;
+      const date = toDate(key);
+      return Number.isFinite(date.getTime()) && date.toISOString().slice(0,10) === key;
+    };
+    const holidays = [
+      ['2027-01-01','2027-01-03','New Year’s Day','元旦'],
+      ['2027-02-05','2027-02-13','Spring Festival','春节'],
+      ['2027-04-03','2027-04-05','Qingming Festival','清明节'],
+      ['2027-05-01','2027-05-05','Labour Day','劳动节'],
+      ['2027-06-09','2027-06-09','Dragon Boat Festival','端午节'],
+      ['2027-09-15','2027-09-15','Mid-Autumn Festival','中秋节'],
+      ['2027-10-01','2027-10-07','National Day','国庆节'],
+    ];
+    const storageKey = 'speakkai.ck.plans.v1';
+    const limit = 3000;
+    let plans = [];
+    let availability = new Map();
+    let feedState = 'loading';
+    let monthIndex = Math.max(0,months.findIndex(month => month.key === today.slice(0,7)));
+    let selected = validDay(today) ? today : `${months[monthIndex].key}-01`;
+    let editing = null;
+    let editingVersion = null;
+
+    function parsePlans(source) {
+      const {version,entries} = JSON.parse(source);
+      if (version !== 1 || !Array.isArray(entries) || entries.length > limit) throw new Error('Invalid plan file');
+      const ids = new Set();
+      return entries.map(entry => {
+        const {id,changed,deleted,date,title,person,time} = entry;
+        if (typeof id !== 'string' || !/^[a-f0-9-]{36}$/.test(id) || ids.has(id) || !Number.isSafeInteger(changed) || changed < 1) throw new Error('Invalid plan');
+        ids.add(id);
+        if (deleted === true) return {id,changed,deleted};
+        if (typeof date !== 'string' || !validDay(date) || typeof title !== 'string' || !title.trim() || title.length > 100 || !Object.hasOwn(people,person) || typeof time !== 'string' || (time && !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time))) throw new Error('Invalid plan');
+        return {id,changed,date,title,person,time};
+      });
+    }
+
+    const serialize = entries => JSON.stringify({version:1,entries});
+    const read = () => parsePlans(localStorage.getItem(storageKey) ?? serialize([]));
+    function write(entries) {
+      if (entries.length > limit) throw new Error('Plan limit reached');
+      localStorage.setItem(storageKey,serialize(entries));
+      plans = entries;
+      renderDays();
+      renderSelected();
+    }
+
+    function entriesFor(key) {
+      const entries = [];
+      const holiday = holidays.find(([start,end]) => start <= key && key <= end);
+      const busy = availability.get(key);
+      if (holiday) entries.push({person:'charis', title:`${holiday[2]} · ${holiday[3]}`, short:holiday[2], compact:'Off'});
+      if (busy) entries.push({person:'kai',...busy});
+      const personal = plans.filter(plan => !plan.deleted && plan.date === key).sort((a,b) => a.time.localeCompare(b.time));
+      return entries.concat(personal);
+    }
+
+    function renderDays() {
+      const month = months[monthIndex];
+      const offset = (month.date.getUTCDay()+6)%7;
+      const cells = [];
+      for (let i=0;i<Math.ceil((offset+month.count)/7)*7;i++) {
+        const number = i-offset+1;
+        if (number<1 || number>month.count) {
+          const blank = make('div','blank');
+          blank.setAttribute('aria-hidden','true');
+          cells.push(blank);
+          continue;
+        }
+        const key = `${month.key}-${pad(number)}`;
+        const button = make('button',`day${i%7>=5?' weekend':''}${key===today?' today':''}`);
+        const entries = entriesFor(key);
+        button.type = 'button';
+        button.dataset.date = key;
+        button.setAttribute('aria-label',`${dayName.format(toDate(key))}, ${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}`);
+        button.setAttribute('aria-pressed',String(key===selected));
+        if (key===today) button.setAttribute('aria-current','date');
+        button.append(make('span','number',String(number)));
+        for (const entry of entries.slice(0,2)) {
+          button.append(make('span',`pill ${entry.person} wide`,entry.short || entry.title));
+          button.append(make('span',`pill ${entry.person} compact`,entry.compact || people[entry.person]));
+        }
+        if (entries.length>2) button.append(make('span','sub',`+${entries.length-2}`));
+        cells.push(button);
+      }
+      const focusKey = document.activeElement?.dataset.date;
+      $('days').replaceChildren(...cells);
+      if (focusKey) $('days').querySelector(`[data-date="${focusKey}"]`)?.focus({preventScroll:true});
+    }
+
+    function renderSelected() {
+      $('day-heading').textContent = dayName.format(toDate(selected));
+      const entries = entriesFor(selected);
+      $('empty').hidden = entries.length > 0;
+      $('day-items').replaceChildren(...entries.map(entry => {
+        const row = make('li');
+        if (entry.id) {
+          const edit = make('button','edit','Edit');
+          edit.type = 'button';
+          edit.setAttribute('aria-label',`Edit ${entry.title}`);
+          edit.addEventListener('click',() => openEditor(entry));
+          row.append(edit);
+        }
+        row.append(make('span',`pill ${entry.person}`,people[entry.person]),make('span','item-title',entry.time ? `${entry.time} · ${entry.title}` : entry.title));
+        if (entry.windows?.length) row.append(make('p','sub',entry.windows.join(' · ')));
+        return row;
+      }));
+    }
+
+    function selectDay(key) {
+      selected = key;
+      for (const button of $('days').querySelectorAll('button')) button.setAttribute('aria-pressed',String(button.dataset.date===key));
+      renderSelected();
+    }
+
+    function renderFeed() {
+      const hasMonth = availability.has(months[monthIndex].key);
+      $('feed').textContent = feedState === 'loading' ? 'Loading Kai’s published availability…' : feedState === 'failed' ? 'Kai’s published availability could not be loaded.' : hasMonth ? 'Unmarked days may still have commitments.' : 'Kai has no published schedule for this month.';
+    }
+
+    function showMonth(index, key, focusTab=false) {
+      monthIndex = index;
+      const month = months[index];
+      selected = key ?? (today.startsWith(month.key) ? today : `${month.key}-01`);
+      $('month-heading').textContent = month.title;
+      $('previous').disabled = index===0;
+      $('next').disabled = index===months.length-1;
+      for (const [i,tab] of Array.from($('tabs').children).entries()) {
+        tab.tabIndex = i===index ? 0 : -1;
+        tab.setAttribute('aria-selected',String(i===index));
+      }
+      const tab = $('tabs').children[index];
+      $('month-panel').setAttribute('aria-labelledby',tab.id);
+      if (focusTab) tab.focus({preventScroll:true});
+      const bar = $('tabs');
+      if (tab.offsetLeft < bar.offsetLeft + bar.scrollLeft || tab.offsetLeft + tab.offsetWidth > bar.offsetLeft + bar.scrollLeft + bar.clientWidth) {
+        bar.scrollLeft = tab.offsetLeft - bar.offsetLeft - (bar.clientWidth-tab.offsetWidth)/2;
+      }
+      const list = holidays.filter(([start]) => start.startsWith(month.key));
+      $('holiday-card').hidden = !list.length;
+      $('month-holidays').replaceChildren(...list.map(([start,end,name,zh]) => {
+        const row = make('li');
+        const link = make('button','holiday-link',`${name} · ${zh}`);
+        link.type = 'button';
+        link.addEventListener('click',() => {
+          selectDay(start);
+          $('days').querySelector(`[data-date="${start}"]`)?.focus();
+        });
+        const shortDate = new Intl.DateTimeFormat('en',{month:'short',day:'numeric',timeZone:'UTC'});
+        const range = start===end ? shortDate.format(toDate(start)) : shortDate.formatRange(toDate(start),toDate(end));
+        row.append(link,make('p','sub',range));
+        return row;
+      }));
+      renderDays();
+      renderSelected();
+      renderFeed();
+    }
+
+    function openEditor(entry) {
+      editing = entry?.id ?? null;
+      editingVersion = entry?.changed ?? null;
+      $('editor-title').textContent = entry ? 'Edit plan' : 'Add a plan';
+      $('entry-title').value = entry?.title ?? '';
+      $('entry-person').value = entry?.person ?? 'both';
+      $('entry-date').value = entry?.date ?? selected;
+      $('entry-time').value = entry?.time ?? '';
+      $('remove').hidden = !entry;
+      $('editor-message').textContent = '';
+      $('editor').showModal();
+    }
+
+    function saveEdit(deleting=false) {
+      const date = $('entry-date').value;
+      const title = $('entry-title').value.trim();
+      if (!deleting && (!title || !validDay(date))) {
+        $('editor-message').textContent = 'Enter a plan name and a date in the calendar.';
+        return;
+      }
+      try {
+        const current = read();
+        const previous = current.find(entry => entry.id===editing);
+        if (editing && previous?.changed!==editingVersion) {
+          $('editor-message').textContent = 'This plan changed in another tab. Close this editor and reopen the plan.';
+          return;
+        }
+        const id = editing ?? crypto.randomUUID();
+        const changed = Math.max(Date.now(),(previous?.changed ?? 0)+1);
+        const entry = deleting ? {id,changed,deleted:true} : {id,changed,date,title,person:$('entry-person').value,time:$('entry-time').value};
+        write([...current.filter(plan => plan.id!==id),entry]);
+        $('editor').close();
+        if (!deleting) showMonth(months.findIndex(month => date.startsWith(month.key)),date);
+        $('add').focus({preventScroll:true});
+        $('notice').textContent = deleting ? 'Plan deleted.' : 'Plan saved in this browser.';
+      } catch {
+        $('editor-message').textContent = 'Could not save this change. Check browser storage and try again.';
+      }
+    }
+
+    months.forEach((month,index) => {
+      const tab = make('button','tab',month.title.slice(0,3));
+      tab.append(make('small','',month.key.slice(0,4)));
+      tab.id = `tab-${month.key}`;
+      tab.type = 'button';
+      tab.setAttribute('role','tab');
+      tab.setAttribute('aria-label',month.title);
+      tab.setAttribute('aria-controls','month-panel');
+      tab.addEventListener('click',() => showMonth(index));
+      $('tabs').append(tab);
+    });
+    $('tabs').addEventListener('keydown',event => {
+      const destinations = {ArrowLeft:(monthIndex+13)%14,ArrowRight:(monthIndex+1)%14,Home:0,End:13};
+      if (!Object.hasOwn(destinations,event.key)) return;
+      event.preventDefault();
+      showMonth(destinations[event.key],undefined,true);
+    });
+    $('days').addEventListener('click',event => {
+      const button = event.target.closest('button[data-date]');
+      if (button) selectDay(button.dataset.date);
+    });
+    $('previous').addEventListener('click',() => showMonth(monthIndex-1));
+    $('next').addEventListener('click',() => showMonth(monthIndex+1));
+    $('add').addEventListener('click',() => openEditor());
+    $('cancel').addEventListener('click',() => $('editor').close());
+    $('remove').addEventListener('click',() => saveEdit(true));
+    $('entry-form').addEventListener('submit',event => {event.preventDefault();saveEdit();});
+    $('manage').addEventListener('click',() => {$('share-message').textContent='';$('sharing').showModal();});
+    $('download').addEventListener('click',() => {
+      try {
+        const url = URL.createObjectURL(new Blob([serialize(read())],{type:'application/json'}));
+        const link = make('a');
+        link.href = url;
+        link.download = `charis-kai-plans-${today}.json`;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url),1000);
+        $('share-message').textContent = 'Plan file exported.';
+      } catch {
+        $('share-message').textContent = 'Could not read plans from this browser.';
+      }
+    });
+    $('upload').addEventListener('click',() => $('import-file').click());
+    $('import-file').addEventListener('change',async event => {
+      const file = event.target.files[0];
+      event.target.value = '';
+      if (!file) return;
+      try {
+        if (file.size > 2_000_000) throw new Error('Plan file too large');
+        const incoming = parsePlans(await file.text());
+        const merged = new Map(read().map(entry => [entry.id,entry]));
+        for (const entry of incoming) {
+          const local = merged.get(entry.id);
+          if (!local || entry.changed > local.changed || (entry.changed === local.changed && JSON.stringify(entry) > JSON.stringify(local))) merged.set(entry.id,entry);
+        }
+        write(Array.from(merged.values()));
+        $('share-message').textContent = 'Plans merged into this browser.';
+      } catch {
+        $('share-message').textContent = 'Could not import plans. Choose a valid export file and check browser storage.';
+      }
+    });
+    window.addEventListener('storage',event => {
+      if (event.key!==storageKey && event.key!==null) return;
+      try {
+        plans = read();
+        renderDays();
+        renderSelected();
+      } catch {
+        $('notice').textContent = 'Could not read plans saved in this browser.';
+      }
+    });
+
+    async function loadAvailability() {
+      try {
+        const response = await fetch('/data/schedule.json',{cache:'no-store',signal:AbortSignal.timeout(10000)});
+        if (!response.ok) throw new Error('Schedule unavailable');
+        const data = await response.json();
+        if (!Array.isArray(data.sheets) || !data.sheets.length) throw new Error('Schedule empty');
+        const latest = new Map();
+        for (const sheet of data.sheets) {
+          const month = months.find(item => item.title===sheet.title);
+          if (!month) continue;
+          latest.set(month.key,true);
+          for (const row of sheet.rows) {
+            for (const {value} of row.cells) {
+              const [day,...details] = String(value).split(/\r?\n/).map(line => line.trim());
+              if (!/^\d{1,2}$/.test(day) || Number(day)<1 || Number(day)>month.count) continue;
+              const busy = details.some(line => /^(unavailable|travel:|in-person:)/i.test(line));
+              const limited = details.some(line => /^limited availability$/i.test(line));
+              if (busy || limited) {
+                const title = busy ? 'Busy' : 'Limited availability';
+                const windows = Array.from(new Set(details.flatMap(line => {
+                  const match = line.match(/^([0-2]\d:[0-5]\d\s*[–-]\s*[0-2]\d:[0-5]\d)\s*·/);
+                  return match ? [match[1]] : [];
+                }))).sort();
+                latest.set(`${month.key}-${pad(day)}`,{title,short:title,compact:busy?'Busy':'Limited',windows});
+              }
+            }
+          }
+        }
+        availability = latest;
+        feedState = 'ready';
+      } catch {
+        feedState = 'failed';
+      }
+      renderDays();
+      renderSelected();
+      renderFeed();
+    }
+
+    try {plans=read();} catch {$('notice').textContent='Could not read plans saved in this browser.';}
+    showMonth(monthIndex,selected);
+    loadAvailability();
+  </script>
+</body>
+</html>
