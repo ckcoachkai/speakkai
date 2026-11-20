@@ -112,7 +112,7 @@
         </section>
       </aside>
     </div>
-    <p class="foot">Shanghai time · Plans are saved in this browser. Kai’s published availability comes from the <a id="schedule-link" href="/schedule/">SpeakKai schedule</a>.</p>
+    <p class="foot">Shanghai time · Plans are saved in this browser. Kai’s dated bookings come from the <a id="schedule-link" href="/schedule/">SpeakKai schedule</a>.</p>
     <p class="sub" id="notice" role="status"></p>
   </main>
   <dialog id="editor" aria-labelledby="editor-title">
@@ -169,10 +169,20 @@
       ['2027-09-15','2027-09-15','Mid-Autumn Festival','中秋节'],
       ['2027-10-01','2027-10-07','National Day','国庆节'],
     ];
+    const kaiWeek = [
+      ['11:30–16:30','Usually booked','Possible extension to 18:00'],
+      ['15:30–17:30','Usually booked'],
+      ['15:30–19:40','Usually booked'],
+      ['', 'Usually free'],
+      ['15:30–17:30','Usually booked'],
+      ['15:30–20:00','Usually booked'],
+      ['13:00–21:00','Current Saturday hours'],
+    ];
     const storageKey = 'speakkai.ck.plans.v1';
     const limit = 3000;
     let plans = [];
-    let availability = new Map();
+    let publishedDays = new Map();
+    let publishedMonths = new Set();
     let feedState = 'loading';
     let monthIndex = Math.max(0,months.findIndex(month => month.key === today.slice(0,7)));
     let selected = validDay(today) ? today : `${months[monthIndex].key}-01`;
@@ -206,9 +216,21 @@
     function entriesFor(key) {
       const entries = [];
       const holiday = holidays.find(([start,end]) => start <= key && key <= end);
-      const busy = availability.get(key);
-      if (holiday) entries.push({person:'charis', title:`${holiday[2]} · ${holiday[3]}`, short:holiday[2], compact:'Off'});
-      if (busy) entries.push({person:'kai',...busy});
+      const weekday = toDate(key).getUTCDay();
+      const bookings = publishedDays.get(key);
+      if (holiday) {
+        entries.push({person:'charis',title:`${holiday[2]} · ${holiday[3]}`,short:holiday[2],compact:'Off'});
+      } else if (weekday === 5) {
+        entries.push({person:'charis',title:'Usually works from home',short:'Work from home',compact:'WFH'});
+      } else if (weekday === 6 || weekday === 0) {
+        entries.push({person:'charis',title:'Regular day off',short:'Day off',compact:'Off'});
+      }
+      const [hours,routine,note] = kaiWeek[weekday];
+      if (bookings) {
+        entries.push(...bookings);
+      } else {
+        entries.push({person:'kai',title:routine,short:hours || routine,compact:hours ? hours.slice(0,5) : 'Free',time:hours,note});
+      }
       const personal = plans.filter(plan => !plan.deleted && plan.date === key).sort((a,b) => a.time.localeCompare(b.time));
       return entries.concat(personal);
     }
@@ -235,8 +257,9 @@
         if (key===today) button.setAttribute('aria-current','date');
         button.append(make('span','number',String(number)));
         for (const entry of entries.slice(0,2)) {
-          button.append(make('span',`pill ${entry.person} wide`,entry.short || entry.title));
-          button.append(make('span',`pill ${entry.person} compact`,entry.compact || people[entry.person]));
+          const label = make('span',`pill ${entry.person} wide`,entry.short || entry.title);
+          label.title = entry.short || entry.title;
+          button.append(label,make('span',`pill ${entry.person} compact`,entry.compact || people[entry.person]));
         }
         if (entries.length>2) button.append(make('span','sub',`+${entries.length-2}`));
         cells.push(button);
@@ -260,7 +283,7 @@
           row.append(edit);
         }
         row.append(make('span',`pill ${entry.person}`,people[entry.person]),make('span','item-title',entry.time ? `${entry.time} · ${entry.title}` : entry.title));
-        if (entry.windows?.length) row.append(make('p','sub',entry.windows.join(' · ')));
+        if (entry.note) row.append(make('p','sub',entry.note));
         return row;
       }));
     }
@@ -272,8 +295,8 @@
     }
 
     function renderFeed() {
-      const hasMonth = availability.has(months[monthIndex].key);
-      $('feed').textContent = feedState === 'loading' ? 'Loading Kai’s published availability…' : feedState === 'failed' ? 'Kai’s published availability could not be loaded.' : hasMonth ? 'Unmarked days may still have commitments.' : 'Kai has no published schedule for this month.';
+      const hasMonth = publishedMonths.has(months[monthIndex].key);
+      $('feed').textContent = feedState === 'loading' ? 'Loading Kai’s published availability…' : feedState === 'failed' ? 'Published bookings could not be loaded. Showing Kai’s usual weekly hours.' : hasMonth ? 'Published bookings are shown when listed. Other dates use Kai’s usual weekly hours.' : 'Showing Kai’s usual weekly hours. No published schedule for this month.';
     }
 
     function showMonth(index, key, focusTab=false) {
@@ -425,35 +448,46 @@
       }
     });
 
+    function publishedEntries(details) {
+      const entries = [];
+      for (const line of details) {
+        const timed = line.match(/^((?:[01]\d|2[0-3]):[0-5]\d(?:[–-](?:[01]\d|2[0-3]):[0-5]\d)?) · (.+)$/);
+        if (timed) {
+          const [,time,title] = timed;
+          entries.push({person:'kai',time,title,short:`${time} · ${title}`,compact:time.slice(0,5)});
+          continue;
+        }
+        const notice = line.match(/^Schedule notice: (.+)$/);
+        if (notice) entries.push({person:'kai',title:notice[1],compact:'Note'});
+        if (/^(?:Holiday|Unavailable)$/i.test(line)) entries.push({person:'kai',title:line,compact:/^Holiday$/i.test(line) ? 'Holiday' : 'Busy'});
+        if (/^(?:Travel:|In-person:)/i.test(line)) entries.push({person:'kai',title:line,compact:'Travel'});
+      }
+      return entries.sort((a,b) => (a.time || '').localeCompare(b.time || ''));
+    }
+
     async function loadAvailability() {
       try {
         const response = await fetch('/data/schedule.json',{cache:'no-store',signal:AbortSignal.timeout(10000)});
         if (!response.ok) throw new Error('Schedule unavailable');
         const data = await response.json();
         if (!Array.isArray(data.sheets) || !data.sheets.length) throw new Error('Schedule empty');
-        const latest = new Map();
+        const days = new Map();
+        const monthKeys = new Set();
         for (const sheet of data.sheets) {
           const month = months.find(item => item.title===sheet.title);
           if (!month) continue;
-          latest.set(month.key,true);
+          monthKeys.add(month.key);
           for (const row of sheet.rows) {
             for (const {value} of row.cells) {
               const [day,...details] = String(value).split(/\r?\n/).map(line => line.trim());
               if (!/^\d{1,2}$/.test(day) || Number(day)<1 || Number(day)>month.count) continue;
-              const busy = details.some(line => /^(unavailable|travel:|in-person:)/i.test(line));
-              const limited = details.some(line => /^limited availability$/i.test(line));
-              if (busy || limited) {
-                const title = busy ? 'Busy' : 'Limited availability';
-                const windows = Array.from(new Set(details.flatMap(line => {
-                  const match = line.match(/^([0-2]\d:[0-5]\d\s*[–-]\s*[0-2]\d:[0-5]\d)\s*·/);
-                  return match ? [match[1]] : [];
-                }))).sort();
-                latest.set(`${month.key}-${pad(day)}`,{title,short:title,compact:busy?'Busy':'Limited',windows});
-              }
+              const bookings = publishedEntries(details);
+              if (bookings.length) days.set(`${month.key}-${pad(day)}`,bookings);
             }
           }
         }
-        availability = latest;
+        publishedDays = days;
+        publishedMonths = monthKeys;
         feedState = 'ready';
       } catch {
         feedState = 'failed';
