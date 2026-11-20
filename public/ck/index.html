@@ -14,6 +14,7 @@
     button{cursor:pointer;touch-action:manipulation}
     :is(button,a,input,select):focus-visible{outline:3px solid var(--accent);outline-offset:3px}
     [hidden]{display:none!important}
+    .sr-only{clip-path:inset(50%);height:1px;width:1px;overflow:hidden;position:absolute;white-space:nowrap}
     .shell{max-width:1120px;margin:auto;padding:26px clamp(12px,4vw,40px) 28px}
     .masthead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:17px}
     .hero{display:flex;align-items:center;gap:17px;min-width:0}
@@ -31,7 +32,7 @@
     .tab{flex:1 0 58px;background:#fffafc;border:1px solid var(--line);border-radius:13px;min-height:46px;padding:5px 7px;font-size:.88rem;font-weight:740;line-height:1.12}
     .tab small{display:block;font-size:.68rem;color:var(--muted);margin-top:3px;font-weight:650}
     .tab:hover{background:var(--rose)}
-    .tab[aria-selected=true]{border-color:#ba6a8d;background:#f8dce8;color:#70274a}
+    .tab[aria-selected=true]{border-color:#9e5276;background:#f8dce8;color:#70274a;box-shadow:inset 0 -3px #b26388}
     .card{background:var(--white);border:1px solid var(--line);border-radius:23px;box-shadow:var(--shadow);min-width:0}
     .calendar{padding:clamp(8px,2vw,22px)}
     .monthbar{display:flex;align-items:center;justify-content:space-between;gap:9px;margin:0 1px 9px}
@@ -46,11 +47,12 @@
     .legend span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
     .dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none;border:1px solid #0002}
     .dot.charis{background:var(--rose-edge)}
-    .dot.kai{background:var(--blue-edge)}
-    .dot.both{background:var(--gold-edge)}
+    .dot.kai{background:var(--blue-edge);border-radius:2px}
+    .dot.both{background:var(--gold-edge);border-radius:2px;transform:rotate(45deg)}
     .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
     .weekday{text-align:center;color:var(--muted);font-size:.81rem;font-weight:730;padding:3px 0 8px}
-    #days{gap:4px}
+    .grid{column-gap:4px}
+    #days{row-gap:4px}
     .day,.blank{border:1px solid #f0e0e6;border-radius:11px;min-width:0;min-height:clamp(47px,6.25vw,81px);padding:6px 7px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;background:#fffcfd;text-align:left}
     .blank{background:#fff8fa;border-color:transparent}
     .weekend{background:#fff3f8}
@@ -65,14 +67,16 @@
     @media(max-width:730px){.today-label{display:none}}
     .day-schedule{display:grid;gap:3px;width:100%;min-width:0}
     .calendar-entry{min-width:0;padding:3px 5px;border-radius:5px;font-size:.76rem;font-weight:720;line-height:1.19}
-    .calendar-entry.charis{background:var(--rose);color:var(--rose-ink);box-shadow:inset 2px 0 var(--rose-edge)}
+    .calendar-entry.charis{background:var(--rose);color:var(--rose-ink);box-shadow:inset 2px 0 var(--rose-edge);border-radius:8px}
     .calendar-entry.kai{background:var(--blue);color:var(--blue-ink);box-shadow:inset 2px 0 var(--blue-edge)}
     .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.kai{background:var(--blue-strong);color:#fff}
     .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.charis{background:var(--rose-strong);color:#fff}
     .calendar-entry.both{background:var(--gold);color:var(--gold-ink);box-shadow:inset 2px 0 var(--gold-edge)}
+    .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.both{background:#765015;color:white}
     .cell-text{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .slot-hours{display:flex;flex-wrap:wrap;font-variant-numeric:tabular-nums;white-space:nowrap}
     .cell-compact{display:none}
+    @media(min-width:950px){.slot-hours{font-size:.875rem;line-height:1.23}}
     @media(max-width:680px){
       .calendar-entry{font-size:.675rem;padding:3px 2px;text-align:center}
       .slot-hours{display:block}
@@ -93,17 +97,17 @@
     .items li{padding:8px 0;border-top:1px solid var(--line);overflow-wrap:anywhere}
     .item-title{display:block;font-size:.96rem;font-weight:620;margin-top:3px}
     .item-time{font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
-    .edit{border:0;background:none;color:var(--accent);padding:3px 0 3px 8px;text-decoration:underline;float:right;font-size:.85rem}
+    .edit{border:0;background:none;color:var(--accent);padding:6px 4px 6px 10px;min-height:38px;text-decoration:underline;float:right;font-size:.85rem}
     dialog{width:min(92vw,470px);max-height:88vh;max-height:88dvh;border:1px solid var(--line);border-radius:20px;padding:20px;background:var(--white);color:var(--ink);box-shadow:var(--shadow)}
     dialog::backdrop{background:#4a233c65}
     dialog form{display:grid;gap:12px}
     dialog label{display:grid;gap:4px;font-weight:650}
-    dialog input,dialog select{width:100%;padding:9px;border:1px solid #cda8b7;border-radius:9px;background:white}
+    dialog input,dialog select{width:100%;padding:9px;border:1px solid #987084;border-radius:9px;background:white}
     .actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:8px}
     #remove{margin-right:auto;color:var(--rose-ink)}
     @media(max-width:700px){.day,.blank{padding:4px 3px}.masthead{align-items:flex-start}.keyline{gap:4px 10px}}
     @media(max-width:485px){.shell{padding-top:14px}.masthead{display:grid;gap:8px}.hero{gap:11px}.tools{justify-content:flex-start}.calendar{border-radius:16px}.day,.blank{border-radius:7px}.number{font-size:.97rem}.hint{font-size:.77rem}.legend{gap:4px 9px}.dot{width:7px;height:7px}.day,.blank{padding:4px 2px}}
-    @media(max-width:350px){.shell{padding-inline:10px}.calendar{padding-inline:6px}.day,.blank{padding-inline:1px}.calendar-entry{padding-inline:1px}.slot-dash{font-size:.57em}.tentative-time{font-size:.62rem}}
+    @media(max-width:374px){.shell{padding-inline:10px}.calendar{padding-inline:6px}.day,.blank{padding-inline:1px}.calendar-entry{padding-inline:1px}.slot-dash{font-size:.57em}.tentative-time{font-size:.62rem}}
     @media(prefers-reduced-motion:no-preference){.sound-star.twinkle{display:inline-block;animation:twinkle .28s ease-out}@keyframes twinkle{50%{transform:scale(1.27) rotate(14deg)}}}
 
     .shell{position:relative;z-index:1}
@@ -138,7 +142,7 @@
       .glimmer:nth-child(2n){animation-delay:-1.7s;animation-duration:5.6s}
       .glimmer:nth-child(3n){animation-delay:-3.1s;animation-duration:6.8s}
       :root:not(.glitter-paused) .day:is(:hover,:focus-visible)::after{content:"✦";position:absolute;top:4px;right:6px;pointer-events:none;color:#a53870;text-shadow:0 0 4px white;font-size:.9rem;animation:date-spark .5s ease-out both}
-      .glitter-paused .glimmer{animation:none}
+      .glitter-paused .glimmer,.glitter-paused .sound-star.twinkle{animation:none}
       @keyframes glimmer{0%,100%{opacity:.42;transform:scale(.8) rotate(-12deg)}48%{opacity:.92;transform:scale(1.13) rotate(11deg)}}
       @keyframes date-spark{from{opacity:.15;transform:translate(-2px,3px) scale(.65)}56%{opacity:1;transform:translate(0,-2px) scale(1.2)}to{opacity:.82;transform:translate(0,0) scale(1)}}
     }
@@ -179,7 +183,7 @@
       <div class="header-glitter" aria-hidden="true"><span class="glimmer">✦</span><span class="glimmer">✧</span><span class="glimmer">✦</span><span class="glimmer">✧</span><span class="glimmer">✦</span></div>
       <img class="header-sticker" src="strawberry-bow.webp" alt="" width="320" height="320">
       <div class="tools">
-        <button class="outline" id="sounds" type="button" aria-label="Sparkle sounds" aria-pressed="true"><span class="sound-star" aria-hidden="true">✦</span> Chimes</button>
+        <button class="outline" id="sounds" type="button" aria-label="Chimes (sparkle sounds)" aria-pressed="true"><span class="sound-star" aria-hidden="true">✦</span> Chimes</button>
         <button class="outline" id="music-toggle" type="button" aria-label="Background music" aria-pressed="true"><span class="bling-icon" aria-hidden="true">♫</span> Music</button>
         <button class="outline" id="manage" type="button">Share plans</button>
       </div>
@@ -197,7 +201,8 @@
           <p class="hint">Hover or tap for details</p>
         </div>
         <div class="grid" aria-hidden="true"><span class="weekday">Mon</span><span class="weekday">Tue</span><span class="weekday">Wed</span><span class="weekday">Thu</span><span class="weekday">Fri</span><span class="weekday">Sat</span><span class="weekday">Sun</span></div>
-        <div class="grid" id="days" aria-label="Days of the month"></div>
+        <p class="sr-only" id="date-keys">Use arrow keys to move between dates. Press Enter to open details.</p>
+        <div class="grid" id="days" role="group" aria-label="Days of the month" aria-describedby="date-keys"></div>
         <p class="status" id="feed" role="status"></p>
       </section>
     </div>
@@ -217,6 +222,7 @@
     <div class="day-head"><h3 id="day-heading"></h3><button class="outline" id="close-day" type="button" autofocus>Close</button></div>
     <ul class="items" id="day-items" aria-labelledby="day-heading"></ul>
     <p class="sub" id="empty">No entries for this day.</p>
+    <p class="sub" id="day-notice" role="status"></p>
     <div class="actions"><button class="primary" id="add" type="button">+ Add plan</button></div>
   </dialog>
   <dialog id="editor" aria-labelledby="editor-title">
@@ -233,7 +239,7 @@
   <dialog id="sharing" aria-labelledby="share-heading">
     <form method="dialog">
       <h3 id="share-heading">Share plans</h3>
-      <p>Export your plans and send the file to each other. Import it on another device to merge the edits into that browser. The file includes your plan details.</p>
+      <p>Export downloads every saved plan with its title, date and time. Anyone with the file can read it. Import merges its plans into this browser.</p>
       <input id="import-file" type="file" accept=".json,application/json" hidden>
       <p class="sub" id="share-message" role="status"></p>
       <div class="actions"><button class="outline" id="download" type="button">Export</button><button class="outline" id="upload" type="button">Import</button><button class="primary">Done</button></div>
@@ -285,29 +291,31 @@
     ];
     const storageKey = 'speakkai.ck.plans.v1';
     const limit = 3000;
-    let plans = [];
+    let plansByDate = new Map();
     let publishedDays = new Map();
     let publishedMonths = new Set();
+    let partialMonths = new Set();
     let feedState = 'loading';
     let monthIndex = today > '2027-12-31' ? months.length-1 : Math.max(0,months.findIndex(month => month.key === today.slice(0,7)));
-    let selected = validDay(today) ? today : `${months[monthIndex].key}-01`;
+    let selected = validDay(today) ? today : today > '2027-12-31' ? '2027-12-31' : '2026-11-01';
     let editing = null;
     let editingVersion = null;
+    let saving = false;
     let previewDate = null;
     let previewAnchor = null;
     let previewTimer = 0;
     let chimeTimer = 0;
     const chimePreference = 'speakkai.ck.chimes';
     const musicPreference = 'speakkai.ck.music';
-    function audioEnabled(key) {
+    function preferenceEnabled(key) {
       try {return localStorage.getItem(key)!=='off';}
       catch {return true;}
     }
-    function setAudioPreference(key, enabled) {
+    function savePreference(key, enabled) {
       try {localStorage.setItem(key,enabled ? 'on' : 'off');}
       catch {}
     }
-    let soundEnabled = audioEnabled(chimePreference);
+    let soundEnabled = preferenceEnabled(chimePreference);
     let audioContext;
     let lastChime = -Infinity;
     let lastChimeDate = null;
@@ -329,10 +337,21 @@
 
     const serialize = entries => JSON.stringify({version:1,entries});
     const read = () => parsePlans(localStorage.getItem(storageKey) ?? serialize([]));
+    const withPlanLock = task => navigator.locks ? navigator.locks.request(storageKey,task) : task();
+
+    function indexPlans(entries) {
+      plansByDate = new Map();
+      for (const entry of entries) {
+        if (entry.deleted) continue;
+        let day = plansByDate.get(entry.date);
+        if (!day) plansByDate.set(entry.date,day=[]);
+        day.push(entry);
+      }
+    }
     function write(entries) {
       if (entries.length > limit) throw new Error('Plan limit reached');
       localStorage.setItem(storageKey,serialize(entries));
-      plans = entries;
+      indexPlans(entries);
       renderDays();
       renderSelected();
     }
@@ -355,8 +374,9 @@
       } else {
         entries.push({person:'kai',title:routine,time:hours,note,summary:'Off'});
       }
-      const personal = plans.filter(plan => !plan.deleted && plan.date === key).sort((a,b) => a.time.localeCompare(b.time));
-      return entries.concat(personal);
+      return entries.concat(plansByDate.get(key) || []).sort((a,b) =>
+        (a.time || '').slice(0,5).localeCompare((b.time || '').slice(0,5))
+      );
     }
 
     function calendarEntry(entry) {
@@ -433,6 +453,7 @@
         if (editable && entry.id) {
           const edit = make('button','edit','Edit');
           edit.type = 'button';
+          edit.dataset.planId = entry.id;
           edit.setAttribute('aria-label',`Edit ${entry.title}`);
           edit.addEventListener('click',() => openEditor(entry));
           row.append(edit);
@@ -458,7 +479,12 @@
       $('day-heading').textContent = dayName.format(toDate(selected));
       const entries = entriesFor(selected);
       $('empty').hidden = entries.length > 0;
+      const focusedPlan = document.activeElement?.dataset.planId;
       $('day-items').replaceChildren(...dayRows(entries,true));
+      if (focusedPlan && $('day-dialog').open) {
+        const edit = $('day-items').querySelector(`[data-plan-id="${focusedPlan}"]`);
+        (edit || $('add')).focus({preventScroll:true});
+      }
       const active = $('days').querySelector('[data-active="true"]');
       if (active) delete active.dataset.active;
       if ($('day-dialog').open) {
@@ -471,8 +497,10 @@
       hidePreview();
       selected = button.dataset.date;
       setDayTabStop(button);
-      $('day-dialog').showModal();
+      $('day-notice').textContent = '';
       renderSelected();
+      $('day-dialog').showModal();
+      button.dataset.active = 'true';
     }
 
 
@@ -497,17 +525,21 @@
         $('preview-items').replaceChildren(...dayRows(entriesFor(key),false));
         const popup = $('preview');
         popup.hidden = false;
-        button.setAttribute('aria-describedby','preview');
+        popup.style.maxHeight = '';
+        button.setAttribute('aria-describedby','preview-items');
         const rect = button.getBoundingClientRect();
         const width = popup.offsetWidth;
         const height = popup.offsetHeight;
-        const below = rect.bottom+height+14<=innerHeight;
-        const above = rect.top>=height+14;
-        const side = !below && !above && (innerWidth-rect.right>=width+16 ? 'right' : rect.left>=width+16 ? 'left' : null);
-        const x = side==='right' ? rect.right+7 : side==='left' ? rect.left-width-7 : rect.left;
-        const y = side ? rect.top : below ? rect.bottom+6 : rect.top-height-6;
+        const upperSpace = rect.top-9;
+        const lowerSpace = innerHeight-rect.bottom-9;
+        const below = lowerSpace>=height || lowerSpace>=upperSpace;
+        const side = Math.max(upperSpace,lowerSpace)<height &&
+          (innerWidth-rect.right>=width+9 ? 'right' : rect.left>=width+9 ? 'left' : null);
+        if (!side) popup.style.maxHeight = Math.max(0,Math.min(height,below ? lowerSpace : upperSpace))+'px';
+        const x = side==='right' ? rect.right+1 : side==='left' ? rect.left-width-1 : rect.left;
+        const y = side ? rect.top : below ? rect.bottom+1 : rect.top-popup.offsetHeight-1;
         popup.style.left = Math.max(8,Math.min(x,innerWidth-width-8))+'px';
-        popup.style.top = Math.max(8,Math.min(y,innerHeight-height-8))+'px';
+        popup.style.top = Math.max(8,Math.min(y,innerHeight-popup.offsetHeight-8))+'px';
       }
       if (audible && soundEnabled) {
         clearTimeout(chimeTimer);
@@ -518,7 +550,10 @@
     function schedulePreviewHide() {
       clearTimeout(chimeTimer);
       clearTimeout(previewTimer);
-      previewTimer = setTimeout(hidePreview,160);
+      previewTimer = setTimeout(() => {
+        if (previewAnchor?.matches(':hover,:focus-visible') || $('preview').matches(':hover')) return;
+        hidePreview();
+      },160);
     }
 
     function playChime(key) {
@@ -560,7 +595,7 @@
     async function toggleSounds() {
       soundEnabled = !soundEnabled;
       $('sounds').setAttribute('aria-pressed',String(soundEnabled));
-      setAudioPreference(chimePreference,soundEnabled);
+      savePreference(chimePreference,soundEnabled);
       if (!soundEnabled) {
         clearTimeout(chimeTimer);
         for (const oscillator of activeTones) oscillator.stop();
@@ -578,10 +613,15 @@
 
     function renderFeed() {
       const hasMonth = publishedMonths.has(months[monthIndex].key);
+      if (partialMonths.has(months[monthIndex].key)) {
+        $('feed').textContent = 'Some bookings could not be read. Dates without bookings show Kai’s usual weekly hours.';
+        return;
+      }
       $('feed').textContent = feedState === 'loading' ? 'Loading Kai’s published availability…' : feedState === 'failed' ? 'Published bookings could not be loaded. Showing Kai’s usual weekly hours.' : hasMonth ? 'Published bookings are shown when listed. Other dates use Kai’s usual weekly hours.' : 'Showing Kai’s usual weekly hours. No published schedule for this month.';
     }
 
     function showMonth(index, key, focusTab=false) {
+      const focusedArrow = document.activeElement;
       monthIndex = index;
       const month = months[index];
       selected = key ?? (today.startsWith(month.key) ? today : `${month.key}-01`);
@@ -594,7 +634,7 @@
       }
       const tab = $('tabs').children[index];
       $('month-panel').setAttribute('aria-labelledby',tab.id);
-      if (focusTab) tab.focus({preventScroll:true});
+      if (focusTab || ((focusedArrow===$('previous') || focusedArrow===$('next')) && focusedArrow.disabled)) tab.focus({preventScroll:true});
       const bar = $('tabs');
       if (tab.offsetLeft < bar.offsetLeft + bar.scrollLeft || tab.offsetLeft + tab.offsetWidth > bar.offsetLeft + bar.scrollLeft + bar.clientWidth) {
         bar.scrollLeft = tab.offsetLeft - bar.offsetLeft - (bar.clientWidth-tab.offsetWidth)/2;
@@ -606,41 +646,59 @@
 
     function openEditor(entry) {
       editing = entry?.id ?? null;
-      editingVersion = entry?.changed ?? null;
+      editingVersion = entry ? JSON.stringify(entry) : null;
       $('editor-title').textContent = entry ? 'Edit plan' : 'Add a plan';
       $('entry-title').value = entry?.title ?? '';
       $('entry-person').value = entry?.person ?? 'both';
       $('entry-date').value = entry?.date ?? selected;
       $('entry-time').value = entry?.time ?? '';
       $('remove').hidden = !entry;
+      $('remove').textContent = 'Delete';
+      delete $('remove').dataset.confirm;
       $('editor-message').textContent = '';
       $('editor').showModal();
     }
 
-    function saveEdit(deleting=false) {
+    async function saveEdit(deleting=false) {
+      if (saving) return;
       const date = $('entry-date').value;
       const title = $('entry-title').value.trim();
       if (!deleting && (!title || !validDay(date))) {
         $('editor-message').textContent = 'Enter a plan name and a date in the calendar.';
         return;
       }
+      const editId = editing;
+      const revision = editingVersion;
+      const person = $('entry-person').value;
+      const time = $('entry-time').value;
+      const controls = [$('remove'),$('cancel'),$('entry-form').querySelector('button[type="submit"]')];
+      saving = true;
+      for (const control of controls) control.disabled = true;
       try {
-        const current = read();
-        const previous = current.find(entry => entry.id===editing);
-        if (editing && previous?.changed!==editingVersion) {
-          $('editor-message').textContent = 'This plan changed in another tab. Close this editor and reopen the plan.';
+        const id = editId ?? crypto.randomUUID();
+        const issue = await withPlanLock(() => {
+          const current = read();
+          const previous = current.find(entry => entry.id===editId);
+          if (editId && JSON.stringify(previous)!==revision) return 'This plan changed in another tab. Reopen it before editing.';
+          const changed = Math.max(Date.now(),(previous?.changed ?? 0)+1);
+          if (!Number.isSafeInteger(changed)) return 'This imported plan’s revision is too large to edit.';
+          const entry = deleting ? {id,changed,deleted:true} : {id,changed,date,title,person,time};
+          write([...current.filter(plan => plan.id!==id),entry]);
+        });
+        if (issue) {
+          $('editor-message').textContent = issue;
           return;
         }
-        const id = editing ?? crypto.randomUUID();
-        const changed = Math.max(Date.now(),(previous?.changed ?? 0)+1);
-        const entry = deleting ? {id,changed,deleted:true} : {id,changed,date,title,person:$('entry-person').value,time:$('entry-time').value};
-        write([...current.filter(plan => plan.id!==id),entry]);
         $('editor').close();
         if (!deleting) showMonth(months.findIndex(month => date.startsWith(month.key)),date);
-        $('add').focus({preventScroll:true});
-        $('notice').textContent = deleting ? 'Plan deleted.' : 'Plan saved in this browser.';
+        const edit = deleting ? null : $('day-items').querySelector(`[data-plan-id="${id}"]`);
+        (edit || $('add')).focus({preventScroll:true});
+        $('day-notice').textContent = deleting ? 'Plan deleted.' : 'Plan saved in this browser.';
       } catch {
         $('editor-message').textContent = 'Could not save this change. Check browser storage and try again.';
+      } finally {
+        saving = false;
+        for (const control of controls) control.disabled = false;
       }
     }
 
@@ -679,7 +737,7 @@
     $('preview').addEventListener('pointerleave',() => schedulePreviewHide());
     window.addEventListener('resize',hidePreview);
     window.addEventListener('scroll',event => {
-      if (event.target!==$('preview')) hidePreview();
+      if (previewAnchor && event.target!==$('preview')) hidePreview();
     },true);
     document.addEventListener('keydown',event => {
       if (event.key==='Escape' && previewDate) hidePreview();
@@ -690,13 +748,18 @@
       const options = {ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7};
       const day = Number(button.dataset.date.slice(-2));
       const month = months[monthIndex];
-      let target = day;
-      if (Object.hasOwn(options,event.key)) target += options[event.key];
-      else if (event.key==='Home') target = 1;
-      else if (event.key==='End') target = month.count;
+      let key = button.dataset.date;
+      if (Object.hasOwn(options,event.key)) {
+        const target = toDate(key);
+        target.setUTCDate(day+options[event.key]);
+        key = target.toISOString().slice(0,10);
+      } else if (event.key==='Home') key = `${month.key}-01`;
+      else if (event.key==='End') key = `${month.key}-${pad(month.count)}`;
       else return;
       event.preventDefault();
-      const next = dayButton(`${month.key}-${pad(Math.max(1,Math.min(target,month.count)))}`);
+      if (!validDay(key)) return;
+      if (!key.startsWith(month.key)) showMonth(months.findIndex(item => key.startsWith(item.key)),key);
+      const next = dayButton(key);
       if (next) {setDayTabStop(next);next.focus();}
     });
     grid.addEventListener('click',event => {
@@ -716,7 +779,7 @@
     $('sounds').addEventListener('click',toggleSounds);
     const music = $('background-music');
     const musicToggle = $('music-toggle');
-    let musicEnabled = audioEnabled(musicPreference);
+    let musicEnabled = preferenceEnabled(musicPreference);
     music.volume = .50;
     musicToggle.setAttribute('aria-pressed',String(musicEnabled));
 
@@ -732,30 +795,49 @@
     musicToggle.addEventListener('click',() => {
       musicEnabled = !musicEnabled;
       musicToggle.setAttribute('aria-pressed',String(musicEnabled));
-      setAudioPreference(musicPreference,musicEnabled);
+      savePreference(musicPreference,musicEnabled);
       if (musicEnabled) startMusic(true);
       else music.pause();
     });
 
     function startAudioAfterInteraction(event) {
       if (!event.isTrusted || navigator.userActivation?.isActive===false) return;
-      const control = event.target.closest?.('#music-toggle,#sounds');
-      if (control?.id!=='sounds') armChimes().catch(() => {});
-      if (control?.id!=='music-toggle') startMusic();
+      if (event.target.closest?.('#music-toggle,#sounds')) return;
+      armChimes().catch(() => {});
+      startMusic();
     }
 
     document.addEventListener('pointerup',startAudioAfterInteraction,true);
     document.addEventListener('keydown',startAudioAfterInteraction,true);
+    document.addEventListener('click',startAudioAfterInteraction,true);
     startMusic();
-    $('glitter-toggle').addEventListener('click',event => {
-      const paused = document.documentElement.classList.toggle('glitter-paused');
-      event.currentTarget.setAttribute('aria-pressed',String(!paused));
+    const glitterPreference = 'speakkai.ck.glitter';
+    const glitterToggle = $('glitter-toggle');
+    function setGlitter(enabled) {
+      document.documentElement.classList.toggle('glitter-paused',!enabled);
+      glitterToggle.setAttribute('aria-pressed',String(enabled));
+    }
+    setGlitter(preferenceEnabled(glitterPreference));
+    glitterToggle.addEventListener('click',() => {
+      const enabled = glitterToggle.getAttribute('aria-pressed')!=='true';
+      setGlitter(enabled);
+      savePreference(glitterPreference,enabled);
     });
     $('previous').addEventListener('click',() => showMonth(monthIndex-1));
     $('next').addEventListener('click',() => showMonth(monthIndex+1));
     $('add').addEventListener('click',() => openEditor());
     $('cancel').addEventListener('click',() => $('editor').close());
-    $('remove').addEventListener('click',() => saveEdit(true));
+    $('editor').addEventListener('cancel',event => {if (saving) event.preventDefault();});
+    $('remove').addEventListener('click',() => {
+      const remove = $('remove');
+      if (remove.dataset.confirm==='true') {
+        saveEdit(true);
+        return;
+      }
+      remove.dataset.confirm = 'true';
+      remove.textContent = 'Confirm delete';
+      $('editor-message').textContent = 'Delete this plan?';
+    });
     $('entry-form').addEventListener('submit',event => {event.preventDefault();saveEdit();});
     $('manage').addEventListener('click',() => {hidePreview();$('share-message').textContent='';$('sharing').showModal();});
     $('download').addEventListener('click',() => {
@@ -779,12 +861,14 @@
       try {
         if (file.size > 2_000_000) throw new Error('Plan file too large');
         const incoming = parsePlans(await file.text());
-        const merged = new Map(read().map(entry => [entry.id,entry]));
-        for (const entry of incoming) {
-          const local = merged.get(entry.id);
-          if (!local || entry.changed > local.changed || (entry.changed === local.changed && JSON.stringify(entry) > JSON.stringify(local))) merged.set(entry.id,entry);
-        }
-        write(Array.from(merged.values()));
+        await withPlanLock(() => {
+          const merged = new Map(read().map(entry => [entry.id,entry]));
+          for (const entry of incoming) {
+            const local = merged.get(entry.id);
+            if (!local || entry.changed > local.changed || (entry.changed === local.changed && JSON.stringify(entry) > JSON.stringify(local))) merged.set(entry.id,entry);
+          }
+          write(Array.from(merged.values()));
+        });
         $('share-message').textContent = 'Plans merged into this browser.';
       } catch {
         $('share-message').textContent = 'Could not import plans. Choose a valid export file and check browser storage.';
@@ -793,7 +877,7 @@
     window.addEventListener('storage',event => {
       if (event.key!==storageKey && event.key!==null) return;
       try {
-        plans = read();
+        indexPlans(read());
         renderDays();
         renderSelected();
       } catch {
@@ -826,13 +910,26 @@
         if (!Array.isArray(data.sheets) || !data.sheets.length) throw new Error('Schedule empty');
         const days = new Map();
         const monthKeys = new Set();
+        const partial = new Set();
         for (const sheet of data.sheets) {
-          const month = months.find(item => item.title===sheet.title);
+          const month = months.find(item => item.title===sheet?.title);
           if (!month) continue;
+          if (!Array.isArray(sheet.rows)) {
+            partial.add(month.key);
+            continue;
+          }
           monthKeys.add(month.key);
           for (const row of sheet.rows) {
-            for (const {value} of row.cells) {
-              const [day,...details] = String(value).split(/\r?\n/).map(line => line.trim());
+            if (!Array.isArray(row?.cells)) {
+              partial.add(month.key);
+              continue;
+            }
+            for (const cell of row.cells) {
+              if (typeof cell?.value!=='string') {
+                partial.add(month.key);
+                continue;
+              }
+              const [day,...details] = cell.value.split(/\r?\n/).map(line => line.trim());
               if (!/^\d{1,2}$/.test(day) || Number(day)<1 || Number(day)>month.count) continue;
               const key = `${month.key}-${pad(day)}`;
               const isWednesday = toDate(key).getUTCDay() === 3;
@@ -845,6 +942,7 @@
         }
         publishedDays = days;
         publishedMonths = monthKeys;
+        partialMonths = partial;
         feedState = 'ready';
       } catch {
         feedState = 'failed';
@@ -854,7 +952,7 @@
       renderFeed();
     }
 
-    try {plans=read();} catch {$('notice').textContent='Could not read plans saved in this browser.';}
+    try {indexPlans(read());} catch {$('notice').textContent='Could not read plans saved in this browser.';}
     function refreshToday() {
       const next = shanghaiDate.format(new Date());
       if (next===today) return;
