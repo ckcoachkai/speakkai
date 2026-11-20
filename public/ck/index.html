@@ -79,12 +79,12 @@
     .charis-label,.shared-plan-label{display:block;white-space:normal;overflow-wrap:anywhere}
     .free-overview{display:grid;gap:2px;padding-top:2px}
     .free-summary{background:var(--free);color:var(--free-ink);box-shadow:inset 0 0 0 1px var(--free-edge)}
-    .free-summary-label,.free-more{display:block;color:var(--free-ink);font-size:.68rem;line-height:1.18}
+    .free-summary-label{display:block;color:var(--free-ink);font-size:.68rem;line-height:1.18}
     .free-summary .slot-hours{font-weight:750}
     .shared-availability{margin:12px 0 0;padding:10px 0 0;border-top:1px solid var(--line)}
     .shared-availability h4{margin:0 0 6px;color:var(--ink);font-size:.94rem}
-    .shared-slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(106px,1fr));gap:5px;list-style:none;padding:0;margin:0}
-    .shared-slots li{border:1px solid var(--free-edge);border-radius:6px;background:var(--free);color:var(--free-ink);padding:3px 5px;font-size:.8rem;font-weight:730;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .shared-windows{display:grid;grid-template-columns:repeat(auto-fit,minmax(106px,1fr));gap:5px;list-style:none;padding:0;margin:0}
+    .shared-windows li{border:1px solid var(--free-edge);border-radius:6px;background:var(--free);color:var(--free-ink);padding:3px 5px;font-size:.8rem;font-weight:730;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}
     .shared-availability .sub{margin-top:5px}
     .editor-times{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
     .editor-times input{min-width:0}
@@ -466,16 +466,8 @@
       return open;
     }
 
-    function hourSlots(busy) {
-      const slots = [];
-      for (const [from,to] of openRanges(busy,planningStart,fullDay)) {
-        for (let cursor=from;cursor+60<=to;cursor+=60) slots.push([cursor,cursor+60]);
-      }
-      return slots;
-    }
-
     function dayAvailability(key, entries) {
-      if (feedState==='loading') return {slots:[],trips:[],missingEnd:false,pending:true};
+      if (feedState==='loading') return {ranges:[],trips:[],missingEnd:false,pending:true};
       const busy = {charis:[],kai:[],both:[]};
       const travel = {charis:[],kai:[]};
       let missingEnd = false;
@@ -514,7 +506,7 @@
         }
       }
       const reserved = mergeRanges([...busy.charis,...busy.kai,...busy.both,...travel.charis,...travel.kai]);
-      return {slots:hourSlots(reserved),trips,missingEnd};
+      return {ranges:openRanges(reserved,planningStart,fullDay),trips,missingEnd};
     }
 
     function stackedTime(time) {
@@ -529,46 +521,32 @@
       return hours;
     }
 
-    function calendarAvailability(slots) {
-      if (!slots.length) return null;
-      const maxShown = 3;
-      const windowStarts = slots.filter(([start],index) => index===0 || start!==slots[index-1][1]);
-      const featured = new Set(windowStarts.length>maxShown
-        ? [...windowStarts.slice(0,maxShown-1),windowStarts.at(-1)]
-        : windowStarts);
-      for (const slot of slots) {
-        if (featured.size>=maxShown) break;
-        featured.add(slot);
-      }
+    function calendarAvailability(ranges) {
+      if (!ranges.length) return null;
       const overview = make('span','free-overview');
-      overview.title = `${slots.length} shared ${slots.length===1 ? 'hour' : 'hours'}. Open this date for all slots.`;
       overview.append(make('span','free-summary-label','Free'));
-      for (const slot of [...featured].sort((a,b) => a[0]-b[0])) {
+      for (const range of ranges) {
         const row = make('span','calendar-entry free-summary');
-        row.append(stackedTime(formatRange(slot)));
+        row.append(stackedTime(formatRange(range)));
         overview.append(row);
       }
-      const remaining = slots.length-featured.size;
-      if (remaining>0) overview.append(make('span','free-more',`+${remaining} more`));
       return overview;
     }
 
-    function slotList(slots) {
-      const list = make('ul','shared-slots');
-      for (const slot of slots) list.append(make('li','',formatRange(slot)));
-      return list;
-    }
-
     function renderAvailability(target, availability) {
-      const {slots,missingEnd} = availability;
+      const {ranges,missingEnd} = availability;
       const section = make('section','shared-availability');
       section.append(make('h4','','Free together · 06:00–24:00'));
       if (availability.pending) {
         section.append(make('p','sub','Checking Kai’s published bookings…'));
+      } else if (ranges.length) {
+        const list = make('ul','shared-windows');
+        for (const range of ranges) list.append(make('li','',formatRange(range)));
+        section.append(list);
       } else {
-        section.append(slots.length ? slotList(slots) : make('p','sub','No full shared hour on the calendar.'));
-        if (missingEnd) section.append(make('p','sub','A booking without an end time can hide later slots.'));
+        section.append(make('p','sub','No shared free time on the calendar.'));
       }
+      if (missingEnd) section.append(make('p','sub','A booking without an end time can hide later free time.'));
       target.replaceChildren(section);
     }
 
@@ -608,11 +586,11 @@
         const button = make('button',`day${i%7>=5?' weekend':''}${key===today?' today':''}`);
         const entries = entriesFor(key);
         const availability = dayAvailability(key,entries);
-        const slotCount = availability.slots.length;
+        const rangeCount = availability.ranges.length;
         button.type = 'button';
         button.dataset.date = key;
-        const slotLabel = availability.pending ? '' : `, ${slotCount} shared ${slotCount===1 ? 'hour' : 'hours'}`;
-        button.setAttribute('aria-label',`${dayName.format(toDate(key))}, ${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}${slotLabel}`);
+        const rangeLabel = availability.pending ? '' : `, ${rangeCount} shared availability ${rangeCount===1 ? 'window' : 'windows'}`;
+        button.setAttribute('aria-label',`${dayName.format(toDate(key))}, ${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}${rangeLabel}`);
         button.tabIndex = key===selected ? 0 : -1;
         button.setAttribute('aria-haspopup','dialog');
         if (key===today) button.setAttribute('aria-current','date');
@@ -629,7 +607,7 @@
         for (const person of ['charis','kai','both']) {
           for (const entry of entries.filter(item => item.person===person)) schedule.append(calendarEntry(entry));
         }
-        const free = calendarAvailability(availability.slots);
+        const free = calendarAvailability(availability.ranges);
         if (free) schedule.append(free);
         button.append(schedule);
         cells.push(button);
