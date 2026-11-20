@@ -858,14 +858,8 @@
     function refreshToday() {
       const next = shanghaiDate.format(new Date());
       if (next===today) return;
-      const currentMonthWasOpen = months[monthIndex].key===today.slice(0,7);
       today = next;
-      const newMonth = months.findIndex(month => month.key===today.slice(0,7));
-      if (currentMonthWasOpen && newMonth>=0 && newMonth!==monthIndex && !document.querySelector('dialog[open]')) {
-        showMonth(newMonth);
-      } else {
-        renderDays();
-      }
+      renderDays();
     }
 
     showMonth(monthIndex,selected);
