@@ -57,7 +57,12 @@
     .day:hover,.day[data-active=true]{background:#f9f0f6;border-color:#be8fa8}
     .day:focus-visible{outline-offset:0;z-index:1}
     .number{min-width:26px;padding:0 3px;text-align:center;line-height:26px;font-size:1.05rem;font-weight:730;font-variant-numeric:tabular-nums;border-radius:50%}
-    .today .number{background:var(--accent);color:white}
+    .date-line{display:flex;align-items:center;gap:6px;max-width:100%}
+    .day.today{border-color:#b05c83;background:#fff0f6;box-shadow:inset 0 0 0 1px #b05c83}
+    .day.today:is(:hover,[data-active=true]){background:#fce5f0}
+    .today .number{background:#82284f;color:white}
+    .today-label{color:#742044;font-size:.73rem;font-weight:780;white-space:nowrap}
+    @media(max-width:730px){.today-label{display:none}}
     .day-schedule{display:grid;gap:3px;width:100%;min-width:0}
     .calendar-entry{min-width:0;padding:3px 5px;border-radius:5px;font-size:.76rem;font-weight:720;line-height:1.19}
     .calendar-entry.charis{background:var(--rose);color:var(--rose-ink);box-shadow:inset 2px 0 var(--rose-edge)}
@@ -246,7 +251,8 @@
     const people = {charis:'Charis',kai:'Kai',both:'Together'};
     const monthName = new Intl.DateTimeFormat('en',{month:'long',year:'numeric',timeZone:'UTC'});
     const dayName = new Intl.DateTimeFormat('en',{weekday:'long',month:'long',day:'numeric',year:'numeric',timeZone:'UTC'});
-    const today = new Intl.DateTimeFormat('sv-SE',{year:'numeric',month:'2-digit',day:'2-digit',timeZone:'Asia/Shanghai'}).format(new Date());
+    const shanghaiDate = new Intl.DateTimeFormat('sv-SE',{year:'numeric',month:'2-digit',day:'2-digit',timeZone:'Asia/Shanghai'});
+    let today = shanghaiDate.format(new Date());
     const toDate = key => new Date(`${key}T00:00:00Z`);
     const pad = value => String(value).padStart(2,'0');
     const months = Array.from({length:14},(_,i) => {
@@ -283,7 +289,7 @@
     let publishedDays = new Map();
     let publishedMonths = new Set();
     let feedState = 'loading';
-    let monthIndex = Math.max(0,months.findIndex(month => month.key === today.slice(0,7)));
+    let monthIndex = today > '2027-12-31' ? months.length-1 : Math.max(0,months.findIndex(month => month.key === today.slice(0,7)));
     let selected = validDay(today) ? today : `${months[monthIndex].key}-01`;
     let editing = null;
     let editingVersion = null;
@@ -395,7 +401,14 @@
         button.tabIndex = key===selected ? 0 : -1;
         button.setAttribute('aria-haspopup','dialog');
         if (key===today) button.setAttribute('aria-current','date');
-        button.append(make('span','number',String(number)));
+        const dateLine = make('span','date-line');
+        dateLine.append(make('span','number',String(number)));
+        if (key===today) {
+          const label = make('span','today-label','Today');
+          label.setAttribute('aria-hidden','true');
+          dateLine.append(label);
+        }
+        button.append(dateLine);
         const schedule = make('span','day-schedule');
         schedule.setAttribute('aria-hidden','true');
         for (const person of ['charis','kai','both']) {
@@ -842,8 +855,25 @@
     }
 
     try {plans=read();} catch {$('notice').textContent='Could not read plans saved in this browser.';}
+    function refreshToday() {
+      const next = shanghaiDate.format(new Date());
+      if (next===today) return;
+      const currentMonthWasOpen = months[monthIndex].key===today.slice(0,7);
+      today = next;
+      const newMonth = months.findIndex(month => month.key===today.slice(0,7));
+      if (currentMonthWasOpen && newMonth>=0 && newMonth!==monthIndex && !document.querySelector('dialog[open]')) {
+        showMonth(newMonth);
+      } else {
+        renderDays();
+      }
+    }
+
     showMonth(monthIndex,selected);
     loadAvailability();
+    setInterval(refreshToday,30000);
+    document.addEventListener('visibilitychange',() => {
+      if (!document.hidden) refreshToday();
+    });
   </script>
 </body>
 </html>
