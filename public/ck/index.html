@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#fff8f7">
   <title>Charis &amp; Kai · Our Calendar</title>
   <style>
-    :root{color-scheme:light;color-scheme:only light;--paper:#fff8f7;--white:#fffdfc;--ink:#462b3b;--muted:#735264;--line:#ebd7df;--accent:#8e345d;--pink:#e878a6;--rose:#ffddeb;--rose-ink:#742044;--rose-edge:#b84673;--rose-strong:#8b2c56;--kai-blue:#d8edff;--kai-blue-ink:#102f50;--kai-blue-edge:#3678ae;--kai-blue-strong:#245781;--gold:#fbefce;--gold-ink:#664015;--gold-edge:#a97524;--shadow:0 3px 0 #b9688b12,0 12px 34px #8c476516}
+    :root{color-scheme:light;color-scheme:only light;--paper:#fff8f7;--white:#fffdfc;--ink:#462b3b;--muted:#735264;--line:#ebd7df;--accent:#8e345d;--pink:#e878a6;--rose:#ffddeb;--rose-ink:#742044;--rose-edge:#b84673;--rose-strong:#8b2c56;--kai-blue:#d8edff;--kai-blue-ink:#102f50;--kai-blue-edge:#3678ae;--kai-blue-strong:#245781;--gold:#fff34d;--gold-ink:#453600;--gold-edge:#a88600;--free:#b5ff35;--free-ink:#214300;--free-edge:#63a512;--shadow:0 3px 0 #b9688b12,0 12px 34px #8c476516}
     *,*::before,*::after{box-sizing:border-box}
     body{margin:0;color:var(--ink);font:16px/1.5 system-ui,"Microsoft YaHei",sans-serif;background-color:var(--paper);background-image:repeating-linear-gradient(0deg,transparent 0 13px,#d88aaa0d 13px 26px),repeating-linear-gradient(90deg,transparent 0 13px,#d88aaa0d 13px 26px)}
     button,input,select{font:inherit;color:inherit}
@@ -49,7 +49,8 @@
     .dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none;border:1px solid #0002}
     .dot.charis{background:var(--rose-edge)}
     .dot.kai{background:var(--kai-blue-edge);border-radius:2px}
-    .dot.both{background:var(--gold-edge);border-radius:2px;transform:rotate(45deg)}
+    .dot.both{background:var(--gold);border-color:var(--gold-edge);border-radius:2px;transform:rotate(45deg)}
+    .dot.free{background:var(--free);border-color:var(--free-edge)}
     .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
     .weekday{text-align:center;color:var(--muted);font-size:.81rem;font-weight:730;padding:3px 0 8px}
     .grid{column-gap:4px}
@@ -73,9 +74,23 @@
     .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.kai{background:var(--kai-blue-strong);color:#fff}
     .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.charis{background:var(--rose-strong);color:#fff}
     .calendar-entry.both{background:var(--gold);color:var(--gold-ink);box-shadow:inset 2px 0 var(--gold-edge)}
-    .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.both{background:#765015;color:white}
+    .day:is(:hover,:focus-visible,[data-active=true]) .calendar-entry.both{background:#ffeb0b;color:var(--gold-ink)}
     .cell-text{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .charis-label{display:block;white-space:normal;overflow-wrap:anywhere}
+    .charis-label,.shared-plan-label{display:block;white-space:normal;overflow-wrap:anywhere}
+    .free-summary{background:var(--free);color:var(--free-ink);box-shadow:inset 0 0 0 1px var(--free-edge)}
+    .free-summary-label{display:block;font-size:.68rem;line-height:1.18}
+    .free-summary .slot-hours{font-weight:750}
+    .shared-availability{margin:12px 0 0;padding:10px 0 0;border-top:1px solid var(--line)}
+    .shared-availability h4{margin:0 0 6px;color:var(--ink);font-size:.94rem}
+    .shared-slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(106px,1fr));gap:5px;list-style:none;padding:0;margin:0}
+    .shared-slots li{border:1px solid var(--free-edge);border-radius:6px;background:var(--free);color:var(--free-ink);padding:3px 5px;font-size:.8rem;font-weight:730;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .shared-availability details{margin-top:8px;color:var(--muted);font-size:.81rem}
+    .shared-availability details .shared-slots{margin-top:6px}
+    .shared-availability summary{cursor:pointer}
+    .shared-availability .sub{margin-top:5px}
+    .editor-times{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .editor-times input{min-width:0}
+    @media(max-width:374px){.editor-times{grid-template-columns:1fr}}
     .slot-hours{display:flex;flex-wrap:wrap;font-variant-numeric:tabular-nums;white-space:nowrap}
     .cell-compact{display:none}
     @media(min-width:950px){.slot-hours{font-size:.875rem;line-height:1.23}}
@@ -208,7 +223,8 @@
           <div class="legend" aria-label="Calendar colors">
             <span><i class="dot charis" aria-hidden="true"></i>Charis</span>
             <span><i class="dot kai" aria-hidden="true"></i>Kai</span>
-            <span><i class="dot both" aria-hidden="true"></i>Together</span>
+            <span><i class="dot free" aria-hidden="true"></i>Free together</span>
+            <span><i class="dot both" aria-hidden="true"></i>Together plan</span>
           </div>
           <p class="hint">Hover or tap for details</p>
         </div>
@@ -229,6 +245,7 @@
   <div class="preview" id="preview" role="tooltip" hidden>
     <div class="day-head"><h3 id="preview-heading"></h3></div>
     <ul class="items" id="preview-items"></ul>
+    <div id="preview-availability"></div>
   </div>
   <dialog id="day-dialog" aria-labelledby="day-heading">
     <div class="day-head"><h3 id="day-heading"></h3><button class="outline" id="close-day" type="button" autofocus>Close</button></div>
@@ -236,6 +253,7 @@
     <p class="sub" id="empty">No entries for this day.</p>
     <p class="sub" id="day-notice" role="status"></p>
     <div class="actions"><button class="primary" id="add" type="button">+ Add plan</button></div>
+    <div id="day-availability"></div>
   </dialog>
   <div class="sparkle-layer" id="sparkles" popover="manual" aria-hidden="true" inert></div>
   <dialog id="editor" aria-labelledby="editor-title">
@@ -244,7 +262,11 @@
       <label>Plan<input id="entry-title" required maxlength="100" autocomplete="off"></label>
       <label>For<select id="entry-person"><option value="both">Together</option><option value="charis">Charis</option><option value="kai">Kai</option></select></label>
       <label>Date<input id="entry-date" type="date" min="2026-11-01" max="2027-12-31" required></label>
-      <label>Time (optional)<input id="entry-time" type="time"></label>
+      <div class="editor-times">
+        <label>Start time<input id="entry-time" type="time"></label>
+        <label>End time<input id="entry-end" type="time"></label>
+      </div>
+      <p class="sub">Leave both blank for an all-day plan.</p>
       <p class="sub" id="editor-message" role="status"></p>
       <div class="actions"><button class="outline" id="remove" type="button" hidden>Delete</button><button class="outline" id="cancel" type="button">Cancel</button><button class="primary" type="submit">Save plan</button></div>
     </form>
@@ -294,7 +316,7 @@
       ['2027-10-01','2027-10-07','National Day','国庆节'],
     ];
     const kaiWeek = [
-      ['11:30–16:30','Usually booked','Possible extension to 18:00'],
+      ['11:30–16:30','Usually booked','18:00'],
       ['15:30–17:30','Usually booked'],
       ['15:30–19:40','Usually booked'],
       ['', 'Day off'],
@@ -302,6 +324,11 @@
       ['15:30–20:00','Usually booked'],
       ['13:00–21:00','Current Saturday hours'],
     ];
+    const workHours = '09:30–18:30';
+    const fullDay = 24*60;
+    const daytimeStart = 8*60;
+    const travelMinutes = 30;
+    const clockTime = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
     const storageKey = 'speakkai.ck.plans.v1';
     const limit = 3000;
     let plansByDate = new Map();
@@ -339,12 +366,13 @@
       if (version !== 1 || !Array.isArray(entries) || entries.length > limit) throw new Error('Invalid plan file');
       const ids = new Set();
       return entries.map(entry => {
-        const {id,changed,deleted,date,title,person,time} = entry;
+        const {id,changed,deleted,date,title,person,time,endTime=''} = entry;
         if (typeof id !== 'string' || !/^[a-f0-9-]{36}$/.test(id) || ids.has(id) || !Number.isSafeInteger(changed) || changed < 1) throw new Error('Invalid plan');
         ids.add(id);
         if (deleted === true) return {id,changed,deleted};
-        if (typeof date !== 'string' || !validDay(date) || typeof title !== 'string' || !title.trim() || title.length > 100 || !Object.hasOwn(people,person) || typeof time !== 'string' || (time && !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time))) throw new Error('Invalid plan');
-        return {id,changed,date,title,person,time};
+        if (typeof date !== 'string' || !validDay(date) || typeof title !== 'string' || !title.trim() || title.length > 100 || !Object.hasOwn(people,person) || typeof time !== 'string' || (time && !clockTime.test(time))) throw new Error('Invalid plan');
+        if (typeof endTime!=='string' || (endTime && (!time || !clockTime.test(endTime) || endTime<=time))) throw new Error('Invalid plan end time');
+        return endTime ? {id,changed,date,title,person,time,endTime} : {id,changed,date,title,person,time};
       });
     }
 
@@ -369,6 +397,8 @@
       renderSelected();
     }
 
+    const compareStart = (a,b) => (a.time || '').slice(0,5).localeCompare((b.time || '').slice(0,5));
+
     function entriesFor(key) {
       const entries = [];
       const holiday = holidays.find(([start,end]) => start <= key && key <= end);
@@ -377,39 +407,183 @@
       if (holiday) {
         entries.push({person:'charis',title:`${holiday[2]} · ${holiday[3]}`});
       } else if (weekday === 5) {
-        entries.push({person:'charis',title:'Usually works from home',summary:'Work from home'});
+        entries.push({person:'charis',title:'Usually works from home',summary:'Work from home',time:workHours,commute:true});
       } else if (weekday === 6 || weekday === 0) {
         entries.push({person:'charis',title:'Regular day off',summary:'Day off'});
-      }
-      const [hours,routine,note] = kaiWeek[weekday];
-      if (bookings) {
-        entries.push(...bookings);
       } else {
-        entries.push({person:'kai',title:routine,time:hours,note,summary:'Off'});
+        entries.push({person:'charis',title:'Work',time:workHours,commute:true});
       }
-      return entries.concat(plansByDate.get(key) || []).sort((a,b) =>
-        (a.time || '').slice(0,5).localeCompare((b.time || '').slice(0,5))
-      );
+      if (bookings) entries.push(...bookings);
+      if (!bookings?.some(entry => entry.time || entry.allDayBusy || entry.dayOff)) {
+        const [hours,routine,tentativeEnd] = kaiWeek[weekday];
+        entries.push({person:'kai',title:routine,time:hours,tentativeEnd,
+          note:tentativeEnd ? `Possible extension to ${tentativeEnd}` : undefined,
+          commute:Boolean(hours),summary:'Off'});
+      }
+      return entries.concat(plansByDate.get(key) || []).sort(compareStart);
+    }
+
+
+    const entryTime = entry => entry.endTime ? `${entry.time}–${entry.endTime}` : entry.time;
+    const toMinutes = time => Number(time.slice(0,2))*60+Number(time.slice(3));
+    const formatClock = minutes => `${pad(Math.floor(minutes/60))}:${pad(minutes%60)}`;
+    const formatRange = ([start,end]) => `${formatClock(start)}–${formatClock(end)}`;
+
+    function busyRange(entry) {
+      if (entry.allDayBusy || (entry.id && !entry.time)) return [0,fullDay];
+      if (!entry.time) return null;
+      const [startText,endText] = entryTime(entry).split(/[–-]/);
+      const start = toMinutes(startText);
+      let end = endText ? toMinutes(endText) : null;
+      if (end===0 && start>0) end = fullDay;
+      if (entry.tentativeEnd) end = Math.max(end || 0,toMinutes(entry.tentativeEnd));
+      return [start,end>start ? end : null];
+    }
+
+    function mergeRanges(ranges) {
+      const merged = [];
+      for (const [start,end] of ranges.filter(([start,end]) => start<end).sort((a,b) => a[0]-b[0])) {
+        const last = merged[merged.length-1];
+        if (last && start<=last[1]) last[1] = Math.max(last[1],end);
+        else merged.push([start,end]);
+      }
+      return merged;
+    }
+
+    function openRanges(busy, start, end) {
+      const open = [];
+      let cursor = start;
+      for (const [from,to] of busy) {
+        if (to<=cursor) continue;
+        if (from>=end) break;
+        if (cursor<from) open.push([cursor,from]);
+        cursor = Math.max(cursor,to);
+      }
+      if (cursor<end) open.push([cursor,end]);
+      return open;
+    }
+
+    function hourSlots(busy) {
+      const slots = [];
+      const early = [];
+      for (const [from,to] of openRanges(busy,0,fullDay)) {
+        for (let cursor=from;cursor+60<=to;cursor+=60) {
+          (cursor<daytimeStart ? early : slots).push([cursor,cursor+60]);
+        }
+      }
+      return {slots,early};
+    }
+
+    function dayAvailability(key, entries) {
+      if (feedState==='loading') return {slots:[],early:[],trips:[],missingEnd:false,pending:true};
+      const busy = {charis:[],kai:[],both:[]};
+      const travel = {charis:[],kai:[]};
+      let missingEnd = false;
+      for (const entry of entries) {
+        const range = busyRange(entry);
+        if (!range) continue;
+        if (range[1]===null) missingEnd = true;
+        busy[entry.person].push([range[0],range[1] ?? fullDay]);
+      }
+
+      // A buffer near midnight can overlap the neighboring calendar date.
+      for (const offset of [-1,0,1]) {
+        const date = toDate(key);
+        date.setUTCDate(date.getUTCDate()+offset);
+        const adjacent = date.toISOString().slice(0,10);
+        if (!validDay(adjacent)) continue;
+        const schedule = offset===0 ? entries : entriesFor(adjacent);
+        for (const entry of schedule) {
+          if (!entry.commute) continue;
+          const [start,end] = busyRange(entry);
+          const shift = offset*fullDay;
+          travel[entry.person].push([Math.max(0,start+shift-travelMinutes),Math.min(fullDay,start+shift)]);
+          if (end!==null) {
+            travel[entry.person].push([Math.max(0,end+shift),Math.min(fullDay,end+shift+travelMinutes)]);
+          }
+        }
+      }
+
+      const trips = [];
+      for (const person of ['charis','kai']) {
+        const occupied = mergeRanges(busy[person].concat(busy.both));
+        for (const [start,end] of mergeRanges(travel[person])) {
+          for (const range of openRanges(occupied,start,end)) {
+            trips.push({person,title:'Travel buffer',time:formatRange(range)});
+          }
+        }
+      }
+      const reserved = mergeRanges([...busy.charis,...busy.kai,...busy.both,...travel.charis,...travel.kai]);
+      return {...hourSlots(reserved),trips,missingEnd};
+    }
+
+    function stackedTime(time) {
+      const [from,to] = time.split(/[–-]/);
+      const hours = make('span','slot-hours');
+      hours.append(make('span','slot-from',from));
+      if (to) {
+        const end = make('span','slot-end');
+        end.append(make('span','slot-dash','–'),document.createTextNode(to));
+        hours.append(end);
+      }
+      return hours;
+    }
+
+    function calendarAvailability(availability, workday) {
+      const firstEvening = workday && availability.slots.find(([start]) => start>=17*60);
+      const first = firstEvening || availability.slots[0] || availability.early[0];
+      if (!first) return null;
+      const row = make('span','calendar-entry free-summary');
+      const quantity = availability.slots.length+availability.early.length;
+      row.title = `${quantity} shared one-hour ${quantity===1 ? 'slot' : 'slots'} · ${formatRange(first)}`;
+      row.append(make('span','free-summary-label','Free'),stackedTime(formatRange(first)));
+      return row;
+    }
+
+    function slotList(slots) {
+      const list = make('ul','shared-slots');
+      for (const slot of slots) list.append(make('li','',formatRange(slot)));
+      return list;
+    }
+
+    function renderAvailability(target, availability, preview=false) {
+      const {slots,early,missingEnd} = availability;
+      const section = make('section','shared-availability');
+      section.append(make('h4','','Free together · 1-hour slots'));
+      if (availability.pending) {
+        section.append(make('p','sub','Checking Kai’s published bookings…'));
+        target.replaceChildren(section);
+        return;
+      }
+      if (slots.length) section.append(slotList(slots));
+      if (!preview && early.length) {
+        const details = make('details');
+        details.open = slots.length===0;
+        details.append(make('summary','',`Starting before 08:00 · ${early.length} ${early.length===1 ? 'slot' : 'slots'}`),slotList(early));
+        section.append(details);
+      }
+      if (preview && !slots.length && early.length) section.append(slotList(early));
+      if (!slots.length && !early.length) section.append(make('p','sub','No full shared hour on the calendar.'));
+      if (missingEnd) section.append(make('p','sub','A booking without an end time can hide later slots.'));
+      target.replaceChildren(section);
+    }
+
+    function dayAgenda(entries, availability) {
+      return entries.concat(availability.trips).sort(compareStart);
     }
 
     function calendarEntry(entry) {
       const row = make('span',`calendar-entry ${entry.person}`);
-      row.title = entry.time ? `${entry.time} · ${entry.title}` : entry.title;
-      if (entry.time) {
-        const [from,to] = entry.time.split(/[–-]/);
-        const hours = make('span','slot-hours');
-        hours.append(make('span','slot-from',from));
-        if (to) {
-          const end = make('span','slot-end');
-          end.append(make('span','slot-dash','–'),document.createTextNode(to));
-          hours.append(end);
-        }
-        row.append(hours);
-        if (entry.note) row.append(make('span','cell-text tentative-time','18:00?'));
+      const time = entryTime(entry);
+      row.title = time ? `${time} · ${entry.title}` : entry.title;
+      if (time) {
+        row.append(stackedTime(time));
+        if (entry.tentativeEnd) row.append(make('span','cell-text tentative-time',`${entry.tentativeEnd}?`));
       }
-      if (entry.person==='charis') {
-        row.append(make('span','charis-label',entry.summary || entry.title));
-      } else if (!entry.time) {
+      if (entry.person==='charis' || entry.person==='both') {
+        const className = entry.person==='charis' ? 'charis-label' : 'shared-plan-label';
+        row.append(make('span',className,entry.summary || entry.title));
+      } else if (!time) {
         row.append(make('span','cell-text cell-wide',entry.summary || entry.title),make('span','cell-text cell-compact',entry.summary || 'Plan'));
       }
       return row;
@@ -430,9 +604,12 @@
         const key = `${month.key}-${pad(number)}`;
         const button = make('button',`day${i%7>=5?' weekend':''}${key===today?' today':''}`);
         const entries = entriesFor(key);
+        const availability = dayAvailability(key,entries);
+        const slotCount = availability.slots.length+availability.early.length;
         button.type = 'button';
         button.dataset.date = key;
-        button.setAttribute('aria-label',`${dayName.format(toDate(key))}, ${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}`);
+        const slotLabel = availability.pending ? '' : `, ${slotCount} shared ${slotCount===1 ? 'hour' : 'hours'}`;
+        button.setAttribute('aria-label',`${dayName.format(toDate(key))}, ${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}${slotLabel}`);
         button.tabIndex = key===selected ? 0 : -1;
         button.setAttribute('aria-haspopup','dialog');
         if (key===today) button.setAttribute('aria-current','date');
@@ -449,6 +626,8 @@
         for (const person of ['charis','kai','both']) {
           for (const entry of entries.filter(item => item.person===person)) schedule.append(calendarEntry(entry));
         }
+        const free = calendarAvailability(availability,entries.some(entry => entry.person==='charis' && entry.commute));
+        if (free) schedule.append(free);
         button.append(schedule);
         cells.push(button);
       }
@@ -474,7 +653,7 @@
           row.append(edit);
         }
         const text = make('span','item-title');
-        if (entry.time) text.append(make('span','item-time',entry.time),document.createTextNode(' · '));
+        if (entry.time) text.append(make('span','item-time',entryTime(entry)),document.createTextNode(' · '));
         text.append(document.createTextNode(entry.title));
         row.append(make('span',`pill ${entry.person}`,people[entry.person]),text);
         if (entry.note) row.append(make('p','sub',entry.note));
@@ -493,9 +672,11 @@
     function renderSelected() {
       $('day-heading').textContent = dayName.format(toDate(selected));
       const entries = entriesFor(selected);
+      const availability = dayAvailability(selected,entries);
       $('empty').hidden = entries.length > 0;
       const focusedPlan = document.activeElement?.dataset.planId;
-      $('day-items').replaceChildren(...dayRows(entries,true));
+      $('day-items').replaceChildren(...dayRows(dayAgenda(entries,availability),true));
+      renderAvailability($('day-availability'),availability);
       if (focusedPlan && $('day-dialog').open) {
         const edit = $('day-items').querySelector(`[data-plan-id="${focusedPlan}"]`);
         (edit || $('add')).focus({preventScroll:true});
@@ -537,7 +718,10 @@
         previewDate = key;
         previewAnchor = button;
         $('preview-heading').textContent = dayName.format(toDate(key));
-        $('preview-items').replaceChildren(...dayRows(entriesFor(key),false));
+        const entries = entriesFor(key);
+        const availability = dayAvailability(key,entries);
+        $('preview-items').replaceChildren(...dayRows(dayAgenda(entries,availability),false));
+        renderAvailability($('preview-availability'),availability,true);
         const popup = $('preview');
         popup.hidden = false;
         popup.style.maxHeight = '';
@@ -667,6 +851,7 @@
       $('entry-person').value = entry?.person ?? 'both';
       $('entry-date').value = entry?.date ?? selected;
       $('entry-time').value = entry?.time ?? '';
+      $('entry-end').value = entry?.endTime ?? '';
       $('remove').hidden = !entry;
       $('remove').textContent = 'Delete';
       delete $('remove').dataset.confirm;
@@ -686,6 +871,12 @@
       const revision = editingVersion;
       const person = $('entry-person').value;
       const time = $('entry-time').value;
+      const endTime = $('entry-end').value;
+      if (!deleting && ((time && !clockTime.test(time)) ||
+        (endTime && (!time || !clockTime.test(endTime) || endTime<=time)))) {
+        $('editor-message').textContent = 'Enter a start time and a later end time.';
+        return;
+      }
       const controls = [$('remove'),$('cancel'),$('entry-form').querySelector('button[type="submit"]')];
       saving = true;
       for (const control of controls) control.disabled = true;
@@ -698,6 +889,7 @@
           const changed = Math.max(Date.now(),(previous?.changed ?? 0)+1);
           if (!Number.isSafeInteger(changed)) return 'This imported plan’s revision is too large to edit.';
           const entry = deleting ? {id,changed,deleted:true} : {id,changed,date,title,person,time};
+          if (!deleting && endTime) entry.endTime = endTime;
           write([...current.filter(plan => plan.id!==id),entry]);
         });
         if (issue) {
@@ -965,21 +1157,28 @@
       }
     });
 
+    function hasClassTravel(title) {
+      const teaching = /\b(?:SAS|STCC|class(?:es)?|lesson|teaching|group|boot\s*camp|VIP|one[- ]to[- ]one)\b|\b1\s*[-–]\s*1\b|班课|年级|一对一/i;
+      const remote = /\b(?:online|zoom|remote)\b|线上|网课/i;
+      return teaching.test(title) && !remote.test(title);
+    }
+
     function publishedEntries(details) {
       const entries = [];
       for (const line of details) {
         const timed = line.match(/^((?:[01]\d|2[0-3]):[0-5]\d(?:[–-](?:[01]\d|2[0-3]):[0-5]\d)?) · (.+)$/);
         if (timed) {
           const [,time,title] = timed;
-          entries.push({person:'kai',time,title});
+          entries.push({person:'kai',time,title,commute:hasClassTravel(title)});
           continue;
         }
         const notice = line.match(/^Schedule notice: (.+)$/);
         if (notice) entries.push({person:'kai',title:notice[1],summary:'Note'});
-        if (/^(?:Holiday|Unavailable)$/i.test(line)) entries.push({person:'kai',title:line,summary:/^Holiday$/i.test(line) ? 'Off' : 'Busy'});
-        if (/^(?:Travel:|In-person:)/i.test(line)) entries.push({person:'kai',title:line,summary:'Travel'});
+        if (/^Holiday$/i.test(line)) entries.push({person:'kai',title:line,summary:'Off',dayOff:true});
+        if (/^Unavailable$/i.test(line)) entries.push({person:'kai',title:line,summary:'Busy',allDayBusy:true});
+        if (/^(?:Travel:|In-person:)/i.test(line)) entries.push({person:'kai',title:line,summary:'Travel',allDayBusy:true});
       }
-      return entries.sort((a,b) => (a.time || '').localeCompare(b.time || ''));
+      return entries.sort(compareStart);
     }
 
     async function loadAvailability() {
