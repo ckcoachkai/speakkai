@@ -3,9 +3,28 @@ import events from '../data/hat-competitions.json';
 import BrandLogo from '../components/BrandLogo.astro';
 import '@fontsource/manrope/400.css';
 import '@fontsource/manrope/700.css';
+
+const startMonth = '2026-11';
+const lastMonth = events.reduce((latest, event) => event.endDate.slice(0, 7) > latest ? event.endDate.slice(0, 7) : latest, '2027-01');
+const monthName = new Intl.DateTimeFormat('en', {month:'long', timeZone:'UTC'});
+const dayName = new Intl.DateTimeFormat('en', {dateStyle:'full', timeZone:'UTC'});
+const weekdayLabels = [['Mon','周一'],['Tue','周二'],['Wed','周三'],['Thu','周四'],['Fri','周五'],['Sat','周六'],['Sun','周日']];
 const studentCount = new Set(events.flatMap(event => event.students.map(student => student.name))).size;
-const month = (date: string) => new Intl.DateTimeFormat('en', { month: 'short', timeZone: 'UTC' }).format(new Date(date+'T12:00:00Z'));
-const weekday = (date: string) => new Intl.DateTimeFormat('en', { weekday: 'long', timeZone: 'UTC' }).format(new Date(date+'T12:00:00Z'));
+const months = [];
+for (let date = new Date(startMonth + '-01T12:00:00Z'); date.toISOString().slice(0,7) <= lastMonth; date.setUTCMonth(date.getUTCMonth()+1)) {
+  const id = date.toISOString().slice(0,7);
+  const year = date.getUTCFullYear(), month = date.getUTCMonth();
+  const days = new Date(Date.UTC(year,month+1,0)).getUTCDate();
+  const start = (date.getUTCDay()+6)%7;
+  const cells = Array.from({length:Math.ceil((start+days)/7)*7},(_,i)=>{
+    const day = i-start+1;
+    if(day<1||day>days)return null;
+    const iso = id+'-'+String(day).padStart(2,'0');
+    return {day,iso,events:events.map((event,index)=>({event,index})).filter(({event})=>event.date<=iso&&iso<=event.endDate)};
+  });
+  months.push({id,title:monthName.format(date)+' '+year,zh:year+' 年 '+(month+1)+' 月',cells});
+}
+const colors: Record<string,string> = {WSDA:'wsda', SSDI:'ssdi', TOC:'toc', ESDP:'esdp'};
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -13,56 +32,130 @@ const weekday = (date: string) => new Intl.DateTimeFormat('en', { weekday: 'long
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex" />
-  <meta name="description" content="SpeakKai student competition dates, November 2026 to January 2027." />
+  <meta name="description" content="SpeakKai student competition calendar · 学生比赛月历" />
   <link rel="canonical" href="https://speakkai.com/hat/" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <title>Competition dates · 比赛日程 | SpeakKai</title>
+  <title>Competition calendar · 比赛月历 | SpeakKai</title>
 </head>
 <body>
-  <header><a href="/" aria-label="SpeakKai home"><BrandLogo compact /></a><span>STUDENT COMPETITIONS · 学生比赛</span><a href="/fb/">Feedback ↗</a></header>
+  <header class="masthead"><a href="/" aria-label="SpeakKai home"><BrandLogo compact /></a><span>STUDENT COMPETITIONS · 学生比赛</span><a href="/fb/">Feedback ↗</a></header>
   <main>
     <section class="opening">
-      <p class="eyebrow">NOVEMBER 2026 — JANUARY 2027</p>
-      <h1>Competition dates<span>比赛日程</span></h1>
-      <div class="intro"><p>WSDA · SSDI · TOC · ESDP<br /><span>学生参赛日期一览</span></p><div class="total"><strong>{studentCount}</strong><span>students · 位学生</span></div></div>
+      <p class="eyebrow">STUDENT COMPETITIONS · 学生比赛</p>
+      <h1>Competition calendar <span>比赛月历</span></h1>
+      <div class="intro"><p>WSDA · SSDI · TOC · ESDP</p><p><strong>{studentCount}</strong> students · 位学生</p></div>
     </section>
     <section aria-label="Find a competition" class="controls">
       <label for="search">Find a student · 查找学生<input id="search" type="search" placeholder="Name / 姓名" autocomplete="off" /></label>
       <label for="status">Show · 显示<select id="status"><option value="all">All dates · 全部日期</option><option value="upcoming">Upcoming · 待参赛</option><option value="completed">Completed · 已结束</option></select></label>
       <p id="results" role="status">{events.length} events · {events.length} 场比赛</p>
     </section>
-    <div class="timeline">
-      {events.map(event => <article class:list={['event', { completed: event.completed }]} data-completed={String(event.completed)} data-search={event.students.map(s=>s.name).join(' ').toLowerCase()}>
-        <div class="date"><span>{month(event.date)} {event.date.slice(0,4)}</span><strong>{Number(event.date.slice(-2))}{event.endDate !== event.date && <small>–{Number(event.endDate.slice(-2))}</small>}</strong><span>{weekday(event.date)}{event.endDate !== event.date && ' – Saturday'}</span><time datetime={event.date}>{event.date}{event.endDate !== event.date && ` — ${event.endDate}`}</time></div>
-        <div class="entries"><div class="event-heading"><h2>{event.competition}</h2>{event.completed ? <span class="badge done">Completed · 已结束</span> : <span class="badge">Competition · 比赛</span>}</div>
-          <div class="table"><div class="table-head"><span>Student · 学生</span><span>Class · 班级</span><span>Grade · 年级</span><span>Format · 参赛形式</span></div>
-            {event.students.map(s=><div class="student" data-name={s.name.toLowerCase()}><strong>{s.name}</strong><span data-label="Class · 班级">{s.class || '未注明 / Not specified'}</span><span data-label="Grade · 年级">{s.grade || '未注明 / Not specified'}</span><span data-label="Format · 形式">{s.format}</span></div>)}
-          </div>
-        </div>
-      </article>)}
-    </div>
+    <nav aria-label="Jump to a month · 跳转月份" class="month-nav">
+      {months.map(m=><a href={'#month-'+m.id}>{m.title} <span>{m.zh}</span></a>)}
+    </nav>
     <p id="empty" hidden>No matching students or dates. · 没有找到相应学生或日期。</p>
+    <p class="mobile-hint">Swipe to see the full week. · 左右滑动查看一整周。</p>
+    {months.map(m=><section class="month" id={'month-'+m.id} aria-labelledby={'title-'+m.id}>
+      <h2 id={'title-'+m.id}>{m.title} <span>{m.zh}</span></h2>
+      <div class="month-scroll" tabindex="0" role="region" aria-labelledby={'title-'+m.id}>
+        <div class="grid">
+          {weekdayLabels.map(([en, zh])=><div class="weekday">{en} <span>{zh}</span></div>)}
+          {m.cells.map((cell,i)=>cell?<div class:list={['day',{weekend:i%7>4}]} data-date={cell.iso}>
+            <time datetime={cell.iso} aria-label={dayName.format(new Date(cell.iso+'T12:00:00Z'))}>{cell.day}</time>
+            {cell.events.map(({event,index})=><article class:list={['event',colors[event.competition.split(' ')[0]],{completed:event.completed}]} data-event={index} data-completed={String(event.completed)}>
+              <div class="competition">{event.competition}</div>
+              {event.date!==event.endDate&&<div class="span-date">{event.date.slice(5)} – {event.endDate.slice(5)}</div>}
+              {event.completed&&<div class="done">Completed · 已结束</div>}
+              <ul class="students">{event.students.map(s=><li class="student" data-name={s.name.toLowerCase()}>{s.name}</li>)}</ul>
+              <details><summary>Details · 详情</summary>
+                <ul>{event.students.map(s=><li class="student" data-name={s.name.toLowerCase()}><strong>{s.name}</strong><br />{[s.class,s.grade,s.format].filter(Boolean).join(' · ')}</li>)}</ul>
+              </details>
+            </article>)}
+          </div>:<div class="day outside" aria-hidden="true"></div>)}
+        </div>
+      </div>
+    </section>)}
     <footer><p>具体比赛时间待确认。未注明的参赛形式保持未注明。<br />Event times are to be confirmed. Unspecified formats are left open.</p><p>报名表更新 · Registration sheet: 17 Nov 2026</p><p>未标注年份的日期按本赛季列为 2026 年；1 月 10 日为 2027 年。<br />Dates without a year are shown in the 2026 season; 10 January is in 2027.</p></footer>
   </main>
   <script>
     const search = document.querySelector<HTMLInputElement>('#search')!;
     const status = document.querySelector<HTMLSelectElement>('#status')!;
     function filter() {
-      const query=search.value.trim().toLowerCase();let count=0;
+      const query = search.value.trim().toLowerCase();
+      const visible = new Set<string>();
       document.querySelectorAll<HTMLElement>('.event').forEach(event=>{
         const matchesStatus=status.value==='all'||(status.value==='completed')===(event.dataset.completed==='true');
-        const matchesName=(event.dataset.search||'').includes(query);
-        event.hidden=!(matchesStatus&&matchesName);if(!event.hidden)count++;
-        event.querySelectorAll<HTMLElement>('.student').forEach(row=>{row.hidden=!row.dataset.name!.includes(query);});
+        let matchesName=false;
+        event.querySelectorAll<HTMLElement>('.student').forEach(row=>{
+          row.hidden=!(row.dataset.name||'').includes(query);
+          if(!row.hidden)matchesName=true;
+        });
+        event.hidden=!(matchesStatus&&matchesName);
+        if(!event.hidden)visible.add(event.dataset.event!);
       });
-      document.querySelector('#results')!.textContent=`${count} ${count===1?'event':'events'} · ${count} 场比赛`;
+      const count=visible.size;
+      document.querySelector('#results')!.textContent=count+' '+(count===1?'event':'events')+' · '+count+' 场比赛';
       (document.querySelector('#empty') as HTMLElement).hidden=count!==0;
     }
-    search.addEventListener('input',filter);status.addEventListener('change',filter);
+    search.addEventListener('input',filter);
+    status.addEventListener('change',filter);
+    filter();
+    if (window.matchMedia('(max-width: 710px)').matches) {
+      document.querySelectorAll<HTMLElement>('.month-scroll').forEach(panel => {
+        const card = panel.querySelector<HTMLElement>('.event');
+        if (card) {
+          const start = card.closest<HTMLElement>('.day')!.getBoundingClientRect().left - panel.getBoundingClientRect().left;
+          if (start > panel.clientWidth / 2) panel.scrollLeft = panel.scrollWidth;
+        }
+      });
+    }
   </script>
   <style is:global>
-    *{box-sizing:border-box}body{margin:0;color:#172c42;background:#fff;font-family:Manrope,'Microsoft YaHei',sans-serif;font-size:14px}a{color:inherit}header{max-width:1280px;margin:auto;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dedfdc;gap:20px}header>a:first-child{display:block;width:126px}header svg,header img{max-width:100%;height:auto}header>span{font-size:10px;letter-spacing:.12em}header>a:last-child{font-size:12px;text-decoration:none}main{max-width:1200px;margin:auto;padding:64px 32px 32px}.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;color:#637286;margin:0 0 20px}h1{font:normal clamp(44px,6vw,76px)/1.08 Georgia,'Songti SC',serif;margin:0;letter-spacing:-.04em}h1>span{display:block;font-size:.52em;margin-top:16px;letter-spacing:.04em}.intro{display:flex;justify-content:space-between;align-items:end;margin-top:32px}.intro p{line-height:1.8;color:#365071;margin:0}.intro p>span{color:#637286}.total{display:flex;align-items:center;gap:16px}.total strong{font:54px/1 Georgia,serif}.total span{font-size:12px;color:#637286}.controls{margin-top:38px;padding:22px 0;border-top:1px solid #d8dce1;border-bottom:1px solid #d8dce1;display:flex;align-items:end;gap:22px}.controls label{display:flex;flex-direction:column;gap:8px;font-size:11px;font-weight:bold}input,select{font:inherit;font-size:14px;padding:12px;border:1px solid #b6c0cd;border-radius:3px;background:white;color:#172c42;min-height:44px}input{width:280px}.controls p{margin:0 0 12px auto;font-size:12px;color:#637286}.timeline{margin-top:12px}.event{display:grid;grid-template-columns:155px minmax(0,1fr);gap:34px;padding:34px 0;border-bottom:1px solid #d8dce1}.date{display:flex;flex-direction:column;align-items:start;gap:8px}.date>span:first-child{text-transform:uppercase;font-weight:700;font-size:12px;letter-spacing:.1em;color:#365071}.date strong{white-space:nowrap;font:58px/1 Georgia,serif;letter-spacing:-.06em}.date small{font-size:40px}.date>span{font-size:12px}.date time{font-size:10px;color:#637286;margin-top:8px}.event-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}h2{font-size:21px;margin:0}.badge{font-size:10px;color:#315373;background:#edf3f7;border-radius:3px;padding:6px 9px}.done{color:#74584e;background:#f4eeea}.table{display:block;width:100%}.table-head,.student{display:grid;grid-template-columns:1.15fr 1fr .8fr 1.55fr;gap:16px}.table-head{font-size:10px;color:#637286;padding-bottom:10px;border-bottom:1px solid #d8dce1}.student{padding:17px 0;border-bottom:1px solid #edf0f2;line-height:1.7}.student:last-child{border-bottom:0}.student strong{font-size:15px}.student>span{font-size:12px}.completed .date{color:#6d7480}footer{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:30px;color:#637286;font-size:11px;line-height:1.8}footer p:last-child{width:100%;margin-top:0;font-size:10px}#empty{padding:40px 0}[hidden]{display:none!important}:focus-visible{outline:3px solid #85aee0;outline-offset:3px}
-    @media(max-width:700px){header{padding:16px 20px}header>span{display:none}main{padding:38px 20px 24px}.intro{margin-top:26px}.total{gap:9px}.total strong{font-size:40px}.total span{min-width:85px;font-size:10px}.controls{flex-wrap:wrap;gap:16px}.controls label:first-child{width:100%}input{width:100%}.controls p{font-size:11px}.event{grid-template-columns:1fr;gap:20px;padding:28px 0}.date{display:grid;grid-template-columns:155px 1fr;gap:6px 18px}.date strong{grid-column:1;grid-row:2/4;font-size:48px}.date>span:nth-of-type(2){grid-column:2;grid-row:2;align-self:end}.date time{grid-column:2;margin-top:0}.table-head{display:none}.student{grid-template-columns:1fr;gap:5px;padding:20px 0}.student strong{font-size:17px;margin-bottom:5px}.student>span:before{content:attr(data-label);display:inline-block;min-width:105px;color:#748092;font-size:10px}.student>span{font-size:12px}footer{display:block}footer p{margin-bottom:20px}}
+    *{box-sizing:border-box}
+    body{margin:0;color:#172c42;background:#fcfbf8;font-family:Manrope,'Microsoft YaHei',sans-serif;font-size:14px}
+    a{color:inherit}
+    .masthead{max-width:1344px;margin:auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dedfdc;gap:20px}
+    .masthead>a:first-child{display:block;width:124px}
+    .masthead svg,.masthead img{max-width:100%;height:auto}
+    .masthead>span{font-size:10px;letter-spacing:.12em}
+    .masthead>a:last-child{font-size:12px;text-decoration:none}
+    main{max-width:1344px;margin:auto;padding:36px 32px 32px}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;color:#51647a;margin:0 0 12px}
+    .opening h1{font:normal clamp(35px,5vw,60px)/1.1 Georgia,'Songti SC',serif;margin:0;letter-spacing:-.035em}
+    .opening h1 span{font-size:.48em;letter-spacing:0;color:#506782;display:inline-block}
+    .intro{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-top:14px;color:#456078}
+    .intro p{margin:0}.intro strong{font-size:18px}
+    .controls{margin-top:22px;padding:14px 0;border-top:1px solid #d8dce1;border-bottom:1px solid #d8dce1;display:flex;align-items:end;gap:18px;flex-wrap:wrap}
+    .controls label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700}
+    .controls input,.controls select{font:inherit;font-size:14px;padding:9px 11px;border:1px solid #aab8c9;border-radius:5px;background:#fff;color:#172c42;min-height:42px;max-width:100%}
+    .controls input{width:240px}.controls p{margin:0 0 10px auto;color:#506782;font-size:12px}
+    .month-nav{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+    .month-nav a{display:inline-flex;flex-wrap:wrap;gap:5px;border:1px solid #ced8e4;background:#f2f6fa;color:#274561;text-decoration:none;border-radius:5px;padding:8px 10px;font-weight:700;font-size:12px}
+    .month-nav a:hover{background:#e4edf6}.month-nav span{font-weight:400}
+    .month{margin:28px 0 36px;scroll-margin-top:12px}
+    .month h2{font-size:clamp(22px,4vw,30px);margin:0 0 10px;letter-spacing:-.02em}
+    .month h2 span{margin-left:7px;color:#526881;font-size:.55em;white-space:nowrap;letter-spacing:0}
+    .month-scroll{overflow-x:auto;border:1px solid #cad4df;border-radius:8px;background:#d9e0e8}
+    .grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;min-width:672px}
+    .weekday{background:#ebf0f6;color:#324c64;text-align:center;padding:8px 2px;font-size:12px;font-weight:700}
+    .weekday span{font-weight:400}
+    .day{min-width:0;min-height:70px;padding:7px;background:#fff}
+    .day.weekend{background:#f7f9fd}.day.outside{background:#eef1f5}
+    .day time{display:block;font-weight:700;font-size:13px;margin-bottom:5px}
+    .event{--accent:#31587b;--tint:#e9f2fa;background:var(--tint);border-left:3px solid var(--accent);border-radius:4px;padding:6px;margin-top:5px;color:#172c42;overflow-wrap:anywhere;font-size:12px;line-height:1.4}
+    .event.wsda{--accent:#2b5781;--tint:#eaf2fb}.event.ssdi{--accent:#93532c;--tint:#fbefe6}.event.toc{--accent:#724889;--tint:#f4edf9}.event.esdp{--accent:#2f6d56;--tint:#e7f4ed}
+    .event.completed{--accent:#666d78;--tint:#eceff2}
+    .competition{font-weight:700;color:var(--accent)}.span-date,.done{margin-top:2px;font-size:10px;color:#43536a}
+    .event ul{list-style:none;margin:4px 0 0;padding:0}
+    ul.students{display:flex;flex-wrap:wrap;gap:2px 7px}.students li{white-space:normal}
+    .event details{margin-top:4px}.event summary{font-size:10px;cursor:pointer;color:#344f6d}
+    .event details li+li{margin-top:4px}
+    footer{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;color:#526881;font-size:11px;line-height:1.7}
+    footer p{margin:0 0 8px}footer p:last-child{width:100%}
+    #empty{margin:16px 0 0;color:#526881}
+    .mobile-hint{display:none;color:#526881;font-size:12px;margin:11px 0 0}
+    [hidden]{display:none!important}:focus-visible{outline:2px solid #386d9e;outline-offset:2px}
+    @media(max-width:710px){.mobile-hint{display:block}.masthead{padding:14px 16px}.masthead>span{display:none}main{padding:24px 16px}.controls{gap:10px}.controls label:first-child{flex:1 1 160px}.controls input{width:100%}.controls p{flex-basis:100%;text-align:right;margin:0}.month{margin:20px 0 26px}.day{min-height:52px}}
   </style>
 </body>
 </html>
