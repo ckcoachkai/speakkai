@@ -3,4 +3,209 @@ import FlagshipLayout from "../layouts/FlagshipLayout.astro";
 import AudienceGateway from "../components/AudienceGateway.astro";
 ---
 
-<FlagshipLayout><AudienceGateway /></FlagshipLayout>
+<FlagshipLayout>
+  <section class="mascot-stage" aria-label="SpeakKai smiley">
+    <button class="mascot-button" type="button" aria-label="Play with the smiley">
+      <img class="mascot-face smile" src="/images/home-smiley/pixel.webp" alt="" width="1024" height="1024" fetchpriority="high" draggable="false" />
+      <img class="mascot-face surprise" src="/images/home-smiley/pixel-surprise.webp" alt="" width="1024" height="1024" draggable="false" />
+      <canvas class="mascot-fur" width="768" height="768" aria-hidden="true"></canvas>
+      <span class="jelly-light" aria-hidden="true"></span>
+    </button>
+    <div class="mascot-sparks" aria-hidden="true"></div>
+  </section>
+  <div class="gateway-shell"><AudienceGateway /></div>
+</FlagshipLayout>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.mascot-button')!;
+  const sparks = document.querySelector<HTMLElement>('.mascot-sparks')!;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const face = button.querySelector<HTMLImageElement>('.smile')!;
+  const canvas = button.querySelector<HTMLCanvasElement>('.mascot-fur')!;
+  const brush = canvas.getContext('2d');
+  const variants = ['pixel', 'plush', 'jelly'] as const;
+  const rotationKey = 'speakkai-smiley-rotation-v1';
+  let position = 0;
+  try {
+    const last = localStorage.getItem(rotationKey);
+    position = last === null ? 0 : (Math.max(0, variants.indexOf(last as typeof variants[number])) + 1) % variants.length;
+    localStorage.setItem(rotationKey, variants[position]);
+  } catch { position = Math.floor(Math.random() * variants.length); }
+  const variant = variants[position];
+  button.dataset.variant = variant;
+  if (variant !== 'pixel') face.src = '/images/home-smiley/' + variant + '.webp';
+
+  let furRequest = 0;
+  let furTarget = {x: .5, y: .5}, furAt = {...furTarget}, furPower = 0, furGoal = 0;
+  let furReset: number | undefined;
+  const fibers = Array.from({length:2100}, (_,i) => {
+    const angle = i * 2.399963, radius = .347 * Math.sqrt((i+.5)/2100);
+    const x = .48 + Math.cos(angle)*radius, y = .507 + Math.sin(angle)*radius;
+    const eye = (cx:number) => ((x-cx)/.047)**2 + ((y-.43)/.080)**2 < 1;
+    const grin = x>.25 && x<.71 && Math.abs(y - (.704 - 2.85*(x-.48)**2))<.032;
+    return {x,y,angle,length:.005+(i%7)*.0014,mask:eye(.362)||eye(.615)||grin};
+  });
+  function renderFur() {
+    if (!brush) return;
+    furRequest = 0;
+    furAt.x += (furTarget.x-furAt.x)*.24;
+    furAt.y += (furTarget.y-furAt.y)*.24;
+    furPower += (furGoal-furPower)*.14;
+    brush.clearRect(0,0,canvas.width,canvas.height);
+    const w=canvas.width;
+    if(furPower>.012){
+      brush.lineCap='round';
+      for(let i=0;i<fibers.length;i++){
+        const f=fibers[i];if(f.mask)continue;
+        const dx=furAt.x-f.x,dy=furAt.y-f.y;
+        const distance=Math.hypot(dx,dy);
+        const pull=Math.max(0,1-distance/.52)*furPower;
+        if(pull<.025)continue;
+        const angle=Math.atan2(dy,dx);
+        const length=w*f.length*(.55+1.9*pull);
+        const x=w*f.x,y=w*f.y;
+        const nx=Math.cos(angle),ny=Math.sin(angle);
+        brush.strokeStyle=i%3===0?'rgba(255,241,155,'+(.68*pull)+')':'rgba(128,67,0,'+(.53*pull)+')';
+        brush.lineWidth=w*(i%4===0?.0027:.0016);
+        brush.beginPath();
+        brush.moveTo(x,y);
+        brush.quadraticCurveTo(x+nx*length*.36+Math.cos(f.angle)*length*.30,y+ny*length*.36+Math.sin(f.angle)*length*.30,x+nx*length,y+ny*length);
+        brush.stroke();
+      }
+    }
+    if(Math.abs(furPower-furGoal)>.01 || Math.hypot(furAt.x-furTarget.x,furAt.y-furTarget.y)>.002) furRequest=requestAnimationFrame(renderFur);
+  }
+  function magnet(x:number,y:number,hold=false){
+    if(reduceMotion.matches || !brush)return;
+    const rect=button.getBoundingClientRect();
+    furTarget={x:(x-rect.left)/rect.width,y:(y-rect.top)/rect.height};
+    furGoal=hold?1:.68;
+    window.clearTimeout(furReset);
+    furReset=window.setTimeout(()=>{furGoal=0;if(!furRequest)furRequest=requestAnimationFrame(renderFur)},hold?2500:1200);
+    if(!furRequest)furRequest=requestAnimationFrame(renderFur);
+  }
+
+  let audio: AudioContext | null = null;
+  let resetTimer: number | undefined;
+  let lastSpark = 0;
+  let cycle = 0;
+  const notes = [[350,440],[440,530]];
+
+  async function woo(id: number) {
+    if (!audio || audio.state !== 'running' || id !== cycle) return;
+    const t = audio.currentTime;
+    for (const [i,[from,to]] of notes.entries()) {
+      const start = t + .035 + i * .27;
+      const voice = audio.createOscillator();
+      const filter = audio.createBiquadFilter();
+      const volume = audio.createGain();
+      voice.type = 'triangle';
+      voice.frequency.setValueAtTime(from, start);
+      voice.frequency.exponentialRampToValueAtTime(to,start+.12);
+      voice.frequency.exponentialRampToValueAtTime(from*.89,start+.23);
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(540,start);
+      filter.frequency.linearRampToValueAtTime(1380,start+.10);
+      filter.frequency.linearRampToValueAtTime(480,start+.23);
+      volume.gain.setValueAtTime(.001,start);
+      volume.gain.exponentialRampToValueAtTime(.17,start+.065);
+      volume.gain.exponentialRampToValueAtTime(.001,start+.23);
+      voice.connect(filter).connect(volume).connect(audio.destination);
+      voice.onended=()=>{voice.disconnect();filter.disconnect();volume.disconnect();};
+      voice.start(start);
+      voice.stop(start+.25);
+    }
+  }
+
+  function sparkle(x: number,y: number,n: number) {
+    if (reduceMotion.matches) return;
+    for (let i=0;i<n;i++) {
+      const star=document.createElement('i');
+      const angle=Math.random()*Math.PI*2;
+      const distance=18+Math.random()*48;
+      star.style.setProperty('--x',x+'px');
+      star.style.setProperty('--y',y+'px');
+      star.style.setProperty('--dx',Math.cos(angle)*distance+'px');
+      star.style.setProperty('--dy',Math.sin(angle)*distance+'px');
+      star.style.setProperty('--size',8+Math.random()*12+'px');
+      star.style.setProperty('--tint',['#ffd629','#fff099','#ffa02e'][i%3]);
+      sparks.append(star);
+      star.addEventListener('animationend',()=>star.remove(),{once:true});
+    }
+  }
+
+  async function react(x: number,y: number,unlock=false) {
+    const id = ++cycle;
+    window.clearTimeout(resetTimer);
+    button.dataset.surprised='true';
+    sparkle(x,y,12);
+    resetTimer=window.setTimeout(()=>delete button.dataset.surprised,700);
+    if (unlock) {
+      try {
+        audio ||= new AudioContext();
+        if (audio.state !== 'running') await audio.resume();
+      } catch { return; }
+    }
+    await woo(id);
+  }
+
+  function jelly(x:number,y:number){
+    if (reduceMotion.matches) return;
+    const rect=button.getBoundingClientRect();
+    button.style.setProperty('--jelly-x',((x-rect.left)/rect.width*100)+'%');
+    button.style.setProperty('--jelly-y',((y-rect.top)/rect.height*100)+'%');
+    face.getAnimations().forEach(a=>a.cancel());
+    face.animate([
+      {transform:'scale(1)'},{transform:'scale(1.14,.87) rotate(-4deg)',offset:.22},
+      {transform:'scale(.92,1.10) rotate(3deg)',offset:.45},
+      {transform:'scale(1.035,.96) rotate(-1.5deg)',offset:.69},{transform:'scale(1)'}
+    ],{duration:730,easing:'ease-out'});
+    button.querySelector<HTMLElement>('.jelly-light')?.animate([{opacity:0},{opacity:.90,offset:.25},{opacity:0}],{duration:780});
+  }
+  button.addEventListener('pointerenter', event=>{
+    if(event.pointerType!=='mouse')return;
+    if(variant==='pixel')void react(event.clientX,event.clientY);
+    if(variant==='jelly')jelly(event.clientX,event.clientY);
+  });
+  button.addEventListener('pointermove',event=>{
+    if(event.pointerType!=='mouse')return;
+    if(variant==='plush' && furGoal>0) magnet(event.clientX,event.clientY, furGoal===1);
+    if(variant==='pixel' && performance.now()-lastSpark>=45){
+      lastSpark=performance.now();
+      sparkle(event.clientX,event.clientY,2);
+    }
+  });
+  button.addEventListener('click', event=>{
+    const rect=button.getBoundingClientRect();
+    const x=event.detail?event.clientX:rect.left+rect.width/2;
+    const y=event.detail?event.clientY:rect.top+rect.height/2;
+    if(variant==='pixel')void react(x,y,true);
+    if(variant==='plush')magnet(x,y,true);
+    if(variant==='jelly')jelly(x,y);
+  });
+
+</script>
+
+<style is:global>
+  body:has(.mascot-stage):not(:has(.gateway-shell :target)) {background:#fffdf6!important}
+  body:has(.mascot-stage):not(:has(.gateway-shell :target)) > :is(.site-language-bar,.site-header,.site-footer,.skip-link) {display:none!important}
+  body:has(.mascot-stage):not(:has(.gateway-shell :target)) #main > .gateway-shell {display:none!important}
+  body:has(.gateway-shell :target) .mascot-stage {display:none}
+  .mascot-stage{display:grid;place-items:center;min-height:100vh;min-height:100svh;overflow:clip;}
+  .mascot-button{appearance:none;display:grid;position:relative;place-items:center;width:min(83vmin,760px);aspect-ratio:1;padding:0;background:none;border:none;border-radius:50%;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+  .mascot-button:focus-visible{outline:3px solid #a97100;outline-offset:-18px;}
+  .mascot-button .mascot-face{grid-area:1/1;display:block;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none;transform:scale(1);transition:transform .18s ease-out;}
+  .mascot-button .mascot-fur,.jelly-light{grid-area:1/1;position:relative;display:none;width:100%;height:100%;pointer-events:none}
+  .mascot-button[data-variant=plush] .mascot-fur{display:block}
+  .mascot-button[data-variant=jelly] .jelly-light{display:block;opacity:0;background:radial-gradient(circle at var(--jelly-x,50%) var(--jelly-y,50%),#fff7a5 0,transparent 29%);clip-path:circle(33% at 48.5% 50%);mix-blend-mode:screen}
+  .mascot-button[data-variant=pixel] .mascot-face{image-rendering:pixelated}
+  .mascot-button[data-variant=pixel] + .mascot-sparks i{clip-path:polygon(33% 0,67% 0,67% 33%,100% 33%,100% 67%,67% 67%,67% 100%,33% 100%,33% 67%,0 67%,0 33%,33% 33%)}
+
+  .mascot-button .surprise{opacity:0;}
+  .mascot-button[data-surprised] .smile{opacity:0;}
+  .mascot-button[data-surprised] .surprise{opacity:1;transform:scale(1.045);}
+  .mascot-sparks{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:2;}
+  .mascot-sparks i{position:absolute;left:var(--x);top:var(--y);width:var(--size);height:var(--size);background:var(--tint);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);animation:mascot-glitter .52s ease-out both;}
+  @keyframes mascot-glitter{from{transform:translate(-50%,-50%) scale(.2);opacity:1}to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.7) rotate(35deg);opacity:0}}
+  @media(prefers-reduced-motion:reduce){.mascot-button .mascot-face{transition:none;transform:none!important}}
+</style>
