@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-21T07:06:28.096033+00:00",
+  "updatedAt": "2026-11-21T09:03:12.929433+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -594,6 +594,43 @@
               "zh": "• Ivy 的整体演讲相当不错。她讲了4分43秒，我觉得时间掌握也不错。\n\n• 需要重新思考的是解决方案部分。她的建议围绕 ADHD 药物，以及不要服用并非为自己开具的药物。不过，如果听众本来就不滥用药物，这种建议就没有给他们可以改变的行动。我们需要退一步思考：这个话题怎样影响世界各地的更多人，包括不滥用药物的人？\n\n• 一个可能的方向，是把信息拓展到不公平或不恰当的捷径。我们可能只看到获得优势的好处，却没有考虑缺点、对自己的负面影响及其他后果。\n\n• 我提出的是供她探索的例子，不是她已经写进演讲的例子：在电子游戏里作弊或开挂，让自己每一局都赢；还有我讲述的那位马拉松参赛者，她坐在自行车后座上完成后面的路程，拍照时还挥手，后来因作弊被取消资格。我也通过关于使用 AI 帮助完成作业或写作的问题，引出对适当帮助和不公平捷径的讨论。目的是找到更多听众熟悉的情境，让信息与更多人产生联系，有更强的影响力。\n\n• 我最推荐的方向是：“自我提升何时变成自我伤害？”保留开头请求一片药的情节，然后把问题拓宽：为了变得“更好”，我们会把自己逼到什么程度？她可以联系牺牲睡眠、不吃饭、忽略疲惫等情况，再探讨如何识别：追求进步何时开始伤害原本应该受益的自己。这是我最推荐的选择，因为想进步、又不知道何时该停下来，是广泛听众都可能有共鸣的事情。\n\n• 另一个可能的方向是：“当别人似乎都有优势时，我们能拒绝那份优势吗？”把“大家都这样做”作为核心句，探讨比较如何迫使人越过自己的界限，例如借用别人的药物、作弊，或采用其他有害的捷径。解决方案可以聚焦于提前决定哪些事自己不会做，以及受到压力时如何回应。"
             }
           ]
+        },
+        {
+          "id": "sat-foundations-2026-11-21",
+          "date": "2026-11-21",
+          "time": "15:00–16:30",
+          "status": "held",
+          "classContent": {
+            "en": "• We took turns giving impromptu speeches. We also have separate notes for each student on how to develop their prepared-speech topic.",
+            "zh": "• 学生轮流做了即兴演讲。另外，每位学生也有一份单独的备稿演讲指导，说明可以怎样展开自己的主题。"
+          },
+          "homework": null,
+          "students": [
+            {
+              "id": "neil",
+              "name": "Neil",
+              "en": "• Prepared-speech coaching — What does screen time crowd out? Open with a true story about a time you, a classmate, or a parent stayed on a device longer than intended. What happened because of it?\n\n• Pick one consequence your audience can picture, such as missing a chance to make a friend or losing focus on the road. Then compare two ways people try to limit device use, such as a phone-free camp and the reported workplace jammer incident. What makes a limit fair, and how can people still get help in an emergency?\n\n• End with one change people can try, such as putting phones away during meals or turning on Do Not Disturb before driving. Verify the jammer story and any traffic statistics before using them. Leave the radio-wave idea out unless you have a specific, well-supported claim.",
+              "zh": "• 备稿演讲指导——屏幕时间挤占了什么？用一个真实故事开场：你、一位同学或家长有没有哪次使用电子设备比原本打算的时间更久？结果发生了什么？\n\n• 选一个听众能想象出来的后果，比如错过交朋友的机会，或者开车时分心。然后比较两种限制电子设备使用的方法，例如不使用手机的营地，以及据报道在工作场所使用信号干扰器的事件。怎样的限制才算公平？遇到紧急情况时，人们还能怎样求助？\n\n• 结尾给大家一个可以尝试的做法，比如吃饭时把手机收起来，或开车前打开“勿扰模式”。使用信号干扰器的故事或任何交通数据前，先核实。除非你有一个具体且证据充分的说法，否则先不谈无线电波。"
+            },
+            {
+              "id": "william",
+              "name": "William",
+              "en": "• Impromptu practice: William spoke next. He talked about taking a test that felt really hard because he had not studied enough. I suggested using metaphors and similes sometimes to make the story more interesting. A comparison with an animal, for example, can make the idea easier for people to remember.\n\n• Prepared-speech coaching — How does pressure from parents feel? Build the speech around one real moment. What did your mom or dad say? What were you already dealing with that day? What did you wish they had asked you?\n\n• Let the audience hear the feeling in your own words. Finish by telling parents what would help, such as listening first or agreeing with you on what to tackle today. The earplugs line can get a laugh before you say what you actually wish they would hear.\n\n• Leave out the unverified percentage and the unsupported link to violence. Your own story can show what too much pressure feels like and give parents something concrete to do differently.",
+              "zh": "• 即兴演讲练习：William 接着上台。他说有一次考试对他来说特别难，因为复习得不够。我建议他有时可以用隐喻和明喻，让故事更有趣。比如用动物作比较，可以让听众更容易记住他的意思。\n\n• 备稿演讲指导——来自父母的压力是什么感受？围绕一个真实的时刻来写。那时爸爸或妈妈说了什么？你当天已经在应付哪些事情？你希望他们当时问你什么？\n\n• 用你自己的话让听众听出当时的感受。结尾告诉家长怎样做会有帮助，比如先听你说，或者和你商量今天先解决什么。关于耳塞的那句话可以先让听众笑一笑，再说出你真正希望他们听见什么。\n\n• 不要使用未经核实的百分比，也先不提缺乏证据的暴力关联。你自己的故事就能让人听懂压力过大是什么感受，也能给家长一个具体的做法。"
+            },
+            {
+              "id": "kyle",
+              "name": "Kyle",
+              "en": "• Impromptu practice: Kyle came up first and spoke for two minutes. He did not seem quite ready and was a little distracted by what was on the TV. He shared a short personal story involving tofu, the plant-based food. The experience came through, though it did not leave a particularly memorable impression.\n\n• Prepared-speech coaching — Teach children how to manage money early. Start with a choice children already make. If you get ¥50, how do you decide what to spend now and what to save for later?\n\n• Use that choice to explain budgeting, saving, and compound interest. Show how savings can grow with a simple example that states the starting amount, how often money is added, and the assumed interest rate.\n\n• Bring it back to what parents and schools can teach. A family can help a child set a savings goal and track progress. A school can use math to show how interest and borrowing work. Source any claims about debt in the U.S. or saving habits in China.",
+              "zh": "• 即兴演讲练习：Kyle 第一个上台，讲了两分钟。他看起来还没有完全准备好，也有一点被电视上的内容分散了注意力。他分享了一个与豆腐这种植物性食物有关的个人小故事。经历讲出来了，不过内容还没有给人留下特别深刻的印象。\n\n• 备稿演讲指导——让孩子早点学会管理金钱。从孩子平时就会遇到的选择讲起：如果拿到 50 元，你会怎么决定现在花多少、留多少以后再用？\n\n• 用这个选择解释预算、储蓄和复利。用一个简单例子说明存款怎样增长，并说清楚起始金额、多久存一次钱，以及假设的利率。\n\n• 再把话题拉回到家长和学校可以教什么。家长可以帮孩子设定储蓄目标、记录进度；学校可以用数学课讲清楚利息和借款是怎么回事。如果提到美国的债务或中国的储蓄习惯，要给出来源。"
+            },
+            {
+              "id": "ivy",
+              "name": "Ivy",
+              "en": "• Impromptu practice: I thought Ivy’s speech was very good. There was a lot of emotion in the way she told her story, and that emotion came through to the audience. I’d like her to articulate more clearly and add a few more pauses. At times she rushed through the words and there was not quite enough space between ideas. Taking a little more time to consider what she wants to say and express would give those words more weight and make it feel more like a speech.\n\n• Prepared-speech coaching — What happens when a shortcut replaces practice? Start with what you feel comfortable sharing about a personal experience and what it made you think about. If you discuss ADHD treatment, give prescribed treatment its own context.\n\n• Use AI as an example everyone can relate to. Getting AI to write the whole speech can save time, but then you miss the practice of deciding what you believe and finding the words to say it. If you include the Thailand fitness story, keep it brief and use it to ask where people draw the line on performance enhancement.\n\n• End with a question the audience can use: “What skill am I trying to build, and am I still practicing it?”",
+              "zh": "• 即兴演讲练习：我觉得 Ivy 讲得很好。她讲故事时带着很丰富的情绪，而且把这种情绪传达给了听众。我希望她把字音咬得更清楚，再多加几个停顿。有时她说得稍快，想法之间留的空隙不够。如果多花一点时间想清楚自己要说什么、要表达什么，她的话会更有分量，也会更像一场演讲。\n\n• 备稿演讲指导——如果捷径取代了练习，会发生什么？从一段你愿意分享的个人经历讲起，说说它让你想到了什么。如果谈到注意缺陷多动障碍（ADHD）的治疗，请单独交代遵医嘱用药的背景。\n\n• 用大家都容易理解的 AI 作例子。让 AI 写完整篇演讲稿可以节省时间，但这样你就少练了两件事：想清楚自己相信什么，以及找到合适的词把它说出来。如果要用泰国的健身故事，请简短带过，用它来问问大家：为了提升表现，做到什么程度就越界了？\n\n• 结尾留给听众一个可以问自己的问题：“我想培养什么技能？我还在练习这项技能吗？”"
+            }
+          ]
         }
       ]
     },
@@ -881,6 +918,34 @@
               "name": "Hugo",
               "en": "• Although Hugo had not prepared for his homework presentation, he spoke at length and shared a detailed story about a boat trip.\n\n• I felt that the story was well put together, with a lot of specific details.\n\n• His next step is to add a clear message: what does he want the audience to take away from the experience, and how can that message connect with the people listening?",
               "zh": "• 虽然 Hugo 没有为作业展示做准备，但他讲了很多，分享了一次乘船经历的详细故事。\n\n• 我觉得故事组织得很好，有很多具体细节。\n\n• 下一步是加入清楚的核心信息：他希望听众从这段经历中得到什么？这个信息怎样与听众建立联系？"
+            }
+          ]
+        },
+        {
+          "id": "sat-introductory-2026-11-21",
+          "date": "2026-11-21",
+          "time": "16:30–18:30",
+          "status": "held",
+          "classContent": null,
+          "homework": null,
+          "students": [
+            {
+              "id": "anna",
+              "name": "Anna",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "stacey",
+              "name": "Stacey",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "hugo",
+              "name": "Hugo",
+              "en": "• Hugo came up to speak first. Overall, I thought his speech was okay, and the content was fine. He did not seem quite prepared, and he hesitated over some of his words. I would suggest practising the speech two or three times before presenting it so he can deliver it with more conviction.",
+              "zh": "• Hugo 第一个上台发言。我觉得他整体表现还可以，演讲内容也没问题。不过，他看起来准备得还不太充分，说到一些词时有些犹豫。我建议他在上台前把演讲练习两到三遍，这样讲起来会更坚定、更有说服力。"
             }
           ]
         }
