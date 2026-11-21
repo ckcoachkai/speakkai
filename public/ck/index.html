@@ -129,7 +129,15 @@
     .masthead{position:relative;isolation:isolate;padding:12px clamp(11px,2.2vw,26px);border:1px solid #eab3cc;border-radius:22px;background:linear-gradient(118deg,#fff9fc 0%,#ffe7f2 66%,#f6e7ff 100%);box-shadow:inset 0 0 0 4px #fffc,0 5px 18px #b7547f18;min-height:114px}
     .masthead::before{content:"";position:absolute;inset:5px;border:1px dashed #d88daf75;border-radius:16px;pointer-events:none;z-index:-1}
     .hero{gap:clamp(6px,1.8vw,16px)}
-    .hero .kitty{display:block;width:clamp(67px,9vw,112px);height:auto;aspect-ratio:1;flex:none;transform:rotate(-7deg);filter:drop-shadow(0 4px 3px #ab497c32)}
+    .portrait-lockup{position:relative;flex:none;width:clamp(84px,12vw,155px);margin:3px 4px 3px 0}
+    .portrait-frame{display:block;padding:3px;border:1px solid #e4a5c1;border-radius:12px;background:#fff9fc;box-shadow:0 3px 8px #ab497c38;transform:rotate(-4deg)}
+    .portrait-frame img{display:block;width:100%;height:auto;aspect-ratio:3/2;border-radius:7px}
+    .portrait-pin{position:absolute;right:-12px;bottom:-12px;width:clamp(29px,4vw,45px);height:auto;pointer-events:none;filter:drop-shadow(0 2px 2px #ab497c3f)}
+    .couple-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center;max-width:610px;margin:-5px auto 12px;gap:clamp(3px,1.7vw,16px)}
+    .couple-strip img{display:block;justify-self:center;width:min(100%,101px);height:auto;aspect-ratio:1;filter:drop-shadow(0 3px 3px #a54f7233);transform:rotate(-4deg)}
+    .couple-strip img:nth-child(even){transform:rotate(5deg)}
+    @media(max-width:565px){.portrait-lockup{width:clamp(69px,19vw,93px);margin-right:3px}.portrait-pin{right:-9px;bottom:-10px}}
+    @media(max-width:390px){.hero h1{font-size:1.78rem}.couple-strip{margin-top:-7px}}
     .hero h1{color:#632445;text-shadow:0 2px #fff}
     .tools{position:relative;z-index:2}
     .bling-icon{color:#a63368;font-size:1.02em}
@@ -174,7 +182,7 @@
     @media(prefers-reduced-motion:reduce){.glitter-toggle,.sparkle-layer{display:none}}
     @media(max-width:1180px){.bling-rail{display:none}}
     @media(max-width:700px){.masthead{min-height:0;padding:8px 12px 12px;gap:10px}.tools{gap:5px}.header-glitter .glimmer:nth-child(2){left:auto;right:2.4%;bottom:4px}}
-    @media(max-width:555px){.masthead{display:grid}.tools{justify-content:flex-start}.tools .outline{padding-inline:10px;font-size:.8rem}.hero .kitty{margin-left:-4px}.footer-line{gap:0}}
+    @media(max-width:555px){.masthead{display:grid}.tools{justify-content:flex-start}.tools .outline{padding-inline:10px;font-size:.8rem}.footer-line{gap:0}}
     @media(max-width:350px){.masthead{padding-inline:8px}.tools .outline{padding-inline:8px}}
     .bling-rail .rail-cupcake{width:86%;transform:rotate(10deg)}
     .bling-rail .rail-bow{width:83%;transform:rotate(-11deg)}
@@ -202,7 +210,12 @@
   <main class="shell">
     <header class="masthead">
       <div class="hero">
-        <img class="kitty" src="kitty-glitter.webp" alt="" width="384" height="384">
+        <div class="portrait-lockup">
+          <a class="portrait-frame" href="charis-kai-blush.webp" target="_blank" rel="noopener" aria-label="Open the portrait of Charis and Kai">
+            <img src="charis-kai-blush.webp" alt="Charis and Kai against a blush-pink studio backdrop" width="720" height="480">
+          </a>
+          <img class="portrait-pin" src="kitty-glitter.webp" alt="" width="384" height="384">
+        </div>
         <div><h1 id="title">Charis &amp; Kai</h1><p class="period">November 2026 – December 2027</p></div>
       </div>
       <div class="header-glitter" aria-hidden="true"><span class="glimmer">✦</span><span class="glimmer">✧</span><span class="glimmer">✦</span><span class="glimmer">✧</span><span class="glimmer">✦</span></div>
@@ -213,6 +226,13 @@
         <button class="outline" id="manage" type="button">Share plans</button>
       </div>
     </header>
+    <div class="couple-strip" aria-hidden="true">
+      <img src="couple-calendar.webp" alt="" width="320" height="320">
+      <img src="couple-bubble-tea.webp" alt="" width="320" height="320">
+      <img src="couple-umbrella.webp" alt="" width="320" height="320">
+      <img src="couple-dumplings.webp" alt="" width="320" height="320">
+      <img src="couple-movie-night.webp" alt="" width="320" height="320">
+    </div>
     <div class="tabs" id="tabs" role="tablist" aria-label="Calendar months"></div>
     <div class="workspace" id="month-panel" role="tabpanel" tabindex="0">
       <section class="card calendar" aria-labelledby="month-heading">
