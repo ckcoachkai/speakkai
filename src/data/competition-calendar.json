@@ -1,0 +1,1753 @@
+{
+  "updated": "2026-11-21",
+  "series": [
+    {
+      "id": "nhsdlc",
+      "name": "NHSDLC",
+      "zh": "NHSDLC 辩论与演讲挑战",
+      "category": "debate",
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "watch": "Watch the organizer for spring 2027 city rounds and the national championship. Published fall and winter rounds appear in the calendar."
+    },
+    {
+      "id": "toc-asia",
+      "name": "TOC Asia",
+      "zh": "TOC 亚洲演讲与辩论",
+      "category": "debate",
+      "source": "https://www.asiatoc.org/",
+      "watch": "Some fall dates are available through a partner schedule. Check the organizer for final invitations, entry deadlines and 2027 winter dates."
+    },
+    {
+      "id": "wsda",
+      "name": "WSDA",
+      "zh": "WSDA 演讲与辩论联赛",
+      "category": "debate",
+      "source": "https://mp.ebaoming.cn/eventList",
+      "watch": "The WSDA portal lists event-specific divisions and deadlines. Watch it for spring rounds and national dates."
+    },
+    {
+      "id": "ivy",
+      "name": "Ivy Cup",
+      "zh": "常春藤杯国际口语活动",
+      "category": "speech",
+      "source": "https://www.ivyevents.us/News",
+      "watch": "Mainland and Hong Kong round dates are awaiting public confirmation. The Taiwan office names a spring 2027 preliminary and gives conflicting dates for the Asia-Pacific finals."
+    },
+    {
+      "id": "century",
+      "name": "21st Century Cup",
+      "zh": "中国日报社“21世纪杯”全国英语演讲比赛",
+      "category": "speech",
+      "source": "https://contest.i21st.cn/youth/article.php?apps=final&cat=common&op=latest",
+      "watch": "The 2027 mainland and Shanghai dates are still to be verified. The 2026 mainland Youth division was for eligible entrants aged 18 and over."
+    },
+    {
+      "id": "century-hk",
+      "name": "21st Century Cup Hong Kong",
+      "zh": "香港“21世纪杯”英语演讲比赛",
+      "category": "speech",
+      "source": "https://www.vdoenglish.com/i21st/en/news",
+      "watch": "Hong Kong runs separate school-age divisions. Watch the local organizer for the next dates."
+    },
+    {
+      "id": "fltrp",
+      "name": "FLTRP Cup",
+      "zh": "“外研社杯”全国中学生外语素养大赛",
+      "category": "speech",
+      "source": "https://events.fltrp.com/c/2026-09-20/236668.shtml",
+      "watch": "The national final is provisionally scheduled for March 2027. Shanghai-specific regional dates are awaiting confirmation. This edition is for senior high and secondary vocational students."
+    },
+    {
+      "id": "wsc",
+      "name": "World Scholar’s Cup",
+      "zh": "世界学者杯",
+      "category": "multi",
+      "source": "https://beta.scholarscup.org/calendar/",
+      "watch": "The organizer lists 2027 China regional rounds. A 2027 Global Round in mainland China, Hong Kong or Macao is still to be verified."
+    },
+    {
+      "id": "stanford",
+      "name": "Stanford Invitational",
+      "category": "debate",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=40749",
+      "watch": "The February 2027 invitational is online. WSDA China appears on the participant list. Check directly about joining a delegation and division-specific signup."
+    },
+    {
+      "id": "harvard",
+      "name": "Harvard National Invitational",
+      "category": "debate",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=40853"
+    },
+    {
+      "id": "harvard-isdi",
+      "name": "Harvard Debate ISDI",
+      "category": "debate",
+      "source": "https://www.isdiworld.org/competitions/tournament-schedule"
+    },
+    {
+      "id": "harvard-wsd",
+      "name": "Harvard College World Schools Invitational",
+      "category": "debate",
+      "source": "https://www.harvardcollegedebatingunion.org/regional-partnerships",
+      "watch": "The Hong Kong pathway is published through See Change. The date of the separate 2027 Harvard College World Schools Invitational is still to be verified."
+    },
+    {
+      "id": "toc-us",
+      "name": "Kentucky TOC Digital Series",
+      "category": "debate",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41805"
+    },
+    {
+      "id": "ssdi",
+      "name": "Shanghai Speech and Debate Invitational",
+      "zh": "上海演讲与辩论邀请赛",
+      "category": "debate",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41965"
+    },
+    {
+      "id": "widpsc",
+      "name": "WIDPSC",
+      "zh": "世界个人辩论与公共演讲锦标赛",
+      "category": "debate",
+      "source": "https://widpsc2027.org/"
+    },
+    {
+      "id": "see-change",
+      "name": "See Change WSD Championship",
+      "category": "debate",
+      "source": "https://www.seechangewsdc.org/registration"
+    },
+    {
+      "id": "capstone",
+      "name": "Hong Kong Primary Schools Debating Championship",
+      "category": "debate",
+      "source": "https://capstonedebate.com/"
+    },
+    {
+      "id": "hkfyg",
+      "name": "HKFYG English Public Speaking Contest",
+      "zh": "香港青年协会英语演讲比赛",
+      "category": "speech",
+      "source": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/"
+    },
+    {
+      "id": "hkitdc",
+      "name": "Hong Kong Innovation Technology School Debate",
+      "category": "debate",
+      "source": "https://hkitdc.org/debate_comp_eng_2027/"
+    },
+    {
+      "id": "edu",
+      "name": "EduDrift",
+      "category": "debate",
+      "source": "https://edudrift.com/online-competitions/"
+    },
+    {
+      "id": "esu-y",
+      "name": "ESU Youth Public Speaking Competition",
+      "category": "speech",
+      "source": "https://www.seedcomp.asia/esuypsc-en/"
+    },
+    {
+      "id": "esu-i",
+      "name": "ESU International Public Speaking Competition",
+      "category": "speech",
+      "source": "https://www.seedasdan.com/en/ipsc-en/"
+    },
+    {
+      "id": "edb",
+      "name": "Time to Talk Public Speaking",
+      "category": "speech",
+      "source": "https://nets.edb.edcity.hk/page.php?p=512",
+      "watch": "The Hong Kong Education Bureau lists an in-person final in May 2027 with the exact date to be confirmed. School registration closed on November 18, 2026."
+    },
+    {
+      "id": "student-voices",
+      "name": "Student Voices",
+      "zh": "Student Voices 英语演讲比赛",
+      "category": "speech",
+      "source": "https://www.sohu.com/a/1090734849_121124007",
+      "watch": "The Shanghai English speech competition is returning in 2027. The co-organizers have yet to give exact dates in the public announcement."
+    },
+    {
+      "id": "star-of-outlook",
+      "name": "Star of Outlook",
+      "zh": "希望之星风采展示大会",
+      "category": "speech",
+      "source": "https://www.staroutlook.com/",
+      "watch": "The organizer links to the 2027 sign-up via WeChat. Exact Shanghai and national competition dates are still to be verified."
+    }
+  ],
+  "events": [
+    {
+      "id": "nhsdlc-hangzhou-debate",
+      "series": "nhsdlc",
+      "title": "Hangzhou fall debate round",
+      "short": "NHSDLC Hangzhou",
+      "start": "2026-11-21",
+      "end": "2026-11-22",
+      "region": "mainland",
+      "place": "Hangzhou · Olive Tree International Academy",
+      "format": "Public Forum & Junior World Schools debate",
+      "source": "https://nhsdlc.org/en/news-en/#baoming"
+    },
+    {
+      "id": "toc-qingdao",
+      "series": "toc-asia",
+      "title": "North China Qualifier",
+      "short": "TOC Qingdao",
+      "start": "2026-11-21",
+      "end": "2026-11-22",
+      "region": "mainland",
+      "place": "Qingdao Academy",
+      "format": "Expository, impromptu, persuasive & Public Forum",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=42461"
+    },
+    {
+      "id": "wsda-wuhan",
+      "series": "wsda",
+      "title": "WSDA Wuhan Fall Open",
+      "short": "WSDA Wuhan",
+      "start": "2026-11-21",
+      "end": "2026-11-22",
+      "region": "mainland",
+      "place": "Wuhan",
+      "format": "Interpretation, Expository Speech, Extemporaneous Debate (junior)",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1795",
+      "divisions": [
+        {
+          "title": "Interpretation",
+          "start": "2026-11-21",
+          "end": "2026-11-21",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1795",
+          "deadline": "2026-11-16"
+        },
+        {
+          "title": "Expository Speech",
+          "start": "2026-11-22",
+          "end": "2026-11-22",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1753",
+          "deadline": "2026-11-12"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2026-11-22",
+          "end": "2026-11-22",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1756",
+          "deadline": "2026-11-12"
+        }
+      ]
+    },
+    {
+      "id": "nhsdlc-hangzhou-speech",
+      "series": "nhsdlc",
+      "title": "Hangzhou public speaking round",
+      "short": "NHSDLC Hangzhou speech",
+      "start": "2026-11-22",
+      "end": "2026-11-22",
+      "region": "mainland",
+      "place": "Hangzhou",
+      "format": "English public speaking",
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "note": "Elementary grades 1–3 and 4–6, plus middle and high school original speech."
+    },
+    {
+      "id": "wsda-qingdao-junior",
+      "series": "wsda",
+      "title": "WSDA Junior Qingdao Fall Open",
+      "short": "WSDA Qingdao",
+      "start": "2026-11-22",
+      "end": "2026-11-22",
+      "region": "mainland",
+      "place": "Qingdao · Qingdao Cornerstone Bilingual School",
+      "format": "Expository Speech, Extemporaneous Debate (junior)",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1761",
+      "deadline": "Portal signup cutoff November 9, 2026.",
+      "divisions": [
+        {
+          "title": "Expository Speech",
+          "start": "2026-11-22",
+          "end": "2026-11-22",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1761",
+          "deadline": "2026-11-09"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2026-11-22",
+          "end": "2026-11-22",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1762",
+          "deadline": "2026-11-09"
+        }
+      ]
+    },
+    {
+      "id": "fltrp-prelims",
+      "series": "fltrp",
+      "title": "FLTRP Cup regional preliminary window",
+      "short": "FLTRP prelims",
+      "start": "2026-11-23",
+      "end": "2026-12-27",
+      "region": "online",
+      "place": "Online · nationwide window",
+      "format": "English reading aloud & Q&A",
+      "source": "https://events.fltrp.com/c/2026-09-20/236668.shtml",
+      "note": "Senior high and secondary vocational qualifiers only. Local timing varies."
+    },
+    {
+      "id": "century-finals",
+      "series": "century",
+      "title": "21st Century Cup national finals",
+      "short": "21st Century Cup",
+      "start": "2026-11-24",
+      "end": "2026-11-28",
+      "region": "mainland",
+      "place": "Tianjin · Society Hill International Convention Center Hotel",
+      "format": "English public speaking",
+      "source": "https://contest.i21st.cn/article/final/7096_1.html",
+      "note": "Organizer notices give this five-day finals program for qualifying University, Youth and International entrants."
+    },
+    {
+      "id": "wsc-2026-chengdu",
+      "series": "wsc",
+      "title": "Chengdu Round",
+      "short": "WSC Chengdu",
+      "start": "2026-11-28",
+      "end": "2026-11-29",
+      "region": "mainland",
+      "place": "Chengdu · SPGS International School Chengdu",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2026-chengdu/"
+    },
+    {
+      "id": "nhsdlc-shanghai",
+      "series": "nhsdlc",
+      "title": "Shanghai fall debate round",
+      "short": "NHSDLC Shanghai",
+      "start": "2026-11-28",
+      "end": "2026-11-29",
+      "region": "mainland",
+      "place": "Shanghai Hongrun Boyuan School",
+      "format": "Public Forum & Junior World Schools debate",
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "note": "Public Forum lists open, middle-school and novice middle-school divisions."
+    },
+    {
+      "id": "wsc-2026-shanghai",
+      "series": "wsc",
+      "title": "Shanghai Intro Round",
+      "short": "WSC Shanghai Intro",
+      "start": "2026-11-28",
+      "end": "2026-11-29",
+      "region": "mainland",
+      "place": "Shanghai · Dehong Shanghai International Chinese School",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2026-shanghai/",
+      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026."
+    },
+    {
+      "id": "ssdi-shanghai",
+      "series": "ssdi",
+      "title": "Shanghai Speech and Debate Invitational",
+      "short": "SSDI Shanghai",
+      "start": "2026-11-28",
+      "end": "2026-11-29",
+      "region": "mainland",
+      "place": "NACIS Shanghai",
+      "format": "Speech & debate",
+      "source": "https://www.dialogy.cn/index/activity/activity.html",
+      "deadline": "The organizer lists November 21 as the registration cutoff.",
+      "note": "Dialogy gives November 28–29 as competition days. The wider Tabroom tournament window starts November 27."
+    },
+    {
+      "id": "toc-shenzhen",
+      "series": "toc-asia",
+      "title": "South China Qualifier",
+      "short": "TOC Shenzhen",
+      "start": "2026-11-28",
+      "end": "2026-11-29",
+      "region": "mainland",
+      "place": "Shenzhen",
+      "format": "Public Forum",
+      "source": "https://www.jingsailian.com/sheke/1655764.html",
+      "status": "Reported",
+      "note": "A published fall schedule lists these dates. Confirm the invitation and registration with TOC Asia."
+    },
+    {
+      "id": "wsda-guangzhou",
+      "series": "wsda",
+      "title": "WSDA Guangzhou Fall Open",
+      "short": "WSDA Guangzhou",
+      "start": "2026-11-28",
+      "end": "2026-11-29",
+      "region": "mainland",
+      "place": "Guangzhou · Benenden Bilingual School Guangzhou",
+      "format": "Public Forum Debate, Extemporaneous Debate (secondary), Original Oratory, Expository Speech, Extemporaneous Debate (junior)",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1764",
+      "deadline": "Portal signup cutoff November 16, 2026.",
+      "divisions": [
+        {
+          "title": "Public Forum Debate",
+          "start": "2026-11-28",
+          "end": "2026-11-29",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1764",
+          "deadline": "2026-11-16"
+        },
+        {
+          "title": "Extemporaneous Debate (secondary)",
+          "start": "2026-11-28",
+          "end": "2026-11-29",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1800",
+          "deadline": "2026-11-16"
+        },
+        {
+          "title": "Original Oratory",
+          "start": "2026-11-28",
+          "end": "2026-11-28",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1766",
+          "deadline": "2026-11-16"
+        },
+        {
+          "title": "Expository Speech",
+          "start": "2026-11-29",
+          "end": "2026-11-29",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1768",
+          "deadline": "2026-11-16"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2026-11-29",
+          "end": "2026-11-29",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1770",
+          "deadline": "2026-11-16"
+        }
+      ]
+    },
+    {
+      "id": "wsda-hangzhou",
+      "series": "wsda",
+      "title": "WSDA Hangzhou Fall Open",
+      "short": "WSDA Hangzhou",
+      "start": "2026-11-28",
+      "end": "2026-11-29",
+      "region": "mainland",
+      "place": "Hangzhou · Hangzhou Dipont School of Arts and Science",
+      "format": "Original Oratory, Public Forum Debate, Extemporaneous Debate (secondary), Expository Speech, Extemporaneous Debate (junior)",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1774",
+      "deadline": "Portal signup cutoff November 16, 2026.",
+      "divisions": [
+        {
+          "title": "Original Oratory",
+          "start": "2026-11-28",
+          "end": "2026-11-28",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1774",
+          "deadline": "2026-11-16"
+        },
+        {
+          "title": "Public Forum Debate",
+          "start": "2026-11-28",
+          "end": "2026-11-28",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1775",
+          "deadline": "2026-11-16"
+        },
+        {
+          "title": "Extemporaneous Debate (secondary)",
+          "start": "2026-11-28",
+          "end": "2026-11-28",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1776",
+          "deadline": "2026-11-16"
+        },
+        {
+          "title": "Expository Speech",
+          "start": "2026-11-29",
+          "end": "2026-11-29",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1778",
+          "deadline": "2026-11-16"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2026-11-29",
+          "end": "2026-11-29",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1780",
+          "deadline": "2026-11-16"
+        }
+      ]
+    },
+    {
+      "id": "edu-apsc",
+      "series": "edu",
+      "title": "Asian Public Speaking Championships",
+      "short": "Asian Public Speaking",
+      "start": "2026-12-05",
+      "end": "2026-12-06",
+      "region": "online",
+      "place": "Online · UTC+8",
+      "format": "Impromptu, interpretive & persuasive speech",
+      "source": "https://edudrift.com/online-competitions/apsc/",
+      "note": "Individual event for ages 7–18."
+    },
+    {
+      "id": "nhsdlc-beijing",
+      "series": "nhsdlc",
+      "title": "Beijing fall round",
+      "short": "NHSDLC Beijing",
+      "start": "2026-12-05",
+      "end": "2026-12-06",
+      "region": "mainland",
+      "place": "Beijing SMIC Private School",
+      "format": "Public Forum, Junior World Schools & public speaking",
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "note": "Public speaking runs December 6."
+    },
+    {
+      "id": "wsc-2026-beijing-intro",
+      "series": "wsc",
+      "title": "Beijing Intro Round",
+      "short": "WSC Beijing Intro",
+      "start": "2026-12-05",
+      "end": "2026-12-06",
+      "region": "mainland",
+      "place": "Beijing · AISL Harrow Beijing",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2026-beijing-intro/",
+      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026."
+    },
+    {
+      "id": "toc-hangzhou",
+      "series": "toc-asia",
+      "title": "East China Qualifier",
+      "short": "TOC Hangzhou",
+      "start": "2026-12-05",
+      "end": "2026-12-06",
+      "region": "mainland",
+      "place": "Hangzhou",
+      "format": "Public Forum & Junior World Schools debate",
+      "source": "https://www.jingsailian.com/sheke/1655764.html",
+      "status": "Reported",
+      "note": "A published fall schedule lists these dates. Confirm the invitation and registration with TOC Asia."
+    },
+    {
+      "id": "nhsdlc-guangzhou",
+      "series": "nhsdlc",
+      "title": "Guangzhou fall round",
+      "short": "NHSDLC Guangzhou",
+      "start": "2026-12-05",
+      "end": "2026-12-06",
+      "region": "mainland",
+      "place": "Guangzhou · ASJ",
+      "format": "Public Forum, Junior World Schools & public speaking",
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "note": "Public speaking runs December 6."
+    },
+    {
+      "id": "toc-digital-1",
+      "series": "toc-us",
+      "title": "Kentucky TOC Digital Series #1",
+      "short": "TOC Digital #1",
+      "start": "2026-12-05",
+      "end": "2026-12-07",
+      "region": "online",
+      "place": "Online · NSDA Campus",
+      "format": "Speech, Public Forum, World Schools, Policy, LD & Congress",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41805",
+      "zone": "China time",
+      "note": "Organizer dates in U.S. Eastern time are December 4–6. Some rounds run overnight in China. The series offers international Public Forum and World Schools breakout eliminations.",
+      "deadline": "Registration closes December 1 at 12:59 p.m. China time."
+    },
+    {
+      "id": "wsc-2026-shenzhen",
+      "series": "wsc",
+      "title": "Shenzhen Round",
+      "short": "WSC Shenzhen",
+      "start": "2026-12-05",
+      "end": "2026-12-06",
+      "region": "mainland",
+      "place": "Shenzhen · Shenzhen College of International Education",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2026-shenzhen/",
+      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026."
+    },
+    {
+      "id": "wsda-online-december",
+      "series": "wsda",
+      "title": "WSDA December Online Fall Round",
+      "short": "WSDA Online",
+      "start": "2026-12-05",
+      "end": "2026-12-06",
+      "region": "online",
+      "place": "Online",
+      "format": "Extemporaneous Debate (secondary), Public Forum Debate, Original Oratory, Extemporaneous Debate (junior), Expository Speech",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1730",
+      "deadline": "Portal signup cutoff November 23, 2026.",
+      "divisions": [
+        {
+          "title": "Extemporaneous Debate (secondary)",
+          "start": "2026-12-05",
+          "end": "2026-12-06",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1730",
+          "deadline": "2026-11-23"
+        },
+        {
+          "title": "Public Forum Debate",
+          "start": "2026-12-05",
+          "end": "2026-12-06",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1732",
+          "deadline": "2026-11-23"
+        },
+        {
+          "title": "Original Oratory",
+          "start": "2026-12-05",
+          "end": "2026-12-05",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1734",
+          "deadline": "2026-11-23"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2026-12-06",
+          "end": "2026-12-06",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1731",
+          "deadline": "2026-11-23"
+        },
+        {
+          "title": "Expository Speech",
+          "start": "2026-12-06",
+          "end": "2026-12-06",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1733",
+          "deadline": "2026-11-23"
+        }
+      ]
+    },
+    {
+      "id": "wsda-greater-bay",
+      "series": "wsda",
+      "title": "WSDA Greater Bay Fall Open",
+      "short": "WSDA Shenzhen",
+      "start": "2026-12-05",
+      "end": "2026-12-06",
+      "region": "mainland",
+      "place": "Shenzhen · Shenzhen Whittle School",
+      "format": "Public Forum Debate, Interpretation, Original Oratory",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1781",
+      "deadline": "Portal signup cutoff November 23, 2026.",
+      "divisions": [
+        {
+          "title": "Public Forum Debate",
+          "start": "2026-12-05",
+          "end": "2026-12-06",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1781",
+          "deadline": "2026-11-23"
+        },
+        {
+          "title": "Interpretation",
+          "start": "2026-12-05",
+          "end": "2026-12-05",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1779",
+          "deadline": "2026-11-23"
+        },
+        {
+          "title": "Original Oratory",
+          "start": "2026-12-05",
+          "end": "2026-12-05",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1782",
+          "deadline": "2026-11-23"
+        }
+      ]
+    },
+    {
+      "id": "nhsdlc-online-iv",
+      "series": "nhsdlc",
+      "title": "Fall Online Round IV",
+      "short": "NHSDLC Online IV",
+      "start": "2026-12-12",
+      "end": "2026-12-13",
+      "region": "online",
+      "place": "Online",
+      "format": "Public Forum, Junior World Schools & public speaking",
+      "source": "https://nhsdlc.org/en/news-en/#baoming"
+    },
+    {
+      "id": "wsc-2026-fuzhou",
+      "series": "wsc",
+      "title": "Fuzhou Round",
+      "short": "WSC Fuzhou",
+      "start": "2026-12-12",
+      "end": "2026-12-13",
+      "region": "mainland",
+      "place": "Fuzhou · Sedbergh School",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2026-fuzhou/",
+      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026."
+    },
+    {
+      "id": "nhsdlc-ningbo",
+      "series": "nhsdlc",
+      "title": "Ningbo fall round",
+      "short": "NHSDLC Ningbo",
+      "start": "2026-12-12",
+      "end": "2026-12-13",
+      "region": "mainland",
+      "place": "HD Ningbo School",
+      "format": "Public Forum, Junior World Schools & public speaking",
+      "source": "https://nhsdlc.org/en/news-en/#baoming"
+    },
+    {
+      "id": "toc-online-iii",
+      "series": "toc-asia",
+      "title": "Online Qualifier III",
+      "short": "TOC Online III",
+      "start": "2026-12-12",
+      "end": "2026-12-13",
+      "region": "online",
+      "place": "Online",
+      "format": "Public Forum",
+      "source": "https://www.jingsailian.com/sheke/1655764.html",
+      "status": "Reported",
+      "note": "A published fall schedule lists these dates. Confirm the invitation and registration with TOC Asia."
+    },
+    {
+      "id": "wsda-greater-bay-junior",
+      "series": "wsda",
+      "title": "WSDA Junior Greater Bay Fall Open",
+      "short": "WSDA Shenzhen Junior",
+      "start": "2026-12-12",
+      "end": "2026-12-13",
+      "region": "mainland",
+      "place": "Shenzhen · Shenzhen Whittle School",
+      "format": "Expository Speech, Extemporaneous Debate (junior)",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1777",
+      "deadline": "Portal signup cutoff November 30, 2026.",
+      "divisions": [
+        {
+          "title": "Expository Speech",
+          "start": "2026-12-12",
+          "end": "2026-12-12",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1777",
+          "deadline": "2026-11-30"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2026-12-13",
+          "end": "2026-12-13",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1773",
+          "deadline": "2026-11-30"
+        }
+      ]
+    },
+    {
+      "id": "wsda-suzhou",
+      "series": "wsda",
+      "title": "WSDA Suzhou Fall Open",
+      "short": "WSDA Kunshan",
+      "start": "2026-12-12",
+      "end": "2026-12-13",
+      "region": "mainland",
+      "place": "Kunshan · Dipont HuaYao Collegiate School Kunshan",
+      "format": "Public Forum Debate, Original Oratory, Expository Speech, Extemporaneous Debate (junior)",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1793",
+      "deadline": "Portal signup cutoff November 30, 2026.",
+      "divisions": [
+        {
+          "title": "Public Forum Debate",
+          "start": "2026-12-12",
+          "end": "2026-12-13",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1793",
+          "deadline": "2026-11-30"
+        },
+        {
+          "title": "Original Oratory",
+          "start": "2026-12-12",
+          "end": "2026-12-12",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1794",
+          "deadline": "2026-11-30"
+        },
+        {
+          "title": "Expository Speech",
+          "start": "2026-12-13",
+          "end": "2026-12-13",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1791",
+          "deadline": "2026-11-30"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2026-12-13",
+          "end": "2026-12-13",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1792",
+          "deadline": "2026-11-30"
+        }
+      ]
+    },
+    {
+      "id": "nhsdlc-chongqing",
+      "series": "nhsdlc",
+      "title": "Chongqing fall round",
+      "short": "NHSDLC Chongqing",
+      "start": "2026-12-19",
+      "end": "2026-12-20",
+      "region": "mainland",
+      "place": "Chongqing · BI Academy",
+      "format": "Public Forum, Junior World Schools & public speaking",
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "note": "Public speaking runs December 20, including English poetry for ages 3–7."
+    },
+    {
+      "id": "wsda-enreach",
+      "series": "wsda",
+      "title": "ENREACH Fall Speech & Debate Day",
+      "short": "WSDA ENREACH",
+      "start": "2026-12-19",
+      "end": "2026-12-20",
+      "region": "mainland",
+      "place": "Shanghai",
+      "format": "Extemporaneous Debate (junior), Expository Speech, Public Forum Debate",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1818",
+      "deadline": "Portal signup cutoff December 9, 2026.",
+      "divisions": [
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2026-12-19",
+          "end": "2026-12-19",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1818",
+          "deadline": "2026-12-09"
+        },
+        {
+          "title": "Expository Speech",
+          "start": "2026-12-19",
+          "end": "2026-12-19",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1819",
+          "deadline": "2026-12-09"
+        },
+        {
+          "title": "Public Forum Debate",
+          "start": "2026-12-20",
+          "end": "2026-12-20",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1820",
+          "deadline": "2026-12-09"
+        }
+      ]
+    },
+    {
+      "id": "nhsdlc-online-v",
+      "series": "nhsdlc",
+      "title": "Fall Online Round V",
+      "short": "NHSDLC Online V",
+      "start": "2026-12-19",
+      "end": "2026-12-20",
+      "region": "online",
+      "place": "Online",
+      "format": "Public Forum, Junior World Schools & public speaking",
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "note": "Public speaking runs December 20."
+    },
+    {
+      "id": "wsda-beijing",
+      "series": "wsda",
+      "title": "WSDA Beijing Fall Regional",
+      "short": "WSDA Beijing",
+      "start": "2026-12-19",
+      "end": "2026-12-20",
+      "region": "mainland",
+      "place": "Beijing · Beijing Huijia Private School",
+      "format": "Public Forum Debate, Extemporaneous Debate (secondary), Original Oratory, Expository Speech, Extemporaneous Debate (junior)",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1765",
+      "deadline": "Portal signup cutoff December 7, 2026.",
+      "divisions": [
+        {
+          "title": "Public Forum Debate",
+          "start": "2026-12-19",
+          "end": "2026-12-20",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1765",
+          "deadline": "2026-12-07"
+        },
+        {
+          "title": "Extemporaneous Debate (secondary)",
+          "start": "2026-12-19",
+          "end": "2026-12-20",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1767",
+          "deadline": "2026-12-07"
+        },
+        {
+          "title": "Original Oratory",
+          "start": "2026-12-19",
+          "end": "2026-12-19",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1769",
+          "deadline": "2026-12-07"
+        },
+        {
+          "title": "Expository Speech",
+          "start": "2026-12-20",
+          "end": "2026-12-20",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1771",
+          "deadline": "2026-12-07"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2026-12-20",
+          "end": "2026-12-20",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1772",
+          "deadline": "2026-12-07"
+        }
+      ]
+    },
+    {
+      "id": "wsda-catoelts",
+      "series": "wsda",
+      "title": "WSDA Junior × Catoelts Shanghai",
+      "short": "WSDA Catoelts",
+      "start": "2026-12-20",
+      "end": "2026-12-20",
+      "region": "mainland",
+      "place": "Shanghai",
+      "format": "Expository Speech",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1807",
+      "deadline": "Portal signup cutoff December 7, 2026."
+    },
+    {
+      "id": "wsda-dialogy",
+      "series": "wsda",
+      "title": "WSDA Junior × Dialogy Qualifier",
+      "short": "WSDA Dialogy",
+      "start": "2026-12-20",
+      "end": "2026-12-20",
+      "region": "mainland",
+      "place": "Shanghai · Dialogy Gubei Center",
+      "format": "Expository Speech, Extemporaneous Debate (junior)",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1811",
+      "deadline": "Portal signup cutoff December 9, 2026.",
+      "divisions": [
+        {
+          "title": "Expository Speech",
+          "start": "2026-12-20",
+          "end": "2026-12-20",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1811",
+          "deadline": "2026-12-09"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2026-12-20",
+          "end": "2026-12-20",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1812",
+          "deadline": "2026-12-09"
+        }
+      ]
+    },
+    {
+      "id": "toc-fall-final",
+      "series": "toc-asia",
+      "title": "Fall Championship",
+      "short": "TOC Fall Final",
+      "start": "2026-12-26",
+      "end": "2026-12-27",
+      "region": "mainland",
+      "place": "China · venue pending",
+      "format": "Public Forum & Gold Bid",
+      "source": "https://www.jingsailian.com/sheke/1647411.html",
+      "status": "Reported",
+      "note": "A published fall schedule lists these dates. Confirm the invitation and registration with TOC Asia."
+    },
+    {
+      "id": "nhsdlc-shenzhen",
+      "series": "nhsdlc",
+      "title": "Shenzhen fall round",
+      "short": "NHSDLC Shenzhen",
+      "start": "2026-12-26",
+      "end": "2026-12-27",
+      "region": "mainland",
+      "place": "Shenzhen · Sendelta International Academy",
+      "format": "Public Forum, Junior World Schools & public speaking",
+      "source": "https://nhsdlc.org/en/news-en/#baoming"
+    },
+    {
+      "id": "wsda-jinan",
+      "series": "wsda",
+      "title": "WSDA Jinan Fall Open",
+      "short": "WSDA Jinan",
+      "start": "2026-12-26",
+      "end": "2026-12-27",
+      "region": "mainland",
+      "place": "Jinan",
+      "format": "Original Oratory, Extemporaneous Debate (junior), Expository Speech",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1785",
+      "deadline": "Portal signup cutoff December 14, 2026.",
+      "divisions": [
+        {
+          "title": "Original Oratory",
+          "start": "2026-12-26",
+          "end": "2026-12-26",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1785",
+          "deadline": "2026-12-14"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2026-12-27",
+          "end": "2026-12-27",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1783",
+          "deadline": "2026-12-14"
+        },
+        {
+          "title": "Expository Speech",
+          "start": "2026-12-27",
+          "end": "2026-12-27",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1784",
+          "deadline": "2026-12-14"
+        }
+      ]
+    },
+    {
+      "id": "wsda-shanghai",
+      "series": "wsda",
+      "title": "WSDA Shanghai Fall Regional",
+      "short": "WSDA Shanghai",
+      "start": "2026-12-26",
+      "end": "2026-12-27",
+      "region": "mainland",
+      "place": "Shanghai",
+      "format": "Public Forum Debate, Extemporaneous Debate (secondary), Original Oratory, Impromptu Speech",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1752",
+      "deadline": "Portal signup cutoff December 14, 2026.",
+      "note": "Secondary-school round. The Shanghai junior round is January 9–10.",
+      "divisions": [
+        {
+          "title": "Public Forum Debate",
+          "start": "2026-12-26",
+          "end": "2026-12-27",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1752",
+          "deadline": "2026-12-14"
+        },
+        {
+          "title": "Extemporaneous Debate (secondary)",
+          "start": "2026-12-26",
+          "end": "2026-12-27",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1757",
+          "deadline": "2026-12-14"
+        },
+        {
+          "title": "Original Oratory",
+          "start": "2026-12-26",
+          "end": "2026-12-26",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1754",
+          "deadline": "2026-12-14"
+        },
+        {
+          "title": "Impromptu Speech",
+          "start": "2026-12-27",
+          "end": "2026-12-27",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1814",
+          "deadline": "2026-12-14"
+        }
+      ]
+    },
+    {
+      "id": "nhsdlc-wuhan",
+      "series": "nhsdlc",
+      "title": "Wuhan fall round",
+      "short": "NHSDLC Wuhan",
+      "start": "2026-12-26",
+      "end": "2026-12-27",
+      "region": "mainland",
+      "place": "Wuhan · Cogdel Cranleigh High School",
+      "format": "Public Forum, Junior World Schools & public speaking",
+      "source": "https://nhsdlc.org/en/news-en/#baoming"
+    },
+    {
+      "id": "nhsdlc-shanghai-speech",
+      "series": "nhsdlc",
+      "title": "Shanghai public speaking round",
+      "short": "NHSDLC Shanghai speech",
+      "start": "2026-12-27",
+      "end": "2026-12-27",
+      "region": "mainland",
+      "place": "Shanghai · Pudong campus, 上海上实剑桥浦东校区",
+      "format": "English public speaking",
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "note": "Elementary grades 1–3 and 4–6, plus middle and high school original speech. Elementary categories include expository, declamation and original speech."
+    },
+    {
+      "id": "nhsdlc-online-vi",
+      "series": "nhsdlc",
+      "title": "Fall Online Round VI",
+      "short": "NHSDLC Online VI",
+      "start": "2027-01-02",
+      "end": "2027-01-03",
+      "region": "online",
+      "place": "Online",
+      "format": "Public Forum, Junior World Schools & public speaking",
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "note": "Public speaking runs January 3."
+    },
+    {
+      "id": "wsda-online-january-1",
+      "series": "wsda",
+      "title": "WSDA January Online Fall Round 1",
+      "short": "WSDA Online I",
+      "start": "2027-01-02",
+      "end": "2027-01-03",
+      "region": "online",
+      "place": "Online",
+      "format": "Extemporaneous Debate (secondary), Public Forum Debate, Original Oratory, Extemporaneous Debate (junior), Expository Speech",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1735",
+      "deadline": "Portal signup cutoff December 21, 2026.",
+      "divisions": [
+        {
+          "title": "Extemporaneous Debate (secondary)",
+          "start": "2027-01-02",
+          "end": "2027-01-03",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1735",
+          "deadline": "2026-12-21"
+        },
+        {
+          "title": "Public Forum Debate",
+          "start": "2027-01-02",
+          "end": "2027-01-03",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1737",
+          "deadline": "2026-12-21"
+        },
+        {
+          "title": "Original Oratory",
+          "start": "2027-01-02",
+          "end": "2027-01-02",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1738",
+          "deadline": "2026-12-21"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2027-01-03",
+          "end": "2027-01-03",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1740",
+          "deadline": "2026-12-21"
+        },
+        {
+          "title": "Expository Speech",
+          "start": "2027-01-03",
+          "end": "2027-01-03",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1741",
+          "deadline": "2026-12-21"
+        }
+      ]
+    },
+    {
+      "id": "fltrp-finals",
+      "series": "fltrp",
+      "title": "FLTRP Cup regional finals window",
+      "short": "FLTRP regional finals",
+      "start": "2027-01-03",
+      "end": "2027-01-31",
+      "region": "mainland",
+      "place": "Across China · local dates vary",
+      "format": "Assigned speech, Q&A & interview",
+      "source": "https://events.fltrp.com/c/2026-09-20/236668.shtml",
+      "note": "For advancing senior high and secondary vocational students. Check the regional committee for venue and timings."
+    },
+    {
+      "id": "wsc-2027-changzhou",
+      "series": "wsc",
+      "title": "Changzhou Round",
+      "short": "WSC Changzhou",
+      "start": "2027-01-09",
+      "end": "2027-01-10",
+      "region": "mainland",
+      "place": "Changzhou · Wycombe Abbey School Changzhou",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2027-changzhou/"
+    },
+    {
+      "id": "wsc-2027-guangzhou",
+      "series": "wsc",
+      "title": "Guangzhou Round",
+      "short": "WSC Guangzhou",
+      "start": "2027-01-09",
+      "end": "2027-01-10",
+      "region": "mainland",
+      "place": "Guangzhou · Benenden Bilingual School Guangzhou",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2027-guangzhou/"
+    },
+    {
+      "id": "ivy-tw-semi",
+      "series": "ivy",
+      "title": "Ivy Cup regional semifinal · Taiwan office",
+      "short": "Ivy Cup semifinal",
+      "start": "2027-01-09",
+      "end": "2027-01-10",
+      "region": "online",
+      "place": "Online · Taiwan registration pathway",
+      "format": "English speaking",
+      "source": "https://sites.google.com/view/ivycup-tw/%E9%83%BD%E5%B8%82%E5%9C%B0%E5%8D%80%E5%8D%8A%E6%B1%BA%E8%B3%BDsemi-final/%E9%83%BD%E5%B8%82%E5%9C%B0%E5%8D%80%E5%8D%8A%E6%B1%BA%E8%B3%BDsemi-final%E4%BB%8B%E7%B4%B9",
+      "status": "Provisional",
+      "note": "For qualifying entrants from the Taiwan registration office. Entrants through other offices should check with their original registration center."
+    },
+    {
+      "id": "hkitdc-p1",
+      "series": "hkitdc",
+      "title": "Preliminary round 1",
+      "short": "HK Tech Debate",
+      "start": "2027-01-09",
+      "end": "2027-01-09",
+      "region": "hong-kong",
+      "place": "Hong Kong",
+      "format": "English school debate",
+      "source": "https://hkitdc.org/debate_comp_eng_2027/",
+      "note": "Entry is through eligible Hong Kong secondary or international schools. The organizer may adjust the dates."
+    },
+    {
+      "id": "wsda-shanghai-junior",
+      "series": "wsda",
+      "title": "WSDA Junior Shanghai Fall Open",
+      "short": "WSDA Shanghai Junior",
+      "start": "2027-01-09",
+      "end": "2027-01-10",
+      "region": "mainland",
+      "place": "Shanghai",
+      "format": "Extemporaneous Debate (junior), Expository Speech",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1760",
+      "deadline": "Portal signup cutoff December 28, 2026.",
+      "note": "Primary school junior round. The secondary Shanghai round runs December 26–27.",
+      "divisions": [
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2027-01-09",
+          "end": "2027-01-09",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1760",
+          "deadline": "2026-12-28"
+        },
+        {
+          "title": "Expository Speech",
+          "start": "2027-01-10",
+          "end": "2027-01-10",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1763",
+          "deadline": "2026-12-28"
+        }
+      ]
+    },
+    {
+      "id": "edu-asow",
+      "series": "edu",
+      "title": "Asia Schools Open Winter",
+      "short": "Asia Schools Open",
+      "start": "2027-01-16",
+      "end": "2027-01-17",
+      "region": "online",
+      "place": "Online · UTC+8",
+      "format": "Asian 3-on-3 debate",
+      "source": "https://edudrift.com/online-competitions/asow/",
+      "note": "Ages 13–18."
+    },
+    {
+      "id": "wsda-online-january-2",
+      "series": "wsda",
+      "title": "WSDA January Online Fall Round 2",
+      "short": "WSDA Online II",
+      "start": "2027-01-16",
+      "end": "2027-01-17",
+      "region": "online",
+      "place": "Online",
+      "format": "Extemporaneous Debate (secondary), Public Forum Debate, Original Oratory, Extemporaneous Debate (junior), Expository Speech",
+      "source": "https://mp.ebaoming.cn/eventDetail?eventId=1745",
+      "deadline": "Portal signup cutoff January 4, 2027.",
+      "divisions": [
+        {
+          "title": "Extemporaneous Debate (secondary)",
+          "start": "2027-01-16",
+          "end": "2027-01-17",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1745",
+          "deadline": "2027-01-04"
+        },
+        {
+          "title": "Public Forum Debate",
+          "start": "2027-01-16",
+          "end": "2027-01-17",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1747",
+          "deadline": "2027-01-04"
+        },
+        {
+          "title": "Original Oratory",
+          "start": "2027-01-16",
+          "end": "2027-01-16",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1748",
+          "deadline": "2027-01-04"
+        },
+        {
+          "title": "Extemporaneous Debate (junior)",
+          "start": "2027-01-17",
+          "end": "2027-01-17",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1746",
+          "deadline": "2027-01-04"
+        },
+        {
+          "title": "Expository Speech",
+          "start": "2027-01-17",
+          "end": "2027-01-17",
+          "source": "https://mp.ebaoming.cn/eventDetail?eventId=1749",
+          "deadline": "2027-01-04"
+        }
+      ]
+    },
+    {
+      "id": "isdi-3",
+      "series": "harvard-isdi",
+      "title": "Harvard Debate UKTOC ISDI Qualifier #3",
+      "short": "Harvard ISDI #3",
+      "start": "2027-01-22",
+      "end": "2027-01-24",
+      "region": "online",
+      "place": "Online · NSDA Campus",
+      "format": "Public Forum, World Schools, original oratory & extemp",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=40337",
+      "zone": "U.S. Eastern time",
+      "deadline": "Tabroom cutoff is January 21 at 12:55 p.m. China time."
+    },
+    {
+      "id": "edu-ajcw",
+      "series": "edu",
+      "title": "Asia Junior Championships Debate Winter",
+      "short": "Asia Junior Debate",
+      "start": "2027-01-23",
+      "end": "2027-01-24",
+      "region": "online",
+      "place": "Online · UTC+8",
+      "format": "Junior World Schools debate",
+      "source": "https://edudrift.com/online-competitions/ajcw/",
+      "note": "Ages 7–14, teams of three."
+    },
+    {
+      "id": "hk-primary",
+      "series": "capstone",
+      "title": "Hong Kong Primary Schools Debating Championship",
+      "short": "HK Primary Debate",
+      "start": "2027-01-23",
+      "end": "2027-01-24",
+      "region": "hong-kong",
+      "place": "Hong Kong · Malvern College Hong Kong",
+      "format": "Junior World Schools debate",
+      "source": "https://docs.google.com/forms/d/e/1FAIpQLSdFdRQf_dgEO7ddqjVhKUXWDZ6THLmGaWjPt3LsfClH3aemaQ/viewform",
+      "note": "Hong Kong primary students in grades 3–6 or years 4–7. Teams of 3–5, including eligible composite teams.",
+      "deadline": "Registration deadline is December 23, 2026."
+    },
+    {
+      "id": "hkfyg-np",
+      "series": "hkfyg",
+      "title": "North Point preliminary",
+      "short": "HKFYG Speech",
+      "start": "2027-01-23",
+      "end": "2027-01-23",
+      "region": "hong-kong",
+      "place": "North Point",
+      "format": "English public speaking",
+      "source": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/",
+      "note": "Hong Kong full-time secondary students in S1–S6 or equivalent. Preliminary entry is through a school or individually.",
+      "deadline": "Applications close January 15, 2027. Early bird ends December 11, 2026."
+    },
+    {
+      "id": "hkitdc-p2",
+      "series": "hkitdc",
+      "title": "Preliminary round 2",
+      "short": "HK Tech Debate",
+      "start": "2027-01-23",
+      "end": "2027-01-23",
+      "region": "hong-kong",
+      "place": "Hong Kong",
+      "format": "English school debate",
+      "source": "https://hkitdc.org/debate_comp_eng_2027/",
+      "note": "Entry is through eligible Hong Kong secondary or international schools. The organizer may adjust the dates."
+    },
+    {
+      "id": "hkfyg-cb",
+      "series": "hkfyg",
+      "title": "Causeway Bay preliminary",
+      "short": "HKFYG Speech",
+      "start": "2027-01-24",
+      "end": "2027-01-24",
+      "region": "hong-kong",
+      "place": "Causeway Bay",
+      "format": "English public speaking",
+      "source": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/",
+      "note": "Hong Kong full-time secondary students in S1–S6 or equivalent. Preliminary entry is through a school or individually.",
+      "deadline": "Applications close January 15, 2027. Early bird ends December 11, 2026."
+    },
+    {
+      "id": "nhsdlc-elite",
+      "series": "nhsdlc",
+      "title": "Elite Invitational",
+      "short": "NHSDLC Elite",
+      "start": "2027-01-30",
+      "end": "2027-02-01",
+      "region": "online",
+      "place": "Online",
+      "format": "Public Forum",
+      "source": "https://open.seedasdan.com/academy/data/nhsdlc/sessions",
+      "note": "Organizer lists middle-school and varsity divisions."
+    },
+    {
+      "id": "hkfyg-f",
+      "series": "hkfyg",
+      "title": "Fanling preliminary",
+      "short": "HKFYG Speech",
+      "start": "2027-01-30",
+      "end": "2027-01-30",
+      "region": "hong-kong",
+      "place": "Fanling",
+      "format": "English public speaking",
+      "source": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/",
+      "note": "Hong Kong full-time secondary students in S1–S6 or equivalent. Preliminary entry is through a school or individually.",
+      "deadline": "Applications close January 15, 2027. Early bird ends December 11, 2026."
+    },
+    {
+      "id": "see-change",
+      "series": "see-change",
+      "title": "See Change World Schools Debate Championship",
+      "short": "See Change WSD",
+      "start": "2027-01-30",
+      "end": "2027-01-31",
+      "region": "online",
+      "place": "Online · Zoom · Hong Kong organizer",
+      "format": "World Schools debate",
+      "source": "https://www.seechangewsdc.org/registration",
+      "note": "Ages 9–18, teams of 3–4. The top four eligible Hong Kong teams in the 15–18 division qualify for the separate Harvard College World Schools Invitational.",
+      "deadline": "Registration closes January 15, 2027. Early bird ends December 18, 2026."
+    },
+    {
+      "id": "nhsdlc-winter-bp",
+      "series": "nhsdlc",
+      "title": "Winter NHSDLC BP Open",
+      "short": "NHSDLC Winter BP",
+      "start": "2027-01-30",
+      "end": "2027-01-31",
+      "region": "mainland",
+      "place": "China · venue and delivery format pending",
+      "format": "British Parliamentary debate",
+      "source": "https://www.jingsailian.com/sheke/1658748.html",
+      "status": "Reported",
+      "note": "Dates are from the republished invitation. Confirm venue and entry with the organizer."
+    },
+    {
+      "id": "stanford-2027",
+      "series": "stanford",
+      "title": "41st Stanford Invitational",
+      "short": "Stanford",
+      "start": "2027-02-06",
+      "end": "2027-02-08",
+      "region": "online",
+      "place": "Online · NSDA Campus",
+      "format": "Speech, debate & Congress",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=40749",
+      "zone": "U.S. Pacific time",
+      "note": "Speech includes impromptu, extemp and original oratory. Confirm division entry with the organizer or a school delegation.",
+      "deadline": "Tabroom general cutoff is February 5 at 3:59 p.m. China time. Some divisions list earlier dates."
+    },
+    {
+      "id": "harvard-2027",
+      "series": "harvard",
+      "title": "Harvard National Speech and Debate Tournament",
+      "short": "Harvard Invitational",
+      "start": "2027-02-13",
+      "end": "2027-02-15",
+      "region": "overseas",
+      "place": "Cambridge, Massachusetts · selected online divisions",
+      "format": "Speech, debate & Congress",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=40853",
+      "zone": "U.S. Eastern time",
+      "note": "The official invitation lists these competition dates. Selected Public Forum, World Schools and middle-school Congress divisions run online.",
+      "deadline": "Check the invitation and registration page for division-specific cutoff times."
+    },
+    {
+      "id": "nhsdlc-winter-debate",
+      "series": "nhsdlc",
+      "title": "Winter National Invitational debate",
+      "short": "NHSDLC Winter debate",
+      "start": "2027-02-13",
+      "end": "2027-02-14",
+      "region": "online",
+      "place": "Online",
+      "format": "Public Forum & Junior World Schools debate",
+      "source": "https://open.seedasdan.com/academy/data/nhsdlc/sessions",
+      "note": "Public Forum lists middle-school and open divisions."
+    },
+    {
+      "id": "nhsdlc-winter-speech",
+      "series": "nhsdlc",
+      "title": "Winter National Invitational public speaking",
+      "short": "NHSDLC Winter speech",
+      "start": "2027-02-14",
+      "end": "2027-02-14",
+      "region": "online",
+      "place": "Online",
+      "format": "English public speaking",
+      "source": "https://open.seedasdan.com/academy/data/nhsdlc/sessions",
+      "note": "Elementary grades 1–3 and 4–6, plus middle and high school original speech."
+    },
+    {
+      "id": "esu-youth-macao",
+      "series": "esu-y",
+      "title": "ESU Youth Public Speaking Competition Asian Round",
+      "short": "ESU Youth Macao",
+      "start": "2027-02-17",
+      "end": "2027-02-19",
+      "region": "macau",
+      "place": "Macao Polytechnic University",
+      "format": "English public speaking",
+      "source": "https://www.seedcomp.asia/esuypsc-en/",
+      "note": "Ages 6–16. The Asian Round is for qualifying medalists from the first round."
+    },
+    {
+      "id": "esu-int-macao",
+      "series": "esu-i",
+      "title": "ESU International Public Speaking Competition Macao final",
+      "short": "ESU Macao final",
+      "start": "2027-02-20",
+      "end": "2027-02-20",
+      "region": "macau",
+      "place": "Macao",
+      "format": "English public speaking",
+      "source": "https://www.seedasdan.com/en/ipsc-en/",
+      "note": "Ages 16–20. Entry is through the preliminary round. The global pathway has Macao student status or residency eligibility."
+    },
+    {
+      "id": "toc-digital-2",
+      "series": "toc-us",
+      "title": "Kentucky TOC Digital Series #2",
+      "short": "TOC Digital #2",
+      "start": "2027-02-20",
+      "end": "2027-02-22",
+      "region": "online",
+      "place": "Online · NSDA Campus",
+      "format": "Speech, Public Forum, World Schools, Policy, LD & Congress",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41842",
+      "zone": "China time",
+      "note": "Organizer dates in U.S. Eastern time are February 19–21. Some rounds run overnight in China. The series offers international Public Forum and World Schools breakout eliminations.",
+      "deadline": "Registration closes February 16 at 12:59 p.m. China time."
+    },
+    {
+      "id": "hkitdc-p3",
+      "series": "hkitdc",
+      "title": "Preliminary round 3",
+      "short": "HK Tech Debate",
+      "start": "2027-02-20",
+      "end": "2027-02-20",
+      "region": "hong-kong",
+      "place": "Hong Kong",
+      "format": "English school debate",
+      "source": "https://hkitdc.org/debate_comp_eng_2027/",
+      "note": "Entry is through eligible Hong Kong secondary or international schools. The organizer may adjust the dates."
+    },
+    {
+      "id": "toc-digital-3",
+      "series": "toc-us",
+      "title": "Kentucky TOC Digital Series #3",
+      "short": "TOC Digital #3",
+      "start": "2027-03-06",
+      "end": "2027-03-08",
+      "region": "online",
+      "place": "Online · NSDA Campus",
+      "format": "Speech, Public Forum, World Schools, Policy, LD & Congress",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41846",
+      "zone": "China time",
+      "note": "Organizer dates in U.S. Eastern time are March 5–7. Some rounds run overnight in China. The series offers international Public Forum and World Schools breakout eliminations.",
+      "deadline": "Registration closes March 2 at 12:59 p.m. China time."
+    },
+    {
+      "id": "hkitdc-qf",
+      "series": "hkitdc",
+      "title": "Quarterfinals",
+      "short": "HK Tech Debate",
+      "start": "2027-03-06",
+      "end": "2027-03-06",
+      "region": "hong-kong",
+      "place": "Hong Kong",
+      "format": "English school debate",
+      "source": "https://hkitdc.org/debate_comp_eng_2027/",
+      "note": "Entry is through eligible Hong Kong secondary or international schools. The organizer may adjust the dates."
+    },
+    {
+      "id": "hkfyg-semi",
+      "series": "hkfyg",
+      "title": "District semifinals",
+      "short": "HKFYG Speech",
+      "start": "2027-03-07",
+      "end": "2027-03-07",
+      "region": "hong-kong",
+      "place": "Hong Kong · check organizer for venue",
+      "format": "English public speaking",
+      "source": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/",
+      "note": "Hong Kong full-time secondary students in S1–S6 or equivalent. Preliminary entry is through a school or individually."
+    },
+    {
+      "id": "hkfyg-district",
+      "series": "hkfyg",
+      "title": "District finals",
+      "short": "HKFYG Speech",
+      "start": "2027-03-20",
+      "end": "2027-03-20",
+      "region": "hong-kong",
+      "place": "Fanling",
+      "format": "English public speaking",
+      "source": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/",
+      "note": "Hong Kong full-time secondary students in S1–S6 or equivalent. Preliminary entry is through a school or individually."
+    },
+    {
+      "id": "wsc-2027-hong-kong",
+      "series": "wsc",
+      "title": "Hong Kong Round",
+      "short": "WSC Hong Kong",
+      "start": "2027-03-20",
+      "end": "2027-03-21",
+      "region": "hong-kong",
+      "place": "Hong Kong · Po Leung Kuk Choi Kai Yau School",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2027-hong-kong/",
+      "deadline": "Registration closes March 14, 2027."
+    },
+    {
+      "id": "hkitdc-sf",
+      "series": "hkitdc",
+      "title": "Semifinals",
+      "short": "HK Tech Debate",
+      "start": "2027-03-20",
+      "end": "2027-03-20",
+      "region": "hong-kong",
+      "place": "Hong Kong",
+      "format": "English school debate",
+      "source": "https://hkitdc.org/debate_comp_eng_2027/",
+      "note": "Entry is through eligible Hong Kong secondary or international schools. The organizer may adjust the dates."
+    },
+    {
+      "id": "hkitdc-f",
+      "series": "hkitdc",
+      "title": "Final",
+      "short": "HK Tech Debate",
+      "start": "2027-03-27",
+      "end": "2027-03-27",
+      "region": "hong-kong",
+      "place": "Hong Kong",
+      "format": "English school debate",
+      "source": "https://hkitdc.org/debate_comp_eng_2027/",
+      "note": "Entry is through eligible Hong Kong secondary or international schools. The organizer may adjust the dates."
+    },
+    {
+      "id": "widpsc-shanghai",
+      "series": "widpsc",
+      "title": "World Individual Debating and Public Speaking Championships",
+      "short": "WIDPSC Shanghai",
+      "start": "2027-03-31",
+      "end": "2027-04-07",
+      "region": "mainland",
+      "place": "NACIS Shanghai",
+      "format": "Parliamentary debate, impromptu, interpretive reading & prepared speech",
+      "source": "https://widpsc2027.org/schedule/",
+      "note": "High-school championship with national team selection. The program runs March 31–April 7. Competition rounds are April 1–6.",
+      "deadline": "January 31, 2027 payment deadline applies to preregistered teams."
+    },
+    {
+      "id": "wsc-2027-shenzhen",
+      "series": "wsc",
+      "title": "Shenzhen Round",
+      "short": "WSC Shenzhen",
+      "start": "2027-04-10",
+      "end": "2027-04-11",
+      "region": "mainland",
+      "place": "Shenzhen · Shenzhen College of International Education",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2027-shenzhen/"
+    },
+    {
+      "id": "wsc-2027-chongqing",
+      "series": "wsc",
+      "title": "Chongqing Round",
+      "short": "WSC Chongqing",
+      "start": "2027-04-17",
+      "end": "2027-04-18",
+      "region": "mainland",
+      "place": "Chongqing · Harrow Lide School Chongqing",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2027-chongqing/",
+      "status": "Provisional",
+      "note": "The organizer marks this round as tentative. Check its calendar for confirmation."
+    },
+    {
+      "id": "hkfyg-final",
+      "series": "hkfyg",
+      "title": "Grand final",
+      "short": "HKFYG Speech",
+      "start": "2027-04-17",
+      "end": "2027-04-17",
+      "region": "hong-kong",
+      "place": "Hong Kong · venue pending",
+      "format": "English public speaking",
+      "source": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/",
+      "note": "Hong Kong full-time secondary students in S1–S6 or equivalent. Preliminary entry is through a school or individually."
+    },
+    {
+      "id": "wsc-2027-shanghai",
+      "series": "wsc",
+      "title": "Shanghai Round",
+      "short": "WSC Shanghai",
+      "start": "2027-04-17",
+      "end": "2027-04-18",
+      "region": "mainland",
+      "place": "Shanghai · Shanghai Singapore International School",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2027-shanghai/"
+    },
+    {
+      "id": "wsc-2027-beijing",
+      "series": "wsc",
+      "title": "Beijing Round",
+      "short": "WSC Beijing",
+      "start": "2027-05-22",
+      "end": "2027-05-23",
+      "region": "mainland",
+      "place": "Beijing · Beijing Huijia Private School",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2027-beijing/"
+    },
+    {
+      "id": "wsc-2027-foshan",
+      "series": "wsc",
+      "title": "Foshan Round",
+      "short": "WSC Foshan",
+      "start": "2027-05-22",
+      "end": "2027-05-23",
+      "region": "mainland",
+      "place": "Foshan · Majestic International College",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2027-foshan/"
+    },
+    {
+      "id": "wsc-2027-hangzhou",
+      "series": "wsc",
+      "title": "Hangzhou Round",
+      "short": "WSC Hangzhou",
+      "start": "2027-05-29",
+      "end": "2027-05-30",
+      "region": "mainland",
+      "place": "Hangzhou · Dingwen Academy Hangzhou",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2027-hangzhou/"
+    },
+    {
+      "id": "wsc-2027-qingdao",
+      "series": "wsc",
+      "title": "Qingdao Round",
+      "short": "WSC Qingdao",
+      "start": "2027-05-29",
+      "end": "2027-05-30",
+      "region": "mainland",
+      "place": "Qingdao · Qingdao Academy",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2027-qingdao/",
+      "status": "Provisional",
+      "note": "The organizer marks this round as tentative. Check its calendar for confirmation."
+    },
+    {
+      "id": "wsc-2027-dalian",
+      "series": "wsc",
+      "title": "Dalian Round",
+      "short": "WSC Dalian",
+      "start": "2027-06-05",
+      "end": "2027-06-06",
+      "region": "mainland",
+      "place": "Dalian · Dalian Vanguard Bilingual School",
+      "format": "Team debate, collaborative writing & academic challenges",
+      "source": "https://beta.scholarscup.org/calendar/2027-dalian/",
+      "status": "Provisional",
+      "note": "The organizer marks this round as tentative. Check its calendar for confirmation."
+    }
+  ]
+}

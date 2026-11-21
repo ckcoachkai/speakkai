@@ -1,0 +1,316 @@
+---
+import BrandLogo from '../components/BrandLogo.astro';
+import data from '../data/competition-calendar.json';
+import '../styles/competition.css';
+import '@fontsource/manrope/400.css';
+import '@fontsource/manrope/600.css';
+import '@fontsource/manrope/700.css';
+import '@fontsource/manrope/800.css';
+
+interface CompetitionSeries {
+  id: string;
+  name: string;
+  zh?: string;
+  category: string;
+  source: string;
+  watch?: string;
+}
+
+interface Competition {
+  id: string;
+  series: string;
+  title: string;
+  short?: string;
+  start: string;
+  end: string;
+  place: string;
+  region: string;
+  format: string;
+  source: string;
+  deadline?: string;
+  note?: string;
+  status?: string;
+  zone?: string;
+  divisions?: Array<{ title: string; start: string; end: string; deadline?: string; source: string }>;
+}
+
+const series: CompetitionSeries[] = data.series;
+const lookup = new Map(series.map(item => [item.id, item]));
+const events: Competition[] = [...data.events].sort((a, b) =>
+  a.start.localeCompare(b.start) || a.title.localeCompare(b.title));
+const dateOf = (date: string) => new Date(date + 'T00:00:00Z');
+const monthLabel = new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+const dayLabel = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+const longDayLabel = new Intl.DateTimeFormat('en', { dateStyle: 'full', timeZone: 'UTC' });
+const compact = (date: string) => dayLabel.format(dateOf(date));
+const eventDate = (event: Pick<Competition, 'start' | 'end'>) =>
+  event.start === event.end ? compact(event.start) : dayLabel.formatRange(dateOf(event.start), dateOf(event.end));
+const firstMonth = events[0].start.slice(0, 7);
+const lastMonth = events.reduce((latest, event) => event.end.slice(0, 7) > latest ? event.end.slice(0, 7) : latest, firstMonth);
+const initialMonth = data.updated.slice(0, 7);
+const monthOptions = [];
+const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const regions = [
+  ['mainland', 'Mainland China'],
+  ['shanghai', 'Shanghai'],
+  ['hong-kong', 'Hong Kong'],
+  ['macau', 'Macao'],
+  ['online', 'Online'],
+  ['overseas', 'Overseas'],
+];
+const eventRegions = (event: Competition) => [
+  event.region,
+  event.region === 'mainland' && /shanghai|上海/i.test(event.place) ? 'shanghai' : '',
+  event.region === 'overseas' && event.place.includes('online') ? 'online' : '',
+].filter(Boolean).join(' ');
+
+for (const cursor = dateOf(firstMonth + '-01'); cursor.toISOString().slice(0, 7) <= lastMonth; cursor.setUTCMonth(cursor.getUTCMonth() + 1)) {
+  const key = cursor.toISOString().slice(0, 7);
+  const year = cursor.getUTCFullYear();
+  const month = cursor.getUTCMonth();
+  const offset = (cursor.getUTCDay() + 6) % 7;
+  const endOfMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+  const monthEvents = events.filter(event => event.start.slice(0, 7) <= key && key <= event.end.slice(0, 7));
+  const weeks = Array.from({ length: Math.ceil((offset + endOfMonth) / 7) }, (_, week) =>
+    weekDays.map((weekday, index) => {
+      const number = week * 7 + index - offset + 1;
+      const date = number > 0 && number <= endOfMonth ? key + '-' + String(number).padStart(2, '0') : '';
+      const entries = date ? monthEvents.filter(event => {
+        if (date < event.start || date > event.end) return false;
+        const duration = dateOf(event.end).getTime() - dateOf(event.start).getTime();
+        return duration <= 8 * 86400000 || date === event.start || date === event.end;
+      }) : [];
+      return { weekday, number, date, entries };
+    })
+  );
+  monthOptions.push({ key, title: monthLabel.format(cursor), monthEvents, weeks });
+}
+
+const watched = series.filter(item => item.watch);
+const initialOption = monthOptions.find(month => month.key === initialMonth) ?? monthOptions[0];
+const updatedLabel = new Intl.DateTimeFormat('en', { dateStyle: 'long', timeZone: 'UTC' }).format(dateOf(data.updated));
+const title = 'China Speech & Debate Competition Calendar | SpeakKai';
+const description = 'Find upcoming English speech and debate competitions in China, Shanghai, Hong Kong, and online. Browse organizer dates, eligibility, and registration links.';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://speakkai.com/competition/" />
+    <link rel="canonical" href="https://speakkai.com/competition/" />
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+  <body class="competition-body">
+    <a class="skip-link" href="#competition-calendar">Skip to calendar</a>
+    <header class="competition-header">
+      <div class="competition-wrap">
+        <a href="/" aria-label="SpeakKai home"><BrandLogo compact /></a>
+        <nav aria-label="Page navigation">
+          <a href="/resources/">Resources</a>
+          <a href="#organizers">Organizers ↓</a>
+        </nav>
+      </div>
+    </header>
+    <main class="competition-wrap">
+      <section class="competition-hero" aria-labelledby="competition-title">
+        <div>
+          <p class="competition-kicker" lang="zh-CN">中国英语演讲与辩论赛事日历</p>
+          <h1 id="competition-title">Competition<br />calendar<span>.</span></h1>
+          <p>Find English speech and debate competitions in China and online, plus selected overseas invitationals.</p>
+        </div>
+        <div class="review-note">
+          <span class="review-dot" aria-hidden="true"></span>
+          <div><strong>Calendar updated</strong><time datetime={data.updated}>{updatedLabel}</time></div>
+        </div>
+      </section>
+
+      <section id="competition-calendar" class="calendar-section" aria-labelledby="calendar-heading">
+        <div class="calendar-toolbar" data-calendar-controls hidden>
+          <div class="month-controls" aria-label="Calendar month">
+            <button type="button" data-month-previous aria-label="Previous month">←</button>
+            <label class="visually-hidden" for="competition-month">Choose month</label>
+            <select id="competition-month">
+              {monthOptions.map(month => <option value={month.key} selected={month.key === initialOption.key}>{month.title}</option>)}
+            </select>
+            <button type="button" data-month-next aria-label="Next month">→</button>
+          </div>
+          <div class="calendar-filters">
+            <div class="filter-control">
+              <label for="competition-region">Location</label>
+              <select id="competition-region">
+                <option value="">All locations</option>
+                {regions.map(([id, label]) => <option value={id}>{label}</option>)}
+              </select>
+            </div>
+            <div class="filter-control">
+              <label for="competition-series">Organizer or series</label>
+              <select id="competition-series">
+                <option value="">All series</option>
+                {series.filter(item => events.some(event => event.series === item.id)).map(item => <option value={item.id}>{item.name}</option>)}
+              </select>
+            </div>
+          </div>
+        </div>
+        <h2 id="calendar-heading" class="visually-hidden">Monthly competition calendar</h2>
+        <p class="calendar-key">
+          <span><i class="legend-dot" aria-hidden="true"></i> Published date</span>
+          <span><i class="legend-dot tentative" aria-hidden="true"></i> Provisional or reported</span>
+          <span class="calendar-time">Dates use the event’s local time. U.S. listings show their time zone.</span>
+        </p>
+        <a class="month-list-jump" data-month-list-jump href={'#agenda-' + initialOption.key} hidden>Jump to the month’s listings ↓</a>
+        <div class="visually-hidden" role="status" data-calendar-status></div>
+        {monthOptions.map(month => (
+          <section class="calendar-month" aria-labelledby={'heading-' + month.key} data-calendar-month={month.key} data-month-title={month.title}>
+            <h3 class="month-heading" id={'heading-' + month.key}>{month.title}</h3>
+            <div class="calendar-grid">
+              <table aria-labelledby={'heading-' + month.key}>
+                <thead>
+                  <tr>{weekDays.map(day => <th scope="col" aria-label={day}>{day.slice(0, 3)}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {month.weeks.map(week => <tr>{week.map(cell => (
+                    <td class:list={[{ 'outside-month': !cell.date, weekend: cell.weekday === 'Saturday' || cell.weekday === 'Sunday' }]}>
+                      {cell.date && (
+                        <>
+                          <time class="day-number" datetime={cell.date} aria-label={longDayLabel.format(dateOf(cell.date))}>{cell.number}</time>
+                          <ul class="day-events">
+                            {cell.entries.map(event => {
+                              const organizer = lookup.get(event.series);
+                              const label = event.short ?? organizer?.name ?? event.title;
+                              return <li data-event-series={event.series} data-event-region={eventRegions(event)}>
+                                <a class:list={['day-event', organizer?.category, { tentative: event.status }]} href={'#' + month.key + '-' + event.id} aria-label={event.title + (event.status ? ' (' + event.status + ')' : '')} title={event.title}>
+                                  <span class="event-dot" aria-hidden="true"></span><span class="day-event-label">{label}</span>
+                                </a>
+                              </li>;
+                            })}
+                          </ul>
+                        </>
+                      )}
+                    </td>
+                  ))}</tr>)}
+                </tbody>
+              </table>
+            </div>
+            <div class="month-agenda" aria-labelledby={'agenda-' + month.key}>
+              <div class="agenda-heading">
+                <h4 id={'agenda-' + month.key}>This month</h4>
+                <span data-month-count>{month.monthEvents.length} {month.monthEvents.length === 1 ? 'listing' : 'listings'}</span>
+              </div>
+              <p class="agenda-empty" data-empty-state hidden={month.monthEvents.length > 0}>No listings for this month with these filters.</p>
+              {month.monthEvents.map(event => {
+                const organizer = lookup.get(event.series);
+                return (
+                  <article class:list={['competition-entry', organizer?.category]} id={month.key + '-' + event.id} tabindex="-1" data-event-series={event.series} data-event-region={eventRegions(event)}>
+                    <div class="entry-date"><time datetime={event.start}>{eventDate(event)}</time>{event.zone && <span>{event.zone}</span>}</div>
+                    <div class="entry-content">
+                      <div class="entry-meta"><span>{organizer?.name}</span>{event.status && <span class="event-status">{event.status}</span>}</div>
+                      <h5>{event.title}</h5>
+                      <p class="entry-place">{event.place} · {event.format}</p>
+                      {event.note && <p>{event.note}</p>}
+                      {event.deadline && <p class="entry-deadline">{event.deadline}</p>}
+                      {event.divisions && <details class="entry-divisions">
+                        <summary>Division dates and registration</summary>
+                        <ul>{event.divisions.map(division => <li>
+                          <a href={division.source}>{division.title} ↗</a>
+                          <span>{eventDate(division)}{division.deadline && ' · Signup cutoff ' + compact(division.deadline)}</span>
+                        </li>)}</ul>
+                      </details>}
+                    </div>
+                    <a class="source-link" href={event.source} aria-label={'Source for ' + event.title}>Source <span aria-hidden="true">↗</span></a>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        ))}
+      </section>
+
+      <section id="organizers" class="organizer-section" aria-labelledby="organizer-heading">
+        <h2 id="organizer-heading">Dates to watch</h2>
+        <div class="watch-grid">
+          {watched.map(item => <article>
+            <h3>{item.name}</h3>
+            {item.zh && <span lang="zh-CN">{item.zh}</span>}
+            <p>{item.watch}</p>
+            <a href={item.source}>Organizer updates <span aria-hidden="true">↗</span></a>
+          </article>)}
+        </div>
+        <details class="source-directory">
+          <summary>All organizer links</summary>
+          <ul>{series.map(item => <li><a href={item.source}>{item.name} <span aria-hidden="true">↗</span></a></li>)}</ul>
+        </details>
+        <p class="calendar-footnote">Check the linked source for division rules and registration before making plans. Multi-week competition windows appear at their start and end on the grid.</p>
+      </section>
+    </main>
+    <footer class="competition-footer">
+      <div class="competition-wrap"><a href="/">SpeakKai</a><span>Speech and debate resources for students and families</span></div>
+    </footer>
+    <script>
+      const controls = document.querySelector<HTMLElement>('[data-calendar-controls]');
+      const selection = document.querySelector<HTMLSelectElement>('#competition-month');
+      const region = document.querySelector<HTMLSelectElement>('#competition-region');
+      const seriesFilter = document.querySelector<HTMLSelectElement>('#competition-series');
+      const previous = document.querySelector<HTMLButtonElement>('[data-month-previous]');
+      const next = document.querySelector<HTMLButtonElement>('[data-month-next]');
+      const status = document.querySelector<HTMLElement>('[data-calendar-status]');
+      const listJump = document.querySelector<HTMLAnchorElement>('[data-month-list-jump]');
+      const panels = [...document.querySelectorAll<HTMLElement>('[data-calendar-month]')];
+
+      if (controls && selection && region && seriesFilter && previous && next && status) {
+        const matchesFilters = (item: HTMLElement) =>
+          (!region.value || item.dataset.eventRegion?.split(' ').includes(region.value)) &&
+          (!seriesFilter.value || item.dataset.eventSeries === seriesFilter.value);
+
+        const update = () => {
+          for (const panel of panels) {
+            panel.hidden = panel.dataset.calendarMonth !== selection.value;
+            if (panel.hidden) continue;
+            let total = 0;
+            for (const item of panel.querySelectorAll<HTMLElement>('[data-event-series]')) {
+              item.hidden = !matchesFilters(item);
+              if (!item.hidden && item.tagName === 'ARTICLE') total++;
+            }
+            const count = panel.querySelector<HTMLElement>('[data-month-count]');
+            const empty = panel.querySelector<HTMLElement>('[data-empty-state]');
+            const message = total + (total === 1 ? ' listing' : ' listings');
+            if (count) count.textContent = message;
+            if (empty) empty.hidden = total > 0;
+            status.textContent = panel.dataset.monthTitle + ', ' + message;
+          }
+          previous.disabled = selection.selectedIndex === 0;
+          next.disabled = selection.selectedIndex === selection.options.length - 1;
+          if (listJump) listJump.href = '#agenda-' + selection.value;
+        };
+
+        const shanghaiMonth = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit' }).format(new Date());
+        if (panels.some(panel => panel.dataset.calendarMonth === shanghaiMonth)) selection.value = shanghaiMonth;
+        const followHash = () => {
+          const target = document.getElementById(window.location.hash.slice(1));
+          const parent = target?.closest<HTMLElement>('[data-calendar-month]');
+          if (!parent?.dataset.calendarMonth) return;
+          selection.value = parent.dataset.calendarMonth;
+          if (target?.hasAttribute('data-event-series') && !matchesFilters(target)) {
+            region.value = '';
+            seriesFilter.value = '';
+          }
+          update();
+          target?.focus();
+          target?.scrollIntoView();
+        };
+        for (const control of [selection, region, seriesFilter]) control.addEventListener('change', update);
+        previous.addEventListener('click', () => { selection.selectedIndex--; update(); });
+        next.addEventListener('click', () => { selection.selectedIndex++; update(); });
+        window.addEventListener('hashchange', followHash);
+        controls.hidden = false;
+        if (listJump) listJump.hidden = false;
+        update();
+        followHash();
+      }
+    </script>
+  </body>
+</html>

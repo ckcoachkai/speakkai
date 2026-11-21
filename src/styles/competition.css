@@ -1,0 +1,229 @@
+.competition-body {
+  --ink: #102737;
+  --muted: #435d68;
+  --teal: #006857;
+  --line: #d6e3dc;
+  --paper: #f5f8f3;
+  --white: #fff;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 16px/1.55 Manrope, system-ui, sans-serif;
+  color-scheme: light;
+}
+.competition-body *, .competition-body *::before, .competition-body *::after { box-sizing: border-box; }
+.competition-body [hidden] { display: none !important; }
+.competition-body a { color: inherit; }
+.competition-body :focus-visible { outline: 3px solid #00846f; outline-offset: 3px; }
+.competition-body .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  white-space: nowrap;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+.competition-wrap { width: min(1192px, calc(100% - 72px)); margin-inline: auto; }
+.competition-body .skip-link { position: absolute; top: -100px; left: 16px; z-index: 2; padding: 10px; background: white; }
+.competition-body .skip-link:focus { top: 10px; }
+.competition-header { border-bottom: 1px solid var(--line); }
+.competition-header .competition-wrap, .competition-footer .competition-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.competition-header .competition-wrap { min-height: 72px; }
+.competition-header nav { display: flex; flex-wrap: wrap; gap: 26px; }
+.competition-header nav a, .competition-footer a { font-weight: 800; text-decoration: none; }
+.competition-header nav a:hover, .competition-footer a:hover { text-decoration: underline; }
+.competition-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 28px;
+  padding-block: 58px 44px;
+}
+.competition-body .competition-kicker {
+  margin: 0 0 12px;
+  color: var(--teal);
+  font-size: .92rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+}
+.competition-body .competition-hero h1 {
+  margin: 0;
+  font: 800 clamp(3.6rem, 7.6vw, 7.25rem)/.91 Manrope, system-ui, sans-serif;
+  letter-spacing: -.09em;
+  color: var(--ink);
+}
+.competition-hero h1 span { color: #00846b; }
+.competition-body .competition-hero h1 + p { color: var(--muted); max-width: 44ch; margin: 22px 0 0; font-size: 1.05rem; }
+.review-note { display: flex; align-items: center; gap: 12px; border: 1px solid #c2d8ca; border-radius: 10px; padding: 12px 18px; min-width: max-content; }
+.review-dot, .legend-dot {
+  flex: 0 0 auto;
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--teal);
+}
+.review-dot { box-shadow: 0 0 0 4px #d4e9db; }
+.review-note strong, .review-note time { display: block; font-size: .82rem; }
+.review-note time { color: var(--muted); }
+.calendar-section { scroll-margin-top: 12px; }
+.calendar-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 15px;
+}
+.month-controls, .calendar-filters { display: flex; min-width: 0; gap: 9px; }
+.calendar-toolbar select, .calendar-toolbar button {
+  min-height: 42px;
+  border: 1px solid #bfcec7;
+  border-radius: 7px;
+  padding: 7px 12px;
+  background: var(--white);
+  color: var(--ink);
+  font: 800 .83rem/1.15 Manrope, system-ui, sans-serif;
+}
+.calendar-toolbar select { width: 100%; min-width: 0; cursor: pointer; }
+.month-controls select { width: auto; max-width: 100%; font-size: 1rem; }
+.calendar-toolbar button { min-width: 42px; font-size: 1.25rem; cursor: pointer; }
+.calendar-toolbar button:not(:disabled):hover { background: #e7f3e9; }
+.calendar-toolbar button:disabled { color: #64756f; background: #f5f7f5; cursor: default; }
+.filter-control { min-width: 0; }
+.filter-control:last-child { max-width: 240px; }
+.filter-control label { display: block; margin: 0 0 4px 2px; color: var(--muted); font-size: .75rem; font-weight: 800; }
+.calendar-key { display: flex; align-items: center; flex-wrap: wrap; gap: 5px 22px; margin: 13px 2px 17px; color: var(--muted); font-size: .8rem; }
+.calendar-key > span { display: inline-flex; align-items: center; gap: 7px; }
+.legend-dot.tentative { background: transparent; border: 1.5px solid #a66329; }
+.calendar-key .calendar-time { margin-inline-start: auto; }
+.competition-body .month-list-jump { display: none; color: var(--teal); font-size: .8rem; font-weight: 800; }
+.competition-body .month-heading {
+  margin: 24px 0 9px;
+  color: var(--ink);
+  font: 800 1.55rem/1.2 Manrope, system-ui, sans-serif;
+  letter-spacing: -.035em;
+}
+.calendar-grid { border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+.calendar-grid table { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0; }
+.calendar-grid th { padding: 8px 11px; text-align: left; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.calendar-grid td { height: 100px; padding: 5px; border-top: 1px solid var(--line); vertical-align: top; }
+.calendar-grid td + td { border-left: 1px solid var(--line); }
+.calendar-grid tr:last-child td:first-child { border-bottom-left-radius: 12px; }
+.calendar-grid tr:last-child td:last-child { border-bottom-right-radius: 12px; }
+.calendar-grid td.weekend { background: #f3f8f4; }
+.calendar-grid td.outside-month { background: #edf2ee; }
+.day-number { display: block; padding: 2px 4px 3px; color: var(--ink); font-size: .83rem; font-weight: 800; }
+.day-events { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3px; list-style: none; margin: 0; padding: 0; }
+.day-events > li { min-width: 0; }
+.day-event, .competition-entry { --event-ink: #2d4969; --event-bg: #eaf0f7; }
+.debate { --event-ink: #155b4c; --event-bg: #e4f2ea; }
+.speech { --event-ink: #754219; --event-bg: #f8ede0; }
+.multi { --event-ink: #563e75; --event-bg: #f0ecf7; }
+.competition-body .day-event {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 23px;
+  min-width: 0;
+  padding: 2px 4px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: var(--event-bg);
+  color: var(--event-ink);
+  line-height: 1.15;
+  text-decoration: none;
+  font-size: .7rem;
+  font-weight: 800;
+}
+.competition-body .day-event.tentative { border-style: dashed; border-color: #a66329; }
+.day-event:hover .day-event-label { text-decoration: underline; }
+.event-dot { flex: 0 0 5px; height: 5px; background: currentColor; border-radius: 50%; }
+.day-event-label { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.month-agenda { margin: 24px 0 38px; }
+.agenda-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--line); padding: 0 0 8px; }
+.competition-body .agenda-heading h4 { margin: 0; font: 800 1.08rem/1.3 Manrope, system-ui, sans-serif; color: var(--ink); }
+.agenda-heading span, .agenda-empty { color: var(--muted); font-size: .84rem; }
+.competition-entry {
+  display: grid;
+  grid-template-columns: minmax(110px, .4fr) minmax(0, 2.5fr) auto;
+  gap: 14px;
+  align-items: start;
+  padding: 16px 8px;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 16px;
+}
+.competition-entry:target { background: #e7f3e9; }
+.entry-date time { display: block; font-weight: 800; color: var(--ink); }
+.entry-date span { display: block; font-size: .74rem; color: var(--muted); }
+.entry-meta { display: flex; gap: 6px 8px; align-items: baseline; flex-wrap: wrap; color: var(--event-ink); font-size: .75rem; font-weight: 800; }
+.event-status { display: inline-block; padding: 0 5px; color: #7a400e; border: 1px dashed #a66329; border-radius: 4px; }
+.competition-body .entry-content h5 { margin: 2px 0 4px; color: var(--ink); font: 800 1.05rem/1.3 Manrope, system-ui, sans-serif; }
+.competition-body .entry-content p { margin: 4px 0 0; color: var(--muted); font-size: .86rem; }
+.competition-body .entry-content .entry-place { font-weight: 700; }
+.competition-body .entry-content .entry-deadline { font-weight: 800; color: #175749; }
+.competition-body .source-link, .competition-body .watch-grid a { color: #005c4d; font-size: .82rem; font-weight: 800; text-underline-offset: 3px; }
+.source-link { display: inline-block; min-height: 30px; padding-block: 4px; }
+.entry-divisions { margin-top: 7px; color: var(--teal); font-size: .83rem; }
+.entry-divisions summary { cursor: pointer; font-weight: 800; }
+.entry-divisions ul { list-style: none; padding: 0; margin: 5px 0; }
+.entry-divisions li { display: flex; gap: 2px 11px; flex-wrap: wrap; padding-block: 3px; }
+.entry-divisions li span { color: var(--muted); }
+.organizer-section { border-top: 1px solid var(--line); padding-block: 32px 48px; }
+.competition-body .organizer-section h2 { margin: 0 0 16px; color: var(--ink); letter-spacing: -.05em; font: 800 2.2rem/1.15 Manrope, system-ui, sans-serif; }
+.watch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 255px), 1fr)); gap: 12px; }
+.watch-grid article { padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--white); }
+.competition-body .watch-grid h3 { font: 800 1rem/1.3 Manrope, system-ui, sans-serif; margin: 0 0 2px; color: var(--ink); }
+.watch-grid article > span { font-size: .76rem; color: var(--muted); }
+.competition-body .watch-grid p { margin: 7px 0; font-size: .85rem; color: var(--muted); }
+.source-directory { margin-top: 18px; color: var(--teal); font-size: .85rem; }
+.source-directory summary { cursor: pointer; font-weight: 800; }
+.source-directory ul { padding: 0; display: flex; flex-wrap: wrap; gap: 7px 18px; list-style: none; }
+.calendar-footnote { color: var(--muted); font-size: .82rem; }
+.competition-footer { border-top: 1px solid var(--line); padding-block: 18px; color: var(--muted); font-size: .8rem; }
+
+@media (max-width: 760px) {
+  .competition-wrap { width: calc(100% - 36px); }
+  .competition-hero { align-items: flex-start; flex-direction: column; gap: 16px; padding-block: 35px 24px; }
+  .calendar-key .calendar-time { margin-inline-start: 0; }
+  .calendar-grid td { height: 72px; padding: 3px; }
+  .calendar-grid th { padding-inline: 4px; }
+  .day-number { padding-inline: 2px; }
+  .competition-body .day-event { padding-inline: 3px; font-size: .64rem; }
+}
+@media (max-width: 490px) {
+  .competition-wrap { width: calc(100% - 24px); }
+  .competition-header nav { gap: 10px; font-size: .8rem; }
+  .competition-body .competition-hero h1 { font-size: clamp(3.05rem, 11.1vw, 4rem); }
+  .competition-body .competition-hero h1 + p { margin-top: 14px; font-size: 1rem; }
+  .review-note { padding: 8px 13px; }
+  .review-note > div { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+  .competition-body .month-list-jump { display: inline-block; }
+  .calendar-toolbar { padding: 10px; }
+  .calendar-filters { width: 100%; }
+  .filter-control { flex: 1; }
+  .calendar-grid td { height: 59px; padding: 2px; }
+  .calendar-grid th { font-size: .66rem; }
+  .competition-body .day-event { gap: 2px; padding-inline: 2px; min-height: 20px; font-size: .6rem; }
+  .event-dot { display: none; }
+  .competition-entry { padding-inline: 2px; grid-template-columns: 1fr auto; gap: 5px 8px; }
+  .entry-date { grid-column: 1 / -1; display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px 8px; }
+}
+@media print {
+  .competition-body { background: white; }
+  .competition-header, .competition-footer, .calendar-toolbar, .organizer-section { display: none; }
+  .competition-wrap { width: 100%; }
+  .competition-hero { padding-block: 0 10px; }
+  .competition-body .competition-hero h1 { font-size: 36pt; }
+  .competition-entry, .calendar-grid tr { break-inside: avoid; }
+}
