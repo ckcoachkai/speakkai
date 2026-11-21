@@ -50,8 +50,23 @@ export function applyFallScheduleOverrides(sheets) {
         const kept = lines.filter(line => line.toLowerCase() !== entry.toLowerCase());
         if (kept[1] === 'Free all day' || kept[1] === 'Online free all day') kept[1] = 'Limited availability';
         if (kept.length === 1) kept.push('Limited availability');
-        if (day === 22) return {...cell,value:[...kept,entry].join('\n')};
         lines.splice(0,lines.length,...kept,entry);
+      }
+      // Coach-confirmed weekend classes, November 21–22 and November 28–29 only.
+      if (month === 10 && [21, 22, 28, 29].includes(day)) {
+        const entries = day === 21 || day === 28
+          ? ['19:00–21:00 · 21st Century Cup prep']
+          : ['16:30–18:00 · Debate prep', '18:00–19:00 · Chongqing 1v1'];
+        const kept = lines.filter(line => !entries.includes(line));
+        if (kept[1] === 'Free all day' || kept[1] === 'Online free all day') kept[1] = 'Limited availability';
+        if (kept.length === 1) kept.push('Limited availability');
+        const first = kept.findIndex(line => /^\d{2}:\d{2}/.test(line));
+        if (first < 0) return {...cell,value:[...kept,...entries].join('\n')};
+        const nonEvents = kept.slice(0, first);
+        const events = [...kept.slice(first), ...entries];
+        events.sort((a, b) => a.slice(0,5).localeCompare(b.slice(0,5)));
+        lines.splice(0,lines.length,...nonEvents,...events);
+        if (date.getUTCDay() === 0) return {...cell,value:lines.join('\n')};
       }
       // Coach-confirmed September change, already recorded in the September 19 Sheet.
       if (date.getUTCMonth() === month && date.getUTCDay() === 6 && (month > 8 || day >= 19)) {

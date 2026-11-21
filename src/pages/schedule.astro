@@ -593,7 +593,7 @@ import "@fontsource/manrope/700.css";
     <SiteFooter />
 
     <script>
-      import { weeklyScheduleBlocks } from "../lib/weeklySchedule";
+      import { publicBookingBlocks, scheduleDateKey } from "../lib/weeklySchedule";
       import { calendarDisplayEventKind, sortScheduleEvents, publicBookingPresentation } from "../lib/schedulePresentation";
 
       type Cell = { value?: string };
@@ -674,6 +674,7 @@ import "@fontsource/manrope/700.css";
         value: string,
         column: number,
         monthTitle: string,
+        dates: Map<string, string[]>,
       ) {
         const lines = value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
         const content = document.createElement("div");
@@ -693,7 +694,11 @@ import "@fontsource/manrope/700.css";
           "display:inline-flex;align-self:flex-start;align-items:center;justify-content:center;min-width:24px;min-height:22px;margin:0;padding:2px 6px;border-radius:4px;color:#fff;background:#17a6a0;font-size:10px;font-weight:800;line-height:1.15";
         content.append(date);
 
-        for (const block of weeklyScheduleBlocks(column, lines, monthTitle)) {
+        const dayKey = scheduleDateKey(monthTitle, lines[0]);
+        const nextDate = dayKey === null ? null : new Date(dayKey + 'T12:00:00Z');
+        if (nextDate) nextDate.setUTCDate(nextDate.getUTCDate() + 1);
+        const nextLines = nextDate ? dates.get(nextDate.toISOString().slice(0,10)) : undefined;
+        for (const block of publicBookingBlocks(column, lines, monthTitle, nextLines)) {
           content.append(makePublicEvent(block.kind, block.timeText, block.title));
         }
 
@@ -753,7 +758,7 @@ import "@fontsource/manrope/700.css";
         return section;
       }
 
-      function renderSheet(sheet: Sheet) {
+      function renderSheet(sheet: Sheet, dates: Map<string, string[]>) {
         if (!tableShell || !notesRail || !monthHeading) return;
         tableShell.replaceChildren();
         notesRail.replaceChildren();
@@ -801,7 +806,7 @@ import "@fontsource/manrope/700.css";
             const td = document.createElement("td");
             td.style.cssText = "height:auto;padding:0;overflow:visible;border:1px solid #9eb0c8;vertical-align:top;background:#fff;font-size:9px;line-height:1.24";
             if (column === 0 || column === 6) td.classList.add("is-weekend");
-            appendLines(td, row.cells?.[column]?.value ?? "", column, sheet.title);
+            appendLines(td, row.cells?.[column]?.value ?? "", column, sheet.title, dates);
             tr.append(td);
           }
           tbody.append(tr);
@@ -835,6 +840,19 @@ import "@fontsource/manrope/700.css";
             }).format(new Date(data.updatedAt))}`
           : "";
 
+
+        const dates = new Map<string, string[]>();
+        for (const listed of visibleSheets) {
+          const firstDay = listed.rows.findIndex((_, index) => /^Sunday$/i.test(cellValue(listed, index, 0)));
+          if (firstDay < 0) continue;
+          for (const row of listed.rows.slice(firstDay + 1)) {
+            for (const cell of row.cells?.slice(0, 7) ?? []) {
+              const lines = (cell.value ?? '').split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+              const date = scheduleDateKey(listed.title, lines[0] ?? '');
+              if (date) dates.set(date, lines);
+            }
+          }
+        }
         tabsElement.replaceChildren();
         visibleSheets.forEach((sheet, index) => {
           const button = document.createElement("button");
@@ -847,14 +865,14 @@ import "@fontsource/manrope/700.css";
             tabsElement.querySelectorAll(".sheet-tab").forEach((tab) => {
               tab.setAttribute("aria-selected", String(tab === button));
             });
-            renderSheet(sheet);
+            renderSheet(sheet, dates);
           });
           tabsElement.append(button);
         });
 
         statusElement.hidden = true;
         scheduleElement.hidden = false;
-        renderSheet(visibleSheets[0]);
+        renderSheet(visibleSheets[0], dates);
       }
 
       const scheduleDataUrl = "/data/schedule.json";

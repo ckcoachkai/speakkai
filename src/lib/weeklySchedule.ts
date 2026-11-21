@@ -164,3 +164,57 @@ export function weeklyScheduleBlocks(
   return [];
 }
 
+
+
+// Booking windows use the date shown in the public calendar; overnight time belongs
+// to that date until 01:00 the following morning.
+export function scheduleDateKey(monthTitle: string, dateLine: string) {
+  const key = monthKey(monthTitle);
+  const number = dateLine.match(/^(\d{1,2})(?:\s*\([^)]*\))?$/)?.[1];
+  if (key === null || !number) return null;
+  const year = Math.floor(key / 12), month = key % 12, day = Number(number);
+  const date = new Date(Date.UTC(year, month, day));
+  return day > 0 && date.getUTCMonth() === month ? date.toISOString().slice(0, 10) : null;
+}
+
+const BOOKING_HOURS_START = 6 * 60;
+const BOOKING_HOURS_END = 25 * 60;
+const BOOKING_BUFFER = 30;
+const MINUTES_PER_DAY = 24 * 60;
+
+export function publicBookingBlocks(
+  column: number,
+  lines: string[],
+  monthTitle: string,
+  nextDateLines: string[] = [],
+): WeeklyScheduleBlock[] {
+  const date = scheduleDateKey(monthTitle, lines[0] ?? '');
+  if (!date || date < '2026-11-21') return weeklyScheduleBlocks(column, lines, monthTitle);
+  if (dayIsBlocked(lines)) return [];
+
+  const buffered = (dateLines: string[], offset: number): TimeRange[] => dateLines.slice(1).flatMap(line => {
+    const time = timeRange(line);
+    if (!time) return [];
+    const end = time.end <= time.start ? time.end + MINUTES_PER_DAY : time.end;
+    return [{start: time.start + offset - BOOKING_BUFFER, end: end + offset + BOOKING_BUFFER}];
+  });
+  const end = dayIsBlocked(nextDateLines) ? MINUTES_PER_DAY : BOOKING_HOURS_END;
+  const busy = [...buffered(lines, 0), ...buffered(nextDateLines, MINUTES_PER_DAY)]
+    .sort((a, b) => a.start - b.start);
+  const segments: TimeRange[] = [];
+  let cursor = BOOKING_HOURS_START;
+  for (const span of busy) {
+    if (span.end <= cursor) continue;
+    if (span.start >= end) break;
+    if (span.start > cursor) segments.push({start: cursor, end: span.start});
+    cursor = Math.max(cursor, span.end);
+  }
+  if (cursor < end) segments.push({start: cursor, end});
+  const title = lines.some(line => /^Online (?:free|available)/i.test(line)) ? 'Online free' : 'Available to book';
+  return segments.filter(span => span.end - span.start >= 15).map(span => ({
+    kind: 'free',
+    timeText: formatMinutes(span.start % MINUTES_PER_DAY) + '–' + formatMinutes(span.end % MINUTES_PER_DAY),
+    title: span.end >= MINUTES_PER_DAY ? title + ' · ends next day' : title,
+  }));
+}
+
