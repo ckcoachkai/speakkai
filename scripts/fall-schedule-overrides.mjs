@@ -43,6 +43,16 @@ export function applyFallScheduleOverrides(sheets) {
         kept.splice(firstEvent < 0 ? kept.length : firstEvent,0,event);
         lines.splice(0,lines.length,...kept);
       }
+      // Coach-confirmed November 21: two one-off ESDP lessons.
+      if (month === 10 && (day === 22 || day === 26)) {
+        const time = day === 22 ? '19:30–20:30' : '20:00–21:00';
+        const entry = time + ' · ESDP 1v1';
+        const kept = lines.filter(line => line.toLowerCase() !== entry.toLowerCase());
+        if (kept[1] === 'Free all day' || kept[1] === 'Online free all day') kept[1] = 'Limited availability';
+        if (kept.length === 1) kept.push('Limited availability');
+        if (day === 22) return {...cell,value:[...kept,entry].join('\n')};
+        lines.splice(0,lines.length,...kept,entry);
+      }
       // Coach-confirmed September change, already recorded in the September 19 Sheet.
       if (date.getUTCMonth() === month && date.getUTCDay() === 6 && (month > 8 || day >= 19)) {
         return {...cell,value:lines.map(line=>line.replace(/^15:30–17:30( · (?:古北1699[^\n]*|Class booked · 古北[^\n]*))$/,'15:00–16:30$1').replace(/^17:30–19:30( · (?:古北1699[^\n]*|Class booked · 古北[^\n]*))$/,'16:30–18:30$1')).join('\n')};
