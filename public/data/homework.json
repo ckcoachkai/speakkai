@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-21T09:03:12.929433+00:00",
+  "updatedAt": "2026-11-21T11:03:54.239297+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -785,8 +785,16 @@
           "id": "sat-introductory-2026-11-21",
           "date": "2026-11-21",
           "time": "16:30–18:30",
-          "classContent": [],
-          "homework": null,
+          "classContent": [
+            "• We focused on two impromptu speaking skills. First, we practised a basic structure for answering any kind of question: “First, Second, Finally,” followed by a summary and a message. The goal was to keep speaking and use the structure to organize what you want to say. You don’t need to come up with the perfect or correct answer.\n\n• Next, we practised organizing a short story using “magical connectors,” or transition words and sentences. These help put the events in order and connect the parts of something that happened, so the listener can follow the story.\n\n• We used a 10-page workbook. We’ll use it for about two or three classes, so make sure you keep it and don’t lose it."
+          ],
+          "homework": {
+            "title": "Impromptu speaking workbook",
+            "steps": [
+              "• Complete pages 5 and 6 of the workbook to continue practising the two skills from class: structuring an impromptu answer and using connectors to organize a short story."
+            ],
+            "prepareFor": "Continued impromptu speaking practice"
+          },
           "students": [
             {
               "name": "Anna",

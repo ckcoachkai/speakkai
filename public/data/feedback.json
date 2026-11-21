@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-21T09:03:12.929433+00:00",
+  "updatedAt": "2026-11-21T11:03:54.239297+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -926,8 +926,14 @@
           "date": "2026-11-21",
           "time": "16:30–18:30",
           "status": "held",
-          "classContent": null,
-          "homework": null,
+          "classContent": {
+            "en": "• We focused on two impromptu speaking skills. First, we practised a basic structure for answering any kind of question: “First, Second, Finally,” followed by a summary and a message. The goal was to keep speaking and use the structure to organize what you want to say. You don’t need to come up with the perfect or correct answer.\n\n• Next, we practised organizing a short story using “magical connectors,” or transition words and sentences. These help put the events in order and connect the parts of something that happened, so the listener can follow the story.\n\n• We used a 10-page workbook. We’ll use it for about two or three classes, so make sure you keep it and don’t lose it.",
+            "zh": "• 这节课重点练习了两项即兴演讲技巧。首先，我们练习了一个适用于各种问题的基本回答结构：用“First, Second, Finally”（首先、其次、最后）组织内容，然后做一个总结，并说出想传达的信息。练习的目标是持续表达，并用这个结构把想说的内容讲清楚。你不需要想出一个完美或正确的答案。\n\n• 接下来，我们练习用“魔法连接词”，也就是过渡词和过渡句，来组织一个简短的故事。它们能帮助我们按顺序把发生的事情串起来，让听众跟得上故事的发展。\n\n• 我们用了一个 10 页的练习册。接下来大约两到三节课还会用到它，请保管好，不要弄丢。"
+          },
+          "homework": {
+            "en": "• Complete pages 5 and 6 of the workbook to continue practising the two skills from class: structuring an impromptu answer and using connectors to organize a short story.",
+            "zh": "• 完成练习册的第 5 和第 6 页，继续练习本节课的两项技巧：用结构组织即兴回答，以及用连接词把短故事串起来。"
+          },
           "students": [
             {
               "id": "anna",
