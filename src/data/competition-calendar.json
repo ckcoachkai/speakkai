@@ -31,7 +31,12 @@
       "zh": "常春藤杯国际口语活动",
       "category": "speech",
       "source": "https://www.ivyevents.us/News",
-      "watch": "Mainland and Hong Kong round dates are awaiting public confirmation. The Taiwan office names a spring 2027 preliminary and gives conflicting dates for the Asia-Pacific finals."
+      "watch": "Mainland and Hong Kong round dates are awaiting public confirmation. The Taiwan office names a spring 2027 preliminary and gives conflicting dates for the Asia-Pacific finals.",
+      "signup": "https://ivyevents.us/FAQ",
+      "signupLabel": "Registration instructions",
+      "eligibility": "Individual entries. Local registration routes and divisions vary.",
+      "details": "The organizer describes a memorized English performance video lasting 60–120 seconds for the global preliminary.",
+      "signupNote": "Contact an authorized local center, follow 常春藤IVY EVENTS on WeChat, or email hello@ivyevents.us. Qualified entrants register for later rounds through their original center."
     },
     {
       "id": "century",
@@ -175,7 +180,86 @@
       "zh": "希望之星风采展示大会",
       "category": "speech",
       "source": "https://www.staroutlook.com/",
-      "watch": "The organizer links to the 2027 sign-up via WeChat. Exact Shanghai and national competition dates are still to be verified."
+      "watch": "The organizer links to the 2027 sign-up via WeChat. Exact Shanghai and national competition dates are still to be verified.",
+      "signup": "https://www.staroutlook.com/index",
+      "signupLabel": "Open 2027 signup QR",
+      "eligibility": "The organizer offers seven age groups from kindergarten through university and adults. Local format and cutoff vary.",
+      "signupNote": "Open the organizer’s 2027 page and scan its registration QR with WeChat. Choose your city and division, then follow the instructions for the online audition."
+    },
+    {
+      "id": "esdp",
+      "name": "ESDP",
+      "zh": "英语演讲与辩论五项",
+      "category": "multi",
+      "source": "https://empact.cn/cases/esdp-speech-debate-pentathlon/",
+      "watch": "SpeakKai’s schedule lists December 6 for its entrants. Confirm the stage, venue, and deadline with the competition organizer. Later 2027 dates are awaiting public confirmation.",
+      "eligibility": "The program is for school students. Confirm current grade divisions with your school or the regional organizer.",
+      "details": "The five-part national program includes speech, debate, writing, translation and interview."
+    },
+    {
+      "id": "skt-cbpa",
+      "name": "SKT · CBPA Business Challenge",
+      "zh": "SKT 商业全能挑战",
+      "category": "multi",
+      "source": "https://en.businessprofessionalsofamerica.org.cn/rules",
+      "watch": "The CBPA national stage is listed for February–March 2027. Exact dates and city are awaiting confirmation.",
+      "signup": "https://www.webloom.cn/#/CBPA",
+      "signupLabel": "Open CBPA on Bloom",
+      "eligibility": "Classic Business Presentation track is for grades 9–12. Check grade and language rules for other tracks.",
+      "details": "An adjacent business presentation contest with an English presentation track."
+    },
+    {
+      "id": "skt-cnec",
+      "name": "SKT · China National Economics Challenge",
+      "zh": "SKT 经济学学术活动",
+      "category": "multi",
+      "source": "https://nec.org.cn/wp-content/uploads/2026/08/CNEC2027Onepage-ENG.pdf",
+      "watch": "The March 2027 national stage includes case work and presentation. Exact dates are awaiting confirmation.",
+      "signup": "https://www.webloom.cn/#/CNEC",
+      "signupLabel": "Open CNEC on Bloom",
+      "eligibility": "Grades 7–12 and under age 20. Check the organizer's division rules.",
+      "details": "An economics competition with presentations and case defense at later stages."
+    },
+    {
+      "id": "future-voices",
+      "name": "Future Voices",
+      "zh": "未来之声英语演讲活动",
+      "category": "speech",
+      "source": "https://www.weilaizhisheng.com/about/",
+      "watch": "Provincial video submissions close August 31, 2027. The national video round closes in September, with the exact day pending.",
+      "signup": "https://www.weilaizhisheng.com/registration/",
+      "signupLabel": "Video submission and registration",
+      "eligibility": "The organizer lists kindergarten through youth categories across mainland China, Hong Kong, Macao and Taiwan."
+    },
+    {
+      "id": "skt-cnap",
+      "name": "SKT · China National Academic Pentathlon",
+      "zh": "SKT 中国全能学术五项",
+      "category": "multi",
+      "source": "https://img.webloom.cn/Img/home/00-6b8b2b29caa3f013aa64b9648cf3824f-20260929154259304.webp",
+      "watch": "China nationals with thematic English speech are scheduled for April 2027, followed by a global round in Macao in August. Exact days are pending. Registration closes December 14, 2026.",
+      "signup": "https://www.webloom.cn/#/CNAP",
+      "signupLabel": "Open CNAP on Bloom",
+      "eligibility": "Grades 6–8, teams of 3–6."
+    },
+    {
+      "id": "skt-cnad",
+      "name": "SKT · China National Academic Decathlon",
+      "zh": "SKT 中国全能学术十项",
+      "category": "multi",
+      "source": "https://img.webloom.cn/Img/home/00-7408436bc031931cedb363e354b8abfb-20260929152345534.webp",
+      "watch": "China nationals with thematic English speech are scheduled for April 2027, followed by a global round in Macao in August. Exact days are pending. Registration closes December 14, 2026.",
+      "signup": "https://www.webloom.cn/#/CNAD",
+      "signupLabel": "Open CNAD on Bloom",
+      "eligibility": "Grades 9–12, teams of 6–9."
+    },
+    {
+      "id": "outlook-superstars",
+      "name": "Outlook Superstars",
+      "zh": "希望之星暨希语盛典",
+      "category": "speech",
+      "source": "https://sz.ifeng.com/c/8vVPVbGgDY0",
+      "watch": "This separately organized event announced its 2027 cycle. Current round dates and signup are awaiting public confirmation."
     }
   ],
   "events": [
@@ -249,7 +333,11 @@
       "place": "Hangzhou",
       "format": "English public speaking",
       "source": "https://nhsdlc.org/en/news-en/#baoming",
-      "note": "Elementary grades 1–3 and 4–6, plus middle and high school original speech."
+      "note": "Elementary grades 1–3 and 4–6, plus middle and high school original speech.",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://nhsdlc.org/en/fall-en/"
     },
     {
       "id": "wsda-qingdao-junior",
@@ -291,7 +379,10 @@
       "place": "Online · nationwide window",
       "format": "English reading aloud & Q&A",
       "source": "https://events.fltrp.com/c/2026-09-20/236668.shtml",
-      "note": "Senior high and secondary vocational qualifiers only. Local timing varies."
+      "note": "Senior high and secondary vocational qualifiers only. Local timing varies.",
+      "eligibility": "Senior high and secondary vocational students who qualified from the first round.",
+      "rules": "https://events.fltrp.com/c/2026-09-20/236667.shtml",
+      "details": "The preliminary round uses online English reading aloud and an organizer Q&A. Regional instructions govern the local schedule."
     },
     {
       "id": "century-finals",
@@ -316,7 +407,11 @@
       "region": "mainland",
       "place": "Chengdu · SPGS International School Chengdu",
       "format": "Team debate, collaborative writing & academic challenges",
-      "source": "https://beta.scholarscup.org/calendar/2026-chengdu/"
+      "source": "https://beta.scholarscup.org/calendar/2026-chengdu/",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2026-chengdu",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "nhsdlc-shanghai",
@@ -329,7 +424,12 @@
       "place": "Shanghai Hongrun Boyuan School",
       "format": "Public Forum & Junior World Schools debate",
       "source": "https://nhsdlc.org/en/news-en/#baoming",
-      "note": "Public Forum lists open, middle-school and novice middle-school divisions."
+      "note": "Public Forum lists open, middle-school and novice middle-school divisions.",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://nhsdlc.org/en/fall-en/",
+      "eligibility": "Junior World Schools is for ages 7–13, with 3–5 students per team. Public Forum eligibility varies by division."
     },
     {
       "id": "wsc-2026-shanghai",
@@ -342,7 +442,11 @@
       "place": "Shanghai · Dehong Shanghai International Chinese School",
       "format": "Team debate, collaborative writing & academic challenges",
       "source": "https://beta.scholarscup.org/calendar/2026-shanghai/",
-      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026."
+      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026.",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2026-shanghai",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "ssdi-shanghai",
@@ -355,8 +459,9 @@
       "place": "NACIS Shanghai",
       "format": "Speech & debate",
       "source": "https://www.dialogy.cn/index/activity/activity.html",
-      "deadline": "The organizer lists November 21 as the registration cutoff.",
-      "note": "Dialogy gives November 28–29 as competition days. The wider Tabroom tournament window starts November 27."
+      "deadline": "Registration closed on November 21, 2026.",
+      "note": "Dialogy gives November 28–29 as competition days. The wider Tabroom tournament window starts November 27.",
+      "rules": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41965"
     },
     {
       "id": "toc-shenzhen",
@@ -483,7 +588,9 @@
       "place": "Online · UTC+8",
       "format": "Impromptu, interpretive & persuasive speech",
       "source": "https://edudrift.com/online-competitions/apsc/",
-      "note": "Individual event for ages 7–18."
+      "note": "Individual event for ages 7–18.",
+      "signup": "https://edudrift.com/online-competitions/apsc/#pricing",
+      "signupLabel": "Choose an entry"
     },
     {
       "id": "nhsdlc-beijing",
@@ -496,7 +603,12 @@
       "place": "Beijing SMIC Private School",
       "format": "Public Forum, Junior World Schools & public speaking",
       "source": "https://nhsdlc.org/en/news-en/#baoming",
-      "note": "Public speaking runs December 6."
+      "note": "Public speaking runs December 6.",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://nhsdlc.org/en/fall-en/",
+      "eligibility": "Junior World Schools is for ages 7–13, with 3–5 students per team. Public Forum eligibility varies by division."
     },
     {
       "id": "wsc-2026-beijing-intro",
@@ -509,7 +621,11 @@
       "place": "Beijing · AISL Harrow Beijing",
       "format": "Team debate, collaborative writing & academic challenges",
       "source": "https://beta.scholarscup.org/calendar/2026-beijing-intro/",
-      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026."
+      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026.",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2026-beijing-intro",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "toc-hangzhou",
@@ -536,7 +652,12 @@
       "place": "Guangzhou · ASJ",
       "format": "Public Forum, Junior World Schools & public speaking",
       "source": "https://nhsdlc.org/en/news-en/#baoming",
-      "note": "Public speaking runs December 6."
+      "note": "Public speaking runs December 6.",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://nhsdlc.org/en/fall-en/",
+      "eligibility": "Junior World Schools is for ages 7–13, with 3–5 students per team. Public Forum eligibility varies by division."
     },
     {
       "id": "toc-digital-1",
@@ -551,7 +672,10 @@
       "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41805",
       "zone": "China time",
       "note": "Organizer dates in U.S. Eastern time are December 4–6. Some rounds run overnight in China. The series offers international Public Forum and World Schools breakout eliminations.",
-      "deadline": "Registration closes December 1 at 12:59 p.m. China time."
+      "deadline": "Registration closes December 1 at 12:59 p.m. China time.",
+      "signup": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41805",
+      "signupLabel": "Registration on Tabroom",
+      "signupNote": "Sign in to Tabroom, then select the tournament’s Register tab when available."
     },
     {
       "id": "wsc-2026-shenzhen",
@@ -564,7 +688,11 @@
       "place": "Shenzhen · Shenzhen College of International Education",
       "format": "Team debate, collaborative writing & academic challenges",
       "source": "https://beta.scholarscup.org/calendar/2026-shenzhen/",
-      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026."
+      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026.",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2026-shenzhen",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "wsda-online-december",
@@ -614,7 +742,10 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1733",
           "deadline": "2026-11-23"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1730",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
     },
     {
       "id": "wsda-greater-bay",
@@ -650,7 +781,43 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1782",
           "deadline": "2026-11-23"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1781",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
+    },
+    {
+      "id": "esdp-december",
+      "series": "esdp",
+      "title": "ESDP session on SpeakKai’s schedule",
+      "short": "ESDP Shanghai",
+      "start": "2026-12-06",
+      "end": "2026-12-06",
+      "region": "mainland",
+      "place": "Shanghai · venue pending",
+      "format": "English speech and debate program",
+      "source": "https://empact.cn/cases/esdp-speech-debate-pentathlon/",
+      "status": "Reported",
+      "note": "SpeakKai’s calendar lists this date for its entrants. Confirm the round, venue, eligibility and signup with the organizer.",
+      "details": "Earlier Shanghai speech rounds have included original speeches, judge Q&A, impromptu speaking and a prepared final."
+    },
+    {
+      "id": "skt-cnec-prelim",
+      "series": "skt-cnec",
+      "title": "CNEC online preliminary",
+      "short": "SKT CNEC preliminary",
+      "start": "2026-12-12",
+      "end": "2026-12-13",
+      "region": "online",
+      "place": "Online · choose one date",
+      "format": "Economics qualifying assessment",
+      "source": "https://nec.org.cn/wp-content/uploads/2026/08/CNEC2027Onepage-ENG.pdf",
+      "signup": "https://www.webloom.cn/#/CNEC",
+      "signupLabel": "Open CNEC on Bloom",
+      "deadline": "Registration and date selection close November 30, 2026 at 11:59 p.m. China time.",
+      "eligibility": "Grades 7–12 and under age 20.",
+      "details": "The preliminary is a written assessment. Later rounds include presentation and case defense.",
+      "rules": "https://nec.org.cn/news/3151.html"
     },
     {
       "id": "nhsdlc-online-iv",
@@ -662,7 +829,12 @@
       "region": "online",
       "place": "Online",
       "format": "Public Forum, Junior World Schools & public speaking",
-      "source": "https://nhsdlc.org/en/news-en/#baoming"
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://nhsdlc.org/en/fall-en/",
+      "eligibility": "Junior World Schools is for ages 7–13, with 3–5 students per team. Public Forum eligibility varies by division."
     },
     {
       "id": "wsc-2026-fuzhou",
@@ -675,7 +847,11 @@
       "place": "Fuzhou · Sedbergh School",
       "format": "Team debate, collaborative writing & academic challenges",
       "source": "https://beta.scholarscup.org/calendar/2026-fuzhou/",
-      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026."
+      "note": "Intro round for scholars who have yet to enter a WSC Regional or Global round in 2026.",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2026-fuzhou",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "nhsdlc-ningbo",
@@ -687,7 +863,12 @@
       "region": "mainland",
       "place": "HD Ningbo School",
       "format": "Public Forum, Junior World Schools & public speaking",
-      "source": "https://nhsdlc.org/en/news-en/#baoming"
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://nhsdlc.org/en/fall-en/",
+      "eligibility": "Junior World Schools is for ages 7–13, with 3–5 students per team. Public Forum eligibility varies by division."
     },
     {
       "id": "toc-online-iii",
@@ -730,7 +911,10 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1773",
           "deadline": "2026-11-30"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1777",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
     },
     {
       "id": "wsda-suzhou",
@@ -773,7 +957,44 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1792",
           "deadline": "2026-11-30"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1793",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
+    },
+    {
+      "id": "skt-cnad-registration",
+      "series": "skt-cnad",
+      "title": "CNAD registration deadline",
+      "short": "SKT CNAD signup",
+      "start": "2026-12-14",
+      "end": "2026-12-14",
+      "region": "online",
+      "place": "Online · Bloom",
+      "format": "Academic team event with thematic English speaking",
+      "source": "https://img.webloom.cn/Img/home/00-7408436bc031931cedb363e354b8abfb-20260929152345534.webp",
+      "signup": "https://www.webloom.cn/#/CNAD",
+      "signupLabel": "Open CNAD on Bloom",
+      "deadline": "Registration closes December 14, 2026 at 11:59 p.m. China time.",
+      "eligibility": "Grades 9–12, teams of 6–9.",
+      "details": "Online preliminary in January 2027, China national round in April, and Macao global round in August. Check the organizer for exact dates."
+    },
+    {
+      "id": "skt-cnap-registration",
+      "series": "skt-cnap",
+      "title": "CNAP registration deadline",
+      "short": "SKT CNAP signup",
+      "start": "2026-12-14",
+      "end": "2026-12-14",
+      "region": "online",
+      "place": "Online · Bloom",
+      "format": "Academic team event with thematic English speaking",
+      "source": "https://img.webloom.cn/Img/home/00-6b8b2b29caa3f013aa64b9648cf3824f-20260929154259304.webp",
+      "signup": "https://www.webloom.cn/#/CNAP",
+      "signupLabel": "Open CNAP on Bloom",
+      "deadline": "Registration closes December 14, 2026 at 11:59 p.m. China time.",
+      "eligibility": "Grades 6–8, teams of 3–6.",
+      "details": "Online preliminary in January 2027, China national round in April, and Macao global round in August. Check the organizer for exact dates."
     },
     {
       "id": "nhsdlc-chongqing",
@@ -786,7 +1007,12 @@
       "place": "Chongqing · BI Academy",
       "format": "Public Forum, Junior World Schools & public speaking",
       "source": "https://nhsdlc.org/en/news-en/#baoming",
-      "note": "Public speaking runs December 20, including English poetry for ages 3–7."
+      "note": "Public speaking runs December 20, including English poetry for ages 3–7.",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://nhsdlc.org/en/fall-en/",
+      "eligibility": "Junior World Schools is for ages 7–13, with 3–5 students per team. Public Forum eligibility varies by division."
     },
     {
       "id": "wsda-enreach",
@@ -822,7 +1048,10 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1820",
           "deadline": "2026-12-09"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1818",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
     },
     {
       "id": "nhsdlc-online-v",
@@ -835,7 +1064,12 @@
       "place": "Online",
       "format": "Public Forum, Junior World Schools & public speaking",
       "source": "https://nhsdlc.org/en/news-en/#baoming",
-      "note": "Public speaking runs December 20."
+      "note": "Public speaking runs December 20.",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://nhsdlc.org/en/fall-en/",
+      "eligibility": "Junior World Schools is for ages 7–13, with 3–5 students per team. Public Forum eligibility varies by division."
     },
     {
       "id": "wsda-beijing",
@@ -885,7 +1119,28 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1772",
           "deadline": "2026-12-07"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1765",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
+    },
+    {
+      "id": "skt-cbpa-video",
+      "series": "skt-cbpa",
+      "title": "CBPA preliminary project submission",
+      "short": "SKT CBPA project",
+      "start": "2026-12-20",
+      "end": "2026-12-20",
+      "region": "online",
+      "place": "Online",
+      "format": "Business project video",
+      "source": "https://img.webloom.cn/Img/home/21-3c9a2aacf7a26a81b44ea1bd81b3febc-20260929140217381.webp",
+      "signup": "https://www.webloom.cn/#/CBPA",
+      "signupLabel": "Open CBPA on Bloom",
+      "deadline": "Registration closes December 6, 2026 at 11:59 p.m. China time. The video is due December 20.",
+      "eligibility": "Classic English Business Presentation is for grades 9–12. Teams of 3–4. Other tracks have different grade and language rules.",
+      "details": "The preliminary stage uses an online project submission. A separate written academic assessment is listed for December 27.",
+      "rules": "https://en.businessprofessionalsofamerica.org.cn/rules"
     },
     {
       "id": "wsda-catoelts",
@@ -898,7 +1153,10 @@
       "place": "Shanghai",
       "format": "Expository Speech",
       "source": "https://mp.ebaoming.cn/eventDetail?eventId=1807",
-      "deadline": "Portal signup cutoff December 7, 2026."
+      "deadline": "Portal signup cutoff December 7, 2026.",
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1807",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
     },
     {
       "id": "wsda-dialogy",
@@ -927,7 +1185,10 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1812",
           "deadline": "2026-12-09"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1811",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
     },
     {
       "id": "toc-fall-final",
@@ -953,7 +1214,12 @@
       "region": "mainland",
       "place": "Shenzhen · Sendelta International Academy",
       "format": "Public Forum, Junior World Schools & public speaking",
-      "source": "https://nhsdlc.org/en/news-en/#baoming"
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://nhsdlc.org/en/fall-en/",
+      "eligibility": "Junior World Schools is for ages 7–13, with 3–5 students per team. Public Forum eligibility varies by division."
     },
     {
       "id": "wsda-jinan",
@@ -989,7 +1255,10 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1784",
           "deadline": "2026-12-14"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1785",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
     },
     {
       "id": "wsda-shanghai",
@@ -1033,7 +1302,10 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1814",
           "deadline": "2026-12-14"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1752",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
     },
     {
       "id": "nhsdlc-wuhan",
@@ -1045,7 +1317,12 @@
       "region": "mainland",
       "place": "Wuhan · Cogdel Cranleigh High School",
       "format": "Public Forum, Junior World Schools & public speaking",
-      "source": "https://nhsdlc.org/en/news-en/#baoming"
+      "source": "https://nhsdlc.org/en/news-en/#baoming",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://nhsdlc.org/en/fall-en/",
+      "eligibility": "Junior World Schools is for ages 7–13, with 3–5 students per team. Public Forum eligibility varies by division."
     },
     {
       "id": "nhsdlc-shanghai-speech",
@@ -1055,10 +1332,16 @@
       "start": "2026-12-27",
       "end": "2026-12-27",
       "region": "mainland",
-      "place": "Shanghai · Pudong campus, 上海上实剑桥浦东校区",
+      "place": "Shanghai Experimental Foreign Language School · Pudong campus",
       "format": "English public speaking",
       "source": "https://nhsdlc.org/en/news-en/#baoming",
-      "note": "Elementary grades 1–3 and 4–6, plus middle and high school original speech. Elementary categories include expository, declamation and original speech."
+      "note": "Elementary grades 1–3 and 4–6, plus middle and high school original speech. Elementary categories include expository, declamation and original speech.",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://seed-static.seedasdan.com/wordpress/2026/09/NHSDLC-Public-Speaking-Rubric-Updated-2025.pdf",
+      "eligibility": "Solo speaking. Grades 1–3 and 4–6 can enter Original Oratory, Declamation or Expository. Middle and high school enter Original Oratory.",
+      "details": "Time limits are 3 minutes for elementary, 5 minutes for middle school, and 10 minutes for high school. Each division has a 30-second grace period."
     },
     {
       "id": "nhsdlc-online-vi",
@@ -1071,7 +1354,12 @@
       "place": "Online",
       "format": "Public Forum, Junior World Schools & public speaking",
       "source": "https://nhsdlc.org/en/news-en/#baoming",
-      "note": "Public speaking runs January 3."
+      "note": "Public speaking runs January 3.",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Find your round, choose Sign Up and scan the official QR code with WeChat. Confirm current availability with NHSDLC.",
+      "rules": "https://nhsdlc.org/en/fall-en/",
+      "eligibility": "Junior World Schools is for ages 7–13, with 3–5 students per team. Public Forum eligibility varies by division."
     },
     {
       "id": "wsda-online-january-1",
@@ -1121,7 +1409,10 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1741",
           "deadline": "2026-12-21"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1735",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
     },
     {
       "id": "fltrp-finals",
@@ -1134,7 +1425,10 @@
       "place": "Across China · local dates vary",
       "format": "Assigned speech, Q&A & interview",
       "source": "https://events.fltrp.com/c/2026-09-20/236668.shtml",
-      "note": "For advancing senior high and secondary vocational students. Check the regional committee for venue and timings."
+      "note": "For advancing senior high and secondary vocational students. Check the regional committee for venue and timings.",
+      "eligibility": "Advancing senior high and secondary vocational students.",
+      "rules": "https://events.fltrp.com/dqzwh/",
+      "details": "Contact the relevant regional committee for the local round's schedule and venue."
     },
     {
       "id": "wsc-2027-changzhou",
@@ -1146,7 +1440,11 @@
       "region": "mainland",
       "place": "Changzhou · Wycombe Abbey School Changzhou",
       "format": "Team debate, collaborative writing & academic challenges",
-      "source": "https://beta.scholarscup.org/calendar/2027-changzhou/"
+      "source": "https://beta.scholarscup.org/calendar/2027-changzhou/",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2027-changzhou",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "wsc-2027-guangzhou",
@@ -1158,7 +1456,11 @@
       "region": "mainland",
       "place": "Guangzhou · Benenden Bilingual School Guangzhou",
       "format": "Team debate, collaborative writing & academic challenges",
-      "source": "https://beta.scholarscup.org/calendar/2027-guangzhou/"
+      "source": "https://beta.scholarscup.org/calendar/2027-guangzhou/",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2027-guangzhou",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "ivy-tw-semi",
@@ -1172,7 +1474,9 @@
       "format": "English speaking",
       "source": "https://sites.google.com/view/ivycup-tw/%E9%83%BD%E5%B8%82%E5%9C%B0%E5%8D%80%E5%8D%8A%E6%B1%BA%E8%B3%BDsemi-final/%E9%83%BD%E5%B8%82%E5%9C%B0%E5%8D%80%E5%8D%8A%E6%B1%BA%E8%B3%BDsemi-final%E4%BB%8B%E7%B4%B9",
       "status": "Provisional",
-      "note": "For qualifying entrants from the Taiwan registration office. Entrants through other offices should check with their original registration center."
+      "note": "For qualifying entrants from the Taiwan registration office. Entrants through other offices should check with their original registration center.",
+      "signupNote": "Registration dates are pending. Use the office that handled your preliminary entry.",
+      "eligibility": "Taiwan-office entrants who advanced from a qualifying preliminary."
     },
     {
       "id": "hkitdc-p1",
@@ -1215,7 +1519,10 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1763",
           "deadline": "2026-12-28"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1760",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
     },
     {
       "id": "edu-asow",
@@ -1228,7 +1535,9 @@
       "place": "Online · UTC+8",
       "format": "Asian 3-on-3 debate",
       "source": "https://edudrift.com/online-competitions/asow/",
-      "note": "Ages 13–18."
+      "note": "Ages 13–18.",
+      "signup": "https://edudrift.com/online-competitions/asow/#pricing",
+      "signupLabel": "Choose an entry"
     },
     {
       "id": "wsda-online-january-2",
@@ -1278,7 +1587,10 @@
           "source": "https://mp.ebaoming.cn/eventDetail?eventId=1749",
           "deadline": "2027-01-04"
         }
-      ]
+      ],
+      "signup": "https://mp.ebaoming.cn/eventDetail?eventId=1745",
+      "signupLabel": "WSDA registration and details",
+      "signupNote": "Open the division you want in the WSDA portal to check availability and register."
     },
     {
       "id": "isdi-3",
@@ -1292,7 +1604,12 @@
       "format": "Public Forum, World Schools, original oratory & extemp",
       "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=40337",
       "zone": "U.S. Eastern time",
-      "deadline": "Tabroom cutoff is January 21 at 12:55 p.m. China time."
+      "deadline": "Tabroom cutoff is January 21 at 12:55 p.m. China time.",
+      "signup": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=40337",
+      "signupLabel": "Register on Tabroom",
+      "signupNote": "Sign in to Tabroom, then select Register.",
+      "eligibility": "The event lists middle-school, novice and open Public Forum, plus junior and open World Schools divisions.",
+      "rules": "https://www.isdiworld.org/competitions/tournament-schedule"
     },
     {
       "id": "edu-ajcw",
@@ -1305,7 +1622,9 @@
       "place": "Online · UTC+8",
       "format": "Junior World Schools debate",
       "source": "https://edudrift.com/online-competitions/ajcw/",
-      "note": "Ages 7–14, teams of three."
+      "note": "Ages 7–14, teams of three.",
+      "signup": "https://edudrift.com/online-competitions/ajcw/#pricing",
+      "signupLabel": "Choose an entry"
     },
     {
       "id": "hk-primary",
@@ -1317,9 +1636,11 @@
       "region": "hong-kong",
       "place": "Hong Kong · Malvern College Hong Kong",
       "format": "Junior World Schools debate",
-      "source": "https://docs.google.com/forms/d/e/1FAIpQLSdFdRQf_dgEO7ddqjVhKUXWDZ6THLmGaWjPt3LsfClH3aemaQ/viewform",
+      "source": "https://capstonedebate.com/",
       "note": "Hong Kong primary students in grades 3–6 or years 4–7. Teams of 3–5, including eligible composite teams.",
-      "deadline": "Registration deadline is December 23, 2026."
+      "deadline": "Registration deadline is December 23, 2026.",
+      "signup": "https://docs.google.com/forms/d/e/1FAIpQLSdFdRQf_dgEO7ddqjVhKUXWDZ6THLmGaWjPt3LsfClH3aemaQ/viewform",
+      "signupLabel": "Open registration form"
     },
     {
       "id": "hkfyg-np",
@@ -1333,7 +1654,10 @@
       "format": "English public speaking",
       "source": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/",
       "note": "Hong Kong full-time secondary students in S1–S6 or equivalent. Preliminary entry is through a school or individually.",
-      "deadline": "Applications close January 15, 2027. Early bird ends December 11, 2026."
+      "deadline": "Applications close January 15, 2027. Early bird ends December 11, 2026.",
+      "signup": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/eps-2027-form/",
+      "signupLabel": "HKFYG application",
+      "eligibility": "Hong Kong full-time secondary students in S1–S6 or equivalent. Enter through school or individually. HKFYG membership is required."
     },
     {
       "id": "hkitdc-p2",
@@ -1360,7 +1684,10 @@
       "format": "English public speaking",
       "source": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/",
       "note": "Hong Kong full-time secondary students in S1–S6 or equivalent. Preliminary entry is through a school or individually.",
-      "deadline": "Applications close January 15, 2027. Early bird ends December 11, 2026."
+      "deadline": "Applications close January 15, 2027. Early bird ends December 11, 2026.",
+      "signup": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/eps-2027-form/",
+      "signupLabel": "HKFYG application",
+      "eligibility": "Hong Kong full-time secondary students in S1–S6 or equivalent. Enter through school or individually. HKFYG membership is required."
     },
     {
       "id": "nhsdlc-elite",
@@ -1373,7 +1700,11 @@
       "place": "Online",
       "format": "Public Forum",
       "source": "https://open.seedasdan.com/academy/data/nhsdlc/sessions",
-      "note": "Organizer lists middle-school and varsity divisions."
+      "note": "Organizer lists middle-school and varsity divisions.",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Confirm winter registration with the organizer at dlc@seedasdan.org.",
+      "rules": "https://nhsdlc.org/en/fall-en/"
     },
     {
       "id": "hkfyg-f",
@@ -1387,7 +1718,10 @@
       "format": "English public speaking",
       "source": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/",
       "note": "Hong Kong full-time secondary students in S1–S6 or equivalent. Preliminary entry is through a school or individually.",
-      "deadline": "Applications close January 15, 2027. Early bird ends December 11, 2026."
+      "deadline": "Applications close January 15, 2027. Early bird ends December 11, 2026.",
+      "signup": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/eps-2027-form/",
+      "signupLabel": "HKFYG application",
+      "eligibility": "Hong Kong full-time secondary students in S1–S6 or equivalent. Enter through school or individually. HKFYG membership is required."
     },
     {
       "id": "see-change",
@@ -1401,7 +1735,10 @@
       "format": "World Schools debate",
       "source": "https://www.seechangewsdc.org/registration",
       "note": "Ages 9–18, teams of 3–4. The top four eligible Hong Kong teams in the 15–18 division qualify for the separate Harvard College World Schools Invitational.",
-      "deadline": "Registration closes January 15, 2027. Early bird ends December 18, 2026."
+      "deadline": "Registration closes January 15, 2027. Early bird ends December 18, 2026.",
+      "signup": "https://registration.seechangewsdc.org/registration?step=personal",
+      "signupLabel": "Register for See Change",
+      "eligibility": "Ages 9–18 as of December 31, 2026. School or independent teams of 3–4. Individual applicants can request team matching."
     },
     {
       "id": "nhsdlc-winter-bp",
@@ -1430,7 +1767,12 @@
       "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=40749",
       "zone": "U.S. Pacific time",
       "note": "Speech includes impromptu, extemp and original oratory. Confirm division entry with the organizer or a school delegation.",
-      "deadline": "Tabroom general cutoff is February 5 at 3:59 p.m. China time. Some divisions list earlier dates."
+      "deadline": "Tabroom general cutoff is February 5 at 3:59 p.m. China time. Some divisions list earlier dates.",
+      "signup": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=40749",
+      "signupLabel": "Register on Tabroom",
+      "signupNote": "Sign in, then select Register. Confirm coach or school arrangements and division deadlines before entering.",
+      "rules": "https://www.tabroom.com/index/tourn/events.mhtml?tourn_id=40749",
+      "details": "Speech includes original oratory, impromptu, extemp, declamation, interpretation and informative speaking. Debate includes Public Forum, Lincoln–Douglas, Policy, Parliamentary and World Schools."
     },
     {
       "id": "harvard-2027",
@@ -1445,7 +1787,11 @@
       "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=40853",
       "zone": "U.S. Eastern time",
       "note": "The official invitation lists these competition dates. Selected Public Forum, World Schools and middle-school Congress divisions run online.",
-      "deadline": "Check the invitation and registration page for division-specific cutoff times."
+      "deadline": "Tabroom cutoff February 9 at 10 a.m. China time. Confirm with the organizer.",
+      "signup": "https://harvard.tabroom.com/",
+      "signupLabel": "Registration on Tabroom",
+      "signupNote": "Check the invitation for your division. Its dates and the Tabroom fields differ.",
+      "rules": "https://www.tabroom.com/index/tourn/events.mhtml?tourn_id=40853"
     },
     {
       "id": "nhsdlc-winter-debate",
@@ -1458,7 +1804,12 @@
       "place": "Online",
       "format": "Public Forum & Junior World Schools debate",
       "source": "https://open.seedasdan.com/academy/data/nhsdlc/sessions",
-      "note": "Public Forum lists middle-school and open divisions."
+      "note": "Public Forum lists middle-school and open divisions.",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Confirm winter registration with the organizer at dlc@seedasdan.org.",
+      "rules": "https://nhsdlc.org/en/fall-en/",
+      "eligibility": "Junior World Schools is for ages 7–13, with 3–5 students per team. Public Forum eligibility varies by division."
     },
     {
       "id": "nhsdlc-winter-speech",
@@ -1471,7 +1822,11 @@
       "place": "Online",
       "format": "English public speaking",
       "source": "https://open.seedasdan.com/academy/data/nhsdlc/sessions",
-      "note": "Elementary grades 1–3 and 4–6, plus middle and high school original speech."
+      "note": "Elementary grades 1–3 and 4–6, plus middle and high school original speech.",
+      "signup": "https://nhsdlc.org/en/news-en/#baoming",
+      "signupLabel": "NHSDLC registration instructions",
+      "signupNote": "Confirm winter registration with the organizer at dlc@seedasdan.org.",
+      "rules": "https://nhsdlc.org/en/fall-en/"
     },
     {
       "id": "esu-youth-macao",
@@ -1512,7 +1867,10 @@
       "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41842",
       "zone": "China time",
       "note": "Organizer dates in U.S. Eastern time are February 19–21. Some rounds run overnight in China. The series offers international Public Forum and World Schools breakout eliminations.",
-      "deadline": "Registration closes February 16 at 12:59 p.m. China time."
+      "deadline": "Registration closes February 16 at 12:59 p.m. China time.",
+      "signup": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41842",
+      "signupLabel": "Registration on Tabroom",
+      "signupNote": "Sign in to Tabroom, then select the tournament’s Register tab when available."
     },
     {
       "id": "hkitdc-p3",
@@ -1540,7 +1898,10 @@
       "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41846",
       "zone": "China time",
       "note": "Organizer dates in U.S. Eastern time are March 5–7. Some rounds run overnight in China. The series offers international Public Forum and World Schools breakout eliminations.",
-      "deadline": "Registration closes March 2 at 12:59 p.m. China time."
+      "deadline": "Registration closes March 2 at 12:59 p.m. China time.",
+      "signup": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41846",
+      "signupLabel": "Registration on Tabroom",
+      "signupNote": "Sign in to Tabroom, then select the tournament’s Register tab when available."
     },
     {
       "id": "hkitdc-qf",
@@ -1592,7 +1953,11 @@
       "place": "Hong Kong · Po Leung Kuk Choi Kai Yau School",
       "format": "Team debate, collaborative writing & academic challenges",
       "source": "https://beta.scholarscup.org/calendar/2027-hong-kong/",
-      "deadline": "Registration closes March 14, 2027."
+      "deadline": "Registration closes March 14, 2027.",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2027-hong-kong",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "hkitdc-sf",
@@ -1632,7 +1997,10 @@
       "format": "Parliamentary debate, impromptu, interpretive reading & prepared speech",
       "source": "https://widpsc2027.org/schedule/",
       "note": "High-school championship with national team selection. The program runs March 31–April 7. Competition rounds are April 1–6.",
-      "deadline": "January 31, 2027 payment deadline applies to preregistered teams."
+      "deadline": "January 31, 2027 payment deadline applies to preregistered teams.",
+      "eligibility": "High school students selected through national or regional delegations.",
+      "rules": "https://chinaschoolsdebate.com/team-china-widpsc/",
+      "signupNote": "Pre-registration for delegations is closed. Mainland entrants go through the Team China selection process."
     },
     {
       "id": "wsc-2027-shenzhen",
@@ -1644,7 +2012,11 @@
       "region": "mainland",
       "place": "Shenzhen · Shenzhen College of International Education",
       "format": "Team debate, collaborative writing & academic challenges",
-      "source": "https://beta.scholarscup.org/calendar/2027-shenzhen/"
+      "source": "https://beta.scholarscup.org/calendar/2027-shenzhen/",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2027-shenzhen",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "wsc-2027-chongqing",
@@ -1658,7 +2030,9 @@
       "format": "Team debate, collaborative writing & academic challenges",
       "source": "https://beta.scholarscup.org/calendar/2027-chongqing/",
       "status": "Provisional",
-      "note": "The organizer marks this round as tentative. Check its calendar for confirmation."
+      "note": "The organizer marks this round as tentative. Check its calendar for confirmation.",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl."
     },
     {
       "id": "hkfyg-final",
@@ -1683,7 +2057,11 @@
       "region": "mainland",
       "place": "Shanghai · Shanghai Singapore International School",
       "format": "Team debate, collaborative writing & academic challenges",
-      "source": "https://beta.scholarscup.org/calendar/2027-shanghai/"
+      "source": "https://beta.scholarscup.org/calendar/2027-shanghai/",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2027-shanghai",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "wsc-2027-beijing",
@@ -1695,7 +2073,11 @@
       "region": "mainland",
       "place": "Beijing · Beijing Huijia Private School",
       "format": "Team debate, collaborative writing & academic challenges",
-      "source": "https://beta.scholarscup.org/calendar/2027-beijing/"
+      "source": "https://beta.scholarscup.org/calendar/2027-beijing/",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2027-beijing",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "wsc-2027-foshan",
@@ -1707,7 +2089,11 @@
       "region": "mainland",
       "place": "Foshan · Majestic International College",
       "format": "Team debate, collaborative writing & academic challenges",
-      "source": "https://beta.scholarscup.org/calendar/2027-foshan/"
+      "source": "https://beta.scholarscup.org/calendar/2027-foshan/",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2027-foshan",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "wsc-2027-hangzhou",
@@ -1719,7 +2105,11 @@
       "region": "mainland",
       "place": "Hangzhou · Dingwen Academy Hangzhou",
       "format": "Team debate, collaborative writing & academic challenges",
-      "source": "https://beta.scholarscup.org/calendar/2027-hangzhou/"
+      "source": "https://beta.scholarscup.org/calendar/2027-hangzhou/",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl.",
+      "signup": "https://registration.scholarscup.org/?round=2027-hangzhou",
+      "signupLabel": "Register with World Scholar’s Cup"
     },
     {
       "id": "wsc-2027-qingdao",
@@ -1733,7 +2123,9 @@
       "format": "Team debate, collaborative writing & academic challenges",
       "source": "https://beta.scholarscup.org/calendar/2027-qingdao/",
       "status": "Provisional",
-      "note": "The organizer marks this round as tentative. Check its calendar for confirmation."
+      "note": "The organizer marks this round as tentative. Check its calendar for confirmation.",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl."
     },
     {
       "id": "wsc-2027-dalian",
@@ -1747,7 +2139,25 @@
       "format": "Team debate, collaborative writing & academic challenges",
       "source": "https://beta.scholarscup.org/calendar/2027-dalian/",
       "status": "Provisional",
-      "note": "The organizer marks this round as tentative. Check its calendar for confirmation."
+      "note": "The organizer marks this round as tentative. Check its calendar for confirmation.",
+      "eligibility": "Junior and Senior divisions. Check the organizer for round-specific age rules.",
+      "details": "The program combines team debate, collaborative writing, the Scholar’s Challenge and the Scholar’s Bowl."
+    },
+    {
+      "id": "future-voices-provincial",
+      "series": "future-voices",
+      "title": "Future Voices provincial video submission deadline",
+      "short": "Future Voices deadline",
+      "start": "2027-08-31",
+      "end": "2027-08-31",
+      "region": "online",
+      "place": "Online · provincial round",
+      "format": "English public speaking video",
+      "source": "https://www.weilaizhisheng.com/about/",
+      "signup": "https://www.weilaizhisheng.com/registration/",
+      "signupLabel": "Registration and WeChat instructions",
+      "deadline": "Provincial video submission deadline August 31, 2027.",
+      "eligibility": "Kindergarten through youth divisions. Confirm the age band and provincial route with the organizer."
     }
   ]
 }

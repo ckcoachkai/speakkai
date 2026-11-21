@@ -169,6 +169,8 @@
 .entry-meta { display: flex; gap: 6px 8px; align-items: baseline; flex-wrap: wrap; color: var(--event-ink); font-size: .75rem; font-weight: 800; }
 .event-status { display: inline-block; padding: 0 5px; color: #7a400e; border: 1px dashed #a66329; border-radius: 4px; }
 .competition-body .entry-content h5 { margin: 2px 0 4px; color: var(--ink); font: 800 1.05rem/1.3 Manrope, system-ui, sans-serif; }
+.competition-body .entry-title-link { text-decoration: none; }
+.competition-body .entry-title-link:hover { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
 .competition-body .entry-content p { margin: 4px 0 0; color: var(--muted); font-size: .86rem; }
 .competition-body .entry-content .entry-place { font-weight: 700; }
 .competition-body .entry-content .entry-deadline { font-weight: 800; color: #175749; }
@@ -184,13 +186,63 @@
 .watch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 255px), 1fr)); gap: 12px; }
 .watch-grid article { padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--white); }
 .competition-body .watch-grid h3 { font: 800 1rem/1.3 Manrope, system-ui, sans-serif; margin: 0 0 2px; color: var(--ink); }
-.watch-grid article > span { font-size: .76rem; color: var(--muted); }
+.watch-copy > span { font-size: .76rem; color: var(--muted); }
 .competition-body .watch-grid p { margin: 7px 0; font-size: .85rem; color: var(--muted); }
 .source-directory { margin-top: 18px; color: var(--teal); font-size: .85rem; }
 .source-directory summary { cursor: pointer; font-weight: 800; }
 .source-directory ul { padding: 0; display: flex; flex-wrap: wrap; gap: 7px 18px; list-style: none; }
 .calendar-footnote { color: var(--muted); font-size: .82rem; }
 .competition-footer { border-top: 1px solid var(--line); padding-block: 18px; color: var(--muted); font-size: .8rem; }
+.competition-body:has(.event-dialog[open]) { overflow: hidden; }
+.event-dialog {
+  width: min(590px, calc(100% - 40px));
+  max-height: 88vh;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: 0 18px 65px #1027373b;
+}
+.event-dialog::backdrop { background: #10273795; }
+.dialog-inner { position: relative; padding: 26px 28px; }
+.competition-body .event-dialog h2 {
+  margin: 6px 40px 14px 0;
+  color: var(--ink);
+  font: 800 clamp(1.4rem, 5vw, 2rem)/1.16 Manrope, system-ui, sans-serif;
+  letter-spacing: -.035em;
+}
+.dialog-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.35rem;
+  cursor: pointer;
+}
+.dialog-close:hover { background: #e4f2ea; }
+.event-dialog [data-dialog-date] .entry-date { display: flex; gap: 7px; align-items: baseline; padding-right: 44px; flex-wrap: wrap; }
+.event-dialog [data-dialog-date] span { font-size: .78rem; }
+.competition-body .event-dialog [data-dialog-body] p { margin: 9px 0 0; font-size: .93rem; }
+.event-dialog .entry-divisions { margin-top: 12px; }
+.dialog-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 9px 14px; margin-top: 20px; }
+.competition-body .dialog-actions a { color: var(--teal); font-size: .86rem; font-weight: 800; text-underline-offset: 3px; }
+.competition-body .dialog-actions .dialog-signup {
+  display: inline-block;
+  padding: 9px 13px;
+  border-radius: 7px;
+  background: var(--teal);
+  color: var(--white);
+  text-decoration: none;
+}
+.competition-body .dialog-actions .dialog-signup:hover { background: #004d40; }
 
 @media (max-width: 760px) {
   .competition-wrap { width: calc(100% - 36px); }
@@ -218,10 +270,12 @@
   .event-dot { display: none; }
   .competition-entry { padding-inline: 2px; grid-template-columns: 1fr auto; gap: 5px 8px; }
   .entry-date { grid-column: 1 / -1; display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px 8px; }
+  .event-dialog { width: 100%; max-width: none; margin: auto 0 0; border-radius: 17px 17px 0 0; }
+  .dialog-inner { padding: 21px 17px max(24px, env(safe-area-inset-bottom)); }
 }
 @media print {
   .competition-body { background: white; }
-  .competition-header, .competition-footer, .calendar-toolbar, .organizer-section { display: none; }
+  .competition-header, .competition-footer, .calendar-toolbar, .organizer-section, .event-dialog { display: none; }
   .competition-wrap { width: 100%; }
   .competition-hero { padding-block: 0 10px; }
   .competition-body .competition-hero h1 { font-size: 36pt; }

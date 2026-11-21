@@ -14,6 +14,11 @@ interface CompetitionSeries {
   category: string;
   source: string;
   watch?: string;
+  signup?: string;
+  signupLabel?: string;
+  signupNote?: string;
+  eligibility?: string;
+  details?: string;
 }
 
 interface Competition {
@@ -31,6 +36,12 @@ interface Competition {
   note?: string;
   status?: string;
   zone?: string;
+  signup?: string;
+  signupLabel?: string;
+  signupNote?: string;
+  eligibility?: string;
+  details?: string;
+  rules?: string;
   divisions?: Array<{ title: string; start: string; end: string; deadline?: string; source: string }>;
 }
 
@@ -42,6 +53,7 @@ const dateOf = (date: string) => new Date(date + 'T00:00:00Z');
 const monthLabel = new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric', timeZone: 'UTC' });
 const dayLabel = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', timeZone: 'UTC' });
 const longDayLabel = new Intl.DateTimeFormat('en', { dateStyle: 'full', timeZone: 'UTC' });
+const fullDateLabel = new Intl.DateTimeFormat('en', { dateStyle: 'long', timeZone: 'UTC' });
 const compact = (date: string) => dayLabel.format(dateOf(date));
 const eventDate = (event: Pick<Competition, 'start' | 'end'>) =>
   event.start === event.end ? compact(event.start) : dayLabel.formatRange(dateOf(event.start), dateOf(event.end));
@@ -88,7 +100,7 @@ for (const cursor = dateOf(firstMonth + '-01'); cursor.toISOString().slice(0, 7)
 
 const watched = series.filter(item => item.watch);
 const initialOption = monthOptions.find(month => month.key === initialMonth) ?? monthOptions[0];
-const updatedLabel = new Intl.DateTimeFormat('en', { dateStyle: 'long', timeZone: 'UTC' }).format(dateOf(data.updated));
+const updatedLabel = fullDateLabel.format(dateOf(data.updated));
 const title = 'China Speech & Debate Competition Calendar | SpeakKai';
 const description = 'Find upcoming English speech and debate competitions in China, Shanghai, Hong Kong, and online. Browse organizer dates, eligibility, and registration links.';
 ---
@@ -183,7 +195,7 @@ const description = 'Find upcoming English speech and debate competitions in Chi
                               const organizer = lookup.get(event.series);
                               const label = event.short ?? organizer?.name ?? event.title;
                               return <li data-event-series={event.series} data-event-region={eventRegions(event)}>
-                                <a class:list={['day-event', organizer?.category, { tentative: event.status }]} href={'#' + month.key + '-' + event.id} aria-label={event.title + (event.status ? ' (' + event.status + ')' : '')} title={event.title}>
+                                <a class:list={['day-event', organizer?.category, { tentative: event.status }]} href={'#' + month.key + '-' + event.id} aria-label={event.title + (event.status ? ' (' + event.status + ')' : '')} title={event.title} data-event-open aria-haspopup="dialog">
                                   <span class="event-dot" aria-hidden="true"></span><span class="day-event-label">{label}</span>
                                 </a>
                               </li>;
@@ -205,11 +217,11 @@ const description = 'Find upcoming English speech and debate competitions in Chi
               {month.monthEvents.map(event => {
                 const organizer = lookup.get(event.series);
                 return (
-                  <article class:list={['competition-entry', organizer?.category]} id={month.key + '-' + event.id} tabindex="-1" data-event-series={event.series} data-event-region={eventRegions(event)}>
-                    <div class="entry-date"><time datetime={event.start}>{eventDate(event)}</time>{event.zone && <span>{event.zone}</span>}</div>
-                    <div class="entry-content">
+                  <article class:list={['competition-entry', organizer?.category]} id={month.key + '-' + event.id} tabindex="-1" data-event-series={event.series} data-event-region={eventRegions(event)} data-calendar-item>
+                    <div class="entry-date"><time datetime={event.start} data-full-date={fullDateLabel.formatRange(dateOf(event.start), dateOf(event.end))}>{eventDate(event)}</time>{event.zone && <span>{event.zone}</span>}</div>
+                    <div class="entry-content" data-dialog-copy>
                       <div class="entry-meta"><span>{organizer?.name}</span>{event.status && <span class="event-status">{event.status}</span>}</div>
-                      <h5>{event.title}</h5>
+                      <h5 data-dialog-title><a class="entry-title-link" href={'#' + month.key + '-' + event.id} data-event-open aria-haspopup="dialog">{event.title}</a></h5>
                       <p class="entry-place">{event.place} · {event.format}</p>
                       {event.note && <p>{event.note}</p>}
                       {event.deadline && <p class="entry-deadline">{event.deadline}</p>}
@@ -220,8 +232,19 @@ const description = 'Find upcoming English speech and debate competitions in Chi
                           <span>{eventDate(division)}{division.deadline && ' · Signup cutoff ' + compact(division.deadline)}</span>
                         </li>)}</ul>
                       </details>}
+                      <template data-dialog-extras>
+                        {event.eligibility && <p><strong>Eligibility</strong> {event.eligibility}</p>}
+                        {event.details && <p>{event.details}</p>}
+                        {event.signupNote && <p>{event.signupNote}</p>}
+                        {!event.deadline && !event.divisions?.some(division => division.deadline) && <p class="entry-deadline">Check the organizer for the signup deadline.</p>}
+                      </template>
                     </div>
                     <a class="source-link" href={event.source} aria-label={'Source for ' + event.title}>Source <span aria-hidden="true">↗</span></a>
+                    <template data-dialog-actions>
+                      {event.signup && <a class="dialog-signup" href={event.signup}>{event.signupLabel ?? 'Registration page'} <span aria-hidden="true">↗</span></a>}
+                      {event.signup !== event.source && <a href={event.source}>Competition details <span aria-hidden="true">↗</span></a>}
+                      {event.rules && event.rules !== event.source && <a href={event.rules}>Rules or schedule <span aria-hidden="true">↗</span></a>}
+                    </template>
                   </article>
                 );
               })}
@@ -233,11 +256,22 @@ const description = 'Find upcoming English speech and debate competitions in Chi
       <section id="organizers" class="organizer-section" aria-labelledby="organizer-heading">
         <h2 id="organizer-heading">Dates to watch</h2>
         <div class="watch-grid">
-          {watched.map(item => <article>
-            <h3>{item.name}</h3>
-            {item.zh && <span lang="zh-CN">{item.zh}</span>}
-            <p>{item.watch}</p>
+          {watched.map(item => <article id={'watch-' + item.id} data-calendar-item>
+            <div class="watch-copy" data-dialog-copy>
+              <h3 data-dialog-title><a class="entry-title-link" href={'#watch-' + item.id} data-event-open aria-haspopup="dialog">{item.name}</a></h3>
+              {item.zh && <span lang="zh-CN">{item.zh}</span>}
+              <p>{item.watch}</p>
+              <template data-dialog-extras>
+                {item.eligibility && <p><strong>Eligibility</strong> {item.eligibility}</p>}
+                {item.details && <p>{item.details}</p>}
+                {item.signupNote && <p>{item.signupNote}</p>}
+              </template>
+            </div>
             <a href={item.source}>Organizer updates <span aria-hidden="true">↗</span></a>
+            <template data-dialog-actions>
+              {item.signup && <a class="dialog-signup" href={item.signup}>{item.signupLabel ?? 'Registration page'} <span aria-hidden="true">↗</span></a>}
+              {item.signup !== item.source && <a href={item.source}>Organizer details <span aria-hidden="true">↗</span></a>}
+            </template>
           </article>)}
         </div>
         <details class="source-directory">
@@ -250,6 +284,15 @@ const description = 'Find upcoming English speech and debate competitions in Chi
     <footer class="competition-footer">
       <div class="competition-wrap"><a href="/">SpeakKai</a><span>Speech and debate resources for students and families</span></div>
     </footer>
+    <dialog class="event-dialog" id="competition-details" aria-labelledby="competition-dialog-title">
+      <div class="dialog-inner">
+        <form method="dialog"><button type="submit" class="dialog-close" aria-label="Close competition details" autofocus>×</button></form>
+        <div data-dialog-date></div>
+        <h2 id="competition-dialog-title"></h2>
+        <div data-dialog-body></div>
+        <div class="dialog-actions" data-dialog-links></div>
+      </div>
+    </dialog>
     <script>
       const controls = document.querySelector<HTMLElement>('[data-calendar-controls]');
       const selection = document.querySelector<HTMLSelectElement>('#competition-month');
@@ -260,6 +303,46 @@ const description = 'Find upcoming English speech and debate competitions in Chi
       const status = document.querySelector<HTMLElement>('[data-calendar-status]');
       const listJump = document.querySelector<HTMLAnchorElement>('[data-month-list-jump]');
       const panels = [...document.querySelectorAll<HTMLElement>('[data-calendar-month]')];
+
+      const dialog = document.querySelector<HTMLDialogElement>('#competition-details');
+      const dialogTitle = dialog?.querySelector<HTMLHeadingElement>('#competition-dialog-title');
+      const dialogDate = dialog?.querySelector<HTMLElement>('[data-dialog-date]');
+      const dialogBody = dialog?.querySelector<HTMLElement>('[data-dialog-body]');
+      const dialogLinks = dialog?.querySelector<HTMLElement>('[data-dialog-links]');
+
+      if (dialog && dialogTitle && dialogDate && dialogBody && dialogLinks && typeof dialog.showModal === 'function') {
+        let opener: HTMLAnchorElement | undefined;
+        document.addEventListener('click', event => {
+          if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          const trigger = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[data-event-open]') : null;
+          if (!trigger) return;
+          const item = document.getElementById(trigger.hash.slice(1));
+          const content = item?.querySelector<HTMLElement>('[data-dialog-copy]');
+          const title = content?.querySelector('[data-dialog-title]');
+          const actions = item?.querySelector<HTMLTemplateElement>('[data-dialog-actions]');
+          if (!item || !content || !title || !actions) return;
+
+          event.preventDefault();
+          const copy = content.cloneNode(true) as HTMLElement;
+          copy.querySelector('[data-dialog-title]')?.remove();
+          const extras = copy.querySelector<HTMLTemplateElement>('[data-dialog-extras]');
+          if (extras) extras.replaceWith(extras.content.cloneNode(true));
+          const date = item.querySelector('.entry-date')?.cloneNode(true) as HTMLElement | undefined;
+          const dateText = date?.querySelector<HTMLElement>('time');
+          if (dateText?.dataset.fullDate) dateText.textContent = dateText.dataset.fullDate;
+          dialogTitle.textContent = title.textContent ?? '';
+          dialogDate.replaceChildren(...(date ? [date] : []));
+          dialogBody.replaceChildren(copy);
+          dialogLinks.replaceChildren(actions.content.cloneNode(true));
+          opener = trigger;
+          dialog.showModal();
+          dialog.scrollTop = 0;
+        });
+        dialog.addEventListener('click', event => {
+          if (event.target === dialog) dialog.close();
+        });
+        dialog.addEventListener('close', () => opener?.focus());
+      }
 
       if (controls && selection && region && seriesFilter && previous && next && status) {
         const matchesFilters = (item: HTMLElement) =>
