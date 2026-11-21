@@ -15,6 +15,7 @@ export const publicRoutes = [
   "/watch/",
   "/zh/watch/",
   "/resources/",
+  "/ai/",
   "/topic/",
   "/coaching/young-competition-speakers/",
   "/zh/coaching/young-competition-speakers/",

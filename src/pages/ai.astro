@@ -1,0 +1,154 @@
+---
+import { ArrowDown, ArrowUpRight, Gamepad2, Smartphone } from '@lucide/astro';
+import FlagshipLayout from '../layouts/FlagshipLayout.astro';
+import { appCompetitions, gameCompetitions, shanghai2026 } from '../data/developerCompetitions';
+
+const sections = [
+  { id: 'games', title: 'Game development', icon: Gamepad2, entries: gameCompetitions },
+  { id: 'apps', title: 'App development', icon: Smartphone, entries: appCompetitions },
+];
+---
+
+<FlagshipLayout
+  title="Game & App Developer Competitions 2026–2027 | SpeakKai"
+  description="Find game jams and app development competitions for 2026–2027. Compare eligibility, Beijing deadlines, submission requirements and official entry links."
+  current="resources"
+  contactHref="/contact/"
+>
+  <div class="developer-guide">
+    <header class="developer-hero">
+      <div class="guide-wrap hero-layout">
+        <div>
+          <p class="guide-season">2026–2027 Competition Guide</p>
+          <h1>Game &amp; app developer<br class="hero-break" /> competitions</h1>
+          <p class="guide-intro">Find a game jam, build your first app, or enter a student competition. Compare what to make, who can enter, and when to submit.</p>
+        </div>
+        <nav class="track-nav" aria-label="Competition categories">
+          {sections.map(({ id, title, icon: Icon, entries }) => (
+            <a href={`#${id}`} class:list={['track-link', `track-${id}`]}>
+              <Icon size={31} stroke-width={1.7} aria-hidden="true" />
+              <span><strong>{title}</strong><small>{entries.length} events</small></span>
+              <ArrowDown size={20} aria-hidden="true" />
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <div class="guide-wrap">
+      <p class="guide-notes"><span>Times shown in Beijing time (UTC+8)</span><span>Sources checked <time datetime="2026-11-21">Nov 21, 2026</time></span></p>
+      {sections.map(({ id, title, icon: Icon, entries }) => (
+        <section id={id} class:list={['guide-section', `section-${id}`]} aria-labelledby={`${id}-title`}>
+          <h2 id={`${id}-title`}><Icon size={25} stroke-width={1.7} aria-hidden="true" /> {title}</h2>
+          <ul class="competition-list" role="list">
+            {entries.map(entry => (
+              <li>
+                <article class="competition-entry">
+                  <div class="entry-date">
+                    <strong>{entry.date}</strong>
+                    <p>{entry.schedule}</p>
+                  </div>
+                  <div class="entry-content">
+                    <p class="entry-format">{entry.format}</p>
+                    <h3>{entry.title}</h3>
+                    <p>{entry.build}</p>
+                    <p class="entry-who"><strong>Who can enter</strong> {entry.eligibility}</p>
+                    <div class="entry-links">
+                      <a href={entry.link} aria-label={`Organizer site for ${entry.title}`}>Organizer site <ArrowUpRight size={15} aria-hidden="true" /></a>
+                      {entry.rules && <a href={entry.rules.href}>{entry.rules.label} <ArrowUpRight size={15} aria-hidden="true" /></a>}
+                    </div>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+
+      <aside class="past-edition" aria-labelledby="shanghai-edition">
+        <div>
+          <p class="entry-format">{shanghai2026.format}</p>
+          <h2 id="shanghai-edition">{shanghai2026.title}</h2>
+          <p>{shanghai2026.build} {shanghai2026.eligibility}</p>
+        </div>
+        <div>
+          <p><strong>{shanghai2026.schedule}</strong><br />{shanghai2026.date}</p>
+          <a href={shanghai2026.link}>2026 competition notice <ArrowUpRight size={15} aria-hidden="true" /></a>
+        </div>
+      </aside>
+
+      <p class="guide-related"><a href="/competition/">Speech &amp; debate competition calendar <span aria-hidden="true">→</span></a></p>
+    </div>
+  </div>
+</FlagshipLayout>
+
+<style>
+  .developer-guide {
+    --guide-ink: #20243c;
+    --guide-muted: #545970;
+    --guide-rule: #d9dce5;
+    --game-tint: #eeeaff;
+    --app-tint: #eff4d6;
+    background: #f9f9fc;
+    color: var(--guide-ink);
+  }
+
+  .guide-wrap { width: min(1112px, calc(100% - 56px)); margin-inline: auto; }
+  .developer-hero { padding: clamp(44px, 7vw, 91px) 0 clamp(48px, 7vw, 85px); background: #1e1b3c; color: #fff; }
+  .hero-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(242px, 300px); gap: clamp(28px, 5vw, 74px); align-items: end; }
+  .guide-season { margin: 0 0 15px; color: #dcd2ff; font-size: .82rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .developer-hero h1 { margin: 0; color: #fff; font-size: clamp(2.55rem, 5.2vw, 4.9rem); letter-spacing: -.06em; line-height: 1.02; }
+  .guide-intro { max-width: 53ch; margin: 23px 0 0; color: #e8e4f6; font-size: clamp(1rem, 1.5vw, 1.16rem); line-height: 1.6; }
+  .track-nav { display: grid; gap: 11px; }
+  .track-link { display: grid; grid-template-columns: auto 1fr auto; column-gap: 13px; align-items: center; min-height: 78px; padding: 13px 16px; border-radius: 12px; color: #211b3c; text-decoration: none; transition: transform .15s ease; }
+  .track-link:hover { transform: translateY(-2px); }
+  .track-games { background: var(--game-tint); }
+  .track-apps { background: var(--app-tint); }
+  .track-link strong { display: block; line-height: 1.25; }
+  .track-link small { display: block; margin-top: 4px; }
+  .guide-notes { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 18px; padding: 15px 0; margin: 0; border-bottom: 1px solid var(--guide-rule); color: var(--guide-muted); font-size: .87rem; }
+  .guide-section { margin-top: clamp(30px, 5vw, 58px); scroll-margin-top: 6rem; }
+  .guide-section h2 { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; font-size: clamp(1.65rem, 3.2vw, 2.4rem); letter-spacing: -.035em; line-height: 1.2; }
+  .guide-section h2 svg { flex: 0 0 auto; }
+  .competition-list { overflow: hidden; margin: 0; padding: 0; border: 1px solid var(--guide-rule); border-radius: 15px; background: #fff; list-style: none; }
+  .competition-list li + li { border-top: 1px solid var(--guide-rule); }
+  .competition-entry { display: grid; grid-template-columns: minmax(186px, 23%) 1fr; }
+  .entry-date { padding: 25px 21px; background: var(--game-tint); }
+  .section-apps .entry-date { background: var(--app-tint); }
+  .entry-date strong { display: block; font-size: 1.01rem; font-variant-numeric: tabular-nums; }
+  .entry-date p { margin: 6px 0 0; color: var(--guide-muted); font-size: .86rem; line-height: 1.45; }
+  .entry-content { padding: 22px clamp(21px, 3vw, 38px); }
+  .entry-format { margin: 0; color: var(--guide-muted); font-size: .83rem; font-weight: 700; }
+  .entry-content h3 { margin: 3px 0 6px; font-size: clamp(1.15rem, 2.35vw, 1.53rem); letter-spacing: -.023em; line-height: 1.28; }
+  .entry-content > p:not(.entry-format) { margin: 0 0 7px; line-height: 1.54; }
+  .entry-who { color: var(--guide-muted); font-size: .92rem; }
+  .entry-who strong { margin-right: .35em; color: var(--guide-ink); }
+  .entry-links { display: flex; flex-wrap: wrap; gap: 0 19px; margin-top: 9px; }
+  .entry-links a, .past-edition a, .guide-related a { display: inline-flex; align-items: center; min-height: 34px; gap: 4px; color: #4a3189; font-size: .9rem; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+  .developer-guide a:focus-visible { outline: 3px solid #8a55df; outline-offset: 4px; }
+  .track-link:focus-visible { outline-color: #eaf2c8; }
+  .past-edition { display: grid; grid-template-columns: 1fr auto; gap: 12px 32px; align-items: center; padding: 22px clamp(20px, 3vw, 30px); margin-top: 22px; border: 1px solid var(--guide-rule); border-radius: 14px; background: #f1f2f7; }
+  .past-edition h2 { margin: 4px 0; font-size: 1.2rem; line-height: 1.3; }
+  .past-edition p:not(.entry-format) { margin: 6px 0 0; color: var(--guide-muted); font-size: .89rem; line-height: 1.55; }
+  .guide-related { margin: 0; padding: 19px 0 40px; }
+
+  @media (max-width: 800px) {
+    .guide-wrap { width: calc(100% - 36px); }
+    .hero-layout { grid-template-columns: 1fr; }
+    .hero-break { display: none; }
+    .track-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 600px; }
+  }
+
+  @media (max-width: 560px) {
+    .track-nav { grid-template-columns: 1fr; }
+    .track-link { min-height: 62px; }
+    .competition-entry, .past-edition { grid-template-columns: 1fr; }
+    .entry-date { padding: 13px 17px; }
+    .entry-date p { margin-top: 3px; }
+    .entry-content { padding: 15px 17px 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .track-link { transition: none; }
+  }
+</style>
