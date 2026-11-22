@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-22T09:02:03.842635+00:00",
+  "updatedAt": "2026-11-22T10:57:58.826608+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -3509,6 +3509,55 @@
             "en": "• If possible, find a debate on a WSDA channel or elsewhere and watch for examples of final focus. Write down which side you think won, why you think they won, and what each side did well or poorly. Watching other people debate can help you learn skills for your own debates and see more clearly what each side did.",
             "zh": "• 如果可以，在 WSDA 频道或其他地方找一场辩论观看，留意最终总结陈词的例子。写下你认为哪一方获胜、为什么获胜，以及双方各有哪些地方做得好或做得不够好。观看别人的辩论可以帮助你学习能用在自己辩论中的技巧，也能让你更清楚地看出双方各自做了什么。"
           }
+        },
+        {
+          "id": "sun-1500-2026-11-22",
+          "date": "2026-11-22",
+          "time": "15:00–16:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "leo",
+              "name": "Leo",
+              "en": "Pro final focus · 12:13 in the recording (approx.)\n\n• You gave a clear reason to vote Pro and returned to your team’s best learning example. You also picked up on Con’s repeated emphasis on cyberbullying.\n\n• Turn that observation into an answer. Bring back Max’s basket, explain which risks it reduces, and tell the judge what important benefit remains under Pro’s policy. Making that comparison is the job of final focus.",
+              "zh": "正方总结陈词 · 12:13（录像中的大致开始位置）\n\n• 你清楚地说明了评委为什么可以投正方一票，也回到了你方最有力的学习例子。你还注意到反方多次强调网络欺凌。\n\n• 把这个观察变成一个回应。重新提到 Max 的收手机方案，说明它能减少哪些风险，再告诉评委，在正方的规则下还保留了什么重要的好处。做出这样的比较，正是总结陈词要做的事。"
+            },
+            {
+              "id": "max",
+              "name": "Max",
+              "en": "Pro rebuttal · 7:15 in the recording (approx.)\n\n• You responded to the distraction argument with a specific solution: teachers collect phones in a basket. That gave the judge a policy they could picture, and it gave teachers a practical way to reduce distraction during lessons.\n\n• Finish explaining the policy. When can students take out their devices for classwork? What use is allowed at recess? How would the school handle social media or messaging during that time?",
+              "zh": "正方反驳 · 7:15（录像中的大致开始位置）\n\n• 你用一个具体的办法回应了设备让人分心的问题：老师用篮子统一收手机。这让评委能想象你方的方案怎么执行，也给了老师一个减少课堂分心的实际办法。\n\n• 把规则讲完整。学生什么时候可以为了课堂任务拿出设备？课间允许怎么用？学校在这段时间会怎样管理社交媒体或即时通讯软件的使用？"
+            },
+            {
+              "id": "celia",
+              "name": "Celia",
+              "en": "Con rebuttal · 9:13 in the recording (approx.)\n\n• Your staff-phone answer was especially effective. You gave the judge another way to get the safety benefit James cared about: school staff already have phones and can make emergency calls to parents.\n\n• Be equally precise on cyberbullying. Explain how access to messaging or social apps creates the risk, and account for teacher-directed activities like Kahoot.",
+              "zh": "反方反驳 · 9:13（录像中的大致开始位置）\n\n• 你用学校工作人员的手机回应紧急情况，这一点很有效。你向评委说明了另一种实现 James 所强调的安全好处的办法：学校工作人员已经有手机，紧急时可以打电话联系家长。\n\n• 讲网络欺凌时，也要同样具体。解释为什么能使用即时通讯或社交软件会带来这种风险，也要说明怎样看待 Kahoot 这类由老师安排的活动。"
+            },
+            {
+              "id": "august",
+              "name": "August",
+              "en": "Con opening · 3:05 in the recording (approx.)\n\n• Your distraction argument was the strongest part of your opening. You cited OECD PISA and explained how a distracted student can also cost the teacher class time.\n\n• Show what unequal access would look like inside one classroom. What happens when a task relies on students bringing their own devices and some students lack one? That makes the consequence clearer than a global statistic about school electricity.",
+              "zh": "反方开篇陈词 · 3:05（录像中的大致开始位置）\n\n• 关于设备让人分心的论点，是你开篇陈词中最有力的一部分。你引用了 OECD 的 PISA，并解释了一名学生分心时，也可能占用老师的课堂时间。\n\n• 把设备获取不平等的问题放到一个具体的教室里讲。如果一项课堂任务要求学生自带设备，而有些学生没有设备，会发生什么？用这样的情景来说明后果，比引用全球学校供电情况的统计数据更清楚。"
+            },
+            {
+              "id": "eva",
+              "name": "Eva",
+              "en": "Con final focus · 14:13 in the recording (approx.)\n\n• You brought back Celia’s emergency answer and gave concrete examples of distraction, including notifications and funny videos. Your close covered several of the round’s main clashes.\n\n• Address the basket directly. Explain which problems it solves during lessons and which risks remain when students get their phones back. Then tell the judge which remaining risk matters most to the decision.",
+              "zh": "反方总结陈词 · 14:13（录像中的大致开始位置）\n\n• 你在总结时重新提到了 Celia 对紧急情况的回应，也具体举出了让学生分心的例子，比如手机通知和搞笑视频。你的结尾回应了本轮的几个主要交锋。\n\n• 直接回应收手机的方案。说明它能解决哪些课堂问题，以及学生拿回手机后还会有哪些风险。然后告诉评委，这些剩下的风险中，哪一个对判票最重要。"
+            },
+            {
+              "id": "james",
+              "name": "James",
+              "en": "Pro opening · 0:00 in the recording (approx.)\n\n• You gave the judge three clear reasons to follow: safety, entertainment, and learning. Your Friday Kahoot example was concrete and easy to picture. It showed a real learning benefit in an activity the teacher had already approved.\n\n• Define your rule up front. Say when students can bring a device, when they can take it out, and who decides. Your safety argument gave a clear reason for students to carry a phone: they could contact their parents quickly. Give one scenario where a student having direct access to their own phone would make a meaningful difference even if school staff already have phones and can call parents.",
+              "zh": "正方开篇陈词 · 0:00（录像中的大致开始位置）\n\n• 你给了评委三个清楚、容易跟上的理由：安全、娱乐和学习。你提到周五玩 Kahoot 的例子很具体，让人容易想象当时的情景，也说明了在老师已经批准的活动中，设备确实可以帮助学习。\n\n• 开头就说明你方的规则。学生什么时候可以带设备，什么时候可以拿出来，谁来决定？你的安全论点清楚说明了学生为什么想带手机：他们可以很快联系家长。再举一个具体情景，说明即使学校工作人员已经有手机、也可以打电话给家长，学生能直接使用自己的手机仍会带来实质性的帮助。"
+            }
+          ],
+          "classContent": {
+            "en": "The class held a practice debate. As the students framed it, the round was mainly about access to personal phones and tablets at school. The main exchanges covered contacting parents in emergencies, distraction in lessons, learning activities, unequal access, cyberbullying, and what would be allowed at recess. We considered whether students’ own phones added an emergency benefit when school staff could already call parents. We also considered what a phone basket would solve during lessons, what wider device access would add beyond teacher-approved activities such as Friday’s Kahoot, and how the school would manage the risks once students got their devices back.\n\nThe times are approximate starting points in the recording, checked against the transcript and video.",
+            "zh": "本节课进行了一轮辩论练习。按照学生在辩论中界定的范围，这轮主要讨论学生在学校使用个人手机和平板电脑的问题。交锋集中在紧急情况下联系家长、课堂分心、学习活动、设备获取不平等、网络欺凌，以及课间可以怎样使用设备。我们讨论了在学校工作人员已经可以打电话联系家长的情况下，学生自己的手机在紧急时还能带来什么额外好处。我们也讨论了用篮子统一收手机可以解决哪些课堂问题，除了周五的 Kahoot 这类经老师批准的活动，更广泛地使用个人设备还有什么好处，以及学生拿回设备后，学校可以怎样应对相关风险。\n\n以下时间是各段发言在录像中的大致开始位置，已对照转写和视频核查。"
+          },
+          "homework": null
         }
       ]
     },

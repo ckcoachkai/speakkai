@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-22T09:02:03.842635+00:00",
+  "updatedAt": "2026-11-22T10:57:58.826608+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2889,6 +2889,41 @@
               "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-15&student=james"
             }
           ]
+        },
+        {
+          "id": "sun-1500-2026-11-22",
+          "date": "2026-11-22",
+          "time": "15:00–16:30",
+          "students": [
+            {
+              "name": "Leo",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-22&student=leo"
+            },
+            {
+              "name": "Max",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-22&student=max"
+            },
+            {
+              "name": "Celia",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-22&student=celia"
+            },
+            {
+              "name": "August",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-22&student=august"
+            },
+            {
+              "name": "Eva",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-22&student=eva"
+            },
+            {
+              "name": "James",
+              "feedbackUrl": "/fb/?class=sun-1500&date=2026-11-22&student=james"
+            }
+          ],
+          "classContent": [
+            "The class held a practice debate. As the students framed it, the round was mainly about access to personal phones and tablets at school. The main exchanges covered contacting parents in emergencies, distraction in lessons, learning activities, unequal access, cyberbullying, and what would be allowed at recess. We considered whether students’ own phones added an emergency benefit when school staff could already call parents. We also considered what a phone basket would solve during lessons, what wider device access would add beyond teacher-approved activities such as Friday’s Kahoot, and how the school would manage the risks once students got their devices back.\n\nThe times are approximate starting points in the recording, checked against the transcript and video."
+          ],
+          "homework": null
         }
       ]
     },
