@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-21T11:03:54.239297+00:00",
+  "updatedAt": "2026-11-22T09:02:03.842635+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -270,6 +270,23 @@
               "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-14&student=kailyn"
             }
           ]
+        },
+        {
+          "id": "sat-original-oratory-2026-11-21",
+          "date": "2026-11-21",
+          "time": "13:00–15:00",
+          "students": [],
+          "classContent": [
+            "• We took turns giving impromptu speeches and worked on how to develop prepared competition speeches."
+          ],
+          "homework": {
+            "title": "Revise your speech script · 修改演讲稿",
+            "steps": [
+              "• Edit your speech and share your updated script with Coach Kai as soon as you can.",
+              "• 修改你的演讲稿，并尽快把修改后的稿子发给 Kai 教练。"
+            ],
+            "prepareFor": "Practising your revised speech · 练习修改后的演讲"
+          }
         }
       ]
     },
@@ -515,9 +532,16 @@
           "date": "2026-11-21",
           "time": "15:00–16:30",
           "classContent": [
-            "• We took turns giving impromptu speeches. We also have separate notes for each student on how to develop their prepared-speech topic."
+            "• We took turns giving impromptu speeches and worked on how to develop prepared competition speeches."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Revise your speech script · 修改演讲稿",
+            "steps": [
+              "• Edit your speech and share your updated script with Coach Kai as soon as you can.",
+              "• 修改你的演讲稿，并尽快把修改后的稿子发给 Kai 教练。"
+            ],
+            "prepareFor": "Practising your revised speech · 练习修改后的演讲"
+          },
           "students": [
             {
               "name": "Neil",
@@ -2196,6 +2220,40 @@
               "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-15&student=ethan"
             }
           ]
+        },
+        {
+          "id": "sun-1130-2026-11-22",
+          "date": "2026-11-22",
+          "time": "11:30–13:00",
+          "classContent": [
+            "• We reviewed the homework on historical figures and talked about how to use an example of a historical figure in a speech. If possible, memorize some of the material so you can use it without looking at the page.\n\n• We focused on impromptu speaking. Students practiced responding to several sayings and to picture prompts. They circled the sentences they wanted to use and practiced putting them into the speaking structure we worked on. The goal was to get comfortable using the structure and to keep speaking for 90 seconds."
+          ],
+          "students": [
+            {
+              "name": "Berlingo",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-22&student=berlingo"
+            },
+            {
+              "name": "Yiyi",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-22&student=yiyi"
+            },
+            {
+              "name": "Charles",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-22&student=charles"
+            },
+            {
+              "name": "Ethan",
+              "feedbackUrl": "/fb/?class=sun-1130&date=2026-11-22&student=ethan"
+            }
+          ],
+          "homework": {
+            "title": "Impromptu speaking worksheet · 即兴演讲练习单",
+            "steps": [
+              "Use the worksheet provided to practice each of these eight sentence starters at least five times.\n\nI started to wonder\nI realized\nI discovered\nI really wanted to_________________________\nI think it’s important to_________________________\nDid you know____________________________?\nLet me tell you one fact about me________________\nI want to challenge you to _____________________",
+              "用老师发的练习单练习下面八个英文句型，每个至少练习五遍。\n\nI started to wonder\nI realized\nI discovered\nI really wanted to_________________________\nI think it’s important to_________________________\nDid you know____________________________?\nLet me tell you one fact about me________________\nI want to challenge you to _____________________"
+            ],
+            "prepareFor": "Impromptu speaking practice · 即兴演讲练习"
+          }
         }
       ]
     },
@@ -2497,6 +2555,44 @@
               "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-15&student=april"
             }
           ]
+        },
+        {
+          "id": "sun-1330-2026-11-22",
+          "date": "2026-11-22",
+          "time": "13:30–15:00",
+          "classContent": [
+            "We focused on the preparation period for impromptu speeches. The longer you spend preparing, the less time you have to speak. If you speak for less time, the judges might deduct points, depending on the quality of what you said. I gave the students a slightly more difficult question and several ways to understand it, organize their ideas, and structure their answer.\n\nEven in an impromptu speech, you have time to go deeper. Explain the logic behind your answer. Think about a problem in society. What do people keep doing that you think is wrong, and what needs to change? Use the time to expand your answer."
+          ],
+          "students": [
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-22&student=arthur"
+            },
+            {
+              "name": "Audrey",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-22&student=audrey"
+            },
+            {
+              "name": "Ning",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-22&student=ning"
+            },
+            {
+              "name": "Teresa",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-22&student=teresa"
+            },
+            {
+              "name": "April",
+              "feedbackUrl": "/fb/?class=sun-1330&date=2026-11-22&student=april"
+            }
+          ],
+          "homework": {
+            "title": "Impromptu speaking worksheet · 即兴演讲练习单",
+            "steps": [
+              "Complete the worksheet you brought home. Work through all five questions.\n\n1. What does the question mean?\n2. Break it into pieces. Which parts do you need to address?\n3. What example or pop culture reference can you use to connect with the audience?\n4. What message can you give that includes a call to action the audience can actually follow?\n5. What might the opposition or critics say? How can you anticipate their point and rebut it?",
+              "完成带回家的练习单，回答下面五个问题。\n\n1. 这个问题是什么意思？\n2. 把问题拆开来看。你觉得需要回答哪几个部分？\n3. 你可以用什么例子或流行文化中的素材来拉近与听众的距离？\n4. 你想传达什么信息？可以提出什么听众能够付诸行动的倡议？\n5. 反方或持批评意见的人可能会怎么说？你可以怎样提前考虑并反驳他们的观点？"
+            ],
+            "prepareFor": "Impromptu speaking practice · 即兴演讲练习"
+          }
         }
       ]
     },
@@ -4177,6 +4273,41 @@
               "feedbackUrl": "/fb/?class=sun-debate&date=2026-11-15&student=celia"
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "sat-evening",
+      "sessions": [
+        {
+          "id": "sat-evening-2026-11-21",
+          "date": "2026-11-21",
+          "time": "19:30–21:00",
+          "students": [
+            {
+              "name": "Oscar",
+              "feedbackUrl": "/fb/?class=sat-evening&date=2026-11-21&student=oscar"
+            },
+            {
+              "name": "Rayen",
+              "feedbackUrl": "/fb/?class=sat-evening&date=2026-11-21&student=rayen"
+            },
+            {
+              "name": "Sascha",
+              "feedbackUrl": "/fb/?class=sat-evening&date=2026-11-21&student=sascha"
+            }
+          ],
+          "classContent": [
+            "The students first practiced introducing themselves on stage, then worked on their speeches. The group had some difficulty expanding answers on stage. A memorized speech might help, and the students still need to get more comfortable speaking in front of other people. Kai asked whether the competition would be online or in person and explained that speaking to a camera online may feel easier. Speaking in person can feel like going downstairs and answering the same questions in front of a crowd of strangers. If speaking in front of classmates or friends is already difficult, it can be harder in front of strangers."
+          ],
+          "homework": {
+            "title": "Revise your speech script · 修改演讲稿",
+            "steps": [
+              "• Edit your speech and share your updated script with Coach Kai as soon as you can.\n\n• Coach Kai will put together updated scripts for you over the next two days so you can start practising.",
+              "• 修改你的演讲稿，并尽快把修改后的稿子发给 Kai 教练。\n\n• Kai 教练会在接下来的两天内为大家准备更新后的讲稿，这样大家就可以开始练习。"
+            ],
+            "prepareFor": "Practising your revised speech · 练习修改后的演讲"
+          }
         }
       ]
     }

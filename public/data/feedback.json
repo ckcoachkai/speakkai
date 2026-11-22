@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-21T11:03:54.239297+00:00",
+  "updatedAt": "2026-11-22T09:02:03.842635+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -325,6 +325,21 @@
               "zh": "• Kailyn 上台发言时，我能感觉到她比以前自信了许多。她演讲时有时会看向听众，也在进行批判性思考。我希望她有时能把回答再展开一点，加入更具体的细节会更好。"
             }
           ]
+        },
+        {
+          "id": "sat-original-oratory-2026-11-21",
+          "date": "2026-11-21",
+          "time": "13:00–15:00",
+          "status": "held",
+          "students": [],
+          "classContent": {
+            "en": "• We took turns giving impromptu speeches and worked on how to develop prepared competition speeches.",
+            "zh": "• 我们轮流做即兴演讲，也练习了如何进一步完善备稿比赛演讲。"
+          },
+          "homework": {
+            "en": "• Edit your speech and share your updated script with Coach Kai as soon as you can.",
+            "zh": "• 修改你的演讲稿，并尽快把修改后的稿子发给 Kai 教练。"
+          }
         }
       ]
     },
@@ -601,10 +616,13 @@
           "time": "15:00–16:30",
           "status": "held",
           "classContent": {
-            "en": "• We took turns giving impromptu speeches. We also have separate notes for each student on how to develop their prepared-speech topic.",
-            "zh": "• 学生轮流做了即兴演讲。另外，每位学生也有一份单独的备稿演讲指导，说明可以怎样展开自己的主题。"
+            "en": "• We took turns giving impromptu speeches and worked on how to develop prepared competition speeches.",
+            "zh": "• 我们轮流做即兴演讲，也练习了如何进一步完善备稿比赛演讲。"
           },
-          "homework": null,
+          "homework": {
+            "en": "• Edit your speech and share your updated script with Coach Kai as soon as you can.",
+            "zh": "• 修改你的演讲稿，并尽快把修改后的稿子发给 Kai 教练。"
+          },
           "students": [
             {
               "id": "neil",
@@ -2669,6 +2687,46 @@
               "zh": "• Ethan 第一次发言时跑来跑去、转来转去，没有控制好自己的动作。\n\n• 第二次尝试时，他的表现仍然比较躁动，没有控制好自己的表达。\n\n• 第三次尝试时，他用了很尖、很高的声音，并继续在教室里走动。\n\n• 我觉得他没有认真对待这几次尝试，也占用了大家的练习时间。他需要认真对待发言练习，注意控制自己的动作和声音。"
             }
           ]
+        },
+        {
+          "id": "sun-1130-2026-11-22",
+          "date": "2026-11-22",
+          "time": "11:30–13:00",
+          "status": "held",
+          "students": [
+            {
+              "id": "berlingo",
+              "name": "Berlingo",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "yiyi",
+              "name": "Yiyi",
+              "en": "• Yiyi did a very good job remembering what she wanted to say. Because she could recall it without looking at the paper, she’s more likely to be able to use that historical example in a future speech.\n\n• My next challenge for Yiyi is to work on her delivery. Some parts sounded like she was reciting what she had memorized. Speaking without a script takes both recall and presentation. Try varying your voice and keeping your hands out in front of you as you speak. That can help you come across as more confident, since your delivery can otherwise seem a little shy.",
+              "zh": "• Yiyi 很好地记住了自己想说的内容。她不用看稿就能回想起来，以后也更有可能把这个历史人物的例子用到自己的演讲里。\n\n• 我想给 Yiyi 的下一个挑战是练习怎样把记住的内容讲出来。有些地方听起来有点像在背稿。脱稿演讲既要记住内容，也要注意怎么呈现。说话时，可以试着让声音有些变化，把双手自然地放在身前。这样能让你显得更自信一些，否则表达时可能会显得有点害羞。"
+            },
+            {
+              "id": "charles",
+              "name": "Charles",
+              "en": "• I felt that Charles recalled the material better. He stood still while speaking, which was good. He held his book high enough to cover his face, so we couldn’t see it. Next time, keep the book lower so we can see your face.\n\n• I liked that he explained why the people he chose were important in history and how they helped make a difference in the world. When you give a speech in the future, look for a chance to use one of those examples.",
+              "zh": "• 我觉得 Charles 这次对资料记得更牢了。他发言时站得很稳，没有走来走去，这一点很好。他把书举得太高，挡住了脸，我们看不到。下次记得把书放低一点，让大家能看到你的脸。\n\n• 他也讲清楚了自己选的这些人物为什么在历史上很重要，以及他们怎样给世界带来了积极的影响，这一点很好。以后演讲时，可以想想有没有机会用上其中一个例子。"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan",
+              "en": "• Ethan spoke first. The group was a little rowdy at the beginning, and Ethan settled down and spoke properly on his second attempt. When you’re reading, keep your book lower and speak louder into the camera.\n\n• The point of the homework was to see how you could refer to a historical figure in one of your speeches. Even though you read the material aloud, I don’t think you’ll remember it easily without looking at the page. If you can, try to memorize a few details so you can actually use them in a speech.",
+              "zh": "• Ethan 第一个发言。刚开始大家有点闹，Ethan 第二次尝试时静下来了，也认真讲了起来。朗读时，记得把书放低一点，对着镜头说得更大声一些。\n\n• 这次作业是想让你看看怎样在自己的演讲中引用一位历史人物。虽然你把资料读了出来，但我觉得离开纸上的内容，你可能不太容易记住。如果可以，试着记住其中几个细节，这样就能真正把它们用到演讲里。"
+            }
+          ],
+          "classContent": {
+            "en": "• We reviewed the homework on historical figures and talked about how to use an example of a historical figure in a speech. If possible, memorize some of the material so you can use it without looking at the page.\n\n• We focused on impromptu speaking. Students practiced responding to several sayings and to picture prompts. They circled the sentences they wanted to use and practiced putting them into the speaking structure we worked on. The goal was to get comfortable using the structure and to keep speaking for 90 seconds.",
+            "zh": "• 我们回顾了历史人物的作业，并讨论了怎样在演讲中用上一位历史人物的例子。如果可以，试着记住其中一些内容，这样不用看资料也能用在演讲里。\n\n• 这节课重点练习了即兴演讲。学生练习了如何回应几句不同的格言，也练习了看图即兴表达。他们圈出了自己想用的句子，并练习把这些句子放进课堂上学习的表达结构里。目标是熟悉这个结构，并练习持续讲满 90 秒。"
+          },
+          "homework": {
+            "en": "Use the worksheet provided to practice each of these eight sentence starters at least five times.\n\nI started to wonder\nI realized\nI discovered\nI really wanted to_________________________\nI think it’s important to_________________________\nDid you know____________________________?\nLet me tell you one fact about me________________\nI want to challenge you to _____________________",
+            "zh": "用老师发的练习单练习下面八个英文句型，每个至少练习五遍。\n\nI started to wonder\nI realized\nI discovered\nI really wanted to_________________________\nI think it’s important to_________________________\nDid you know____________________________?\nLet me tell you one fact about me________________\nI want to challenge you to _____________________"
+          }
         }
       ]
     },
@@ -3034,6 +3092,52 @@
               "zh": "• April 的回答本身没有问题，不过她有一点犹豫，进一步展开回答时也有些困难。把回答再展开一些，是她可以继续改进的地方。\n\n• 全班共同需要注意的是，更直接地与听众或评委建立联系。很多回答更多围绕“我”，与听众建立联系的表达还不够。可以尝试用“亲爱的朋友们”或“你有没有……？”直接对听众说话，并在适合的地方使用“我们”“我们大家”“在我们的社会中”等表达。要想到正在听你讲话的人，让他们能在你说的内容中看到与自己有关的部分。"
             }
           ]
+        },
+        {
+          "id": "sun-1330-2026-11-22",
+          "date": "2026-11-22",
+          "time": "13:30–15:00",
+          "status": "held",
+          "students": [
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "audrey",
+              "name": "Audrey",
+              "en": "• Audrey seemed a little tired today. A bit more sleep might help. Overall, I thought her answer was okay.\n\n• Use my follow-up questions to think through your ideas and organize your response. When you speak, answer the main prompt in an order that makes sense for your ideas. You don’t need to answer the preparation questions one by one.\n\n• Audrey spoke for about two minutes, and length was still an issue in the later practice. If possible, aim for three to four minutes by developing your ideas and sharing more details.",
+              "zh": "• Audrey 今天看起来有点累。多睡一点可能会有帮助。整体来说，我觉得她的回答还可以。\n\n• 可以用我问的几个问题来梳理思路，想清楚怎么组织回答。正式开口时，围绕主要题目，按照自己的思路来讲。准备时的问题不用逐一回答。\n\n• Audrey 讲了大约 2 分钟，后面的练习中发言也偏短。如果可以，试着讲到 3 到 4 分钟，把想法展开一些，多分享些细节。"
+            },
+            {
+              "id": "ning",
+              "name": "Ning",
+              "en": "• Ning spoke for much longer in this practice. Her response was well structured, and the logic was clear.",
+              "zh": "• Ning 这次讲了更长时间。她的回答结构清楚，逻辑也很好。"
+            },
+            {
+              "id": "teresa",
+              "name": "Teresa",
+              "en": "• Teresa spoke first and finished in two minutes in the earlier round. The goal was three to five minutes. I found parts of her speech a little confusing. She referred to the trampoline several times, and some of the reasoning was hard to follow. Make the connection between the trampoline example and your main point clearer.\n\n• In the later round, Teresa spoke at much greater length. I felt some parts were repetitive, and at times it sounded like she was stretching the speech to fill time. She was expressing her ideas, but it took a long time to get through each point. For more impact, state your point, give supporting evidence or an example, explain why it matters, and then move on to the next point.",
+              "zh": "• Teresa 在前一轮第一个发言，讲了 2 分钟，目标是 3 到 5 分钟。我觉得她演讲里有些地方不太好懂。她几次提到蹦床，其中一些推理不太容易跟上。可以把蹦床这个例子和主要观点之间的联系讲得更清楚。\n\n• 后一轮 Teresa 讲了更长时间。我觉得有些地方有点重复，有时听起来像是为了讲久一点而把内容拉长。她有自己的想法，但每个观点都花了较长时间才讲清楚。想让表达更有分量，可以先说观点，再给证据或举例，然后解释为什么这个观点重要，接着进入下一点。"
+            },
+            {
+              "id": "april",
+              "name": "April",
+              "en": "• April spoke for one minute, which was short of the three-to-five-minute goal. Slow down and give yourself more to say by adding specific details, developing your ideas further, or including a personal story.",
+              "zh": "• April 讲了 1 分钟，离 3 到 5 分钟的目标还有一段距离。可以放慢语速，多加一些具体细节，把自己的想法展开，或者加入一个亲身经历的故事，让内容更充实。"
+            }
+          ],
+          "classContent": {
+            "en": "We focused on the preparation period for impromptu speeches. The longer you spend preparing, the less time you have to speak. If you speak for less time, the judges might deduct points, depending on the quality of what you said. I gave the students a slightly more difficult question and several ways to understand it, organize their ideas, and structure their answer.\n\nEven in an impromptu speech, you have time to go deeper. Explain the logic behind your answer. Think about a problem in society. What do people keep doing that you think is wrong, and what needs to change? Use the time to expand your answer.",
+            "zh": "这节课重点练习了即兴演讲的准备环节。准备得越久，留给正式发言的时间就越少。如果发言时间比较短，评委可能会扣分，具体还要看发言内容的质量。我给了学生一个稍难一点的问题，并提供了几种理解题目、整理想法和组织回答的方法。\n\n即使是即兴演讲，也有时间把问题讲深一点。把回答背后的道理说清楚。想一想社会上的一个问题：人们反复在做哪些你认为不对的事？哪些地方需要改变？利用这段时间把回答展开。"
+          },
+          "homework": {
+            "en": "Complete the worksheet you brought home. Work through all five questions.\n\n1. What does the question mean?\n2. Break it into pieces. Which parts do you need to address?\n3. What example or pop culture reference can you use to connect with the audience?\n4. What message can you give that includes a call to action the audience can actually follow?\n5. What might the opposition or critics say? How can you anticipate their point and rebut it?",
+            "zh": "完成带回家的练习单，回答下面五个问题。\n\n1. 这个问题是什么意思？\n2. 把问题拆开来看。你觉得需要回答哪几个部分？\n3. 你可以用什么例子或流行文化中的素材来拉近与听众的距离？\n4. 你想传达什么信息？可以提出什么听众能够付诸行动的倡议？\n5. 反方或持批评意见的人可能会怎么说？你可以怎样提前考虑并反驳他们的观点？"
+          }
         }
       ]
     },
@@ -5063,6 +5167,49 @@
           "homework": {
             "en": "• Practise cross-examination. If you have a chance to watch other WSDA competitions on their channels, practise writing down questions you could ask.",
             "zh": "• 练习盘问。如果有机会在 WSDA 的频道上观看其他比赛，可以练习写下你可以提出的问题。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sat-evening",
+      "label": {
+        "en": "Saturday · 19:30–21:00",
+        "zh": "周六 · 19:30–21:00"
+      },
+      "sessions": [
+        {
+          "id": "sat-evening-2026-11-21",
+          "date": "2026-11-21",
+          "time": "19:30–21:00",
+          "status": "held",
+          "students": [
+            {
+              "id": "oscar",
+              "name": "Oscar",
+              "en": "• Oscar went first in the self-introduction practice and spoke on stage for one minute. He opened with “Hello, I’m Oscar” and shared a few details about himself, including that he likes playing video games. That was a good detail to include. He spoke loudly, used some body language, and liked to clap while speaking. He sometimes got stuck on what to say next. He can expand on the details he has already shared and, if possible, add a few more things about himself.\n\n• Oscar spoke for 2 minutes and 7 seconds in the later practice. Overall, he did well, with clear pronunciation and articulation. He mostly read the script, with few pauses and little emotion. His main focus is delivery. More pauses, hand gestures, and variety in his voice can help him express what he means. We’ll probably need to cut about 10–20% of the script, and there may be a few places where we can polish the wording.",
+              "zh": "• Oscar 在自我介绍练习中第一个上台，讲了 1 分钟。他用“Hello, I’m Oscar”开场，介绍了自己的一些情况，包括他喜欢玩电子游戏。这个细节加得很好。他说话声音响亮，用了一些肢体语言，也喜欢边说边拍手。有时他会卡住，不知道接下来该说什么。他可以把已经提到的内容讲得更具体，如果可以，再多介绍几件关于自己的事。\n\n• 在后一次练习中，Oscar 讲了 2 分 7 秒。整体表现不错，发音和咬字都很清楚。他主要是照着讲稿念，停顿较少，表达出来的情感也不多。接下来主要练习演讲的呈现。多加一些停顿和手势，让声音更有变化，可以帮助他表达自己的意思。讲稿可能还需要删减大约 10–20%，有些地方的措辞也可以稍微润色。"
+            },
+            {
+              "id": "rayen",
+              "name": "Rayen",
+              "en": "• Rayen went second in the self-introduction practice and spoke for 1 minute and 17 seconds. I gave her a couple of directions she could take to expand her answer.\n\n• In the later speech practice, Rayen needed to slow down, add pauses, and work on pronunciation and articulation. She occasionally mispronounced a word. Speaking more slowly, articulating clearly, and pausing between ideas will make her speech easier to follow. She may need more content, probably at least 70 more words. For the 21st Century Cup and similar public speaking competitions in China, I advised her to pay particular attention to vocabulary, grammar, pronunciation, and accurate word choice.",
+              "zh": "• Rayen 在自我介绍练习中第二个上台，讲了 1 分 17 秒。我给了她几个可以继续展开回答的方向。\n\n• 在后一次演讲练习中，Rayen 需要放慢语速，增加停顿，并练习发音和咬字。她偶尔会把个别单词读错。说慢一点、把字音说清楚、在讲完一个意思后稍作停顿，都能让听众更容易跟上。她的讲稿可能还需要补充内容，可能至少要再加 70 个英文单词。我建议她在准备“21 世纪杯”和国内类似的演讲比赛时，特别留意词汇运用、语法、发音和用词的准确性。"
+            },
+            {
+              "id": "sascha",
+              "name": "Sascha",
+              "en": "• Sascha went last in the first self-introduction practice and spoke for about 1 minute and 48 seconds. She seemed a little nervous and ran back to her seat when her name was called. Once she started speaking, she kept going and developed her answers in more detail, showing persistence.\n\n• Sascha went first in the later practice and spoke for three minutes. I estimated that her script was at least 300 words. The main thing to work on is length. My advice was to cut at least 100 words to bring the speaking time down.",
+              "zh": "• Sascha 在第一次自我介绍练习中最后一个发言，讲了大约 1 分 48 秒。听到自己的名字时，她似乎有点紧张，跑回了座位。开始说之后，她坚持讲了下去，也把自己的回答展开得更具体。\n\n• Sascha 在后一次练习中第一个发言，讲了 3 分钟。我估计她的讲稿至少有 300 个英文单词。目前最需要调整的是篇幅。我建议她至少删减 100 个英文单词，把演讲时间缩短。"
+            }
+          ],
+          "classContent": {
+            "en": "The students first practiced introducing themselves on stage, then worked on their speeches. The group had some difficulty expanding answers on stage. A memorized speech might help, and the students still need to get more comfortable speaking in front of other people. Kai asked whether the competition would be online or in person and explained that speaking to a camera online may feel easier. Speaking in person can feel like going downstairs and answering the same questions in front of a crowd of strangers. If speaking in front of classmates or friends is already difficult, it can be harder in front of strangers.",
+            "zh": "学生先上台练习自我介绍，之后又练习了自己的演讲。大家上台后都有些难以展开回答。提前背熟一篇演讲稿可能会有帮助，同时也需要逐渐适应在别人面前开口。Kai 问大家比赛是线上还是线下，并解释说，线上面对镜头讲话可能容易一些。线下则像是走到楼下，在一群陌生人面前回答同样的问题。如果在同学或朋友面前开口已经有些困难，在陌生人面前可能会更难。"
+          },
+          "homework": {
+            "en": "• Edit your speech and share your updated script with Coach Kai as soon as you can.\n\n• Coach Kai will put together updated scripts for you over the next two days so you can start practising.",
+            "zh": "• 修改你的演讲稿，并尽快把修改后的稿子发给 Kai 教练。\n\n• Kai 教练会在接下来的两天内为大家准备更新后的讲稿，这样大家就可以开始练习。"
           }
         }
       ]
