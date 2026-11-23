@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-23T06:46:49.428364+00:00",
+  "updatedAt": "2026-11-23T09:38:07.176678+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -283,6 +283,10 @@
             {
               "name": "Kenny",
               "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-21&student=kenny"
+            },
+            {
+              "name": "Kailyn",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-21&student=kailyn"
             }
           ],
           "classContent": [
@@ -3323,6 +3327,48 @@
               "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-16&student=john"
             }
           ]
+        },
+        {
+          "id": "mon-afternoon-2026-11-23",
+          "date": "2026-11-23",
+          "time": "15:30–17:30",
+          "students": [
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-23&student=william"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-23&student=sean"
+            },
+            {
+              "name": "Royce",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-23&student=royce"
+            },
+            {
+              "name": "Cynthia",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-23&student=cynthia"
+            },
+            {
+              "name": "Ariel",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-23&student=ariel"
+            },
+            {
+              "name": "John",
+              "feedbackUrl": "/fb/?class=mon-afternoon&date=2026-11-23&student=john"
+            }
+          ],
+          "classContent": [
+            "• We listened to students give their prepared speeches and gave feedback on their scripts and delivery. We discussed getting to the thesis quickly after setting a scene, adding storytelling to analytical writing, and using facial expressions, hand gestures, pauses, emphasis, and vocal variety to suit each moment.\n\n• I offered two advanced options: the cause → effect → impact → solution structure I teach middle school students, or using humor. Humor is hard to add, but the class was ready to try it. We focused on putting the message, story, and logic first and polishing the humor last. I also said I would get colored markers or highlighters. Students who already have some can use them to mark up their scripts.\n\n• We looked at four types of humor: self-deprecating humor, where you notice something about yourself you can laugh at; wordplay or misdirection, where you change how a word is understood or make a pun; exaggeration, which you can bring out with your facial expressions and voice; and observational humor, where you notice something weird, funny, or odd.\n\n• We used this example to see how a setup and punchline work: “Outside of a dog, a book is a man’s best friend.” The setup suggests that people turn to dogs first and books second for companionship and support. We expect “outside” to mean “except for.” That same word links the setup to a second meaning: the physical outside of a dog. Once we take it literally, we get the punchline: “Inside of a dog it’s too dark to read.”\n\n• I also reminded the class that electronics should stay put away so everyone can focus during demonstrations."
+          ],
+          "homework": {
+            "title": "Test four kinds of humor · 试用四种幽默",
+            "steps": [
+              "• Write at least two examples for each of the four types of humor: self-deprecating, wordplay or misdirection, exaggeration, and observational humor.\n\n• See if you can add some of your examples to your speech. Test them out on an audience to see what works.",
+              "• 四种幽默各写至少两个例子：自嘲、文字游戏或误导、夸张，以及观察式幽默。\n\n• 看看能不能把其中一些例子加进自己的演讲里。试着讲给听众听，看看哪些例子有效。"
+            ],
+            "prepareFor": "Revising your speech · 修改演讲稿"
+          }
         }
       ]
     },

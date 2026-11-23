@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-23T06:46:49.428364+00:00",
+  "updatedAt": "2026-11-23T09:38:07.176678+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -341,6 +341,12 @@
             {
               "id": "kenny",
               "name": "Kenny",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "kailyn",
+              "name": "Kailyn",
               "en": null,
               "zh": null
             }
@@ -4040,6 +4046,58 @@
               "zh": "• John 加入了我们周一15:30–17:30的课堂。他昨晚花了一个半小时写出一篇讲起来长达六分钟的演讲。里面有很多不错的内容，但篇幅太长了。为了符合发言时间，我们需要删去大约一半的内容。\n\n• 他的主题有一点宽泛，基本上是“让我们阻止气候问题”或“让我们阻止天气变化”。他需要更具体的切入点，因为一个人无法完成这样整个层面的改变。\n\n• 一个令人记住的点是他的比较：人会产生很多气体，但飞机产生的更多。我不会认为一架飞机产生的气体会比一个人更少，因此这个比较还需要进一步展开，才能表达一个有用的观点。\n\n• John 分享了自己写的演讲，我能看出他投入了很多心力。我请他练习精简内容，因为他的演讲时长大约是一般说明类比赛演讲合适时长的两倍。"
             }
           ]
+        },
+        {
+          "id": "mon-afternoon-2026-11-23",
+          "date": "2026-11-23",
+          "time": "15:30–17:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "william",
+              "name": "William",
+              "en": "• Overall, you brought good energy to your speech. Your hand gestures were clear, and the emotion came through to the audience. Vocal variety is an area to work on.\n\n• We also need to work on editing your latest speech in the right direction. It’s a little logical and analytical overall, so I’d like you to develop the storytelling further.",
+              "zh": "• 总体来说，你的演讲很有活力。你的手势很清楚，情绪也传达给了听众。接下来还需要练习声音的变化。\n\n• 我们也要继续调整你最新的讲稿。整体有点偏逻辑和分析，所以接下来我希望你把故事讲得更充分。"
+            },
+            {
+              "id": "sean",
+              "name": "Sean",
+              "en": "• Your voice had a lot of power, and I didn’t hear many moments where it relaxed. Work on vocal variety so some parts can sound more relaxed. We’ll probably also work a little on hand gestures and body language. We’ll get some more practice in over the next couple of days.\n\n• Your speech is very serious. Today we’ll work on adding some humor. I think the judges will appreciate it.",
+              "zh": "• 你的声音很有力量，但我很少听到语气放松下来的地方。接下来练习让声音多一些变化，有些地方可以讲得更放松。我们可能也会稍微练一下手势和肢体语言。接下来几天，我们会再多练一点。\n\n• 你的演讲整体很严肃。今天我们会练习加一些幽默。我觉得评委会欣赏这一点。"
+            },
+            {
+              "id": "royce",
+              "name": "Royce",
+              "en": "• You used emphasis well in places. The content still felt a little familiar, and the delivery could sound more natural. Toward the end, the emphasis and pauses were drawn out enough to slow the speech down. At that pace, I think you’ll probably run 30 seconds to a minute over time. Keep the emphasis on your most important lines and shorten some of the longer pauses.\n\n• You were playing chess on your iPad while I was showing the class something. Please keep your iPad put away during class so you can give the demonstration your full attention.",
+              "zh": "• 你有些地方强调得很好。内容听起来还是有点熟悉，表达也可以再自然一点。讲到后面时，有些地方强调得太久，停顿也拉得太长，拖慢了整篇演讲的节奏。按这个节奏讲，我估计可能会超时 30 秒到 1 分钟。把重点放在最重要的几句话上，也可以把一些较长的停顿缩短一点。\n\n• 我在给全班展示内容时，你正在用 iPad 下国际象棋。上课时请把 iPad 收起来，专心看老师的示范。"
+            },
+            {
+              "id": "cynthia",
+              "name": "Cynthia",
+              "en": "• Your speech content was really good, and the script itself is fine. Facial expressions are the biggest thing to work on. They would have helped a lot in your previous speech.\n\n• The second priority is vocal variety. Your voice sounded very strained, as though you were pushing it out, and it stayed much the same. I couldn’t hear much difference between moments when you were being sarcastic, smiling in a deliberately fake way, angry, or sad. Let each moment sound different according to what’s happening in the speech.\n\n• Today we’ll work on humor, and I’ll briefly cover facial expressions and vocal variety so you can see how both depend on the context. I’ll get some colored markers or highlighters. If you already have some, you can use them to mark up your script.",
+              "zh": "• 你的演讲内容很好，讲稿本身也没问题。最需要练习的是面部表情。如果上一场演讲能多用一些表情，会有很大的帮助。\n\n• 第二个重点是声音的变化。你的声音听起来很紧，像在用力把声音推出来，而且整段的语气变化不多。说反话、故意假笑、生气和伤心时，我没有听出太大的区别。试着根据演讲里当时的情境，让这些不同的情绪听起来各有区别。\n\n• 今天我们会练习幽默，我也会带大家简单练一下面部表情和声音变化，看看怎样根据情境来用。我会买一些彩色笔或荧光笔。如果你已经有了，可以用来给讲稿做彩色标记。"
+            },
+            {
+              "id": "ariel",
+              "name": "Ariel",
+              "en": "• Ariel spoke next. The scene you added at the beginning was good. It helped the audience picture what was happening and gave them a reason to listen. The personal story at the start was a little too long. Try setting the scene in three or four sentences, then state your main point so the audience knows what the speech is about. You can come back to the story later. If the opening goes on too long, listeners may start wondering when the story will end and what point you’re making.\n\n• Here’s the wording I suggested in class: “Today, I’m going to talk about how people cheat.” Pause. “People cheat in sports. And this is a big problem in society.” Then continue with the rest of your speech.",
+              "zh": "• Ariel 接着发言。你在开头加的场景很好，能让听众想象当时发生了什么，也能吸引他们继续听。开头的个人故事有点长。可以试着用三到四句话把场景讲出来，然后说出核心观点，让大家早点知道这篇演讲要讲什么。后面可以再回来接着讲这个故事。如果开头讲得太久，听众可能会想：这个故事什么时候讲完？你到底想表达什么？\n\n• 我在课堂上给的示范是：“今天，我想谈谈人们如何作弊。”停顿一下。“体育比赛中有人作弊。这是一个严重的社会问题。”然后再继续讲演讲的其他部分。"
+            },
+            {
+              "id": "john",
+              "name": "John",
+              "en": "• John spoke first and delivered his speech with a lot of enthusiasm. I’m still concerned that “stop climate change” is too broad and general for one speech. You can keep climate change as your topic and give it a more specific angle of your own. I brought up Greta Thunberg as a reference point for discussing calls for climate action. One angle is to ask what happens after we say, “Let’s stop climate change.” Saying we want change can sound impressive. What realistic changes can we make in the world around us, and what could your audience actually do to help?\n\n• With only a couple of days before the competition, make sure you can deliver the speech from memory. Today we’ll look at adding some humor. If you add anything, make sure you can remember those parts too.\n\n• Your delivery had a lot of power and force. I think some moments could be softer. I’ll look at your script to see where a gentler delivery could fit.\n\n• During class, John got distracted by his “invention” with syringes, which made popping noises. Please put it away during class so you can focus on the lesson.",
+              "zh": "• John 第一个发言，讲得很有热情。我还是担心“阻止气候变化”对一篇演讲来说太宽泛、太笼统。你可以保留气候变化这个主题，再从一个更具体、也更有自己特色的角度切入。我提到 Greta Thunberg，是为了引出对气候行动呼吁的讨论。一个可以考虑的角度是问大家：当我们说完“让我们阻止气候变化”之后，接下来会做什么？说自己想做出改变，听起来可能很了不起。我们能在身边做出哪些切实可行的改变？听众实际上可以做些什么来帮忙？\n\n• 离比赛只剩几天了，要确保自己能脱稿讲完整篇演讲。今天我们会看看怎么加入一些幽默。如果加了新内容，也要把这些地方记熟。\n\n• 你的表达很有力量，语气也很强。我觉得有些地方可以放柔和一点。我会看看你的讲稿，找找哪里适合用更柔和的方式来讲。\n\n• 上课时，John 被自己用注射器做的“发明”分散了注意力，期间还发出了“啪”的声响。上课时请先把它收起来，专心听课。"
+            }
+          ],
+          "classContent": {
+            "en": "• We listened to students give their prepared speeches and gave feedback on their scripts and delivery. We discussed getting to the thesis quickly after setting a scene, adding storytelling to analytical writing, and using facial expressions, hand gestures, pauses, emphasis, and vocal variety to suit each moment.\n\n• I offered two advanced options: the cause → effect → impact → solution structure I teach middle school students, or using humor. Humor is hard to add, but the class was ready to try it. We focused on putting the message, story, and logic first and polishing the humor last. I also said I would get colored markers or highlighters. Students who already have some can use them to mark up their scripts.\n\n• We looked at four types of humor: self-deprecating humor, where you notice something about yourself you can laugh at; wordplay or misdirection, where you change how a word is understood or make a pun; exaggeration, which you can bring out with your facial expressions and voice; and observational humor, where you notice something weird, funny, or odd.\n\n• We used this example to see how a setup and punchline work: “Outside of a dog, a book is a man’s best friend.” The setup suggests that people turn to dogs first and books second for companionship and support. We expect “outside” to mean “except for.” That same word links the setup to a second meaning: the physical outside of a dog. Once we take it literally, we get the punchline: “Inside of a dog it’s too dark to read.”\n\n• I also reminded the class that electronics should stay put away so everyone can focus during demonstrations.",
+            "zh": "• 我们听了学生的备稿演讲，并针对讲稿和台上表达给出反馈。我们讨论了怎样在开头交代场景后尽快说出中心观点，怎样在偏分析性的讲稿里加入更多故事，以及怎样根据不同情境使用表情、手势、停顿、重音和声音变化。\n\n• 我给大家提了两个进阶方向：练习我教中学生的“原因 → 结果 → 影响 → 解决办法”结构，或者练习在演讲中加入幽默。幽默不容易加，但我觉得大家已经可以尝试。这节课的重点是先把主题信息、故事和逻辑处理好，最后再打磨幽默。我也说会买一些彩色笔或荧光笔。已经有笔的同学可以用它们给讲稿做标记。\n\n• 我们看了四种幽默。自嘲是找出自己身上可以拿来开玩笑的地方。文字游戏或误导是改变一个词的理解方式，或者用双关。夸张可以通过面部表情和声音表现出来。观察式幽默是留意身边那些古怪、好笑或不寻常的事。\n\n• 我们用这个例子看铺垫和笑点是怎么配合的：“Outside of a dog, a book is a man’s best friend.”（除了狗之外，书是人最好的朋友。）铺垫让人以为，狗是人们寻求陪伴和支持时的第一选择，书排在第二。我们会先把“outside”理解为“除了”，同一个词又把铺垫带到第二层意思：狗身体的外部。按字面理解，就有了后面的笑点：“Inside of a dog it’s too dark to read.”（狗肚子里太黑了，没法看书。）\n\n• 我也再次提醒大家上课时要把电子设备收起来，老师示范时大家才能专心。"
+          },
+          "homework": {
+            "en": "• Write at least two examples for each of the four types of humor: self-deprecating, wordplay or misdirection, exaggeration, and observational humor.\n\n• See if you can add some of your examples to your speech. Test them out on an audience to see what works.",
+            "zh": "• 四种幽默各写至少两个例子：自嘲、文字游戏或误导、夸张，以及观察式幽默。\n\n• 看看能不能把其中一些例子加进自己的演讲里。试着讲给听众听，看看哪些例子有效。"
+          }
         }
       ]
     },
