@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21",
+  "updated": "2026-11-23",
   "series": [
     {
       "id": "nhsdlc",
@@ -260,6 +260,48 @@
       "category": "speech",
       "source": "https://sz.ifeng.com/c/8vVPVbGgDY0",
       "watch": "This separately organized event announced its 2027 cycle. Current round dates and signup are awaiting public confirmation."
+    },
+    {
+      "id": "nsda-springboard",
+      "name": "NSDA Springboard",
+      "category": "debate",
+      "source": "https://www.tabroom.com/index/circuit/calendar.mhtml?circuit_id=222",
+      "watch": "January Springboard scrimmage registration opens December 1 on Tabroom. Entries go through the student's school and coach. Check each invitation for formats and China-local start times."
+    },
+    {
+      "id": "learning-to-be-heard",
+      "name": "Learning to Be Heard",
+      "category": "speech",
+      "source": "https://www.ted.immerse.education/public-speaking-challenge"
+    },
+    {
+      "id": "gapsk-storytelling",
+      "name": "GAPSK Bilingual Storytelling",
+      "zh": "全港中英講故事大賽",
+      "category": "speech",
+      "source": "https://www.gapsk.org/hkbsc/"
+    },
+    {
+      "id": "nsda-nationals",
+      "name": "NSDA U.S. Nationals",
+      "category": "debate",
+      "source": "https://www.thinkaloud.cn/%E4%BC%9A%E5%91%98%E4%BD%93%E7%B3%BB/",
+      "watch": "WSDA’s published rules describe a mainland selection pathway for the U.S. National Tournament. The 2027 mainland selection application and deadline are awaiting public confirmation.",
+      "details": "Contact WSDA at wsda@thinkaloud.cn for current mainland selection requirements."
+    },
+    {
+      "id": "oxford-schools",
+      "name": "Oxford Schools’ Debating Competition",
+      "category": "debate",
+      "source": "https://www.oxfordschools.net/international-rounds",
+      "watch": "Oxford lists Solum TAIS Group for mainland China and See Change Education for Hong Kong in the 2026–27 season. Current mainland qualifier dates and signup are awaiting public confirmation."
+    },
+    {
+      "id": "hk-student-story-slam",
+      "name": "Hong Kong Student Story Slam",
+      "category": "speech",
+      "source": "https://www.hongkongstories.com/student-story-slam",
+      "watch": "The organizer says entries for 2027 open in January. The event is for Hong Kong secondary students. The deadline and live final date are pending."
     }
   ],
   "events": [
@@ -676,6 +718,25 @@
       "signup": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41805",
       "signupLabel": "Registration on Tabroom",
       "signupNote": "Sign in to Tabroom, then select the tournament’s Register tab when available."
+    },
+    {
+      "id": "nsda-springboard-december-capstone",
+      "series": "nsda-springboard",
+      "title": "NSDA Springboard December Capstone",
+      "short": "NSDA Springboard",
+      "start": "2026-12-05",
+      "end": "2026-12-06",
+      "region": "online",
+      "place": "Online · NSDA Campus",
+      "format": "Live speech and debate, plus recorded speech",
+      "source": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41550&webpage_id=40362",
+      "zone": "China time",
+      "signup": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41550",
+      "signupLabel": "Register on Tabroom",
+      "deadline": "School registration, judges and video links are due December 4, 2026 at 2:00 a.m. Shanghai time.",
+      "eligibility": "School permission and coach registration are required. NSDA membership is optional. Rising Stars is for middle-school students and first-year high-school competitors.",
+      "details": "The organizer lists December 5 in U.S. Central time. Live rounds span December 5–6 in Shanghai. Recorded events include Storytelling, Declamation, Prose, Poetry, Pro Con Challenge and Original Spoken Word Poetry.",
+      "rules": "https://www.tabroom.com/index/tourn/main.mhtml?tourn_id=41550&webpage_id=40364"
     },
     {
       "id": "wsc-2026-shenzhen",
@@ -1525,6 +1586,24 @@
       "signupNote": "Open the division you want in the WSDA portal to check availability and register."
     },
     {
+      "id": "learning-to-be-heard-2027-deadline",
+      "series": "learning-to-be-heard",
+      "title": "Learning to Be Heard video submission deadline",
+      "short": "Speaking video deadline",
+      "start": "2027-01-11",
+      "end": "2027-01-11",
+      "region": "online",
+      "place": "Online",
+      "format": "One-minute English speaking video",
+      "source": "https://www.ted.immerse.education/public-speaking-challenge",
+      "zone": "China time",
+      "signup": "https://www.ted.immerse.education/public-speaking-challenge",
+      "signupLabel": "Open the official entry form",
+      "deadline": "January 11, 2027 at 7:59 a.m. in Shanghai (January 10 at 11:59 p.m. in the UK).",
+      "eligibility": "High-school students ages 14–18 worldwide. Entry is free.",
+      "details": "Submit a video up to one minute long and one or two written sentences explaining your idea. Selected entrants can earn full or partial scholarships to TED Summer School."
+    },
+    {
       "id": "edu-asow",
       "series": "edu",
       "title": "Asia Schools Open Winter",
@@ -1688,6 +1767,23 @@
       "signup": "https://leadershipinstitute.hkfyg.org.hk/en/eps-2027/eps-2027-form/",
       "signupLabel": "HKFYG application",
       "eligibility": "Hong Kong full-time secondary students in S1–S6 or equivalent. Enter through school or individually. HKFYG membership is required."
+    },
+    {
+      "id": "gapsk-hk-bilingual-storytelling-2027",
+      "series": "gapsk-storytelling",
+      "title": "Hong Kong Bilingual Storytelling Competition",
+      "short": "GAPSK Storytelling",
+      "start": "2027-01-24",
+      "end": "2027-01-24",
+      "region": "hong-kong",
+      "place": "Hong Kong · venue pending",
+      "format": "In-person storytelling with English categories",
+      "source": "https://www.gapsk.org/hkbsc/",
+      "signup": "https://apply2.gapsk.org/events/313/",
+      "signupLabel": "Register with GAPSK",
+      "deadline": "January 12, 2027.",
+      "eligibility": "Kindergarten and primary school students, or equivalent.",
+      "details": "The organizer lists a HK$490 entry fee and requires memorized recitation. If choosing your own material, follow the submission rules."
     },
     {
       "id": "nhsdlc-elite",
