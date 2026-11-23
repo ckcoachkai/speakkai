@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-22T10:57:58.826608+00:00",
+  "updatedAt": "2026-11-23T06:46:49.428364+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -331,7 +331,20 @@
           "date": "2026-11-21",
           "time": "13:00–15:00",
           "status": "held",
-          "students": [],
+          "students": [
+            {
+              "id": "winston",
+              "name": "Winston",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "kenny",
+              "name": "Kenny",
+              "en": null,
+              "zh": null
+            }
+          ],
           "classContent": {
             "en": "• We took turns giving impromptu speeches and worked on how to develop prepared competition speeches.",
             "zh": "• 我们轮流做即兴演讲，也练习了如何进一步完善备稿比赛演讲。"
@@ -956,14 +969,15 @@
             {
               "id": "anna",
               "name": "Anna",
-              "en": null,
-              "zh": null
+              "en": "Absent from this class, as confirmed by the teacher.",
+              "zh": "教师确认本次课缺席。",
+              "attendance": "absent"
             },
             {
               "id": "stacey",
               "name": "Stacey",
-              "en": null,
-              "zh": null
+              "en": "• I think this practice was a little more challenging for Stacey, but she had a good attitude and expressed herself confidently. The next step is to expand on her answers while speaking.\n\n• Try opening your hands a little wider as you speak. That can help you express what you’re thinking and show more confidence on stage.",
+              "zh": "• 我觉得这次练习对 Stacey 来说稍有挑战，但她的态度很好，表达时也很自信。接下来可以在说的时候把回答再展开一些。\n\n• 说话时试着把双手打开一点，这样既能帮助你表达自己的想法，也能在台上展现更多自信。"
             },
             {
               "id": "hugo",
@@ -1915,8 +1929,8 @@
             {
               "id": "evan",
               "name": "Evan",
-              "en": null,
-              "zh": null
+              "en": "• Evan spoke in a slightly soft voice, which is something we’ve been working on. Speak louder and articulate your words more clearly so your stage presence comes through. Your classroom behavior and etiquette were very good. You took notes and made an effort to understand what to do.\n\n• I think taking part in a competition might help something click and bring out more of your stage presence.",
+              "zh": "• Evan 的声音还是稍微有点轻，这是我们一直在练习的地方。说话时可以再大声一点，把每个词说清楚，让自己的台上表现更有存在感。你的课堂表现和课堂礼仪都很好，也有做笔记，并努力弄清楚要做什么。\n\n• 我觉得参加一次比赛也许会让你找到感觉，更好地发挥自己的台上表现力。"
             },
             {
               "id": "wendy",
@@ -2697,8 +2711,8 @@
             {
               "id": "berlingo",
               "name": "Berlingo",
-              "en": null,
-              "zh": null
+              "en": "• Berlingo seemed a little more distracted this time. Sometimes he looks distracted in class and is still listening. This time, I had to take away his book. When I asked him a couple of questions to check whether he was following what we were discussing, he was unsure what to do next, even though the rest of the class was following along.\n\n• I think I need to be a little firmer about redirecting his attention when his usual habits pull his focus away from the lesson.",
+              "zh": "• Berlingo 这次看起来比平时更容易分心。有时他看起来在分心，其实还在听。但这次我需要先把他的书收起来。我问了他几个问题，想看看他有没有跟上我们正在讨论的内容。其他同学都跟得上，但他不太确定下一步该做什么。\n\n• 我觉得，当他平时的一些习惯让他把注意力转到别处时，我需要更明确地提醒他把注意力拉回课堂。"
             },
             {
               "id": "yiyi",
@@ -3554,10 +3568,13 @@
             }
           ],
           "classContent": {
-            "en": "The class held a practice debate. As the students framed it, the round was mainly about access to personal phones and tablets at school. The main exchanges covered contacting parents in emergencies, distraction in lessons, learning activities, unequal access, cyberbullying, and what would be allowed at recess. We considered whether students’ own phones added an emergency benefit when school staff could already call parents. We also considered what a phone basket would solve during lessons, what wider device access would add beyond teacher-approved activities such as Friday’s Kahoot, and how the school would manage the risks once students got their devices back.\n\nThe times are approximate starting points in the recording, checked against the transcript and video.",
-            "zh": "本节课进行了一轮辩论练习。按照学生在辩论中界定的范围，这轮主要讨论学生在学校使用个人手机和平板电脑的问题。交锋集中在紧急情况下联系家长、课堂分心、学习活动、设备获取不平等、网络欺凌，以及课间可以怎样使用设备。我们讨论了在学校工作人员已经可以打电话联系家长的情况下，学生自己的手机在紧急时还能带来什么额外好处。我们也讨论了用篮子统一收手机可以解决哪些课堂问题，除了周五的 Kahoot 这类经老师批准的活动，更广泛地使用个人设备还有什么好处，以及学生拿回设备后，学校可以怎样应对相关风险。\n\n以下时间是各段发言在录像中的大致开始位置，已对照转写和视频核查。"
+            "en": "The class held a practice debate. As the students framed it, the round was mainly about access to personal phones and tablets at school. The main exchanges covered contacting parents in emergencies, distraction in lessons, learning activities, unequal access, cyberbullying, and what would be allowed at recess. We considered whether students’ own phones added an emergency benefit when school staff could already call parents. We also considered what a phone basket would solve during lessons, what wider device access would add beyond teacher-approved activities such as Friday’s Kahoot, and how the school would manage the risks once students got their devices back.\n\nThe times are approximate starting points in the recording, checked against the transcript and video.\n\n• We looked at how to use AI as a research tool when you have a debate prompt and the competition allows AI-assisted research. We discussed what role to give the AI, what exactly you want it to do, how you want it to speak to you, what personality you want it to have, how broad the content should be, and what format and structure you want it to return. We also discussed asking for citable sources you can check yourself, checking for made-up information, and making sure the language is readable and suitable for a primary-school debate or the level of the debate you’re preparing for.",
+            "zh": "本节课进行了一轮辩论练习。按照学生在辩论中界定的范围，这轮主要讨论学生在学校使用个人手机和平板电脑的问题。交锋集中在紧急情况下联系家长、课堂分心、学习活动、设备获取不平等、网络欺凌，以及课间可以怎样使用设备。我们讨论了在学校工作人员已经可以打电话联系家长的情况下，学生自己的手机在紧急时还能带来什么额外好处。我们也讨论了用篮子统一收手机可以解决哪些课堂问题，除了周五的 Kahoot 这类经老师批准的活动，更广泛地使用个人设备还有什么好处，以及学生拿回设备后，学校可以怎样应对相关风险。\n\n以下时间是各段发言在录像中的大致开始位置，已对照转写和视频核查。\n\n• 我们讨论了拿到辩题后，如果比赛允许使用 AI 辅助研究，可以怎样把 AI 当作研究工具。我们讨论了要给 AI 设定什么角色、希望它具体做什么、希望它怎样跟你说话、希望它具有什么样的个性、内容范围有多大，以及希望它用什么格式和结构来回答。我们还讨论了怎样要求 AI 提供自己可以核查并引用的来源，怎样检查是否有编造的信息，以及怎样确认语言易读，适合小学辩论或你正在准备的其他级别的辩论。"
           },
-          "homework": null
+          "homework": {
+            "en": "• If you have the chance, spend about 30 minutes to an hour talking with an AI tool such as Doubao or ChatGPT. Set its role and personality, tell it what you want it to do and how you want it to respond, and specify the scope, structure, and format. You can ask for bold text, italics, bullet points, and symbols that make the answer easier to scan and organize.\n\n• Try a sample motion such as “All houses in the world should be painted the same color.” Ask for arguments for and against it in language that students can easily understand, along with evidence and citable sources you can check yourself. Check the sources, facts, and readability. Use the AI to explore the topic and find evidence you can work with, then develop the arguments in your own words.",
+            "zh": "• 如果有机会，可以花大约 30 分钟到 1 小时和豆包、ChatGPT 或其他 AI 工具对话。先设定它的角色和个性，告诉它你希望它做什么、怎样回应，并说明内容范围、结构和格式。你可以要求它使用粗体、斜体、项目符号，以及帮助你快速看懂和整理内容的符号。\n\n• 可以用一个示例辩题练习，例如“世界上所有的房子都应该漆成同一种颜色”。请 AI 用学生容易理解的语言给出正反两方的论点，并提供证据和自己可以核查、引用的来源。核查来源和事实，同时看看回答是否易读。把 AI 当作探索辩题、寻找可用证据的工具，再用自己的话组织论证。"
+          }
         }
       ]
     },

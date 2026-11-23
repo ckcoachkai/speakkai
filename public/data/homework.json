@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-22T10:57:58.826608+00:00",
+  "updatedAt": "2026-11-23T06:46:49.428364+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -275,7 +275,16 @@
           "id": "sat-original-oratory-2026-11-21",
           "date": "2026-11-21",
           "time": "13:00–15:00",
-          "students": [],
+          "students": [
+            {
+              "name": "Winston",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-21&student=winston"
+            },
+            {
+              "name": "Kenny",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-21&student=kenny"
+            }
+          ],
           "classContent": [
             "• We took turns giving impromptu speeches and worked on how to develop prepared competition speeches."
           ],
@@ -2921,9 +2930,16 @@
             }
           ],
           "classContent": [
-            "The class held a practice debate. As the students framed it, the round was mainly about access to personal phones and tablets at school. The main exchanges covered contacting parents in emergencies, distraction in lessons, learning activities, unequal access, cyberbullying, and what would be allowed at recess. We considered whether students’ own phones added an emergency benefit when school staff could already call parents. We also considered what a phone basket would solve during lessons, what wider device access would add beyond teacher-approved activities such as Friday’s Kahoot, and how the school would manage the risks once students got their devices back.\n\nThe times are approximate starting points in the recording, checked against the transcript and video."
+            "The class held a practice debate. As the students framed it, the round was mainly about access to personal phones and tablets at school. The main exchanges covered contacting parents in emergencies, distraction in lessons, learning activities, unequal access, cyberbullying, and what would be allowed at recess. We considered whether students’ own phones added an emergency benefit when school staff could already call parents. We also considered what a phone basket would solve during lessons, what wider device access would add beyond teacher-approved activities such as Friday’s Kahoot, and how the school would manage the risks once students got their devices back.\n\nThe times are approximate starting points in the recording, checked against the transcript and video.\n\n• We looked at how to use AI as a research tool when you have a debate prompt and the competition allows AI-assisted research. We discussed what role to give the AI, what exactly you want it to do, how you want it to speak to you, what personality you want it to have, how broad the content should be, and what format and structure you want it to return. We also discussed asking for citable sources you can check yourself, checking for made-up information, and making sure the language is readable and suitable for a primary-school debate or the level of the debate you’re preparing for."
           ],
-          "homework": null
+          "homework": {
+            "title": "Optional AI research practice · 自愿练习：用 AI 辅助辩论研究",
+            "steps": [
+              "• If you have the chance, spend about 30 minutes to an hour talking with an AI tool such as Doubao or ChatGPT. Set its role and personality, tell it what you want it to do and how you want it to respond, and specify the scope, structure, and format. You can ask for bold text, italics, bullet points, and symbols that make the answer easier to scan and organize.\n\n• Try a sample motion such as “All houses in the world should be painted the same color.” Ask for arguments for and against it in language that students can easily understand, along with evidence and citable sources you can check yourself. Check the sources, facts, and readability. Use the AI to explore the topic and find evidence you can work with, then develop the arguments in your own words.",
+              "• 如果有机会，可以花大约 30 分钟到 1 小时和豆包、ChatGPT 或其他 AI 工具对话。先设定它的角色和个性，告诉它你希望它做什么、怎样回应，并说明内容范围、结构和格式。你可以要求它使用粗体、斜体、项目符号，以及帮助你快速看懂和整理内容的符号。\n\n• 可以用一个示例辩题练习，例如“世界上所有的房子都应该漆成同一种颜色”。请 AI 用学生容易理解的语言给出正反两方的论点，并提供证据和自己可以核查、引用的来源。核查来源和事实，同时看看回答是否易读。把 AI 当作探索辩题、寻找可用证据的工具，再用自己的话组织论证。"
+            ],
+            "prepareFor": "Researching and checking evidence · 研究和核查证据"
+          }
         }
       ]
     },
