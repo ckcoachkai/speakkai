@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-23T09:38:07.176678+00:00",
+  "updatedAt": "2026-11-24T09:06:51.964770+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -3714,6 +3714,37 @@
             {
               "name": "Ethan Liu",
               "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-17&student=ethan-liu"
+            }
+          ]
+        },
+        {
+          "id": "tue-afternoon-2026-11-24",
+          "date": "2026-11-24",
+          "time": "15:30–17:30",
+          "classContent": [
+            "• We listened to prepared speeches and discussed how to make an expository speech clear and useful to the audience. A personal story can take about 40% of a speech, leaving about 60% to explain the concept, what makes it unique, the main takeaway, and a call to action. We also discussed fitting the work from homework into the speech itself.\n\n• We looked at ways to structure and deliver a competition speech. A concrete example can open with a question for listeners, followed by the topic and a personal connection. The speaker can bring the audience through a difficult moment and lift them back up with a quick solution. We discussed making the wording concise when over time, speaking more slowly and projecting the voice, looking up from the page, and defining unfamiliar terms when they are introduced. “PID” came up as an example of an abbreviation the audience may need explained."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Ethan Jia",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-24&student=ethan-jia"
+            },
+            {
+              "name": "Harry",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-24&student=harry"
+            },
+            {
+              "name": "Alyssa",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-24&student=alyssa"
+            },
+            {
+              "name": "Patrick",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-24&student=patrick"
+            },
+            {
+              "name": "Ethan Liu",
+              "feedbackUrl": "/fb/?class=tue-afternoon&date=2026-11-24&student=ethan-liu"
             }
           ]
         }

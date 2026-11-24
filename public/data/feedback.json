@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-23T09:38:07.176678+00:00",
+  "updatedAt": "2026-11-24T09:06:51.964770+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -4516,6 +4516,49 @@
               "zh": "• Ethan Liu 稍晚一些到达。他似乎更喜欢自己创作的演讲，而不是我帮忙稍作修改的版本。\n\n• 对于他关于现代教育与传统教育的演讲，主要需要加强的是例子、个人故事，以及能让听众想象画面、更加深入理解内容的具体描写。\n\n• 如果缺少这些内容，评委就比较难给他更高的分数。他们可能会觉得演讲缺少个人联系和亲身经历。这就是我们希望在内容中加入更多个人叙事的原因。"
             }
           ]
+        },
+        {
+          "id": "tue-afternoon-2026-11-24",
+          "date": "2026-11-24",
+          "time": "15:30–17:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "ethan-jia",
+              "name": "Ethan Jia",
+              "en": "• You remembered what the homework was and completed it. What you shared was good. I’d like to hear that material worked into the speech itself so it strengthens the whole speech.\n\n• You and Harry sat together again this class.",
+              "zh": "• 你记得作业是什么，也完成了。你分享的内容不错。我希望听到你把这部分融入演讲里，让整篇演讲更有说服力。\n\n• 这次上课，你又和 Harry 坐在一起。"
+            },
+            {
+              "id": "harry",
+              "name": "Harry",
+              "en": "• You sped through the script, and the delivery sounded mechanical, like you were reading it quickly. Slow down and give each idea time to reach the audience.\n\n• You and Ethan Jia sat together again this class.\n\n• You didn’t have a pencil or pen, and you seemed unsure how to ask someone for one. You banged your chair against the table and lay there looking confused. When you need a pencil or pen, try asking someone nearby, in the class or outside the classroom.",
+              "zh": "• 你读稿时速度太快，听起来有些机械，像是在匆匆把稿子读完。把语速放慢一点，给听众时间听清并理解每个意思。\n\n• 这次上课，你又和 Ethan Jia 坐在一起。\n\n• 你当时没有铅笔或笔，也似乎不太知道怎么开口向别人借。你用椅子撞桌子，还躺在那里，看起来有点困惑。需要用笔时，可以试着问问身边的人，比如班里的同学，或者教室外的人。"
+            },
+            {
+              "id": "alyssa",
+              "name": "Alyssa",
+              "en": "• The content was okay. Go straight into your opening without reading the title aloud. We may also want to revise the title. You looked down at the page as you spoke, which made it harder to connect with the audience. Look up more often as you deliver the speech.\n\n• You spoke very quietly and too quickly. Your voice didn’t carry, so we had trouble hearing you. It felt more like casual talking, and even a lecture would usually be louder. As I demonstrated in class, try lifting and projecting your voice so it reaches the audience. Slow down so your words are easier to hear and understand. Clarity and pace are the main delivery priorities.",
+              "zh": "• 演讲内容还可以。开场时直接进入正文，可以跳过标题。标题本身也可以考虑调整。你讲的时候低头看稿，这让你比较难和听众建立联系。演讲时可以多抬头看看听众。\n\n• 你的声音很轻，语速也太快。声音没有传开，所以我们有些听不清。听起来更像平时聊天，甚至平时讲课的声音一般也会更响一些。可以像我在课堂上示范的那样，试着把声音提起来、送出去，让听众都能听见。把语速放慢一些，让大家更容易听清、听懂。接下来表达上最需要改善的是清晰度和语速。"
+            },
+            {
+              "id": "patrick",
+              "name": "Patrick",
+              "en": "• Patrick spoke first. The content was good, and the speech felt much more personal and connected. I’d trim roughly 60% of the current story so it takes up about 40% of the finished speech, leaving about 60% for explanation.\n\n• In that part, explain what concept you’re introducing, what makes it unique, what you want listeners to remember, and what action you want them to take. I’ll try to help you organize the speech around those pieces. The story is yours, and the speech and its message are for the audience. Think about what they can learn or gain from it.\n\n• Patrick continued sitting next to Ethan Liu. He got distracted and turned toward the back of the room while we were explaining speech concepts. I also had to ask them to stop talking to each other for the third time. During explanations, please face the front and save side conversations for after class.",
+              "zh": "• Patrick 第一个发言。内容不错，这次的演讲更有个人色彩，也更能和听众产生联系。建议把目前的故事部分删减约 60%，让故事占整篇演讲的约 40%，留出约 60% 来解释你想介绍的内容。\n\n• 用这部分讲清楚你想介绍的概念、它有什么独特之处、你希望听众记住什么，以及你希望他们采取什么行动。我会试着帮你按照这些要点组织演讲。故事是你自己的，演讲和它传达的信息是给听众的。想一想大家听完以后能学到什么、获得什么。\n\n• Patrick 继续坐在 Ethan Liu 旁边。我们讲解演讲概念时，他分了心，转身面向教室后方。我也第三次提醒他们上课时不要互相聊天。讲解时请面向前方，把聊天留到课后。"
+            },
+            {
+              "id": "ethan-liu",
+              "name": "Ethan Liu",
+              "en": "• You wrote the speech in your own words, and I could see the effort you put into it. It was easy to follow, with a clear example and a separate point drawn from your own experience. Overall, it was very well put together. I liked the new style you brought to this speech. The version I polished was there to give you a direction. Keep writing in your own words so the speech sounds like you.\n\n• You went over time, which could be a problem in competition. Aim to cut about 20% by making the wording more concise and keeping the substance of your points.\n\n• Opening with “modern or traditional education” felt a little flat. Try moving the example from near the end to the beginning so it makes the audience ask a question. Then introduce your topic and bring in your personal connection. Let the audience feel the sadness, shock, or fear in that part of the speech, then lift them back up with a quick solution at the end. That emotional roller coaster can guide them through the speech. A little restructuring will help it fit the competition format.\n\n• Define unfamiliar terms the first time you use them. I brought up “PID” as an example because I didn’t know what it meant. If you use an abbreviation like that, say what it stands for and explain it briefly so the audience can follow.\n\n• This was the third time I had to ask you and Patrick to stop talking to each other during class. Please save side conversations for after class so you can follow the lesson.",
+              "zh": "• 这篇演讲是你用自己的话写的，我能看出你花了心思。内容容易听懂，你举了一个清楚的例子，也另外分享了自己的亲身经历。整体组织得很好，我喜欢你这次演讲的新风格。我帮你润色的版本是为了给你一个方向。继续用自己的话写，这样听起来才像你自己。\n\n• 这次演讲超时了，比赛时可能会有影响。可以把措辞改得更简洁，删减大约 20%，同时保留各个观点的实质内容。\n\n• 一开头就说“现代教育还是传统教育”有点平。试着把接近结尾的那个例子移到开头，让听众产生一个问题。然后再引出主题，讲到它和你个人的联系。让听众感受到那一段里的难过、震惊或害怕，最后用一个简短的解决办法把情绪带回来。这样一来一回的情绪变化，可以带着听众走完整篇演讲。稍微调整一下结构，也会更符合比赛的形式。\n\n• 第一次用到听众可能不熟悉的术语时，要先解释清楚。我举了“PID”这个例子，因为我也不知道它是什么意思。用到这样的缩写时，先说出全称，再简单解释一下，让听众能跟上。\n\n• 这是我第三次提醒你和 Patrick 上课时不要互相聊天。请把私下的聊天留到课后，这样才能跟上课堂内容。"
+            }
+          ],
+          "classContent": {
+            "en": "• We listened to prepared speeches and discussed how to make an expository speech clear and useful to the audience. A personal story can take about 40% of a speech, leaving about 60% to explain the concept, what makes it unique, the main takeaway, and a call to action. We also discussed fitting the work from homework into the speech itself.\n\n• We looked at ways to structure and deliver a competition speech. A concrete example can open with a question for listeners, followed by the topic and a personal connection. The speaker can bring the audience through a difficult moment and lift them back up with a quick solution. We discussed making the wording concise when over time, speaking more slowly and projecting the voice, looking up from the page, and defining unfamiliar terms when they are introduced. “PID” came up as an example of an abbreviation the audience may need explained.",
+            "zh": "• 我们听了学生的备稿演讲，并讨论了怎样让说明性演讲既容易听懂，也能让听众有所收获。个人故事可以占演讲的约 40%，剩下约 60% 用来解释概念、它的独特之处、希望听众记住的核心信息，以及行动号召。我们也讨论了怎样把作业里做好的内容融入演讲本身。\n\n• 我们讨论了怎样组织和呈现比赛演讲。可以用一个具体例子开场，让听众产生疑问，再引出主题和它与自己经历的联系。演讲者可以带着听众感受一段困难的经历，最后用一个简短的解决办法把情绪带回来。我们还讨论了超时时怎样精简措辞，怎样放慢语速、把声音送出去和抬头看听众，以及怎样在第一次用到陌生术语时加以解释。“PID”是课堂上提到的例子，听众可能需要先了解这个缩写是什么意思。"
+          },
+          "homework": null
         }
       ]
     },
