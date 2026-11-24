@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-24T09:06:51.964770+00:00",
+  "updatedAt": "2026-11-24T11:04:34.411222+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -4053,6 +4053,33 @@
             {
               "name": "Lyon",
               "feedbackUrl": "/fb/?class=tue-later&date=2026-11-17&student=lyon"
+            }
+          ]
+        },
+        {
+          "id": "tue-later-2026-11-24",
+          "date": "2026-11-24",
+          "time": "17:40–19:40",
+          "classContent": [
+            "• We listened to a prepared speech and discussed polishing the content before working on presentation. I also reminded the students to put down their phones and explained why relying on a phone to write and revise longer work can be inconvenient.\n\n• Students were asked to share their views on a hypothetical leadership scenario involving Jensen Huang. Imagine that the U.S. president persuaded company leaders and the media to support bringing him back as CEO of the world’s largest company. Would that be a good or bad decision? More broadly, if a potential leader had serious ethical problems, would it be acceptable to return them to power if keeping them out might hurt the stock market or the economy? Could allowing a problematic person back into a leadership role be justified by benefits to the wider world? What matters more, equality or power?"
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Jayden",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-24&student=jayden"
+            },
+            {
+              "name": "Sean",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-24&student=sean"
+            },
+            {
+              "name": "Nelson",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-24&student=nelson"
+            },
+            {
+              "name": "Lyon",
+              "feedbackUrl": "/fb/?class=tue-later&date=2026-11-24&student=lyon"
             }
           ]
         }

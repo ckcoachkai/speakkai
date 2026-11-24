@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-24T09:06:51.964770+00:00",
+  "updatedAt": "2026-11-24T11:04:34.411222+00:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -4923,6 +4923,43 @@
               "zh": "• Lyon 选择从手机上朗读自己的稿子，没有使用我提供的版本。他的演讲用了七分钟以上。\n\n• 讲话时，他也在拍打自己的脸，并发出“ooh”的声音。\n\n• 他的演讲探讨了两个不同的方面：让高尔夫有趣、让人熟悉它，以及让初学者感到受欢迎、愿意参与。他用 Mario Golf 和 Happy Gilmore 举例，说明娱乐作品怎样把这项运动带到人们面前。\n\n• 他谈到了器材费用、场地、出行和尴尬感等障碍，也结合了爸爸为他购买球杆，以及打高尔夫花费较高的个人经历。\n\n• 在挥空的例子中，他描述了初学者挥杆却没打到球，又因为别人在看或发笑而感到尴尬。这把话题与尝试陌生活动的体验联系了起来。\n\n• 他引用参与人数研究，说明高尔夫有不同形式，并不限于传统的九洞或十八洞球场。他也说，学校里很少有自己的朋友打高尔夫，并提出学校和俱乐部可以提供入门机会。\n\n• 主要需要注意的是与听众建立联系。他的信息需要对那些原本不打高尔夫的人也有意义。否则，听众可能只是听到一篇很长的高尔夫介绍，却没有一个清楚的理由让他们在乎这个话题。"
             }
           ]
+        },
+        {
+          "id": "tue-later-2026-11-24",
+          "date": "2026-11-24",
+          "time": "17:40–19:40",
+          "status": "held",
+          "students": [
+            {
+              "id": "jayden",
+              "name": "Jayden",
+              "en": "• I’ve mentioned this before. Please avoid relying on your phone to write your whole speech. I’m concerned because a phone is inconvenient for longer writing. Think about a school project or a ten-page paper. How easy would it be to write and revise the whole thing on your phone? The same applies when you’re working on a speech draft.",
+              "zh": "• 我之前也提过，尽量不要只用手机写整篇演讲稿。我担心的是，篇幅一长，用手机写和修改都不方便。想想学校的项目或者一篇十页的论文：如果全程用手机写和改，会方便吗？写演讲稿也是一样。"
+            },
+            {
+              "id": "sean",
+              "name": "Sean",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "nelson",
+              "name": "Nelson",
+              "en": "• Nelson spoke first and went for six minutes. His delivery was conversational, easy to listen to, and easy to understand. Several parts of the speech still need refining. Finish polishing the content first, then work on the presentation.",
+              "zh": "• Nelson 第一个发言，讲了 6 分钟。他的表达很自然，像在和听众交流，听起来轻松，也容易听懂。演讲内容还有几处需要打磨。先把内容修改好，再练习台上的呈现。"
+            },
+            {
+              "id": "lyon",
+              "name": "Lyon",
+              "en": "• I’ve mentioned this before. Please avoid relying on your phone to write your whole speech. I’m concerned because a phone is inconvenient for longer writing. Think about a school project or a ten-page paper. How easy would it be to write and revise the whole thing on your phone? The same applies when you’re working on a speech draft.",
+              "zh": "• 我之前也提过，尽量不要只用手机写整篇演讲稿。我担心的是，篇幅一长，用手机写和修改都不方便。想想学校的项目或者一篇十页的论文：如果全程用手机写和改，会方便吗？写演讲稿也是一样。"
+            }
+          ],
+          "classContent": {
+            "en": "• We listened to a prepared speech and discussed polishing the content before working on presentation. I also reminded the students to put down their phones and explained why relying on a phone to write and revise longer work can be inconvenient.\n\n• Students were asked to share their views on a hypothetical leadership scenario involving Jensen Huang. Imagine that the U.S. president persuaded company leaders and the media to support bringing him back as CEO of the world’s largest company. Would that be a good or bad decision? More broadly, if a potential leader had serious ethical problems, would it be acceptable to return them to power if keeping them out might hurt the stock market or the economy? Could allowing a problematic person back into a leadership role be justified by benefits to the wider world? What matters more, equality or power?",
+            "zh": "• 我们听了一篇备稿演讲，并讨论了怎样先打磨内容，再练习台上的呈现。我也提醒同学们把手机放下，并解释了为什么只用手机来写和改篇幅较长的稿件会不方便。\n\n• 同学们围绕一个涉及黄仁勋的假设情境分享自己的看法。假设美国总统说服了公司领导层和媒体，支持让黄仁勋重新担任世界上最大公司的首席执行官，这会是一个好决定还是坏决定？进一步想，如果一位潜在的领导者存在严重的道德问题，而让他离开权力岗位可能会影响股市或经济，那么让他重新掌权可以接受吗？如果让有问题的人重新掌权可以让更广泛的社会受益，这样做有道理吗？平等和权力，哪一个更重要？"
+          },
+          "homework": null
         }
       ]
     },
