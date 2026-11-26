@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-24T11:04:34.411222+00:00",
+  "updatedAt": "2026-11-26T17:01:16.646777+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1334,6 +1334,40 @@
               "zh": "• Remi 今天上课时很难在座位上坐住，多次进出教室，影响了课堂的专注，包括 Jarvis 发言的时候。我希望 Remi 在同学展示时留在座位上，专心听讲。这也是尊重发言同学的一种方式。\n\n• Remi 还多次把橙子放进嘴里，当成奶嘴，并模仿婴儿发出咿咿呀呀的声音。我希望他上课时停止这样做，把注意力放回课堂上。"
             }
           ]
+        },
+        {
+          "id": "thu-afternoon-2026-11-26",
+          "date": "2026-11-26",
+          "time": "15:30–17:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "jarvis",
+              "name": "Jarvis",
+              "en": "• Jarvis said he had practiced his script once. His speech ran about 3 minutes and 25 seconds, which put him over the time limit and disqualified this attempt.\n• His delivery sounded like slow reading, and he still seemed unfamiliar with the script. With his competition about a week away, he needs to get more comfortable with the script. We may also need to cut some content to bring the speech within the time limit.",
+              "zh": "• Jarvis 说他练习过一次讲稿。这次演讲用了大约 3 分 25 秒，超过了规定时间，因此这次演讲被判失去资格。\n• 他讲起来像是在慢慢念稿，听得出来对讲稿还不太熟悉。距离比赛大约还有一周，他需要再熟悉一下讲稿。我们可能也需要删减一些内容，把演讲控制在规定时间内。"
+            },
+            {
+              "id": "elsa",
+              "name": "Elsa",
+              "en": "• Elsa wasn’t here last time, so I gave her an impromptu question: “Do you want to become famous? Why or why not?” She was able to speak for one minute. When she first started in class, I remember she would speak for maybe 10 to 15 seconds and then run off. This time, she stayed calm and relaxed and kept speaking. She didn’t panic about what to say, run off, or cry out. I think she’s much more at ease with speaking now, and she’s able to express herself for longer.\n• The next step is to give the audience a clear message. What do you want everyone to take away or do? For example, you could say that even if you become famous, you should remember your friends and family. You could also talk about why you might choose to avoid becoming famous for the wrong reasons, or why living a peaceful life can sometimes matter more than having everyone know who you are.",
+              "zh": "• Elsa 上次没来，所以我给了她一道即兴题：“你想成名吗？为什么想，或者为什么不想？”她讲了一分钟。我记得她刚开始上课时，可能只讲 10 到 15 秒就跑开了。这一次，她很平静、很放松，也能继续讲下去。她没有因为不知道说什么而慌张，也没有跑开或叫出声。我觉得她现在面对演讲时自在多了，也能花更长的时间表达自己的想法。\n• 下一步是给听众一个清楚的信息。你希望大家听完后记住什么，或者去做什么？比如，你可以说，即使成名了，也要记得自己的朋友和家人。你也可以谈谈，为什么不该因为不恰当的理由追求成名，或者为什么有时候，过平静的生活比让所有人都知道你是谁更重要。"
+            },
+            {
+              "id": "owen",
+              "name": "Owen",
+              "en": "• I was really happy that Owen went home and edited the script himself. That was one of the things I wanted him to do. My edits were meant to point him in the right direction with the structure and logic. There was still work for him to do on revising and practicing it. Owen put effort into fixing up the script and making it more his own.\n• Owen finished in two minutes, which was too short. Check the word count and aim for 300–320 words if possible. He also spoke a bit too fast, which made some of what he was trying to express hard to understand. Slow down so the audience can follow those parts more easily.\n• We also worked through where to color-code the expressions in Owen’s racing speech. Show excitement and happiness as you wait to see which team wins, right up until the cars cross the finish line. The funny thing is that you’re sitting still while the driver is the one going around the corner. Scrunch up your face when you ask, “Can something on the screen really change what your body does?” Look shocked when you introduce adrenaline, then happy again as you explain how a close finish can make your heart beat faster. It can also make you want another close finish.\n• That’s where things get tricky. Ask the audience to imagine playing a racing game at bedtime. You can address them with “Dear friends” and explain that getting excited about the race is part of the fun. Then ask them to think about chasing that feeling for another round and what they might give up. A late game can take up time you meant to spend sleeping or talking to someone at home. Let your face show sadness there, because you’ve lost something.",
+              "zh": "• 我很高兴 Owen 回家后自己修改了讲稿。这正是我希望他做的事情之一。我帮他调整结构和逻辑，是为了给他一个修改方向，接下来还需要他自己继续修改和练习。Owen 确实花了功夫完善讲稿，也让它更有自己的风格。\n• Owen 两分钟就讲完了，时间偏短。请检查一下讲稿的词数，尽量控制在 300 到 320 个英文单词。他的语速也有点快，有些地方听众不太容易听懂他想表达的意思。把语速放慢一些，让听众更容易跟上。\n• 我们也一起看了 Owen 的赛车演讲，找出哪些地方可以用颜色标出表情。等着看哪支队伍会赢时，表现出兴奋和开心，一直保持到赛车冲过终点线。有趣的是，你自己坐着没动，转弯的是车手。问“屏幕上的东西真的能让你的身体产生反应吗？”时，把脸皱起来。提到肾上腺素时露出惊讶的表情，接着讲到势均力敌的冲线会让你心跳加快时，再露出开心的表情。这样的冲线也可能让你想再体验一次。\n• 接下来，事情就变得有点棘手了。请听众想象在睡觉前玩赛车游戏的情景。你可以用“亲爱的朋友们”来称呼大家，告诉他们，为比赛感到兴奋本来就是乐趣的一部分。然后请他们想想，为了再体验一次那种感觉而多玩一局时，可能会牺牲什么。玩到太晚可能会占用你原本打算用来睡觉或和家里人聊天的时间。这时让脸上流露出难过，因为你失去了一些东西。"
+            },
+            {
+              "id": "remy",
+              "name": "Remi",
+              "en": "• Remi’s speech also ran long, at roughly 3 minutes and 20 to 30 seconds. I’m a little concerned about the timing. We may need to cut some content to shorten the speech.",
+              "zh": "• Remi 的演讲也偏长，大约用了 3 分 20 秒到 3 分 30 秒。我有点担心演讲的时长。我们可能需要删减一些内容，把演讲缩短一点。"
+            }
+          ],
+          "classContent": null,
+          "homework": null
         }
       ]
     },

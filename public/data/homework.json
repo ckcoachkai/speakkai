@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-24T11:04:34.411222+00:00",
+  "updatedAt": "2026-11-26T17:01:16.646777+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1127,6 +1127,31 @@
             {
               "name": "Remi",
               "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-19&student=remy"
+            }
+          ]
+        },
+        {
+          "id": "thu-afternoon-2026-11-26",
+          "date": "2026-11-26",
+          "time": "15:30–17:30",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Jarvis",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-26&student=jarvis"
+            },
+            {
+              "name": "Elsa",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-26&student=elsa"
+            },
+            {
+              "name": "Owen",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-26&student=owen"
+            },
+            {
+              "name": "Remi",
+              "feedbackUrl": "/fb/?class=thu-afternoon&date=2026-11-26&student=remy"
             }
           ]
         }
