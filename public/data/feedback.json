@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-27T19:02:40.776449+08:00",
+  "updatedAt": "2026-11-28T00:57:48.821550+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2036,12 +2036,12 @@
             }
           ],
           "classContent": {
-            "en": "• Students went through their previous homework in class. The class also included an impromptu speech, with reminders to use the transitions and include the story.\n• We worked on two parts of impromptu speaking. First, we discussed how answers can be organized in chronological, logical, or spatial order. We focused on chronological order. If a question asks how to complete something, students can spend part of their speaking time explaining the steps in the order they happen.\n• Second, we worked on the advanced sentence pattern “Instead of ___, we should ___.” We also talked about sharing our feelings in an impromptu answer with phrases like “I feel happy about this because…” or “I feel sad about this.” I think sharing how we feel helps us connect with the audience and makes us more credible as speakers.\n• We’ll keep practicing these skills in impromptu speaking so students can develop fuller answers and speak for longer while keeping their ideas logical, their answers structured, and their responses efficient.",
-            "zh": "• 学生在课堂上把之前的作业讲了一遍。课堂上也进行了即兴演讲练习，我提醒发言的学生用上过渡语，并把故事讲出来。\n• 我们练习了即兴演讲的两个方面。首先，我们讨论了回答问题时可以用时间顺序、逻辑顺序或空间顺序来组织内容。这次我们重点讲了时间顺序。如果题目问的是如何完成一件事，学生可以用一部分发言时间，按照事情发生的先后顺序讲清楚各个步骤。\n• 接着，我们练习了一个进阶句型 “Instead of ___, we should ___.”（与其……，我们应该……。）我们也讨论了如何在即兴回答中表达自己的感受，比如“我对此感到高兴，因为……”或“我对此感到难过。”我觉得，分享自己的感受能帮助我们和听众建立联系，也能让听众更信任演讲者。\n• 接下来，我们会继续在即兴演讲中练习运用这些技巧，让学生能把回答展开、讲得更久，同时做到思路合乎逻辑、结构清晰，并高效地回答问题。"
+            "en": "• We focused on logical order when answering impromptu questions about how to do something. The goal was to explain the steps in an order the audience could follow. Examples included how to turn on the water, feed a pet, take care of a dog, or even throw furniture out the window. Any topic was fine for this exercise.\n• We practiced two advanced speaking patterns: “We shouldn’t ___. Instead, we should ___.” and “Some people may say ___. However, ___.”\n• We also worked on adding emotion to an impromptu answer with phrases like “I feel happy about this because…” or “I feel sad about this.” I think sharing how you feel helps you connect with the audience and builds credibility as a speaker.\n• We’ll keep applying these skills in impromptu practice so students can give fuller, longer answers while keeping their ideas logical, their structure clear, and their responses efficient.\n• Students went through their previous homework in class. The class also included an impromptu speech, with reminders to use the transitions and include the story.",
+            "zh": "• 我们重点练习了在即兴回答“怎么做一件事”这类问题时，如何用逻辑顺序组织内容。目标是把步骤讲清楚，让听众能跟上。举的例子包括怎么打开水龙头、怎么喂宠物、怎么照顾一只狗，甚至怎么把家具从窗户扔出去。这个练习选什么题材都可以。\n• 我们练习了两个进阶表达句型。“We shouldn’t ___. Instead, we should ___.”（我们不应该……，而应该……。）和“Some people may say ___. However, ___.”（有些人可能会说……，不过……。）\n• 我们也练习了在即兴回答中加入自己的感受，比如“我对此感到高兴，因为……”或“我对此感到难过。”我觉得，分享自己的感受能帮助我们和听众建立联系，也能让听众更信任演讲者。\n• 接下来，我们会继续在即兴演讲中运用这些技巧，让学生能把回答讲得更充分、讲得更久，同时保持思路有逻辑、结构清晰，并高效地回答问题。\n• 学生在课堂上把之前的作业讲了一遍。课堂上也进行了即兴演讲练习，我提醒发言的学生用上过渡语，并把故事讲出来。"
           },
           "homework": {
-            "en": "• Complete pages 8 and 9 in your packet to practice these skills a little more.",
-            "zh": "• 完成练习册的第 8 页和第 9 页，进一步练习这些技巧。"
+            "en": "• Complete pages 8 and 9 in your workbook to keep practicing these skills.",
+            "zh": "• 完成练习册的第 8 页和第 9 页，继续练习这些技巧。"
           }
         }
       ]
@@ -2451,29 +2451,37 @@
               "id": "arthur",
               "name": "Arthur",
               "en": null,
-              "zh": null
+              "zh": null,
+              "attendance": "absent"
             },
             {
               "id": "merlin",
               "name": "Merlin",
               "en": null,
-              "zh": null
+              "zh": null,
+              "attendance": "absent"
             },
             {
               "id": "zoey",
               "name": "Zoe",
-              "en": null,
-              "zh": null
+              "en": "• I felt Zoe’s attitude was much better in this two-person session, when the boys weren’t there.",
+              "zh": "• 我觉得这次只有两个人练习，男生没有到场，Zoe 的学习态度好多了。"
             },
             {
               "id": "molly",
               "name": "Molly",
-              "en": "• Molly spoke first. She spoke a little softly, but otherwise did well. Molly, try to speak a little louder next time.\n• Molly completed her homework and printed it out. I was pleasantly surprised to see the printout. Others had written theirs on a sheet of paper, and I appreciated the extra effort Molly put in.",
-              "zh": "• Molly 第一个发言。她的声音有点轻，其他方面表现不错。Molly，下次试着讲得再大声一点。\n• Molly 完成了作业，还把作业打印了出来。看到打印好的作业，我有点惊喜。其他同学是把作业写在纸上的，我很欣赏 Molly 在这方面多花的心思。"
+              "en": "• Molly spoke first. She spoke a little softly, but otherwise did well. Molly, try to speak a little louder next time.\n• Molly completed her homework and printed it out. I was pleasantly surprised to see the printout. Others had written theirs on a sheet of paper, and I appreciated the extra effort Molly put in.\n• During the two-person practice, Molly came up with a lot of different ideas as she tried to express herself. I thought that was really amazing.",
+              "zh": "• Molly 第一个发言。她的声音有点轻，其他方面表现不错。Molly，下次试着讲得再大声一点。\n• Molly 完成了作业，还把作业打印了出来。看到打印好的作业，我有点惊喜。其他同学是把作业写在纸上的，我很欣赏 Molly 在这方面多花的心思。\n• 双人练习时，Molly 一边试着表达自己的想法，一边想出了许多不同的点子。我觉得这真的很棒。"
             }
           ],
-          "classContent": null,
-          "homework": null
+          "classContent": {
+            "en": "• We focused on logical order when answering impromptu questions about how to do something. The goal was to explain the steps in an order the audience could follow. Examples included how to turn on the water, feed a pet, take care of a dog, or even throw furniture out the window. Any topic was fine for this exercise.\n• We practiced two advanced speaking patterns: “We shouldn’t ___. Instead, we should ___.” and “Some people may say ___. However, ___.”\n• We also worked on adding emotion to an impromptu answer with phrases like “I feel happy about this because…” or “I feel sad about this.” I think sharing how you feel helps you connect with the audience and builds credibility as a speaker.\n• We’ll keep applying these skills in impromptu practice so students can give fuller, longer answers while keeping their ideas logical, their structure clear, and their responses efficient.\n• The two students did an intensive two-person practice session for an hour and a half, so they got to use these skills a lot. I felt the class went well overall. It may have been a bit too much practice for them, and they were a little tired by the end.",
+            "zh": "• 我们重点练习了在即兴回答“怎么做一件事”这类问题时，如何用逻辑顺序组织内容。目标是把步骤讲清楚，让听众能跟上。举的例子包括怎么打开水龙头、怎么喂宠物、怎么照顾一只狗，甚至怎么把家具从窗户扔出去。这个练习选什么题材都可以。\n• 我们练习了两个进阶表达句型。“We shouldn’t ___. Instead, we should ___.”（我们不应该……，而应该……。）和“Some people may say ___. However, ___.”（有些人可能会说……，不过……。）\n• 我们也练习了在即兴回答中加入自己的感受，比如“我对此感到高兴，因为……”或“我对此感到难过。”我觉得，分享自己的感受能帮助我们和听众建立联系，也能让听众更信任演讲者。\n• 接下来，我们会继续在即兴演讲中运用这些技巧，让学生能把回答讲得更充分、讲得更久，同时保持思路有逻辑、结构清晰，并高效地回答问题。\n• 两位同学进行了一个半小时强度较高的双人练习，所以有很多机会运用这些技巧。我觉得这节课整体上进行得不错。练习量可能有点多，到最后两位同学都有些累了。"
+          },
+          "homework": {
+            "en": "• Complete pages 8 and 9 in your workbook to keep practicing these skills.",
+            "zh": "• 完成练习册的第 8 页和第 9 页，继续练习这些技巧。"
+          }
         }
       ]
     },
