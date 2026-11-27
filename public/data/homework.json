@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-27T17:00:27.948422+08:00",
+  "updatedAt": "2026-11-27T19:02:40.776449+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1650,9 +1650,15 @@
           "date": "2026-11-27",
           "time": "15:40–17:40",
           "classContent": [
-            "• Students went through their previous homework in class. The class also included an impromptu speech, with reminders to use the transitions and include the story."
+            "• Students went through their previous homework in class. The class also included an impromptu speech, with reminders to use the transitions and include the story.\n• We worked on two parts of impromptu speaking. First, we discussed how answers can be organized in chronological, logical, or spatial order. We focused on chronological order. If a question asks how to complete something, students can spend part of their speaking time explaining the steps in the order they happen.\n• Second, we worked on the advanced sentence pattern “Instead of ___, we should ___.” We also talked about sharing our feelings in an impromptu answer with phrases like “I feel happy about this because…” or “I feel sad about this.” I think sharing how we feel helps us connect with the audience and makes us more credible as speakers.\n• We’ll keep practicing these skills in impromptu speaking so students can develop fuller answers and speak for longer while keeping their ideas logical, their answers structured, and their responses efficient."
           ],
-          "homework": null,
+          "homework": {
+            "title": "Impromptu speaking practice",
+            "steps": [
+              "• Complete pages 8 and 9 in your packet to practice these skills a little more."
+            ],
+            "prepareFor": "Impromptu speaking practice"
+          },
           "students": [
             {
               "name": "Evan",
@@ -1999,6 +2005,31 @@
             {
               "name": "Molly",
               "feedbackUrl": "/fb/?class=fri-later&date=2026-11-20&student=molly"
+            }
+          ]
+        },
+        {
+          "id": "fri-later-2026-11-27",
+          "date": "2026-11-27",
+          "time": "18:00–20:00",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Arthur",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-27&student=arthur"
+            },
+            {
+              "name": "Merlin",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-27&student=merlin"
+            },
+            {
+              "name": "Zoe",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-27&student=zoey"
+            },
+            {
+              "name": "Molly",
+              "feedbackUrl": "/fb/?class=fri-later&date=2026-11-27&student=molly"
             }
           ]
         }

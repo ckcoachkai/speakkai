@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-27T17:00:27.948422+08:00",
+  "updatedAt": "2026-11-27T19:02:40.776449+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -2036,10 +2036,13 @@
             }
           ],
           "classContent": {
-            "en": "• Students went through their previous homework in class. The class also included an impromptu speech, with reminders to use the transitions and include the story.",
-            "zh": "• 学生在课堂上把之前的作业讲了一遍。课堂上也进行了即兴演讲练习，我提醒发言的学生用上过渡语，并把故事讲出来。"
+            "en": "• Students went through their previous homework in class. The class also included an impromptu speech, with reminders to use the transitions and include the story.\n• We worked on two parts of impromptu speaking. First, we discussed how answers can be organized in chronological, logical, or spatial order. We focused on chronological order. If a question asks how to complete something, students can spend part of their speaking time explaining the steps in the order they happen.\n• Second, we worked on the advanced sentence pattern “Instead of ___, we should ___.” We also talked about sharing our feelings in an impromptu answer with phrases like “I feel happy about this because…” or “I feel sad about this.” I think sharing how we feel helps us connect with the audience and makes us more credible as speakers.\n• We’ll keep practicing these skills in impromptu speaking so students can develop fuller answers and speak for longer while keeping their ideas logical, their answers structured, and their responses efficient.",
+            "zh": "• 学生在课堂上把之前的作业讲了一遍。课堂上也进行了即兴演讲练习，我提醒发言的学生用上过渡语，并把故事讲出来。\n• 我们练习了即兴演讲的两个方面。首先，我们讨论了回答问题时可以用时间顺序、逻辑顺序或空间顺序来组织内容。这次我们重点讲了时间顺序。如果题目问的是如何完成一件事，学生可以用一部分发言时间，按照事情发生的先后顺序讲清楚各个步骤。\n• 接着，我们练习了一个进阶句型 “Instead of ___, we should ___.”（与其……，我们应该……。）我们也讨论了如何在即兴回答中表达自己的感受，比如“我对此感到高兴，因为……”或“我对此感到难过。”我觉得，分享自己的感受能帮助我们和听众建立联系，也能让听众更信任演讲者。\n• 接下来，我们会继续在即兴演讲中练习运用这些技巧，让学生能把回答展开、讲得更久，同时做到思路合乎逻辑、结构清晰，并高效地回答问题。"
           },
-          "homework": null
+          "homework": {
+            "en": "• Complete pages 8 and 9 in your packet to practice these skills a little more.",
+            "zh": "• 完成练习册的第 8 页和第 9 页，进一步练习这些技巧。"
+          }
         }
       ]
     },
@@ -2437,6 +2440,40 @@
               "zh": "• Molly 讲得很清楚，很有自信，声音也很响亮。她可以用一些手势来标示主要观点，让听众更容易跟上她想表达的内容。演讲结束时，记得说一声 “Thank you”（谢谢），让大家知道已经讲完了。如果最后只是停下来，听众可能会以为她还有话要说。"
             }
           ]
+        },
+        {
+          "id": "fri-later-2026-11-27",
+          "date": "2026-11-27",
+          "time": "18:00–20:00",
+          "status": "held",
+          "students": [
+            {
+              "id": "arthur",
+              "name": "Arthur",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "merlin",
+              "name": "Merlin",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "zoey",
+              "name": "Zoe",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "molly",
+              "name": "Molly",
+              "en": "• Molly spoke first. She spoke a little softly, but otherwise did well. Molly, try to speak a little louder next time.\n• Molly completed her homework and printed it out. I was pleasantly surprised to see the printout. Others had written theirs on a sheet of paper, and I appreciated the extra effort Molly put in.",
+              "zh": "• Molly 第一个发言。她的声音有点轻，其他方面表现不错。Molly，下次试着讲得再大声一点。\n• Molly 完成了作业，还把作业打印了出来。看到打印好的作业，我有点惊喜。其他同学是把作业写在纸上的，我很欣赏 Molly 在这方面多花的心思。"
+            }
+          ],
+          "classContent": null,
+          "homework": null
         }
       ]
     },
