@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-26T17:01:16.646777+08:00",
+  "updatedAt": "2026-11-27T17:00:27.948422+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1997,6 +1997,49 @@
               "zh": "• Mikaela 第一个上台演讲。这是目前我在这个班听到她声音最响亮的一次，我觉得大家都能听见她。她的音量已经接近合适的课堂音量了，再提高大约 10%–20%，就能达到平常在教室里发言的音量。Mikaela，做得很好！"
             }
           ]
+        },
+        {
+          "id": "fri-afternoon-2026-11-27",
+          "date": "2026-11-27",
+          "time": "15:40–17:40",
+          "status": "held",
+          "students": [
+            {
+              "id": "evan",
+              "name": "Evan",
+              "en": "• Evan was the next speaker. He spoke clearly, which was good. The next step is to practice a bit without the script so we can see how he uses these skills in an impromptu speech.",
+              "zh": "• 接下来是 Evan 发言。他讲得很清楚，这点做得很好。下一步是试着脱稿练习一下，这样我们就能看看他在即兴演讲中是怎么运用这些技巧的。"
+            },
+            {
+              "id": "wendy",
+              "name": "Wendy",
+              "en": "• Wendy was the next speaker. She completed her homework and read through it in class, which was great. I had very little else to add this time. Well done, Wendy!",
+              "zh": "• 接下来是 Wendy 发言。她完成了作业，也在课堂上把作业读了一遍，这点做得很好。这次我没有太多其他意见。Wendy，做得好！"
+            },
+            {
+              "id": "ethan",
+              "name": "Ethan Xu",
+              "en": "• Ethan came up to speak and went through his homework. It was good that he had completed it. He jumped up and down as he spoke and spoke quite quickly. Ethan, slow down and try to connect with us as you speak. It was clear that you were reading through your work, so try looking up from the page as you speak.\n• Ethan giggled and laughed while a classmate was speaking.",
+              "zh": "• Ethan 上来发言，把作业讲了一遍。他完成了作业，这点做得很好。他讲的时候上下跳动，语速也比较快。Ethan，放慢一点，试着在讲话时和听众多交流。当时能明显看出你在照着作业念，讲的时候可以试着抬头看看听众。\n• 有同学发言时，Ethan 在咯咯地笑。"
+            },
+            {
+              "id": "ray",
+              "name": "Ray",
+              "en": "• Ray spoke first. He hadn’t done his homework and gave an impromptu speech. He forgot some parts of the structure, including the transitions and telling the story. I had to remind him, and he tried two or three times.\n• Ray, remember to do your homework. It gives you a chance to practice these speaking skills and get better at using them.",
+              "zh": "• Ray 第一个发言。他没有做作业，现场做了即兴演讲。他忘了演讲结构中的几个部分，包括过渡语和讲故事。我提醒了他，他试了两三次。\n• Ray，记得做作业。做作业能让你练习这些演讲技巧，把它们用得更熟练。"
+            },
+            {
+              "id": "mikaela",
+              "name": "Mikaela",
+              "en": "• We could hear Mikaela clearly. She completed both homework assignments and went through them in class, which was good. She faced the audience and did some reading as she went.\n• Good job, Mikaela. Keep practicing and keep going!",
+              "zh": "• 大家能听清 Mikaela 说的话。她完成了两项作业，也在课堂上把两项作业都讲了一遍，这点做得很好。她面向听众，讲的时候有些地方是照着念的。\n• Mikaela，做得好。继续练习，继续加油！"
+            }
+          ],
+          "classContent": {
+            "en": "• Students went through their previous homework in class. The class also included an impromptu speech, with reminders to use the transitions and include the story.",
+            "zh": "• 学生在课堂上把之前的作业讲了一遍。课堂上也进行了即兴演讲练习，我提醒发言的学生用上过渡语，并把故事讲出来。"
+          },
+          "homework": null
         }
       ]
     },

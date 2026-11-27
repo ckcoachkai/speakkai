@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-26T17:01:16.646777+08:00",
+  "updatedAt": "2026-11-27T17:00:27.948422+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1642,6 +1642,37 @@
             {
               "name": "Mikaela",
               "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-20&student=mikaela"
+            }
+          ]
+        },
+        {
+          "id": "fri-afternoon-2026-11-27",
+          "date": "2026-11-27",
+          "time": "15:40–17:40",
+          "classContent": [
+            "• Students went through their previous homework in class. The class also included an impromptu speech, with reminders to use the transitions and include the story."
+          ],
+          "homework": null,
+          "students": [
+            {
+              "name": "Evan",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-27&student=evan"
+            },
+            {
+              "name": "Wendy",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-27&student=wendy"
+            },
+            {
+              "name": "Ethan Xu",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-27&student=ethan"
+            },
+            {
+              "name": "Ray",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-27&student=ray"
+            },
+            {
+              "name": "Mikaela",
+              "feedbackUrl": "/fb/?class=fri-afternoon&date=2026-11-27&student=mikaela"
             }
           ]
         }
