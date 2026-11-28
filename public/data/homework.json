@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-28T00:57:48.821550+08:00",
+  "updatedAt": "2026-11-28T14:58:42.599815+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -300,6 +300,31 @@
             ],
             "prepareFor": "Practising your revised speech · 练习修改后的演讲"
           }
+        },
+        {
+          "id": "sat-original-oratory-2026-11-28",
+          "date": "2026-11-28",
+          "time": "13:00–15:00",
+          "classContent": [],
+          "homework": null,
+          "students": [
+            {
+              "name": "Winston",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-28&student=winston"
+            },
+            {
+              "name": "Louis",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-28&student=louis"
+            },
+            {
+              "name": "Kenny",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-28&student=kenny"
+            },
+            {
+              "name": "Kailyn",
+              "feedbackUrl": "/fb/?class=sat-original-oratory&date=2026-11-28&student=kailyn"
+            }
+          ]
         }
       ]
     },

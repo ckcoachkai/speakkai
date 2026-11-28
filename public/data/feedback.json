@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-28T00:57:48.821550+08:00",
+  "updatedAt": "2026-11-28T14:58:42.599815+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -359,6 +359,40 @@
             "en": "• Edit your speech and share your updated script with Coach Kai as soon as you can.",
             "zh": "• 修改你的演讲稿，并尽快把修改后的稿子发给 Kai 教练。"
           }
+        },
+        {
+          "id": "sat-original-oratory-2026-11-28",
+          "date": "2026-11-28",
+          "time": "13:00–15:00",
+          "status": "held",
+          "students": [
+            {
+              "id": "winston",
+              "name": "Winston",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "louis",
+              "name": "Louis",
+              "en": "• Louis had been away earlier. When he came back, he answered the question and spoke for 1 minute and 40 seconds. Overall, it was a good reply. Remember that you’re giving a speech. Look at the audience, speak a little more slowly, and end with a clear message for them to take away.\n• On his second attempt, Louis gave quite a long answer in terms of content. I still felt the biggest thing for him to work on was slowing down a bit. He also needs to keep his hands out of his pockets while speaking.",
+              "zh": "• Louis 前面没在场。回来后，他回答了问题，讲了 1 分 40 秒。整体来说，回答得不错。记得你是在做演讲。讲话时看着听众，语速再放慢一点，最后给听众留下一条清楚的信息。\n• 第二次发言时，Louis 的回答内容挺多。我觉得他最需要练习的还是把语速放慢一点。发言时也要记得把手从口袋里拿出来。"
+            },
+            {
+              "id": "kenny",
+              "name": "Kenny",
+              "en": "• I gave Kenny a slightly more difficult question. After sharing your opinion, connect it to a bigger issue in society. Explain how it applies to the world today and how people can benefit from what you’re saying. Think about what message each listener could take away. One example I gave was that when someone is going through a dark, difficult time, we can be there for them.\n• On Kenny’s second attempt, I heard a quiver in his voice. He was holding himself as he spoke, almost as if he were trying to comfort himself. He sounded hurt, and I heard little enthusiasm or confidence in his delivery.\n• When the speech calls for a hurt tone, that delivery can fit. For the other parts, speak with more enthusiasm and a little more volume. You can also try a slightly sarcastic tone where it fits, as the NSDA speaker demonstrated.",
+              "zh": "• 我给 Kenny 的问题稍微难一些。表达自己的看法之后，记得把它和更广泛的社会问题联系起来。说清楚这和我们今天的世界有什么关系，以及大家能从你的观点中得到什么启发。想一想，每位听众能从你的回答中带走什么信息。我举的一个例子是，当有人正经历一段低落、艰难的时期时，我们可以陪伴和支持对方。\n• Kenny 第二次发言时，我听到他的声音有些发颤。他一边说，一边抱着自己，像是在给自己一点安慰。他的语气听起来有些受伤，整体表达也少了一点热情和自信。\n• 如果演讲的某个地方需要表现受伤的情绪，这样的语气可以用在那里。讲到其他部分时，可以更有热情一点，声音也稍微大一点。在合适的地方，还可以像那位 NSDA 演讲者示范的那样，试着用一点讽刺的语气。"
+            },
+            {
+              "id": "kailyn",
+              "name": "Kailyn",
+              "en": "• Kailyn’s reasoning was clear, and her answer was well structured. I’d suggest speaking a little longer and giving specific examples of what she could do next.\n• While explaining how she had blamed someone else, Kailyn kept smiling, laughing, and giggling. At times, she came across as a little too happy for what she was describing. Keep those reactions in check so your expression matches the emotion you want the audience to hear.",
+              "zh": "• Kailyn 的思路清楚，回答的结构也组织得很好。建议再讲久一点，并给出具体例子，说明自己接下来可以怎么做。\n• 讲到自己是怎么把责任推给别人时，Kailyn 一直在微笑，有时还咯咯地笑出了声。她有时显得有点太开心，和当时想表达的情绪不太一致。讲到这些地方时，可以稍微收一收笑容和笑声，让表情和语气更贴合你想传达给听众的情绪。"
+            }
+          ],
+          "classContent": null,
+          "homework": null
         }
       ]
     },
