@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-28T16:59:14.025959+08:00",
+  "updatedAt": "2026-11-28T19:00:12.859434+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -910,6 +910,54 @@
             {
               "name": "Hugo",
               "feedbackUrl": "/fb/?class=sat-introductory&date=2026-11-21&student=hugo"
+            }
+          ]
+        },
+        {
+          "id": "sat-introductory-2026-11-28",
+          "date": "2026-11-28",
+          "time": "16:30–18:30",
+          "classContent": [
+            "• We worked through pages 3 and 4 of the impromptu speaking packet. We practiced three ways to expand an answer:\n• “Some people might say ___. However, ___.” This brings in another point of view and gives you room to respond to it.\n• “We shouldn’t ___. Instead, we should ___.” This helps you explain what you think people should do.\n• “I feel ___ about ___. It makes me ___.” This helps you share how you feel about the topic and explain your reaction.\n• We also practiced expanding answers using chronological order, by explaining what happened first and what happened next, and logical order, by putting ideas in an order that helps the audience follow your reasoning.\n• We then moved into competition speech topics. At the Grade 3–4 level, students can start developing their own topics. Since Stacey and Hugo were still looking for ideas, I gave them two topics to explore: “Can I Be Your Friend Without Being Your Enemy’s Enemy?” for Stacey and “The Courage to Say I Don’t Know” for Hugo."
+          ],
+          "homework": {
+            "title": "Research your expository speech topic",
+            "steps": [
+              "Research your own speech topic using the five questions below. Look for examples you can explain in your own words and think about how they connect to your own experience.",
+              "Stacey — “Can I Be Your Friend Without Being Your Enemy’s Enemy?”",
+              "Explore why school friendships can get complicated when people expect their friends to take sides. At school, your friend may have an enemy, and you may feel expected to treat that person as your enemy too. You might also make a new friend who is already in conflict with a friend you have. Think about why people put so much emphasis on taking sides.",
+              "1. How do we choose our friends? What makes you want to be friends with someone? Can two of your friends have very different opinions about each other?",
+              "2. How does a disagreement spread? Look at how a conflict between two students can turn into a situation where an entire group feels it has to choose a side.",
+              "3. Why do friends expect loyalty to mean taking sides? What might a friend worry about if you get along with someone they dislike?",
+              "4. How can you support a friend while forming your own opinion? Think about what you could say if a friend told you, “If you’re my friend, you can’t be friends with them.”",
+              "5. When should someone step in? Compare an ordinary disagreement with a situation where someone is being hurt. Think about what a fair and helpful response would look like in each case.",
+              "Hugo — “The Courage to Say I Don’t Know”",
+              "Explore how the expectation that we should always know the answer can make it stressful to admit when we’re unsure. When teachers, friends, or parents assume you should know because you were paying attention, it can feel as though knowing the answer is the expectation either way. Look into how that pressure can turn into a fear of saying “I don’t know.”",
+              "1. Where does the expectation come from? Think about situations where teachers, parents, or friends expect you to know an answer because you were paying attention.",
+              "2. Why can “I don’t know” feel scary? What might you worry people will think about you? How can that worry create pressure even before you speak?",
+              "3. What do students do when they feel they have to know? Explore why someone might guess, pretend to understand, or stay quiet. What happens to their chance to learn?",
+              "4. How can admitting uncertainty help? Find an example where saying “I don’t know yet” helped someone ask a better question, get help, or figure something out.",
+              "5. What can students and the people around them do? Think of one way a student can ask for help and one way a teacher, friend, or parent can respond so that asking feels easier.",
+              "How to build the expository speech",
+              "• Aim for 30–40% personal story and 60–70% explanation. Use a personal example to show why the topic matters to you, then spend most of the speech introducing the idea and helping the audience understand it more deeply.",
+              "• Choose about three main points from your research. Use “First,” “Second,” and “Finally” to help the audience follow your thinking. You can research all five directions and choose the ones that fit your speech best.",
+              "• Use a little ethos by showing why the audience can trust what you’re saying, pathos by helping them feel what the situation is like, and logos by giving a clear reason or example that supports your point.",
+              "• Connect the topic to something your audience might experience. End with one idea, solution, or action they can take away."
+            ],
+            "prepareFor": "Expository speech planning"
+          },
+          "students": [
+            {
+              "name": "Anna",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-11-28&student=anna"
+            },
+            {
+              "name": "Stacey",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-11-28&student=stacey"
+            },
+            {
+              "name": "Hugo",
+              "feedbackUrl": "/fb/?class=sat-introductory&date=2026-11-28&student=hugo"
             }
           ]
         }

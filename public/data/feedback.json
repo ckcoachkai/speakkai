@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-28T16:59:14.025959+08:00",
+  "updatedAt": "2026-11-28T19:00:12.859434+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -1069,6 +1069,40 @@
               "zh": "• Hugo 第一个上台发言。我觉得他整体表现还可以，演讲内容也没问题。不过，他看起来准备得还不太充分，说到一些词时有些犹豫。我建议他在上台前把演讲练习两到三遍，这样讲起来会更坚定、更有说服力。"
             }
           ]
+        },
+        {
+          "id": "sat-introductory-2026-11-28",
+          "date": "2026-11-28",
+          "time": "16:30–18:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "anna",
+              "name": "Anna",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "stacey",
+              "name": "Stacey",
+              "en": null,
+              "zh": null
+            },
+            {
+              "id": "hugo",
+              "name": "Hugo",
+              "en": null,
+              "zh": null
+            }
+          ],
+          "classContent": {
+            "en": "• We worked through pages 3 and 4 of the impromptu speaking packet. We practiced three ways to expand an answer:\n• “Some people might say ___. However, ___.” This brings in another point of view and gives you room to respond to it.\n• “We shouldn’t ___. Instead, we should ___.” This helps you explain what you think people should do.\n• “I feel ___ about ___. It makes me ___.” This helps you share how you feel about the topic and explain your reaction.\n• We also practiced expanding answers using chronological order, by explaining what happened first and what happened next, and logical order, by putting ideas in an order that helps the audience follow your reasoning.\n• We then moved into competition speech topics. At the Grade 3–4 level, students can start developing their own topics. Since Stacey and Hugo were still looking for ideas, I gave them two topics to explore: “Can I Be Your Friend Without Being Your Enemy’s Enemy?” for Stacey and “The Courage to Say I Don’t Know” for Hugo.",
+            "zh": "• 我们一起练习了即兴演讲练习册的第 3 页和第 4 页，学习用三种句型把回答展开：\n• “Some people might say ___. However, ___.”（有些人可能会说……。不过，……。） 先提出另一种看法，再回应这个观点。\n• “We shouldn’t ___. Instead, we should ___.”（我们不应该……。我们应该……。） 用这个句型说清楚你认为大家应该怎么做。\n• “I feel ___ about ___. It makes me ___.”（对于……，我感到……。这让我……。） 用这个句型分享你对话题的感受，并说清楚这件事让你产生了什么反应。\n• 我们也练习了用时间顺序和逻辑顺序展开回答。时间顺序是讲清楚先发生了什么、接着发生了什么。逻辑顺序是把观点安排好，让听众能跟上你的思路。\n• 接着，我们开始讨论比赛演讲的选题。三、四年级的学生已经可以开始构思自己的演讲主题。Stacey 和 Hugo 还在找选题的灵感，所以我分别给了他们一个可以深入了解的题目。Stacey 的题目是 “Can I Be Your Friend Without Being Your Enemy’s Enemy?”，Hugo 的题目是 “The Courage to Say I Don’t Know”。"
+          },
+          "homework": {
+            "en": "Research your own speech topic using the five questions below. Look for examples you can explain in your own words and think about how they connect to your own experience.\nStacey — “Can I Be Your Friend Without Being Your Enemy’s Enemy?”\nExplore why school friendships can get complicated when people expect their friends to take sides. At school, your friend may have an enemy, and you may feel expected to treat that person as your enemy too. You might also make a new friend who is already in conflict with a friend you have. Think about why people put so much emphasis on taking sides.\n1. How do we choose our friends? What makes you want to be friends with someone? Can two of your friends have very different opinions about each other?\n2. How does a disagreement spread? Look at how a conflict between two students can turn into a situation where an entire group feels it has to choose a side.\n3. Why do friends expect loyalty to mean taking sides? What might a friend worry about if you get along with someone they dislike?\n4. How can you support a friend while forming your own opinion? Think about what you could say if a friend told you, “If you’re my friend, you can’t be friends with them.”\n5. When should someone step in? Compare an ordinary disagreement with a situation where someone is being hurt. Think about what a fair and helpful response would look like in each case.\nHugo — “The Courage to Say I Don’t Know”\nExplore how the expectation that we should always know the answer can make it stressful to admit when we’re unsure. When teachers, friends, or parents assume you should know because you were paying attention, it can feel as though knowing the answer is the expectation either way. Look into how that pressure can turn into a fear of saying “I don’t know.”\n1. Where does the expectation come from? Think about situations where teachers, parents, or friends expect you to know an answer because you were paying attention.\n2. Why can “I don’t know” feel scary? What might you worry people will think about you? How can that worry create pressure even before you speak?\n3. What do students do when they feel they have to know? Explore why someone might guess, pretend to understand, or stay quiet. What happens to their chance to learn?\n4. How can admitting uncertainty help? Find an example where saying “I don’t know yet” helped someone ask a better question, get help, or figure something out.\n5. What can students and the people around them do? Think of one way a student can ask for help and one way a teacher, friend, or parent can respond so that asking feels easier.\nHow to build the expository speech\n• Aim for 30–40% personal story and 60–70% explanation. Use a personal example to show why the topic matters to you, then spend most of the speech introducing the idea and helping the audience understand it more deeply.\n• Choose about three main points from your research. Use “First,” “Second,” and “Finally” to help the audience follow your thinking. You can research all five directions and choose the ones that fit your speech best.\n• Use a little ethos by showing why the audience can trust what you’re saying, pathos by helping them feel what the situation is like, and logos by giving a clear reason or example that supports your point.\n• Connect the topic to something your audience might experience. End with one idea, solution, or action they can take away.",
+            "zh": "请根据下面的五个方向研究自己的演讲主题。找一些能用自己的话讲清楚的例子，再想想它们和你自己的经历有什么联系。\nStacey — “Can I Be Your Friend Without Being Your Enemy’s Enemy?”\n研究在学校里，当朋友希望你选边站时，友谊为什么会变得复杂。朋友可能有一个和自己不和的人，你也可能觉得自己应该把那个人当成敌人。你还可能交到一个新朋友，而这个新朋友正好和你原来的朋友有矛盾。想一想，为什么大家这么看重选边站。\n1. 我们怎么选择朋友？ 什么会让你想和一个人交朋友？你的两个朋友能不能对彼此有很不一样的看法？\n2. 两个人的矛盾是怎么扩大的？ 想想两位同学之间的分歧，怎么会变成一整个朋友圈都觉得自己必须选边站。\n3. 为什么有时朋友会把支持自己和选边站联系在一起？ 如果你和朋友不喜欢的人相处得很好，你的朋友可能会担心什么？\n4. 怎样支持朋友，同时保留自己的判断？ 如果朋友对你说：“你要是我的朋友，就不能和那个人做朋友。”你可以怎么回答？\n5. 什么时候应该站出来帮忙？ 比较普通的意见分歧和有人受到伤害的情况。想想在这两种情况下，怎样做才公平，也能真正帮到别人。\nHugo — “The Courage to Say I Don’t Know”\n研究为什么当大家觉得你应该知道答案时，说出“我不知道”会让人感到紧张和有压力。当老师、朋友或家长觉得你只要认真听了就应该知道答案时，你可能会觉得自己怎么都得知道。研究这种压力是怎么慢慢变成不敢说“我不知道”的。\n1. 这种期待从哪里来？ 想想老师、朋友或家长在哪些情况下会觉得，只要你有认真听，就应该知道答案。\n2. 为什么说“我不知道”会让人害怕？ 你可能担心别人怎么看你？这种担心怎么会在你开口之前就给你带来压力？\n3. 觉得自己必须知道答案时，学生可能会怎么做？ 想想为什么有人会乱猜、假装听懂，或者保持沉默。这会怎样影响他们学习的机会？\n4. 承认自己不知道，能带来什么好处？ 找一个例子，看看说出“我还不知道”是怎样帮助一个人提出更好的问题、得到帮助，或者弄懂一件事的。\n5. 学生和身边的人可以怎么做？ 想一个学生可以用来求助的方法，再想一个老师、朋友或家长可以用来回应的方法，让学生更敢开口问问题。\n说明型演讲怎么组织\n• 个人故事约占 30–40%，说明和分析约占 60–70%。 用自己的经历让听众明白这个主题为什么对你重要，再用大部分时间介绍你的观点，带着听众往下想。\n• 从研究中选出大约三个重点，用 “First,” “Second,” “Finally” 帮助听众跟上你的思路。可以先研究五个方向，再挑最适合演讲的几个。\n• 加入一点 ethos（可信度），让听众知道为什么可以相信你的话。用 pathos（情感） 让听众感受到当时的情形。用 logos（逻辑） 给出支持观点的理由或例子。\n• 把主题和听众可能遇到的情况联系起来。结尾留给他们一个值得思考的观点、一个解决办法，或者一件可以去做的事。"
+          }
         }
       ]
     },
