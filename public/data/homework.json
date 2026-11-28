@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-28T14:58:42.599815+08:00",
+  "updatedAt": "2026-11-28T15:02:30.804828+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -306,7 +306,15 @@
           "date": "2026-11-28",
           "time": "13:00–15:00",
           "classContent": [],
-          "homework": null,
+          "homework": {
+            "title": "Individual speech homework",
+            "steps": [
+              "• Louis: Confirm your speech topic. It can be something you strongly believe in. Ask yourself what common misconception people have, how you want to prove it wrong, and what you want to persuade people to do. One possible direction is to look at social norms or the unwritten rules that lead people to follow the majority, then ask what we can do about that.",
+              "• Kenny: Work on your speech about how the fear of embarrassment quietly controls our lives and pushes us to follow those unwritten rules and go along with the majority.",
+              "• Kailyn: Shorten the speech a bit and add a few specific, unexpected examples to make it more fun. You could take one scene from the movie I showed you and use it for a bit of shock value. Those specific details can make the speech more interesting for the judges."
+            ],
+            "prepareFor": "Speech practice"
+          },
           "students": [
             {
               "name": "Winston",
