@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-11-28T15:02:30.804828+08:00",
+  "updatedAt": "2026-11-28T16:59:14.025959+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -604,6 +604,39 @@
             {
               "name": "Ivy",
               "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-21&student=ivy"
+            }
+          ]
+        },
+        {
+          "id": "sat-foundations-2026-11-28",
+          "date": "2026-11-28",
+          "time": "15:00–16:30",
+          "classContent": [
+            "• We did a simplified speaking exercise focused on pausing and emphasis. We also briefly introduced emotional transference, using color highlighting to mark where to bring out different emotions in a speech."
+          ],
+          "homework": {
+            "title": "Send your latest speech script",
+            "steps": [
+              "• William, Ivy, Kyle, and Neil should each send me the latest version of their script."
+            ],
+            "prepareFor": "Script review"
+          },
+          "students": [
+            {
+              "name": "Neil",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-28&student=neil"
+            },
+            {
+              "name": "William",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-28&student=william"
+            },
+            {
+              "name": "Kyle",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-28&student=kyle"
+            },
+            {
+              "name": "Ivy",
+              "feedbackUrl": "/fb/?class=sat-foundations&date=2026-11-28&student=ivy"
             }
           ]
         }

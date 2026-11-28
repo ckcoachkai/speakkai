@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-28T15:02:30.804828+08:00",
+  "updatedAt": "2026-11-28T16:59:14.025959+08:00",
   "timeZone": "Asia/Shanghai",
   "classes": [
     {
@@ -705,6 +705,46 @@
               "zh": "• 即兴演讲练习：我觉得 Ivy 讲得很好。她讲故事时带着很丰富的情绪，而且把这种情绪传达给了听众。我希望她把字音咬得更清楚，再多加几个停顿。有时她说得稍快，想法之间留的空隙不够。如果多花一点时间想清楚自己要说什么、要表达什么，她的话会更有分量，也会更像一场演讲。\n\n• 备稿演讲指导——如果捷径取代了练习，会发生什么？从一段你愿意分享的个人经历讲起，说说它让你想到了什么。如果谈到注意缺陷多动障碍（ADHD）的治疗，请单独交代遵医嘱用药的背景。\n\n• 用大家都容易理解的 AI 作例子。让 AI 写完整篇演讲稿可以节省时间，但这样你就少练了两件事：想清楚自己相信什么，以及找到合适的词把它说出来。如果要用泰国的健身故事，请简短带过，用它来问问大家：为了提升表现，做到什么程度就越界了？\n\n• 结尾留给听众一个可以问自己的问题：“我想培养什么技能？我还在练习这项技能吗？”"
             }
           ]
+        },
+        {
+          "id": "sat-foundations-2026-11-28",
+          "date": "2026-11-28",
+          "time": "15:00–16:30",
+          "status": "held",
+          "students": [
+            {
+              "id": "neil",
+              "name": "Neil",
+              "en": "• I felt Neil did quite well overall and was able to deliver the speech. I asked whether he liked the speech and whether he’d practiced it quite a bit. I gave him another version of the script with some changes to the content. With a few more adjustments, we can probably use this as his final topic.\n• Pronunciation is the main thing I want Neil to focus on. If I record the script, follow along with the recording to practice your pronunciation. Right now, your delivery sounds quite robotic. That style is hard for an audience to follow for five minutes.",
+              "zh": "• 我觉得 Neil 整体完成得挺好，也能把演讲讲出来。我问了他喜不喜欢这篇演讲，以及之前是不是已经练习了不少次。我给了他另一个版本的讲稿，调整了一些内容。再改一改，这个题目应该就可以作为他的最终主题。\n• 发音是我最希望 Neil 重点练习的地方。如果我把讲稿录成音频，你可以听着录音跟读，练习发音。你现在讲起来有点像机器人。如果五分钟都用这样的方式讲，听众很难一直跟上你的内容。"
+            },
+            {
+              "id": "william",
+              "name": "William",
+              "en": "• Articulation and clarity are two of the biggest things William needs to work on. He struggled to articulate his words clearly, and parts of his speech were hard to understand. That’s an area we wanted to focus on in practice.",
+              "zh": "• 咬字和表达清晰度是 William 最需要改进的地方。他有些字词说得不够清楚，导致部分演讲内容很难听懂。这也是我们想在练习中重点解决的问题。"
+            },
+            {
+              "id": "kyle",
+              "name": "Kyle",
+              "en": "• I was surprised that Kyle had memorized his speech. The first part was well organized, with clear structure and logic. Later on, he seemed to struggle a little to find the words for what he wanted to say. He was less familiar with the later sections, and the ending was noticeably fuzzy. The rest went well.\n• Kyle, work from your script for this speech and get more familiar with the later sections. I need to see your latest script so we can review the ending.",
+              "zh": "• Kyle 把演讲稿背下来了，这让我挺惊喜。前面组织得很好，结构清楚，逻辑也很顺。讲到后面时，他有些地方似乎一时找不到合适的词来表达自己的想法。他对后面的内容还没那么熟悉，结尾也明显有些模糊。其他部分讲得很好。\n• Kyle，这篇演讲请按讲稿来练，把后面的内容再熟悉一些。我需要看你最新的讲稿，这样我们可以一起看看结尾。"
+            },
+            {
+              "id": "ivy",
+              "name": "Ivy",
+              "en": "• Ivy’s speech was pretty good overall. I think we may need to cut it by about 10%. Bring out more of your personal connection so the audience understands what was at stake for you and how devastated or sad you felt.\n• Some parts were hard to understand. I couldn’t tell whether you were speaking too fast or whether you needed to articulate the words more clearly. Pay attention to both when you practice.",
+              "zh": "• Ivy 的演讲整体不错，我觉得可能需要删减大约 10%。再多讲一点这件事和你自己的关系，让听众明白这件事对你为什么重要，以及你当时有多难过、多受打击。\n• 有些地方听起来不太清楚。我还不能确定是语速太快，还是咬字需要更清楚。练习时可以同时留意这两点。"
+            }
+          ],
+          "classContent": {
+            "en": "• We did a simplified speaking exercise focused on pausing and emphasis. We also briefly introduced emotional transference, using color highlighting to mark where to bring out different emotions in a speech.",
+            "zh": "• 我们做了一个简化版的演讲练习，重点练习停顿和重读。我们也简单介绍了如何把情绪传递给听众，用不同颜色标出演讲中需要表现不同情绪的地方。"
+          },
+          "homework": {
+            "en": "• William, Ivy, Kyle, and Neil should each send me the latest version of their script.",
+            "zh": "• 请 William、Ivy、Kyle 和 Neil 分别把自己最新版本的演讲稿发给我。"
+          }
         }
       ]
     },
